@@ -7,6 +7,7 @@
   "scripts": {
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\"",
+    "seed": "tsc && node dist/seed.js",
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
@@ -22,7 +23,9 @@
     "@nestjs/common": "^5.4.0",
     "@nestjs/core": "^5.4.0",
     "@nestjs/swagger": "^2.5.1",
+    "@types/mongodb": "^3.1.14",
     "@types/ws": "^6.0.1",
+    "mongodb": "^3.1.10",
     "reflect-metadata": "^0.1.12",
     "rimraf": "^2.6.2",
     "rxjs": "^6.2.2",

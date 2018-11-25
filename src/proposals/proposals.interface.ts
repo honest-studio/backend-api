@@ -1,5 +1,5 @@
 export interface Proposal {
     proposal: Object,
-    votes: Array,
+    //votes: Array<Vote>,
     result: Object
 }
