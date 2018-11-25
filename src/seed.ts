@@ -12,7 +12,7 @@ const dfuse = new WebSocket(`wss://mainnet.eos.dfuse.io/v1/stream?token=${apiKey
 const mongo_url: string = "mongodb://localhost:27017";
 const dbName = "Everipedia";
 
-const DEFAULT_BLOCK_START: number = 5969684;
+const DEFAULT_BLOCK_START: number = 1000000;
 
 async function set_indexes(): Promise<any> {
     const index1 = new Promise<any>((resolve, reject) => {
