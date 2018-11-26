@@ -13,6 +13,7 @@ const mongo_url: string = "mongodb://localhost:27017";
 const dbName = "Everipedia";
 
 const DEFAULT_BLOCK_START: number = 1000000;
+const DEFAULT_BLOCK_START_LATE: number = 10000000;
 
 async function set_indexes(): Promise<any> {
     const index1 = new Promise<any>((resolve, reject) => {
@@ -87,8 +88,8 @@ dfuse.on('open', async () => {
 
     dfuse.send(JSON.stringify(article_req));
     dfuse.send(JSON.stringify(token_req));
-    dfuse.send(JSON.stringify(safesend_req));
-    dfuse.send(JSON.stringify(fee_req));
+    //dfuse.send(JSON.stringify(safesend_req));
+    //dfuse.send(JSON.stringify(fee_req));
 });
 
 dfuse.on('message', (msg_str: string) => {
