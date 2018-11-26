@@ -4,9 +4,14 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as WebSocket from 'ws';
 import * as querystring from 'querystring'
 import * as seed from './seed';
+import { SSL } from './config';
+import { createServer } from 'https';
+import * as express from 'express';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const expressApp = express();
+  const app = await NestFactory.create(AppModule, expressApp);
+  const httpsServer = createServer(SSL, expressApp);
 
   const options = new DocumentBuilder()
     .setTitle('Everipedia API')
@@ -18,6 +23,7 @@ async function bootstrap() {
 
   seed.start();
 
+  httpsServer.listen(3000);
   await app.listen(3001);
 }
 bootstrap();
