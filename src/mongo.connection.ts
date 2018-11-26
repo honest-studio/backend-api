@@ -9,7 +9,7 @@ function connection(): Promise<any> {
         MongoClient.connect(url, function (err: Error, client: MongoClient) {
             const db = client.db(database);
             const actions = db.collection("actions");
-            resolve({ actions, db, client });
+            resolve({ client, db, actions });
         });
     });
 }
