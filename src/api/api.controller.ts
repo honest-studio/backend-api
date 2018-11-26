@@ -24,4 +24,15 @@ export class ApiController {
     return await this.apiService.getResult(proposal_hash);
   }
 
+  @Get('plagiarism/:proposal_hash')
+  @ApiOperation({ title: "Get plagiarism report for a proposal: Not implemented yet" })
+  async getPlagiarism(@Param('proposal_hash') proposal_hash): Promise<any> {
+    return await this.apiService.getPlagiarism(proposal_hash);
+  }
+
+  @Get('wiki/:ipfs_hash')
+  @ApiOperation({ title: "Get IPFS document for a wiki: Not implemented yet" })
+  async getWiki(@Param('ipfs_hash') ipfs_hash): Promise<any> {
+    return await this.apiService.getPlagiarism(ipfs_hash);
+  }
 }

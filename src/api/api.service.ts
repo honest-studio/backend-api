@@ -24,4 +24,10 @@ export class ApiService {
             "data.trace.act.data.proposal": proposal_hash 
         }).toArray());
     }
+    async getPlagiarism(proposal_hash: string): Promise<any> {
+        return { "error": "Not implemented yet" }
+    }
+    async getWiki(ipfs_hash: string): Promise<any> {
+        return { "error": "Not implemented yet" }
+    }
 }
