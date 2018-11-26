@@ -1,6 +1,7 @@
 import * as WebSocket from 'ws';
 import { readFileSync, writeFile } from 'fs';
 import { MongoClient } from 'mongodb';
+import * as mongocon from 'mongo.connection';
 
 const apiKey = "eyJhbGciOiJLTVNFUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDc5MDM3NTYsImp0aSI6IjE0YzY4Yjk5LTM5NTctNDZjYi04OTBiLWVkODJiMjFjOTQ3NyIsImlhdCI6MTU0MjcxOTc1NiwiaXNzIjoiZGZ1c2UuaW8iLCJzdWIiOiJDaVFBNmNieWU1ekJJS1pJWFAxYnBZdi9oejVjcXpFRm9ySnVKUGsxZnExeDR5SGhKYUFTUEFBL0NMUnQ2TkdLT3F2V2w4cldCZVBPRDRwdGkyVWIyWllrNUxMVGhyMTViNWxBdUNUNXFvaXdjWHdsRS96NTMwdWJDZVRmK0pFSnp3SjlGdz09IiwidGllciI6ImJldGEtdjEiLCJzdGJsayI6MiwidiI6MX0.qTZ0FqT8GIfaY4xeuM-tFpTnw97Jr9r7CeZdfMRTVK8W6I8bRZGHEzRASbtsZDivlZ2c8YK22hVn70qiBuwF-Q";
 
@@ -9,22 +10,20 @@ const dfuse = new WebSocket(`wss://mainnet.eos.dfuse.io/v1/stream?token=${apiKey
         Origin: "https://everipedia.org"
     }
 });
-const mongo_url: string = "mongodb://localhost:27017";
-const dbName = "Everipedia";
 
 const DEFAULT_BLOCK_START: number = 1000000;
 const DEFAULT_BLOCK_START_LATE: number = 10000000;
 
 async function set_indexes(): Promise<any> {
     const index1 = new Promise<any>((resolve, reject) => {
-        MongoClient.connect(mongo_url, function (err: Error, client: MongoClient) {
-            client.db(dbName).collection("actions")
+        MongoClient.connect(mongocon.url, function (err: Error, client: MongoClient) {
+            client.db(mongocon.database).collection("actions")
                 .createIndex("data.trace.receipt.global_sequence", { unique: true }, resolve);
         });
     });
     const index2 = new Promise<any>((resolve, reject) => {
-        MongoClient.connect(mongo_url, function (err: Error, client: MongoClient) {
-            client.db(dbName).collection("actions")
+        MongoClient.connect(mongocon.url, function (err: Error, client: MongoClient) {
+            client.db(mongocon.database).collection("actions")
                 .createIndex({ "data.trace.act.name": 1, "data.trace.act.account": 1 }, {}, resolve);
         });
     });
@@ -33,8 +32,8 @@ async function set_indexes(): Promise<any> {
 
 async function get_start_block(account: string): Promise<number> {
     return new Promise<number>((resolve, reject) => {
-        MongoClient.connect(mongo_url, function (err: Error, client: MongoClient) {
-            client.db(dbName).collection("actions")
+        MongoClient.connect(mongocon.url, function (err: Error, client: MongoClient) {
+            client.db(mongocon.database).collection("actions")
             .find({ "data.trace.act.account": account })
                 .sort({ "data.block_num": -1 })
                 .limit(1)
@@ -98,8 +97,8 @@ dfuse.on('message', (msg_str: string) => {
         console.log(msg);
         return;
     }
-    MongoClient.connect(mongo_url, function (err: Error, client: MongoClient) {
-        client.db(dbName).collection("actions")
+    MongoClient.connect(mongocon.url, function (err: Error, client: MongoClient) {
+        client.db(mongocon.database).collection("actions")
             .insertOne(msg, function (err: Error) {
                 if (err) console.log(err);
                 else {
