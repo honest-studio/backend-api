@@ -31,8 +31,8 @@ export class ApiController {
   }
 
   @Get('wiki/:ipfs_hash')
-  @ApiOperation({ title: "Get IPFS document for a wiki: Not implemented yet" })
+  @ApiOperation({ title: "Get IPFS document for a wiki" })
   async getWiki(@Param('ipfs_hash') ipfs_hash): Promise<any> {
-    return await this.apiService.getPlagiarism(ipfs_hash);
+    return await this.apiService.getWiki(ipfs_hash);
   }
 }

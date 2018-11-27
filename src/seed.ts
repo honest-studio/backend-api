@@ -24,7 +24,23 @@ async function set_indexes(): Promise<any> {
             });
         });
     });
-    return Promise.all([ index1, index2 ]);
+    const index3 = new Promise<any>((resolve, reject) => {
+        mongo.connection().then(function (conn) {
+            conn.wikis.createIndex({ "ipfs_hash": 1 }, {}, function () {
+                conn.client.close();
+                resolve();
+            });
+        });
+    });
+    const index4 = new Promise<any>((resolve, reject) => {
+        mongo.connection().then(function (conn) {
+            conn.plagiarism.createIndex({ "proposal_hash": 1 }, {}, function () {
+                conn.client.close();
+                resolve();
+            });
+        });
+    });
+    return Promise.all([ index1, index2, index3, index4 ]);
 }
 
 async function get_start_block(account: string): Promise<number> {
@@ -59,7 +75,7 @@ function start () {
           data: {
             account: "eparticlectr",
           },
-          start_block: await get_start_block("eparticlectr")
+          //start_block: await get_start_block("eparticlectr")
         };
         const token_req = {
           type: "get_actions",
@@ -68,7 +84,7 @@ function start () {
           data: {
             account: "everipediaiq",
           },
-          start_block: await get_start_block("everipediaiq")
+          //start_block: await get_start_block("everipediaiq")
         };
         const safesend_req = {
           type: "get_actions",
@@ -97,6 +113,7 @@ function start () {
 
     dfuse.on('message', (msg_str: string) => {
         lastMessageReceived = new Date().getTime();
+
         const msg = JSON.parse(msg_str);
         if (msg.type != "action_trace") {
             console.log(msg);

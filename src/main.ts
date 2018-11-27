@@ -7,6 +7,7 @@ import * as seed from './seed';
 import { SSL } from './config';
 import { createServer } from 'https';
 import * as express from 'express';
+import { ipfs } from './ipfs.connection'; // this will auto-start an IPFS node
 
 async function bootstrap() {
   const expressApp = express();

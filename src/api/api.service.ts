@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as mongo from '../mongo.connection';
+import * as fetch from 'node-fetch';
+import { ipfsNode } from '../ipfs.connection';
+import { Copyleak } from '../config';
 
 @Injectable()
 export class ApiService {
@@ -59,9 +62,84 @@ export class ApiService {
 
     }
     async getPlagiarism(proposal_hash: string): Promise<any> {
-        return { "error": "Not implemented yet" }
+        const result = await mongo.connection().then(con => con.plagiarism.findOne({
+            "proposal_hash": proposal_hash 
+        }));
+        if (result) return result;
+
+        const proposal = await this.getProposal(proposal_hash);
+        if (proposal.error) return { "error": "Proposal not found" }
+        
+        console.log(Copyleak);
+        const tokenReqBody = JSON.stringify(Copyleak);
+        const token_json = await fetch("https://api.copyleaks.com/v1/account/login-api", {
+            method: "post",
+            body: tokenReqBody,
+            headers: { 'Content-Type': 'application/json' }
+        }).then(res => res.json())        
+        console.log(token_json);
+        const access_token = token_json.access_token;
+
+        const createReqBody = await this.getWiki(proposal_hash);
+        const create_json = await fetch("https://api.copyleaks.com/v1/businesses/create-by-text", {
+            method: "post",
+            body: createReqBody,
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        }).then(res => res.json());
+        console.log(create_json);
+        const processId = create_json.ProcessId;
+
+        // Check the status every 5s until the process completes
+        await new Promise(function (resolve, reject) {
+            setInterval(async function () {
+                const status_json = await fetch(`https://api.copyleaks.com/v1/businesses/${processId}/status`, {
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${access_token}`
+                    }
+                }).then(res => res.json())
+                console.log(status_json);
+                if (status_json.Status == "Finished")
+                    resolve();
+            }, 5000);
+        });
+
+        const result_json = await fetch(`https://api.copyleaks.com/v2/businesses/${processId}/result`, {
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+            }
+        }).then(res => res.json());
+        console.log(result_json);
+
+        const doc = {
+            proposal_hash: proposal_hash,
+            copyleaks: result_json
+        };
+        await new Promise(function (resolve, reject) {
+            mongo.connection().then(function (conn) {
+                conn.plagiarism.insertOne(doc, function (err: Error) {
+                    if (err) { 
+                        console.log(err); 
+                        reject() 
+                    }
+                    else {
+                        console.log(`Saved plagiarism results for ${proposal_hash} to Mongo`);
+                        resolve();
+                    }
+                    conn.client.close();
+                });
+            });
+        });
+
+        return result_json;
     }
-    async getWiki(ipfs_hash: string): Promise<any> {
-        return { "error": "Not implemented yet" }
+    async getWiki(ipfs_hash: string): Promise<string> {
+        await ipfsNode.pin.add(ipfs_hash);
+        const files = await ipfsNode.files.get(ipfs_hash)
+        return files[0].content.toString('utf8');
     }
 }
