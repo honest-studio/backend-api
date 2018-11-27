@@ -25,7 +25,7 @@ export class ApiController {
   }
 
   @Get('plagiarism/:proposal_hash')
-  @ApiOperation({ title: "Get plagiarism report for a proposal: Not implemented yet" })
+  @ApiOperation({ title: "Get plagiarism report for a proposal: Limited Availability" })
   async getPlagiarism(@Param('proposal_hash') proposal_hash): Promise<any> {
     return await this.apiService.getPlagiarism(proposal_hash);
   }
