@@ -75,7 +75,7 @@ function start () {
           data: {
             account: "eparticlectr",
           },
-          //start_block: await get_start_block("eparticlectr")
+          start_block: await get_start_block("eparticlectr")
         };
         const token_req = {
           type: "get_actions",
@@ -84,7 +84,7 @@ function start () {
           data: {
             account: "everipediaiq",
           },
-          //start_block: await get_start_block("everipediaiq")
+          start_block: await get_start_block("everipediaiq")
         };
         const safesend_req = {
           type: "get_actions",
