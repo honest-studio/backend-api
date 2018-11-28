@@ -8,9 +8,14 @@ import { SSL } from './config';
 import { createServer } from 'https';
 import * as express from 'express';
 import { ipfsNode } from './ipfs.connection'; // this will auto-start an IPFS node
+import * as cors from 'cors';
+import * as morgan from 'morgan';
 
 async function bootstrap() {
   const expressApp = express();
+  expressApp.use(cors())
+  expressApp.use(morgan('combined'))
+
   const app = await NestFactory.create(AppModule, expressApp);
   const httpsServer = createServer(SSL, expressApp);
 
@@ -18,6 +23,8 @@ async function bootstrap() {
     .setTitle('Everipedia API')
     .setDescription('Data access API for the Everipedia dapp on EOS')
     .setVersion('0.1')
+    .setSchemes('https')
+    .setHost('api.everipedia.org:3000')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);
