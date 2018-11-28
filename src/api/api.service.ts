@@ -93,7 +93,7 @@ export class ApiService {
 
         // Check the status every 5s until the process completes
         await new Promise(function (resolve, reject) {
-            setInterval(async function () {
+            const timer = setInterval(async function () {
                 const status_json = await fetch(`https://api.copyleaks.com/v1/businesses/${processId}/status`, {
                     headers: { 
                         'Content-Type': 'application/json',
@@ -101,8 +101,10 @@ export class ApiService {
                     }
                 }).then(res => res.json())
                 console.log(status_json);
-                if (status_json.Status == "Finished")
+                if (status_json.Status == "Finished") {
                     resolve();
+                    clearInterval(timer);
+                }
             }, 5000);
         });
 
