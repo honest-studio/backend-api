@@ -57,6 +57,8 @@ export class ApiService {
         const SIX_HOURS = 6*3600*1000; // in milliseconds
         if (now > starttime + SIX_HOURS)
             ret.finalized = true;
+        else 
+            ret.approved = null;
 
         return ret;
 
