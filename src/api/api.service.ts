@@ -27,9 +27,9 @@ export class ApiService {
             "data.trace.act.account": "eparticlectr",
             "data.trace.act.name": "logpropres",
             "data.trace.act.data.proposal": proposal_hash 
-        }));
+        }))
 
-        if (result) return result;
+        if (result) return result.data.trace.act.data;
 
         const proposal = await this.getProposal(proposal_hash);
         if (proposal.error) return { "error": "Proposal not found" };
@@ -38,8 +38,7 @@ export class ApiService {
 
         const ret = {
             proposal: proposal_hash,
-            approved: false,
-            finalized: false,
+            approved: 0,
             yes_votes: 50,
             no_votes: 0
         }
@@ -50,19 +49,17 @@ export class ApiService {
             else
                 ret.no_votes += vote.data.trace.act.data.amount;
         });
-        if (ret.yes_votes > ret.no_votes) ret.approved = true;
+        if (ret.yes_votes > ret.no_votes) ret.approved = 1;
 
         const starttime = new Date(proposal.data.trace.block_time).getTime();
         const now = new Date().getTime();
         const SIX_HOURS = 6*3600*1000; // in milliseconds
-        if (now > starttime + SIX_HOURS)
-            ret.finalized = true;
-        else 
-            ret.approved = null;
+        if (now < starttime + SIX_HOURS)
+            ret.approved = -1;
 
         return ret;
-
     }
+
     async getPlagiarism(proposal_hash: string): Promise<any> {
         const result = await mongo.connection().then(con => con.plagiarism.findOne({
             "proposal_hash": proposal_hash 
