@@ -4,9 +4,9 @@ Everipedia Backend Data-Acess API
 
 ## Installation
 
-This code has only been tested on Ubuntu 18.04
-Users of Ubuntu >16.04 can attempt to use the install/ubuntu_setup.sh script
-Users of Mac OS X will have to install and initialize MongoDB and IPFS manually
+This code has only been tested on Ubuntu 18.04.
+
+Users of Ubuntu >16.04 can attempt to use the install/ubuntu_setup.sh script. Users of Mac OS X will have to install and initialize MongoDB and IPFS manually.
 
 ```bash
 $ npm install
