@@ -25,14 +25,15 @@ echo
 
 # Initialize IPFS repo
 echo "Initializing IPFS repo"
-/snap/bin/ipfs init
+/snap/bin/ipfs init --profile server
 echo "Done"
 echo
 
 # Create systemd service for ipfs daemon and start it
 echo "Creating IPFS systemd service"
-sudo cp ipfs.service /etc/systemd/system/ipfs.service
-sudo systemctl daemon-reload
+mkdir -p ~/.config/systemd/user/
+cp ipfs.service ~/.config/systemd/user/
+systemctl --user daemon-reload
 echo "Starting IPFS daemon"
-sudo systemctl start ipfs
+systemctl --user start ipfs
 echo "Done"

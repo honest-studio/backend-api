@@ -7,11 +7,17 @@ import * as seed from './seed';
 import { SSL } from './config';
 import { createServer } from 'https';
 import * as express from 'express';
-import { ipfsNode } from './ipfs.connection'; // this will auto-start an IPFS node
 import * as cors from 'cors';
 import * as morgan from 'morgan';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 
 async function bootstrap() {
+  // Check IPFS daemon
+  const { stdout, stderr } = await promisify(exec)(' pgrep -fa "ipfs daemon" | grep -v "pgrep" | wc -l | tr -d "\n" ');
+  if (stdout != "1")
+    console.warn("No running IPFS daemon detected. Run install/ubuntu_deps.sh to initialize");
+
   const expressApp = express();
   expressApp.use(cors())
   expressApp.use(morgan('combined'))

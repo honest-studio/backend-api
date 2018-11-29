@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as mongo from '../mongo.connection';
 import * as fetch from 'node-fetch';
-import { ipfsNode } from '../ipfs.connection';
 import { Copyleak } from '../config';
+import * as ipfsClient from 'ipfs-http-client';
 
 @Injectable()
 export class ApiService {
@@ -138,9 +138,11 @@ export class ApiService {
 
         return result_json;
     }
-    async getWiki(ipfs_hash: string): Promise<string> {
-        await ipfsNode.pin.add(ipfs_hash);
-        const files = await ipfsNode.files.get(ipfs_hash)
-        return files[0].content.toString('utf8');
+
+    async getWiki(ipfs_hash: string): Promise<any> {
+        const ipfs = new ipfsClient();
+        await ipfs.pin.add(ipfs_hash);
+        const buffer: Buffer = await ipfs.cat(ipfs_hash);
+        return buffer.toString('utf8');
     }
 }
