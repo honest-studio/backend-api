@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
-import { ApiService } from './api/api.service';
-import { ApiController } from './api/api.controller';
+import { ProposalController } from './proposal/proposal.controller';
+import { ProposalService } from './proposal/proposal.service';
+import { WikiController } from './wiki/wiki.controller';
+import { WikiService } from './wiki/wiki.service';
+import { RecentActivityController } from './recent-activity/recent-activity.controller';
+import { RecentActivityService } from './recent-activity/recent-activity.service';
 
 @Module({
   imports: [],
-  controllers: [ApiController],
-  providers: [ApiService],
+  controllers: [ProposalController, WikiController, RecentActivityController],
+  providers: [ProposalService, WikiService, RecentActivityService],
 })
 export class AppModule {}

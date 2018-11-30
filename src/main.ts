@@ -31,6 +31,9 @@ async function bootstrap() {
     .setVersion('0.1')
     .setSchemes('https')
     .setHost('api.everipedia.org:3000')
+    .addTag('Proposals')
+    .addTag('Wikis')
+    .addTag('Recent Activity')
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('docs', app, document);

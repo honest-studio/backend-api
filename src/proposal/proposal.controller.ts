@@ -1,29 +1,29 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
-import { ApiService } from './api.service';
+import { ProposalService } from './proposal.service';
 
-@Controller('v1')
+@Controller('v1/proposal')
 @ApiUseTags('Proposals')
-export class ApiController {
-  constructor(private readonly apiService: ApiService) {}
+export class ProposalController {
+  constructor(private readonly proposalService: ProposalService) {}
 
-  @Get('proposal/:proposal_hash')
+  @Get(':proposal_hash')
   @ApiOperation({ title: "Get details of a proposal" })
   @ApiImplicitParam({ name: 'proposal_hash', 
     description: "IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ" })
   async getProposal(@Param('proposal_hash') proposal_hash): Promise<any> {
-    return await this.apiService.getProposal(proposal_hash);
+    return await this.proposalService.getProposal(proposal_hash);
   }
 
-  @Get('votes/:proposal_hash')
+  @Get(':proposal_hash/votes')
   @ApiOperation({ title: "Get votes for a proposal" })
   @ApiImplicitParam({ name: 'proposal_hash', 
     description: "IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ" })
   async getVotes(@Param('proposal_hash') proposal_hash): Promise<any> {
-    return await this.apiService.getVotes(proposal_hash);
+    return await this.proposalService.getVotes(proposal_hash);
   }
 
-  @Get('result/:proposal_hash')
+  @Get(':proposal_hash/result')
   @ApiOperation({ title: "Get result of a proposal" })
   @ApiResponse({ status: 200, description: `
             proposal_hash:
@@ -34,22 +34,15 @@ export class ApiController {
   @ApiImplicitParam({ name: 'proposal_hash', 
     description: "IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ" })
   async getResult(@Param('proposal_hash') proposal_hash): Promise<any> {
-    return await this.apiService.getResult(proposal_hash);
+    return await this.proposalService.getResult(proposal_hash);
   }
 
-  @Get('plagiarism/:proposal_hash')
+  @Get(':proposal_hash/plagiarism')
   @ApiOperation({ title: "Get plagiarism report for a proposal: Limited Availability" })
   @ApiImplicitParam({ name: 'proposal_hash', 
     description: "IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ" })
   async getPlagiarism(@Param('proposal_hash') proposal_hash): Promise<any> {
-    return await this.apiService.getPlagiarism(proposal_hash);
+    return await this.proposalService.getPlagiarism(proposal_hash);
   }
 
-  @Get('wiki/:ipfs_hash')
-  @ApiOperation({ title: "Get IPFS document for a wiki" })
-  @ApiImplicitParam({ name: 'ipfs_hash', 
-    description: "IPFS hash of a wiki - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ" })
-  async getWiki(@Param('ipfs_hash') ipfs_hash): Promise<any> {
-    return await this.apiService.getWiki(ipfs_hash);
-  }
 }

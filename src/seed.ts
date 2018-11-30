@@ -34,13 +34,29 @@ async function set_indexes(): Promise<any> {
     });
     const index4 = new Promise<any>((resolve, reject) => {
         mongo.connection().then(function (conn) {
-            conn.plagiarism.createIndex({ "proposal_hash": 1 }, {}, function () {
+            conn.actions.createIndex({ "data.trace.act.account": 1 }, {}, function () {
                 conn.client.close();
                 resolve();
             });
         });
     });
-    return Promise.all([ index1, index2, index3, index4 ]);
+    const index5 = new Promise<any>((resolve, reject) => {
+        mongo.connection().then(function (conn) {
+            conn.actions.createIndex({ "data.block_num": -1 }, {}, function () {
+                conn.client.close();
+                resolve();
+            });
+        });
+    });
+    const index6 = new Promise<any>((resolve, reject) => {
+        mongo.connection().then(function (conn) {
+            conn.actions.createIndex({ "data.block_num": -1 }, {}, function () {
+                conn.client.close();
+                resolve();
+            });
+        });
+    });
+    return Promise.all([ index1, index2, index3, index4, index5 ]);
 }
 
 async function get_start_block(account: string): Promise<number> {
