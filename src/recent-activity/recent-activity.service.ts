@@ -15,7 +15,7 @@ export class RecentActivityService {
             "data.trace.act.account": "eparticlectr",
             "data.trace.act.name": "logpropres",
         }));
-        return results.sort({"data.block_num": -1 }).limit(20).toArray();
+        return results.sort({"data.block_num": -1 }).skip(offset).limit(20).toArray();
     }
 
     async getProposals(offset): Promise<Array<any>> {
@@ -23,7 +23,7 @@ export class RecentActivityService {
             "data.trace.act.account": "eparticlectr",
             "data.trace.act.name": "propose",
         }));
-        return proposals.sort({ "data.block_num": -1 }).limit(20).toArray();
+        return proposals.sort({ "data.block_num": -1 }).skip(offset).limit(20).toArray();
     }
 
     async getVotes(offset): Promise<Array<any>> {
@@ -31,7 +31,7 @@ export class RecentActivityService {
             "data.trace.act.account": "eparticlectr",
             "data.trace.act.name": "votebyhash",
         }))
-        return votes.sort({ "data.block_num": -1 }).limit(20).toArray();
+        return votes.sort({ "data.block_num": -1 }).skip(offset).limit(20).toArray();
     }
 
     async getWikis(offset): Promise<any> {
@@ -40,7 +40,7 @@ export class RecentActivityService {
             "data.trace.act.name": "logpropres",
             "data.trace.act.data.approved": 1,
         }));
-        return results.sort({"data.block_num": -1 }).limit(20).toArray();
+        return results.sort({"data.block_num": -1 }).skip(offset).limit(20).toArray();
     }
 
 }
