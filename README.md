@@ -1,12 +1,12 @@
 ## Description
 
-Everipedia Backend Data-Acess API
+Everipedia Backend Data-Access API
 
 ## Installation
 
 This code has only been tested on Ubuntu 18.04.
 
-Users of Ubuntu >16.04 can attempt to use the install/ubuntu_setup.sh script. Users of Mac OS X will have to install and initialize MongoDB and IPFS manually.
+Users of Ubuntu >16.04 can attempt to use the install/ubuntu_setup.sh script. Users of Mac OS X or Windows will have to install and initialize MongoDB and IPFS manually.
 
 ```bash
 $ npm install
@@ -14,6 +14,10 @@ $ cd install
 $ ./ubuntu_setup.sh
 $ cd ..
 ```
+
+## Configuration
+
+You will find a `SAMPLE.env` file in the project root. Copy or rename this to `.env` (still in the project root) and set your API keys + other configuration variables as indicated.
 
 ## Running the app
 
@@ -34,7 +38,7 @@ $ npm run start:prod
 
 ## Test
 
-There are currently no tests for the repo. In the future, you will be able to run tests with the following commands: 
+There are currently no tests for the repo. In the future, you will be able to run tests with the following commands:
 
 ```bash
 # unit tests

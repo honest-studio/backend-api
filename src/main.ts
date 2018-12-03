@@ -13,18 +13,9 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { isIpfsRunning } from './utils';
-import { TestModule } from './shared';
-
-const testAppInit = () => {
-    console.log('testing app init');
-    const tm = new TestModule();
-    tm.onModuleInit();
-};
-
-testAppInit();
 
 async function bootstrap() {
-    // Check IPFS daemon
+    // Check IPFS daemon status (if enabled)
     // const ipfsIsRunning = await isIpfsRunning();
 
     const expressApp = express();
@@ -32,6 +23,7 @@ async function bootstrap() {
     expressApp.use(morgan('combined'));
 
     const app = await NestFactory.create(AppModule, expressApp);
+    // SSL- add back with your config if needed, and uncomment the call to 'listen' below as well
     // const httpsServer = createServer(SSL, expressApp);
 
     const options = new DocumentBuilder()
