@@ -1,5 +1,6 @@
 import { AppConfigVars } from './config-types';
 import { validateAndBuildConfig } from './config-schema';
+import { Injectable } from '@nestjs/common';
 
 /**
  * Construct and build app config to be shared across modules
@@ -8,6 +9,7 @@ import { validateAndBuildConfig } from './config-schema';
  *       this.mongoConfig=config.get('mongoConfig');
  *  }
  */
+@Injectable()
 export class ConfigService {
     /**
      * AppConfigVars describing app behavior

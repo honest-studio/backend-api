@@ -4,7 +4,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as WebSocket from 'ws';
 import * as querystring from 'querystring';
 import * as seed from './seed';
-import { SSL } from './config';
+import { SSL, ConfigService } from './common';
 import { createServer } from 'https';
 import * as express from 'express';
 import * as cors from 'cors';
@@ -12,7 +12,7 @@ import * as morgan from 'morgan';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
-import { isIpfsRunning } from './utils';
+import { isIpfsRunning, TryResolveSslConfig } from './utils';
 
 async function bootstrap() {
     // Check IPFS daemon status (if enabled)
@@ -23,8 +23,6 @@ async function bootstrap() {
     expressApp.use(morgan('combined'));
 
     const app = await NestFactory.create(AppModule, expressApp);
-    // SSL- add back with your config if needed, and uncomment the call to 'listen' below as well
-    // const httpsServer = createServer(SSL, expressApp);
 
     const options = new DocumentBuilder()
         .setTitle('Everipedia API')
@@ -41,7 +39,13 @@ async function bootstrap() {
 
     seed.start();
 
-    // httpsServer.listen(3000);
+    // try to load SSL config
+    const sslConfig = TryResolveSslConfig(app.get(ConfigService).get('sslConfig'));
+    if (sslConfig) {
+        const httpsServer = createServer(SSL, expressApp);
+        httpsServer.listen(3000);
+    }
+
     await app.listen(3001);
 }
 bootstrap();

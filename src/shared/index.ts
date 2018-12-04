@@ -1,3 +1,3 @@
 export * from './filters';
-export * from './modules';
 export * from './contracts';
+export * from './constants';
