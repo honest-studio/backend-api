@@ -6,7 +6,7 @@ import chalk from 'chalk';
  * @param prefix Optional prefix text
  */
 const resolvePrefix = (prefix?: string): string => {
-    return prefix && prefix.length > 0 ? ` -- ${prefix}` : '';
+    return prefix && prefix.length > 0 ? ` [${prefix}] :: ` : '';
 };
 
 /**

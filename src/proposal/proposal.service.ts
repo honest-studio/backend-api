@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as mongo from '../mongo.connection';
 import * as fetch from 'node-fetch';
-import { ConfigService, CopyLeaksConfig } from '../config';
+import { ConfigService, CopyLeaksConfig } from '../common';
 import * as ipfsClient from 'ipfs-http-client';
 
 @Injectable()
