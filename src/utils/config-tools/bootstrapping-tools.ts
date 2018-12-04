@@ -19,7 +19,7 @@ export const TryResolveSslConfig = (cfg?: SslConfig): { key: string; cert: strin
             let returnObj = null;
             try {
                 const sslKey = readFileSync(cfg.sslKeyPath, { encoding: 'utf8' });
-                const sslCert = readFileSync(cfg.sslKeyPath, { encoding: 'utf8' });
+                const sslCert = readFileSync(cfg.sslCertificatePath, { encoding: 'utf8' });
                 if (sslKey && sslCert && sslKey != '' && sslCert != '') {
                     successfulRead = true;
                     returnObj = { key: sslKey, cert: sslCert };
