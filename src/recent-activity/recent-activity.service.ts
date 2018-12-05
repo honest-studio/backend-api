@@ -3,20 +3,21 @@ import * as mongo from '../mongo.connection';
 
 @Injectable()
 export class RecentActivityService {
-    async getAll(offset: number): Promise<Array<any>> {
+    async getAll(query): Promise<Array<any>> {
         const docs = await mongo.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr'
             })
         );
+        console.log(query);
         return docs
             .sort({ 'data.block_num': -1 })
-            .skip(offset)
-            .limit(100)
+            .skip(query.offset)
+            .limit(query.limit)
             .toArray();
     }
 
-    async getResults(offset): Promise<Array<any>> {
+    async getResults(query): Promise<Array<any>> {
         const results = await mongo.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
@@ -25,12 +26,12 @@ export class RecentActivityService {
         );
         return results
             .sort({ 'data.block_num': -1 })
-            .skip(offset)
-            .limit(20)
+            .skip(query.offset)
+            .limit(query.limit)
             .toArray();
     }
 
-    async getProposals(offset): Promise<Array<any>> {
+    async getProposals(query): Promise<Array<any>> {
         const proposals = await mongo.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
@@ -39,12 +40,12 @@ export class RecentActivityService {
         );
         return proposals
             .sort({ 'data.block_num': -1 })
-            .skip(offset)
-            .limit(20)
+            .skip(query.offset)
+            .limit(query.limit)
             .toArray();
     }
 
-    async getVotes(offset): Promise<Array<any>> {
+    async getVotes(query): Promise<Array<any>> {
         const votes = await mongo.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
@@ -53,12 +54,12 @@ export class RecentActivityService {
         );
         return votes
             .sort({ 'data.block_num': -1 })
-            .skip(offset)
-            .limit(20)
+            .skip(query.offset)
+            .limit(query.limit)
             .toArray();
     }
 
-    async getWikis(offset): Promise<any> {
+    async getWikis(query): Promise<any> {
         const results = await mongo.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
@@ -68,8 +69,8 @@ export class RecentActivityService {
         );
         return results
             .sort({ 'data.block_num': -1 })
-            .skip(offset)
-            .limit(20)
+            .skip(query.offset)
+            .limit(query.limit)
             .toArray();
     }
 }
