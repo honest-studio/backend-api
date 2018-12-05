@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Query, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
-import { RecentActivityService } from './recent-activity.service';
+import { RecentActivityService, RecentActivityQuerySchema } from '.';
+import { JoiValidationPipe } from '../common';
 
 @Controller('v1/recent-activity')
 @ApiUseTags('Recent Activity')
@@ -8,45 +9,50 @@ export class RecentActivityController {
     constructor(private readonly recentActivityService: RecentActivityService) {}
 
     @Get('all')
-    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip', required: false, type: Number })
+    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip. Default=0', required: false, type: Number })
+    @ApiImplicitQuery({ name: 'limit', description: 'Number of records to return. Min=1, Max=100, Default=10', required: false, type: Number })
     @ApiOperation({
         title: 'All recent on-chain activity',
         description: 'Returns 100 most recent actions on the eparticlectr smart contract'
     })
-    async getAll(@Query('offset') offset = '0'): Promise<Array<any>> {
-        const numOffset = Number(offset);
-        return await this.recentActivityService.getAll(numOffset);
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getAll(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getAll(query);
     }
 
     @Get('results')
-    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip', required: false, type: Number })
     @ApiOperation({ title: 'Recent proposal results' })
-    async getResults(@Query('offset') offset = '0'): Promise<Array<any>> {
-        const numOffset = Number(offset);
-        return await this.recentActivityService.getResults(numOffset);
+    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip. Default=0', required: false, type: Number })
+    @ApiImplicitQuery({ name: 'limit', description: 'Number of records to return. Min=1, Max=100, Default=10', required: false, type: Number })
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getResults(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getResults(query);
     }
 
     @Get('votes')
-    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip', required: false, type: Number })
     @ApiOperation({ title: 'Recent on-chain votes' })
-    async getVotes(@Query('offset') offset = '0'): Promise<Array<any>> {
-        const numOffset = Number(offset);
-        return await this.recentActivityService.getVotes(numOffset);
+    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip. Default=0', required: false, type: Number })
+    @ApiImplicitQuery({ name: 'limit', description: 'Number of records to return. Min=1, Max=100, Default=10', required: false, type: Number })
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getVotes(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getVotes(query);
     }
 
     @Get('proposals')
-    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip', required: false, type: Number })
     @ApiOperation({ title: 'Recent proposals' })
-    async getProposals(@Query('offset') offset = '0'): Promise<Array<any>> {
-        const numOffset = Number(offset);
-        return await this.recentActivityService.getProposals(numOffset);
+    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip. Default=0', required: false, type: Number })
+    @ApiImplicitQuery({ name: 'limit', description: 'Number of records to return. Min=1, Max=100, Default=10', required: false, type: Number })
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getProposals(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getProposals(query);
     }
 
     @Get('wikis')
-    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip', required: false, type: Number })
     @ApiOperation({ title: 'Recent accepted wikis' })
-    async getWikis(@Query('offset') offset = '0'): Promise<Array<any>> {
-        const numOffset = Number(offset);
-        return await this.recentActivityService.getWikis(numOffset);
+    @ApiImplicitQuery({ name: 'offset', description: 'Number of records to skip. Default=0', required: false, type: Number })
+    @ApiImplicitQuery({ name: 'limit', description: 'Number of records to return. Min=1, Max=100, Default=10', required: false, type: Number })
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getWikis(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getWikis(query);
     }
 }
