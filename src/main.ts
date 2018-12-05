@@ -37,7 +37,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);
 
-    seed.start();
+    // seed.start();
 
     // try to load SSL config
     const sslConfig = TryResolveSslConfig(app.get(ConfigService).get('sslConfig'));
