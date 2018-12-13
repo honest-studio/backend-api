@@ -1,2 +1,2 @@
-export * from './chain.controller'
-export * from './chain.service'
+export * from './chain.controller';
+export * from './chain.service';

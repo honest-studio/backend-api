@@ -12,26 +12,24 @@ export class ChainService {
 
     async forward(eos_api_endpoint, body): Promise<any> {
         return fetch(`${this.dfuseConfig.dfuseRestEndpoint}/v1/chain/${eos_api_endpoint}`, {
-            method: "POST",
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer: ${this.dfuseConfig.dfuseApiKey}`,
+                Authorization: `Bearer: ${this.dfuseConfig.dfuseApiKey}`
             },
             body: JSON.stringify(body)
-        })
-        .then(r => r.json())
+        }).then((r) => r.json());
     }
 
     async pushTransaction(transaction): Promise<any> {
         return fetch(`${this.dfuseConfig.dfuseRestEndpoint}/v1/chain/push_transaction`, {
-            method: "POST",
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer: ${this.dfuseConfig.dfuseApiKey}`,
+                Authorization: `Bearer: ${this.dfuseConfig.dfuseApiKey}`,
                 'X-Eos-Push-Guarantee': 'in-block'
             },
             body: JSON.stringify(transaction)
-        })
-        .then(r => r.json())
+        }).then((r) => r.json());
     }
 }

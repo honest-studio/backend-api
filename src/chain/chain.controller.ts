@@ -8,8 +8,8 @@ export class ChainController {
     constructor(private readonly chainService: ChainService) {}
 
     @Post('push_transaction')
-    @ApiOperation({ 
-        title: 'Guaranteed transaction execution', 
+    @ApiOperation({
+        title: 'Guaranteed transaction execution',
         description: `
             An improved version of the EOS HTTP API push_transaction endpoint that offers guaranteed transaction execution.
             This is a slow endpoint that does not return until the transaction has been included in a block.
@@ -19,9 +19,8 @@ export class ChainController {
         return this.chainService.pushTransaction(transaction);
     }
 
-
     @Post(':eos_api_endpoint')
-    @ApiOperation({ 
+    @ApiOperation({
         title: 'Get contract ABI',
         description: `
             A drop-in replacement for the EOS HTTP Chain API.
@@ -30,5 +29,4 @@ export class ChainController {
     async forward(@Param('eos_api_endpoint') eos_api_endpoint, @Body() body): Promise<any> {
         return this.chainService.forward(eos_api_endpoint, body);
     }
-
 }
