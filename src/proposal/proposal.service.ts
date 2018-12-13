@@ -90,7 +90,6 @@ export class ProposalService {
             body: tokenReqBody,
             headers: { 'Content-Type': 'application/json' }
         }).then((res) => res.json());
-        console.log(token_json);
         const access_token = token_json.access_token;
 
         const createReqBody = await this.getWiki(proposal_hash);
@@ -102,7 +101,6 @@ export class ProposalService {
                 Authorization: `Bearer ${access_token}`
             }
         }).then((res) => res.json());
-        console.log(create_json);
         const processId = create_json.ProcessId;
 
         // Check the status every 5s until the process completes
@@ -114,7 +112,6 @@ export class ProposalService {
                         Authorization: `Bearer ${access_token}`
                     }
                 }).then((res) => res.json());
-                console.log(status_json);
                 if (status_json.Status == 'Finished') {
                     resolve();
                     clearInterval(timer);
@@ -128,7 +125,6 @@ export class ProposalService {
                 Authorization: `Bearer ${access_token}`
             }
         }).then((res) => res.json());
-        console.log(result_json);
 
         const doc = {
             proposal_hash: proposal_hash,
@@ -138,7 +134,6 @@ export class ProposalService {
             mongo.connection().then(function(conn) {
                 conn.plagiarism.insertOne(doc, function(err: Error) {
                     if (err) {
-                        console.log(err);
                         reject();
                     } else {
                         console.log(`Saved plagiarism results for ${proposal_hash} to Mongo`);

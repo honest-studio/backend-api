@@ -22,6 +22,15 @@ async function bootstrap() {
     expressApp.use(cors());
     expressApp.use(morgan('combined'));
 
+    // Automatically set the Content-Type headers for the /v1/chain routes
+    // Both eosjs and cleos don't set those headers explicitly, and Nestjs
+    // doesn't read in the body with the @Body function unless that header
+    // is explicitly set
+    expressApp.use(function(req, res, next) {
+        if (req.path.startsWith('/v1/chain/')) req.headers['content-type'] = 'application/json';
+        next();
+    });
+
     const app = await NestFactory.create(AppModule, expressApp);
 
     const options = new DocumentBuilder()
@@ -33,6 +42,7 @@ async function bootstrap() {
         .addTag('Proposals')
         .addTag('Wikis')
         .addTag('Recent Activity')
+        .addTag('Chain')
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);
