@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as mongo from '../mongo.connection';
+import * as ipfsClient from 'ipfs-http-client';
 
 @Injectable()
 export class RecentActivityService {
@@ -9,7 +10,6 @@ export class RecentActivityService {
                 'data.trace.act.account': 'eparticlectr'
             })
         );
-        console.log(query);
         return docs
             .sort({ 'data.block_num': -1 })
             .skip(query.offset)
@@ -32,17 +32,63 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<any>> {
-        const proposals = await mongo.connection().then((con) =>
+        const docs = await mongo.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'propose'
             })
         );
-        return proposals
+
+        const proposals = await docs
             .sort({ 'data.block_num': -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
+
+        const ipfs = new ipfsClient();
+        if (query.preview) {
+            for (const i in proposals) {
+                const proposal = proposals[i];
+
+                const hash: string = proposal.data.trace.act.data.proposed_article_hash;
+                const buffer: Buffer = await ipfs.cat(hash);
+                const wiki = buffer.toString('utf8');
+
+                let title: string = '';
+                const titleIndex = wiki.indexOf(`<h1 class="page-title">`);
+                if (titleIndex != -1) {
+                    const titleStartIndex = titleIndex + 23;
+                    const titleEndIndex = wiki.indexOf(`</h1>`, titleStartIndex);
+                    title = wiki
+                        .substring(titleStartIndex, titleEndIndex)
+                        .replace(/\n/g, '')
+                        .trim();
+                }
+
+                let thumbnail: string = '';
+                let mainimage: string = '';
+                const thumbnailIndex = wiki.indexOf(`class="main-photo no-edit" data-thumbnail="`);
+                if (thumbnailIndex != -1) {
+                    const thumbnailStartIndex = thumbnailIndex + 43;
+                    const thumbnailEndIndex = wiki.indexOf(`" src="`, thumbnailStartIndex);
+                    thumbnail = wiki
+                        .substring(thumbnailStartIndex, thumbnailEndIndex)
+                        .replace(/\n/g, '')
+                        .trim();
+
+                    const mainimageStartIndex = thumbnailEndIndex + 7;
+                    const mainimageEndIndex = wiki.indexOf(`"/>`, mainimageStartIndex);
+                    mainimage = wiki
+                        .substring(mainimageStartIndex, mainimageEndIndex)
+                        .replace(/\n/g, '')
+                        .trim();
+                }
+
+                proposals[i].preview = { title, thumbnail, mainimage };
+            }
+        }
+
+        return proposals;
     }
 
     async getVotes(query): Promise<Array<any>> {

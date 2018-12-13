@@ -11,7 +11,8 @@ const RecentActivityQuerySchema = {
         .min(1)
         .max(100)
         .optional()
-        .default(10)
+        .default(10),
+    preview: Joi.boolean().default(false)
 };
 
 export { RecentActivityQuerySchema };
