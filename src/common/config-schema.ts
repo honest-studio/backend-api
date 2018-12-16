@@ -81,7 +81,8 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetSslConfig,
     GetCopyLeaksConfig,
     GetDfuseConfig,
-    GetMongoConnConfig
+    GetMongoConnConfig,
+    GetIpfsConfig
 ];
 
 /**

@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as IpfsClient from 'ipfs-http-client';
+import { IpfsConfig } from './config-types';
+import { ConfigService } from './config-service';
 
 /**
  * Construct and build app config to be shared across modules
@@ -11,11 +13,13 @@ import * as IpfsClient from 'ipfs-http-client';
 @Injectable()
 export class IpfsService {
     private readonly ipfsClient: IpfsClient;
+    private readonly ipfsConfig: IpfsConfig;
 
-    constructor() {
+    constructor(config: ConfigService) {
+        this.ipfsConfig = config.get('ipfsConfig');
         this.ipfsClient = new IpfsClient({
-            host: 'localhost',
-            port: 5001
+            host: this.ipfsConfig.ipfsDaemonHost,
+            port: this.ipfsConfig.ipfsDaemonPort
         });
     }
 
