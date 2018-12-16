@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import * as mongo from '../mongo.connection';
 import * as fetch from 'node-fetch';
-import { ConfigService, CopyLeaksConfig } from '../common';
-import * as ipfsClient from 'ipfs-http-client';
+import { ConfigService, CopyLeaksConfig, IpfsService } from '../common';
+import * as IpfsClient from 'ipfs-http-client';
 
 @Injectable()
 export class ProposalService {
     private readonly copyLeaksConfig: CopyLeaksConfig;
+    private readonly ipfsClient: IpfsClient;
 
-    constructor(config: ConfigService) {
+    constructor(config: ConfigService, ipfs: IpfsService) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
+        this.ipfsClient = ipfs.getClient();
     }
     async getProposal(proposal_hash: string): Promise<any> {
         const proposal = await mongo.connection().then((con) =>
@@ -148,9 +150,8 @@ export class ProposalService {
     }
 
     async getWiki(ipfs_hash: string): Promise<any> {
-        const ipfs = new ipfsClient();
-        await ipfs.pin.add(ipfs_hash);
-        const buffer: Buffer = await ipfs.cat(ipfs_hash);
+        await this.ipfsClient.pin.add(ipfs_hash);
+        const buffer: Buffer = await this.ipfsClient.cat(ipfs_hash);
         return buffer.toString('utf8');
     }
 }

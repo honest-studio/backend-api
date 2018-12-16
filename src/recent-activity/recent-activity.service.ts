@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import * as mongo from '../mongo.connection';
-import * as ipfsClient from 'ipfs-http-client';
+import * as IpfsClient from 'ipfs-http-client';
+import { IpfsService } from '../common';
 
 @Injectable()
 export class RecentActivityService {
+    private readonly ipfsClient: IpfsClient;
+
+    constructor(ipfs: IpfsService) {
+        this.ipfsClient = ipfs.getClient();
+    }
+
     async getAll(query): Promise<Array<any>> {
         const docs = await mongo.connection().then((con) =>
             con.actions.find({
@@ -45,13 +52,12 @@ export class RecentActivityService {
             .limit(query.limit)
             .toArray();
 
-        const ipfs = new ipfsClient();
         if (query.preview) {
             for (const i in proposals) {
                 const proposal = proposals[i];
 
                 const hash: string = proposal.data.trace.act.data.proposed_article_hash;
-                const buffer: Buffer = await ipfs.cat(hash);
+                const buffer: Buffer = await this.ipfsClient.cat(hash);
                 const wiki = buffer.toString('utf8');
 
                 let title: string = '';
