@@ -7,10 +7,10 @@ import { CommonModule } from './common';
 import { RecentActivityController } from './recent-activity/recent-activity.controller';
 import { RecentActivityService } from './recent-activity/recent-activity.service';
 import { ChainController, ChainService } from './chain';
-import { EosClientModule } from './feature-modules';
+import { EosClientModule, DatabaseModule } from './feature-modules';
 
 @Module({
-    imports: [CommonModule, EosClientModule],
+    imports: [CommonModule, EosClientModule, DatabaseModule],
     controllers: [ProposalController, WikiController, RecentActivityController, ChainController],
     providers: [ProposalService, WikiService, RecentActivityService, ChainService]
 })

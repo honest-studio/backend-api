@@ -1,18 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import * as mongo from '../mongo.connection';
-import * as IpfsClient from 'ipfs-http-client';
+import { MongoDbService } from '../feature-modules';
 import { IpfsService } from '../common';
 
 @Injectable()
 export class RecentActivityService {
-    private readonly ipfsClient: IpfsClient;
+    private readonly ipfsService: IpfsService;
+    private readonly mongoDbService: MongoDbService;
 
-    constructor(ipfs: IpfsService) {
-        this.ipfsClient = ipfs.getClient();
+    constructor(ipfs: IpfsService, mongo:MongoDbService) {
+        this.ipfsService = ipfs;
+        this.mongoDbService = mongo; 
     }
 
     async getAll(query): Promise<Array<any>> {
-        const docs = await mongo.connection().then((con) =>
+        const docs = await this.mongoDbService.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr'
             })
@@ -25,7 +26,7 @@ export class RecentActivityService {
     }
 
     async getResults(query): Promise<Array<any>> {
-        const results = await mongo.connection().then((con) =>
+        const results = await this.mongoDbService.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'logpropres'
@@ -39,7 +40,7 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<any>> {
-        const docs = await mongo.connection().then((con) =>
+        const docs = await this.mongoDbService.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'propose'
@@ -57,7 +58,7 @@ export class RecentActivityService {
                 const proposal = proposals[i];
 
                 const hash: string = proposal.data.trace.act.data.proposed_article_hash;
-                const buffer: Buffer = await this.ipfsClient.cat(hash);
+                const buffer: Buffer = await this.ipfsService.client().cat(hash);
                 const wiki = buffer.toString('utf8');
 
                 let title: string = '';
@@ -98,7 +99,7 @@ export class RecentActivityService {
     }
 
     async getVotes(query): Promise<Array<any>> {
-        const votes = await mongo.connection().then((con) =>
+        const votes = await this.mongoDbService.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'votebyhash'
@@ -112,7 +113,7 @@ export class RecentActivityService {
     }
 
     async getWikis(query): Promise<any> {
-        const results = await mongo.connection().then((con) =>
+        const results = await this.mongoDbService.connection().then((con) =>
             con.actions.find({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'logpropres',

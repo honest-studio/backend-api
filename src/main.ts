@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as WebSocket from 'ws';
 import * as querystring from 'querystring';
-import * as seed from './seed';
+//import * as seed from './seed';
 import { ConfigService } from './common';
 import { createServer } from 'https';
 import * as express from 'express';
@@ -47,7 +47,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);
 
-    seed.start();
+    //seed.start();
 
     // try to load SSL config
     const sslConfig = TryResolveSslConfig(app.get(ConfigService).get('sslConfig'));

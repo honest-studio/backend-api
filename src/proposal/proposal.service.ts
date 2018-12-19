@@ -1,31 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import * as mongo from '../mongo.connection';
+import { MongoDbService } from '../feature-modules';
 import * as fetch from 'node-fetch';
 import { ConfigService, CopyLeaksConfig, IpfsService } from '../common';
-import * as IpfsClient from 'ipfs-http-client';
+import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 
 @Injectable()
 export class ProposalService {
     private readonly copyLeaksConfig: CopyLeaksConfig;
-    private readonly ipfsClient: IpfsClient;
+    private readonly ipfsService: IpfsService;
+    private readonly mongoDbService: MongoDbService;
 
-    constructor(config: ConfigService, ipfs: IpfsService) {
+    constructor(config: ConfigService, ipfs: IpfsService, mongo: MongoDbService) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
-        this.ipfsClient = ipfs.getClient();
+        this.ipfsService = ipfs;
+        this.mongoDbService = mongo; 
     }
-    async getProposal(proposal_hash: string): Promise<any> {
-        const proposal = await mongo.connection().then((con) =>
+    async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
+        const proposal = await this.mongoDbService.connection().then((con) =>
             con.actions.findOne({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'propose',
                 'data.trace.act.data.proposed_article_hash': proposal_hash
             })
         );
-        if (!proposal) return { error: 'Proposal not found' };
+        if (!proposal) throw new Error("Proposal not found");
         else return proposal;
     }
-    async getVotes(proposal_hash: string): Promise<any> {
-        return mongo.connection().then((con) =>
+    async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
+        return this.mongoDbService.connection().then((con) =>
             con.actions
                 .find({
                     'data.trace.act.account': 'eparticlectr',
@@ -35,8 +37,8 @@ export class ProposalService {
                 .toArray()
         );
     }
-    async getResult(proposal_hash: string): Promise<any> {
-        const result = await mongo.connection().then((con) =>
+    async getResult(proposal_hash: string): Promise<ProposalResult> {
+        const result = await this.mongoDbService.connection().then((con) =>
             con.actions.findOne({
                 'data.trace.act.account': 'eparticlectr',
                 'data.trace.act.name': 'logpropres',
@@ -47,7 +49,7 @@ export class ProposalService {
         if (result) return result.data.trace.act.data;
 
         const proposal = await this.getProposal(proposal_hash);
-        if (proposal.error) return { error: 'Proposal not found' };
+        if (proposal.error) throw new Error("proposal not found");
 
         const votes = await this.getVotes(proposal_hash);
 
@@ -73,7 +75,7 @@ export class ProposalService {
     }
 
     async getPlagiarism(proposal_hash: string): Promise<any> {
-        const result = await mongo.connection().then((con) =>
+        const result = await this.mongoDbService.connection().then((con) =>
             con.plagiarism.findOne({
                 proposal_hash: proposal_hash
             })
@@ -133,7 +135,7 @@ export class ProposalService {
             copyleaks: result_json
         };
         await new Promise(function(resolve, reject) {
-            mongo.connection().then(function(conn) {
+            this.mongoDbService.connection().then(function(conn) {
                 conn.plagiarism.insertOne(doc, function(err: Error) {
                     if (err) {
                         reject();
@@ -150,8 +152,8 @@ export class ProposalService {
     }
 
     async getWiki(ipfs_hash: string): Promise<any> {
-        await this.ipfsClient.pin.add(ipfs_hash);
-        const buffer: Buffer = await this.ipfsClient.cat(ipfs_hash);
+        await this.ipfsService.client().pin.add(ipfs_hash);
+        const buffer: Buffer = await this.ipfsService.client().cat(ipfs_hash);
         return buffer.toString('utf8');
     }
 }

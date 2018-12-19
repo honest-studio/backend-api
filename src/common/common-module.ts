@@ -16,6 +16,6 @@ import { StatusHubService } from './status-hub-service';
         StatusHubService,
         IpfsService
     ],
-    exports: [ConfigService, StatusHubService, IpfsService]
+    exports: [ConfigService, StatusHubService, IpfsService ]
 })
 export class CommonModule {}

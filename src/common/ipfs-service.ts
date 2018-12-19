@@ -4,7 +4,6 @@ import { IpfsConfig } from './config-types';
 import { ConfigService } from './config-service';
 
 /**
- * Construct and build app config to be shared across modules
  * Call in a service like:
  * constructor(ipfs: IpfsService) {
  *       this.ipfsClient=ipfs.getClient();
@@ -26,7 +25,7 @@ export class IpfsService {
     /**
      * get an instance of IpfsClient 
      */
-    getClient(): Promise<IpfsClient> {
+    client(): IpfsClient {
         return this.ipfsClient;
     }
 }
