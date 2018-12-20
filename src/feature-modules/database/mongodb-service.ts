@@ -25,18 +25,19 @@ export type AppConnectionInstance = {
 @Injectable()
 export class MongoDbService {
     private readonly mongoConfig: MongoDbConnectionConfig;
+    private appConnectionInstance: AppConnectionInstance;
 
     constructor(config: ConfigService) {
         this.mongoConfig = config.get('mongoConfig');
     }
 
-    /**
-     * get a connection to MongoDB
-     */
-    connection(): Promise<AppConnectionInstance> {
-        return new Promise<AppConnectionInstance>((resolve, reject) => {
+    async connect(): Promise<AppConnectionInstance> {
+        if (this.appConnectionInstance) return this.appConnectionInstance;
+
+        this.appConnectionInstance = await new Promise<AppConnectionInstance>((resolve, reject) => {
             MongoClient.connect(
-                this.mongoConfig.mongoConnUrl,
+                this.mongoConfig.mongoConnUrl, 
+                { poolSize: 10 },
                 (err: Error, client: MongoClient) => {
                     if (err) {
                         console.warn('Is the MongoDB daemon running? Run install/ubuntu_deps.sh to initialize');
@@ -55,5 +56,13 @@ export class MongoDbService {
                 }
             );
         });
+        return this.appConnectionInstance;
+    }
+
+    /**
+     * get a connection to MongoDB
+     */
+    connection(): AppConnectionInstance {
+        return this.appConnectionInstance;
     }
 }

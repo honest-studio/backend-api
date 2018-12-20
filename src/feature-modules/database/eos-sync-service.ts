@@ -21,82 +21,46 @@ export class EosSyncService {
                 Origin: this.dfuseConfig.dfuseOriginUrl
             }
         });
-
-        this.sync()
     }
 
     async set_indexes(): Promise<any> {
-        const index1 = new Promise<any>((resolve, reject) => {
-            this.mongoDbService.connection().then((conn) => {
-                conn.actions.createIndex('data.trace.receipt.global_sequence', { unique: true }, function() {
-                    conn.client.close();
-                    resolve();
-                });
-            });
-        });
-        const index2 = new Promise<any>((resolve, reject) => {
-            this.mongoDbService.connection().then((conn) => {
-                conn.actions.createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 }, {}, function() {
-                    conn.client.close();
-                    resolve();
-                });
-            });
-        });
-        const index3 = new Promise<any>((resolve, reject) => {
-            this.mongoDbService.connection().then((conn) => {
-                conn.wikis.createIndex({ ipfs_hash: 1 }, {}, function() {
-                    conn.client.close();
-                    resolve();
-                });
-            });
-        });
-        const index4 = new Promise<any>((resolve, reject) => {
-            this.mongoDbService.connection().then((conn) => {
-                conn.actions.createIndex({ 'data.trace.act.account': 1 }, {}, function() {
-                    conn.client.close();
-                    resolve();
-                });
-            });
-        });
-        const index5 = new Promise<any>((resolve, reject) => {
-            this.mongoDbService.connection().then((conn) => {
-                conn.actions.createIndex({ 'data.block_num': -1 }, {}, function() {
-                    conn.client.close();
-                    resolve();
-                });
-            });
-        });
-        const index6 = new Promise<any>((resolve, reject) => {
-            this.mongoDbService.connection().then((conn) => {
-                conn.actions.createIndex({ 'data.block_num': -1 }, {}, function() {
-                    conn.client.close();
-                    resolve();
-                });
-            });
-        });
+        const index1 = this.mongoDbService.connection().actions
+            .createIndex('data.trace.receipt.global_sequence', { unique: true });
+
+        const index2 = this.mongoDbService.connection().actions
+            .createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
+
+        const index3 = this.mongoDbService.connection().wikis
+            .createIndex({ ipfs_hash: 1 });
+
+        const index4 = this.mongoDbService.connection().wikis
+            .createIndex({ 'data.trace.act.account': 1 });
+
+        const index5: Promise<any> = this.mongoDbService.connection().wikis
+            .createIndex({ 'data.block_num': -1 });
+
         return Promise.all([index1, index2, index3, index4, index5]);
     }
 
     async get_start_block(account: string, default_start_block: number = this.DEFAULT_BLOCK_START): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
-            this.mongoDbService.connection().then(conn => {
-                conn.actions
-                    .find({ 'data.trace.act.account': account })
-                    .sort({ 'data.block_num': -1 })
-                    .limit(1)
-                    .toArray(function(err: Error, result: Array<any>) {
-                        if (result.length == 0) resolve(default_start_block);
-                        else resolve(result[0].data.block_num);
-                        conn.client.close();
-                    });
+        return this.mongoDbService.connection().actions
+            .find({ 'data.trace.act.account': account })
+            .sort({ 'data.block_num': -1 })
+            .limit(1)
+            .toArray()
+            .then((result: Array<any>) => {
+                if (result.length == 0) return default_start_block;
+                else return result[0].data.block_num;
             });
-        });
     }
 
-    start() {
-
+    async start() {
         this.dfuse.on('open', async () => {
-            await this.set_indexes();
+            try {
+                await this.set_indexes();
+            } catch (e) {
+                console.log("MongoDBService: Indexes already set. Continuing.");
+            }
 
             const article_req = {
                 type: 'get_actions',
@@ -149,17 +113,11 @@ export class EosSyncService {
                 console.log(msg);
                 return;
             }
-            this.mongoDbService.connection().then(function(conn) {
-                conn.actions.insertOne(msg, function(err: Error) {
-                    if (err) console.log(err);
-                    else {
-                        const block_num = msg.data.block_num;
-                        const account = msg.data.trace.act.account;
-                        const name = msg.data.trace.act.name;
-                        console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
-                    }
-                    conn.client.close();
-                });
+            this.mongoDbService.connection().actions.insertOne(msg).then(() => {
+                const block_num = msg.data.block_num;
+                const account = msg.data.trace.act.account;
+                const name = msg.data.trace.act.name;
+                console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
             });
         });
 

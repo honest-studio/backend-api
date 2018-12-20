@@ -33,6 +33,7 @@ async function bootstrap() {
 
     const app = await NestFactory.create(AppModule, expressApp);
 
+    // Swagger
     const options = new DocumentBuilder()
         .setTitle('Everipedia API')
         .setDescription('Data access API for the Everipedia dapp on EOS')
@@ -47,7 +48,11 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);
 
-    //seed.start();
+    // Connect to MongoDB
+    await app.get('MongoDbService').connect();
+
+    // Start Dfuse sync
+    app.get('EosSyncService').sync();
 
     // try to load SSL config
     const sslConfig = TryResolveSslConfig(app.get(ConfigService).get('sslConfig'));

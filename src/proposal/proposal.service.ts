@@ -16,35 +16,27 @@ export class ProposalService {
         this.mongoDbService = mongo; 
     }
     async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
-        const proposal = await this.mongoDbService.connection().then((con) =>
-            con.actions.findOne({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'propose',
-                'data.trace.act.data.proposed_article_hash': proposal_hash
-            })
-        );
+        const proposal = await this.mongoDbService.connection().actions.findOne({
+            'data.trace.act.account': 'eparticlectr',
+            'data.trace.act.name': 'propose',
+            'data.trace.act.data.proposed_article_hash': proposal_hash
+        });
         if (!proposal) throw new Error("Proposal not found");
         else return proposal;
     }
     async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
-        return this.mongoDbService.connection().then((con) =>
-            con.actions
-                .find({
-                    'data.trace.act.account': 'eparticlectr',
-                    'data.trace.act.name': 'votebyhash',
-                    'data.trace.act.data.proposal_hash': proposal_hash
-                })
-                .toArray()
-        );
+        return this.mongoDbService.connection().actions.find({
+            'data.trace.act.account': 'eparticlectr',
+            'data.trace.act.name': 'votebyhash',
+            'data.trace.act.data.proposal_hash': proposal_hash
+        }).toArray();
     }
     async getResult(proposal_hash: string): Promise<ProposalResult> {
-        const result = await this.mongoDbService.connection().then((con) =>
-            con.actions.findOne({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'logpropres',
-                'data.trace.act.data.proposal': proposal_hash
-            })
-        );
+        const result = await this.mongoDbService.connection().actions.findOne({
+            'data.trace.act.account': 'eparticlectr',
+            'data.trace.act.name': 'logpropres',
+            'data.trace.act.data.proposal': proposal_hash
+        });
 
         if (result) return result.data.trace.act.data;
 
@@ -75,11 +67,9 @@ export class ProposalService {
     }
 
     async getPlagiarism(proposal_hash: string): Promise<any> {
-        const result = await this.mongoDbService.connection().then((con) =>
-            con.plagiarism.findOne({
-                proposal_hash: proposal_hash
-            })
-        );
+        const result = await this.mongoDbService.connection().plagiarism.findOne({
+            proposal_hash: proposal_hash
+        });
         if (result) return result;
 
         const proposal = await this.getProposal(proposal_hash);
