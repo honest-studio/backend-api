@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules';
 import * as fetch from 'node-fetch';
 import { ConfigService, CopyLeaksConfig, IpfsService } from '../common';
@@ -21,7 +21,7 @@ export class ProposalService {
             'data.trace.act.name': 'propose',
             'data.trace.act.data.proposed_article_hash': proposal_hash
         });
-        if (!proposal) throw new Error('Proposal not found');
+        if (!proposal) throw new NotFoundException('Proposal not found');
         else return proposal;
     }
     async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
@@ -44,7 +44,7 @@ export class ProposalService {
         if (result) return result.data.trace.act.data;
 
         const proposal = await this.getProposal(proposal_hash);
-        if (proposal.error) throw new Error('proposal not found');
+        if (proposal.error) throw new NotFoundException('Proposal not found');
 
         const votes = await this.getVotes(proposal_hash);
 
