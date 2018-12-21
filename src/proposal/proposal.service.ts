@@ -13,7 +13,7 @@ export class ProposalService {
     constructor(config: ConfigService, ipfs: IpfsService, mongo: MongoDbService) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
         this.ipfsService = ipfs;
-        this.mongoDbService = mongo; 
+        this.mongoDbService = mongo;
     }
     async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
         const proposal = await this.mongoDbService.connection().actions.findOne({
@@ -21,15 +21,18 @@ export class ProposalService {
             'data.trace.act.name': 'propose',
             'data.trace.act.data.proposed_article_hash': proposal_hash
         });
-        if (!proposal) throw new Error("Proposal not found");
+        if (!proposal) throw new Error('Proposal not found');
         else return proposal;
     }
     async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
-        return this.mongoDbService.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'votebyhash',
-            'data.trace.act.data.proposal_hash': proposal_hash
-        }).toArray();
+        return this.mongoDbService
+            .connection()
+            .actions.find({
+                'data.trace.act.account': 'eparticlectr',
+                'data.trace.act.name': 'votebyhash',
+                'data.trace.act.data.proposal_hash': proposal_hash
+            })
+            .toArray();
     }
     async getResult(proposal_hash: string): Promise<ProposalResult> {
         const result = await this.mongoDbService.connection().actions.findOne({
@@ -41,7 +44,7 @@ export class ProposalService {
         if (result) return result.data.trace.act.data;
 
         const proposal = await this.getProposal(proposal_hash);
-        if (proposal.error) throw new Error("proposal not found");
+        if (proposal.error) throw new Error('proposal not found');
 
         const votes = await this.getVotes(proposal_hash);
 

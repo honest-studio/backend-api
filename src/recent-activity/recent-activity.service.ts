@@ -8,9 +8,9 @@ export class RecentActivityService {
     private readonly ipfsService: IpfsService;
     private readonly mongoDbService: MongoDbService;
 
-    constructor(ipfs: IpfsService, mongo:MongoDbService) {
+    constructor(ipfs: IpfsService, mongo: MongoDbService) {
         this.ipfsService = ipfs;
-        this.mongoDbService = mongo; 
+        this.mongoDbService = mongo;
     }
 
     async getAll(query): Promise<Array<EosAction<any>>> {

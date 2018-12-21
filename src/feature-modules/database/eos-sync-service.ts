@@ -24,27 +24,27 @@ export class EosSyncService {
     }
 
     async set_indexes(): Promise<any> {
-        const index1 = this.mongoDbService.connection().actions
-            .createIndex('data.trace.receipt.global_sequence', { unique: true });
+        const index1 = this.mongoDbService
+            .connection()
+            .actions.createIndex('data.trace.receipt.global_sequence', { unique: true });
 
-        const index2 = this.mongoDbService.connection().actions
-            .createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
+        const index2 = this.mongoDbService
+            .connection()
+            .actions.createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
 
-        const index3 = this.mongoDbService.connection().wikis
-            .createIndex({ ipfs_hash: 1 });
+        const index3 = this.mongoDbService.connection().wikis.createIndex({ ipfs_hash: 1 });
 
-        const index4 = this.mongoDbService.connection().wikis
-            .createIndex({ 'data.trace.act.account': 1 });
+        const index4 = this.mongoDbService.connection().wikis.createIndex({ 'data.trace.act.account': 1 });
 
-        const index5: Promise<any> = this.mongoDbService.connection().wikis
-            .createIndex({ 'data.block_num': -1 });
+        const index5: Promise<any> = this.mongoDbService.connection().wikis.createIndex({ 'data.block_num': -1 });
 
         return Promise.all([index1, index2, index3, index4, index5]);
     }
 
     async get_start_block(account: string, default_start_block: number = this.DEFAULT_BLOCK_START): Promise<number> {
-        return this.mongoDbService.connection().actions
-            .find({ 'data.trace.act.account': account })
+        return this.mongoDbService
+            .connection()
+            .actions.find({ 'data.trace.act.account': account })
             .sort({ 'data.block_num': -1 })
             .limit(1)
             .toArray()
@@ -59,7 +59,7 @@ export class EosSyncService {
             try {
                 await this.set_indexes();
             } catch (e) {
-                console.log("MongoDBService: Indexes already set. Continuing.");
+                console.log('MongoDBService: Indexes already set. Continuing.');
             }
 
             const article_req = {
@@ -113,12 +113,15 @@ export class EosSyncService {
                 console.log(msg);
                 return;
             }
-            this.mongoDbService.connection().actions.insertOne(msg).then(() => {
-                const block_num = msg.data.block_num;
-                const account = msg.data.trace.act.account;
-                const name = msg.data.trace.act.name;
-                console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
-            });
+            this.mongoDbService
+                .connection()
+                .actions.insertOne(msg)
+                .then(() => {
+                    const block_num = msg.data.block_num;
+                    const account = msg.data.trace.act.account;
+                    const name = msg.data.trace.act.name;
+                    console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
+                });
         });
 
         this.dfuse.on('error', (e) => {
@@ -142,5 +145,4 @@ export class EosSyncService {
         this.start();
         setInterval(this.restartIfFailing, 15 * 1000); // every 15 seconds
     }
-
 }

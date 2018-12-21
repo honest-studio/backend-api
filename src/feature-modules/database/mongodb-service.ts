@@ -2,7 +2,6 @@ import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { MongoDbConnectionConfig, ConfigService } from '../../common';
 
-
 // placeholder entities for mongodb
 export type ActionEntity = any;
 export type PlagiarismEntity = any;
@@ -36,7 +35,7 @@ export class MongoDbService {
 
         this.appConnectionInstance = await new Promise<AppConnectionInstance>((resolve, reject) => {
             MongoClient.connect(
-                this.mongoConfig.mongoConnUrl, 
+                this.mongoConfig.mongoConnUrl,
                 { poolSize: 10 },
                 (err: Error, client: MongoClient) => {
                     if (err) {

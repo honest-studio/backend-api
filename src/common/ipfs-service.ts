@@ -23,7 +23,7 @@ export class IpfsService {
     }
 
     /**
-     * get an instance of IpfsClient 
+     * get an instance of IpfsClient
      */
     client(): IpfsClient {
         return this.ipfsClient;
