@@ -134,7 +134,11 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.DFUSE_API_REST_ENDPOINT]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string().required(),
     [ConfigKeyNames.IPFS_DAEMON_HOST]: Joi.string().required(),
-    [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number().integer().min(0).max(65535).required()
+    [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number()
+        .integer()
+        .min(0)
+        .max(65535)
+        .required()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {
