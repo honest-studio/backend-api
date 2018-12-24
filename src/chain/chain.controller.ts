@@ -19,6 +19,17 @@ export class ChainController {
         return this.chainService.pushTransaction(transaction);
     }
 
+    @Get(':get_info')
+    @ApiOperation({
+        title: 'Get Chain Info',
+        description: `
+            A drop-in replacement for the EOS HTTP Chain API get_info endpoint.
+            Details for using the endpoint can be found at https://developers.eos.io/eosio-nodeos/reference#get_info`
+    })
+    async getInfo(@Body() body): Promise<any> {
+        return this.chainService.forward('get_info', body);
+    }
+
     @Post(':eos_api_endpoint')
     @ApiOperation({
         title: 'Get contract ABI',
