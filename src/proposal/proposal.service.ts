@@ -1,51 +1,50 @@
-import { Injectable } from '@nestjs/common';
-import * as mongo from '../mongo.connection';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { MongoDbService } from '../feature-modules';
 import * as fetch from 'node-fetch';
-import { ConfigService, CopyLeaksConfig } from '../common';
-import * as ipfsClient from 'ipfs-http-client';
+import { ConfigService, CopyLeaksConfig, IpfsService } from '../common';
+import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 
 @Injectable()
 export class ProposalService {
     private readonly copyLeaksConfig: CopyLeaksConfig;
+    private readonly ipfsService: IpfsService;
+    private readonly mongoDbService: MongoDbService;
 
-    constructor(config: ConfigService) {
+    constructor(config: ConfigService, ipfs: IpfsService, mongo: MongoDbService) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
+        this.ipfsService = ipfs;
+        this.mongoDbService = mongo;
     }
-    async getProposal(proposal_hash: string): Promise<any> {
-        const proposal = await mongo.connection().then((con) =>
-            con.actions.findOne({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'propose',
-                'data.trace.act.data.proposed_article_hash': proposal_hash
-            })
-        );
-        if (!proposal) return { error: 'Proposal not found' };
+    async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
+        const proposal = await this.mongoDbService.connection().actions.findOne({
+            'data.trace.act.account': 'eparticlectr',
+            'data.trace.act.name': 'propose',
+            'data.trace.act.data.proposed_article_hash': proposal_hash
+        });
+        if (!proposal) throw new NotFoundException('Proposal not found');
         else return proposal;
     }
-    async getVotes(proposal_hash: string): Promise<any> {
-        return mongo.connection().then((con) =>
-            con.actions
-                .find({
-                    'data.trace.act.account': 'eparticlectr',
-                    'data.trace.act.name': 'votebyhash',
-                    'data.trace.act.data.proposal_hash': proposal_hash
-                })
-                .toArray()
-        );
-    }
-    async getResult(proposal_hash: string): Promise<any> {
-        const result = await mongo.connection().then((con) =>
-            con.actions.findOne({
+    async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
+        return this.mongoDbService
+            .connection()
+            .actions.find({
                 'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'logpropres',
-                'data.trace.act.data.proposal': proposal_hash
+                'data.trace.act.name': 'votebyhash',
+                'data.trace.act.data.proposal_hash': proposal_hash
             })
-        );
+            .toArray();
+    }
+    async getResult(proposal_hash: string): Promise<ProposalResult> {
+        const result = await this.mongoDbService.connection().actions.findOne({
+            'data.trace.act.account': 'eparticlectr',
+            'data.trace.act.name': 'logpropres',
+            'data.trace.act.data.proposal': proposal_hash
+        });
 
         if (result) return result.data.trace.act.data;
 
         const proposal = await this.getProposal(proposal_hash);
-        if (proposal.error) return { error: 'Proposal not found' };
+        if (proposal.error) throw new NotFoundException('Proposal not found');
 
         const votes = await this.getVotes(proposal_hash);
 
@@ -71,11 +70,9 @@ export class ProposalService {
     }
 
     async getPlagiarism(proposal_hash: string): Promise<any> {
-        const result = await mongo.connection().then((con) =>
-            con.plagiarism.findOne({
-                proposal_hash: proposal_hash
-            })
-        );
+        const result = await this.mongoDbService.connection().plagiarism.findOne({
+            proposal_hash: proposal_hash
+        });
         if (result) return result;
 
         const proposal = await this.getProposal(proposal_hash);
@@ -90,7 +87,6 @@ export class ProposalService {
             body: tokenReqBody,
             headers: { 'Content-Type': 'application/json' }
         }).then((res) => res.json());
-        console.log(token_json);
         const access_token = token_json.access_token;
 
         const createReqBody = await this.getWiki(proposal_hash);
@@ -102,7 +98,6 @@ export class ProposalService {
                 Authorization: `Bearer ${access_token}`
             }
         }).then((res) => res.json());
-        console.log(create_json);
         const processId = create_json.ProcessId;
 
         // Check the status every 5s until the process completes
@@ -114,7 +109,6 @@ export class ProposalService {
                         Authorization: `Bearer ${access_token}`
                     }
                 }).then((res) => res.json());
-                console.log(status_json);
                 if (status_json.Status == 'Finished') {
                     resolve();
                     clearInterval(timer);
@@ -128,17 +122,15 @@ export class ProposalService {
                 Authorization: `Bearer ${access_token}`
             }
         }).then((res) => res.json());
-        console.log(result_json);
 
         const doc = {
             proposal_hash: proposal_hash,
             copyleaks: result_json
         };
         await new Promise(function(resolve, reject) {
-            mongo.connection().then(function(conn) {
+            this.mongoDbService.connection().then(function(conn) {
                 conn.plagiarism.insertOne(doc, function(err: Error) {
                     if (err) {
-                        console.log(err);
                         reject();
                     } else {
                         console.log(`Saved plagiarism results for ${proposal_hash} to Mongo`);
@@ -153,9 +145,8 @@ export class ProposalService {
     }
 
     async getWiki(ipfs_hash: string): Promise<any> {
-        const ipfs = new ipfsClient();
-        await ipfs.pin.add(ipfs_hash);
-        const buffer: Buffer = await ipfs.cat(ipfs_hash);
+        await this.ipfsService.client().pin.add(ipfs_hash);
+        const buffer: Buffer = await this.ipfsService.client().cat(ipfs_hash);
         return buffer.toString('utf8');
     }
 }

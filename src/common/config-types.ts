@@ -65,6 +65,20 @@ export interface MongoDbConnectionConfig {
 }
 
 /**
+ * Configure connection to IPFS daemon
+ */
+export interface IpfsConfig {
+    /**
+     * Connection host for IPFS daemon
+     */
+    ipfsDaemonHost: string;
+    /**
+     * Connection port for IPFS daemon
+     */
+    ipfsDaemonPort: string;
+}
+
+/**
  * Combined config for app
  */
 export interface AppConfigVars {
@@ -84,6 +98,10 @@ export interface AppConfigVars {
      * MongoDb connection config
      */
     mongoConfig: MongoDbConnectionConfig;
+    /**
+     * IPFS connection config
+     */
+    ipfsConfig: IpfsConfig;
 }
 
 /**
@@ -99,7 +117,9 @@ export enum ConfigKeyNames {
     DFUSE_API_KEY = 'DFUSE_API_KEY',
     DFUSE_API_WEBSOCKET_ENDPOINT = 'DFUSE_API_WEBSOCKET_ENDPOINT',
     DFUSE_API_REST_ENDPOINT = 'DFUSE_API_REST_ENDPOINT',
-    DFUSE_API_ORIGIN_URL = 'DFUSE_API_ORIGIN_URL'
+    DFUSE_API_ORIGIN_URL = 'DFUSE_API_ORIGIN_URL',
+    IPFS_DAEMON_HOST = 'IPFS_DAEMON_HOST',
+    IPFS_DAEMON_PORT = 'IPFS_DAEMON_PORT'
 }
 
 /**

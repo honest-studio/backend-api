@@ -1,6 +1,7 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { ProposalService } from './proposal.service';
+import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 
 @Controller('v1/proposal')
 @ApiUseTags('Proposals')
@@ -13,7 +14,7 @@ export class ProposalController {
         name: 'proposal_hash',
         description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
     })
-    async getProposal(@Param('proposal_hash') proposal_hash): Promise<any> {
+    async getProposal(@Param('proposal_hash') proposal_hash): Promise<EosAction<Propose>> {
         return await this.proposalService.getProposal(proposal_hash);
     }
 
@@ -23,7 +24,7 @@ export class ProposalController {
         name: 'proposal_hash',
         description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
     })
-    async getVotes(@Param('proposal_hash') proposal_hash): Promise<any> {
+    async getVotes(@Param('proposal_hash') proposal_hash): Promise<Array<EosAction<Vote>>> {
         return await this.proposalService.getVotes(proposal_hash);
     }
 
@@ -41,7 +42,7 @@ export class ProposalController {
         name: 'proposal_hash',
         description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
     })
-    async getResult(@Param('proposal_hash') proposal_hash): Promise<any> {
+    async getResult(@Param('proposal_hash') proposal_hash): Promise<ProposalResult> {
         return await this.proposalService.getResult(proposal_hash);
     }
 

@@ -1,14 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import * as mongo from '../mongo.connection';
 import * as fetch from 'node-fetch';
-import * as ipfsClient from 'ipfs-http-client';
+import { IpfsService } from '../common';
 
 @Injectable()
 export class WikiService {
+    private readonly ipfsService: IpfsService;
+
+    constructor(ipfs: IpfsService) {
+        this.ipfsService = ipfs;
+    }
+
     async getWiki(ipfs_hash: string): Promise<any> {
-        const ipfs = new ipfsClient();
-        await ipfs.pin.add(ipfs_hash);
-        const buffer: Buffer = await ipfs.cat(ipfs_hash);
+        await this.ipfsService.client().pin.add(ipfs_hash);
+        const buffer: Buffer = await this.ipfsService.client().cat(ipfs_hash);
         return buffer.toString('utf8');
     }
 }

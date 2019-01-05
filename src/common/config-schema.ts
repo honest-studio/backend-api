@@ -62,13 +62,27 @@ const GetMongoConnConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput
 };
 
 /**
+ * Build IPFS connection config
+ * @param parsed dotenv parsed output
+ */
+const GetIpfsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        ipfsConfig: {
+            ipfsDaemonHost: parsed[ConfigKeyNames.IPFS_DAEMON_HOST],
+            ipfsDaemonPort: parsed[ConfigKeyNames.IPFS_DAEMON_PORT]
+        }
+    };
+};
+
+/**
  * Array of functions that will be applied, in order, to build AppConfigVars
  */
 const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetSslConfig,
     GetCopyLeaksConfig,
     GetDfuseConfig,
-    GetMongoConnConfig
+    GetMongoConnConfig,
+    GetIpfsConfig
 ];
 
 /**
@@ -118,7 +132,13 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.DFUSE_API_KEY]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_WEBSOCKET_ENDPOINT]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_REST_ENDPOINT]: Joi.string().required(),
-    [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string().required()
+    [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string().required(),
+    [ConfigKeyNames.IPFS_DAEMON_HOST]: Joi.string().required(),
+    [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number()
+        .integer()
+        .min(0)
+        .max(65535)
+        .required()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {
