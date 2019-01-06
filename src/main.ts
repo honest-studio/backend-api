@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as WebSocket from 'ws';
 import * as querystring from 'querystring';
-//import * as seed from './seed';
 import { ConfigService } from './common';
 import { createServer } from 'https';
 import * as express from 'express';
@@ -46,6 +45,8 @@ async function bootstrap() {
         .addTag('Chain')
         .build();
     const document = SwaggerModule.createDocument(app, options);
+    
+    // swagger available at http://localhost:3001/docs/swagger
     SwaggerModule.setup('docs', app, document);
 
     // Connect to MongoDB

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as IpfsClient from 'ipfs-http-client';
 import { IpfsConfig } from './config-types';
-import { ConfigService } from './config-service';
+import { ConfigService } from './config-loader/config-service';
 
 /**
  * Call in a service like:

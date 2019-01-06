@@ -5,13 +5,7 @@ import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/dat
 
 @Injectable()
 export class RecentActivityService {
-    private readonly ipfsService: IpfsService;
-    private readonly mongoDbService: MongoDbService;
-
-    constructor(ipfs: IpfsService, mongo: MongoDbService) {
-        this.ipfsService = ipfs;
-        this.mongoDbService = mongo;
-    }
+    constructor(private readonly ipfsService: IpfsService, private readonly mongoDbService: MongoDbService) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
         const docs = this.mongoDbService.connection().actions.find({

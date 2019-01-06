@@ -5,6 +5,7 @@
         "noImplicitAny": false,
         "removeComments": true,
         "noLib": false,
+        "preserveConstEnums": true,
         "lib": ["es5", "es6", "es7", "dom", "es2015", "es2016", "es2017"],
         "allowSyntheticDefaultImports": true,
         "emitDecoratorMetadata": true,

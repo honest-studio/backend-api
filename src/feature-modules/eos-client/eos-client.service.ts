@@ -26,8 +26,6 @@ class WebSocketWithHeaderConfig extends WebSocket {
 @Injectable()
 export class EosClientService extends BaseProvider {
     static dfuseConn: WebSocketSubject<any>;
-
-    serviceName: ServiceName = ServiceName.EOS_CLIENT_SVC;
     /**
      * Dfuse.IO API config
      */
@@ -38,9 +36,11 @@ export class EosClientService extends BaseProvider {
      */
     private openObserver: NextObserver<Event> = {
         next: () => {
+            this.onServiceStarted();
             console.log('WebSocket opened');
         },
         error: (val: any) => {
+            this.onServiceError(val);
             console.warn('WebSocket open error: ', val);
         },
         complete: () => {
@@ -56,6 +56,7 @@ export class EosClientService extends BaseProvider {
             console.log('WebSocket close');
         },
         error: (val: any) => {
+            this.onServiceError(val);
             console.warn('WebSocket close error: ', val);
         },
         complete: () => {
@@ -64,9 +65,12 @@ export class EosClientService extends BaseProvider {
     };
 
     constructor(private config: ConfigService, protected statusHub: StatusHubService) {
-        super(statusHub);
+        super(statusHub, ServiceName.EOS_CLIENT_SVC);
         this.dfuseConfig = config.get('dfuseConfig');
         WebSocketWithHeaderConfig.headerConfig = BuildDfuseConnectionHeaders(this.dfuseConfig);
+    }
+
+    onAfterModuleInit() {
         this.initWebSocketClient();
     }
 
@@ -112,7 +116,7 @@ export class EosClientService extends BaseProvider {
             )
             .subscribe(
                 (msg) => console.log(`ping timestamp ${msg}`),
-                (err) => console.error('socket err: ', err),
+                (err) => console.error('socket err - handling inbound ping: ', err),
                 () => console.warn('Completed!')
             );
 
@@ -128,7 +132,9 @@ export class EosClientService extends BaseProvider {
                 bufferTime(500)
             )
             .subscribe(
-                (msg) =>
+                (msg) => {},
+                /*
+                    // commented out because of noise
                     msg && msg.length > 0
                         ? console.log(
                               'action trace data for blocks: ',
@@ -138,8 +144,8 @@ export class EosClientService extends BaseProvider {
                                   })
                                   .join(',')
                           )
-                        : console.log('No blocks received'),
-                (err) => console.error('socket err: ', err),
+                        : console.log('No blocks received')*/
+                (err) => console.error('socket err - handling action trace w ping: ', err),
                 () => console.warn('Completed!')
             );
 
@@ -152,7 +158,7 @@ export class EosClientService extends BaseProvider {
             )
             .subscribe(
                 (msg) => console.log('socket data: ', msg),
-                (err) => console.error('socket err: ', err),
+                (err) => console.error('socket err - handling action trace without ping: ', err),
                 () => console.warn('Completed!')
             );
 

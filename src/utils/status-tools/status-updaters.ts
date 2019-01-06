@@ -21,11 +21,43 @@ export const SetServiceStatus = (
 };
 
 /**
- * Print current details on each service's status to the console
- * @param statusMapIn Status map
+ * Print current details on each service to the console
+ * @param statusMapIn Map object to load statuses from
  */
 export const PrintServiceStatus = (statusMapIn: StatusMap) => {
+    console.log(chalk.black.bgCyan(`\n[Services] as of ${new Date().toTimeString()}`));
     for (const [key, value] of statusMapIn) {
-        console.log(chalk.greenBright(`Service: ${key} :: ${value.code} -- ${value.msg}`));
+        console.log(chalk.bgBlue(`    [Service] ${key}:: ${value.code} -- ${value.msg}`));
+    }
+};
+
+/**
+ * Transform a service status map into a plain JSON object
+ *
+ * @param statusMapIn Map object convert to JSON
+ */
+export const StatusMapToJson = (statusMapIn: StatusMap): { [serviceName: string]: StatusWithMessage } => {
+    return Array.from(statusMapIn.keys()).reduce((acc, iter) => {
+        return Object.assign(acc, { [iter]: statusMapIn.get(iter) });
+    }, {});
+};
+
+/**
+ * Get the current status of a service by querying on its name.
+ * Returns ServiceStatus.UNKNOWN if invalid/undefined
+ *
+ * @param statusMapIn Map object to load statuses from
+ * @param serviceName Service name to query
+ */
+export const GetServiceStatus = (statusMapIn: StatusMap, serviceName: ServiceName): ServiceStatus => {
+    if (statusMapIn && serviceName && statusMapIn.has(serviceName)) {
+        const mapVal = statusMapIn.get(serviceName);
+        if (mapVal) {
+            return mapVal.code;
+        } else {
+            return ServiceStatus.UNKNOWN;
+        }
+    } else {
+        return ServiceStatus.UNKNOWN;
     }
 };

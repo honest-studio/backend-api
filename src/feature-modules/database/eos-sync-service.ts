@@ -6,14 +6,12 @@ import * as WebSocket from 'ws';
 
 @Injectable()
 export class EosSyncService {
-    private readonly mongoDbService: MongoDbService;
     private readonly dfuse: WebSocket;
     private readonly dfuseConfig: DfuseConfig;
     private readonly DEFAULT_BLOCK_START: number = 1000000;
     private lastMessageReceived: number;
 
-    constructor(mongo: MongoDbService, config: ConfigService) {
-        this.mongoDbService = mongo;
+    constructor(private readonly mongoDbService: MongoDbService, config: ConfigService) {
         this.dfuseConfig = config.get('dfuseConfig');
         const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${this.dfuseConfig.dfuseApiKey}`;
         this.dfuse = new WebSocket(url, {

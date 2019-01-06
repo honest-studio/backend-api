@@ -1,5 +1,5 @@
-import { AppConfigVars } from './config-types';
-import { validateAndBuildConfig } from './config-schema';
+import { AppConfigVars } from '../config-types';
+import { validateAndBuildConfig } from '../config-schema';
 import { Injectable } from '@nestjs/common';
 
 /**
@@ -17,8 +17,12 @@ export class ConfigService {
     private readonly envConfig: AppConfigVars;
 
     constructor(filePath: string) {
-        // this.envConfig = dotenv.parse(fs.readFileSync(filePath));
-        this.envConfig = validateAndBuildConfig(filePath);
+        try {
+            this.envConfig = validateAndBuildConfig(filePath);
+        } catch (derp) {
+            console.error('Unable to load config file: ', derp);
+            process.exit();
+        }
     }
 
     /**
