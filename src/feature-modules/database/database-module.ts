@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongoDbService } from './mongodb-service';
 import { EosSyncService } from './eos-sync-service';
+import { MysqlService } from './mysql-service';
 import { CommonModule } from '../../common';
 
 /**
@@ -8,7 +9,7 @@ import { CommonModule } from '../../common';
  */
 @Module({
     imports: [CommonModule],
-    providers: [MongoDbService, EosSyncService],
-    exports: [MongoDbService]
+    providers: [MongoDbService, EosSyncService, MysqlService],
+    exports: [MongoDbService, MysqlService]
 })
 export class DatabaseModule {}
