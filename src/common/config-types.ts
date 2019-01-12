@@ -77,6 +77,61 @@ export interface IpfsConfig {
      */
     ipfsDaemonPort: string;
 }
+/**
+ * Configure connection to Azure ElasticSearch
+ */
+export interface ElasticSearchConfig {
+    /**
+     * Connection Protocol for ElasticSearch
+     */
+    elasticSearchProtocol: string;
+    /**
+     * Connection Host for ElasticSearch
+     */
+    elasticSearchHost: string;
+    /**
+     * Connection Port for ElasticSearch
+     */
+    elasticSearchPort: number;
+    /**
+     * Username for ElasticSearch connection
+     */
+    elasticSearchUsername: string;
+    /**
+     * Password for ElasticSearch connection
+     */
+    elasticSearchPassword: string;
+    /**
+     * URL Prefix for ElasticSearch connection
+     */
+    elasticSearchUrlPrefix: string;
+}
+
+/**
+ * Configure connection to MySQL on AWS
+ */
+export interface MysqlConfig {
+    /**
+     * Connection Host for Mysql
+     */
+    mysqlHost: string;
+    /**
+     * Connection Port for Mysql
+     */
+    mysqlPort: number;
+    /**
+     * Username for Mysql connection
+     */
+    mysqlUsername: string;
+    /**
+     * Password for Mysql connection
+     */
+    mysqlPassword: string;
+    /**
+     * Database for Mysql connection
+     */
+    mysqlDatabase: string;
+}
 
 /**
  * Combined config for app
@@ -102,6 +157,14 @@ export interface AppConfigVars {
      * IPFS connection config
      */
     ipfsConfig: IpfsConfig;
+    /**
+     * ElasticSearch connection config
+     */
+    elasticSearchConfig?: ElasticSearchConfig;
+    /**
+     * Mysql Connection config
+     */
+    mysqlConfig?: MysqlConfig;
 }
 
 /**
@@ -119,7 +182,18 @@ export enum ConfigKeyNames {
     DFUSE_API_REST_ENDPOINT = 'DFUSE_API_REST_ENDPOINT',
     DFUSE_API_ORIGIN_URL = 'DFUSE_API_ORIGIN_URL',
     IPFS_DAEMON_HOST = 'IPFS_DAEMON_HOST',
-    IPFS_DAEMON_PORT = 'IPFS_DAEMON_PORT'
+    IPFS_DAEMON_PORT = 'IPFS_DAEMON_PORT',
+    ELASTICSEARCH_PROTOCOL = 'ELASTICSEARCH_PROTOCOL',
+    ELASTICSEARCH_HOST = 'ELASTICSEARCH_HOST',
+    ELASTICSEARCH_PORT = 'ELASTICSEARCH_PORT',
+    ELASTICSEARCH_USERNAME = 'ELASTICSEARCH_USERNAME',
+    ELASTICSEARCH_PASSWORD = 'ELASTICSEARCH_PASSWORD',
+    ELASTICSEARCH_URL_PREFIX = 'ELASTICSEARCH_URL_PREFIX',
+    MYSQL_HOST = 'MYSQL_HOST',
+    MYSQL_PORT = 'MYSQL_PORT',
+    MYSQL_USERNAME = 'MYSQL_USERNAME',
+    MYSQL_PASSWORD = 'MYSQL_PASSWORD',
+    MYSQL_DATABASE = 'MYSQL_DATABASE'
 }
 
 /**

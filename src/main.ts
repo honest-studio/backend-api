@@ -44,6 +44,7 @@ async function bootstrap() {
         .addTag('Wikis')
         .addTag('Recent Activity')
         .addTag('Chain')
+        .addTag('Search')
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);

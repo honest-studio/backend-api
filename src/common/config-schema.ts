@@ -75,6 +75,41 @@ const GetIpfsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Pa
 };
 
 /**
+ * Build ElasticSearch connection config
+ * @param parsed dotenv parsed output
+ */
+const GetElasticSearchConfig: PartialConfigMaker = (
+    parsed: dotenv.DotenvParseOutput
+): Partial<AppConfigVars> | null => {
+    return {
+        elasticSearchConfig: {
+            elasticSearchProtocol: parsed[ConfigKeyNames.ELASTICSEARCH_PROTOCOL],
+            elasticSearchHost: parsed[ConfigKeyNames.ELASTICSEARCH_HOST],
+            elasticSearchPort: Number(parsed[ConfigKeyNames.ELASTICSEARCH_PORT]),
+            elasticSearchUsername: parsed[ConfigKeyNames.ELASTICSEARCH_USERNAME],
+            elasticSearchPassword: parsed[ConfigKeyNames.ELASTICSEARCH_PASSWORD],
+            elasticSearchUrlPrefix: parsed[ConfigKeyNames.ELASTICSEARCH_URL_PREFIX]
+        }
+    };
+};
+
+/**
+ * Build MySQL connection config
+ * @param parsed dotenv parsed output
+ */
+const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        mysqlConfig: {
+            mysqlHost: parsed[ConfigKeyNames.MYSQL_HOST],
+            mysqlPort: Number(parsed[ConfigKeyNames.MYSQL_PORT]),
+            mysqlUsername: parsed[ConfigKeyNames.MYSQL_USERNAME],
+            mysqlPassword: parsed[ConfigKeyNames.MYSQL_PASSWORD],
+            mysqlDatabase: parsed[ConfigKeyNames.MYSQL_DATABASE]
+        }
+    };
+};
+
+/**
  * Array of functions that will be applied, in order, to build AppConfigVars
  */
 const ConfigMappingFunctions: PartialConfigMaker[] = [
@@ -82,7 +117,9 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetCopyLeaksConfig,
     GetDfuseConfig,
     GetMongoConnConfig,
-    GetIpfsConfig
+    GetIpfsConfig,
+    GetElasticSearchConfig,
+    GetMysqlConfig
 ];
 
 /**
@@ -130,15 +167,40 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.MONGODB_URL]: Joi.string().required(),
     [ConfigKeyNames.MONGODB_DATABASE_NAME]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_KEY]: Joi.string().required(),
-    [ConfigKeyNames.DFUSE_API_WEBSOCKET_ENDPOINT]: Joi.string().required(),
-    [ConfigKeyNames.DFUSE_API_REST_ENDPOINT]: Joi.string().required(),
-    [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string().required(),
+    [ConfigKeyNames.DFUSE_API_WEBSOCKET_ENDPOINT]: Joi.string()
+        .uri()
+        .required(),
+    [ConfigKeyNames.DFUSE_API_REST_ENDPOINT]: Joi.string()
+        .uri()
+        .required(),
+    [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string()
+        .uri()
+        .required(),
     [ConfigKeyNames.IPFS_DAEMON_HOST]: Joi.string().required(),
     [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number()
         .integer()
         .min(0)
         .max(65535)
-        .required()
+        .required(),
+    [ConfigKeyNames.ELASTICSEARCH_USERNAME]: Joi.string().required(),
+    [ConfigKeyNames.ELASTICSEARCH_PASSWORD]: Joi.string().required(),
+    [ConfigKeyNames.ELASTICSEARCH_HOST]: Joi.string().required(),
+    [ConfigKeyNames.ELASTICSEARCH_PROTOCOL]: Joi.string().required(),
+    [ConfigKeyNames.ELASTICSEARCH_URL_PREFIX]: Joi.string(),
+    [ConfigKeyNames.ELASTICSEARCH_PORT]: Joi.number()
+        .integer()
+        .min(0)
+        .max(65535)
+        .required(),
+    [ConfigKeyNames.MYSQL_HOST]: Joi.string().required(),
+    [ConfigKeyNames.MYSQL_PORT]: Joi.number()
+        .integer()
+        .min(0)
+        .max(65535)
+        .required(),
+    [ConfigKeyNames.MYSQL_USERNAME]: Joi.string().required(),
+    [ConfigKeyNames.MYSQL_PASSWORD]: Joi.string().required(),
+    [ConfigKeyNames.MYSQL_DATABASE]: Joi.string().required()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {
