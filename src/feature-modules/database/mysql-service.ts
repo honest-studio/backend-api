@@ -6,16 +6,17 @@ import { Pool } from 'mysql';
 @Injectable()
 export class MysqlService {
     private readonly mysqlConfig: MysqlConfig;
-    private pool: Pool;
+    private connectionPool;
 
     constructor(config: ConfigService) {
         this.mysqlConfig = config.get('mysqlConfig');
+        this.connect();
     }
 
     connect(): Pool {
-        if (this.pool) return this.pool;
+        if (this.connectionPool) return this.connectionPool;
 
-        this.pool = mysql.createPool({
+        this.connectionPool = mysql.createPool({
             connectionLimit: 10,
             host: this.mysqlConfig.mysqlHost,
             port: this.mysqlConfig.mysqlPort,
@@ -23,13 +24,13 @@ export class MysqlService {
             password: this.mysqlConfig.mysqlPassword,
             database: this.mysqlConfig.mysqlDatabase
         });
-        return this.pool;
+        return this.connectionPool;
     }
 
     /**
      * get a connection to MongoDB
      */
-    connection(): Pool {
-        return this.pool;
+    pool() {
+        return this.connectionPool;
     }
 }
