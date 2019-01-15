@@ -7,7 +7,7 @@ import { ChainService } from './chain.service';
 export class ChainController {
     constructor(private readonly chainService: ChainService) {}
 
-    @Get(':get_info')
+    @Get('get_info')
     @ApiOperation({
         title: 'Get Chain Info',
         description: `
