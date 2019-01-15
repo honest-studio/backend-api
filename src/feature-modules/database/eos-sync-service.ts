@@ -9,7 +9,7 @@ export class EosSyncService {
     private readonly mongoDbService: MongoDbService;
     private readonly dfuse: WebSocket;
     private readonly dfuseConfig: DfuseConfig;
-    private readonly DEFAULT_BLOCK_START: number = 1000000;
+    private readonly DEFAULT_BLOCK_START: number = 5000000;
     private lastMessageReceived: number;
 
     constructor(mongo: MongoDbService, config: ConfigService) {
@@ -26,7 +26,7 @@ export class EosSyncService {
     async set_indexes(): Promise<any> {
         const index1 = this.mongoDbService
             .connection()
-            .actions.createIndex('data.trace.receipt.global_sequence', { unique: true });
+            .actions.createIndex({ 'data.trace.receipt.global_sequence': 1 }, { unique: true });
 
         const index2 = this.mongoDbService
             .connection()
@@ -56,11 +56,7 @@ export class EosSyncService {
 
     async start() {
         this.dfuse.on('open', async () => {
-            try {
-                await this.set_indexes();
-            } catch (e) {
-                console.log('MongoDBService: Indexes already set. Continuing.');
-            }
+            await this.set_indexes();
 
             const article_req = {
                 type: 'get_actions',

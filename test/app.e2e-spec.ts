@@ -50,14 +50,11 @@ describe('Backend API', () => {
       .expect(200)
   });
 
-  // This currently takes 1 min on average to process
-  // so it has been commented out for now. It needs to 
-  // be optimized so it works in a reasonable time
-  //it('Recent Activity: Proposals w/ Preview', () => {
-  //  return request(app.getHttpServer())
-  //    .get('/v1/recent-activity/proposals?preview=true')
-  //    .expect(200)
-  //});
+  it('Recent Activity: Proposals w/ Preview', () => {
+    return request(app.getHttpServer())
+      .get('/v1/recent-activity/proposals?preview=true')
+      .expect(200)
+  });
 
   it('Recent Activity: Wikis', () => {
     return request(app.getHttpServer())
@@ -79,31 +76,37 @@ describe('Backend API', () => {
 
   it('Proposal: Basic proposal', () => {
     return request(app.getHttpServer())
-        .get('/v1/proposal/QmR3BxbUGf3u9qCLZSZxCrUPHQ6AoyLhLq8GymzTn4cFfh')
+        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
         .expect(200)
   });
 
   it('Proposal: Proposal votes', () => {
     return request(app.getHttpServer())
-        .get('/v1/proposal/QmR3BxbUGf3u9qCLZSZxCrUPHQ6AoyLhLq8GymzTn4cFfh/votes')
+        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/votes')
         .expect(200)
   });
 
   it('Proposal: Proposal result', () => {
     return request(app.getHttpServer())
-        .get('/v1/proposal/QmR3BxbUGf3u9qCLZSZxCrUPHQ6AoyLhLq8GymzTn4cFfh/result')
+        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/result')
         .expect(200)
   });
 
   it('Wiki: Get wiki', () => {
     return request(app.getHttpServer())
-        .get('/v1/wiki/QmR3BxbUGf3u9qCLZSZxCrUPHQ6AoyLhLq8GymzTn4cFfh')
+        .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
         .expect(200)
   });
 
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v1/chain/get_info')
+        .expect(200)
+  });
+
+  it('Search: Title', () => {
+    return request(app.getHttpServer())
+        .get('/v1/search/title/Travis%20Moore')
         .expect(200)
   });
 });
