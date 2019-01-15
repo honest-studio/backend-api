@@ -98,10 +98,23 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki: Get non-existent wiki', () => {
+    return request(app.getHttpServer())
+        .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfPc')
+        .expect(500)
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v1/chain/get_info')
         .expect(200)
+  });
+
+  it('Chain: Get ABI', () => {
+    return request(app.getHttpServer())
+        .post('/v1/chain/get_abi')
+        .send({ account_name: "everipediaiq" })
+        .expect(201)
   });
 
   it('Search: Title', () => {

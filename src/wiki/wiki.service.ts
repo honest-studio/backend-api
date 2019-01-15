@@ -19,7 +19,7 @@ export class WikiService {
                     .pool()
                     .query(`SELECT * FROM enterlink_hashcache where ipfs_hash="${ipfs_hash}"`, function(err, rows) {
                         if (err) reject(err);
-                        else if (rows.length == 0) reject(new Error("Wiki could not be found"));
+                        else if (rows.length == 0) reject({ error: "Wiki could not be found"});
                         else resolve(rows[0].html_blob);
                     });
             });
