@@ -110,6 +110,12 @@ describe('Backend API', () => {
         .expect(404)
   });
 
+  it('Wiki: Get history', () => {
+    return request(app.getHttpServer())
+        .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/history')
+        .expect(200)
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v1/chain/get_info')
