@@ -6,12 +6,16 @@ import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/dat
 import { WikiService } from '../wiki/wiki.service';
 import HtmlDiff from 'htmldiff-js';
 
-
 @Injectable()
 export class ProposalService {
     private readonly copyLeaksConfig: CopyLeaksConfig;
 
-    constructor(config: ConfigService, private ipfs: IpfsService, private mongo: MongoDbService, private wikiService: WikiService) {
+    constructor(
+        config: ConfigService,
+        private ipfs: IpfsService,
+        private mongo: MongoDbService,
+        private wikiService: WikiService
+    ) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
     }
     async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
@@ -142,7 +146,7 @@ export class ProposalService {
 
         return result_json;
     }
-    
+
     async getDiff(proposal_hash: string): Promise<any> {
         const proposal = await this.getProposal(proposal_hash);
         const old_hash = proposal.data.trace.act.data.old_article_hash;

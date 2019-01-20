@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
-import { ProposalService } from '../proposal'
+import { ProposalService } from '../proposal';
 
 @Injectable()
 export class WikiService {
@@ -23,14 +23,13 @@ export class WikiService {
                         else resolve(rows);
                     });
             });
-            if (rows.length == 0)
-                throw new NotFoundException('Wiki not found');
+            if (rows.length == 0) throw new NotFoundException('Wiki not found');
             return rows[0].html_blob;
         }
     }
 
     async getHistory(ipfs_hash: string): Promise<any> {
-        const history = [ ipfs_hash ]
+        const history = [ipfs_hash];
 
         // get parent hashes
         while (true) {
@@ -40,8 +39,7 @@ export class WikiService {
                 'data.trace.act.name': 'propose',
                 'data.trace.act.data.proposed_article_hash': tip_hash
             });
-            if (!proposal) 
-                break;
+            if (!proposal) break;
             history.push(proposal.data.trace.act.data.old_article_hash);
         }
 
@@ -53,8 +51,7 @@ export class WikiService {
                 'data.trace.act.name': 'propose',
                 'data.trace.act.data.old_article_hash': tip_hash
             });
-            if (!proposal) 
-                break;
+            if (!proposal) break;
             history.unshift(proposal.data.trace.act.data.proposed_article_hash);
         }
 

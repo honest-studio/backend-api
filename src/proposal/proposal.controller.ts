@@ -60,7 +60,8 @@ export class ProposalController {
     @ApiOperation({ title: 'Get diff between proposed and old version' })
     @ApiResponse({
         status: 200,
-        description: ''
+        description:
+        'Returns the diff between a proposal and its parent hash. Insertions are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
     })
     @ApiImplicitParam({
         name: 'proposal_hash',
