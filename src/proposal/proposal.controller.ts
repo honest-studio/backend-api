@@ -55,4 +55,18 @@ export class ProposalController {
     async getPlagiarism(@Param('proposal_hash') proposal_hash): Promise<any> {
         return await this.proposalService.getPlagiarism(proposal_hash);
     }
+
+    @Get(':proposal_hash/diff')
+    @ApiOperation({ title: 'Get diff between proposed and old version' })
+    @ApiResponse({
+        status: 200,
+        description: ''
+    })
+    @ApiImplicitParam({
+        name: 'proposal_hash',
+        description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+    })
+    async getDiff(@Param('proposal_hash') proposal_hash): Promise<any> {
+        return this.proposalService.getDiff(proposal_hash);
+    }
 }

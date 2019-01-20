@@ -3,20 +3,19 @@ import { MongoDbService } from '../feature-modules';
 import * as fetch from 'node-fetch';
 import { ConfigService, CopyLeaksConfig, IpfsService } from '../common';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
+import { WikiService } from '../wiki/wiki.service';
+import HtmlDiff from 'htmldiff-js';
+
 
 @Injectable()
 export class ProposalService {
     private readonly copyLeaksConfig: CopyLeaksConfig;
-    private readonly ipfsService: IpfsService;
-    private readonly mongoDbService: MongoDbService;
 
-    constructor(config: ConfigService, ipfs: IpfsService, mongo: MongoDbService) {
+    constructor(config: ConfigService, private ipfs: IpfsService, private mongo: MongoDbService, private wikiService: WikiService) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
-        this.ipfsService = ipfs;
-        this.mongoDbService = mongo;
     }
     async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
-        const proposal = await this.mongoDbService.connection().actions.findOne({
+        const proposal = await this.mongo.connection().actions.findOne({
             'data.trace.act.account': 'eparticlectr',
             'data.trace.act.name': 'propose',
             'data.trace.act.data.proposed_article_hash': proposal_hash
@@ -25,7 +24,7 @@ export class ProposalService {
         else return proposal;
     }
     async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
-        return this.mongoDbService
+        return this.mongo
             .connection()
             .actions.find({
                 'data.trace.act.account': 'eparticlectr',
@@ -35,7 +34,7 @@ export class ProposalService {
             .toArray();
     }
     async getResult(proposal_hash: string): Promise<ProposalResult> {
-        const result = await this.mongoDbService.connection().actions.findOne({
+        const result = await this.mongo.connection().actions.findOne({
             'data.trace.act.account': 'eparticlectr',
             'data.trace.act.name': 'logpropres',
             'data.trace.act.data.proposal': proposal_hash
@@ -70,7 +69,7 @@ export class ProposalService {
     }
 
     async getPlagiarism(proposal_hash: string): Promise<any> {
-        const result = await this.mongoDbService.connection().plagiarism.findOne({
+        const result = await this.mongo.connection().plagiarism.findOne({
             proposal_hash: proposal_hash
         });
         if (result) return result;
@@ -89,7 +88,7 @@ export class ProposalService {
         }).then((res) => res.json());
         const access_token = token_json.access_token;
 
-        const createReqBody = await this.getWiki(proposal_hash);
+        const createReqBody = await this.wikiService.getWiki(proposal_hash);
         const create_json = await fetch('https://api.copyleaks.com/v1/businesses/create-by-text', {
             method: 'post',
             body: createReqBody,
@@ -128,7 +127,7 @@ export class ProposalService {
             copyleaks: result_json
         };
         await new Promise(function(resolve, reject) {
-            this.mongoDbService.connection().then(function(conn) {
+            this.mongo.connection().then(function(conn) {
                 conn.plagiarism.insertOne(doc, function(err: Error) {
                     if (err) {
                         reject();
@@ -143,10 +142,12 @@ export class ProposalService {
 
         return result_json;
     }
-
-    async getWiki(ipfs_hash: string): Promise<any> {
-        await this.ipfsService.client().pin.add(ipfs_hash);
-        const buffer: Buffer = await this.ipfsService.client().cat(ipfs_hash);
-        return buffer.toString('utf8');
+    
+    async getDiff(proposal_hash: string): Promise<any> {
+        const proposal = await this.getProposal(proposal_hash);
+        const old_hash = proposal.data.trace.act.data.old_article_hash;
+        const new_html = await this.wikiService.getWiki(proposal_hash);
+        const old_html = await this.wikiService.getWiki(old_hash);
+        return HtmlDiff.execute(old_html, new_html);
     }
 }
