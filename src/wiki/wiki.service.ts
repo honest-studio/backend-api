@@ -13,7 +13,6 @@ export class WikiService {
             const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
             return buffer.toString('utf8');
         } catch (e) {
-            console.error(e);
             setTimeout(() => this.ipfs.client().pin.add(ipfs_hash, { timeout: '20s' }), 1);
             const rows: Array<any> = await new Promise((resolve, reject) => {
                 this.mysql

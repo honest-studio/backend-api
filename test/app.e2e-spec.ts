@@ -91,6 +91,12 @@ describe('Backend API', () => {
         .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/result')
         .expect(200)
   });
+  
+  it('Proposal: Proposal diff', () => {
+    return request(app.getHttpServer())
+        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/diff')
+        .expect(200)
+  });
 
   it('Wiki: Get wiki', () => {
     return request(app.getHttpServer())
@@ -101,7 +107,7 @@ describe('Backend API', () => {
   it('Wiki: Get non-existent wiki', () => {
     return request(app.getHttpServer())
         .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfPc')
-        .expect(500)
+        .expect(404)
   });
 
   it('Chain: Get Info', () => {
