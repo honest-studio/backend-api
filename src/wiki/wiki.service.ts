@@ -8,7 +8,7 @@ import { ProposalService } from '../proposal';
 export class WikiService {
     constructor(private ipfs: IpfsService, private mysql: MysqlService, private mongo: MongoDbService) {}
 
-    async getWiki(ipfs_hash: string): Promise<any> {
+    async getWikiByHash(ipfs_hash: string): Promise<any> {
         try {
             const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
             const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
@@ -26,5 +26,24 @@ export class WikiService {
             if (rows.length == 0) throw new NotFoundException('Wiki not found');
             return rows[0].html_blob;
         }
+    }
+
+    async getWikiByTitle(article_title: string): Promise<any> {
+        const rows: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT cache.html_blob 
+                FROM enterlink_articletable AS art 
+                JOIN enterlink_hashcache AS cache 
+                ON art.ipfs_hash_current=cache.ipfs_hash 
+                WHERE art.slug=? OR art.slug_alt=?;`,
+                [article_title, article_title],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        return rows[0].html_blob;
     }
 }

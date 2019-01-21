@@ -92,7 +92,7 @@ export class ProposalService {
         }).then((res) => res.json());
         const access_token = token_json.access_token;
 
-        const createReqBody = await this.wikiService.getWiki(proposal_hash);
+        const createReqBody = await this.wikiService.getWikiByHash(proposal_hash);
         const create_json = await fetch('https://api.copyleaks.com/v1/businesses/create-by-text', {
             method: 'post',
             body: createReqBody,
@@ -150,8 +150,8 @@ export class ProposalService {
     async getDiff(proposal_hash: string): Promise<any> {
         const proposal = await this.getProposal(proposal_hash);
         const old_hash = proposal.data.trace.act.data.old_article_hash;
-        const new_html = await this.wikiService.getWiki(proposal_hash);
-        const old_html = await this.wikiService.getWiki(old_hash);
+        const new_html = await this.wikiService.getWikiByHash(proposal_hash);
+        const old_html = await this.wikiService.getWikiByHash(old_hash);
         return HtmlDiff.execute(old_html, new_html);
     }
 

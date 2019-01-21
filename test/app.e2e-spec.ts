@@ -98,9 +98,21 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get wiki', () => {
+  it('Proposal: Get history', () => {
     return request(app.getHttpServer())
-        .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/history')
+        .expect(200)
+  });
+
+  it('Wiki: Get wiki by hash', () => {
+    return request(app.getHttpServer())
+        .get('/v1/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .expect(200)
+  });
+
+  it('Wiki: Get wiki by title', () => {
+    return request(app.getHttpServer())
+        .get('/v1/wiki/title/William_Legate')
         .expect(200)
   });
 
@@ -108,12 +120,6 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfPc')
         .expect(404)
-  });
-
-  it('Wiki: Get history', () => {
-    return request(app.getHttpServer())
-        .get('/v1/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/history')
-        .expect(200)
   });
 
   it('Chain: Get Info', () => {
