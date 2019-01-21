@@ -70,4 +70,22 @@ export class ProposalController {
     async getDiff(@Param('proposal_hash') proposal_hash): Promise<any> {
         return this.proposalService.getDiff(proposal_hash);
     }
+
+    @Get(':proposal_hash/history')
+    @ApiOperation({ title: 'Get edit history for a wiki' })
+    @ApiImplicitParam({
+        name: 'ipfs_hash',
+        description: 'IPFS hash of a wiki - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns:
+            history: An array of IPFS hashes. The first item in the array is the most recent proposal, 
+                and each subsequent hash is the parent of the one before it
+            proposals: An object mapping hashes to proposal receipts
+            results: An object mapping hashes to proposal results`
+    })
+    async getHistory(@Param('proposal_hash') proposal_hash): Promise<any> {
+        return this.proposalService.getHistory(proposal_hash);
+    }
 }

@@ -154,4 +154,49 @@ export class ProposalService {
         const old_html = await this.wikiService.getWiki(old_hash);
         return HtmlDiff.execute(old_html, new_html);
     }
+
+    async getHistory(proposal_hash: string): Promise<any> {
+        const history = [proposal_hash];
+        const proposals = {}
+        const results = {}
+
+        // get parent hashes
+        while (true) {
+            try {
+                const tip_hash = history[history.length - 1];
+                const proposal = await this.getProposal(tip_hash);
+                history.push(proposal.data.trace.act.data.old_article_hash);
+                proposals[tip_hash] = proposal;
+            } catch (e) {
+                if (history.length == 1)
+                    throw e;
+                break;
+            }
+        }
+
+        // get child hashes
+        while (true) {
+            const tip_hash = history[0];
+            const proposal = await this.mongo.connection().actions.findOne({
+                'data.trace.act.account': 'eparticlectr',
+                'data.trace.act.name': 'propose',
+                'data.trace.act.data.old_article_hash': tip_hash
+            });
+            if (!proposal) break;
+            const child_hash = proposal.data.trace.act.data.proposed_article_hash;
+            history.unshift(child_hash);
+            proposals[child_hash] = proposal;
+        }
+
+        // get results
+        for (const i in history) {
+            const hash = history[i];
+            try {
+                results[hash] = await this.getResult(hash);
+            }
+            catch (e) { continue; }
+        }
+
+        return { history, proposals, results }
+    }
 }

@@ -28,33 +28,4 @@ export class WikiService {
         }
     }
 
-    async getHistory(ipfs_hash: string): Promise<any> {
-        const history = [ipfs_hash];
-
-        // get parent hashes
-        while (true) {
-            const tip_hash = history[history.length - 1];
-            const proposal = await this.mongo.connection().actions.findOne({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'propose',
-                'data.trace.act.data.proposed_article_hash': tip_hash
-            });
-            if (!proposal) break;
-            history.push(proposal.data.trace.act.data.old_article_hash);
-        }
-
-        // get child hashes
-        while (true) {
-            const tip_hash = history[0];
-            const proposal = await this.mongo.connection().actions.findOne({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'propose',
-                'data.trace.act.data.old_article_hash': tip_hash
-            });
-            if (!proposal) break;
-            history.unshift(proposal.data.trace.act.data.proposed_article_hash);
-        }
-
-        return history;
-    }
 }
