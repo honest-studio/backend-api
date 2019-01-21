@@ -157,8 +157,8 @@ export class ProposalService {
 
     async getHistory(proposal_hash: string): Promise<any> {
         const history = [proposal_hash];
-        const proposals = {}
-        const results = {}
+        const proposals = {};
+        const results = {};
 
         // get parent hashes
         while (true) {
@@ -168,8 +168,7 @@ export class ProposalService {
                 history.push(proposal.data.trace.act.data.old_article_hash);
                 proposals[tip_hash] = proposal;
             } catch (e) {
-                if (history.length == 1)
-                    throw e;
+                if (history.length == 1) throw e;
                 break;
             }
         }
@@ -193,10 +192,11 @@ export class ProposalService {
             const hash = history[i];
             try {
                 results[hash] = await this.getResult(hash);
+            } catch (e) {
+                continue;
             }
-            catch (e) { continue; }
         }
 
-        return { history, proposals, results }
+        return { history, proposals, results };
     }
 }

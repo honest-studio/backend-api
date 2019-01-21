@@ -61,7 +61,7 @@ export class ProposalController {
     @ApiResponse({
         status: 200,
         description:
-        'Returns the diff between a proposal and its parent hash. Insertions are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
+            'Returns the diff between a proposal and its parent hash. Insertions are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
     })
     @ApiImplicitParam({
         name: 'proposal_hash',
@@ -80,10 +80,12 @@ export class ProposalController {
     @ApiResponse({
         status: 200,
         description: `Returns:
-            history: An array of IPFS hashes. The first item in the array is the most recent proposal, 
-                and each subsequent hash is the parent of the one before it
-            proposals: An object mapping hashes to proposal receipts
-            results: An object mapping hashes to proposal results`
+                history: An array of IPFS hashes. The first item in the array is the most recent proposal, 
+                    and each subsequent hash is the parent of the one before it
+                proposals: An object mapping hashes to proposal receipts.
+                results: An object mapping hashes to proposal results.
+                
+            The last hash in the history is usually a blank hash and doesn't have a proposal or result object associated with it. `
     })
     async getHistory(@Param('proposal_hash') proposal_hash): Promise<any> {
         return this.proposalService.getHistory(proposal_hash);

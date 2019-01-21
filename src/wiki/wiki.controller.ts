@@ -16,5 +16,4 @@ export class WikiController {
     async getWiki(@Param('ipfs_hash') ipfs_hash): Promise<any> {
         return await this.wikiService.getWiki(ipfs_hash);
     }
-
 }

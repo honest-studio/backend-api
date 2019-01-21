@@ -27,5 +27,4 @@ export class WikiService {
             return rows[0].html_blob;
         }
     }
-
 }
