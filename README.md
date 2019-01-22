@@ -38,15 +38,26 @@ $ npm run start:prod
 
 ## Test
 
-There are currently no tests for the repo. In the future, you will be able to run tests with the following commands:
+There are currently only end-to-end test for the repo. To run:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
+# end-to-end tests
 $ npm run test:e2e
 
-# test coverage
+# unit tests - currently not available
+$ npm run test
+
+# test coverage - currently not available
 $ npm run test:cov
 ```
+
+## Disabling Sync for Dev
+
+Sometimes you need to disable the Dfuse syncing in development or testing. 
+
+To do so, comment out the following line in `src/main.ts`:
+
+```js
+app.get('EosSyncService').sync();
+```
+
