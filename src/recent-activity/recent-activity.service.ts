@@ -112,7 +112,6 @@ export class RecentActivityService {
         }
 
         if (query.diff_percent) {
-            // grab as many wikis as possible from MySQL
             const wikis = {};
             const hashes = [];
             for (const i in proposals) {
@@ -120,6 +119,8 @@ export class RecentActivityService {
                 const old_hash = proposals[i].data.trace.act.data.old_article_hash;
                 hashes.push(new_hash, old_hash);
             }
+
+            // grab as many wikis as possible from MySQL
             const wikis_in_db: Array<any> = await new Promise((resolve, reject) => {
                 const joined_hashes = hashes
                     .map((h) => `"${h}"`) // wrap each hash in quotes
@@ -146,6 +147,8 @@ export class RecentActivityService {
                     const buffer: Buffer = await this.ipfs.client().cat(hash);
                     wikis[hash] = buffer.toString('utf8');
                 } catch (e) {
+                    // fetch wiki from IPFS in background for later use
+                    setTimeout(() => this.ipfs.client().pin.add(hash, { timeout: '20s' }), 1);
                     continue;
                 }
             }
@@ -158,10 +161,23 @@ export class RecentActivityService {
                 const old_wiki = wikis[old_hash];
                 if (!new_wiki || !old_wiki) continue;
 
-                const diff_wiki = HtmlDiff.execute(old_wiki, new_wiki);
-                const diff_words = diff_wiki.split(' ').length;
-                const old_hash_words = old_wiki.split(' ').length;
-                proposals[i].diff_percent = (((diff_words - old_hash_words) / diff_words) * 100).toFixed(2);
+                // check for cached version
+                const diff_doc = await this.mongo.connection().diffs.findOne({ old_hash, new_hash });
+                if (diff_doc)
+                    proposals[i].diff_percent = diff_doc.diff_percent;
+                else {
+                    try {
+                        const diff_wiki = HtmlDiff.execute(old_wiki, new_wiki);
+                        const diff_words = diff_wiki.split(' ').length;
+                        const old_hash_words = old_wiki.split(' ').length;
+                        const diff_percent = (((diff_words - old_hash_words) / diff_words) * 100).toFixed(2);
+                        await this.mongo.connection().diffs.insertOne({ old_hash, new_hash, diff_percent, diff_wiki })
+                        proposals[i].diff_percent = diff_percent;
+                    } 
+                    catch { 
+                        console.log(`Could not diff ${old_wiki} and ${new_wiki}`); 
+                    }
+                }
             }
         }
 

@@ -150,9 +150,25 @@ export class ProposalService {
     async getDiff(proposal_hash: string): Promise<any> {
         const proposal = await this.getProposal(proposal_hash);
         const old_hash = proposal.data.trace.act.data.old_article_hash;
-        const new_html = await this.wikiService.getWikiByHash(proposal_hash);
-        const old_html = await this.wikiService.getWikiByHash(old_hash);
-        return HtmlDiff.execute(old_html, new_html);
+        const new_hash = proposal_hash;
+        
+        // check cache first
+        const diff_doc = await this.mongo.connection().diffs.findOne({ old_hash, new_hash });
+        if (diff_doc)
+           return diff_doc.diff_wiki;
+
+        // calculate diff
+        const new_wiki = await this.wikiService.getWikiByHash(new_hash);
+        const old_wiki = await this.wikiService.getWikiByHash(old_hash);
+        const diff_wiki = HtmlDiff.execute(old_wiki, new_wiki);
+        const diff_words = diff_wiki.split(' ').length;
+        const old_hash_words = old_wiki.split(' ').length;
+        const diff_percent = (((diff_words - old_hash_words) / diff_words) * 100).toFixed(2);
+
+        // cache result
+        await this.mongo.connection().diffs.insertOne({ old_hash, new_hash, diff_percent, diff_wiki })
+
+        return diff_wiki;
     }
 
     async getHistory(proposal_hash: string): Promise<any> {
