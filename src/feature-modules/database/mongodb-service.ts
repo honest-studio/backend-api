@@ -73,17 +73,14 @@ export class MongoDbService {
      * set indexes on Mongo collections
      */
     async set_indexes(): Promise<any> {
-        const index1 = this
-            .connection()
-            .actions.createIndex({ 'data.trace.receipt.global_sequence': 1 }, { unique: true });
+        const index1 = this.connection().actions.createIndex(
+            { 'data.trace.receipt.global_sequence': 1 },
+            { unique: true }
+        );
 
-        const index2 = this
-            .connection()
-            .actions.createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
+        const index2 = this.connection().actions.createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
 
-        const index3 = this
-            .connection()
-            .diffs.createIndex({ 'old_hash': 1, 'new_hash': 1 }, { unique: true });
+        const index3 = this.connection().diffs.createIndex({ old_hash: 1, new_hash: 1 }, { unique: true });
 
         return Promise.all([index1, index2, index3]);
     }
