@@ -29,6 +29,7 @@
         "@types/mysql": "^2.15.5",
         "@types/ws": "^6.0.1",
         "chalk": "^2.4.1",
+        "cheerio": "^1.0.0-rc.2",
         "cors": "^2.8.5",
         "dotenv": "^6.1.0",
         "event-stream": "^4.0.1",

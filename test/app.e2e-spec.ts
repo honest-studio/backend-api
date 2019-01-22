@@ -56,6 +56,18 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Proposals w/ Diff Percent', () => {
+    return request(app.getHttpServer())
+      .get('/v1/recent-activity/proposals?diff_percent=true')
+      .expect(200)
+  });
+
+  it('Recent Activity: Proposals w/ Preview and Diff Percent', () => {
+    return request(app.getHttpServer())
+      .get('/v1/recent-activity/proposals?diff_percent=true&preview=true')
+      .expect(200)
+  });
+
   it('Recent Activity: Wikis', () => {
     return request(app.getHttpServer())
       .get('/v1/recent-activity/wikis')

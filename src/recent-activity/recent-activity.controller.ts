@@ -84,7 +84,13 @@ export class RecentActivityController {
     })
     @ApiImplicitQuery({
         name: 'preview',
-        description: `Include page title and main photo for each proposal. Setting preview=true currently makes this endpoint very slow if uncached IPFS files need to be pulled from the network. Optimizations are required and will be coming at a later time, but are not a priority right now.`,
+        description: `Include page title, main photo, thumbnail, and text preview for each proposal.`,
+        required: false,
+        type: Boolean
+    })
+    @ApiImplicitQuery({
+        name: 'diff_percent',
+        description: `Include percentage of article changed by proposal.`,
         required: false,
         type: Boolean
     })

@@ -12,7 +12,8 @@ const RecentActivityQuerySchema = {
         .max(100)
         .optional()
         .default(10),
-    preview: Joi.boolean().default(false)
+    preview: Joi.boolean().default(false),
+    diff_percent: Joi.boolean().default(false)
 };
 
 export { RecentActivityQuerySchema };
