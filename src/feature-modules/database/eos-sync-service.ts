@@ -23,24 +23,6 @@ export class EosSyncService {
         });
     }
 
-    async set_indexes(): Promise<any> {
-        const index1 = this.mongoDbService
-            .connection()
-            .actions.createIndex({ 'data.trace.receipt.global_sequence': 1 }, { unique: true });
-
-        const index2 = this.mongoDbService
-            .connection()
-            .actions.createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
-
-        const index3 = this.mongoDbService.connection().wikis.createIndex({ ipfs_hash: 1 });
-
-        const index4 = this.mongoDbService.connection().wikis.createIndex({ 'data.trace.act.account': 1 });
-
-        const index5: Promise<any> = this.mongoDbService.connection().wikis.createIndex({ 'data.block_num': -1 });
-
-        return Promise.all([index1, index2, index3, index4, index5]);
-    }
-
     async get_start_block(account: string, default_start_block: number = this.DEFAULT_BLOCK_START): Promise<number> {
         return this.mongoDbService
             .connection()
@@ -56,8 +38,6 @@ export class EosSyncService {
 
     async start() {
         this.dfuse.on('open', async () => {
-            await this.set_indexes();
-
             const article_req = {
                 type: 'get_actions',
                 req_id: 'article_req',

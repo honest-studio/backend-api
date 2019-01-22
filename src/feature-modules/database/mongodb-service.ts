@@ -6,13 +6,14 @@ import { MongoDbConnectionConfig, ConfigService } from '../../common';
 export type ActionEntity = any;
 export type PlagiarismEntity = any;
 export type WikiEntity = any;
+export type DiffEntity = any;
 
 export type AppConnectionInstance = {
     client: MongoClient;
     db: Db;
     actions: Collection<ActionEntity>;
     plagiarism: Collection<PlagiarismEntity>;
-    wikis: Collection<WikiEntity>;
+    diffs: Collection<DiffEntity>;
 };
 
 /**
@@ -49,12 +50,15 @@ export class MongoDbService {
                         const db = client.db(this.mongoConfig.mongoDbName);
                         const actions = db.collection('actions');
                         const plagiarism = db.collection('plagiarism');
-                        const wikis = db.collection('wikis');
-                        resolve({ client, db, actions, plagiarism, wikis });
+                        const diffs = db.collection('diffs');
+                        resolve({ client, db, actions, plagiarism, diffs });
                     }
                 }
             );
         });
+
+        await this.set_indexes();
+
         return this.appConnectionInstance;
     }
 
@@ -63,5 +67,24 @@ export class MongoDbService {
      */
     connection(): AppConnectionInstance {
         return this.appConnectionInstance;
+    }
+
+    /**
+     * set indexes on Mongo collections
+     */
+    async set_indexes(): Promise<any> {
+        const index1 = this
+            .connection()
+            .actions.createIndex({ 'data.trace.receipt.global_sequence': 1 }, { unique: true });
+
+        const index2 = this
+            .connection()
+            .actions.createIndex({ 'data.trace.act.name': 1, 'data.trace.act.account': 1 });
+
+        const index3 = this
+            .connection()
+            .diffs.createIndex({ 'old_hash': 1, 'new_hash': 1 }, { unique: true });
+
+        return Promise.all([index1, index2, index3]);
     }
 }
