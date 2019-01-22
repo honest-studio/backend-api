@@ -68,7 +68,17 @@ export class RecentActivityService {
             });
             const previews = {};
             article_info.map((a) => (previews[a.ipfs_hash] = a));
-            proposals.forEach((p) => (p.preview = previews[p.data.trace.act.data.proposed_article_hash]));
+            proposals.forEach((p,i) => {
+                const preview = previews[p.data.trace.act.data.proposed_article_hash];
+                if (!preview)
+                    return; // continue foreach loop
+
+                const $ = cheerio.load(preview.text_preview);
+                preview.text_preview = $.text()
+                    .replace(/\s+/g, ' ')
+                    .trim()
+                proposals[i].preview = preview;
+            });
 
             // try and fill in missing previews with pinned wikis
             for (const i in proposals) {
