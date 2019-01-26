@@ -18,6 +18,7 @@ export class ProposalService {
     ) {
         this.copyLeaksConfig = config.get('copyLeaksConfig');
     }
+
     async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
         const proposal = await this.mongo.connection().actions.findOne({
             'data.trace.act.account': 'eparticlectr',
@@ -27,6 +28,17 @@ export class ProposalService {
         if (!proposal) throw new NotFoundException('Proposal not found');
         else return proposal;
     }
+
+
+    async getProposals(proposal_hashes: Array<string>): Promise<Array<EosAction<Propose>>> {
+        const proposals = await this.mongo.connection().actions.findOne({
+            'data.trace.act.account': 'eparticlectr',
+            'data.trace.act.name': 'propose',
+            'data.trace.act.data.proposed_article_hash': { $in: [proposal_hashes] }
+        });
+        return proposals;
+    }
+
     async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
         return this.mongo
             .connection()
@@ -145,29 +157,6 @@ export class ProposalService {
         });
 
         return result_json;
-    }
-
-    async getDiff(proposal_hash: string): Promise<any> {
-        const proposal = await this.getProposal(proposal_hash);
-        const old_hash = proposal.data.trace.act.data.old_article_hash;
-        const new_hash = proposal_hash;
-
-        // check cache first
-        const diff_doc = await this.mongo.connection().diffs.findOne({ old_hash, new_hash });
-        if (diff_doc) return diff_doc.diff_wiki;
-
-        // calculate diff
-        const new_wiki = await this.wikiService.getWikiByHash(new_hash);
-        const old_wiki = await this.wikiService.getWikiByHash(old_hash);
-        const diff_wiki = HtmlDiff.execute(old_wiki, new_wiki);
-        const diff_words = diff_wiki.split(' ').length;
-        const old_hash_words = old_wiki.split(' ').length;
-        const diff_percent = (((diff_words - old_hash_words) / diff_words) * 100).toFixed(2);
-
-        // cache result
-        await this.mongo.connection().diffs.insertOne({ old_hash, new_hash, diff_percent, diff_wiki });
-
-        return diff_wiki;
     }
 
     async getHistory(proposal_hash: string): Promise<any> {

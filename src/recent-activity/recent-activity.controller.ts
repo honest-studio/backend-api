@@ -90,7 +90,7 @@ export class RecentActivityController {
     })
     @ApiImplicitQuery({
         name: 'diff_percent',
-        description: `Include percentage of article changed by proposal. This option will add 2-3s to the response time.`,
+        description: `Include percentage of article changed by proposal. This option will add 1-2s to the response time.`,
         required: false,
         type: Boolean
     })

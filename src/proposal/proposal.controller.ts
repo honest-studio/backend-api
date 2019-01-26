@@ -56,21 +56,6 @@ export class ProposalController {
         return await this.proposalService.getPlagiarism(proposal_hash);
     }
 
-    @Get(':proposal_hash/diff')
-    @ApiOperation({ title: 'Get diff between proposed and old version' })
-    @ApiResponse({
-        status: 200,
-        description:
-            'Returns the diff between a proposal and its parent hash. Insertions are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
-    })
-    @ApiImplicitParam({
-        name: 'proposal_hash',
-        description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
-    })
-    async getDiff(@Param('proposal_hash') proposal_hash): Promise<any> {
-        return this.proposalService.getDiff(proposal_hash);
-    }
-
     @Get(':proposal_hash/history')
     @ApiOperation({ title: 'Get edit history for a wiki' })
     @ApiImplicitParam({

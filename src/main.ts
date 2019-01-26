@@ -45,6 +45,8 @@ async function bootstrap() {
         .addTag('Recent Activity')
         .addTag('Chain')
         .addTag('Search')
+        .addTag('Diffs')
+        .addTag('Cache')
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);

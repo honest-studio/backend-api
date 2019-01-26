@@ -46,4 +46,36 @@ export class WikiService {
         });
         return rows[0].html_blob;
     }
+
+    async getWikisByHash(ipfs_hashes: Array<string>) {
+        // try to fetch everything locally first
+        const wikis = {}
+        for (const i in ipfs_hashes) {
+            const ipfs_hash = ipfs_hashes[i];
+            try {
+                const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
+                const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
+                wikis[ipfs_hash] = buffer.toString('utf8');
+            } catch {
+                wikis[ipfs_hash] = null;
+            }
+        }
+
+        // fetch remainder from mysql if they exist
+        const joined_hashes = Object.keys(wikis)
+            .filter(hash => wikis[hash] === null)
+            .map(hash => `"${hash}"`)
+            .join(',');
+        const rows: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql
+                .pool()
+                .query(`SELECT * FROM enterlink_hashcache where ipfs_hash IN (?)`, [joined_hashes], function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                });
+        });
+        rows.forEach(r => wikis[r.ipfs_hash] = r.html_blob);
+
+        return wikis;
+    }
 }
