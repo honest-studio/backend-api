@@ -182,4 +182,16 @@ describe('Backend API', () => {
         .get('/v1/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
         .expect(200)
   });
+
+  it('Preview: Wikis', () => {
+    return request(app.getHttpServer())
+        .get('/v1/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
+        .expect(200)
+  });
+
+  it('Cache: Wiki', () => {
+    return request(app.getHttpServer())
+        .get('/v1/cache/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .expect(200)
+  });
 });
