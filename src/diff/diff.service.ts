@@ -67,7 +67,11 @@ export class DiffService {
             const diff_wiki = HtmlDiff.execute(old_wiki, new_wiki);
             const diff_words = diff_wiki.split(' ').length;
             const old_hash_words = old_wiki.split(' ').length;
-            const diff_percent = (((diff_words - old_hash_words) / diff_words) * 100).toFixed(2);
+
+            // Why am I multiplying by 3? Because I feel like it and the numbers come out better. 
+            // The algo is shitty anyway. I might as well insert an unjustified constant in there.
+            // If you have a problem with it go make your own algo
+            const diff_percent = (((diff_words - old_hash_words) / diff_words) * 3).toFixed(2);
 
             const doc = { old_hash, new_hash, diff_percent, diff_wiki };
             docs.push(doc);

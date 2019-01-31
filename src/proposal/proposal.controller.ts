@@ -1,34 +1,29 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { ProposalService } from './proposal.service';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
+
+export type ProposeOrArray = (EosAction<Propose> | Array<EosAction<Propose>>)
 
 @Controller('v1/proposal')
 @ApiUseTags('Proposals')
 export class ProposalController {
     constructor(private readonly proposalService: ProposalService) {}
 
-
-    @Get('multiple')
-    @ApiOperation({ title: 'Get details of multiple proposals' })
-    @ApiImplicitQuery({
-        name: 'hashes',
-        description: 'Array of IPFS hashes of wikis - Example: /v1/wiki/hashes?hashes[]=QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ&hashes[]=QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z',
-        type: 'String',
-        isArray: true
-    })
-    async getProposals(@Query('hashes') proposal_hashes): Promise<EosAction<Propose>[]> {
-        return await this.proposalService.getProposals(proposal_hashes);
-    }
-
     @Get(':proposal_hash')
     @ApiOperation({ title: 'Get details of a proposal' })
     @ApiImplicitParam({
         name: 'proposal_hash',
-        description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+        description: `IPFS hashes of proposals. To get multiple proposals, separate hashes with a comma.
+        Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
+        Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
     })
-    async getProposal(@Param('proposal_hash') proposal_hash): Promise<EosAction<Propose>> {
-        return await this.proposalService.getProposal(proposal_hash);
+    async getProposal(@Param('proposal_hash') query_hashes): Promise<ProposeOrArray> {
+        const proposal_hashes = query_hashes.split(',');
+        if (proposal_hashes.length == 1)
+            return this.proposalService.getProposal(proposal_hashes[0]);
+        else
+            return this.proposalService.getProposals(proposal_hashes);
     }
 
     @Get(':proposal_hash/votes')

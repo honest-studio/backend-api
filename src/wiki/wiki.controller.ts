@@ -1,5 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { Controller, Get, Param } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { WikiService } from './wiki.service';
 
 @Controller('v1/wiki')
@@ -11,22 +11,16 @@ export class WikiController {
     @ApiOperation({ title: 'Get wiki by IPFS hash' })
     @ApiImplicitParam({
         name: 'ipfs_hash',
-        description: 'IPFS hash of a wiki - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+        description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
+            Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
+            Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
     })
-    async getWikiByHash(@Param('ipfs_hash') ipfs_hash): Promise<any> {
-        return await this.wikiService.getWikiByHash(ipfs_hash);
-    }
-
-    @Get('hashes')
-    @ApiOperation({ title: 'Get multiple wikis by IPFS hash' })
-    @ApiImplicitQuery({
-        name: 'hashes',
-        description: 'Array of IPFS hashes of wikis - Example: /v1/wiki/hashes?hashes[]=QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ&hashes[]=QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z',
-        type: 'String',
-        isArray: true
-    })
-    async getWikisByHash(@Query('hashes') ipfs_hashes): Promise<any> {
-        return await this.wikiService.getWikisByHash(ipfs_hashes);
+    async getWikiByHash(@Param('ipfs_hash') query_hashes): Promise<any> {
+        const ipfs_hashes = query_hashes.split(',');
+        if (ipfs_hashes.length == 1)
+            return await this.wikiService.getWikiByHash(ipfs_hashes[0]);
+        else
+            return await this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
     @Get('title/:article_title')
