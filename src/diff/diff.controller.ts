@@ -21,11 +21,11 @@ export class DiffController {
             'Returns the diff (or an array of diffs) between a proposal and its parent hash. Insertions in the diff_wiki are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
     })
     async getDiffByProposal(@Param('proposal_hash') query_hashes): Promise<any> {
-        const proposal_hashes = query_hashes.split(',');
+        const proposal_hashes: Array<string> = query_hashes.split(',');
         if (proposal_hashes.length == 1)
             return await this.diffService.getDiffByProposal(proposal_hashes[0]);
         else
-            return await this.diffService.getDiffsByProposal(proposal_hashes[0]);
+            return await this.diffService.getDiffsByProposal(proposal_hashes);
     }
 
     @Get('/wiki/:old_hash/:new_hash')
