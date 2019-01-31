@@ -18,7 +18,7 @@ export class WikiController {
     }
 
     @Get('hashes')
-    @ApiOperation({ title: 'Get wiki by IPFS hash' })
+    @ApiOperation({ title: 'Get multiple wikis by IPFS hash' })
     @ApiImplicitQuery({
         name: 'hashes',
         description: 'Array of IPFS hashes of wikis - Example: /v1/wiki/hashes?hashes[]=QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ&hashes[]=QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z',

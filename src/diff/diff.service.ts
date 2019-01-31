@@ -46,7 +46,7 @@ export class DiffService {
         }
 
         const flattened_hashes = [].concat(...ipfs_hashes);
-        const wikis = this.wikiService.getWikisByHash(flattened_hashes);
+        const wikis = await this.wikiService.getWikisByHash(flattened_hashes);
 
         for (const i in ipfs_hashes) {
             if (diffs[i] !== null) continue;

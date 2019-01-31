@@ -24,9 +24,6 @@ export class PreviewService  {
     async getWikiPreviews(ipfs_hashes: Array<string>): Promise<any> {
         const previews = {};
 
-        const joined_hashes = ipfs_hashes
-            .map((h) => `"${h}"`) // wrap each hash in quotes
-            .join(',');
         const article_info: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -35,7 +32,8 @@ export class PreviewService  {
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache
                 ON cache.articletable_id=art.id
-                WHERE cache.ipfs_hash IN (${joined_hashes})`,
+                WHERE cache.ipfs_hash IN (?)`,
+                [ipfs_hashes],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);

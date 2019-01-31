@@ -49,9 +49,13 @@ export class WikiService {
             }
         }
 
-        // fetch remainder from mysql if they exist
+        // if there are no uncached wikis, return the result
         const uncached_wikis = Object.keys(wikis)
-            .filter((hash) => wikis[hash] === null)
+            .filter((hash) => wikis[hash] === null);
+        if (uncached_wikis.length == 0)
+            return wikis;
+            
+        // fetch remainder from mysql if they exist
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql
                 .pool()
