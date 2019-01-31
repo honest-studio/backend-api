@@ -56,7 +56,7 @@ async function bootstrap() {
     await app.get('MongoDbService').connect();
 
     // Start Dfuse sync
-    //app.get('EosSyncService').sync();
+    app.get('EosSyncService').sync();
 
     // try to load SSL config
     const sslConfig = TryResolveSslConfig(app.get(ConfigService).get('sslConfig'));

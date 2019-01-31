@@ -80,7 +80,7 @@ export class DiffService {
 
         var cache_docs = docs.filter(doc => !doc.error);
         if (cache_docs.length > 0)
-            await this.mongo.connection().diffs.insert(cache_docs);
+            await this.mongo.connection().diffs.insertMany(cache_docs);
 
         return diffs;
     }

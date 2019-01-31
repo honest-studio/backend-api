@@ -11,12 +11,15 @@ export class PreviewController {
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
         name: 'ipfs_hash',
-        description: 'IPFS hash of a wiki - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+        description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
+            Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
+            Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
     })
     @ApiResponse({
         status: 200,
         description:
-            `{
+            `Object or array of objects with the following schema:
+            {
                 title: Article title,
                 mainimage: Main article image,
                 thumbnail: Article main image thumbnail,
@@ -25,7 +28,11 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getWikiPreview(@Param('ipfs_hash') ipfs_hash): Promise<any> {
-        return await this.previewService.getWikiPreview(ipfs_hash);
+    async getWikiPreview(@Param('ipfs_hash') query_hashes): Promise<any> {
+        const ipfs_hashes = query_hashes.split(',');
+        if (ipfs_hashes.length == 1)
+            return await this.previewService.getWikiPreview(ipfs_hashes[0]);
+        else
+            return await this.previewService.getWikiPreviews(ipfs_hashes);
     }
 }
