@@ -92,6 +92,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Proposal: Multiple proposals', () => {
+    return request(app.getHttpServer())
+        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
+        .expect(200)
+  });
+
   it('Proposal: Proposal votes', () => {
     return request(app.getHttpServer())
         .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/votes')
@@ -101,12 +107,6 @@ describe('Backend API', () => {
   it('Proposal: Proposal result', () => {
     return request(app.getHttpServer())
         .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/result')
-        .expect(200)
-  });
-  
-  it('Proposal: Proposal diff', () => {
-    return request(app.getHttpServer())
-        .get('/v1/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/diff')
         .expect(200)
   });
 
@@ -119,6 +119,12 @@ describe('Backend API', () => {
   it('Wiki: Get wiki by hash', () => {
     return request(app.getHttpServer())
         .get('/v1/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .expect(200)
+  });
+
+  it('Wiki: Get wikis by hash', () => {
+    return request(app.getHttpServer())
+        .get('/v1/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
         .expect(200)
   });
 
@@ -150,6 +156,30 @@ describe('Backend API', () => {
   it('Search: Title', () => {
     return request(app.getHttpServer())
         .get('/v1/search/title/Travis%20Moore')
+        .expect(200)
+  });
+  
+  it('Diff: Proposal diff', () => {
+    return request(app.getHttpServer())
+        .get('/v1/diff/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .expect(200)
+  });
+
+  it('Diff: Proposal diffs', () => {
+    return request(app.getHttpServer())
+        .get('/v1/diff/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
+        .expect(200)
+  });
+
+  it('Diff: Wiki diff', () => {
+    return request(app.getHttpServer())
+        .get('/v1/diff/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
+        .expect(200)
+  });
+
+  it('Preview: Wiki', () => {
+    return request(app.getHttpServer())
+        .get('/v1/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
         .expect(200)
   });
 });
