@@ -7,7 +7,7 @@ import { DiffService } from './diff.service';
 export class DiffController {
     constructor(private readonly diffService: DiffService) {}
 
-    @Get('diff/proposal/:proposal_hash')
+    @Get('/proposal/:proposal_hash')
     @ApiOperation({ title: 'Get diff of an edit proposal' })
     @ApiImplicitParam({
         name: 'proposal_hash',
@@ -22,7 +22,7 @@ export class DiffController {
         return await this.diffService.getDiffByProposal(proposal_hash);
     }
 
-    @Get('diff/wiki/:old_hash/:new_hash')
+    @Get('/wiki/:old_hash/:new_hash')
     @ApiOperation({ title: 'Get diff between 2 wikis' })
     @ApiImplicitParam({
         name: 'old_hash',

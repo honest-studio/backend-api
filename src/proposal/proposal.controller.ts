@@ -1,5 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { ProposalService } from './proposal.service';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 
@@ -7,6 +7,19 @@ import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/dat
 @ApiUseTags('Proposals')
 export class ProposalController {
     constructor(private readonly proposalService: ProposalService) {}
+
+
+    @Get('multiple')
+    @ApiOperation({ title: 'Get details of multiple proposals' })
+    @ApiImplicitQuery({
+        name: 'hashes',
+        description: 'Array of IPFS hashes of wikis - Example: /v1/wiki/hashes?hashes[]=QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ&hashes[]=QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z',
+        type: 'String',
+        isArray: true
+    })
+    async getProposals(@Query('hashes') proposal_hashes): Promise<EosAction<Propose>[]> {
+        return await this.proposalService.getProposals(proposal_hashes);
+    }
 
     @Get(':proposal_hash')
     @ApiOperation({ title: 'Get details of a proposal' })

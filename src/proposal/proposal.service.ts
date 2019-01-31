@@ -29,14 +29,12 @@ export class ProposalService {
         else return proposal;
     }
 
-
     async getProposals(proposal_hashes: Array<string>): Promise<Array<EosAction<Propose>>> {
-        const proposals = await this.mongo.connection().actions.findOne({
+        return this.mongo.connection().actions.find({
             'data.trace.act.account': 'eparticlectr',
             'data.trace.act.name': 'propose',
-            'data.trace.act.data.proposed_article_hash': { $in: [proposal_hashes] }
-        });
-        return proposals;
+            'data.trace.act.data.proposed_article_hash': { $in: proposal_hashes }
+        }).toArray();
     }
 
     async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {

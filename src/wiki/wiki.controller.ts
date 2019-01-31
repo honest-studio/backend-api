@@ -1,5 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
+import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { WikiService } from './wiki.service';
 
 @Controller('v1/wiki')
@@ -15,6 +15,18 @@ export class WikiController {
     })
     async getWikiByHash(@Param('ipfs_hash') ipfs_hash): Promise<any> {
         return await this.wikiService.getWikiByHash(ipfs_hash);
+    }
+
+    @Get('hashes')
+    @ApiOperation({ title: 'Get wiki by IPFS hash' })
+    @ApiImplicitQuery({
+        name: 'hashes',
+        description: 'Array of IPFS hashes of wikis - Example: /v1/wiki/hashes?hashes[]=QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ&hashes[]=QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z',
+        type: 'String',
+        isArray: true
+    })
+    async getWikisByHash(@Query('hashes') ipfs_hashes): Promise<any> {
+        return await this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
     @Get('title/:article_title')

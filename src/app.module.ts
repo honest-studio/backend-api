@@ -6,7 +6,10 @@ import { CommonModule, ConfigService } from './common';
 import { RecentActivityController } from './recent-activity/recent-activity.controller';
 import { RecentActivityService } from './recent-activity/recent-activity.service';
 import { ChainController, ChainService } from './chain';
+import { DiffController, DiffService } from './diff';
+import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
+import { CacheController, CacheService } from './cache';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 
 @Module({
@@ -33,7 +36,7 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
             inject: [ConfigService]
         })
     ],
-    controllers: [ProposalController, WikiController, RecentActivityController, ChainController, SearchController],
-    providers: [ProposalService, WikiService, RecentActivityService, ChainService, SearchService]
+    controllers: [ProposalController, WikiController, RecentActivityController, ChainController, SearchController, DiffController, PreviewController, CacheController],
+    providers: [ProposalService, WikiService, RecentActivityService, ChainService, SearchService, DiffService, PreviewService, CacheService]
 })
 export class AppModule {}
