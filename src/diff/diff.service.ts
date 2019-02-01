@@ -14,7 +14,12 @@ export class DiffService {
     ) {}
 
     async getDiffByProposal(proposal_hash: string): Promise<any> {
-        return this.getDiffsByProposal([ proposal_hash ]);
+        const diffs = await this.getDiffsByProposal([ proposal_hash ]);
+        if (diffs.length == 0)
+            throw new NotFoundException("Proposal not found");
+        if (diffs[0].error)
+            throw new NotFoundException(diffs[0].error);
+        return diffs[0];
     }
 
     async getDiffsByProposal(proposal_hashes: Array<string>): Promise<any> {
@@ -56,11 +61,11 @@ export class DiffService {
             const old_wiki = wikis[old_hash];
             const new_wiki = wikis[new_hash];
             if (!old_wiki) { 
-            diffs[i] = { error: `${old_hash} could not be found`, statusCode: 404 };
+            diffs[i] = { error: `Wiki ${old_hash} could not be found`, statusCode: 404 };
                 continue;
             }
             else if (!new_wiki) { 
-                diffs[i] = { error: `${new_hash} could not be found`, statusCode: 404 };
+                diffs[i] = { error: `Wiki ${new_hash} could not be found`, statusCode: 404 };
                 continue;
             }
 
