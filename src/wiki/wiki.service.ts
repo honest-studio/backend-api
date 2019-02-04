@@ -74,4 +74,9 @@ export class WikiService {
 
         return wikis;
     }
+
+    async submitWiki(html_body: string): Promise<any> {
+        const submission = await this.ipfs.client().add(Buffer.from(html_body, 'utf8'));
+        return { ipfs_hash: submission[0].hash  }
+    }
 }

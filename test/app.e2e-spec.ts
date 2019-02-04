@@ -140,6 +140,17 @@ describe('Backend API', () => {
         .expect(404)
   });
 
+  it('Wiki: Submit article', () => {
+    return request(app.getHttpServer())
+        .post('/v1/wiki')
+        .set('Content-type', 'text/html')
+        .send(`<!DOCTYPE html><html>Hi I'm a wiki</html>`)
+        .expect(201)
+        .expect({
+            ipfs_hash: "QmY8v3eMGG4tWBjgDgMnYDcbVnWx9ikMgxDurSeKRjLRMB"
+        })
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v1/chain/get_info')

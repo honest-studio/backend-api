@@ -1,6 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
+import { Controller, Get, Post, Req, Param } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
 import { WikiService } from './wiki.service';
+import * as rawbody from 'raw-body';
 
 @Controller('v1/wiki')
 @ApiUseTags('Wikis')
@@ -31,5 +32,12 @@ export class WikiController {
     })
     async getWikiByTitle(@Param('article_title') article_title): Promise<any> {
         return await this.wikiService.getWikiByTitle(article_title);
+    }
+
+    @Post('/')
+    @ApiOperation({ title: "Submit a wiki to IPFS" })
+    async submitWiki(_, @Req() req): Promise<any> {
+        const raw = await rawbody(req);
+        return this.wikiService.submitWiki(raw.toString());
     }
 }
