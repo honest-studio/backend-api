@@ -40,4 +40,24 @@ export class WikiController {
         const raw = await rawbody(req);
         return this.wikiService.submitWiki(raw.toString());
     }
+
+    @Get(':wiki_id/history')
+    @ApiOperation({ title: 'Get edit history for a wiki' })
+    @ApiImplicitParam({
+        name: 'ipfs_hash',
+        description: 'IPFS hash of a wiki - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns:
+                history: An array of IPFS hashes. The first item in the array is the most recent proposal, 
+                    and each subsequent hash is the parent of the one before it
+                proposals: An object mapping hashes to proposal receipts.
+                results: An object mapping hashes to proposal results.
+                
+            The last hash in the history is usually a blank hash and doesn't have a proposal or result object associated with it. `
+    })
+    async getHistory(@Param('proposal_id') proposal_id: string): Promise<any> {
+        return this.wikiService.getHistory(Number(proposal_id));
+    }
 }

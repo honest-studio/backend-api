@@ -1,13 +1,8 @@
 export type IpfsHash = string;
 export type EosName = string;
-export type ProposalApproved = number; // 0=no, 1=yes
+export type BooleanNumber = number; // 0=false | 1=true;
 
 export interface EosAction<T> {
-    data: EosActionData<T>;
-    error?: any;
-}
-
-export interface EosActionData<T> {
     block_num: number;
     block_id: string;
     block_time: Date;
@@ -15,6 +10,7 @@ export interface EosActionData<T> {
     idx: number;
     depth: number;
     trace: EosTrace<T>;
+    error?: any;
 }
 
 export interface EosTrace<T> {
@@ -62,19 +58,25 @@ export interface EosPermission {
 
 export interface Propose {
     proposer: EosName;
-    proposed_article_hash: IpfsHash;
-    old_article_hash: IpfsHash;
-    grandparent_hash?: IpfsHash;
+    wiki_id: number;
+    ipfs_hash: IpfsHash;
+    lang_code: string;
+    group_id: number;
+    comment: string;
+    memo: string
 }
 export interface Vote {
     voter: EosName;
-    proposal_hash: IpfsHash;
-    approve: ProposalApproved;
+    proposal_id: number;
+    approve: BooleanNumber;
     amount: number;
+    comment: string;
+    memo: string
 }
 export interface ProposalResult {
-    proposal: IpfsHash;
-    approved: ProposalApproved;
+    proposal_id: number;
+    wiki_id: number;
+    approved: BooleanNumber;
     yes_votes: number;
     no_votes: number;
 }

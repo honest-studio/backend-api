@@ -48,6 +48,10 @@ export interface DfuseConfig {
      * Origin URL to send with requests to DFuse API
      */
     dfuseOriginUrl: string;
+    /**
+     * Block to start syncing a fresh database
+     */
+    dfuseStartBlock: string
 }
 
 /**
@@ -181,6 +185,7 @@ export enum ConfigKeyNames {
     DFUSE_API_WEBSOCKET_ENDPOINT = 'DFUSE_API_WEBSOCKET_ENDPOINT',
     DFUSE_API_REST_ENDPOINT = 'DFUSE_API_REST_ENDPOINT',
     DFUSE_API_ORIGIN_URL = 'DFUSE_API_ORIGIN_URL',
+    DFUSE_START_BLOCK = 'DFUSE_START_BLOCK',
     IPFS_DAEMON_HOST = 'IPFS_DAEMON_HOST',
     IPFS_DAEMON_PORT = 'IPFS_DAEMON_PORT',
     ELASTICSEARCH_PROTOCOL = 'ELASTICSEARCH_PROTOCOL',

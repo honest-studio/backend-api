@@ -8,8 +8,8 @@ import * as WebSocket from 'ws';
 export class EosSyncService {
     private readonly mongoDbService: MongoDbService;
     private readonly dfuse: WebSocket;
+    private readonly dfuseStartBlock;
     private readonly dfuseConfig: DfuseConfig;
-    private readonly DEFAULT_BLOCK_START: number = 5000000;
     private lastMessageReceived: number;
 
     constructor(mongo: MongoDbService, config: ConfigService) {
@@ -21,18 +21,19 @@ export class EosSyncService {
                 Origin: this.dfuseConfig.dfuseOriginUrl
             }
         });
+        this.dfuseStartBlock = Number(this.dfuseConfig.dfuseStartBlock);
     }
 
-    async get_start_block(account: string, default_start_block: number = this.DEFAULT_BLOCK_START): Promise<number> {
+    async get_start_block(account: string, default_start_block: number = this.dfuseStartBlock): Promise<number> {
         return this.mongoDbService
             .connection()
-            .actions.find({ 'data.trace.act.account': account })
-            .sort({ 'data.block_num': -1 })
+            .actions.find({ 'trace.act.account': account })
+            .sort({ 'block_num': -1 })
             .limit(1)
             .toArray()
             .then((result: Array<any>) => {
                 if (result.length == 0) return default_start_block;
-                else return result[0].data.block_num;
+                else return result[0].block_num;
             });
     }
 
@@ -43,18 +44,18 @@ export class EosSyncService {
                 req_id: 'article_req',
                 listen: true,
                 data: {
-                    account: 'eparticlectr'
+                    account: 'eparticlenew'
                 },
-                start_block: await this.get_start_block('eparticlectr')
+                start_block: await this.get_start_block('eparticlenew')
             };
             const token_req = {
                 type: 'get_actions',
                 req_id: 'token_req',
                 listen: true,
                 data: {
-                    account: 'everipediaiq'
+                    account: 'everipediatk'
                 },
-                start_block: await this.get_start_block('everipediaiq')
+                start_block: await this.get_start_block('everipediatk')
             };
             const safesend_req = {
                 type: 'get_actions',
@@ -91,7 +92,7 @@ export class EosSyncService {
             }
             this.mongoDbService
                 .connection()
-                .actions.insertOne(msg)
+                .actions.insertOne(msg.data)
                 .then(() => {
                     const block_num = msg.data.block_num;
                     const account = msg.data.trace.act.account;

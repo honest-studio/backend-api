@@ -7,10 +7,10 @@ import { DiffService } from './diff.service';
 export class DiffController {
     constructor(private readonly diffService: DiffService) {}
 
-    @Get('/proposal/:proposal_hash')
+    @Get('/proposal/:proposal_id')
     @ApiOperation({ title: 'Get diffs for edit proposals' })
     @ApiImplicitParam({
-        name: 'proposal_hash',
+        name: 'proposal_id',
         description: `IPFS hashes of proposals. To get multiple proposals, separate hashes with a comma.
         Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
         Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
@@ -20,12 +20,12 @@ export class DiffController {
         description:
             'Returns the diff (or an array of diffs) between a proposal and its parent hash. Insertions in the diff_wiki are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
     })
-    async getDiffByProposal(@Param('proposal_hash') query_hashes): Promise<any> {
-        const proposal_hashes: Array<string> = query_hashes.split(',');
-        if (proposal_hashes.length == 1)
-            return await this.diffService.getDiffByProposal(proposal_hashes[0]);
+    async getDiffByProposal(@Param('proposal_id') query_ids): Promise<any> {
+        const proposal_ids: Array<number> = query_ids.split(',');
+        if (proposal_ids.length == 1)
+            return await this.diffService.getDiffByProposal(proposal_ids[0]);
         else
-            return await this.diffService.getDiffsByProposal(proposal_hashes);
+            return await this.diffService.getDiffsByProposal(proposal_ids);
     }
 
     @Get('/wiki/:old_hash/:new_hash')

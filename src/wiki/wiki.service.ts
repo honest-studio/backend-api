@@ -79,4 +79,26 @@ export class WikiService {
         const submission = await this.ipfs.client().add(Buffer.from(html_body, 'utf8'));
         return { ipfs_hash: submission[0].hash  }
     }
+
+    async getHistory(wiki_id: number): Promise<Array<any>> {
+        const infos = await this.mongo.connection().actions.find({
+            'trace.act.account': 'eparticlenew',
+            'trace.act.name': 'logpropinfo',
+            'trace.act.data.wiki_id': wiki_id
+        }).toArray();
+        const proposals: Array<any> = infos.map(doc => { info: doc });
+
+        // get results
+        const results = []
+        for (const i in proposals) {
+            const id = proposals[i].trace.act.id;
+            try {
+            //proposals[i].result = await this.getResult(id);
+            } catch (e) {
+                continue;
+            }
+        }
+
+        return proposals;
+    }
 }

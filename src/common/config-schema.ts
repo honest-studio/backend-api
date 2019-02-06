@@ -43,7 +43,8 @@ const GetDfuseConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
             dfuseApiKey: parsed[ConfigKeyNames.DFUSE_API_KEY],
             dfuseWsEndpoint: parsed[ConfigKeyNames.DFUSE_API_WEBSOCKET_ENDPOINT],
             dfuseRestEndpoint: parsed[ConfigKeyNames.DFUSE_API_REST_ENDPOINT],
-            dfuseOriginUrl: parsed[ConfigKeyNames.DFUSE_API_ORIGIN_URL]
+            dfuseOriginUrl: parsed[ConfigKeyNames.DFUSE_API_ORIGIN_URL],
+            dfuseStartBlock: parsed[ConfigKeyNames.DFUSE_START_BLOCK]
         }
     };
 };
@@ -176,6 +177,7 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string()
         .uri()
         .required(),
+    [ConfigKeyNames.DFUSE_START_BLOCK]: Joi.number().min(2).default(2),
     [ConfigKeyNames.IPFS_DAEMON_HOST]: Joi.string().required(),
     [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number()
         .integer()
