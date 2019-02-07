@@ -22,10 +22,7 @@ export class DiffController {
     })
     async getDiffByProposal(@Param('proposal_id') query_ids): Promise<any> {
         const proposal_ids: Array<number> = query_ids.split(',');
-        if (proposal_ids.length == 1)
-            return await this.diffService.getDiffByProposal(proposal_ids[0]);
-        else
-            return await this.diffService.getDiffsByProposal(proposal_ids);
+        return await this.diffService.getDiffsByProposal(proposal_ids);
     }
 
     @Get('/wiki/:old_hash/:new_hash')
@@ -39,6 +36,6 @@ export class DiffController {
         description: 'IPFS hash of new wiki'
     })
     async getDiffByWiki(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
-        return await this.diffService.getDiffByWiki(old_hash, new_hash);
+        return await this.diffService.getDiffsByWiki([old_hash, new_hash]);
     }
 }

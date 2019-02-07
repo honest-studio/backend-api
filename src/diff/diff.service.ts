@@ -13,29 +13,13 @@ export class DiffService {
         private mongo: MongoDbService
     ) {}
 
-    async getDiffByProposal(proposal_id: number): Promise<any> {
-        const diffs = await this.getDiffsByProposal([ proposal_id ]);
-        if (diffs.length == 0)
-            throw new NotFoundException("Proposal not found");
-        if (diffs[0].error)
-            throw new NotFoundException(diffs[0].error);
-        return diffs[0];
-    }
-
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
         const proposals = await this.proposalService.getProposals(proposal_ids);
-        const ipfs_hashes = proposals.map((p) => [
-            p.trace.act.data.old_article_hash,
-            p.trace.act.data.proposed_article_hash
-        ]);
+        for (const i in proposals) {
+            const proposal_id = proposals[i].trace.act.data.id;
+        }
+        const ipfs_hashes = [];
         return this.getDiffsByWiki(ipfs_hashes);
-    }
-
-    async getDiffByWiki(old_hash: string, new_hash: string): Promise<any> {
-        const diffs = await this.getDiffsByWiki([[ old_hash, new_hash ]]);
-        if (diffs[0].error && diffs[0].statusCode == 404)
-            throw new NotFoundException(diffs[0].error);
-        return diffs[0];
     }
 
     async getDiffsByWiki(ipfs_hashes: Array<Array<string>>): Promise<any> {

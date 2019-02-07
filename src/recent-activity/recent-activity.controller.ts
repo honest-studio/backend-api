@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitQuery, ApiUseTa
 import { RecentActivityService, RecentActivityQuerySchema } from '.';
 import { JoiValidationPipe } from '../common';
 
-@Controller('v1/recent-activity')
+@Controller('v2/recent-activity')
 @ApiUseTags('Recent Activity')
 export class RecentActivityController {
     constructor(private readonly recentActivityService: RecentActivityService) {}
