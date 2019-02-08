@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { SearchService } from './search.service';
 
-@Controller('v1/search')
+@Controller('v2/search')
 @ApiUseTags('Search')
 export class SearchController {
     constructor(private readonly searchService: SearchService) {}

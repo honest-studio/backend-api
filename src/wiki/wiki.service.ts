@@ -2,12 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
-import { ProposalService } from '../proposal';
 import { CacheService } from '../cache';
 
 @Injectable()
 export class WikiService {
-    constructor(private ipfs: IpfsService, private mysql: MysqlService, private mongo: MongoDbService, private cacheService: CacheService) {}
+    constructor(private ipfs: IpfsService, private mysql: MysqlService, private mongo: MongoDbService, private cacheService: CacheService ) {}
 
     async getWikiByHash(ipfs_hash: string): Promise<any> {
         const wikis = await this.getWikisByHash([ ipfs_hash ]);
@@ -80,25 +79,4 @@ export class WikiService {
         return { ipfs_hash: submission[0].hash  }
     }
 
-    async getHistory(wiki_id: number): Promise<Array<any>> {
-        const infos = await this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
-            'trace.act.name': 'logpropinfo',
-            'trace.act.data.wiki_id': wiki_id
-        }).toArray();
-        const proposals: Array<any> = infos.map(doc => { info: doc });
-
-        // get results
-        const results = []
-        for (const i in proposals) {
-            const id = proposals[i].trace.act.id;
-            try {
-            //proposals[i].result = await this.getResult(id);
-            } catch (e) {
-                continue;
-            }
-        }
-
-        return proposals;
-    }
 }

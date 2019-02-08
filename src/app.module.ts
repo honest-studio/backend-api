@@ -10,6 +10,7 @@ import { DiffController, DiffService } from './diff';
 import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
 import { CacheController, CacheService } from './cache';
+import { HistoryController, HistoryService } from './history';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 
 @Module({
@@ -36,7 +37,7 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
             inject: [ConfigService]
         })
     ],
-    controllers: [ProposalController, WikiController, RecentActivityController, ChainController, SearchController, DiffController, PreviewController, CacheController],
-    providers: [ProposalService, WikiService, RecentActivityService, ChainService, SearchService, DiffService, PreviewService, CacheService]
+    controllers: [ProposalController, WikiController, RecentActivityController, ChainController, SearchController, DiffController, PreviewController, CacheController, HistoryController],
+    providers: [ProposalService, WikiService, RecentActivityService, ChainService, SearchService, DiffService, PreviewService, CacheService, HistoryService]
 })
 export class AppModule {}

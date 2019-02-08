@@ -2,12 +2,12 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { PreviewService } from './preview.service';
 
-@Controller('v1/preview')
+@Controller('v2/preview')
 @ApiUseTags('Preview')
 export class PreviewController {
     constructor(private readonly previewService: PreviewService) {}
 
-    @Get('wiki/:ipfs_hash')
+    @Get('wiki/:ipfs_hashes')
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
         name: 'ipfs_hash',
@@ -28,11 +28,8 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getWikiPreview(@Param('ipfs_hash') query_hashes): Promise<any> {
+    async getWikiPreview(@Param('ipfs_hashes') query_hashes): Promise<any> {
         const ipfs_hashes = query_hashes.split(',');
-        if (ipfs_hashes.length == 1)
-            return await this.previewService.getWikiPreview(ipfs_hashes[0]);
-        else
-            return await this.previewService.getWikiPreviews(ipfs_hashes);
+        return this.previewService.getWikiPreviews(ipfs_hashes);
     }
 }

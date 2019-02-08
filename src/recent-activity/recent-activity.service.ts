@@ -20,14 +20,15 @@ export class RecentActivityService {
 
     async getResults(query): Promise<Array<EosAction<ProposalResult>>> {
         const results = await this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
-            'trace.act.name': 'logpropres'
-        });
-        return results
-            .sort({ 'data.block_num': -1 })
+                'trace.act.account': 'eparticlenew',
+                'trace.act.name': 'logpropres'
+            })
+            .sort({ 'block_num': -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
+
+        return results;
     }
 
     async getProposals(query): Promise<Array<EosAction<Propose>>> {
@@ -35,16 +36,18 @@ export class RecentActivityService {
                 'trace.act.account': 'eparticlenew',
                 'trace.act.name': 'logpropinfo'
             }, { projection: { 'trace.act.data.proposal_id': 1 }})
-            .sort({ 'data.block_num': -1 })
+            .sort({ 'block_num': -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
-        console.log(proposal_id_docs);
         
         const proposal_ids = proposal_id_docs.map(doc => doc.trace.act.data.proposal_id);
-        console.log(proposal_ids);
+        const proposals = await this.proposalService.getProposals(proposal_ids, query.preview, query.diff_percent);
 
-        return this.proposalService.getProposals(proposal_ids, query.preview, query.diff_percent);
+        return Object.keys(proposals)
+            .map(Number)
+            .sort((a,b) => b - a)
+            .map(proposal_id => proposals[proposal_id])
     }
 
     async getVotes(query): Promise<Array<EosAction<Vote>>> {
@@ -53,7 +56,7 @@ export class RecentActivityService {
             'trace.act.name': 'vote'
         });
         return votes
-            .sort({ 'data.block_num': -1 })
+            .sort({ 'block_num': -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();

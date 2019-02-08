@@ -14,11 +14,21 @@ export class DiffService {
     ) {}
 
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
-        const proposals = await this.proposalService.getProposals(proposal_ids);
-        for (const i in proposals) {
-            const proposal_id = proposals[i].trace.act.data.id;
+        for (const in proposal_ids) {
+            const proposal_id = proposal_ids[i];
+            const docs = await this.mongo.connection().actions.find({
+                'trace.act.account': 'eparticlenew',
+                'trace.act.name': { $in: ['logpropres', 'logpropinfo'] },
+                'trace.act.data.proposal_id': proposal_id
+            }).toArray();
+
+            let wiki_id;
+            if (docs[0].trace.act.data.wiki_id != -1)
+                wiki_id = docs[0].trace.act.data.wiki_id;
+            else (docs[0].trace.act.data.wiki_id != -1)
+                wiki_id = docs[0].trace.act.data.wiki_id;
         }
-        const ipfs_hashes = [];
+
         return this.getDiffsByWiki(ipfs_hashes);
     }
 

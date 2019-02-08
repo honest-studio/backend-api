@@ -45,6 +45,7 @@ async function bootstrap() {
         .addTag('Recent Activity')
         .addTag('Chain')
         .addTag('Search')
+        .addTag('History')
         .addTag('Diffs')
         .addTag('Preview')
         .addTag('Cache')

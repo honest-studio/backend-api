@@ -2,7 +2,7 @@ import { Controller, Body, Post, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { ChainService } from './chain.service';
 
-@Controller('v1/chain')
+@Controller('v2/chain')
 @ApiUseTags('Chain')
 export class ChainController {
     constructor(private readonly chainService: ChainService) {}

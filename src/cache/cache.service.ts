@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { IpfsService } from '../common';
 import { MysqlService } from '../feature-modules/database';
-import HtmlDiff from 'htmldiff-js';
 
 @Injectable()
 export class CacheService {
