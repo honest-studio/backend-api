@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { DiffService } from './diff.service';
 
-@Controller('v1/diff')
+@Controller('v2/diff')
 @ApiUseTags('Diffs')
 export class DiffController {
     constructor(private readonly diffService: DiffService) {}
@@ -21,7 +21,7 @@ export class DiffController {
             'Returns the diff (or an array of diffs) between a proposal and its parent hash. Insertions in the diff_wiki are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
     })
     async getDiffByProposal(@Param('proposal_id') query_ids): Promise<any> {
-        const proposal_ids: Array<number> = query_ids.split(',');
+        const proposal_ids: Array<number> = query_ids.split(',').map(Number);
         return await this.diffService.getDiffsByProposal(proposal_ids);
     }
 

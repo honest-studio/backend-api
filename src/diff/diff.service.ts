@@ -14,7 +14,9 @@ export class DiffService {
     ) {}
 
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
-        for (const in proposal_ids) {
+        const ipfs_hashes = [];
+
+        for (const i in proposal_ids) {
             const proposal_id = proposal_ids[i];
             const docs = await this.mongo.connection().actions.find({
                 'trace.act.account': 'eparticlenew',
@@ -25,8 +27,21 @@ export class DiffService {
             let wiki_id;
             if (docs[0].trace.act.data.wiki_id != -1)
                 wiki_id = docs[0].trace.act.data.wiki_id;
-            else (docs[0].trace.act.data.wiki_id != -1)
-                wiki_id = docs[0].trace.act.data.wiki_id;
+            else if (docs.length == 1) { // proposal doesn't have a parent
+                // Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ is an empty file
+                ipfs_hashes.push(["Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ", docs[0].trace.act.data.ipfs_hash]);
+                continue;    
+            }
+            else
+                wiki_id = docs[1].trace.act.data.wiki_id;
+
+            const history = await this.mongo.connection().actions.findOne({
+                'trace.act.account': 'eparticlenew',
+                'trace.act.name': { $in: ['logpropres', 'logpropinfo'] },
+                'trace.act.data.wiki_id': wiki_id,
+                'trace.act.data.proposal_id': { $lt: proposal_id }
+            })
+            console.log(history);
         }
 
         return this.getDiffsByWiki(ipfs_hashes);
