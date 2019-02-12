@@ -3,6 +3,7 @@ import * as fetch from 'node-fetch';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { ProposalService } from '../proposal';
 import { WikiService } from '../wiki';
+import { HistoryService } from '../history';
 import HtmlDiff from 'htmldiff-js';
 
 @Injectable()
@@ -10,7 +11,8 @@ export class DiffService {
     constructor(
         private proposalService: ProposalService,
         private wikiService: WikiService,
-        private mongo: MongoDbService
+        private mongo: MongoDbService,
+        private historyService: HistoryService
     ) {}
 
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
@@ -18,30 +20,48 @@ export class DiffService {
 
         for (const i in proposal_ids) {
             const proposal_id = proposal_ids[i];
-            const docs = await this.mongo.connection().actions.find({
+            const proposal = await this.mongo.connection().actions.findOne({
                 'trace.act.account': 'eparticlenew',
-                'trace.act.name': { $in: ['logpropres', 'logpropinfo'] },
+                'trace.act.name': 'logpropinfo',
                 'trace.act.data.proposal_id': proposal_id
-            }).toArray();
+            });
 
-            let wiki_id;
-            if (docs[0].trace.act.data.wiki_id != -1)
-                wiki_id = docs[0].trace.act.data.wiki_id;
-            else if (docs.length == 1) { // proposal doesn't have a parent
+            if (!proposal)
+                throw new NotFoundException(`Proposal ${proposal_id} could not be found`);
+
+            const new_hash = proposal.trace.act.data.ipfs_hash;
+            const wiki_id = proposal.trace.act.data.wiki_id;
+
+            let old_hash;
+            if (wiki_id == -1) {
+                // The proposal doesn't have a parent
                 // Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ is an empty file
-                ipfs_hashes.push(["Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ", docs[0].trace.act.data.ipfs_hash]);
-                continue;    
+                old_hash = "Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ";
             }
-            else
-                wiki_id = docs[1].trace.act.data.wiki_id;
+            else {
+                const lastpropres = await this.mongo.connection().actions.find({
+                    'trace.act.account': 'eparticlenew',
+                    'trace.act.name': 'logpropres',
+                    'trace.act.data.wiki_id': wiki_id,
+                    'trace.act.data.proposal_id': { $lt: proposal_id }
+                })
+                .sort({ 'trace.act.data.proposal_id': -1 })
+                .limit(1)
+                .toArray();
 
-            const history = await this.mongo.connection().actions.findOne({
-                'trace.act.account': 'eparticlenew',
-                'trace.act.name': { $in: ['logpropres', 'logpropinfo'] },
-                'trace.act.data.wiki_id': wiki_id,
-                'trace.act.data.proposal_id': { $lt: proposal_id }
-            })
-            console.log(history);
+                old_hash = lastpropres[0].trace.act.data.ipfs_hash;    
+                if (!old_hash) {
+                    const lastpropid = lastpropres[0].trace.act.data.proposal_id;
+                    const lastpropinfo = await this.mongo.connection().actions.findOne({
+                        'trace.act.account': 'eparticlenew',
+                        'trace.act.name': 'logpropinfo',
+                        'trace.act.data.proposal_id': lastpropid
+                    })
+                    old_hash = lastpropinfo.trace.act.data.ipfs_hash;    
+                }
+            }
+
+            ipfs_hashes.push([ old_hash, new_hash ]);
         }
 
         return this.getDiffsByWiki(ipfs_hashes);

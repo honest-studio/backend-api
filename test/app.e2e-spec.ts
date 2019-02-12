@@ -160,14 +160,20 @@ describe('Backend API', () => {
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .get('/v2/diff/proposal/306')
         .expect(200)
   });
 
   it('Diff: Proposal diffs', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
+        .get('/v2/diff/proposal/34,36,57')
         .expect(200)
+  });
+
+  it('Diff: Non-existent proposal', () => {
+    return request(app.getHttpServer())
+        .get('/v2/diff/proposal/789239023')
+        .expect(404)
   });
 
   it('Diff: Wiki diff', () => {
