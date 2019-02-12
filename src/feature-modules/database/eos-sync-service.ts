@@ -44,18 +44,18 @@ export class EosSyncService {
                 req_id: 'article_req',
                 listen: true,
                 data: {
-                    account: 'eparticlenew'
+                    account: 'eparticlectr'
                 },
-                start_block: await this.get_start_block('eparticlenew')
+                start_block: await this.get_start_block('eparticlectr')
             };
             const token_req = {
                 type: 'get_actions',
                 req_id: 'token_req',
                 listen: true,
                 data: {
-                    account: 'everipediatk'
+                    account: 'everipediaiq'
                 },
-                start_block: await this.get_start_block('everipediatk')
+                start_block: await this.get_start_block('everipediaiq')
             };
             const safesend_req = {
                 type: 'get_actions',

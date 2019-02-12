@@ -15,21 +15,21 @@ export class ProposalService {
         proposal_ids.forEach(id => proposals[id].result = null);
 
         const info = await this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
+            'trace.act.account': 'eparticlectr',
             'trace.act.name': 'logpropinfo',
             'trace.act.data.proposal_id': { $in: proposal_ids }
         }).toArray();
         info.forEach(doc => proposals[Number(doc.trace.act.data.proposal_id)].info = doc);
 
         const votes = await this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
+            'trace.act.account': 'eparticlectr',
             'trace.act.name': 'vote',
             'trace.act.data.proposal_id': { $in: proposal_ids }
         }).toArray();
         votes.forEach(doc => proposals[Number(doc.trace.act.data.proposal_id)].votes.push(doc));
 
         const results = await this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
+            'trace.act.account': 'eparticlectr',
             'trace.act.name': 'logpropres',
             'trace.act.data.proposal_id': { $in: proposal_ids }
         });

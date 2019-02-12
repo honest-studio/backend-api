@@ -9,7 +9,7 @@ export class RecentActivityService {
 
     async getAll(query): Promise<Array<EosAction<any>>> {
         const docs = this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew'
+            'trace.act.account': 'eparticlectr'
         });
         return docs
             .sort({ 'block_num': -1 })
@@ -20,7 +20,7 @@ export class RecentActivityService {
 
     async getResults(query): Promise<Array<EosAction<ProposalResult>>> {
         const results = await this.mongo.connection().actions.find({
-                'trace.act.account': 'eparticlenew',
+                'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropres'
             })
             .sort({ 'block_num': -1 })
@@ -33,7 +33,7 @@ export class RecentActivityService {
 
     async getProposals(query): Promise<Array<EosAction<Propose>>> {
         const proposal_id_docs = await this.mongo.connection().actions.find({
-                'trace.act.account': 'eparticlenew',
+                'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo'
             }, { projection: { 'trace.act.data.proposal_id': 1 }})
             .sort({ 'block_num': -1 })
@@ -52,7 +52,7 @@ export class RecentActivityService {
 
     async getVotes(query): Promise<Array<EosAction<Vote>>> {
         const votes = this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
+            'trace.act.account': 'eparticlectr',
             'trace.act.name': 'vote'
         });
         return votes
@@ -64,7 +64,7 @@ export class RecentActivityService {
 
     async getWikis(query): Promise<Array<EosAction<ProposalResult>>> {
         const results = this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlenew',
+            'trace.act.account': 'eparticlectr',
             'trace.act.name': 'logpropres',
             'trace.act.data.approved': 1
         });

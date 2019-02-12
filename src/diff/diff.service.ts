@@ -28,7 +28,7 @@ export class DiffService {
         for (const i in proposal_ids) {
             const proposal_id = proposal_ids[i];
             const proposal = await this.mongo.connection().actions.findOne({
-                'trace.act.account': 'eparticlenew',
+                'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo',
                 'trace.act.data.proposal_id': proposal_id
             });
@@ -47,7 +47,7 @@ export class DiffService {
             }
             else {
                 const lastpropres = await this.mongo.connection().actions.find({
-                    'trace.act.account': 'eparticlenew',
+                    'trace.act.account': 'eparticlectr',
                     'trace.act.name': 'logpropres',
                     'trace.act.data.wiki_id': wiki_id,
                     'trace.act.data.proposal_id': { $lt: proposal_id }
@@ -60,7 +60,7 @@ export class DiffService {
                 if (!old_hash) {
                     const lastpropid = lastpropres[0].trace.act.data.proposal_id;
                     const lastpropinfo = await this.mongo.connection().actions.findOne({
-                        'trace.act.account': 'eparticlenew',
+                        'trace.act.account': 'eparticlectr',
                         'trace.act.name': 'logpropinfo',
                         'trace.act.data.proposal_id': lastpropid
                     })

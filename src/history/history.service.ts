@@ -8,7 +8,7 @@ export class HistoryService {
 
     async getWikiHistory(wiki_id: number): Promise<Array<any>> {
         const proposal_id_docs = await this.mongo.connection().actions.find({
-                'trace.act.account': 'eparticlenew',
+                'trace.act.account': 'eparticlectr',
                 'trace.act.name': { $in: ['logpropres', 'logpropinfo'] },
                 'trace.act.data.wiki_id': wiki_id
             }, { projection: { "trace.act.data.proposal_id": 1 }})
