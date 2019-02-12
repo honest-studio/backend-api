@@ -182,6 +182,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Diff: History diff', () => {
+    return request(app.getHttpServer())
+        .get('/v2/diff/history/16')
+        .expect(200)
+  });
+
   it('Preview: Wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')

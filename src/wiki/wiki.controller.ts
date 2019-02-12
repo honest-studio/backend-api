@@ -16,6 +16,10 @@ export class WikiController {
             Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
             Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
     })
+    @ApiResponse({
+        status: 200,
+        description: `An HTML wiki or key-value object with hashes as keys to HTML wikis encoded in UTF-8`
+    })
     async getWikiByHash(@Param('ipfs_hash') query_hashes): Promise<any> {
         const ipfs_hashes = query_hashes.split(',');
         if (ipfs_hashes.length == 1)
@@ -30,12 +34,20 @@ export class WikiController {
         name: 'article_title',
         description: 'The article slug (will later be the on-chain article title) Example: travis-moore'
     })
+    @ApiResponse({
+        status: 200,
+        description: `An HTML wiki encoded in UTF-8`
+    })
     async getWikiByTitle(@Param('article_title') article_title): Promise<any> {
         return await this.wikiService.getWikiByTitle(article_title);
     }
 
     @Post('/')
     @ApiOperation({ title: "Submit a wiki to IPFS" })
+    @ApiResponse({
+        status: 200,
+        description: `Success`
+    })
     async submitWiki(_, @Req() req): Promise<any> {
         const raw = await rawbody(req);
         return this.wikiService.submitWiki(raw.toString());
