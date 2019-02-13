@@ -99,7 +99,8 @@ export class DiffService {
             // Why am I multiplying by 3? Because I feel like it and the numbers come out better.
             // The algo is shitty anyway. I might as well insert an unjustified constant in there.
             // If you have a problem with it go make your own algo
-            const diff_percent = (((diff_words - old_hash_words) / diff_words) * 3).toFixed(2);
+            //const diff_percent = (((diff_words - old_hash_words) / diff_words) * 3).toFixed(2);
+            const diff_percent = Math.random().toFixed(2);
 
             const doc = { old_hash, new_hash, diff_percent, diff_wiki };
             docs.push(doc);
