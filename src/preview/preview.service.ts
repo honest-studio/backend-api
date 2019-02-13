@@ -26,7 +26,6 @@ export class PreviewService  {
             return {}
 
         const previews = {};
-        console.log(ipfs_hashes);
 
         const article_info: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(

@@ -18,7 +18,6 @@ export class DiffService {
     async getDiffHistoryWiki(wiki_id: number) {
         const history = await this.historyService.getWikiHistory(wiki_id);
         const proposal_ids = history.map(prop => prop.info.trace.act.data.proposal_id);
-        console.log(proposal_ids);
         return this.getDiffsByProposal(proposal_ids);
     }
 
