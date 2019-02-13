@@ -105,7 +105,9 @@ export class WikiService {
                 INSERT INTO enterlink_hashcache (ipfs_hash, html_blob, timestamp) 
                 VALUES (?, ?, NOW())
                 `, [ ipfs_hash, html_body ], function (err, res) {
-                    if (err) reject(err);
+                    if (err && err.message.includes("ER_DUP_ENTRY"))
+                        resolve("Duplicate entry. Continuing");
+                    else if (err) reject(err);
                     else resolve(res);
                 });
         });

@@ -62,6 +62,12 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Expiring Proposals', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/proposals?expiring=true')
+      .expect(200)
+  });
+
   it('Recent Activity: Proposals w/ Preview and Diff Percent', () => {
     return request(app.getHttpServer())
       .get('/v2/recent-activity/proposals?diff_percent=true&preview=true')

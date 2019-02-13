@@ -34,13 +34,24 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<EosAction<Propose>>> {
-        const proposal_id_docs = await this.mongo
-            .connection()
-            .actions.find(
-                {
-                    'trace.act.account': 'eparticlectr',
-                    'trace.act.name': 'logpropinfo'
-                },
+        let find_query;
+        if (query.expiring) {
+            const now = Date.now() / 1000 | 0;
+            find_query = {
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo',
+                'trace.act.data.endtime': { $lt: now }
+            }
+        }
+        else {
+            find_query = {
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo'
+            }
+        }
+        const proposal_id_docs = await this.mongo.connection()
+            .actions.find( 
+                find_query,
                 { projection: { 'trace.act.data.proposal_id': 1 } }
             )
             .sort({ block_num: -1 })

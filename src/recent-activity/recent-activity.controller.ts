@@ -94,6 +94,12 @@ export class RecentActivityController {
         required: false,
         type: Boolean
     })
+    @ApiImplicitQuery({
+        name: 'expiring',
+        description: `Get expiring proposals instead of the most recent ones`,
+        required: false,
+        type: Boolean
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getProposals(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getProposals(query);
