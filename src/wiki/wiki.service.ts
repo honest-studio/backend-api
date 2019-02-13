@@ -34,8 +34,9 @@ export class WikiService {
         if (docs.length == 0) throw new NotFoundException(`Wiki ${wiki_id} could not be found`);
 
         const ipfs_hash = docs[0].trace.act.data.ipfs_hash;
+        if (!ipfs_hash) throw new NotFoundException(`Wiki ${wiki_id} does not have an IPFS hash`);
         const wikis = await this.getWikisByHash([ipfs_hash]);
-        if (!wikis[ipfs_hash]) throw new NotFoundException(`Wiki {$ipfs_hash} could not be found`);
+        if (!wikis[ipfs_hash]) throw new NotFoundException(`Wiki ${ipfs_hash} could not be found`);
         return wikis[ipfs_hash];
     }
 

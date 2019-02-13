@@ -37,24 +37,24 @@ export class DiffService {
             const new_hash = proposal.trace.act.data.ipfs_hash;
             const wiki_id = proposal.trace.act.data.wiki_id;
 
-            const old_proposals = await this.mongo.connection().actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.wiki_id': wiki_id,
-                'trace.act.data.proposal_id': { $lt: proposal_id }
-            })
-            .sort({ 'trace.act.data.proposal_id': -1 })
-            .limit(1)
-            .toArray();
-
+            const old_proposals = await this.mongo
+                .connection()
+                .actions.find({
+                    'trace.act.account': 'eparticlectr',
+                    'trace.act.name': 'logpropinfo',
+                    'trace.act.data.wiki_id': wiki_id,
+                    'trace.act.data.proposal_id': { $lt: proposal_id }
+                })
+                .sort({ 'trace.act.data.proposal_id': -1 })
+                .limit(1)
+                .toArray();
 
             let old_hash;
             if (old_proposals.length == 0)
                 // The proposal doesn't have a parent
                 // Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ is an empty file
                 old_hash = 'Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ';
-            else
-                old_hash = old_proposals[0].trace.act.data.ipfs_hash;
+            else old_hash = old_proposals[0].trace.act.data.ipfs_hash;
 
             ipfs_hashes.push([old_hash, new_hash]);
         }

@@ -122,6 +122,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki: Get wiki by id', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/id/1000000000')
+        .expect(200)
+  });
+
   it('Wiki: Get non-existent wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfPc')
@@ -160,19 +166,19 @@ describe('Backend API', () => {
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/306')
+        .get('/v2/diff/proposal/50')
         .expect(200)
   });
 
   it('Diff: Proposal diffs', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/34,36,57')
+        .get('/v2/diff/proposal/34,52,50')
         .expect(200)
   });
 
   it('Diff: Non-existent proposal', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/789239023')
+        .get('/v2/diff/proposal/7989239023')
         .expect(404)
   });
 
