@@ -15,7 +15,7 @@ export class HistoryService {
             .actions.find(
                 {
                     'trace.act.account': 'eparticlectr',
-                    'trace.act.name': { $in: ['logpropres', 'logpropinfo'] },
+                    'trace.act.name': 'logpropinfo',
                     'trace.act.data.wiki_id': wiki_id
                 },
                 { projection: { 'trace.act.data.proposal_id': 1 } }
