@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
 import { ProposalService } from '../proposal';
 
 @Injectable()
 export class HistoryService {
-    constructor( private mongo: MongoDbService, private proposalService: ProposalService ) {}
+    constructor( private mongo: MongoDbService, @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService ) {}
 
     async getWikiHistory(wiki_id: number): Promise<Array<any>> {
         const proposal_id_docs = await this.mongo.connection().actions.find({

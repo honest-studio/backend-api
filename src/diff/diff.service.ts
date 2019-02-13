@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { ProposalService } from '../proposal';
@@ -9,7 +9,7 @@ import HtmlDiff from 'htmldiff-js';
 @Injectable()
 export class DiffService {
     constructor(
-        private proposalService: ProposalService,
+        @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private wikiService: WikiService,
         private mongo: MongoDbService,
         private historyService: HistoryService

@@ -28,6 +28,23 @@ export class WikiController {
             return await this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
+    @Get('id/:wiki_id')
+    @ApiOperation({ title: 'Get wiki by ID' })
+    @ApiImplicitParam({
+        name: 'ipfs_hash',
+        description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
+            Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
+            Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `An HTML wiki or key-value object with hashes as keys to HTML wikis encoded in UTF-8`
+    })
+    async getWikiById(@Param('wiki_id') query_id: string): Promise<any> {
+        const wiki_id = Number(query_id);
+        return this.wikiService.getWikiById(wiki_id);
+    }
+
     @Get('title/:article_title')
     @ApiOperation({ title: 'Get wiki by article title' })
     @ApiImplicitParam({

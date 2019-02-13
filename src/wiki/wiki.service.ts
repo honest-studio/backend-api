@@ -15,6 +15,26 @@ export class WikiService {
         return wikis[ipfs_hash];
     }
 
+    async getWikiById(wiki_id: number): Promise<any> {
+        const docs = await this.mongo.connection().actions.find({
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo',
+            'trace.act.data.wiki_id': wiki_id
+        })
+        .sort({ 'trace.act.data.proposal_id': -1 })
+        .limit(1)
+        .toArray();
+
+        if (docs.length == 0)
+            throw new NotFoundException(`Wiki ${wiki_id} could not be found`);
+        
+        const ipfs_hash = docs[0].trace.act.data.ipfs_hash;
+        const wikis = await this.getWikisByHash([ ipfs_hash ]);
+        if (!wikis[ipfs_hash])
+            throw new NotFoundException(`Wiki {$ipfs_hash} could not be found`);
+        return wikis[ipfs_hash];
+    }
+
     async getWikiByTitle(article_title: string): Promise<any> {
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
