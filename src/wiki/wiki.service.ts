@@ -99,6 +99,16 @@ export class WikiService {
 
     async submitWiki(html_body: string): Promise<any> {
         const submission = await this.ipfs.client().add(Buffer.from(html_body, 'utf8'));
-        return { ipfs_hash: submission[0].hash };
+        const ipfs_hash = submission[0].hash;
+        const insertion  = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(`
+                INSERT INTO enterlink_hashcache (ipfs_hash, html_blob, timestamp) 
+                VALUES (?, ?, NOW())
+                `, [ ipfs_hash, html_body ], function (err, res) {
+                    if (err) reject(err);
+                    else resolve(res);
+                });
+        });
+        return { ipfs_hash };
     }
 }
