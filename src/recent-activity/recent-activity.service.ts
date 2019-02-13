@@ -12,18 +12,20 @@ export class RecentActivityService {
             'trace.act.account': 'eparticlectr'
         });
         return docs
-            .sort({ 'block_num': -1 })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
     }
 
     async getResults(query): Promise<Array<EosAction<ProposalResult>>> {
-        const results = await this.mongo.connection().actions.find({
+        const results = await this.mongo
+            .connection()
+            .actions.find({
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropres'
             })
-            .sort({ 'block_num': -1 })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
@@ -32,22 +34,27 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<EosAction<Propose>>> {
-        const proposal_id_docs = await this.mongo.connection().actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo'
-            }, { projection: { 'trace.act.data.proposal_id': 1 }})
-            .sort({ 'block_num': -1 })
+        const proposal_id_docs = await this.mongo
+            .connection()
+            .actions.find(
+                {
+                    'trace.act.account': 'eparticlectr',
+                    'trace.act.name': 'logpropinfo'
+                },
+                { projection: { 'trace.act.data.proposal_id': 1 } }
+            )
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
-        
-        const proposal_ids = proposal_id_docs.map(doc => doc.trace.act.data.proposal_id);
+
+        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id);
         const proposals = await this.proposalService.getProposals(proposal_ids, query.preview, query.diff_percent);
 
         return Object.keys(proposals)
             .map(Number)
-            .sort((a,b) => b - a)
-            .map(proposal_id => proposals[proposal_id])
+            .sort((a, b) => b - a)
+            .map((proposal_id) => proposals[proposal_id]);
     }
 
     async getVotes(query): Promise<Array<EosAction<Vote>>> {
@@ -56,7 +63,7 @@ export class RecentActivityService {
             'trace.act.name': 'vote'
         });
         return votes
-            .sort({ 'block_num': -1 })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
@@ -69,7 +76,7 @@ export class RecentActivityService {
             'trace.act.data.approved': 1
         });
         return results
-            .sort({ 'block_num': -1 })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();

@@ -63,7 +63,7 @@ export interface Propose {
     lang_code: string;
     group_id: number;
     comment: string;
-    memo: string
+    memo: string;
 }
 export interface Vote {
     voter: EosName;
@@ -71,7 +71,7 @@ export interface Vote {
     approve: BooleanNumber;
     amount: number;
     comment: string;
-    memo: string
+    memo: string;
 }
 export interface ProposalResult {
     proposal_id: number;

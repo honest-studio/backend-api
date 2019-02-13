@@ -22,10 +22,8 @@ export class WikiController {
     })
     async getWikiByHash(@Param('ipfs_hash') query_hashes): Promise<any> {
         const ipfs_hashes = query_hashes.split(',');
-        if (ipfs_hashes.length == 1)
-            return await this.wikiService.getWikiByHash(ipfs_hashes[0]);
-        else
-            return await this.wikiService.getWikisByHash(ipfs_hashes);
+        if (ipfs_hashes.length == 1) return await this.wikiService.getWikiByHash(ipfs_hashes[0]);
+        else return await this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
     @Get('id/:wiki_id')
@@ -60,7 +58,7 @@ export class WikiController {
     }
 
     @Post('/')
-    @ApiOperation({ title: "Submit a wiki to IPFS" })
+    @ApiOperation({ title: 'Submit a wiki to IPFS' })
     @ApiResponse({
         status: 200,
         description: `Success`

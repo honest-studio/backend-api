@@ -36,7 +36,11 @@ export class ProposalController {
                 diff_percent: percentage difference from previous version (optional)
             }, ... ]`
     })
-    async getProposal(@Param('proposal_ids') query_ids: string, @Query('preview') preview_query, @Query('diff_percent') diff_percent_query): Promise<any> {
+    async getProposal(
+        @Param('proposal_ids') query_ids: string,
+        @Query('preview') preview_query,
+        @Query('diff_percent') diff_percent_query
+    ): Promise<any> {
         const proposal_ids = query_ids.split(',').map(Number);
         const preview = Boolean(preview_query);
         const diff_percent = Boolean(diff_percent_query);

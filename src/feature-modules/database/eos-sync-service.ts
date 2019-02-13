@@ -28,7 +28,7 @@ export class EosSyncService {
         return this.mongoDbService
             .connection()
             .actions.find({ 'trace.act.account': account })
-            .sort({ 'block_num': -1 })
+            .sort({ block_num: -1 })
             .limit(1)
             .toArray()
             .then((result: Array<any>) => {

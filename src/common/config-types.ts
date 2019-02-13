@@ -51,7 +51,7 @@ export interface DfuseConfig {
     /**
      * Block to start syncing a fresh database
      */
-    dfuseStartBlock: string
+    dfuseStartBlock: string;
 }
 
 /**

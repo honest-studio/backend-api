@@ -37,7 +37,27 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
             inject: [ConfigService]
         })
     ],
-    controllers: [ProposalController, WikiController, RecentActivityController, ChainController, SearchController, DiffController, PreviewController, CacheController, HistoryController],
-    providers: [ProposalService, WikiService, RecentActivityService, ChainService, SearchService, DiffService, PreviewService, CacheService, HistoryService]
+    controllers: [
+        ProposalController,
+        WikiController,
+        RecentActivityController,
+        ChainController,
+        SearchController,
+        DiffController,
+        PreviewController,
+        CacheController,
+        HistoryController
+    ],
+    providers: [
+        ProposalService,
+        WikiService,
+        RecentActivityService,
+        ChainService,
+        SearchService,
+        DiffService,
+        PreviewService,
+        CacheService,
+        HistoryService
+    ]
 })
 export class AppModule {}

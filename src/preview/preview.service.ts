@@ -8,7 +8,7 @@ import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
 
 @Injectable()
-export class PreviewService  {
+export class PreviewService {
     constructor(
         private wikiService: WikiService,
         private mysql: MysqlService,
@@ -22,8 +22,7 @@ export class PreviewService  {
     }
 
     async getWikiPreviews(ipfs_hashes: Array<string>): Promise<any> {
-        if (ipfs_hashes.length == 0)
-            return {}
+        if (ipfs_hashes.length == 0) return {};
 
         const previews = {};
 
@@ -86,5 +85,4 @@ export class PreviewService  {
 
         return previews;
     }
-
 }

@@ -177,7 +177,9 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string()
         .uri()
         .required(),
-    [ConfigKeyNames.DFUSE_START_BLOCK]: Joi.number().min(2).default(2),
+    [ConfigKeyNames.DFUSE_START_BLOCK]: Joi.number()
+        .min(2)
+        .default(2),
     [ConfigKeyNames.IPFS_DAEMON_HOST]: Joi.string().required(),
     [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number()
         .integer()

@@ -17,8 +17,7 @@ export class PreviewController {
     })
     @ApiResponse({
         status: 200,
-        description:
-            `Object or array of objects with the following schema:
+        description: `Object or array of objects with the following schema:
             {
                 title: Article title,
                 mainimage: Main article image,
