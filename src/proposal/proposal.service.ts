@@ -57,7 +57,10 @@ export class ProposalService {
             }
             const previews = await this.previewService.getWikiPreviews(ipfs_hashes);
             for (const i in ipfs_hashes) {
-                proposals[proposal_ids[i]].preview = previews[ipfs_hashes[i]];
+                for (const proposal_id in proposals) {
+                    if (proposals[proposal_id].info.trace.act.data.ipfs_hash == ipfs_hashes[i])
+                        proposals[proposal_id].preview = previews[ipfs_hashes[i]];
+                }
             }
         }
 
