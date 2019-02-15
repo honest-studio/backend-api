@@ -15,8 +15,8 @@ export class WikiService {
 
     async getWikiByHash(ipfs_hash: string): Promise<any> {
         const wikis = await this.getWikisByHash([ipfs_hash]);
-        if (!wikis[ipfs_hash]) throw new NotFoundException('Wiki could not be found');
-        return wikis[ipfs_hash];
+        if (wikis[0].error) throw new NotFoundException('Wiki could not be found');
+        return wikis[0].wiki;
     }
 
     async getWikiById(wiki_id: number): Promise<any> {
@@ -33,11 +33,7 @@ export class WikiService {
 
         if (docs.length == 0) throw new NotFoundException(`Wiki ${wiki_id} could not be found`);
 
-        const ipfs_hash = docs[0].trace.act.data.ipfs_hash;
-        if (!ipfs_hash) throw new NotFoundException(`Wiki ${wiki_id} does not have an IPFS hash`);
-        const wikis = await this.getWikisByHash([ipfs_hash]);
-        if (!wikis[ipfs_hash]) throw new NotFoundException(`Wiki ${ipfs_hash} could not be found`);
-        return wikis[ipfs_hash];
+        return this.getWikiByHash(docs[0].trace.act.data.ipfs_hash);
     }
 
     async getWikiByTitle(article_title: string): Promise<any> {
@@ -60,21 +56,25 @@ export class WikiService {
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>) {
-        // try to fetch everything locally first
-        const wikis = {};
+        const wikis = [];
         for (const i in ipfs_hashes) {
-            const ipfs_hash = ipfs_hashes[i];
+            wikis.push({ ipfs_hash: ipfs_hashes[i] });
+        }
+
+        // try to fetch everything locally first
+        for (const i in wikis) {
+            const ipfs_hash = wikis[i].ipfs_hash;
             try {
                 const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
                 const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
-                wikis[ipfs_hash] = buffer.toString('utf8');
+                wikis[i].wiki = buffer.toString('utf8');
             } catch {
-                wikis[ipfs_hash] = null;
+                continue;
             }
         }
 
         // if there are no uncached wikis, return the result
-        const uncached_wikis = Object.keys(wikis).filter((hash) => wikis[hash] === null);
+        const uncached_wikis = wikis.filter(w => !w.wiki).map(w => w.ipfs_hash);
         if (uncached_wikis.length == 0) return wikis;
 
         // fetch remainder from mysql if they exist
@@ -89,8 +89,11 @@ export class WikiService {
                     else resolve(rows);
                 });
         });
-        rows.forEach((r) => (wikis[r.ipfs_hash] = r.html_blob));
-
+        rows.forEach((r) => wikis.find(w => w.ipfs_hash == r.ipfs_hash).wiki = r.html_blob);
+        
+        // mark wikis that couldn't be found
+        wikis.filter(w => !w.wiki).forEach(w => w.error = `Wiki ${w.ipfs_hash} could not be found`);
+        
         // attempt to cache uncached wikis
         uncached_wikis.forEach((hash) => this.cacheService.cacheWiki(hash));
 

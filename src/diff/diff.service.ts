@@ -3,7 +3,6 @@ import * as fetch from 'node-fetch';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { ProposalService } from '../proposal';
 import { WikiService } from '../wiki';
-import { HistoryService } from '../history';
 import HtmlDiff from 'htmldiff-js';
 
 @Injectable()
@@ -12,14 +11,7 @@ export class DiffService {
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private wikiService: WikiService,
         private mongo: MongoDbService,
-        private historyService: HistoryService
     ) {}
-
-    async getDiffHistoryWiki(wiki_id: number) {
-        const history = await this.historyService.getWikiHistory(wiki_id);
-        const proposal_ids = history.map((prop) => prop.info.trace.act.data.proposal_id);
-        return this.getDiffsByProposal(proposal_ids);
-    }
 
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
         const ipfs_hashes = [];
@@ -56,15 +48,24 @@ export class DiffService {
                 old_hash = 'Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ';
             else old_hash = old_proposals[0].trace.act.data.ipfs_hash;
 
-            ipfs_hashes.push([old_hash, new_hash]);
+            // the 3rd element doesn't get used by the diff and is for our
+            // tracking purposes
+            ipfs_hashes.push([old_hash, new_hash, proposal_id]);
         }
+        
+        const diffs = await this.getDiffsByWiki(ipfs_hashes);
+        diffs.forEach(diff => 
+            diff.proposal_id = ipfs_hashes.find(row => row[1] === diff.new_hash)[2]);
 
-        return this.getDiffsByWiki(ipfs_hashes);
+        return diffs;
     }
 
     async getDiffsByWiki(ipfs_hashes: Array<Array<string>>): Promise<any> {
         const diffs = [];
         const docs = []; // documents to add to MongoDB cache
+
+        // trim any extra data that might be passed into the argument
+        ipfs_hashes = ipfs_hashes.map(arr => arr.slice(0,2));
 
         for (const i in ipfs_hashes) {
             const old_hash = ipfs_hashes[i][0];
@@ -82,19 +83,19 @@ export class DiffService {
 
             const old_hash = ipfs_hashes[i][0];
             const new_hash = ipfs_hashes[i][1];
-            const old_wiki = wikis[old_hash];
-            const new_wiki = wikis[new_hash];
-            if (!old_wiki) {
-                diffs[i] = { error: `Wiki ${old_hash} could not be found`, statusCode: 404 };
+            const old_wiki = wikis.find(w => w.ipfs_hash == old_hash);
+            const new_wiki = wikis.find(w => w.ipfs_hash == new_hash);
+            if (old_wiki.error) {
+                diffs[i] = { error: old_wiki.error, old_hash, new_hash };
                 continue;
-            } else if (!new_wiki) {
-                diffs[i] = { error: `Wiki ${new_hash} could not be found`, statusCode: 404 };
+            } else if (new_wiki.error) {
+                diffs[i] = { error: new_wiki.error, old_hash, new_hash };
                 continue;
             }
 
-            const diff_wiki = HtmlDiff.execute(old_wiki, new_wiki);
+            const diff_wiki = HtmlDiff.execute(old_wiki.wiki, new_wiki.wiki);
             const diff_words = diff_wiki.split(' ').length;
-            const old_hash_words = old_wiki.split(' ').length;
+            const old_hash_words = old_wiki.wiki.split(' ').length;
 
             // Why am I multiplying by 3? Because I feel like it and the numbers come out better.
             // The algo is shitty anyway. I might as well insert an unjustified constant in there.

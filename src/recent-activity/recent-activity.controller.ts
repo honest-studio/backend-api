@@ -9,6 +9,10 @@ export class RecentActivityController {
     constructor(private readonly recentActivityService: RecentActivityService) {}
 
     @Get('all')
+    @ApiOperation({ 
+        title: 'Recent actions on the Everipedia Network smart contracts',
+        description: 'All actions flowing through the Everipedia Network smart contracts. Currently consists of the eparticlectr and everipediaiq contracts'
+    })
     @ApiImplicitQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
@@ -30,8 +34,11 @@ export class RecentActivityController {
         return await this.recentActivityService.getAll(query);
     }
 
-    @Get('results')
-    @ApiOperation({ title: 'Recent proposal results' })
+    @Get('eparticlectr')
+    @ApiOperation({ 
+        title: 'Recent article contract actions',
+        description: 'All actions flowing through the eparticlectr contract'
+    })
     @ApiImplicitQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
@@ -45,12 +52,15 @@ export class RecentActivityController {
         type: Number
     })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
-    async getResults(@Query() query): Promise<Array<any>> {
-        return await this.recentActivityService.getResults(query);
+    async getArticleActions(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getArticleActions(query);
     }
 
-    @Get('votes')
-    @ApiOperation({ title: 'Recent on-chain votes' })
+    @Get('everipediaiq')
+    @ApiOperation({ 
+        title: 'Recent token contract actions',
+        description: 'All actions flowing through the everipediaiq contract. Use this endpoint if you want to track transfers.'
+    })
     @ApiImplicitQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
@@ -64,8 +74,8 @@ export class RecentActivityController {
         type: Number
     })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
-    async getVotes(@Query() query): Promise<Array<any>> {
-        return await this.recentActivityService.getVotes(query);
+    async getTokenActions(@Query() query): Promise<Array<any>> {
+        return await this.recentActivityService.getTokenActions(query);
     }
 
     @Get('proposals')
@@ -89,8 +99,13 @@ export class RecentActivityController {
         type: Boolean
     })
     @ApiImplicitQuery({
-        name: 'diff_percent',
-        description: `Include percentage of article changed by proposal. This option will add 1-2s to the response time.`,
+        name: 'diff',
+        description: `Include diff data in the proposals. Takes one of three values:
+            'none': (default) Don't include diff data.
+            'percent': Only the return the percentage difference between the proposal and its parent.
+            'full': Return the full wiki diff between the proposal and its parent. Warning: this can lead to large responses that lag on low-bandwidth connections. 
+
+            Setting this option to 'percent' or 'full' can add 1-5 seconds to the response time.`,
         required: false,
         type: Boolean
     })
@@ -103,24 +118,5 @@ export class RecentActivityController {
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getProposals(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getProposals(query);
-    }
-
-    @Get('wikis')
-    @ApiOperation({ title: 'Recent accepted wikis' })
-    @ApiImplicitQuery({
-        name: 'offset',
-        description: 'Number of records to skip. Default=0',
-        required: false,
-        type: Number
-    })
-    @ApiImplicitQuery({
-        name: 'limit',
-        description: 'Number of records to return. Min=1, Max=100, Default=10',
-        required: false,
-        type: Number
-    })
-    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
-    async getWikis(@Query() query): Promise<Array<any>> {
-        return await this.recentActivityService.getWikis(query);
     }
 }

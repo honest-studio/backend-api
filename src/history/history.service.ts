@@ -1,15 +1,17 @@
 import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
-import { ProposalService } from '../proposal';
+import { ProposalService, Proposal, ProposalOptions } from '../proposal';
+import { DiffService } from '../diff';
 
 @Injectable()
 export class HistoryService {
     constructor(
         private mongo: MongoDbService,
-        @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService
+        private proposalService: ProposalService,
+        private diffService: DiffService,
     ) {}
 
-    async getWikiHistory(wiki_id: number): Promise<Array<any>> {
+    async getWikiHistory(wiki_id: number, options: ProposalOptions): Promise<Array<Proposal>> {
         const proposal_id_docs = await this.mongo
             .connection()
             .actions.find(
@@ -26,10 +28,9 @@ export class HistoryService {
             .filter((v, i, arr) => arr.indexOf(v) === i) // get unique values
             .map(Number);
 
-        const proposals = await this.proposalService.getProposals(proposal_ids);
-        return Object.keys(proposals)
-            .map(Number)
-            .sort((a, b) => b - a)
-            .map((proposal_id) => proposals[proposal_id]);
+
+        const proposals = await this.proposalService.getProposals(proposal_ids, options);
+
+        return proposals;
     }
 }

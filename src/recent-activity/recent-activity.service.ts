@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
-import { ProposalService } from '../proposal';
+import { ProposalService, Proposal } from '../proposal';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 
 @Injectable()
@@ -8,9 +8,7 @@ export class RecentActivityService {
     constructor(private mongo: MongoDbService, private proposalService: ProposalService) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
-        const docs = this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlectr'
-        });
+        const docs = this.mongo.connection().actions.find({});
         return docs
             .sort({ block_num: -1 })
             .skip(query.offset)
@@ -18,12 +16,11 @@ export class RecentActivityService {
             .toArray();
     }
 
-    async getResults(query): Promise<Array<EosAction<ProposalResult>>> {
+    async getArticleActions(query): Promise<Array<EosAction<any>>> {
         const results = await this.mongo
             .connection()
             .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropres'
+                'trace.act.account': 'eparticlectr'
             })
             .sort({ block_num: -1 })
             .skip(query.offset)
@@ -33,7 +30,21 @@ export class RecentActivityService {
         return results;
     }
 
-    async getProposals(query): Promise<Array<EosAction<Propose>>> {
+    async getTokenActions(query): Promise<Array<EosAction<any>>> {
+        const results = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'everipediaiq'
+            })
+            .sort({ block_num: -1 })
+            .skip(query.offset)
+            .limit(query.limit)
+            .toArray();
+
+        return results;
+    }
+
+    async getProposals(query): Promise<Array<Proposal>> {
         let find_query;
         if (query.expiring) {
             const now = Date.now() / 1000 | 0;
@@ -60,7 +71,11 @@ export class RecentActivityService {
             .toArray();
 
         const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id);
-        const proposals = await this.proposalService.getProposals(proposal_ids, query.preview, query.diff_percent);
+        const proposal_options = { 
+            preview: query.preview,
+            diff: query.diff 
+        };
+        const proposals = await this.proposalService.getProposals(proposal_ids, proposal_options);
 
         return Object.keys(proposals)
             .map(Number)
@@ -68,28 +83,4 @@ export class RecentActivityService {
             .map((proposal_id) => proposals[proposal_id]);
     }
 
-    async getVotes(query): Promise<Array<EosAction<Vote>>> {
-        const votes = this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlectr',
-            'trace.act.name': 'vote'
-        });
-        return votes
-            .sort({ block_num: -1 })
-            .skip(query.offset)
-            .limit(query.limit)
-            .toArray();
-    }
-
-    async getWikis(query): Promise<Array<EosAction<ProposalResult>>> {
-        const results = this.mongo.connection().actions.find({
-            'trace.act.account': 'eparticlectr',
-            'trace.act.name': 'logpropres',
-            'trace.act.data.approved': 1
-        });
-        return results
-            .sort({ block_num: -1 })
-            .skip(query.offset)
-            .limit(query.limit)
-            .toArray();
-    }
 }

@@ -1,6 +1,8 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { ProposalService } from './proposal.service';
+import { ProposalService, Proposal } from './proposal.service';
+import { JoiValidationPipe } from '../common';
+import { ProposalSchema } from './proposal.query-schema';
 
 @Controller('v2/proposal')
 @ApiUseTags('Proposals')
@@ -16,9 +18,15 @@ export class ProposalController {
         Example 2: 55,92,332`
     })
     @ApiImplicitQuery({
-        name: 'diff_percent',
-        type: 'boolean',
-        description: 'returns percentage difference from previous version if set true'
+        name: 'diff',
+        description: `Include diff data in the proposals. Takes one of three values:
+            'none': (default) Don't include diff data.
+            'percent': Only the return the percentage difference between the proposal and its parent.
+            'full': Return the full wiki diff between the proposal and its parent. Warning: this can lead to large responses that lag on low-bandwidth connections. 
+
+            Setting this option to 'percent' or 'full' can add 1-5 seconds to the response time.`,
+        required: false,
+        type: Boolean
     })
     @ApiImplicitQuery({
         name: 'preview',
@@ -36,14 +44,12 @@ export class ProposalController {
                 diff_percent: percentage difference from previous version (optional)
             }, ... ]`
     })
-    async getProposal(
+    @UsePipes(new JoiValidationPipe(ProposalSchema, ['query']))
+    async getProposals(
         @Param('proposal_ids') query_ids: string,
-        @Query('preview') preview_query,
-        @Query('diff_percent') diff_percent_query
-    ): Promise<any> {
+        @Query() options
+        ): Promise<Array<Proposal>> {
         const proposal_ids = query_ids.split(',').map(Number);
-        const preview = Boolean(preview_query);
-        const diff_percent = Boolean(diff_percent_query);
-        return this.proposalService.getProposals(proposal_ids, preview, diff_percent);
+        return this.proposalService.getProposals(proposal_ids, options);
     }
 }

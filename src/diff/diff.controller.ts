@@ -7,19 +7,6 @@ import { DiffService } from './diff.service';
 export class DiffController {
     constructor(private readonly diffService: DiffService) {}
 
-    @Get('/history/:wiki_id')
-    @ApiOperation({ title: 'Get diff history for a wiki' })
-    @ApiImplicitParam({
-        name: 'proposal_id',
-        description: `IPFS hashes of proposals. To get multiple proposals, separate hashes with a comma.
-        Example 1: 33
-        Example 2: 33,739,203`
-    })
-    async getDiffHistoryWiki(@Param('wiki_id') query_id): Promise<any> {
-        const wiki_id: number = Number(query_id);
-        return await this.diffService.getDiffHistoryWiki(wiki_id);
-    }
-
     @Get('/proposal/:proposal_id')
     @ApiOperation({ title: 'Get diffs for edit proposals' })
     @ApiImplicitParam({
@@ -49,6 +36,6 @@ export class DiffController {
         description: 'IPFS hash of new wiki'
     })
     async getDiffByWiki(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
-        return await this.diffService.getDiffsByWiki([old_hash, new_hash]);
+        return await this.diffService.getDiffsByWiki([[old_hash, new_hash]]);
     }
 }

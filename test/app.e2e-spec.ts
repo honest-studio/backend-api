@@ -58,7 +58,7 @@ describe('Backend API', () => {
 
   it('Recent Activity: Proposals w/ Diff Percent', () => {
     return request(app.getHttpServer())
-      .get('/v2/recent-activity/proposals?diff_percent=true')
+      .get('/v2/recent-activity/proposals?diff=percent')
       .expect(200)
   });
 
@@ -70,25 +70,7 @@ describe('Backend API', () => {
 
   it('Recent Activity: Proposals w/ Preview and Diff Percent', () => {
     return request(app.getHttpServer())
-      .get('/v2/recent-activity/proposals?diff_percent=true&preview=true')
-      .expect(200)
-  });
-
-  it('Recent Activity: Wikis', () => {
-    return request(app.getHttpServer())
-      .get('/v2/recent-activity/wikis')
-      .expect(200)
-  });
-
-  it('Recent Activity: Results', () => {
-    return request(app.getHttpServer())
-      .get('/v2/recent-activity/results')
-      .expect(200)
-  });
-
-  it('Recent Activity: Votes', () => {
-    return request(app.getHttpServer())
-      .get('/v2/recent-activity/votes')
+      .get('/v2/recent-activity/proposals?diff=percent&preview=true')
       .expect(200)
   });
 
@@ -101,6 +83,30 @@ describe('Backend API', () => {
   it('Proposal: Multiple proposals', () => {
     return request(app.getHttpServer())
         .get('/v2/proposal/50,51,52,12')
+        .expect(200)
+  });
+
+  it('Proposal: Multiple proposals w/ preview', () => {
+    return request(app.getHttpServer())
+        .get('/v2/proposal/50,51,52,12?preview=true')
+        .expect(200)
+  });
+
+  it('Proposal: Multiple proposals w/ diff percent', () => {
+    return request(app.getHttpServer())
+        .get('/v2/proposal/50,51,52,12?diff=percent')
+        .expect(200)
+  });
+
+  it('Proposal: Multiple proposals w/ full diff', () => {
+    return request(app.getHttpServer())
+        .get('/v2/proposal/50,51,52,12?diff=full')
+        .expect(200)
+  });
+
+  it('Proposal: Multiple proposals w/ preview and full diff', () => {
+    return request(app.getHttpServer())
+        .get('/v2/proposal/50,51,52,12?diff=full&preview=true')
         .expect(200)
   });
 
@@ -194,12 +200,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Diff: History diff', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/history/16')
-        .expect(200)
-  });
-
   it('Preview: Wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
@@ -211,6 +211,19 @@ describe('Backend API', () => {
         .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
         .expect(200)
   });
+
+  it('History: Wiki', () => {
+    return request(app.getHttpServer())
+        .get('/v2/history/wiki/16')
+        .expect(200)
+  });
+  
+  it('History: Wiki w/ Preview and Full diff', () => {
+    return request(app.getHttpServer())
+        .get('/v2/history/wiki/16?preview=true&diff=full')
+        .expect(200)
+  });
+
 
   it('Cache: Wiki', () => {
     return request(app.getHttpServer())
