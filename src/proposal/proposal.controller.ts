@@ -31,6 +31,7 @@ export class ProposalController {
     @ApiImplicitQuery({
         name: 'preview',
         type: 'boolean',
+        required: false,
         description: 'returns wiki preview if set true'
     })
     @ApiResponse({

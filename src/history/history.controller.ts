@@ -29,6 +29,7 @@ export class HistoryController {
     @ApiImplicitQuery({
         name: 'preview',
         type: 'boolean',
+        required: false,
         description: 'returns wiki preview if set true'
     })
     @UsePipes(new JoiValidationPipe(HistoryWikiSchema, ['query']))
