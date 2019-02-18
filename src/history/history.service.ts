@@ -22,6 +22,7 @@ export class HistoryService {
                 },
                 { projection: { 'trace.act.data.proposal_id': 1 } }
             )
+            .sort({ 'trace.act.data.proposal_id': -1 })
             .toArray();
         const proposal_ids = proposal_id_docs
             .map((doc) => doc.trace.act.data.proposal_id)
