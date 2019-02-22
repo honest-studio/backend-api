@@ -46,26 +46,29 @@ export class RecentActivityService {
 
     async getProposals(query): Promise<Array<Proposal>> {
         let find_query;
+        let sort_direction;
         if (query.expiring) {
             const now = Date.now() / 1000 | 0;
             find_query = {
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo',
-                'trace.act.data.endtime': { $lt: now }
+                'trace.act.data.endtime': { $gt: now }
             }
+            sort_direction = 1;
         }
         else {
             find_query = {
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo'
             }
+            sort_direction = -1;
         }
         const proposal_id_docs = await this.mongo.connection()
             .actions.find( 
                 find_query,
                 { projection: { 'trace.act.data.proposal_id': 1 } }
             )
-            .sort({ block_num: -1 })
+            .sort({ block_num: sort_direction })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
@@ -75,12 +78,8 @@ export class RecentActivityService {
             preview: query.preview,
             diff: query.diff 
         };
-        const proposals = await this.proposalService.getProposals(proposal_ids, proposal_options);
 
-        return Object.keys(proposals)
-            .map(Number)
-            .sort((a, b) => b - a)
-            .map((proposal_id) => proposals[proposal_id]);
+        return this.proposalService.getProposals(proposal_ids, proposal_options);
     }
 
 }
