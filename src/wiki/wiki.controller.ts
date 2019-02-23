@@ -45,10 +45,10 @@ export class WikiController {
     @Get('id/:wiki_id')
     @ApiOperation({ title: 'Get wiki by ID' })
     @ApiImplicitParam({
-        name: 'ipfs_hash',
-        description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
-            Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
-            Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
+        name: 'wiki_id',
+        description: `ID of a wiki. To get multiple wikis, separate IDs with a comma.  
+            Example 1: 10
+            Example 2: 10,1000000063,323`
     })
     @ApiImplicitQuery({
         name: 'json',
