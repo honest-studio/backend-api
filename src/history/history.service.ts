@@ -8,7 +8,7 @@ export class HistoryService {
     constructor(
         private mongo: MongoDbService,
         private proposalService: ProposalService,
-        private diffService: DiffService,
+        private diffService: DiffService
     ) {}
 
     async getWikiHistory(wiki_id: number, options: ProposalOptions): Promise<Array<Proposal>> {
@@ -28,7 +28,6 @@ export class HistoryService {
             .map((doc) => doc.trace.act.data.proposal_id)
             .filter((v, i, arr) => arr.indexOf(v) === i) // get unique values
             .map(Number);
-
 
         const proposals = await this.proposalService.getProposals(proposal_ids, options);
 

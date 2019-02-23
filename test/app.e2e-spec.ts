@@ -110,15 +110,27 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get history', () => {
+  it('History: Get wiki history', () => {
     return request(app.getHttpServer())
         .get('/v2/history/wiki/32')
+        .expect(200)
+  });
+
+  it('History: Get wiki history w/ full diff', () => {
+    return request(app.getHttpServer())
+        .get('/v2/history/wiki/32?diff=full')
         .expect(200)
   });
 
   it('Wiki: Get wiki by hash', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .expect(200)
+  });
+
+  it('Wiki: Get wiki json by hash', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd?json=true')
         .expect(200)
   });
 
@@ -133,10 +145,22 @@ describe('Backend API', () => {
         .get('/v2/wiki/title/William_Legate')
         .expect(200)
   });
+  
+  it('Wiki: Get wiki json by title', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/title/William_Legate?json=true')
+        .expect(200)
+  });
 
   it('Wiki: Get wiki by id', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/id/1000000000')
+        .expect(200)
+  });
+
+  it('Wiki: Get wiki json by id', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/id/1000000000?json=true')
         .expect(200)
   });
 

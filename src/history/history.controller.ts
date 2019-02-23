@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
 import { HistoryService } from './history.service';
-import { HistoryWikiSchema } from  './history.query-schema';
+import { HistoryWikiSchema } from './history.query-schema';
 import { JoiValidationPipe } from '../common';
 
 @Controller('v2/history')

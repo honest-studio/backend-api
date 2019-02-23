@@ -33,10 +33,13 @@
         "cors": "^2.8.5",
         "dotenv": "^6.1.0",
         "event-stream": "^4.0.1",
+        "get-youtube-id": "^1.0.1",
         "htmldiff-js": "^1.0.5",
+        "htmlparser2": "^3.10.1",
         "ipfs-http-client": "^27.0.0",
         "joi": "^14.3.0",
         "lodash": "^4.17.11",
+        "mime": "^2.4.0",
         "mongodb": "^3.1.10",
         "mongoose": "^5.3.14",
         "morgan": "^1.9.1",
@@ -47,6 +50,7 @@
         "rimraf": "^2.6.2",
         "rxjs": "^6.3.3",
         "typescript": "^3.2.1",
+        "unescape": "^1.0.1",
         "ws": "^6.1.2"
     },
     "devDependencies": {

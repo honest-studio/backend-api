@@ -10,7 +10,7 @@ export class DiffService {
     constructor(
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private wikiService: WikiService,
-        private mongo: MongoDbService,
+        private mongo: MongoDbService
     ) {}
 
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
@@ -52,10 +52,9 @@ export class DiffService {
             // tracking purposes
             ipfs_hashes.push([old_hash, new_hash, proposal_id]);
         }
-        
+
         const diffs = await this.getDiffsByWiki(ipfs_hashes);
-        diffs.forEach(diff => 
-            diff.proposal_id = ipfs_hashes.find(row => row[1] === diff.new_hash)[2]);
+        diffs.forEach((diff) => (diff.proposal_id = ipfs_hashes.find((row) => row[1] === diff.new_hash)[2]));
 
         return diffs;
     }
@@ -65,7 +64,7 @@ export class DiffService {
         const docs = []; // documents to add to MongoDB cache
 
         // trim any extra data that might be passed into the argument
-        ipfs_hashes = ipfs_hashes.map(arr => arr.slice(0,2));
+        ipfs_hashes = ipfs_hashes.map((arr) => arr.slice(0, 2));
 
         for (const i in ipfs_hashes) {
             const old_hash = ipfs_hashes[i][0];
@@ -83,8 +82,8 @@ export class DiffService {
 
             const old_hash = ipfs_hashes[i][0];
             const new_hash = ipfs_hashes[i][1];
-            const old_wiki = wikis.find(w => w.ipfs_hash == old_hash);
-            const new_wiki = wikis.find(w => w.ipfs_hash == new_hash);
+            const old_wiki = wikis.find((w) => w.ipfs_hash == old_hash);
+            const new_wiki = wikis.find((w) => w.ipfs_hash == new_hash);
             if (old_wiki.error) {
                 diffs[i] = { error: old_wiki.error, old_hash, new_hash };
                 continue;

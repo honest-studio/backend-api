@@ -46,10 +46,7 @@ export class ProposalController {
             }, ... ]`
     })
     @UsePipes(new JoiValidationPipe(ProposalSchema, ['query']))
-    async getProposals(
-        @Param('proposal_ids') query_ids: string,
-        @Query() options
-        ): Promise<Array<Proposal>> {
+    async getProposals(@Param('proposal_ids') query_ids: string, @Query() options): Promise<Array<Proposal>> {
         const proposal_ids = query_ids.split(',').map(Number);
         return this.proposalService.getProposals(proposal_ids, options);
     }

@@ -48,38 +48,34 @@ export class RecentActivityService {
         let find_query;
         let sort_direction;
         if (query.expiring) {
-            const now = Date.now() / 1000 | 0;
+            const now = (Date.now() / 1000) | 0;
             find_query = {
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo',
                 'trace.act.data.endtime': { $gt: now }
-            }
+            };
             sort_direction = 1;
-        }
-        else {
+        } else {
             find_query = {
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo'
-            }
+            };
             sort_direction = -1;
         }
-        const proposal_id_docs = await this.mongo.connection()
-            .actions.find( 
-                find_query,
-                { projection: { 'trace.act.data.proposal_id': 1 } }
-            )
+        const proposal_id_docs = await this.mongo
+            .connection()
+            .actions.find(find_query, { projection: { 'trace.act.data.proposal_id': 1 } })
             .sort({ block_num: sort_direction })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
 
         const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id);
-        const proposal_options = { 
+        const proposal_options = {
             preview: query.preview,
-            diff: query.diff 
+            diff: query.diff
         };
 
         return this.proposalService.getProposals(proposal_ids, proposal_options);
     }
-
 }

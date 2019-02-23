@@ -9,9 +9,10 @@ export class RecentActivityController {
     constructor(private readonly recentActivityService: RecentActivityService) {}
 
     @Get('all')
-    @ApiOperation({ 
+    @ApiOperation({
         title: 'Recent actions on the Everipedia Network smart contracts',
-        description: 'All actions flowing through the Everipedia Network smart contracts. Currently consists of the eparticlectr and everipediaiq contracts'
+        description:
+            'All actions flowing through the Everipedia Network smart contracts. Currently consists of the eparticlectr and everipediaiq contracts'
     })
     @ApiImplicitQuery({
         name: 'offset',
@@ -35,7 +36,7 @@ export class RecentActivityController {
     }
 
     @Get('eparticlectr')
-    @ApiOperation({ 
+    @ApiOperation({
         title: 'Recent article contract actions',
         description: 'All actions flowing through the eparticlectr contract'
     })
@@ -57,9 +58,10 @@ export class RecentActivityController {
     }
 
     @Get('everipediaiq')
-    @ApiOperation({ 
+    @ApiOperation({
         title: 'Recent token contract actions',
-        description: 'All actions flowing through the everipediaiq contract. Use this endpoint if you want to track transfers.'
+        description:
+            'All actions flowing through the everipediaiq contract. Use this endpoint if you want to track transfers.'
     })
     @ApiImplicitQuery({
         name: 'offset',

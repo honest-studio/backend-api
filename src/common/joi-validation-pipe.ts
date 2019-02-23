@@ -12,8 +12,6 @@ export class JoiValidationPipe implements PipeTransform {
                 throw new BadRequestException(ret.error.details[0].message);
             }
             return ret.value; // with type conversions
-        }
-        else 
-            return value;
+        } else return value;
     }
 }

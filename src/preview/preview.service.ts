@@ -45,13 +45,13 @@ export class PreviewService {
                 }
             );
         });
-        article_info.forEach(a => {
-            const i = previews.findIndex(p => p.ipfs_hash === a.ipfs_hash);
+        article_info.forEach((a) => {
+            const i = previews.findIndex((p) => p.ipfs_hash === a.ipfs_hash);
             previews[i] = a;
         });
 
         // clean up text previews
-        previews.forEach(preview => {
+        previews.forEach((preview) => {
             if (!preview.text_preview) return; // continue
             const $ = cheerio.load(preview.text_preview);
             preview.text_preview = $.text()
@@ -91,8 +91,7 @@ export class PreviewService {
         }
 
         // error messages for missing wikis
-        previews.filter(p => !p.title)
-            .forEach(p => p.error = `Wiki ${p.ipfs_hash} could not be found`);
+        previews.filter((p) => !p.title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
 
         return previews;
     }
