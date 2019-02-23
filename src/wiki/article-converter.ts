@@ -2,24 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import {
-    ArticleOptions,
-    PageLink,
-    Inline,
-    Template,
-    TemplateWithProps,
-    TextFormat,
-    Sentence,
-    Image,
-    SectionData,
-    Section,
-    Interwiki,
-    ArticleData,
-    ArticleJson,
-    Media,
-    Citation,
-    Metadata
-} from './article-dto';
+import { Sentence, Section, ArticleJson, Media, Citation, Metadata } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
 import getYouTubeID from 'get-youtube-id';
@@ -319,8 +302,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
             in_gallery: false,
             in_blurb: false,
             attribution_url: null,
-            media_page_uuid: null,
-            comments: []
+            media_page_uuid: null
         };
 
         // Fetch the citation number
@@ -417,8 +399,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
             mime: null,
             timestamp: null,
             attribution_url: null,
-            media_page_uuid: null,
-            comments: []
+            media_page_uuid: null
         };
 
         // Fetch the caption
@@ -624,8 +605,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
             schema: null,
             addlSchematype: null,
             addlSchemaItemprop: null,
-            rows: [],
-            comments: []
+            rows: []
         };
 
         // Get the key (plaintext schemaType)
@@ -693,8 +673,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
             schema: null,
             addlSchematype: null,
             addlSchemaItemprop: null,
-            rows: [],
-            comments: []
+            rows: []
         };
 
         // Get the key (plaintext schemaType)
@@ -1403,18 +1382,15 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                     colgroup: null,
                                     thead: {
                                         attrs: [],
-                                        rows: [],
-                                        comments: []
+                                        rows: []
                                     },
                                     tbody: {
                                         attrs: [],
-                                        rows: [],
-                                        comments: []
+                                        rows: []
                                     },
                                     tfoot: {
                                         attrs: [],
-                                        rows: [],
-                                        comments: []
+                                        rows: []
                                     }
                                 }
                             };
@@ -1454,7 +1430,6 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                             let rowObj = {
                                                 index: rowIdx,
                                                 attrs: rowElem.attribs,
-                                                comments: [],
                                                 cells: null
                                             };
 
@@ -1474,7 +1449,6 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                                         index: cellIdx,
                                                         attrs: cellElem.attribs,
                                                         tag_type: theCellTagName,
-                                                        comments: [],
                                                         contents: null
                                                     };
 
@@ -1637,7 +1611,7 @@ export function linkCiteSentenceMarkdowner(
     // Need to text replace placeholders for citations and links
     return sentenceTokens.map(function(token, index) {
         // Initialize the return object
-        let sentence = { type: 'sentence', index: index, text: token, comments: [], links: [] };
+        let sentence = { type: 'sentence', index: index, text: token, links: [] };
 
         // Deal with the links and citations
         // https://davidwalsh.name/string-replace-javascript
