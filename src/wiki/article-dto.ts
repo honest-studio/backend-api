@@ -9,12 +9,22 @@ export interface PageLink {
 }
 
 export interface Sentence {
-    type: string;
+    type: string; // sentence | inline-image | fixed
     index: number;
     text: string;
     links: PageLink[];
 }
-export type Section = Sentence[];
+
+export interface Paragraph {
+    index: number;
+    items: Sentence[];
+    tag_type: string;
+    attrs: { string : string };
+}
+
+export interface Section {
+    paragraphs: Paragraph;
+}
 
 export interface Infobox {}
 

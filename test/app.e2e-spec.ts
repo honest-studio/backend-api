@@ -181,6 +181,24 @@ describe('Backend API', () => {
         })
   });
 
+  it('Wiki Json: Manaus', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/title/Manaus?json=true')
+        .expect(200)
+  });
+
+  it('Wiki Json: 2016 Summer Olympics', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/title/2016_Summer_Olympics?json=true')
+        .expect(200)
+  });
+
+  it('Wiki Json: Ghana', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/title/Ghana?json=true')
+        .expect(200)
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v2/chain/get_info')
