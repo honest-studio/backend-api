@@ -1299,7 +1299,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
 
                             // Initialize the objects
                             const image: Media = {
-                                type: 'inline-image',
+                                type: 'fixed_image',
                                 url: $(theImgNode).attr('src'),
                                 mime: $(theImgNode).attr('data-mimetype'),
                                 thumb: null,
