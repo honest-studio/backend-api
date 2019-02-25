@@ -23,7 +23,7 @@ export interface Paragraph {
 }
 
 export interface Section {
-    paragraphs: Paragraph;
+    paragraphs: Paragraph[];
 }
 
 export interface Infobox {}
