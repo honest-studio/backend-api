@@ -239,7 +239,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
         );
 
         // Find any links to other pages that appear in the link description
-        citation.description = linkCiteSentenceMarkdowner(tempDescription, [], true);
+        citation.description = parseTextToSentences(tempDescription, [], true);
 
         // Fetch the timestamp
         citation.timestamp =
@@ -328,7 +328,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
         );
 
         // Find any links to other pages that appear in the caption]
-        mediaObject.caption = linkCiteSentenceMarkdowner(tempCaption, [], true);
+        mediaObject.caption = parseTextToSentences(tempCaption, [], true);
 
         // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
         mediaObject.class = $(this)
@@ -480,7 +480,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
     if (caption.length == 0) main_photo.caption = null;
     else {
         const captionText = decode(caption.html().trim(), 'all');
-        main_photo.caption = linkCiteSentenceMarkdowner(captionText, [], true);
+        main_photo.caption = parseTextToSentences(captionText, [], true);
     }
 
     // Try to find the photo attribution
@@ -570,7 +570,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
                 );
 
                 // Find any links to other pages that appear in the caption]
-                tempValue = linkCiteSentenceMarkdowner(tempValue, [], true, true);
+                tempValue = parseTextToSentences(tempValue, [], true, true);
 
                 // Add the value to the rows
                 infoPackage.rows.push(tempValue);
@@ -639,7 +639,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
                 );
 
                 // Find any links to other pages that appear in the caption]
-                tempValue = linkCiteSentenceMarkdowner(tempValue, [], true, true);
+                tempValue = parseTextToSentences(tempValue, [], true, true);
 
                 // Add the value to the rows
                 infoPackage.rows.push(tempValue);
@@ -1162,14 +1162,14 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                 case 'blockquote':
                 case 'p': {
                     // Get the sentences
-                    paragraph.items = linkCiteSentenceMarkdowner($(this).text(), citations);
+                    paragraph.items = parseTextToSentences($(this).text(), citations);
                     break;
                 }
                 // Headings
                 case String(paragraph.tag_type.match(/h[1-6]/gimu)): {
                     // Get the sentences
                     sections.push({ paragraphs: [] });
-                    paragraph.items = linkCiteSentenceMarkdowner($(this).text(), citations, true, true);
+                    paragraph.items = parseTextToSentences($(this).text(), citations, true, true);
                     break;
                 }
                 // Lists
@@ -1184,7 +1184,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                             // Get the sentences
                             listItems.push({
                                 index: innerIndex,
-                                sentences: linkCiteSentenceMarkdowner($(innerElem).text(), citations)
+                                sentences: parseTextToSentences($(innerElem).text(), citations)
                             });
                         });
 
@@ -1243,7 +1243,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                 });
 
                             // Set the caption
-                            image.caption = linkCiteSentenceMarkdowner(
+                            image.caption = parseTextToSentences(
                                 $(captionNode)
                                     .text()
                                     .trim(),
@@ -1317,7 +1317,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                     let tempValue = $(this)
                                         .html()
                                         .trim();
-                                    tableObj.table.caption = linkCiteSentenceMarkdowner(tempValue, [], true, true);
+                                    tableObj.table.caption = parseTextToSentences(tempValue, [], true, true);
                                 });
 
                             // Deal with the colgroup
@@ -1371,7 +1371,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                                     let tempValue = $(cellElem)
                                                         .text()
                                                         .trim();
-                                                    cellObj.contents = linkCiteSentenceMarkdowner(
+                                                    cellObj.contents = parseTextToSentences(
                                                         tempValue,
                                                         [],
                                                         true,
@@ -1411,6 +1411,8 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
 
     return sections;
 }
+
+export function extractCitations() {}
 
 // Take a jQuery / cheerio object and convert some of its HTML to Markdown
 export function markdowner(cheerioInput: cheerio) {
@@ -1505,7 +1507,7 @@ export function markdowner(cheerioInput: cheerio) {
 }
 
 // Convert the plaintext strings for links and citations to the Markdown format
-export function linkCiteSentenceMarkdowner(
+export function parseTextToSentences(
     inputString: string,
     linksList: any[],
     addPeriod: boolean = false,
@@ -1520,7 +1522,7 @@ export function linkCiteSentenceMarkdowner(
     }
 
     // Create the sentence tokens
-    let sentenceTokens = splitSentences(inputString);
+    const sentenceTokens = splitSentences(inputString);
 
     // Each sentence needs to be a dictionary
     // Need to text replace placeholders for citations and links
@@ -1594,6 +1596,7 @@ export function linkCiteSentenceMarkdowner(
         return sentence;
     });
 }
+
 
 // See if a given URL is a social media URL. If so, return the type
 export function socialURLType(inputURL: string) {
@@ -1681,36 +1684,18 @@ export function socialURLType(inputURL: string) {
             ]
         }
     ];
-    // Set the return type
-    let returnSocialType = null;
 
-    // Loop through the regexes
-    let isExcluded = false;
-    for (let regexPack of SOCIAL_MEDIA_REGEXES) {
-        // See if the URL matches one of the regexes
-        if (inputURL.match(regexPack.regex)) {
-            // Make sure it doesn't match one of the exclusions
-            for (let exclusion of regexPack.exclusions) {
-                if (inputURL.match(exclusion)) {
-                    isExcluded = true;
-                    break;
-                }
-            }
-            // If the URL matched an excluded regex, break the loop and return null
-            if (isExcluded) {
-                returnSocialType = null;
-                break;
-            }
-            // Otherwise, set the type
-            else {
-                returnSocialType = regexPack.type;
-                break;
-            }
-        }
-    }
-    return returnSocialType;
+    // Check for a match and make sure it doesn't match an exclusion
+    const match = SOCIAL_MEDIA_REGEXES.find(r => 
+        r.regex.test(inputURL) && 
+        !r.exclusions.some(exclusion => exclusion.test(inputURL))
+    );
+    if (!match) return null;
+    return match.type;
 }
 
+// Regex copied from natural NPM package
+// https://www.npmjs.com/package/natural#tokenizers
 function splitSentences(text: string): Array<string> {
     const matches = text.match(
         /([\"\'\‘\“\'\"\[\(\{\⟨][^\.\?\!]+[\.\?\!][\"\'\’\”\'\"\]\)\}\⟩]|[^\.\?\!]+[\.\?\!\s]*)/g

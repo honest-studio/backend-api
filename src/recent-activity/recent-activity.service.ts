@@ -65,7 +65,7 @@ export class RecentActivityService {
         const proposal_id_docs = await this.mongo
             .connection()
             .actions.find(find_query, { projection: { 'trace.act.data.proposal_id': 1 } })
-            .sort({ block_num: sort_direction })
+            .sort({ 'trace.act.data.proposal_id': sort_direction })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
