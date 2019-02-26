@@ -199,6 +199,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki Json: Real Matrix', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/title/Real_matrix?json=true')
+        .expect(200)
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v2/chain/get_info')

@@ -5,97 +5,12 @@ import * as htmlparser2 from 'htmlparser2';
 import { Sentence, Section, ArticleJson, Media, Citation, Metadata } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
-import getYouTubeID from 'get-youtube-id';
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
 const CAPTURE_REGEXES = {
     linkcite: /__~(LINK|CITATION)__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__(LINK|CITATION)~__/gimu
 };
-const SOCIAL_MEDIA_REGEXES = [
-    {
-        type: 'bandcamp',
-        regex: /bandcamp.com/gimu,
-        exclusions: [/bandcamp.com\/track\/.*/gimu, /bandcamp.com\/album\/.*/gimu, /blog.bandcamp.com\/.*/gimu]
-    },
-    {
-        type: 'facebook',
-        regex: /facebook.com/gimu,
-        exclusions: [
-            /facebook.com\/photo.*/gimu,
-            /facebook.com\/.*?\/videos\/vb.*/gimu,
-            /facebook.com\/.*?\/photos/gimu,
-            /facebook.com\/.*?\/timeline\//gimu,
-            /facebook.com\/.*?\/posts/gimu,
-            /facebook.com\/events\/.*?/gimu,
-            /blog.facebook.com\/.*/gimu,
-            /developers.facebook.com\/.*/gimu
-        ]
-    },
-    { type: 'google', regex: /plus.google.com/gimu, exclusions: [] },
-    {
-        type: 'instagram',
-        regex: /instagram.com/gimu,
-        exclusions: [/instagram.com\/p\/.*/gimu, /blog.instagram.com\/.*/gimu]
-    },
-    { type: 'lastfm', regex: /last.fm\/user/gimu, exclusions: [/last.fm\/music\/.*\/.*/gimu] },
-    {
-        type: 'linkedin',
-        regex: /linkedin.com/gimu,
-        exclusions: [/linkedin.com\/pub\/.*/gimu, /press.linkedin.com\/.*/gimu, /blog.linkedin.com\/.*/gimu]
-    },
-    { type: 'medium', regex: /medium.com\/@/gimu, exclusions: [/medium.com\/@.*\/.*/gimu] },
-    { type: 'myspace', regex: /myspace.com/gimu, exclusions: [/myspace.com\/.*\/.*/gimu, /blogs.myspace.com\/.*/gimu] },
-    {
-        type: 'pinterest',
-        regex: /pinterest.com/gimu,
-        exclusions: [/pinterest.com\/pin\/.*/gimu, /blog.pinterest.com\/.*/gimu]
-    },
-    { type: 'quora', regex: /quora.com\/profile/gimu, exclusions: [] },
-    { type: 'reddit', regex: /reddit.com\/user/gimu, exclusions: [] },
-    { type: 'snapchat', regex: /snapchat.com\/add/gimu, exclusions: [] },
-    { type: 'songkick', regex: /songkick.com\/artists/gimu, exclusions: [] },
-    {
-        type: 'soundcloud',
-        regex: /soundcloud.com/gimu,
-        exclusions: [
-            /soundcloud.com\/.*\/tracks\/.*/gimu,
-            /soundcloud.com\/.*\/sets\/.*/gimu,
-            /soundcloud.com\/.*\/reposts\/.*/gimu
-        ]
-    },
-    { type: 'tumblr', regex: /tumblr.com/gimu, exclusions: [/tumblr.com\/post.*/gimu] },
-    {
-        type: 'twitter',
-        regex: /twitter.com/gimu,
-        exclusions: [
-            /twitter.com\/.*?\/status.*?/gimu,
-            /dev.twitter.com\/.*/gimu,
-            /blog.twitter.com\/.*/gimu,
-            /help.twitter.com\/.*/gimu,
-            /support.twitter.com\/.*/gimu
-        ]
-    },
-    { type: 'vine', regex: /vine.co/gimu, exclusions: [] },
-    { type: 'vk', regex: /vk.com/gimu, exclusions: [] },
-    { type: 'yelp', regex: /yelp.com\/biz/gimu, exclusions: [] },
-    {
-        type: 'youtube',
-        regex: /youtube.com/gimu,
-        exclusions: [
-            /youtube.com\/playlist.*[?]list=.*/gimu,
-            /youtube.com\/v\/.*/gimu,
-            /youtube.com\/channel\/.*?#p.*?/gimu,
-            /youtube.com\/embed\/.*/gimu,
-            /youtube.com\/watch?v=.*/gimu,
-            /youtube.com\/watch.*[?]v=.*/gimu,
-            /youtube.com\/watch.*[?]v=.*/gimu,
-            /youtube.com\/watch?.*?/gimu,
-            /youtube.com\/user\/.*?#p.*?/gimu,
-            /youtube.com\/subscription_center.*/gimu
-        ]
-    }
-];
 const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
     { regex: /\u{200B}/gimu, replacement: '' },
@@ -245,7 +160,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
     // PAGE METADATA
     // Extract the page metadata
     // Initialize the sub-dictionary
-    const metadata: Metadata = { link_count: 1, page_lang: 'en' };
+    const metadata = { link_count: 1, page_lang: 'en' };
 
     // Loop through the elements and fill the dictionary
     $('tr.data-pair').each(function() {
@@ -1682,6 +1597,90 @@ export function linkCiteSentenceMarkdowner(
 
 // See if a given URL is a social media URL. If so, return the type
 export function socialURLType(inputURL: string) {
+    const SOCIAL_MEDIA_REGEXES = [
+        {
+            type: 'bandcamp',
+            regex: /bandcamp.com/gimu,
+            exclusions: [/bandcamp.com\/track\/.*/gimu, /bandcamp.com\/album\/.*/gimu, /blog.bandcamp.com\/.*/gimu]
+        },
+        {
+            type: 'facebook',
+            regex: /facebook.com/gimu,
+            exclusions: [
+                /facebook.com\/photo.*/gimu,
+                /facebook.com\/.*?\/videos\/vb.*/gimu,
+                /facebook.com\/.*?\/photos/gimu,
+                /facebook.com\/.*?\/timeline\//gimu,
+                /facebook.com\/.*?\/posts/gimu,
+                /facebook.com\/events\/.*?/gimu,
+                /blog.facebook.com\/.*/gimu,
+                /developers.facebook.com\/.*/gimu
+            ]
+        },
+        { type: 'google', regex: /plus.google.com/gimu, exclusions: [] },
+        {
+            type: 'instagram',
+            regex: /instagram.com/gimu,
+            exclusions: [/instagram.com\/p\/.*/gimu, /blog.instagram.com\/.*/gimu]
+        },
+        { type: 'lastfm', regex: /last.fm\/user/gimu, exclusions: [/last.fm\/music\/.*\/.*/gimu] },
+        {
+            type: 'linkedin',
+            regex: /linkedin.com/gimu,
+            exclusions: [/linkedin.com\/pub\/.*/gimu, /press.linkedin.com\/.*/gimu, /blog.linkedin.com\/.*/gimu]
+        },
+        { type: 'medium', regex: /medium.com\/@/gimu, exclusions: [/medium.com\/@.*\/.*/gimu] },
+        { type: 'myspace', regex: /myspace.com/gimu, exclusions: [/myspace.com\/.*\/.*/gimu, /blogs.myspace.com\/.*/gimu] },
+        {
+            type: 'pinterest',
+            regex: /pinterest.com/gimu,
+            exclusions: [/pinterest.com\/pin\/.*/gimu, /blog.pinterest.com\/.*/gimu]
+        },
+        { type: 'quora', regex: /quora.com\/profile/gimu, exclusions: [] },
+        { type: 'reddit', regex: /reddit.com\/user/gimu, exclusions: [] },
+        { type: 'snapchat', regex: /snapchat.com\/add/gimu, exclusions: [] },
+        { type: 'songkick', regex: /songkick.com\/artists/gimu, exclusions: [] },
+        {
+            type: 'soundcloud',
+            regex: /soundcloud.com/gimu,
+            exclusions: [
+                /soundcloud.com\/.*\/tracks\/.*/gimu,
+                /soundcloud.com\/.*\/sets\/.*/gimu,
+                /soundcloud.com\/.*\/reposts\/.*/gimu
+            ]
+        },
+        { type: 'tumblr', regex: /tumblr.com/gimu, exclusions: [/tumblr.com\/post.*/gimu] },
+        {
+            type: 'twitter',
+            regex: /twitter.com/gimu,
+            exclusions: [
+                /twitter.com\/.*?\/status.*?/gimu,
+                /dev.twitter.com\/.*/gimu,
+                /blog.twitter.com\/.*/gimu,
+                /help.twitter.com\/.*/gimu,
+                /support.twitter.com\/.*/gimu
+            ]
+        },
+        { type: 'vine', regex: /vine.co/gimu, exclusions: [] },
+        { type: 'vk', regex: /vk.com/gimu, exclusions: [] },
+        { type: 'yelp', regex: /yelp.com\/biz/gimu, exclusions: [] },
+        {
+            type: 'youtube',
+            regex: /youtube.com/gimu,
+            exclusions: [
+                /youtube.com\/playlist.*[?]list=.*/gimu,
+                /youtube.com\/v\/.*/gimu,
+                /youtube.com\/channel\/.*?#p.*?/gimu,
+                /youtube.com\/embed\/.*/gimu,
+                /youtube.com\/watch?v=.*/gimu,
+                /youtube.com\/watch.*[?]v=.*/gimu,
+                /youtube.com\/watch.*[?]v=.*/gimu,
+                /youtube.com\/watch?.*?/gimu,
+                /youtube.com\/user\/.*?#p.*?/gimu,
+                /youtube.com\/subscription_center.*/gimu
+            ]
+        }
+    ];
     // Set the return type
     let returnSocialType = null;
 
@@ -1732,7 +1731,7 @@ export function linkCategorizer(inputString: string) {
         return 'GIF';
     } else if (theMIME.includes('image')) {
         return 'PICTURE';
-    } else if (getYouTubeIdIfPresent(inputString)) {
+    } else if (youtubeIdExists(inputString)) {
         return 'YOUTUBE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
         return 'NORMAL_VIDEO';
@@ -1743,17 +1742,26 @@ export function linkCategorizer(inputString: string) {
     }
 }
 
-function getYouTubeIdIfPresent(inputURL: string) {
-    try {
-        // Also handle image URLs
-        inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
-
-        // Get the ID
-        let result = getYouTubeID(inputURL);
-
-        // Return the YouTube ID string
-        return result ? result : false;
-    } catch (e) {
+// Copied with light modifications from NPM package get-youtube-id
+// https://www.npmjs.com/package/get-youtube-id
+function youtubeIdExists(url: string) {
+    if (!/youtu\.?be/.test(url))
         return false;
+
+    // Look first for known patterns
+    var patterns = [
+        /youtu\.be\/([^#\&\?]{11})/,  // youtu.be/<id>
+        /\?v=([^#\&\?]{11})/,         // ?v=<id>
+        /\&v=([^#\&\?]{11})/,         // &v=<id>
+        /embed\/([^#\&\?]{11})/,      // embed/<id>
+        /\/v\/([^#\&\?]{11})/         // /v/<id>
+    ];
+
+    // If any pattern matches, return the ID
+    for (let i = 0; i < patterns.length; ++i) {
+        if (patterns[i].test(url)) {
+            return true;
+        }
     }
+    return false;
 }

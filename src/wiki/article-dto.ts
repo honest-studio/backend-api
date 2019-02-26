@@ -39,8 +39,21 @@ export interface Media {
 }
 
 export interface Metadata {
-    link_count: number;
-    page_lang: string;
+    link_count?: number;
+    page_lang?: string;
+    page_type?: string;
+    is_removed?: boolean;
+    is_adult_content?: boolean;
+    creation_timestamp?: Date;
+    last_modified?: Date;
+    pageviews?: number;
+    url_slug?: string;
+    url_slug_alternate?: string;
+    sub_page_type?: string;
+    is_wikipedia_import?: boolean;
+    is_indexed?: boolean;
+    bing_index_override?: boolean;
+    is_locked?: boolean;
 }
 
 export interface AmpInfo {
