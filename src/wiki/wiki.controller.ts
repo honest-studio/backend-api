@@ -66,11 +66,11 @@ export class WikiController {
         return this.wikiService.getWikiById(wiki_id, query);
     }
 
-    @Get('title/:article_title')
+    @Get('slug/:lang_code/:slug')
     @ApiOperation({ title: 'Get wiki by article title' })
     @ApiImplicitParam({
-        name: 'article_title',
-        description: 'The article slug (will later be the on-chain article title) Example: travis-moore'
+        name: 'slug',
+        description: 'The article slug. Each article has a unique slug. Example: travis-moore'
     })
     @ApiImplicitQuery({
         name: 'json',
@@ -83,8 +83,8 @@ export class WikiController {
         description: `An HTML wiki encoded in UTF-8`
     })
     @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
-    async getWikiByTitle(@Param('article_title') article_title, @Query() query): Promise<any> {
-        return await this.wikiService.getWikiByTitle(article_title, query);
+    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() query): Promise<any> {
+        return await this.wikiService.getWikiBySlug(lang_code, slug, query);
     }
 
     @Post('/')

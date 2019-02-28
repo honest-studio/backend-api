@@ -41,7 +41,7 @@ export class WikiService {
         return this.getWikiByHash(docs[0].trace.act.data.ipfs_hash, options);
     }
 
-    async getWikiByTitle(article_title: string, options: WikiOptions = {}): Promise<any> {
+    async getWikiBySlug(lang_code: string, slug: string, options: WikiOptions = {}): Promise<any> {
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -49,8 +49,9 @@ export class WikiService {
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache 
                 ON art.ipfs_hash_current=cache.ipfs_hash 
-                WHERE art.slug=? OR art.slug_alt=?;`,
-                [article_title, article_title],
+                WHERE art.slug=? OR art.slug_alt=?
+                AND art.page_lang=?;`,
+                [slug, slug, lang_code],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);

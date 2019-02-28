@@ -140,15 +140,15 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get wiki by title', () => {
+  it('Wiki: Get wiki by slug', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/title/William_Legate')
+        .get('/v2/wiki/slug/en/William_Legate')
         .expect(200)
   });
   
-  it('Wiki: Get wiki json by title', () => {
+  it('Wiki: Get wiki json by slug', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/title/William_Legate?json=true')
+        .get('/v2/wiki/slug/en/William_Legate?json=true')
         .expect(200)
   });
 
@@ -183,25 +183,25 @@ describe('Backend API', () => {
 
   it('Wiki Json: Manaus', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/title/Manaus?json=true')
+        .get('/v2/wiki/slug/en/Manaus?json=true')
         .expect(200)
   });
 
   it('Wiki Json: 2016 Summer Olympics', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/title/2016_Summer_Olympics?json=true')
+        .get('/v2/wiki/slug/en/2016_Summer_Olympics?json=true')
         .expect(200)
   });
 
   it('Wiki Json: Ghana', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/title/Ghana?json=true')
+        .get('/v2/wiki/slug/en/Ghana?json=true')
         .expect(200)
   });
 
   it('Wiki Json: Real Matrix', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/title/Real_matrix?json=true')
+    .get('/v2/wiki/slug/en/Real_matrix?json=true')
         .expect(200)
   });
 
