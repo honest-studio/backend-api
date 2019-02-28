@@ -216,11 +216,6 @@ export function ampSanitizer(
     console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
     console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
     console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
 
     // Set some initial variables
     let localCopy = inputString;
@@ -242,7 +237,7 @@ export function ampSanitizer(
     // Replace tags <font> with <span>
     const replacementTags = [['font', 'span']];
     replacementTags.forEach(function(pair) {
-        $(pair[0]).replaceWith($(`<${pair[1]}>${$(this).innerHTML}</${pair[1]}>`));
+        $(pair[0]).replaceWith($(`<${pair[1]}>${$(this).html()}</${pair[1]}>`));
     });
 
     // Remove bad tags from the HTML
@@ -303,13 +298,11 @@ export function ampSanitizer(
         // Create the button that will be substituted
         let openButtonTag = $('<button />');
         $(openButtonTag).addClass('tooltippable');
-        $(openButtonTag).attr({
-            role: 'button',
-            tabindex: 0,
-            'aria-label': theSlug,
-            'aria-labelledby': `${theSlug}__${unique_id}`,
-            on: `tap:hvrblb-${theSlug}__${unique_id}`
-        });
+        $(openButtonTag).attr('role', 'button');
+        $(openButtonTag).attr('tabindex', 0);
+        $(openButtonTag).attr('aria-label', theSlug);
+        $(openButtonTag).attr('aria-labelledby', `${theSlug}__${unique_id}`);
+        $(openButtonTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}`);
         $(openButtonTag).text(anchorText);
 
         // Replace the <a> tag with a button
@@ -318,32 +311,26 @@ export function ampSanitizer(
         // Construct the amp-lightbox
         let lightBoxTag = $('<amp-lightbox />');
         $(lightBoxTag).addClass('amp-hc');
-        $(lightBoxTag).attr({
-            id: `hvrblb-${theSlug}__${unique_id}`,
-            role: 'button',
-            tabindex: 0,
-            on: `tap:hvrblb-${theSlug}__${unique_id}.close`,
-            layout: 'nodisplay'
-        });
+        $(lightBoxTag).attr('id', `hvrblb-${theSlug}__${unique_id}`);
+        $(lightBoxTag).attr('role', 'button');
+        $(lightBoxTag).attr('tabindex', 0);
+        $(lightBoxTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}.close`);
+        $(lightBoxTag).attr('layout', 'nodisplay');
 
         // Construct the amp-iframe
         let iframeTag = $('<amp-iframe />');
         $(iframeTag).addClass('amp-hc');
-        $(iframeTag).attr({
-            sandbox: 'allow-same-origin allow-scripts allow-top-navigation',
-            frameborder: 0,
-            scrolling: 'no',
-            layout: 'fill',
-            src: `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${hrefDestinationSlug}/`
-        });
+        $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
+        $(iframeTag).attr('frameborder', 0);
+        $(iframeTag).attr('scrolling', 'no');
+        $(iframeTag).attr('layout', 'fill');
+        $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${hrefDestinationSlug}/`);
 
         // Placeholder image (leave this here or it will cause stupid AMP problems)
         let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr({
-            placeholder: '',
-            layout: 'fill',
-            src: 'https://epcdn-vz.azureedge.net/static/images/white_dot.png'
-        });
+        $(placeholderTag).attr('placeholder', '');
+        $(placeholderTag).attr('layout', 'fill');
+        $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
 
         // Put the placeholder inside the iframe
         $(iframeTag).append(placeholderTag);
@@ -376,13 +363,11 @@ export function ampSanitizer(
         // Create the button that will be substituted
         let openButtonTag = $('<button />');
         $(openButtonTag).addClass('tooltippableCarat');
-        $(openButtonTag).attr({
-            role: 'button',
-            tabindex: 0,
-            'aria-label': anchorText,
-            'aria-labelledby': `hvrlnk-${unique_id}`,
-            on: `tap:hvrlnk-${unique_id}`
-        });
+        $(openButtonTag).attr('role', 'button');
+        $(openButtonTag).attr('tabindex', 0);
+        $(openButtonTag).attr('aria-label', anchorText);
+        $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
+        $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
         $(openButtonTag).text(anchorText);
 
         // Replace the <a> tag with a button
@@ -391,33 +376,27 @@ export function ampSanitizer(
         // Construct the amp-lightbox
         let lightBoxTag = $('<amp-lightbox />');
         $(lightBoxTag).addClass('amp-hc');
-        $(lightBoxTag).attr({
-            id: `hvrlnk-${unique_id}`,
-            role: 'button',
-            tabindex: 0,
-            on: `tap:hvrlnk-${unique_id}.close`,
-            layout: 'nodisplay'
-        });
+        $(lightBoxTag).attr('id', `hvrlnk-${unique_id}`);
+        $(lightBoxTag).attr('role', 'button');
+        $(lightBoxTag).attr('tabindex', 0);
+        $(lightBoxTag).attr('on', `tap:hvrlnk-${unique_id}.close`);
+        $(lightBoxTag).attr('layout', 'nodisplay');
 
         // Construct the amp-iframe
         let iframeTag = $('<amp-iframe />');
         $(iframeTag).addClass('amp-hc');
-        $(iframeTag).attr({
-            sandbox: 'allow-same-origin allow-scripts allow-top-navigation',
-            height: '275',
-            frameborder: 0,
-            scrolling: 'no',
-            layout: 'fill',
-            src: `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
-        });
+        $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
+        $(iframeTag).attr('height', '275');
+        $(iframeTag).attr('frameborder', 0);
+        $(iframeTag).attr('scrolling', 'no');
+        $(iframeTag).attr('layout', 'fill');
+        $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`);
 
         // Placeholder image (leave this here or it will cause stupid AMP problems)
         let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr({
-            placeholder: '',
-            layout: 'fill',
-            src: 'https://epcdn-vz.azureedge.net/static/images/white_dot.png'
-        });
+        $(placeholderTag).attr('placeholder', '');
+        $(placeholderTag).attr('layout', 'fill');
+        $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
 
         // Put the placeholder inside the iframe
         $(iframeTag).append(placeholderTag);
@@ -445,23 +424,19 @@ export function ampSanitizer(
 
         // Create the amp-anim
         let ampAnimTag = $('<amp-anim />');
-        $(ampAnimTag).attr({
-            width: 'auto',
-            height: '275',
-            layout: 'fixed-height',
-            'data-mimetype': 'image/gif',
-            src: fullImgSrc
-        });
+        $(ampAnimTag).attr('width', 'auto');
+        $(ampAnimTag).attr('height', '275');
+        $(ampAnimTag).attr('layout', 'fixed-height');
+        $(ampAnimTag).attr('data-mimetype', 'image/gif');
+        $(ampAnimTag).attr('src', fullImgSrc);
 
         // Create the placeholder / thumbnail image
         let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr({
-            layout: 'fill',
-            width: '1',
-            'data-height': '1',
-            src: thumbImgSrc,
-            placeholder: ''
-        });
+        $(placeholderTag).attr('layout', 'fill');
+        $(placeholderTag).attr('width', '1');
+        $(placeholderTag).attr('data-height', '1');
+        $(placeholderTag).attr('src', thumbImgSrc);
+        $(placeholderTag).attr('placeholder', '');
 
         // Put the placeholder inside the amp-anim
         $(ampAnimTag).append(placeholderTag);
@@ -495,23 +470,19 @@ export function ampSanitizer(
 
         // Create the amp-img
         let ampImgTag = $('<amp-img />');
-        $(ampImgTag).attr({
-            width: 'auto',
-            height: '275',
-            layout: 'fixed-height',
-            'data-mimetype': $(this).attr('data-mimetype'),
-            src: fullImgSrc
-        });
+        $(ampImgTag).attr('width', 'auto');
+        $(ampImgTag).attr('height', '275');
+        $(ampImgTag).attr('layout', 'fixed-height');
+        $(ampImgTag).attr('data-mimetype', $(this).attr('data-mimetype'));
+        $(ampImgTag).attr('src', fullImgSrc);
 
         // Create the placeholder / thumbnail image
         let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr({
-            layout: 'fill',
-            width: '1',
-            'data-height': '1',
-            src: thumbImgSrc,
-            placeholder: ''
-        });
+        $(placeholderTag).attr('layout', 'fill');
+        $(placeholderTag).attr('width', '1');
+        $(placeholderTag).attr('data-height', '1');
+        $(placeholderTag).attr('src', thumbImgSrc);
+        $(placeholderTag).attr('placeholder', '');
 
         // Put the placeholder inside the amp-img
         $(ampImgTag).append(placeholderTag);
@@ -526,21 +497,17 @@ export function ampSanitizer(
     $('video').each(function() {
         // Create the amp-img
         let ampVideoTag = $('<amp-video />');
-        $(ampVideoTag).attr({
-            width: 'auto',
-            height: '250',
-            layout: 'fixed-height',
-            preload: 'metadata',
-            'data-mimetype': $(this).attr('data-mimetype')
-        });
+        $(ampVideoTag).attr('width', 'auto');
+        $(ampVideoTag).attr('height', '250');
+        $(ampVideoTag).attr('layout', 'fixed-height');
+        $(ampVideoTag).attr('preload', 'metadata');
+        $(ampVideoTag).attr('data-mimetype', $(this).attr('data-mimetype'));
         $(ampVideoTag).text(' ');
 
         // Create the source tag
         let sourceTag = $('<source />');
-        $(sourceTag).attr({
-            src: $(this).attr('src') + '#t=0.1',
-            type: $(this).attr('data-mimetype')
-        });
+        $(sourceTag).attr('src', $(this).attr('src') + '#t=0.1');
+        $(sourceTag).attr('type', $(this).attr('data-mimetype'));
 
         // Put the source inside the amp-video
         $(ampVideoTag).append(sourceTag);
@@ -588,16 +555,14 @@ export function ampSanitizer(
         }
 
         // Cleans up remaining images (mainly from wikipedia imports). Will fail for GIF
-        if ($(this).tagName == 'img') {
+        if (this.tagName == 'img') {
             if (!$(this).attr('placeholder')) {
                 // Create the amp-img
                 let ampImgTag = $('<amp-img />');
-                $(ampImgTag).attr({
-                    width: $(this).attr('width'),
-                    height: $(this).attr('height'),
-                    layout: 'fixed',
-                    src: $(this).attr('src')
-                });
+                $(ampImgTag).attr('width', $(this).attr('width'));
+                $(ampImgTag).attr('height', $(this).attr('height'));
+                $(ampImgTag).attr('layout', 'fixed');
+                $(ampImgTag).attr('src', $(this).attr('src'));
                 $(ampImgTag).text(' ');
             }
         }
@@ -618,295 +583,31 @@ export function ampSanitizer(
 }
 
 // Turn the HTML blurb into a JSON dict
-export function extractPageBody($: cheerio, citations: Citation[], metadata: any, media: Media[]): Section[] {
+export function extractPageBody($: CheerioStatic, citations: Citation[], metadata: any, media: Media[]): Section[] {
     // Get the body
-    let theBody = $('.blurb-wrap');
+    // First 2 are wikipedia divs
+    // Default is everipedia body 
+    let $body;
+    if ($('.mw-parser-output').length > 0)
+        $body = $( $('.mw-parser-output')[0] );
+    else if ($('.mw-content-ltr').length > 0) 
+        $body = $( $('.mw-content-ltr')[0] );
+    else 
+        $body = $('.blurb-wrap');
 
-    // Check for wikipedia divs
-    if ($('.mw-parser-output').length > 0) {
-        theBody = $('.mw-parser-output')[0];
-    } else if ($('.mw-content-ltr').length > 0) {
-        theBody = $('.mw-content-ltr')[0];
-    }
+    // Split body into sections
+    let cheerioSections = splitIntoSections($body)
+        .map(parseSection);
+    
 
-    // Create the sections array
-    let sections = [];
+    //// Set up the first section
+    //sections.push({ paragraphs: [] });
 
-    // Set up the first section
-    sections.push({ paragraphs: [] });
 
-    // Loop through all of the first-level children
-    $(theBody)
-        .children()
-        .each(function(index, element) {
-            // Initialize a blank dictionary for the first level
-            let paragraph = {
-                index: index,
-                items: [],
-                tag_type:
-                    $(this)
-                        .prop('tagName')
-                        .toLowerCase() || null,
-                attrs: this.attribs
-            };
-
-            // Process the tag types accordingly
-            switch (paragraph.tag_type) {
-                // Paragraphs and divs
-                case 'blockquote':
-                case 'p': {
-                    // Get the sentences
-                    paragraph.items = parseSentences($(this).text(), citations);
-                    break;
-                }
-                // Headings
-                case String(paragraph.tag_type.match(/h[1-6]/gimu)): {
-                    // Get the sentences
-                    sections.push({ paragraphs: [] });
-                    paragraph.items = parseSentences($(this).text(), citations, true, true);
-                    break;
-                }
-                // Lists
-                case String(paragraph.tag_type.match(/(ul|ol)/gimu)): {
-                    // Initialize the return array
-                    let listItems = [];
-
-                    // Loop through the li's
-                    $(element)
-                        .children('li')
-                        .each(function(innerIndex, innerElem) {
-                            // Get the sentences
-                            listItems.push({
-                                index: innerIndex,
-                                sentences: parseSentences($(innerElem).text(), citations)
-                            });
-                        });
-
-                    // Set the items
-                    paragraph.items = listItems;
-                    break;
-                }
-                // Inline images
-                case 'table': {
-                    // Initialize the return object
-                    let paragraph_item: any;
-
-                    // get the the HTML classes
-                    const classes = paragraph.attrs.class;
-
-                    // if there's no class, ignore the table
-                    if (!classes) break;
-
-                    // See what type of table it is
-                    for (let testClass of classes.split(/\s+/)) {
-                        // Test for the inline images
-                        if (testClass.includes('blurb-inline-image-container')) {
-                            // Get the image node
-                            let theImgNode = $(element)
-                                .find('img.caption-img, img.tooltippableImage')
-                                .eq(0);
-
-                            // Initialize the objects
-                            const image: Media = {
-                                type: 'fixed_image',
-                                url: $(theImgNode).attr('src'),
-                                mime: $(theImgNode).attr('data-mimetype'),
-                                thumb: null,
-                                caption: null
-                            };
-
-                            paragraph_item = { type: 'inline-image', link_id: null };
-
-                            // Get the caption
-                            // Set the caption node
-                            let captionNode = $(this)
-                                .find('.blurbimage-caption')
-                                .eq(0);
-
-                            // Remove the .magnify div, if present (applies to some Wikipedia imports)
-                            $(captionNode)
-                                .find('.blurbimage-caption .magnify')
-                                .eq(0)
-                                .remove();
-
-                            // Unwrap the thumbcaption, if present (applies to some Wikipedia imports)
-                            $(captionNode)
-                                .children('.thumbcaption')
-                                .each(function(index, element) {
-                                    $(captionNode).html($(this).html());
-                                });
-
-                            // Set the caption
-                            image.caption = parseSentences(
-                                $(captionNode)
-                                    .text()
-                                    .trim(),
-                                [],
-                                true,
-                                false
-                            );
-
-                            // Decode the URL
-                            let decodedURL = decodeURIComponent(image.url);
-
-                            // Find the URL in the global citations list, if applicable
-                            let theLinkID: number = -1;
-                            for (let element of citations) {
-                                if (element.url == decodedURL && element.url && decodedURL) {
-                                    theLinkID = element.citation_id;
-                                    element.in_blurb = true;
-                                    break;
-                                }
-                            }
-
-                            // Orphaned images need to be added to the link list
-                            if (theLinkID == -1) {
-                                // Set the linkID
-                                theLinkID = metadata.link_count;
-                                paragraph_item.link_id = theLinkID;
-                                image.link_id = theLinkID;
-
-                                // Construct the filename
-                                if (image.url.includes('wikipedia')) {
-                                    let theAttributionURL = null;
-                                    theAttributionURL = image.url.split('/').pop();
-                                    theAttributionURL = `https://${
-                                        metadata.page_lang
-                                    }.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
-                                    image.attribution_url = theAttributionURL;
-                                }
-
-                                // Add the media object to the list of media links
-                                media.push(image);
-
-                                // Increment the link count
-                                metadata.link_count++;
-                            }
-                        } else if (testClass.includes('wikitable') || testClass.includes('ep-table')) {
-                            // Set the objects
-                            let tableObj = {
-                                type: 'wikitable',
-                                table: {
-                                    caption: null,
-                                    colgroup: null,
-                                    thead: {
-                                        attrs: [],
-                                        rows: []
-                                    },
-                                    tbody: {
-                                        attrs: [],
-                                        rows: []
-                                    },
-                                    tfoot: {
-                                        attrs: [],
-                                        rows: []
-                                    }
-                                }
-                            };
-
-                            // Set the table caption, if present
-                            $(element)
-                                .children('caption')
-                                .each(function(index, element) {
-                                    let tempValue = $(this)
-                                        .html()
-                                        .trim();
-                                    tableObj.table.caption = parseSentences(tempValue, [], true, true);
-                                });
-
-                            // Deal with the colgroup
-                            // TODO
-
-                            // Loop through the head, body, and foot
-                            $(element)
-                                .children('thead, tbody, tfoot')
-                                .each(function(innerIndex, innerElement) {
-                                    // Find the tag name (thead, tbody, or tfoot)
-                                    let theTagName =
-                                        $(innerElement)
-                                            .prop('tagName')
-                                            .toLowerCase() || null;
-
-                                    // Push the attributes into the parent object
-                                    tableObj.table[theTagName].attrs = innerElement.attribs;
-
-                                    // Loop through the tr's
-                                    let rowList = [];
-                                    $(innerElement)
-                                        .children('tr')
-                                        .each(function(rowIdx, rowElem) {
-                                            // Initialize a row object
-                                            let rowObj = {
-                                                index: rowIdx,
-                                                attrs: rowElem.attribs,
-                                                cells: null
-                                            };
-
-                                            // Loop through the cells
-                                            let cellList = [];
-                                            $(rowElem)
-                                                .children('th, td')
-                                                .each(function(cellIdx, cellElem) {
-                                                    // Find the tag name (th or td)
-                                                    let theCellTagName =
-                                                        $(cellElem)
-                                                            .prop('tagName')
-                                                            .toLowerCase() || null;
-
-                                                    // Initialize a cell object
-                                                    let cellObj = {
-                                                        index: cellIdx,
-                                                        attrs: cellElem.attribs,
-                                                        tag_type: theCellTagName,
-                                                        contents: null
-                                                    };
-
-                                                    // Process / Markdown the cell contents
-                                                    let tempValue = $(cellElem)
-                                                        .text()
-                                                        .trim();
-                                                    cellObj.contents = parseSentences(
-                                                        tempValue,
-                                                        [],
-                                                        true,
-                                                        true
-                                                    );
-
-                                                    // Add the cell object to the list of cells
-                                                    cellList.push(cellObj);
-                                                });
-
-                                            // Add the cells to the row object
-                                            rowObj.cells = cellList;
-
-                                            // Add the row object to the list of rows
-                                            rowList.push(rowObj);
-                                        });
-
-                                    // Push the rows into the parent object
-                                    tableObj.table[theTagName].rows = rowList;
-                                });
-
-                            // Set the return object to the table object
-                            paragraph_item = tableObj;
-                        }
-                    }
-
-                    // Return the object
-                    paragraph.items.push(paragraph_item);
-                    break;
-                }
-                default:
-                    break;
-            }
-            // Add the object to the array
-            sections[sections.length - 1].paragraphs.push(paragraph);
-        });
-
-    return sections;
+    return [];
 }
 
-function extractMetadata($: cheerio): Metadata {
+function extractMetadata($: CheerioStatic): Metadata {
     const metadata: any = {}
 
     // Loop through the elements and fill the dictionary
@@ -925,7 +626,7 @@ function extractMetadata($: cheerio): Metadata {
     return metadata;
 }
 
-function extractCitations($: cheerio): Citation[] {
+function extractCitations($: CheerioStatic): Citation[] {
     const citations = [];
     $('li.link-row').each(function(index, element) {
         let citation: any = {};
@@ -999,7 +700,7 @@ function extractCitations($: cheerio): Citation[] {
     return citations;
 }
 
-function extractMediaGallery($: cheerio) {
+function extractMediaGallery($: CheerioStatic) {
     const gallery = [];
 
     $('li.media-row').each(function() {
@@ -1106,7 +807,7 @@ function extractMediaGallery($: cheerio) {
     return gallery;
 }
 
-function extractMainPhoto($: cheerio): Media {
+function extractMainPhoto($: CheerioStatic): Media {
     const main_photo: Media = {
         type: 'main_image',
         url: null,
@@ -1141,7 +842,7 @@ function extractMainPhoto($: cheerio): Media {
     return main_photo;
 }
 
-function extractInfoboxHtml($: cheerio): string {
+function extractInfoboxHtml($: CheerioStatic): string {
     const blobbox = $('div.blobbox-wrap');
 
     // no infobox found
@@ -1155,7 +856,7 @@ function extractInfoboxHtml($: cheerio): string {
     );
 }
 
-function extractInfoboxes($: cheerio): Infobox[] {
+function extractInfoboxes($: CheerioStatic): Infobox[] {
     let infoboxes = [];
 
     // Loop through the plural non-Wikipedia elements first and fill the dictionary
@@ -1298,8 +999,287 @@ function extractInfoboxes($: cheerio): Infobox[] {
     return infoboxes;
 }
 
+function splitIntoSections($body: Cheerio): Cheerio[] {
+    const bodyHtml = $body.html();
+    return bodyHtml.split(/(?=<h[1-6])/gimu)
+        .map(htmlSection => htmlSection.trim())
+        .map(htmlSection => `<div class="section">${htmlSection}</div>`)
+        .map(htmlSection => cheerio.load(htmlSection))
+        .map($ => $('.section'))
+}
+
+function parseSection($section: Cheerio): Section {
+    const section = { paragraphs: [] };
+    const $children = $section.children();
+    for (let i=0; i < $children.length; i++) {
+        const $element = $children.eq(i);
+        const element = $children[i];
+        // Initialize a blank dictionary for the first level
+        let paragraph = {
+            index: i,
+            items: [],
+            tag_type: element.tagName.toLowerCase() || null,
+            attrs: this.attribs
+        };
+
+        // Process the tag types accordingly
+        switch (paragraph.tag_type) {
+            // Paragraphs and divs
+            case 'blockquote':
+            case 'p': {
+                // Get the sentences
+                paragraph.items = parseSentences($element.text(), citations);
+                break;
+            }
+            // Headings
+            case String(paragraph.tag_type.match(/h[1-6]/gimu)): {
+                // Get the sentences
+                sections.push({ paragraphs: [] });
+                paragraph.items = parseSentences($element.text(), citations, true, true);
+                break;
+            }
+            // Lists
+            case String(paragraph.tag_type.match(/(ul|ol)/gimu)): {
+                // Initialize the return array
+                let listItems = [];
+
+                // Loop through the li's
+                $(element)
+                    .children('li')
+                    .each(function(innerIndex, innerElem) {
+                        // Get the sentences
+                        listItems.push({
+                            index: innerIndex,
+                            sentences: parseSentences($(innerElem).text(), citations)
+                        });
+                    });
+
+                // Set the items
+                paragraph.items = listItems;
+                break;
+            }
+            // Inline images
+            case 'table': {
+                // Initialize the return object
+                let paragraph_item: any;
+
+                // get the the HTML classes
+                const classes = paragraph.attrs.class;
+
+                // if there's no class, ignore the table
+                if (!classes) break;
+
+                // See what type of table it is
+                for (let testClass of classes.split(/\s+/)) {
+                    // Test for the inline images
+                    if (testClass.includes('blurb-inline-image-container')) {
+                        // Get the image node
+                        let theImgNode = $(element)
+                            .find('img.caption-img, img.tooltippableImage')
+                            .eq(0);
+
+                        // Initialize the objects
+                        const image: Media = {
+                            type: 'fixed_image',
+                            url: $(theImgNode).attr('src'),
+                            mime: $(theImgNode).attr('data-mimetype'),
+                            thumb: null,
+                            caption: null
+                        };
+
+                        paragraph_item = { type: 'inline-image', link_id: null };
+
+                        // Get the caption
+                        // Set the caption node
+                        let captionNode = $element
+                            .find('.blurbimage-caption')
+                            .eq(0);
+
+                        // Remove the .magnify div, if present (applies to some Wikipedia imports)
+                        $(captionNode)
+                            .find('.blurbimage-caption .magnify')
+                            .eq(0)
+                            .remove();
+
+                        // Unwrap the thumbcaption, if present (applies to some Wikipedia imports)
+                        $(captionNode)
+                            .children('.thumbcaption')
+                            .each(function(index, element) {
+                                $(captionNode).html($element.html());
+                            });
+
+                        // Set the caption
+                        image.caption = parseSentences(
+                            $(captionNode)
+                                .text()
+                                .trim(),
+                            [],
+                            true,
+                            false
+                        );
+
+                        // Decode the URL
+                        let decodedURL = decodeURIComponent(image.url);
+
+                        // Find the URL in the global citations list, if applicable
+                        let theLinkID: number = -1;
+                        for (let element of citations) {
+                            if (element.url == decodedURL && element.url && decodedURL) {
+                                theLinkID = element.citation_id;
+                                element.in_blurb = true;
+                                break;
+                            }
+                        }
+
+                        // Orphaned images need to be added to the link list
+                        if (theLinkID == -1) {
+                            // Set the linkID
+                            theLinkID = metadata.link_count;
+                            paragraph_item.link_id = theLinkID;
+                            image.link_id = theLinkID;
+
+                            // Construct the filename
+                            if (image.url.includes('wikipedia')) {
+                                let theAttributionURL = null;
+                                theAttributionURL = image.url.split('/').pop();
+                                theAttributionURL = `https://${
+                                    metadata.page_lang
+                                }.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
+                                image.attribution_url = theAttributionURL;
+                            }
+
+                            // Add the media object to the list of media links
+                            media.push(image);
+
+                            // Increment the link count
+                            metadata.link_count++;
+                        }
+                    } else if (testClass.includes('wikitable') || testClass.includes('ep-table')) {
+                        // Set the objects
+                        let tableObj = {
+                            type: 'wikitable',
+                            table: {
+                                caption: null,
+                                colgroup: null,
+                                thead: {
+                                    attrs: [],
+                                    rows: []
+                                },
+                                tbody: {
+                                    attrs: [],
+                                    rows: []
+                                },
+                                tfoot: {
+                                    attrs: [],
+                                    rows: []
+                                }
+                            }
+                        };
+
+                        // Set the table caption, if present
+                        $(element)
+                            .children('caption')
+                            .each(function(index, element) {
+                                let tempValue = $element
+                                    .html()
+                                    .trim();
+                                tableObj.table.caption = parseSentences(tempValue, [], true, true);
+                            });
+
+                        // Deal with the colgroup
+                        // TODO
+
+                        // Loop through the head, body, and foot
+                        $(element)
+                            .children('thead, tbody, tfoot')
+                            .each(function(innerIndex, innerElement) {
+                                // Find the tag name (thead, tbody, or tfoot)
+                                let theTagName =
+                                    $(innerElement)
+                                        .prop('tagName')
+                                        .toLowerCase() || null;
+
+                                // Push the attributes into the parent object
+                                tableObj.table[theTagName].attrs = innerElement.attribs;
+
+                                // Loop through the tr's
+                                let rowList = [];
+                                $(innerElement)
+                                    .children('tr')
+                                    .each(function(rowIdx, rowElem) {
+                                        // Initialize a row object
+                                        let rowObj = {
+                                            index: rowIdx,
+                                            attrs: rowElem.attribs,
+                                            cells: null
+                                        };
+
+                                        // Loop through the cells
+                                        let cellList = [];
+                                        $(rowElem)
+                                            .children('th, td')
+                                            .each(function(cellIdx, cellElem) {
+                                                // Find the tag name (th or td)
+                                                let theCellTagName =
+                                                    $(cellElem)
+                                                        .prop('tagName')
+                                                        .toLowerCase() || null;
+
+                                                // Initialize a cell object
+                                                let cellObj = {
+                                                    index: cellIdx,
+                                                    attrs: cellElem.attribs,
+                                                    tag_type: theCellTagName,
+                                                    contents: null
+                                                };
+
+                                                // Process / Markdown the cell contents
+                                                let tempValue = $(cellElem)
+                                                    .text()
+                                                    .trim();
+                                                cellObj.contents = parseSentences(
+                                                    tempValue,
+                                                    [],
+                                                    true,
+                                                    true
+                                                );
+
+                                                // Add the cell object to the list of cells
+                                                cellList.push(cellObj);
+                                            });
+
+                                        // Add the cells to the row object
+                                        rowObj.cells = cellList;
+
+                                        // Add the row object to the list of rows
+                                        rowList.push(rowObj);
+                                    });
+
+                                // Push the rows into the parent object
+                                tableObj.table[theTagName].rows = rowList;
+                            });
+
+                        // Set the return object to the table object
+                        paragraph_item = tableObj;
+                    }
+                }
+
+                // Return the object
+                paragraph.items.push(paragraph_item);
+                break;
+            }
+            default:
+                break;
+        }
+        // Add the object to the array
+        sections[sections.length - 1].paragraphs.push(paragraph);
+    }
+        
+    return section; 
+}
+
 // Sanitize a cheerio object and convert some of its HTML to Markdown
-function sanitizeText($: cheerio) {
+function sanitizeText($: CheerioStatic) {
 
     // Substitute all the links and citations into something that is safe for the parser
     $('a.tooltippable, a.tooltippableCarat').each(function() {
@@ -1395,9 +1375,9 @@ function sanitizeText($: cheerio) {
 
     // Check for wikipedia divs
     if ($('.mw-parser-output').length > 0) {
-        theBody = $('.mw-parser-output')[0];
+        theBody = $( $('.mw-parser-output')[0] );
     } else if ($('.mw-content-ltr').length > 0) {
-        theBody = $('.mw-content-ltr')[0];
+        theBody = $( $('.mw-content-ltr')[0] );
     }
 
     // Fix certain elements
