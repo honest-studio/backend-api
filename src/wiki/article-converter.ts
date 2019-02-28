@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { Sentence, Section, ArticleJson, Media, Citation, Metadata } from './article-dto';
+import { Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
 
@@ -141,12 +141,10 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
     // Load the HTML into cheerio for parsing
     let $ = cheerio.load(dom);
 
-    // Convert some stuff to markdown / psuedo-markdown
-    $ = markdowner($);
-
-    // Remove bad tags
-    const badTagSelectors = ['.thumbcaption .magnify', '.blurb-wrap .thumbinner'];
-    badTagSelectors.forEach((selector) => $(selector).remove());
+    // Remove useless and empty tags and HTML
+    // Convert text formatting to pseudo-markdown
+    // Converts link and citation HTML to clean parseable formats
+    $ = sanitizeText($);
 
     // ---------------------------------------------------------
     // PAGE TITLE
@@ -156,24 +154,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
             .text()
             .trim() || null;
 
-    // ---------------------------------------------------------
-    // PAGE METADATA
-    // Extract the page metadata
-    // Initialize the sub-dictionary
-    const metadata = { link_count: 1, page_lang: 'en' };
-
-    // Loop through the elements and fill the dictionary
-    $('tr.data-pair').each(function() {
-        let pairKey = $(this).attr('data-key');
-        let pairValue = pyToJS(
-            $(this)
-                .find('td')
-                .eq(1)
-                .text()
-                .trim()
-        );
-        metadata[pairKey] = pairValue;
-    });
+    const metadata = extractMetadata($);
 
     // ---------------------------------------------------------
     // AMP
@@ -196,477 +177,29 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
         $ = cheerio.load(dom);
     }
 
-    // ---------------------------------------------------------
-    // CITATIONS
-    // Extract the citations
 
-    // Loop through the elements and fill the dictionary
-    const citations = [];
-    $('li.link-row').each(function(index, element) {
-        // Initialize a blank citation object dictionary
-        let citation = {
-            url: null,
-            thumb: null,
-            description: null,
-            category: null,
-            link_id: 0,
-            social_type: null,
-            attr: null,
-            timestamp: null,
-            mime: null,
-            in_gallery: false,
-            in_blurb: false,
-            attribution_url: null,
-            media_page_uuid: null
-        };
-
-        // Fetch the citation number
-        // citation.link_id = $(this).find(".link-url-citation-number").eq(0).text().trim();
-        // Clean up the link_id once and for all
-        citation.link_id = metadata['link_count'];
-
-        // Increment the link count
-        metadata['link_count'] = metadata['link_count'] + 1;
-
-        // Fetch the description
-        let tempDescription = decode(
-            $(this)
-                .find('.link-description')
-                .eq(0)
-                .html()
-                .trim(),
-            'all'
-        );
-
-        // Find any links to other pages that appear in the link description
-        citation.description = parseTextToSentences(tempDescription, [], true);
-
-        // Fetch the timestamp
-        citation.timestamp =
-            $(this)
-                .find('.link-timestamp')
-                .eq(0)
-                .text()
-                .trim() || null;
-
-        // Fetch the MIME type
-        citation.mime =
-            pyToJS(
-                $(this)
-                    .find('.link-mime')
-                    .eq(0)
-                    .text()
-                    .trim()
-            ) || null;
-
-        // Fetch the attribution info
-        citation.attr = pyToJS(
-            $(this)
-                .find('.link-attr')
-                .eq(0)
-                .text()
-                .trim()
-        );
-        citation.attr = null;
-
-        // Fetch the thumbnail
-        citation.thumb = $(this)
-            .find('.link-thumb')
-            .eq(0)
-            .attr('src');
-        citation.thumb = null;
-
-        // Fetch the URL & social media type
-        const href = $(this)
-            .find('.link-url')
-            .eq(0)
-            .attr('href');
-        if (!href) {
-            citation.url = null;
-            citation.social_type = null;
-        } else {
-            citation.url = href.trim();
-            citation.social_type = socialURLType(citation.url);
-        }
-
-        // Find the url category
-        citation.category = linkCategorizer(citation.url);
-
-        // Add it to the list
-        citations.push(citation);
-    });
-
-    // ---------------------------------------------------------
-    // MEDIA
-    // Extract items from the media gallery, like videos and images
-    // These media items will be added to the citations list if they are not already present
-    // Initialize the sub-dictionary
-    let media = [];
-
-    // Loop through the elements and fill the dictionary
-    $('li.media-row').each(function() {
-        // Initialize a blank media object dictionary
-        let mediaObject = {
-            url: null,
-            thumb: null,
-            caption: null,
-            class: null,
-            mime: null,
-            timestamp: null,
-            attribution_url: null,
-            media_page_uuid: null
-        };
-
-        // Fetch the caption
-        let tempCaption = decode(
-            $(this)
-                .find('.media-caption')
-                .eq(0)
-                .html()
-                .trim(),
-            'all'
-        );
-
-        // Find any links to other pages that appear in the caption]
-        mediaObject.caption = parseTextToSentences(tempCaption, [], true);
-
-        // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
-        mediaObject.class = $(this)
-            .find('.media-class')
-            .eq(0)
-            .text()
-            .trim();
-
-        // Fetch the MIME type
-        mediaObject.mime = pyToJS(
-            $(this)
-                .find('.media-mime')
-                .eq(0)
-                .text()
-                .trim()
-        );
-        mediaObject.mime = null;
-
-        // Fetch the timestamp
-        mediaObject.timestamp = pyToJS(
-            $(this)
-                .find('.media-timestamp')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Fetch the attribution
-        mediaObject.attribution_url =
-            pyToJS(
-                $(this)
-                    .find('.media-ogsource')
-                    .eq(0)
-                    .text()
-                    .trim()
-            ) || null;
-
-        // Random ID (for unique identification on the front end), if needed. Changes every time the front end is reloaded
-        let mediaUnique = Math.random()
-            .toString(36)
-            .substring(2);
-        mediaObject.media_page_uuid = mediaUnique;
-
-        // Fetch the main and thumbnail URLs depending on the category of the media
-        let mediaElement = $(this)
-            .find('.media-obj')
-            .eq(0);
-        switch (mediaObject.class) {
-            case 'PICTURE':
-            case 'GIF': {
-                mediaObject.url = mediaElement.attr('src');
-                mediaObject.thumb = mediaElement.attr('data-thumb');
-                break;
-            }
-            case 'YOUTUBE': {
-                amp_info.load_youtube_js = true;
-                mediaObject.url = mediaElement.attr('data-videourl');
-                mediaObject.thumb = mediaElement.attr('src');
-                break;
-            }
-            case 'NORMAL_VIDEO': {
-                amp_info.load_video_js = true;
-                mediaObject.url = mediaElement
-                    .find('source')
-                    .eq(0)
-                    .attr('src');
-                mediaObject.thumb = mediaElement
-                    .find('source')
-                    .eq(0)
-                    .attr('data-thumb');
-                break;
-            }
-            case 'AUDIO': {
-                amp_info.load_audio_js = true;
-                mediaObject.url = mediaElement
-                    .find('source')
-                    .eq(0)
-                    .attr('src');
-                mediaObject.thumb = mediaElement
-                    .find('source')
-                    .eq(0)
-                    .attr('data-thumb');
-                break;
-            }
-            default:
-                break;
-        }
-
-        // If a media item matches an existing citation, update the latter
-        let matchFound = false;
-        for (let citeObj of citations) {
-            if (citeObj.url == mediaObject.url && citeObj.url && mediaObject.url) {
-                if (!citeObj.thumb) {
-                    citeObj.thumb = mediaObject.thumb;
-                }
-                citeObj.category = mediaObject.class;
-                citeObj.attribution_url = mediaObject.attribution_url;
-                citeObj.media_page_uuid = mediaObject.media_page_uuid;
-                citeObj.in_gallery = true;
-                matchFound = true;
-                break;
-            }
-        }
-
-        // If no match was found, insert the media object as a citation object
-        // remember to use currentLinkID
-        if (!matchFound) {
-            // Add the media object to the list of links
-            media.push({
-                url: mediaObject.url,
-                thumb: mediaObject.thumb,
-                description: mediaObject.caption,
-                category: mediaObject.class,
-                link_id: metadata['link_count'],
-                timestamp: mediaObject.timestamp,
-                mime: mediaObject.mime,
-                in_gallery: true,
-                in_blurb: false,
-                attribution_url: mediaObject.attribution_url,
-                media_page_uuid: mediaObject.media_page_uuid
-            });
-
-            // Increment the link count
-            metadata['link_count'] = metadata['link_count'] + 1;
-        }
-    });
-
-    // ---------------------------------------------------------
-    // MAIN PHOTO
-    // Start finding the main photo
-    // Initialize the Media object
-    const main_photo: Media = {
-        type: 'main_image',
-        url: null,
-        thumb: null,
-        caption: null,
-        attribution_url: null
-    };
-
-    let photoElement = $('.main-photo-wrap img.main-photo');
-
-    // Get the URLs for the photo and its thumbnail. If absent, give placeholders
-    main_photo.url = photoElement.attr('src') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
-    main_photo.thumb =
-        photoElement.attr('data-thumbnail') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
-
-    // Find any links to other pages that appear in the caption
-    const caption = $('figcaption.main-photo-caption');
-    if (caption.length == 0) main_photo.caption = null;
-    else {
-        const captionText = decode(caption.html().trim(), 'all');
-        main_photo.caption = parseTextToSentences(captionText, [], true);
-    }
-
-    // Try to find the photo attribution
-    main_photo.attribution_url =
-        pyToJS(
-            $('.main-photo-og-url')
-                .text()
-                .trim()
-        ) || null;
-
-    // ---------------------------------------------------------
-    // BLOBBOX / WIKIPEDIA-INFOBOX
-    // Extract the blobbox, which is another name for the Wikipedia-imported infobox
-    // NOTE, might need prettifyCorrector() from Python here
-    let infobox_html;
-    const blobbox = $('div.blobbox-wrap');
-    if (blobbox.length == 0) infobox_html = null;
-    // no infobox found
-    else
-        infobox_html = decode(
-            $('div.blobbox-wrap')
-                .html()
-                .trim(),
-            'all'
-        );
-
-    // ---------------------------------------------------------
-    // INFOBOXES
-    // Extract the non-Wikipedia infoboxes
-    let infoboxes = [];
-
-    // Loop through the plural non-Wikipedia elements first and fill the dictionary
-    $('table.ibox-item-plural').each(function() {
-        // Initialize a blank object dictionary
-        let infoPackage = {
-            key: null,
-            schema: null,
-            addlSchematype: null,
-            addlSchemaItemprop: null,
-            rows: []
-        };
-
-        // Get the key (plaintext schemaType)
-        infoPackage.key = $(this)
-            .find('.ibox-plural-key-inner')
-            .eq(0)
-            .text()
-            .trim();
-
-        // Get the schema.org key
-        infoPackage.schema = pyToJS(
-            $(this)
-                .find('.ibox-schema')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Get the sub-schema type
-        infoPackage.addlSchematype = pyToJS(
-            $(this)
-                .find('.ibox-additionalschematype')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Get the sub-schema key
-        infoPackage.addlSchemaItemprop = pyToJS(
-            $(this)
-                .find('.ibox-addl_schema_itemprop')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Loop through the value rows
-        $(this)
-            .find('td.ibox-plural-value')
-            .each(function() {
-                // Try to find the value
-                let tempValue = decode(
-                    $(this)
-                        .html()
-                        .trim(),
-                    'all'
-                );
-
-                // Find any links to other pages that appear in the caption]
-                tempValue = parseTextToSentences(tempValue, [], true, true);
-
-                // Add the value to the rows
-                infoPackage.rows.push(tempValue);
-            });
-
-        // Add to the infobox list
-        infoboxes.push(infoPackage);
-    });
-
-    // Loop through the nonplural elements and fill the dictionary
-    $('table.ibox-item-nonplural').each(function() {
-        // Initialize a blank object dictionary
-        let infoPackage = {
-            key: null,
-            schema: null,
-            addlSchematype: null,
-            addlSchemaItemprop: null,
-            rows: []
-        };
-
-        // Get the key (plaintext schemaType)
-        infoPackage.key = $(this)
-            .find('.ibox-nonplural-key')
-            .eq(0)
-            .text()
-            .trim();
-
-        // Get the schema.org key
-        infoPackage.schema = pyToJS(
-            $(this)
-                .find('.ibox-schema')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Get the sub-schema type
-        infoPackage.addlSchematype = pyToJS(
-            $(this)
-                .find('.ibox-additionalschematype')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Get the sub-schema key
-        infoPackage.addlSchemaItemprop = pyToJS(
-            $(this)
-                .find('.ibox-addl_schema_itemprop')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Loop through the value rows (should only be one)
-        $(this)
-            .find('.ibox-nonplural-value')
-            .each(function() {
-                // Try to find the value
-                let tempValue;
-                tempValue = decode(
-                    $(this)
-                        .html()
-                        .trim(),
-                    'all'
-                );
-
-                // Find any links to other pages that appear in the caption]
-                tempValue = parseTextToSentences(tempValue, [], true, true);
-
-                // Add the value to the rows
-                infoPackage.rows.push(tempValue);
-            });
-
-        // Add to the infobox list
-        infoboxes.push(infoPackage);
-    });
-
-    // ---------------------------------------------------------
-    // BLURB / MAIN ARTICLE BODY
-    // Extract the blurb
-    // NOTE, might need prettifyCorrector() from Python here
-    const sections = blurbParser(
-        decode(
-            $('.blurb-wrap')
-                .html()
-                .trim(),
-            'all'
-        ),
+    const citations = extractCitations($);
+    const media_gallery = extractMediaGallery($);
+    const main_photo = extractMainPhoto($);
+    const infobox_html = extractInfoboxHtml($);
+    const infoboxes = extractInfoboxes($);
+    const page_body = extractPageBody(
+        $,
         citations,
         metadata,
-        media
+        media_gallery
     );
 
+    // Deal with citation + media matches
+    // If a media item matches an existing citation, update the latter
+    //for (let citeObj of citations) {
+    //    if (citeObj.url == medium.url && citeObj.url && medium.url) {
+    //    }
+    //}
+
+
     // Return the dictionary
-    return { infobox_html, page_title, sections, main_photo, citations, media, infoboxes, metadata, amp_info };
+    return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }
 
 // AMP sanitize a chunk of HTML and return the cleaned HTML, as well as the hoverblurb and citation lightboxes
@@ -1085,17 +618,7 @@ export function ampSanitizer(
 }
 
 // Turn the HTML blurb into a JSON dict
-export function blurbParser(inputString: string, citations: Citation[], metadata: any, media: Media[]) {
-    // Load the HTML into htmlparser2 beforehand since it is more forgiving
-    // Note the dummy document
-    const dom = htmlparser2.parseDOM(
-        `<html><head></head><body><div class="blurb-wrap">${inputString}</div></body></html>`,
-        { decodeEntities: true }
-    );
-
-    // Load the HTML into cheerio for parsing
-    let $ = cheerio.load(dom);
-
+export function extractPageBody($: cheerio, citations: Citation[], metadata: any, media: Media[]): Section[] {
     // Get the body
     let theBody = $('.blurb-wrap');
 
@@ -1108,35 +631,6 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
 
     // Create the sections array
     let sections = [];
-
-    // Fix certain elements
-    $(theBody)
-        .children('div.thumb')
-        .each(function(index, element) {
-            // Find the inline photo, if present
-            let innerInlinePhoto = $(this)
-                .find('.blurb-inline-image-container')
-                .eq(0);
-
-            // Replace the div.thumb with the inline image
-            $(this).replaceWith(innerInlinePhoto);
-        });
-
-    // Fix <center> elements
-    $(theBody)
-        .children('center')
-        .each(function(index, element) {
-            // Replace the center with all of its contents
-            $(this).replaceWith($(element).contents());
-        });
-
-    // Fix <div> elements
-    $(theBody)
-        .children('div')
-        .each(function(index, element) {
-            // Convert the div to a <p>
-            $(element).replaceWith('<p>' + $(element).html() + '</p>');
-        });
 
     // Set up the first section
     sections.push({ paragraphs: [] });
@@ -1162,14 +656,14 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                 case 'blockquote':
                 case 'p': {
                     // Get the sentences
-                    paragraph.items = parseTextToSentences($(this).text(), citations);
+                    paragraph.items = parseSentences($(this).text(), citations);
                     break;
                 }
                 // Headings
                 case String(paragraph.tag_type.match(/h[1-6]/gimu)): {
                     // Get the sentences
                     sections.push({ paragraphs: [] });
-                    paragraph.items = parseTextToSentences($(this).text(), citations, true, true);
+                    paragraph.items = parseSentences($(this).text(), citations, true, true);
                     break;
                 }
                 // Lists
@@ -1184,7 +678,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                             // Get the sentences
                             listItems.push({
                                 index: innerIndex,
-                                sentences: parseTextToSentences($(innerElem).text(), citations)
+                                sentences: parseSentences($(innerElem).text(), citations)
                             });
                         });
 
@@ -1243,7 +737,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                 });
 
                             // Set the caption
-                            image.caption = parseTextToSentences(
+                            image.caption = parseSentences(
                                 $(captionNode)
                                     .text()
                                     .trim(),
@@ -1259,7 +753,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                             let theLinkID: number = -1;
                             for (let element of citations) {
                                 if (element.url == decodedURL && element.url && decodedURL) {
-                                    theLinkID = element.link_id;
+                                    theLinkID = element.citation_id;
                                     element.in_blurb = true;
                                     break;
                                 }
@@ -1317,7 +811,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                     let tempValue = $(this)
                                         .html()
                                         .trim();
-                                    tableObj.table.caption = parseTextToSentences(tempValue, [], true, true);
+                                    tableObj.table.caption = parseSentences(tempValue, [], true, true);
                                 });
 
                             // Deal with the colgroup
@@ -1371,7 +865,7 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
                                                     let tempValue = $(cellElem)
                                                         .text()
                                                         .trim();
-                                                    cellObj.contents = parseTextToSentences(
+                                                    cellObj.contents = parseSentences(
                                                         tempValue,
                                                         [],
                                                         true,
@@ -1412,12 +906,400 @@ export function blurbParser(inputString: string, citations: Citation[], metadata
     return sections;
 }
 
-export function extractCitations() {}
+function extractMetadata($: cheerio): Metadata {
+    const metadata: any = {}
 
-// Take a jQuery / cheerio object and convert some of its HTML to Markdown
-export function markdowner(cheerioInput: cheerio) {
-    // Set the dollar sign
-    let $ = cheerioInput;
+    // Loop through the elements and fill the dictionary
+    $('tr.data-pair').each(function() {
+        let pairKey = $(this).attr('data-key');
+        let pairValue = pyToJS(
+            $(this)
+                .find('td')
+                .eq(1)
+                .text()
+                .trim()
+        );
+        metadata[pairKey] = pairValue;
+    });
+
+    return metadata;
+}
+
+function extractCitations($: cheerio): Citation[] {
+    const citations = [];
+    $('li.link-row').each(function(index, element) {
+        let citation: any = {};
+
+        // Fetch the citation number
+        // citation.link_id = $(this).find(".link-url-citation-number").eq(0).text().trim();
+        // Clean up the link_id once and for all
+        citation.citation_id = citations.length;
+
+        // Fetch the description
+        let descriptionText = decode(
+            $(this)
+                .find('.link-description')
+                .eq(0)
+                .html()
+                .trim(),
+            'all'
+        );
+
+        // Find any links to other pages that appear in the link description
+        citation.description = parseSentences(descriptionText, [], true);
+
+        // Fetch the timestamp
+        citation.timestamp =
+            $(this)
+                .find('.link-timestamp')
+                .eq(0)
+                .text()
+                .trim() || null;
+
+        // Fetch the MIME type
+        citation.mime =
+            pyToJS(
+                $(this)
+                    .find('.link-mime')
+                    .eq(0)
+                    .text()
+                    .trim()
+            ) || null;
+
+        // Fetch the attribution info
+        citation.attribution = pyToJS(
+            $(this)
+                .find('.link-attr')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Fetch the thumbnail
+        citation.thumb = $(this)
+            .find('.link-thumb')
+            .eq(0)
+            .attr('src');
+
+        // Fetch the URL & social media type
+        const href = $(this)
+            .find('.link-url')
+            .eq(0)
+            .attr('href');
+        citation.url = href.trim();
+        citation.social_type = socialURLType(citation.url);
+
+        // Find the url category
+        citation.category = linkCategorizer(citation.url);
+
+        // Add it to the list
+        citations.push(citation);
+    });
+
+    return citations;
+}
+
+function extractMediaGallery($: cheerio) {
+    const gallery = [];
+
+    $('li.media-row').each(function() {
+        let media: any = {};
+
+        // Fetch the caption
+        let captionText = decode(
+            $(this)
+                .find('.media-caption')
+                .eq(0)
+                .html()
+                .trim(),
+            'all'
+        );
+
+        // Find any links to other pages that appear in the caption]
+        media.caption = parseSentences(captionText, [], true);
+
+        // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
+        media.type = $(this)
+            .find('.media-class')
+            .eq(0)
+            .text()
+            .trim();
+
+        // Fetch the MIME type
+        media.mime = pyToJS(
+            $(this)
+                .find('.media-mime')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Fetch the timestamp
+        media.timestamp = pyToJS(
+            $(this)
+                .find('.media-timestamp')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Fetch the attribution
+        media.attribution_url =
+            pyToJS(
+                $(this)
+                    .find('.media-ogsource')
+                    .eq(0)
+                    .text()
+                    .trim()
+            ) || null;
+
+        // Fetch the main and thumbnail URLs depending on the category of the media
+        let mediaElement = $(this)
+            .find('.media-obj')
+            .eq(0);
+        switch (media.type) {
+            case 'PICTURE':
+            case 'GIF': {
+                media.url = mediaElement.attr('src');
+                media.thumb = mediaElement.attr('data-thumb');
+                break;
+            }
+            case 'YOUTUBE': {
+                // TODO: need to deal with this
+                //amp_info.load_youtube_js = true;
+                media.url = mediaElement.attr('data-videourl');
+                media.thumb = mediaElement.attr('src');
+                break;
+            }
+            case 'NORMAL_VIDEO': {
+                // TODO: this needs to be dealt with
+                //amp_info.load_video_js = true;
+                media.url = mediaElement
+                    .find('source')
+                    .eq(0)
+                    .attr('src');
+                media.thumb = mediaElement
+                    .find('source')
+                    .eq(0)
+                    .attr('data-thumb');
+                break;
+            }
+            case 'AUDIO': {
+                // TODO: This needs to be dealt with
+                //amp_info.load_audio_js = true;
+                media.url = mediaElement
+                    .find('source')
+                    .eq(0)
+                    .attr('src');
+                media.thumb = mediaElement
+                    .find('source')
+                    .eq(0)
+                    .attr('data-thumb');
+                break;
+            }
+            default:
+                break;
+        }
+        gallery.push(media);
+    });
+
+    return gallery;
+}
+
+function extractMainPhoto($: cheerio): Media {
+    const main_photo: Media = {
+        type: 'main_image',
+        url: null,
+        thumb: null,
+        caption: null,
+        attribution_url: null
+    };
+
+    let photoElement = $('.main-photo-wrap img.main-photo');
+
+    // Get the URLs for the photo and its thumbnail. If absent, give placeholders
+    main_photo.url = photoElement.attr('src') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+    main_photo.thumb =
+        photoElement.attr('data-thumbnail') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+
+    // Find any links to other pages that appear in the caption
+    const caption = $('figcaption.main-photo-caption');
+    if (caption.length == 0) main_photo.caption = null;
+    else {
+        const captionText = decode(caption.html().trim(), 'all');
+        main_photo.caption = parseSentences(captionText, [], true);
+    }
+
+    // Try to find the photo attribution
+    main_photo.attribution_url =
+        pyToJS(
+            $('.main-photo-og-url')
+                .text()
+                .trim()
+        ) || null;
+
+    return main_photo;
+}
+
+function extractInfoboxHtml($: cheerio): string {
+    const blobbox = $('div.blobbox-wrap');
+
+    // no infobox found
+    if (blobbox.length == 0) return null;
+
+    return decode(
+        $('div.blobbox-wrap')
+            .html()
+            .trim(),
+        'all'
+    );
+}
+
+function extractInfoboxes($: cheerio): Infobox[] {
+    let infoboxes = [];
+
+    // Loop through the plural non-Wikipedia elements first and fill the dictionary
+    $('table.ibox-item-plural').each(function() {
+        // Initialize a blank object dictionary
+        let infoPackage = {
+            key: null,
+            schema: null,
+            addlSchematype: null,
+            addlSchemaItemprop: null,
+            rows: []
+        };
+
+        // Get the key (plaintext schemaType)
+        infoPackage.key = $(this)
+            .find('.ibox-plural-key-inner')
+            .eq(0)
+            .text()
+            .trim();
+
+        // Get the schema.org key
+        infoPackage.schema = pyToJS(
+            $(this)
+                .find('.ibox-schema')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Get the sub-schema type
+        infoPackage.addlSchematype = pyToJS(
+            $(this)
+                .find('.ibox-additionalschematype')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Get the sub-schema key
+        infoPackage.addlSchemaItemprop = pyToJS(
+            $(this)
+                .find('.ibox-addl_schema_itemprop')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Loop through the value rows
+        $(this)
+            .find('td.ibox-plural-value')
+            .each(function() {
+                // Try to find the value
+                let tempValue = decode(
+                    $(this)
+                        .html()
+                        .trim(),
+                    'all'
+                );
+
+                // Find any links to other pages that appear in the caption]
+                tempValue = parseSentences(tempValue, [], true, true);
+
+                // Add the value to the rows
+                infoPackage.rows.push(tempValue);
+            });
+
+        // Add to the infobox list
+        infoboxes.push(infoPackage);
+    });
+
+    // Loop through the nonplural elements and fill the dictionary
+    $('table.ibox-item-nonplural').each(function() {
+        // Initialize a blank object dictionary
+        let infoPackage = {
+            key: null,
+            schema: null,
+            addlSchematype: null,
+            addlSchemaItemprop: null,
+            rows: []
+        };
+
+        // Get the key (plaintext schemaType)
+        infoPackage.key = $(this)
+            .find('.ibox-nonplural-key')
+            .eq(0)
+            .text()
+            .trim();
+
+        // Get the schema.org key
+        infoPackage.schema = pyToJS(
+            $(this)
+                .find('.ibox-schema')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Get the sub-schema type
+        infoPackage.addlSchematype = pyToJS(
+            $(this)
+                .find('.ibox-additionalschematype')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Get the sub-schema key
+        infoPackage.addlSchemaItemprop = pyToJS(
+            $(this)
+                .find('.ibox-addl_schema_itemprop')
+                .eq(0)
+                .text()
+                .trim()
+        );
+
+        // Loop through the value rows (should only be one)
+        $(this)
+            .find('.ibox-nonplural-value')
+            .each(function() {
+                // Try to find the value
+                let tempValue;
+                tempValue = decode(
+                    $(this)
+                        .html()
+                        .trim(),
+                    'all'
+                );
+
+                // Find any links to other pages that appear in the caption]
+                tempValue = parseSentences(tempValue, [], true, true);
+
+                // Add the value to the rows
+                infoPackage.rows.push(tempValue);
+            });
+
+        // Add to the infobox list
+        infoboxes.push(infoPackage);
+    });
+
+    return infoboxes;
+}
+
+// Sanitize a cheerio object and convert some of its HTML to Markdown
+function sanitizeText($: cheerio) {
 
     // Substitute all the links and citations into something that is safe for the parser
     $('a.tooltippable, a.tooltippableCarat').each(function() {
@@ -1503,11 +1385,55 @@ export function markdowner(cheerioInput: cheerio) {
         $(this).replaceWith(plaintextString);
     });
 
+    // Remove bad tags
+    const badTagSelectors = ['.thumbcaption .magnify', '.blurb-wrap .thumbinner'];
+    badTagSelectors.forEach((selector) => $(selector).remove());
+
+
+    // Get the body
+    let theBody = $('.blurb-wrap');
+
+    // Check for wikipedia divs
+    if ($('.mw-parser-output').length > 0) {
+        theBody = $('.mw-parser-output')[0];
+    } else if ($('.mw-content-ltr').length > 0) {
+        theBody = $('.mw-content-ltr')[0];
+    }
+
+    // Fix certain elements
+    $(theBody)
+        .children('div.thumb')
+        .each(function(index, element) {
+            // Find the inline photo, if present
+            let innerInlinePhoto = $(this)
+                .find('.blurb-inline-image-container')
+                .eq(0);
+
+            // Replace the div.thumb with the inline image
+            $(this).replaceWith(innerInlinePhoto);
+        });
+
+    // Fix <center> elements
+    $(theBody)
+        .children('center')
+        .each(function(index, element) {
+            // Replace the center with all of its contents
+            $(this).replaceWith($(element).contents());
+        });
+
+    // Fix <div> elements
+    $(theBody)
+        .children('div')
+        .each(function(index, element) {
+            // Convert the div to a <p>
+            $(element).replaceWith('<p>' + $(element).html() + '</p>');
+        });
+
     return $;
 }
 
 // Convert the plaintext strings for links and citations to the Markdown format
-export function parseTextToSentences(
+export function parseSentences(
     inputString: string,
     linksList: any[],
     addPeriod: boolean = false,

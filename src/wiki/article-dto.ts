@@ -9,7 +9,7 @@ export interface PageLink {
 }
 
 export interface Sentence {
-    type: string; // sentence | inline-image | fixed
+    type: string; // sentence | inline_image | fixed_image
     index: number;
     text: string;
     links: PageLink[];
@@ -33,6 +33,7 @@ export interface Media {
     url: string;
     thumb: string;
     caption: Sentence[];
+    timestamp?: Date;
     attribution_url?: string;
     mime?: string;
     link_id?: number;
@@ -68,15 +69,12 @@ export interface Citation {
     thumb: string;
     description: string;
     category: string;
-    link_id: number;
+    citation_id: number;
     social_type: string;
-    attr: string;
+    attribution: string;
     timestamp: Date;
     mime: string;
-    in_gallery: boolean;
-    in_blurb: boolean;
-    attribution_url: string;
-    media_page_uuid: string;
+    in_blurb?: boolean;
 }
 
 /**
@@ -86,10 +84,10 @@ export interface ArticleJson {
     page_title: string;
     main_photo: Media;
     infobox_html: string;
-    sections: Section[];
+    page_body: Section[];
     infoboxes: Infobox[];
     citations: Citation[];
-    media: Media[];
+    media_gallery: Media[];
     metadata: Metadata;
     amp_info: AmpInfo;
 
