@@ -2,14 +2,16 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox } from './article-dto';
+import { Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
 const CAPTURE_REGEXES = {
-    linkcite: /__~(LINK|CITATION)__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__(LINK|CITATION)~__/gimu
+    linkcite: /__~(LINK|CITATION)__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__(LINK|CITATION)~__/gimu,
+    link: /__~LINK__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__LINK~__/gimu,
+    cite: /__~CITATION__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__CITATION~__/gimu,
 };
 const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
@@ -146,14 +148,6 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
     // Converts link and citation HTML to clean parseable formats
     $ = sanitizeText($);
 
-    // ---------------------------------------------------------
-    // PAGE TITLE
-    // Extract the page title
-    const page_title =
-        $('h1.page-title')
-            .text()
-            .trim() || null;
-
     const metadata = extractMetadata($);
 
     // ---------------------------------------------------------
@@ -177,12 +171,19 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
         $ = cheerio.load(dom);
     }
 
-
+    const page_title =
+        $('h1.page-title')
+            .text()
+            .trim() || null;
     const citations = extractCitations($);
     const media_gallery = extractMediaGallery($);
     const main_photo = extractMainPhoto($);
     const infobox_html = extractInfoboxHtml($);
     const infoboxes = extractInfoboxes($);
+
+    // mark all the citations with the appropriate number in the text
+    $ = markCitations($, citations);
+
     const page_body = extractPageBody(
         $,
         citations,
@@ -647,7 +648,7 @@ function extractCitations($: CheerioStatic): Citation[] {
         );
 
         // Find any links to other pages that appear in the link description
-        citation.description = parseSentences(descriptionText, [], true);
+        citation.description = parseSentences(descriptionText, true);
 
         // Fetch the timestamp
         citation.timestamp =
@@ -717,7 +718,7 @@ function extractMediaGallery($: CheerioStatic) {
         );
 
         // Find any links to other pages that appear in the caption]
-        media.caption = parseSentences(captionText, [], true);
+        media.caption = parseSentences(captionText, true);
 
         // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
         media.type = $(this)
@@ -828,7 +829,7 @@ function extractMainPhoto($: CheerioStatic): Media {
     if (caption.length == 0) main_photo.caption = null;
     else {
         const captionText = decode(caption.html().trim(), 'all');
-        main_photo.caption = parseSentences(captionText, [], true);
+        main_photo.caption = parseSentences(captionText, true);
     }
 
     // Try to find the photo attribution
@@ -917,7 +918,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                 );
 
                 // Find any links to other pages that appear in the caption]
-                tempValue = parseSentences(tempValue, [], true, true);
+                tempValue = parseSentences(tempValue, true, true);
 
                 // Add the value to the rows
                 infoPackage.rows.push(tempValue);
@@ -986,7 +987,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                 );
 
                 // Find any links to other pages that appear in the caption]
-                tempValue = parseSentences(tempValue, [], true, true);
+                tempValue = parseSentences(tempValue, true, true);
 
                 // Add the value to the rows
                 infoPackage.rows.push(tempValue);
@@ -1009,17 +1010,75 @@ function splitIntoSections($body: Cheerio): Cheerio[] {
 }
 
 function parseSection($section: Cheerio): Section {
-    const section = { paragraphs: [] };
+    const section = { paragraphs: [], images: [] };
+
+    // Get all images
+    const $fixed_images = $section.find('.blurb-inline-image-container')
+    $fixed_images.each((i, fixed_image_node) => {
+        const $image = $fixed_images.eq(i);
+
+        // Get the image node
+        let theImgNode = $image
+            .find('img.caption-img, img.tooltippableImage')
+            .eq(0);
+
+        // Initialize the objects
+        const image: Media = {
+            type: 'fixed_image',
+            url: theImgNode.attr('src'),
+            mime: theImgNode.attr('data-mimetype'),
+            thumb: null,
+            caption: null
+        };
+
+        // Get the caption
+        let $captionNode = $image
+            .find('.blurbimage-caption')
+            .eq(0);
+
+        // Remove the .magnify div, if present (applies to some Wikipedia imports)
+        $captionNode
+            .find('.blurbimage-caption .magnify')
+            .eq(0)
+            .remove();
+
+        // Unwrap the thumbcaption, if present (applies to some Wikipedia imports)
+        const $thumbcaption = $captionNode.find('.thumbcaption');
+        if ($thumbcaption.length > 0)
+            $captionNode.html($thumbcaption.html());
+
+        // Set the caption
+        image.caption = parseSentences(
+            $captionNode
+                .text()
+                .trim(),
+            true,
+            false
+        );
+
+        // Decode the URL
+        let decodedURL = decodeURIComponent(image.url);
+
+        // Orphaned images need to be added to the link list
+        if (image.url.includes('wikipedia')) {
+            console.log(image.url);
+            //image.attribution_url = `https://${metadata.page_lang}.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
+            image.attribution_url = `https://en.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
+        }
+
+        section.images.push(image);
+    });
+
+    // Get paragraphs in section
     const $children = $section.children();
     for (let i=0; i < $children.length; i++) {
         const $element = $children.eq(i);
         const element = $children[i];
-        // Initialize a blank dictionary for the first level
-        let paragraph = {
+
+        const paragraph: any = {
             index: i,
-            items: [],
             tag_type: element.tagName.toLowerCase() || null,
-            attrs: this.attribs
+            attrs: element.attribs
         };
 
         // Process the tag types accordingly
@@ -1028,14 +1087,13 @@ function parseSection($section: Cheerio): Section {
             case 'blockquote':
             case 'p': {
                 // Get the sentences
-                paragraph.items = parseSentences($element.text(), citations);
+                paragraph.items = parseSentences($element.text());
                 break;
             }
             // Headings
             case String(paragraph.tag_type.match(/h[1-6]/gimu)): {
                 // Get the sentences
-                sections.push({ paragraphs: [] });
-                paragraph.items = parseSentences($element.text(), citations, true, true);
+                paragraph.items = parseSentences($element.text(), true, true);
                 break;
             }
             // Lists
@@ -1044,235 +1102,36 @@ function parseSection($section: Cheerio): Section {
                 let listItems = [];
 
                 // Loop through the li's
-                $(element)
-                    .children('li')
-                    .each(function(innerIndex, innerElem) {
-                        // Get the sentences
-                        listItems.push({
-                            index: innerIndex,
-                            sentences: parseSentences($(innerElem).text(), citations)
-                        });
+                const $list_items = $element.children('li');
+                for (let j = 0; j < $list_items.length; j++) {
+                    const $list_item = $list_items.eq(j);
+                    listItems.push({
+                        index: j,
+                        sentences: parseSentences($list_item.text())
                     });
+                }
 
                 // Set the items
                 paragraph.items = listItems;
                 break;
             }
-            // Inline images
+            // Tables
             case 'table': {
-                // Initialize the return object
-                let paragraph_item: any;
-
-                // get the the HTML classes
+                // make sure it's a real table
                 const classes = paragraph.attrs.class;
+                if (!classes.includes('wikitable') || classes.includes('ep-table'))
+                    break;
 
-                // if there's no class, ignore the table
-                if (!classes) break;
+                const table = parseTable($element);
+                paragraph.items.push(table);
 
-                // See what type of table it is
-                for (let testClass of classes.split(/\s+/)) {
-                    // Test for the inline images
-                    if (testClass.includes('blurb-inline-image-container')) {
-                        // Get the image node
-                        let theImgNode = $(element)
-                            .find('img.caption-img, img.tooltippableImage')
-                            .eq(0);
-
-                        // Initialize the objects
-                        const image: Media = {
-                            type: 'fixed_image',
-                            url: $(theImgNode).attr('src'),
-                            mime: $(theImgNode).attr('data-mimetype'),
-                            thumb: null,
-                            caption: null
-                        };
-
-                        paragraph_item = { type: 'inline-image', link_id: null };
-
-                        // Get the caption
-                        // Set the caption node
-                        let captionNode = $element
-                            .find('.blurbimage-caption')
-                            .eq(0);
-
-                        // Remove the .magnify div, if present (applies to some Wikipedia imports)
-                        $(captionNode)
-                            .find('.blurbimage-caption .magnify')
-                            .eq(0)
-                            .remove();
-
-                        // Unwrap the thumbcaption, if present (applies to some Wikipedia imports)
-                        $(captionNode)
-                            .children('.thumbcaption')
-                            .each(function(index, element) {
-                                $(captionNode).html($element.html());
-                            });
-
-                        // Set the caption
-                        image.caption = parseSentences(
-                            $(captionNode)
-                                .text()
-                                .trim(),
-                            [],
-                            true,
-                            false
-                        );
-
-                        // Decode the URL
-                        let decodedURL = decodeURIComponent(image.url);
-
-                        // Find the URL in the global citations list, if applicable
-                        let theLinkID: number = -1;
-                        for (let element of citations) {
-                            if (element.url == decodedURL && element.url && decodedURL) {
-                                theLinkID = element.citation_id;
-                                element.in_blurb = true;
-                                break;
-                            }
-                        }
-
-                        // Orphaned images need to be added to the link list
-                        if (theLinkID == -1) {
-                            // Set the linkID
-                            theLinkID = metadata.link_count;
-                            paragraph_item.link_id = theLinkID;
-                            image.link_id = theLinkID;
-
-                            // Construct the filename
-                            if (image.url.includes('wikipedia')) {
-                                let theAttributionURL = null;
-                                theAttributionURL = image.url.split('/').pop();
-                                theAttributionURL = `https://${
-                                    metadata.page_lang
-                                }.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
-                                image.attribution_url = theAttributionURL;
-                            }
-
-                            // Add the media object to the list of media links
-                            media.push(image);
-
-                            // Increment the link count
-                            metadata.link_count++;
-                        }
-                    } else if (testClass.includes('wikitable') || testClass.includes('ep-table')) {
-                        // Set the objects
-                        let tableObj = {
-                            type: 'wikitable',
-                            table: {
-                                caption: null,
-                                colgroup: null,
-                                thead: {
-                                    attrs: [],
-                                    rows: []
-                                },
-                                tbody: {
-                                    attrs: [],
-                                    rows: []
-                                },
-                                tfoot: {
-                                    attrs: [],
-                                    rows: []
-                                }
-                            }
-                        };
-
-                        // Set the table caption, if present
-                        $(element)
-                            .children('caption')
-                            .each(function(index, element) {
-                                let tempValue = $element
-                                    .html()
-                                    .trim();
-                                tableObj.table.caption = parseSentences(tempValue, [], true, true);
-                            });
-
-                        // Deal with the colgroup
-                        // TODO
-
-                        // Loop through the head, body, and foot
-                        $(element)
-                            .children('thead, tbody, tfoot')
-                            .each(function(innerIndex, innerElement) {
-                                // Find the tag name (thead, tbody, or tfoot)
-                                let theTagName =
-                                    $(innerElement)
-                                        .prop('tagName')
-                                        .toLowerCase() || null;
-
-                                // Push the attributes into the parent object
-                                tableObj.table[theTagName].attrs = innerElement.attribs;
-
-                                // Loop through the tr's
-                                let rowList = [];
-                                $(innerElement)
-                                    .children('tr')
-                                    .each(function(rowIdx, rowElem) {
-                                        // Initialize a row object
-                                        let rowObj = {
-                                            index: rowIdx,
-                                            attrs: rowElem.attribs,
-                                            cells: null
-                                        };
-
-                                        // Loop through the cells
-                                        let cellList = [];
-                                        $(rowElem)
-                                            .children('th, td')
-                                            .each(function(cellIdx, cellElem) {
-                                                // Find the tag name (th or td)
-                                                let theCellTagName =
-                                                    $(cellElem)
-                                                        .prop('tagName')
-                                                        .toLowerCase() || null;
-
-                                                // Initialize a cell object
-                                                let cellObj = {
-                                                    index: cellIdx,
-                                                    attrs: cellElem.attribs,
-                                                    tag_type: theCellTagName,
-                                                    contents: null
-                                                };
-
-                                                // Process / Markdown the cell contents
-                                                let tempValue = $(cellElem)
-                                                    .text()
-                                                    .trim();
-                                                cellObj.contents = parseSentences(
-                                                    tempValue,
-                                                    [],
-                                                    true,
-                                                    true
-                                                );
-
-                                                // Add the cell object to the list of cells
-                                                cellList.push(cellObj);
-                                            });
-
-                                        // Add the cells to the row object
-                                        rowObj.cells = cellList;
-
-                                        // Add the row object to the list of rows
-                                        rowList.push(rowObj);
-                                    });
-
-                                // Push the rows into the parent object
-                                tableObj.table[theTagName].rows = rowList;
-                            });
-
-                        // Set the return object to the table object
-                        paragraph_item = tableObj;
-                    }
-                }
-
-                // Return the object
-                paragraph.items.push(paragraph_item);
                 break;
             }
             default:
                 break;
         }
         // Add the object to the array
-        sections[sections.length - 1].paragraphs.push(paragraph);
+        section.paragraphs.push(paragraph);
     }
         
     return section; 
@@ -1305,7 +1164,7 @@ function sanitizeText($: CheerioStatic) {
                 .trim() || '';
 
         // Create the string
-        let plaintextString = `__~${toolObj.type}__~~~USERNAME:${toolObj.username}~-~HREF:${toolObj.href}~-~STRING:${
+        let plaintextString = `__~${toolObj.type}:__~~~USERNAME:${toolObj.username}~-~HREF:${toolObj.href}~-~STRING:${
             toolObj.string
         }~~~__${toolObj.type}~__`;
 
@@ -1415,7 +1274,6 @@ function sanitizeText($: CheerioStatic) {
 // Convert the plaintext strings for links and citations to the Markdown format
 export function parseSentences(
     inputString: string,
-    linksList: any[],
     addPeriod: boolean = false,
     removePeriod: boolean = false
 ): Sentence[] {
@@ -1458,30 +1316,6 @@ export function parseSentences(
 
                     // Increment
                     increment = increment + 1;
-                    break;
-                }
-                case 'CITATION': {
-                    // Decode the URL
-                    let decodedURL = decodeURIComponent($2);
-
-                    // Find the URL in the global links list
-                    let theLinkID = null;
-                    for (let element of linksList) {
-                        if (element.url == decodedURL) {
-                            theLinkID = element.link_id;
-                            break;
-                        }
-                    }
-
-                    // Construct the replacement string
-                    if (theLinkID) {
-                        // Construct the replacement string
-                        replacementString = `[[${$1}|${theLinkID}]]`;
-                    } else {
-                        // Remove the citation
-                        replacementString = '';
-                    }
-
                     break;
                 }
                 default:
@@ -1655,4 +1489,86 @@ function youtubeIdExists(url: string) {
         }
     }
     return false;
+}
+
+function markCitations ($: CheerioStatic, citations: Citation[]): CheerioStatic {
+    const html = $.html();
+    const citation_index = citations
+    const matches = html.match(CAPTURE_REGEXES.cite);
+    //case 'CITATION': {
+    //    // Decode the URL
+    //    let decodedURL = decodeURIComponent($2);
+
+    //    // Find the URL in the global links list
+    //    let theLinkID = null;
+    //    for (let element of linksList) {
+    //        if (element.url == decodedURL) {
+    //            theLinkID = element.link_id;
+    //            break;
+    //        }
+    //    }
+
+    //    // Construct the replacement string
+    //    if (theLinkID) {
+    //        // Construct the replacement string
+    //        replacementString = `[[${$1}|${theLinkID}]]`;
+    //    } else {
+    //        // Remove the citation
+    //        replacementString = '';
+    //    }
+
+    //    break;
+    //}
+    return $;
+}
+
+function parseTable($element: Cheerio): Table {
+    const table: any = {
+        type: 'wikitable',
+    };
+
+    // Set the table caption, if present
+    const $caption = $element.children('caption');
+    if ($caption.length > 0) 
+        table.caption = $caption.html().trim();
+
+    // Deal with the colgroup
+    // TODO
+
+    // Setup the head, body, and foot
+    const $table_containers = $element.children('thead, tbody, tfoot');
+    for (let j=0; j < $table_containers.length; j++) {
+        const $table_container = $table_containers.eq(j);
+
+        // Find the tag name (thead, tbody, or tfoot)
+        let theTagName = $table_container[0].tagName
+                .toLowerCase() || null;
+
+        // Push the attributes into the parent object
+        table[theTagName] = {
+            attrs: $table_container[0].attribs
+        }
+    }
+
+    // Add the rows and cells
+    const $rows = $element.find('tr');
+    $rows.each(function (i, row) {
+        const parentTag = row.parentNode.tagName;
+        table[parentTag].rows.push({
+            index: i,
+            attrs: row.attribs
+        });
+
+        const $cells = $rows.eq(i).find('td, th');
+        table.rows[i].cells = $cells.map((j, cell) => { 
+            return {
+                index: j,
+                attrs: cell.attribs,
+                tag_type: cell.tagName.toLowerCase(),
+                contents: parseSentences( $cells.eq(j).html().trim(), true, true)
+            };
+        });
+    });
+
+    return table;
 }

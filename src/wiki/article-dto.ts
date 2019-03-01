@@ -24,6 +24,7 @@ export interface Paragraph {
 
 export interface Section {
     paragraphs: Paragraph[];
+    images: Media[];
 }
 
 export interface Infobox {}
@@ -77,9 +78,27 @@ export interface Citation {
     in_blurb?: boolean;
 }
 
-/**
- * Root for article JSON as parsed from `wtf_wikipedia`
- */
+export interface Table {
+    type: string;
+    caption: string;
+    thead?: TableRow[];
+    tbody: TableRow[];
+    tfoot?: TableRow[];
+}
+
+export interface TableRow {
+    index: number;
+    attrs: { string: string };
+    cells: TableCell[];
+}
+
+export interface TableCell {
+    index: number;
+    attrs: { string: string };
+    tag_type: string;
+    contents: Sentence[];
+}
+
 export interface ArticleJson {
     page_title: string;
     main_photo: Media;
