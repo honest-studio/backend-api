@@ -9,11 +9,15 @@ import { JoiValidationPipe } from '../common';
 export class HistoryController {
     constructor(private readonly historyService: HistoryService) {}
 
-    @Get('wiki/:wiki_id')
+    @Get('wiki/:lang_code/:slug')
     @ApiOperation({ title: 'Get edit history for a wiki' })
     @ApiImplicitParam({
-        name: 'wiki_id',
-        description: 'ID of a wiki'
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
     })
     @ApiImplicitQuery({
         name: 'diff',
@@ -33,7 +37,7 @@ export class HistoryController {
         description: 'returns wiki preview if set true'
     })
     @UsePipes(new JoiValidationPipe(HistoryWikiSchema, ['query']))
-    async getWikiHistory(@Param('wiki_id') wiki_id: string, @Query() query): Promise<any> {
-        return this.historyService.getWikiHistory(Number(wiki_id), query);
+    async getWikiHistory(@Param('lang_code') lang_code: string, @Param('slug') slug, @Query() query): Promise<any> {
+        return this.historyService.getWikiHistory(lang_code, slug, query);
     }
 }

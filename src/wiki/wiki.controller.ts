@@ -69,8 +69,12 @@ export class WikiController {
     @Get('slug/:lang_code/:slug')
     @ApiOperation({ title: 'Get wiki by article title' })
     @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code'
+    })
+    @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique slug. Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
     })
     @ApiImplicitQuery({
         name: 'json',

@@ -11,6 +11,7 @@ import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
 import { CacheController, CacheService } from './cache';
 import { HistoryController, HistoryService } from './history';
+import { UserController, UserService } from './user';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 
 @Module({
@@ -46,7 +47,8 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         DiffController,
         PreviewController,
         CacheController,
-        HistoryController
+        HistoryController,
+        UserController
     ],
     providers: [
         ProposalService,
@@ -57,7 +59,8 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         DiffService,
         PreviewService,
         CacheService,
-        HistoryService
+        HistoryService,
+        UserService
     ]
 })
 export class AppModule {}

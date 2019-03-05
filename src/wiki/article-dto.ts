@@ -1,18 +1,19 @@
-/**
- * Link to a page
- */
-export interface PageLink {
-    page: string;
-    text: string;
-    type?: string;
-    site?: string;
+// Link to an Everipedia page
+// The interface is listed here for documentation, but the 
+// links are actually marked up inline in sentence text with 
+// the format: 
+// [[ LINK|${lang_code}|${slug}|${text} ]]
+export interface WikiLink {
+    index?: number;
+    lang_code: string;
+    slug: string;
+    text: string; // the link's display text
 }
 
 export interface Sentence {
     type: string; // sentence | inline_image | fixed_image
     index: number;
-    text: string;
-    links: PageLink[];
+    text: string; // contains inline WikiLink markup + some light markdown for formatting
 }
 
 export interface Paragraph {
@@ -96,7 +97,7 @@ export interface TableCell {
     index: number;
     attrs: { string: string };
     tag_type: string;
-    contents: Sentence[];
+    content: Sentence[];
 }
 
 export interface ArticleJson {

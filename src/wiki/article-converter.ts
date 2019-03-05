@@ -2,16 +2,17 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table } from './article-dto';
+import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
 const CAPTURE_REGEXES = {
-    linkcite: /__~(LINK|CITATION)__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__(LINK|CITATION)~__/gimu,
-    link: /__~LINK__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__LINK~__/gimu,
-    cite: /__~CITATION__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~STRING:(.*?)~~~__CITATION~__/gimu,
+    linkcite: /__~(LINK|CITATION)__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~TEXT:(.*?)~~~__(LINK|CITATION)~__/gimu,
+    link: /__~LINK__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~TEXT:(.*?)~~~__LINK~__/gimu,
+    cite: /__~CITATION__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~TEXT:(.*?)~~~__CITATION~__/gimu,
+    inline_image: /__~INLINE_IMAGE__~~~SRC:(.*?)~-~HEIGHT:(.*?)~-~WIDTH:(.*?)~-~ALT:(.*?)~~~__INLINE_IMAGE~__/gimu
 };
 const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
@@ -178,18 +179,14 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
     const citations = extractCitations($);
     const media_gallery = extractMediaGallery($);
     const main_photo = extractMainPhoto($);
-    const infobox_html = extractInfoboxHtml($);
+    let infobox_html = extractInfoboxHtml($);
     const infoboxes = extractInfoboxes($);
 
     // mark all the citations with the appropriate number in the text
     $ = markCitations($, citations);
 
-    const page_body = extractPageBody(
-        $,
-        citations,
-        metadata,
-        media_gallery
-    );
+    const page_body = extractPageBody($);
+
 
     // Deal with citation + media matches
     // If a media item matches an existing citation, update the latter
@@ -584,7 +581,7 @@ export function ampSanitizer(
 }
 
 // Turn the HTML blurb into a JSON dict
-export function extractPageBody($: CheerioStatic, citations: Citation[], metadata: any, media: Media[]): Section[] {
+export function extractPageBody($: CheerioStatic): Section[] {
     // Get the body
     // First 2 are wikipedia divs
     // Default is everipedia body 
@@ -597,15 +594,10 @@ export function extractPageBody($: CheerioStatic, citations: Citation[], metadat
         $body = $('.blurb-wrap');
 
     // Split body into sections
-    let cheerioSections = splitIntoSections($body)
+    let sections: Section[] = splitIntoSections($body)
         .map(parseSection);
     
-
-    //// Set up the first section
-    //sections.push({ paragraphs: [] });
-
-
-    return [];
+    return sections;
 }
 
 function extractMetadata($: CheerioStatic): Metadata {
@@ -633,16 +625,14 @@ function extractCitations($: CheerioStatic): Citation[] {
         let citation: any = {};
 
         // Fetch the citation number
-        // citation.link_id = $(this).find(".link-url-citation-number").eq(0).text().trim();
-        // Clean up the link_id once and for all
         citation.citation_id = citations.length;
 
         // Fetch the description
         let descriptionText = decode(
-            $(this)
+            $(element)
                 .find('.link-description')
                 .eq(0)
-                .html()
+                .text()
                 .trim(),
             'all'
         );
@@ -652,7 +642,7 @@ function extractCitations($: CheerioStatic): Citation[] {
 
         // Fetch the timestamp
         citation.timestamp =
-            $(this)
+            $(element)
                 .find('.link-timestamp')
                 .eq(0)
                 .text()
@@ -661,7 +651,7 @@ function extractCitations($: CheerioStatic): Citation[] {
         // Fetch the MIME type
         citation.mime =
             pyToJS(
-                $(this)
+                $(element)
                     .find('.link-mime')
                     .eq(0)
                     .text()
@@ -670,7 +660,7 @@ function extractCitations($: CheerioStatic): Citation[] {
 
         // Fetch the attribution info
         citation.attribution = pyToJS(
-            $(this)
+            $(element)
                 .find('.link-attr')
                 .eq(0)
                 .text()
@@ -678,18 +668,20 @@ function extractCitations($: CheerioStatic): Citation[] {
         );
 
         // Fetch the thumbnail
-        citation.thumb = $(this)
+        citation.thumb = $(element)
             .find('.link-thumb')
             .eq(0)
             .attr('src');
 
         // Fetch the URL & social media type
-        const href = $(this)
-            .find('.link-url')
-            .eq(0)
-            .attr('href');
-        citation.url = href.trim();
-        citation.social_type = socialURLType(citation.url);
+        let href = $(element).find('.link-url').attr('href');
+        if (!href)
+            href = $(element).find('.link-url-wrap').text();
+                
+        if (href) {
+            citation.url = href.trim();
+            citation.social_type = socialURLType(citation.url);
+        }
 
         // Find the url category
         citation.category = linkCategorizer(citation.url);
@@ -849,12 +841,15 @@ function extractInfoboxHtml($: CheerioStatic): string {
     // no infobox found
     if (blobbox.length == 0) return null;
 
-    return decode(
+    const html = decode(
         $('div.blobbox-wrap')
             .html()
             .trim(),
         'all'
     );
+    const marked_html = markLinks(html);
+
+    return marked_html;
 }
 
 function extractInfoboxes($: CheerioStatic): Infobox[] {
@@ -1031,6 +1026,16 @@ function parseSection($section: Cheerio): Section {
             caption: null
         };
 
+        // Deal with images in tables
+        if (!image.url) {
+            const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
+            if (inline_image_token) {
+                const src = inline_image_token[0].match(/(?<=SRC\:).+(?=~-~HEIGHT)/)[0];
+                image.url = decodeURIComponent(src)
+                image.type = 'inline_image';
+            }
+        }
+
         // Get the caption
         let $captionNode = $image
             .find('.blurbimage-caption')
@@ -1059,14 +1064,15 @@ function parseSection($section: Cheerio): Section {
         // Decode the URL
         let decodedURL = decodeURIComponent(image.url);
 
-        // Orphaned images need to be added to the link list
+        // Attribution URLs
         if (image.url.includes('wikipedia')) {
-            console.log(image.url);
             //image.attribution_url = `https://${metadata.page_lang}.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
             image.attribution_url = `https://en.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
         }
 
         section.images.push(image);
+
+        return true;
     });
 
     // Get paragraphs in section
@@ -1078,58 +1084,43 @@ function parseSection($section: Cheerio): Section {
         const paragraph: any = {
             index: i,
             tag_type: element.tagName.toLowerCase() || null,
-            attrs: element.attribs
+            attrs: element.attribs,
+            items: []
         };
 
         // Process the tag types accordingly
-        switch (paragraph.tag_type) {
-            // Paragraphs and divs
-            case 'blockquote':
-            case 'p': {
-                // Get the sentences
-                paragraph.items = parseSentences($element.text());
-                break;
-            }
-            // Headings
-            case String(paragraph.tag_type.match(/h[1-6]/gimu)): {
-                // Get the sentences
-                paragraph.items = parseSentences($element.text(), true, true);
-                break;
-            }
-            // Lists
-            case String(paragraph.tag_type.match(/(ul|ol)/gimu)): {
-                // Initialize the return array
-                let listItems = [];
+        if (paragraph.tag_type == 'p' || paragraph.tag_type == 'blockquote')
+            paragraph.items = parseSentences($element.text());
 
-                // Loop through the li's
-                const $list_items = $element.children('li');
-                for (let j = 0; j < $list_items.length; j++) {
-                    const $list_item = $list_items.eq(j);
-                    listItems.push({
-                        index: j,
-                        sentences: parseSentences($list_item.text())
-                    });
-                }
+        // Headings
+        else if (paragraph.tag_type.match(/h[1-6]/gimu))
+            paragraph.items = parseSentences($element.text(), true, true);
 
-                // Set the items
-                paragraph.items = listItems;
-                break;
+        // Lists
+        else if (paragraph.tag_type.match(/(ul|ol)/gimu)) {
+            // Loop through the li's
+            const $list_items = $element.children('li');
+            for (let j = 0; j < $list_items.length; j++) {
+                const $list_item = $list_items.eq(j);
+                paragraph.items.push({
+                    index: j,
+                    sentences: parseSentences($list_item.text()),
+                    tag_type: 'li'
+                });
             }
-            // Tables
-            case 'table': {
-                // make sure it's a real table
-                const classes = paragraph.attrs.class;
-                if (!classes.includes('wikitable') || classes.includes('ep-table'))
-                    break;
-
-                const table = parseTable($element);
-                paragraph.items.push(table);
-
-                break;
-            }
-            default:
-                break;
         }
+
+        // Tables
+        else if (paragraph.tag_type == 'table') {
+            // ignore images
+            const classes = paragraph.attrs.class;
+            if (classes && classes.includes('blurb-inline-image-container'))
+                continue; 
+
+            const table = parseTable($element);
+            paragraph.items.push(table);
+        }
+
         // Add the object to the array
         section.paragraphs.push(paragraph);
     }
@@ -1147,7 +1138,7 @@ function sanitizeText($: CheerioStatic) {
             type: '',
             username: encodeURIComponent($(this).attr('data-username')).replace(/\./gimu, '%2E'),
             href: encodeURIComponent($(this).attr('href')).replace(/\./gimu, '%2E') || '',
-            string: ''
+            tooltip: ''
         };
 
         // Find the type
@@ -1158,14 +1149,14 @@ function sanitizeText($: CheerioStatic) {
         }
 
         // Set the string
-        toolObj.string =
+        toolObj.tooltip =
             $(this)
                 .text()
                 .trim() || '';
 
         // Create the string
-        let plaintextString = `__~${toolObj.type}:__~~~USERNAME:${toolObj.username}~-~HREF:${toolObj.href}~-~STRING:${
-            toolObj.string
+        let plaintextString = `__~${toolObj.type}__~~~USERNAME:${toolObj.username}~-~HREF:${toolObj.href}~-~TEXT:${
+            toolObj.tooltip
         }~~~__${toolObj.type}~__`;
 
         // Replace the tag with the string
@@ -1218,7 +1209,7 @@ function sanitizeText($: CheerioStatic) {
         // Create the string
         let plaintextString = `__~${imgObj.type}__~~~SRC:${imgObj.src}~-~HEIGHT:${imgObj.height}~-~WIDTH:${
             imgObj.width
-        }~-~WIDTH:${imgObj.alt}~~~__${imgObj.type}~__`;
+        }~-~ALT:${imgObj.alt}~~~__${imgObj.type}~__`;
 
         // Replace the tag with the string
         $(this).replaceWith(plaintextString);
@@ -1296,35 +1287,8 @@ export function parseSentences(
 
         // Deal with the links and citations
         // https://davidwalsh.name/string-replace-javascript
-        let increment = 0;
         // There is an implicit loop here...
-        sentence.text = token.replace(CAPTURE_REGEXES.linkcite, (match, $1, $2, $3, $4, index) => {
-            // Fill the correct array and construct the replacement string
-            let replacementString = '';
-            switch ($1) {
-                case 'LINK': {
-                    // Add the link to the array
-                    sentence.links.push({
-                        index: increment,
-                        slug: $2,
-                        href: $3,
-                        string: $4
-                    });
-
-                    // Construct the replacement string
-                    replacementString = `[[${$1}|${increment}|${$4}]]`;
-
-                    // Increment
-                    increment = increment + 1;
-                    break;
-                }
-                default:
-                    break;
-            }
-
-            // Replace the link with the bracket
-            return replacementString;
-        });
+        sentence.text = markLinks(token);
 
         // Remove the period if applicable
         sentence.text = removePeriod ? sentence.text.slice(0, -1) : sentence.text;
@@ -1437,11 +1401,9 @@ export function socialURLType(inputURL: string) {
 // Regex copied from natural NPM package
 // https://www.npmjs.com/package/natural#tokenizers
 function splitSentences(text: string): Array<string> {
-    const matches = text.match(
-        /([\"\'\‘\“\'\"\[\(\{\⟨][^\.\?\!]+[\.\?\!][\"\'\’\”\'\"\]\)\}\⟩]|[^\.\?\!]+[\.\?\!\s]*)/g
-    );
-    if (!matches) return [text];
-    return matches.map((sentence) => sentence.trim());
+    const splits = text.split(/(?<=[.!?]\s)/gm);
+    return splits.map(split => split.trim())
+        .filter(Boolean)
 }
 
 export function linkCategorizer(inputString: string) {
@@ -1492,34 +1454,14 @@ function youtubeIdExists(url: string) {
 }
 
 function markCitations ($: CheerioStatic, citations: Citation[]): CheerioStatic {
-    const html = $.html();
-    const citation_index = citations
-    const matches = html.match(CAPTURE_REGEXES.cite);
-    //case 'CITATION': {
-    //    // Decode the URL
-    //    let decodedURL = decodeURIComponent($2);
+    const cleaned_text = $.html().replace(CAPTURE_REGEXES.cite, (token, $1, $2, $3, $4, index) => {
+        const url = token.match(/USERNAME:(.*?)(?=~-~)/)[0].split(':')[1];
+        const decoded_url = decodeURIComponent(decodeURIComponent(url));
+        const link_id = citations.findIndex(cite => cite.url == decoded_url);
+        return `[[CITE|${link_id}|${decoded_url}]] `;
+    });
 
-    //    // Find the URL in the global links list
-    //    let theLinkID = null;
-    //    for (let element of linksList) {
-    //        if (element.url == decodedURL) {
-    //            theLinkID = element.link_id;
-    //            break;
-    //        }
-    //    }
-
-    //    // Construct the replacement string
-    //    if (theLinkID) {
-    //        // Construct the replacement string
-    //        replacementString = `[[${$1}|${theLinkID}]]`;
-    //    } else {
-    //        // Remove the citation
-    //        replacementString = '';
-    //    }
-
-    //    break;
-    //}
-    return $;
+    return cheerio.load(cleaned_text);
 }
 
 function parseTable($element: Cheerio): Table {
@@ -1546,7 +1488,8 @@ function parseTable($element: Cheerio): Table {
 
         // Push the attributes into the parent object
         table[theTagName] = {
-            attrs: $table_container[0].attribs
+            attrs: $table_container[0].attribs,
+            rows: []
         }
     }
 
@@ -1556,19 +1499,42 @@ function parseTable($element: Cheerio): Table {
         const parentTag = row.parentNode.tagName;
         table[parentTag].rows.push({
             index: i,
-            attrs: row.attribs
+            attrs: row.attribs,
+            cells: []
         });
 
         const $cells = $rows.eq(i).find('td, th');
-        table.rows[i].cells = $cells.map((j, cell) => { 
-            return {
+        $cells.each(function (j, cell) {
+            table[parentTag].rows[i].cells.push({
                 index: j,
                 attrs: cell.attribs,
                 tag_type: cell.tagName.toLowerCase(),
-                contents: parseSentences( $cells.eq(j).html().trim(), true, true)
-            };
+                content: parseSentences( $cells.eq(j).html().trim(), true, true)
+            });
         });
     });
 
     return table;
+}
+
+function markLinks (text: string) {
+    let cleaned_text = text.replace(CAPTURE_REGEXES.link, (token) => {
+        const old_slug = decodeURIComponent(token.match(/(?<=USERNAME:)(.*?)(?=~-~)/)[0]);
+        let lang_code, slug;
+        if (old_slug.includes('lang_')) {
+            lang_code = old_slug.split('/')[0].substring(5); // ignore the lang_ at the start
+            slug = old_slug.split('/')[1];
+        }
+        else {
+            lang_code = 'en';
+            slug = old_slug;
+        }
+        const text = token.match(/(?<=TEXT:)(.*?)(?=~~~)/)[0];
+        return `[[LINK|${lang_code}|${slug}|${text}]]`;
+    });
+
+    // add spaces after links if not present
+    cleaned_text = cleaned_text.replace(/\]\](?=[a-z])/g, ']] ');
+
+    return cleaned_text;
 }

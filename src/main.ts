@@ -48,6 +48,7 @@ async function bootstrap() {
         .addTag('History')
         .addTag('Diffs')
         .addTag('Preview')
+        .addTag('User')
         .addTag('Cache')
         .build();
     const document = SwaggerModule.createDocument(app, options);

@@ -112,13 +112,13 @@ describe('Backend API', () => {
 
   it('History: Get wiki history', () => {
     return request(app.getHttpServer())
-        .get('/v2/history/wiki/32')
+        .get('/v2/history/wiki/en/alexa-dell')
         .expect(200)
   });
 
-  it('History: Get wiki history w/ full diff', () => {
+  it('History: Get wiki history w/ full diff & preview', () => {
     return request(app.getHttpServer())
-        .get('/v2/history/wiki/32?diff=full')
+        .get('/v2/history/wiki/en/alexa-dell?diff=full&preview=true')
         .expect(200)
   });
 
@@ -260,18 +260,17 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('History: Wiki', () => {
+  it('User: Stakes', () => {
     return request(app.getHttpServer())
-        .get('/v2/history/wiki/16')
-        .expect(200)
-  });
-  
-  it('History: Wiki w/ Preview and Full diff', () => {
-    return request(app.getHttpServer())
-        .get('/v2/history/wiki/16?preview=true&diff=full')
+        .get('/v2/user/eptestusersa/stakes')
         .expect(200)
   });
 
+  it('User: Rewards', () => {
+    return request(app.getHttpServer())
+        .get('/v2/user/eptestusersf/rewards')
+        .expect(200)
+  });
 
   it('Cache: Wiki', () => {
     return request(app.getHttpServer())
