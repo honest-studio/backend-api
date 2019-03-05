@@ -34,12 +34,15 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, expressApp);
 
     // Swagger
+    const serverConfig = app.get(ConfigService).get('serverConfig');
+    const primaryPort = serverConfig.serverHost == 'https' ? serverConfig.serverHttpsPort : serverConfig.serverHttpPort;
+    const protocol = serverConfig.serverHost == 'https' ? 'https' : 'http';
     const options = new DocumentBuilder()
         .setTitle('Everipedia API')
         .setDescription('Data access API for the Everipedia dapp on EOS')
         .setVersion('0.1')
-        .setSchemes('https')
-        .setHost('api.everipedia.org:3000')
+        .setSchemes(protocol)
+        .setHost(`${serverConfig.serverHost}:${primaryPort}`)
         .addTag('Proposals')
         .addTag('Wikis')
         .addTag('Recent Activity')
@@ -64,9 +67,9 @@ async function bootstrap() {
     const sslConfig = TryResolveSslConfig(app.get(ConfigService).get('sslConfig'));
     if (sslConfig) {
         const httpsServer = createServer(sslConfig, expressApp);
-        httpsServer.listen(3000);
+        httpsServer.listen(serverConfig.serverHttpsPort);
     }
 
-    await app.listen(3001);
+    await app.listen(serverConfig.serverHttpPort);
 }
 bootstrap();

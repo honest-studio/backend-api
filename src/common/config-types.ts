@@ -1,5 +1,11 @@
 import * as dotenv from 'dotenv';
 
+export interface ServerConfig {
+    serverProtocol: string;
+    serverHost: string;
+    serverHttpPort: string;
+    serverHttpsPort: string;
+}
 /**
  * SSL Server configuration
  */
@@ -141,6 +147,7 @@ export interface MysqlConfig {
  * Combined config for app
  */
 export interface AppConfigVars {
+    serverConfig: ServerConfig;
     /**
      * SSL config (optional)
      */
@@ -175,6 +182,10 @@ export interface AppConfigVars {
  * Valid key names for the .env file
  */
 export enum ConfigKeyNames {
+    SERVER_PROTOCOL = 'SERVER_PROTOCOL',
+    SERVER_HOST = 'SERVER_HOST',
+    SERVER_HTTP_PORT = 'SERVER_HTTP_PORT',
+    SERVER_HTTPS_PORT = 'SERVER_HTTPS_PORT',
     SSL_KEY_PATH = 'SSL_KEY_PATH',
     SSL_CERTIFICATE_PATH = 'SSL_CERTIFICATE_PATH',
     COPYLEAKS_API_KEY = 'COPYLEAKS_API_KEY',

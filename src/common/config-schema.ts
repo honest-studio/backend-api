@@ -3,6 +3,17 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { AppConfigVars, ConfigKeyNames, PartialConfigMaker } from './config-types';
 
+
+const GetServerConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        serverConfig: {
+            serverProtocol: parsed[ConfigKeyNames.SERVER_PROTOCOL],
+            serverHost: parsed[ConfigKeyNames.SERVER_HOST],
+            serverHttpPort: parsed[ConfigKeyNames.SERVER_HTTP_PORT],
+            serverHttpsPort: parsed[ConfigKeyNames.SERVER_HTTPS_PORT],
+        }
+    }
+}
 /**
  * Build SSL config if SSL key path and cert path are provided
  * @param parsed dotenv parsed output
@@ -114,6 +125,7 @@ const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
  * Array of functions that will be applied, in order, to build AppConfigVars
  */
 const ConfigMappingFunctions: PartialConfigMaker[] = [
+    GetServerConfig,
     GetSslConfig,
     GetCopyLeaksConfig,
     GetDfuseConfig,
@@ -161,6 +173,10 @@ const mapPropertyKeysToConfig = (parsed: dotenv.DotenvParseOutput): AppConfigVar
  * Schema to validate environment vars from .env file
  */
 const envVarsSchema: Joi.ObjectSchema = Joi.object({
+    [ConfigKeyNames.SERVER_HOST]: Joi.string().required(),
+    [ConfigKeyNames.SERVER_PROTOCOL]: Joi.string().required(),
+    [ConfigKeyNames.SERVER_HTTP_PORT]: Joi.string().optional(),
+    [ConfigKeyNames.SERVER_HTTPS_PORT]: Joi.string().optional(),
     [ConfigKeyNames.SSL_KEY_PATH]: Joi.string().optional(),
     [ConfigKeyNames.SSL_CERTIFICATE_PATH]: Joi.string().optional(),
     [ConfigKeyNames.COPYLEAKS_API_KEY]: Joi.string().required(),
