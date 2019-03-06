@@ -29,7 +29,7 @@ export interface Paragraph {
     index: number;
     items: ParagraphItem[];
     tag_type: string;
-    attrs: { string : string };
+    attrs: { string: string };
 }
 
 export interface Section {
@@ -79,7 +79,7 @@ export interface AmpInfo {
 export interface Citation {
     url: string;
     thumb: string;
-    description: string;
+    description: Sentence[];
     category: string;
     citation_id: number;
     social_type: string;
