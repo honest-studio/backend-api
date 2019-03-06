@@ -16,9 +16,18 @@ export interface Sentence {
     text: string; // contains inline WikiLink markup + some light markdown for formatting
 }
 
+export interface ListItem {
+    type: string; // list_item
+    index: number;
+    sentences: Sentence[];
+    tag_type: string; // li
+}
+
+export type ParagraphItem = (Sentence | ListItem);
+
 export interface Paragraph {
     index: number;
-    items: Sentence[];
+    items: ParagraphItem[];
     tag_type: string;
     attrs: { string : string };
 }

@@ -1106,6 +1106,7 @@ function parseSection($section: Cheerio): Section {
             for (let j = 0; j < $list_items.length; j++) {
                 const $list_item = $list_items.eq(j);
                 paragraph.items.push({
+                    type: 'list_item',
                     index: j,
                     sentences: parseSentences($list_item.text()),
                     tag_type: 'li'
