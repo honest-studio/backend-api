@@ -33,7 +33,8 @@ export class EosSyncService {
             .toArray()
             .then((result: Array<any>) => {
                 if (result.length == 0) return default_start_block;
-                else return result[0].block_num;
+                const db_block = result[0].block_num;
+                return Math.max(default_start_block, db_block);
             });
     }
 
