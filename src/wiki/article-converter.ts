@@ -9,10 +9,9 @@ const decode = require('unescape');
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
 const CAPTURE_REGEXES = {
-    linkcite: /(?<=\[\[)(LINK|CITE)\|[^\]]*(?=\]\])/gimu,
     link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
-    inline_image: /__~INLINE_IMAGE__~~~SRC:(.*?)~-~HEIGHT:(.*?)~-~WIDTH:(.*?)~-~ALT:(.*?)~~~__INLINE_IMAGE~__/gimu
+    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu,
 };
 const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
@@ -641,7 +640,7 @@ function extractCitations($: CheerioStatic): Citation[] {
         );
 
         // Find any links to other pages that appear in the link description
-        citation.description = parseSentences(descriptionText, true);
+        citation.description = parseSentences(descriptionText);
 
         // Fetch the timestamp
         citation.timestamp =
@@ -713,7 +712,7 @@ function extractMediaGallery($: CheerioStatic) {
         );
 
         // Find any links to other pages that appear in the caption]
-        media.caption = parseSentences(captionText, true);
+        media.caption = parseSentences(captionText)
 
         // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
         media.type = $(this)
@@ -824,7 +823,7 @@ function extractMainPhoto($: CheerioStatic): Media {
     if (caption.length == 0) main_photo.caption = null;
     else {
         const captionText = decode(caption.html().trim(), 'all');
-        main_photo.caption = parseSentences(captionText, true);
+        main_photo.caption = parseSentences(captionText);
     }
 
     // Try to find the photo attribution
@@ -915,7 +914,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                 );
 
                 // Find any links to other pages that appear in the caption]
-                tempValue = parseSentences(tempValue, true, true);
+                tempValue = parseSentences(tempValue);
 
                 // Add the value to the rows
                 infoPackage.rows.push(tempValue);
@@ -984,7 +983,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                 );
 
                 // Find any links to other pages that appear in the caption]
-                tempValue = parseSentences(tempValue, true, true);
+                tempValue = parseSentences(tempValue);
 
                 // Add the value to the rows
                 infoPackage.rows.push(tempValue);
@@ -1032,42 +1031,26 @@ function parseSection($section: Cheerio): Section {
         if (!image.url) {
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
-                const src = inline_image_token[0].match(/(?<=SRC\:).+(?=~-~HEIGHT)/)[0];
-                image.url = decodeURIComponent(src)
+                const parts = inline_image_token[0].split('|');
+                image.url = parts[1];
+                image.alt = parts[2];
+                image.height = Number(parts[3].substring(1));
+                image.width = Number(parts[4].substring(1));
                 image.type = 'inline_image';
             }
         }
 
-        // Get the caption
-        let $captionNode = $image
-            .find('.blurbimage-caption')
-            .eq(0);
-
-        // Remove the .magnify div, if present (applies to some Wikipedia imports)
-        $captionNode
-            .find('.blurbimage-caption .magnify')
-            .eq(0)
-            .remove();
-
-        // Unwrap the thumbcaption, if present (applies to some Wikipedia imports)
-        const $thumbcaption = $captionNode.find('.thumbcaption');
-        if ($thumbcaption.length > 0)
-            $captionNode.html($thumbcaption.html());
-
         // Set the caption
-        image.caption = parseSentences(
-            $captionNode
-                .text()
-                .trim(),
-            true,
-            false
+        image.caption = parseSentences( 
+            $image.find('.blurbimage-caption').text().trim() 
         );
 
         // Decode the URL
-        let decodedURL = decodeURIComponent(image.url);
+        if (image.url)
+            image.url = decodeURIComponent(image.url);
 
         // Attribution URLs
-        if (image.url.includes('wikipedia')) {
+        if (image.url && image.url.includes('wikipedia')) {
             //image.attribution_url = `https://${metadata.page_lang}.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
             image.attribution_url = `https://en.wikipedia.org/wiki/File:${image.url.split('/').pop()}`;
         }
@@ -1096,7 +1079,7 @@ function parseSection($section: Cheerio): Section {
 
         // Headings
         else if (paragraph.tag_type.match(/h[1-6]/gimu))
-            paragraph.items = parseSentences($element.text(), true, true);
+            paragraph.items = parseSentences($element.text());
 
         // Lists
         else if (paragraph.tag_type.match(/(ul|ol)/gimu)) {
@@ -1156,9 +1139,14 @@ function sanitizeText($: CheerioStatic) {
         $(this).replaceWith(plaintextString);
     });
 
+    // Add whitespace after links when there's no space and it's followed by a letter
+    const spaced_links = $.html()
+        .replace(/\[\[LINK\|[^\]]*\]\][a-zA-Z]/gimu, (token) => `${token} `);
+    
+
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
-        const url = $(this).attr('data-username');
+        const url = decodeURIComponent($(this).attr('data-username'));
         const plaintextString = `[[CITE|0|${url}]]`;
         $(this).replaceWith(plaintextString);
     });
@@ -1198,27 +1186,24 @@ function sanitizeText($: CheerioStatic) {
     // Convert images inside wikitables to markup
     $('.wikitable img').each(function() {
         // Construct a dictionary
-        let imgObj = {
-            type: 'INLINE_IMAGE',
-            src: encodeURIComponent($(this).attr('src')).replace(/\./gimu, '%2E') || '',
-            height: $(this).attr('height'),
-            width: $(this).attr('width'),
-            alt: encodeURIComponent($(this).attr('alt'))
-        };
-
-        // Create the string
-        let plaintextString = `__~${imgObj.type}__~~~SRC:${imgObj.src}~-~HEIGHT:${imgObj.height}~-~WIDTH:${
-            imgObj.width
-        }~-~ALT:${imgObj.alt}~~~__${imgObj.type}~__`;
+        const src = $(this).attr('src');
+        const height = $(this).attr('height');
+        const width = $(this).attr('width');
+        const alt = $(this).attr('alt');
 
         // Replace the tag with the string
+        const plaintextString = `[[INLINE_IMAGE|${src}|${alt}|h${height}|w${width}]]`;
         $(this).replaceWith(plaintextString);
     });
 
     // Remove bad tags
-    const badTagSelectors = ['.thumbcaption .magnify', '.blurb-wrap .thumbinner'];
+    const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
     badTagSelectors.forEach((selector) => $(selector).remove());
 
+    // Replace thumbcaption divs with their text
+    $('.thumbcaption').each(function (index, element) {
+        $(this).replaceWith($(this).html());
+    });
 
     // Get the body
     let theBody = $('.blurb-wrap');
@@ -1263,18 +1248,8 @@ function sanitizeText($: CheerioStatic) {
 }
 
 // Convert the plaintext strings for links and citations to the Markdown format
-export function parseSentences(
-    inputString: string,
-    addPeriod: boolean = false,
-    removePeriod: boolean = false
-): Sentence[] {
+export function parseSentences( inputString: string ): Sentence[] {
     if (!inputString) return [];
-
-    // Make sure the sentence ends in a period
-    if (addPeriod) {
-        // NEED TO CHECK THIS FOR CHINESE AND OTHER LANGUAGES
-        inputString = inputString.endsWith('.') ? inputString : inputString + '.';
-    }
 
     // Create the sentence tokens
     const sentenceTokens = splitSentences(inputString);
@@ -1284,9 +1259,6 @@ export function parseSentences(
     return sentenceTokens.map(function(token, index) {
         // Initialize the return object
         let sentence = { type: 'sentence', index: index, text: token };
-
-        // Remove the period if applicable
-        sentence.text = removePeriod ? sentence.text.slice(0, -1) : sentence.text;
 
         // Quick regex clean
         sentence.text = sentence.text.replace(/ {1,}/gimu, ' ');
@@ -1504,7 +1476,7 @@ function parseTable($element: Cheerio): Table {
                 index: j,
                 attrs: cell.attribs,
                 tag_type: cell.tagName.toLowerCase(),
-                content: parseSentences( $cells.eq(j).html().trim(), true, true)
+                content: parseSentences( $cells.eq(j).html().trim())
             });
         });
     });

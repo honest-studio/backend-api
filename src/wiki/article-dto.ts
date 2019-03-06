@@ -47,7 +47,9 @@ export interface Media {
     timestamp?: Date;
     attribution_url?: string;
     mime?: string;
-    link_id?: number;
+    alt?: string;
+    height?: number;
+    width?: number;
 }
 
 export interface Metadata {
