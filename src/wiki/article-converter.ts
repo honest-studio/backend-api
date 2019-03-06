@@ -9,9 +9,9 @@ const decode = require('unescape');
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
 const CAPTURE_REGEXES = {
-    linkcite: /__~(LINK|CITATION)__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~TEXT:(.*?)~~~__(LINK|CITATION)~__/gimu,
-    link: /__~LINK__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~TEXT:(.*?)~~~__LINK~__/gimu,
-    cite: /__~CITATION__~~~USERNAME:(.*?)~-~HREF:(.*?)~-~TEXT:(.*?)~~~__CITATION~__/gimu,
+    linkcite: /(?<=\[\[)(LINK|CITE)\|[^\]]*(?=\]\])/gimu,
+    link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
+    cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
     inline_image: /__~INLINE_IMAGE__~~~SRC:(.*?)~-~HEIGHT:(.*?)~-~WIDTH:(.*?)~-~ALT:(.*?)~~~__INLINE_IMAGE~__/gimu
 };
 const REPLACEMENTS = [
@@ -850,9 +850,8 @@ function extractInfoboxHtml($: CheerioStatic): string {
             .trim(),
         'all'
     );
-    const marked_html = markLinks(html);
 
-    return marked_html;
+    return html;
 }
 
 function extractInfoboxes($: CheerioStatic): Infobox[] {
@@ -1135,35 +1134,32 @@ function parseSection($section: Cheerio): Section {
 // Sanitize a cheerio object and convert some of its HTML to Markdown
 function sanitizeText($: CheerioStatic) {
 
-    // Substitute all the links and citations into something that is safe for the parser
-    $('a.tooltippable, a.tooltippableCarat').each(function() {
-        // Construct a dictionary
-        let toolObj = {
-            type: '',
-            username: encodeURIComponent($(this).attr('data-username')).replace(/\./gimu, '%2E'),
-            href: encodeURIComponent($(this).attr('href')).replace(/\./gimu, '%2E') || '',
-            tooltip: ''
-        };
+    // Substitute all the links into something that is safe for the parser
+    $('a.tooltippable ').each(function() {
+        let old_slug = decodeURIComponent($(this).attr('data-username'));
+        if (old_slug.charAt(0) == '/')
+            old_slug = old_slug.substring(1);
+        const display_text = $(this).text().trim();
 
-        // Find the type
-        if ($(this).hasClass('tooltippableCarat')) {
-            toolObj.type = 'CITATION';
-        } else {
-            toolObj.type = 'LINK';
+        let lang_code, slug;
+        if (old_slug.includes('lang_')) {
+            lang_code = old_slug.split('/')[0].substring(5); // ignore the lang_ at the start
+            slug = old_slug.split('/')[1];
+        }
+        else {
+            lang_code = 'en';
+            slug = old_slug;
         }
 
-        // Set the string
-        toolObj.tooltip =
-            $(this)
-                .text()
-                .trim() || '';
-
-        // Create the string
-        let plaintextString = `__~${toolObj.type}__~~~USERNAME:${toolObj.username}~-~HREF:${toolObj.href}~-~TEXT:${
-            toolObj.tooltip
-        }~~~__${toolObj.type}~__`;
-
         // Replace the tag with the string
+        const plaintextString = `[[LINK|lang_${lang_code}|${slug}|${display_text}]]`;
+        $(this).replaceWith(plaintextString);
+    });
+
+    // Substitute all the citations into something that is safe for the parser
+    $('a.tooltippableCarat').each(function() {
+        const url = $(this).attr('data-username');
+        const plaintextString = `[[CITE|0|${url}]]`;
         $(this).replaceWith(plaintextString);
     });
 
@@ -1287,12 +1283,7 @@ export function parseSentences(
     // Need to text replace placeholders for citations and links
     return sentenceTokens.map(function(token, index) {
         // Initialize the return object
-        let sentence = { type: 'sentence', index: index, text: token, links: [] };
-
-        // Deal with the links and citations
-        // https://davidwalsh.name/string-replace-javascript
-        // There is an implicit loop here...
-        sentence.text = markLinks(token);
+        let sentence = { type: 'sentence', index: index, text: token };
 
         // Remove the period if applicable
         sentence.text = removePeriod ? sentence.text.slice(0, -1) : sentence.text;
@@ -1458,11 +1449,11 @@ function youtubeIdExists(url: string) {
 }
 
 function markCitations ($: CheerioStatic, citations: Citation[]): CheerioStatic {
-    const cleaned_text = $.html().replace(CAPTURE_REGEXES.cite, (token, $1, $2, $3, $4, index) => {
-        const url = token.match(/USERNAME:(.*?)(?=~-~)/)[0].split(':')[1];
-        const decoded_url = decodeURIComponent(decodeURIComponent(url));
-        const link_id = citations.findIndex(cite => cite.url == decoded_url);
-        return `[[CITE|${link_id}|${decoded_url}]] `;
+    const cleaned_text = $.html().replace(CAPTURE_REGEXES.cite, (token) => {
+        const parts = token.split('|');
+        const url = parts[2];
+        const link_id = citations.findIndex(cite => cite.url == url);
+        return `CITE|${link_id}|${url}`;
     });
 
     return cheerio.load(cleaned_text);
@@ -1519,26 +1510,4 @@ function parseTable($element: Cheerio): Table {
     });
 
     return table;
-}
-
-function markLinks (text: string) {
-    let cleaned_text = text.replace(CAPTURE_REGEXES.link, (token) => {
-        const old_slug = decodeURIComponent(token.match(/(?<=USERNAME:)(.*?)(?=~-~)/)[0]);
-        let lang_code, slug;
-        if (old_slug.includes('lang_')) {
-            lang_code = old_slug.split('/')[0].substring(5); // ignore the lang_ at the start
-            slug = old_slug.split('/')[1];
-        }
-        else {
-            lang_code = 'en';
-            slug = old_slug;
-        }
-        const text = token.match(/(?<=TEXT:)(.*?)(?=~~~)/)[0];
-        return `[[LINK|${lang_code}|${slug}|${text}]]`;
-    });
-
-    // add spaces after links if not present
-    cleaned_text = cleaned_text.replace(/\]\](?=[a-z])/g, ']] ');
-
-    return cleaned_text;
 }
