@@ -49,7 +49,6 @@ export interface Metadata {
     is_adult_content?: boolean;
     creation_timestamp?: Date;
     last_modified?: Date;
-    pageviews?: number;
     url_slug?: string;
     url_slug_alternate?: string;
     sub_page_type?: string;

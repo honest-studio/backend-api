@@ -602,18 +602,21 @@ export function extractPageBody($: CheerioStatic): Section[] {
 
 function extractMetadata($: CheerioStatic): Metadata {
     const metadata: any = {}
+    const ignore_fields = ['pageviews'];
 
     // Loop through the elements and fill the dictionary
     $('tr.data-pair').each(function() {
         let pairKey = $(this).attr('data-key');
-        let pairValue = pyToJS(
-            $(this)
-                .find('td')
-                .eq(1)
-                .text()
-                .trim()
-        );
-        metadata[pairKey] = pairValue;
+        if (!ignore_fields.includes(pairKey)) {
+            let pairValue = pyToJS(
+                $(this)
+                    .find('td')
+                    .eq(1)
+                    .text()
+                    .trim()
+            );
+            metadata[pairKey] = pairValue;
+        }
     });
 
     return metadata;
