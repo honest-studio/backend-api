@@ -92,12 +92,12 @@ export interface Citation {
 export interface Table {
     type: string;
     caption: string;
-    thead?: TableRow[];
-    tbody: TableBody;
-    tfoot?: TableRow[];
+    thead?: TableSection;
+    tbody: TableSection;
+    tfoot?: TableSection;
 }
 
-export interface TableBody {
+export interface TableSection {
     attrs: { string: string };
     rows: TableRow[];
 }
