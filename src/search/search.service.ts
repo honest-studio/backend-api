@@ -36,7 +36,7 @@ export class SearchService {
         
         if (lang){
             searchJSON.query.bool["must"]= {
-                "terms" : { "lang" : lang }
+                "terms" : { "lang" : (typeof lang === 'string') ? [lang] : lang }
             }
         };
 
