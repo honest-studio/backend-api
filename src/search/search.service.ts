@@ -7,36 +7,44 @@ import { MysqlService } from '../feature-modules/database';
 export class SearchService {
     constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
 
-    async searchTitle(query: string): Promise<any> {
+    async searchTitle(query: string, lang?: string|string[]): Promise<any> {
+        const searchJSON = {
+            query: {
+                bool: {
+                    should: [
+                        {
+                            multi_match: {
+                                query: query,
+                                fields: ['page_title'],
+                                type: 'phrase_prefix',
+                                slop: 5,
+                                max_expansions: 250
+                            }
+                        },
+                        {
+                            multi_match: {
+                                query: query,
+                                fields: ['page_title.keyword'],
+                                type: 'phrase',
+                                boost: 4
+                            }
+                        }
+                    ]
+                }
+            }
+        };
+        
+        if (lang){
+            searchJSON.query.bool["must"]= {
+                "terms" : { "lang" : lang }
+            }
+        };
+
         const searchResult = await this.client
             .search({
-                index: 'articletable_main2',
-                type: 'enterlink_articletable_main2',
-                body: {
-                    query: {
-                        bool: {
-                            should: [
-                                {
-                                    multi_match: {
-                                        query: query,
-                                        fields: ['page_title'],
-                                        type: 'phrase_prefix',
-                                        slop: 5,
-                                        max_expansions: 250
-                                    }
-                                },
-                                {
-                                    multi_match: {
-                                        query: query,
-                                        fields: ['page_title'],
-                                        type: 'phrase',
-                                        boost: 5
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
+                index: 'articletable_main5',
+                type: 'ep_template_v1',
+                body: searchJSON
             })
             .toPromise();
         const canonical_ids = searchResult[0].hits.hits.map((h) => h._source.canonical_id);
