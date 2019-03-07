@@ -93,8 +93,13 @@ export interface Table {
     type: string;
     caption: string;
     thead?: TableRow[];
-    tbody: TableRow[];
+    tbody: TableBody;
     tfoot?: TableRow[];
+}
+
+export interface TableBody {
+    attrs: { string: string };
+    rows: TableRow[];
 }
 
 export interface TableRow {
