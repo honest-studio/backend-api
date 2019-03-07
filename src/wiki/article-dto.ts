@@ -1,7 +1,7 @@
 // Link to an Everipedia page
-// The interface is listed here for documentation, but the 
-// links are actually marked up inline in sentence text with 
-// the format: 
+// The interface is listed here for documentation, but the
+// links are actually marked up inline in sentence text with
+// the format:
 // [[ LINK|${lang_code}|${slug}|${text} ]]
 export interface WikiLink {
     index?: number;
@@ -23,7 +23,7 @@ export interface ListItem {
     tag_type: string; // li
 }
 
-export type ParagraphItem = (Sentence | ListItem);
+export type ParagraphItem = Sentence | ListItem | Table;
 
 export interface Paragraph {
     index: number;
@@ -93,8 +93,13 @@ export interface Table {
     type: string;
     caption: string;
     thead?: TableRow[];
-    tbody: TableRow[];
+    tbody: TableBody;
     tfoot?: TableRow[];
+}
+
+export interface TableBody {
+    attrs: { string: string };
+    rows: TableRow[];
 }
 
 export interface TableRow {
