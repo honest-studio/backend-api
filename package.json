@@ -51,6 +51,7 @@
         "rxjs": "^6.3.3",
         "typescript": "^3.2.1",
         "unescape": "^1.0.1",
+        "webpack": "^4.29.6",
         "ws": "^6.1.2"
     },
     "devDependencies": {
