@@ -35,6 +35,7 @@ export class MediaUploadController {
     // @UsePipes(new JoiValidationPipe(HistoryWikiSchema, ['query']))
     uploadMedia(@UploadedFile() file, @Body() message: MediaUploadParams) {
         console.log(file);
+        console.log(file.buffer);
         console.log(message);
     }
 }
