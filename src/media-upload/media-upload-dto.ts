@@ -1,10 +1,22 @@
-// Can only have specific types of uploads
-export type PhotoUploadTypes = "ProfilePicture" | "CitationThumbnail" | "GalleryMediaItem";
+import { IsString, Matches } from 'class-validator';
 
 // Parameters for the media upload
-export interface MediaUploadParams {
+export class MediaUploadDto {
+    @IsString()
+    lang: string;
+
+    @IsString()
+    slug: string;
+
+    @IsString()
     caption: string;
-    upload_type: PhotoUploadTypes;
+
+    // Can only have specific types of uploads
+    @IsString()
+    @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/igum, {
+        message: "Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem"
+    })
+    upload_type: string;
 }
 
 // Mimetype interface

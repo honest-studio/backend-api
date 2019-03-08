@@ -1,8 +1,9 @@
-import { Controller, Body, Get, Param, Post, Query, Req, UseInterceptors, FileInterceptor, UploadedFile  } from '@nestjs/common';
+import { Controller, Body, Get, Param, Post, Query, Req, UseInterceptors, FileInterceptor, UploadedFile, ValidationPipe  } from '@nestjs/common';
 import { ApiConsumes, ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitFile, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { MediaUploadService } from './media-upload.service';
-import { MediaUploadParams } from './media-upload-dto';
+import { MediaUploadDto } from './media-upload-dto';
 import * as rawbody from 'raw-body';
+const path = require('path');
 
 @Controller('v2/media-upload')
 @ApiUseTags('Media Upload')
@@ -31,11 +32,18 @@ export class MediaUploadController {
         required: true,
         description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, or GalleryMediaItem)'
     })
+    @ApiImplicitParam({
+        name: 'slug',
+        required: true,
+        description: 'The slug of the page where the image is being uploaded to'
+    })
+    @ApiImplicitParam({
+        name: 'lang',
+        required: true,
+        description: 'The language of the page where the image is being uploaded to'
+    })
     // Need to add a validator here later
-    // @UsePipes(new JoiValidationPipe(HistoryWikiSchema, ['query']))
-    uploadMedia(@UploadedFile() file, @Body() message: MediaUploadParams) {
-        console.log(file);
-        console.log(file.buffer);
-        console.log(message);
+    async uploadMedia(@UploadedFile() file, @Body(new ValidationPipe()) message: MediaUploadDto): Promise<any> {
+        return this.MediaUploadService.processMedia(file.buffer, message.lang, message.slug, path.parse(file.originalname).name, message.upload_type, message.caption);
     }
 }

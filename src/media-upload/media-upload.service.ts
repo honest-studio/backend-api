@@ -118,24 +118,24 @@ export class MediaUploadService {
         }
     }
 
+    // TODO: NEED TO FIX THIS
     // Try to fetch a thumbnail from a website
-    async fetchMetaThumbnail(targetURL: string, slug: string, ipfs_truncated: string){
-        try {
-            // Try to determine the favicon URL for a given HTML URL
-            let linkToMetaImage = await this.getFavicon(targetURL);
+    // async fetchMetaThumbnail(targetURL: string, slug: string, lang:string, ipfs_truncated: string){
+    //     try {
+    //         // Try to determine the favicon URL for a given HTML URL
+    //         let linkToMetaImage = await this.getFavicon(targetURL);
 
-            // Get the buffer of the favicon
-            let faviconBuffer = await this.getImageBufferFromURL(linkToMetaImage);
-            let mimeResult = fileType(faviconBuffer);
+    //         // Get the buffer of the favicon
+    //         let faviconBuffer = await this.getImageBufferFromURL(linkToMetaImage);
 
-            // Upload the favicon to the S3 bucket
-            return await this.processMedia(faviconBuffer, mimeResult, 'GalleryMediaItem', slug, ipfs_truncated)
+    //         // Upload the favicon to the S3 bucket
+    //         return await this.processMedia(faviconBuffer, 'GalleryMediaItem', slug, ipfs_truncated)
 
-        }
-        catch (e){
-            return null;
-        }
-    }
+    //     }
+    //     catch (e){
+    //         return null;
+    //     }
+    // }
 
     // Get a buffer from a URL
     async getImageBufferFromURL(inputURL: string){
@@ -214,7 +214,6 @@ export class MediaUploadService {
         }
     }
 
-
     // Get a png buffer from the first frame of a GIF. Will be used as the GIF's thumbnail.
     async getPNGFrameFromGIF(gifBuffer: Buffer) {
         try {
@@ -243,8 +242,11 @@ export class MediaUploadService {
     }
 
     // Process a photo and upload it to the AWS S3 Bucket.
-    async processMedia(mediaBuffer: Buffer, mimePack: MimePack, photoType: string, identifier: string, fileCaption: string){
+    async processMedia(mediaBuffer: Buffer, lang: string, slug: string, identifier: string, uploadType: string,  fileCaption: string){
         try {
+            // Determine the MIME type
+            let mimePack : MimePack = fileType(mediaBuffer);
+
             // Set some variables
             let varPack = {'suffix': '', 'thumbSuffix': '', 'thumbMIME': '', 'mainMIME': ''};
             let bufferPack = {'mainBuf': new Buffer(''), 'thumbBuf': new Buffer('')};
@@ -265,12 +267,12 @@ export class MediaUploadService {
             let includeMainPhoto: boolean = true;
 
             // Set the thumbnail width and height
-            if (photoType == 'ProfilePicture' || photoType == 'NewlinkFiles'){
+            if (uploadType == 'ProfilePicture' || uploadType == 'NewlinkFiles'){
                 thumbWidth = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
                 thumbHeight = PHOTO_CONSTANTS.CROPPED_THUMB_HEIGHT;
                 includeMainPhoto = true;
             }
-            else if (photoType == 'GalleryMediaItem'){
+            else if (uploadType == 'GalleryMediaItem'){
                 thumbWidth = PHOTO_CONSTANTS.CROPPED_META_THUMB_WIDTH;
                 thumbHeight = PHOTO_CONSTANTS.CROPPED_META_THUMB_HEIGHT;
                 includeMainPhoto = false;
@@ -383,11 +385,12 @@ export class MediaUploadService {
                         bufferPack.mainBuf = await this.compressImage(mediaBuffer);
 
                         // Get a PNG frame from the GIF, resize, then compress it to a JPEG
+                        // Must resize to fit 1201x1201 to help with AMP
                         bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer).then(pngFrame => 
                             Jimp.read(pngFrame)
                         ).then(image => 
                             image.background(0xFFFFFFFF)
-                            .scaleToFit(thumbWidth, thumbHeight)
+                            .scaleToFit(mainWidth, mainHeight)
                             .quality(85)
                             .getBufferAsync('image/jpeg')
                         ).then(buffer => 
@@ -486,11 +489,11 @@ export class MediaUploadService {
                     bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {level: zlib.constants.Z_BEST_COMPRESSION});
 
                     // Set the AWS S3 bucket key
-                    let theMainKey = photoType + "/" + filename + "." + varPack.suffix;
+                    let theMainKey = `${uploadType}/${lang}/${slug}/${filename}.${varPack.suffix}`;
 
                     // Specify S3 upload options
                     let uploadParamsMain = {
-                        Bucket: this.awss3Config.AWS_S3_STORAGE_BUCKET_NAME,
+                        Bucket: this.awss3Config.awsStorageBucketName,
                         Key: theMainKey,
                         Body: bufferPack.mainBuf,
                         ACL: 'public-read',
@@ -506,6 +509,7 @@ export class MediaUploadService {
 
                     // Update the return dictionary with the main photo URL
                     returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
+                    console.log(returnPack.mainPhotoURL);
                 }
                 
             }
@@ -553,7 +557,7 @@ export class MediaUploadService {
 
                     // Upload the video as a stream
                     // Set the AWS S3 bucket key
-                    let theMainKey = photoType + "/" + filename + "." + varPack.suffix;
+                    let theMainKey = `${uploadType}/${lang}/${slug}/${filename}.${varPack.suffix}`;
 
                     fs.readFile(tempPath, function (err, data) {
                         if (err) { 
@@ -563,7 +567,7 @@ export class MediaUploadService {
                         else {
                             // Specify S3 upload options
                             let uploadParamsMain = {
-                                Bucket: this.awss3Config.AWS_S3_STORAGE_BUCKET_NAME,
+                                Bucket: this.awss3Config.awsStorageBucketName,
                                 Key: theMainKey,
                                 Body: data,
                                 ACL: 'public-read',
@@ -605,11 +609,11 @@ export class MediaUploadService {
             bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, {level: zlib.constants.Z_BEST_COMPRESSION});
 
             // Set the AWS S3 bucket key
-            let theThumbKey = photoType + "/" + filename + "__thumb." + varPack.thumbSuffix;
+            let theThumbKey = `${uploadType}/${lang}/${slug}/${filename}__thumb.${varPack.suffix}`;
 
             // Specify S3 upload options
             let uploadParamsThumb = {
-                Bucket: this.awss3Config.AWS_S3_STORAGE_BUCKET_NAME,
+                Bucket: this.awss3Config.awsStorageBucketName,
                 Key: theThumbKey,
                 Body: bufferPack.thumbBuf,
                 ACL: 'public-read',
@@ -625,6 +629,7 @@ export class MediaUploadService {
 
             // Update the return dictionary with the thumbnail URL
             returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
+            console.log(returnPack.thumbnailPhotoURL);
 
             // Return some information about the uploads
             return returnPack;

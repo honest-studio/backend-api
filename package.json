@@ -34,6 +34,8 @@
         "buffer-image-size": "^0.6.4",
         "chalk": "^2.4.1",
         "cheerio": "^1.0.0-rc.2",
+        "class-transformer": "^0.2.0",
+        "class-validator": "^0.9.1",
         "cors": "^2.8.5",
         "crypto": "^1.0.1",
         "dotenv": "^6.1.0",
