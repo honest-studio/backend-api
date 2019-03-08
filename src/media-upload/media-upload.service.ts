@@ -2,6 +2,7 @@ import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/commo
 import * as fetch from 'node-fetch';
 import { MimePack } from './media-upload-dto';
 const crypto = require("crypto");
+const DWebp = require('cwebp').DWebp;
 const extractFrames = require('./gif-extract-frames');
 const extractVideoPreview = require('ffmpeg-extract-frame');
 const fetch = require('node-fetch');
@@ -17,6 +18,7 @@ const imagemin_Gifsicle = require('imagemin-gifsicle');
 const imagemin_Jpegtran = require('imagemin-jpegtran');
 const imagemin_Optipng = require('imagemin-optipng');
 const imagemin_Svgo = require('imagemin-svgo');
+const imagemin_Webp = require('imagemin-webp');
 const mimeClass = require('mime');
 const path = require('path');
 const sizeOf = require('buffer-image-size');
@@ -204,7 +206,8 @@ export class MediaUploadService {
                     imagemin_Gifsicle(),
                     imagemin_Jpegtran(),
                     imagemin_Optipng({number: 7}),
-                    imagemin_Svgo()
+                    imagemin_Svgo(),
+                    imagemin_Webp({quality: 90, method: 6})
                 ]
             });
             return result;
@@ -400,14 +403,48 @@ export class MediaUploadService {
                     }
                     // Process WEBPs
                     case 'image/webp': {
-                        // TODO: NEED TO CONVERT TO JPEG
+                        // Convert to PNG for maximum browser compatibility
                         varPack.suffix = 'jpeg';
                         varPack.mainMIME = 'image/jpeg';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = "image/jpeg";
-                        // bufferPack.mainBuf = mediaBuffer;
-                        // bufferPack.thumbBuf = mediaBuffer;
-                        break
+                        bufferPack.mainBuf = await this.compressImage(mediaBuffer);
+
+                        // Convert to PNG
+                        let dwebpObj = new DWebp(bufferPack.mainBuf);
+                        dwebpObj.png().toBuffer(function(err, thisBuffer) {
+                            bufferPack.mainBuf = thisBuffer;
+                        });
+
+                        // Convert to a PNG buffer
+                        bufferPack.mainBuf = await dwebpObj.png().toBuffer().then(function(thisBuffer) {
+                            return thisBuffer;
+                        });
+
+                        // Need to switch the orders (thumb first) so the mainBuf gets evaluated.
+                        // Otherwise, errors will show up
+
+                        // Convert the PNG to JPEG for the thumbnail
+                        bufferPack.thumbBuf = await Jimp.read(bufferPack.mainBuf)
+                        .then(image => 
+                            image.background(0xFFFFFFFF)
+                            .scaleToFit(thumbWidth, thumbHeight)
+                            .quality(85)
+                            .getBufferAsync('image/jpeg')
+                        ).then(buffer => 
+                            this.compressImage(buffer)
+                        ).catch(err => console.log(err));
+
+                        // Resize the PNG and convert to AMP JPEG due to AMP (1200px width minimum)
+                        bufferPack.mainBuf = await Jimp.read(bufferPack.mainBuf)
+                        .then(image => 
+                            image.background(0xFFFFFFFF)
+                            .scaleToFit(mainWidth, mainHeight)
+                            .getBufferAsync('image/jpeg')
+                        ).then(buffer => 
+                            this.compressImage(buffer)
+                        ).catch(err => console.log(err));
+                        break;
                     }
                     // Process ICO files
                     case 'image/ico':
@@ -467,7 +504,7 @@ export class MediaUploadService {
                             this.compressImage(buffer)
                         ).catch(err => console.log(err));
 
-                        // Resize the PNG for the its thumbnail
+                        // Resize the PNG for its thumbnail
                         bufferPack.thumbBuf = await Jimp.read(mediaBuffer)
                         .then(image => 
                             image.scaleToFit(thumbWidth, thumbHeight)
@@ -609,7 +646,7 @@ export class MediaUploadService {
             bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, {level: zlib.constants.Z_BEST_COMPRESSION});
 
             // Set the AWS S3 bucket key
-            let theThumbKey = `${uploadType}/${lang}/${slug}/${filename}__thumb.${varPack.suffix}`;
+            let theThumbKey = `${uploadType}/${lang}/${slug}/${filename}__thumb.${varPack.thumbSuffix}`;
 
             // Specify S3 upload options
             let uploadParamsThumb = {
