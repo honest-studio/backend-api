@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { MimePack } from './media-upload-dto';
+const Canvas = require('canvas');
 const crypto = require("crypto");
 const DWebp = require('cwebp').DWebp;
 const extractFrames = require('./gif-extract-frames');
@@ -310,10 +311,28 @@ export class MediaUploadService {
                     case "image/heif-sequence":
                     case "image/heic-sequence": {
                         // TODO: NEED TO CONVERT TO JPEG
-                        varPack.suffix = 'jpeg';
-                        varPack.mainMIME = 'image/jpeg';
-                        varPack.thumbSuffix = 'jpeg';
-                        varPack.thumbMIME = "image/jpeg";
+                        // WAIT UNTIL THERE IS MORE NPM SUPPORT
+                        // JS library stolen from https://github.com/devMYC/heif-to-jpeg-demo since there is no npm package (yet)
+                        // varPack.suffix = 'jpeg';
+                        // varPack.mainMIME = 'image/jpeg';
+                        // varPack.thumbSuffix = 'jpeg';
+                        // varPack.thumbMIME = "image/jpeg";
+
+                        // // Decode the HEIF and convert to a JPEG buffer using Canvas
+                        // const decoder = new libheif.HeifDecoder();
+                        // const [image] = decoder.decode(mediaBuffer);
+                        // const w = image.get_width();
+                        // const h = image.get_height();
+                        // const canvas = new Canvas(w, h);
+                        // const ctx = canvas.getContext('2d');
+                        // const imgData = ctx.createImageData(w, h);
+                        // image.display(imgData, displayData => {
+                        //     ctx.putImageData(displayData, 0, 0);
+                        //     let coinmongler = ctx.toBuffer("image/jpeg");
+                        //     let one = 1;
+                        // })
+
+
                         // bufferPack.mainBuf = mediaBuffer;
                         // bufferPack.thumbBuf = mediaBuffer;
                         break;
@@ -421,7 +440,7 @@ export class MediaUploadService {
                             return thisBuffer;
                         });
 
-                        // Need to switch the orders (thumb first) so the mainBuf gets evaluated.
+                        // Need to switch the orders (thumb first) so the mainBuf gets evaluated
                         // Otherwise, errors will show up
 
                         // Convert the PNG to JPEG for the thumbnail
