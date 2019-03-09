@@ -143,6 +143,32 @@ export interface MysqlConfig {
     mysqlDatabase: string;
 }
 
+
+/**
+ * Configure connection to S3 on AWS
+ */
+export interface AWSS3Config {
+    /**
+     * Default storage bucket name
+     */
+    awsStorageBucketName: string;
+    /**
+     * Fast / Accelerated storage bucket name
+     */
+    awsFastCacheBucketName: string;
+    /**
+     * Access ID
+     */
+    awsAccessKeyID: string;
+    /**
+     * Access secret key
+     */
+    awsSecretAccessKey: string;
+    /**
+     * Domain to show
+     */
+}
+
 /**
  * Combined config for app
  */
@@ -169,6 +195,10 @@ export interface AppConfigVars {
      */
     ipfsConfig: IpfsConfig;
     /**
+     * AWS S3 connection config
+    */
+    AWSS3Config?: AWSS3Config;
+    /**
      * ElasticSearch connection config
      */
     elasticSearchConfig?: ElasticSearchConfig;
@@ -177,6 +207,7 @@ export interface AppConfigVars {
      */
     mysqlConfig?: MysqlConfig;
 }
+
 
 /**
  * Valid key names for the .env file
@@ -209,7 +240,11 @@ export enum ConfigKeyNames {
     MYSQL_PORT = 'MYSQL_PORT',
     MYSQL_USERNAME = 'MYSQL_USERNAME',
     MYSQL_PASSWORD = 'MYSQL_PASSWORD',
-    MYSQL_DATABASE = 'MYSQL_DATABASE'
+    MYSQL_DATABASE = 'MYSQL_DATABASE',
+    AWS_S3_STORAGE_BUCKET_NAME = 'AWS_S3_STORAGE_BUCKET_NAME',
+    AWS_S3_FAST_CACHE_BUCKET_NAME = 'AWS_S3_FAST_CACHE_BUCKET_NAME',
+    AWS_S3_ACCESS_KEY_ID = 'AWS_S3_ACCESS_KEY_ID',
+    AWS_S3_SECRET_ACCESS_KEY = 'AWS_S3_SECRET_ACCESS_KEY',
 }
 
 /**

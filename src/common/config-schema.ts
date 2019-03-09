@@ -106,6 +106,23 @@ const GetElasticSearchConfig: PartialConfigMaker = (
 };
 
 /**
+ * Build AWS S3 Bucket connection config
+ * @param parsed dotenv parsed output
+ */
+const GetAWSS3Config: PartialConfigMaker = (
+    parsed: dotenv.DotenvParseOutput
+): Partial<AppConfigVars> | null => {
+    return {
+        AWSS3Config: {
+            awsStorageBucketName: parsed[ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME],
+            awsFastCacheBucketName: parsed[ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME],
+            awsAccessKeyID: parsed[ConfigKeyNames.AWS_S3_ACCESS_KEY_ID],
+            awsSecretAccessKey: parsed[ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY],
+        }
+    };
+};
+
+/**
  * Build MySQL connection config
  * @param parsed dotenv parsed output
  */
@@ -132,7 +149,8 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetMongoConnConfig,
     GetIpfsConfig,
     GetElasticSearchConfig,
-    GetMysqlConfig
+    GetMysqlConfig,
+    GetAWSS3Config
 ];
 
 /**
@@ -220,7 +238,11 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
         .required(),
     [ConfigKeyNames.MYSQL_USERNAME]: Joi.string().required(),
     [ConfigKeyNames.MYSQL_PASSWORD]: Joi.string().required(),
-    [ConfigKeyNames.MYSQL_DATABASE]: Joi.string().required()
+    [ConfigKeyNames.MYSQL_DATABASE]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_ACCESS_KEY_ID]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY]: Joi.string().required()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {

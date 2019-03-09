@@ -35,7 +35,7 @@ export class SearchService {
         };
         
         if (langs){
-            searchJSON.query.bool["must"]= {
+            searchJSON.query.bool["must"] = {
                 "terms" : { "lang" : langs }
             }
         };

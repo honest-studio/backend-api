@@ -11,6 +11,7 @@ import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
 import { CacheController, CacheService } from './cache';
 import { HistoryController, HistoryService } from './history';
+import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 
@@ -48,6 +49,7 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         PreviewController,
         CacheController,
         HistoryController,
+        MediaUploadController,
         UserController
     ],
     providers: [
@@ -60,6 +62,7 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         PreviewService,
         CacheService,
         HistoryService,
+        MediaUploadService,
         UserService
     ]
 })

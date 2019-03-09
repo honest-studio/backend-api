@@ -17,6 +17,13 @@ sudo snap install ipfs
 echo "Done"
 echo
 
+echo "Installing Webp and HEIC/HEIF stuff"
+sudo apt-get install libpng-dev libtiff-dev libjpeg-dev libheif-dev build-essential libcairo2-dev
+sudo apt-get libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+sudo apt-get install webp
+echo "Done"
+echo
+
 # This should run on install, but just in case
 echo "Starting MongoDB"
 sudo systemctl start mongodb
