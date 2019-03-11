@@ -72,7 +72,6 @@ export class ProposalService {
             .forEach((p) => (p.result = { error: `Proposal ${p.proposal_id} has not finalized` }));
 
         if (options.preview) {
-            console.log(proposals);
             const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
             const previews = await this.previewService.getWikiPreviews(ipfs_hashes);
             previews.forEach(

@@ -54,7 +54,8 @@ export class SearchService {
                 SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, art.blurb_snippet,
                 art.photo_url, art.ipfs_hash_current, art.page_lang 
                 FROM enterlink_articletable AS art
-                WHERE art.id IN (${canonical_ids.join(',')})`,
+                WHERE art.id IN (?)`,
+                [canonical_ids],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);
