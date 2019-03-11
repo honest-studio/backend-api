@@ -15,18 +15,26 @@ export class SearchService {
                         {
                             multi_match: {
                                 query: query,
-                                fields: ['page_title'],
-                                type: 'phrase_prefix',
-                                slop: 5,
-                                max_expansions: 250
+                                fields: ['page_title.keyword'],
+                                type: 'phrase',
+                                boost: 4
                             }
                         },
                         {
                             multi_match: {
                                 query: query,
                                 fields: ['page_title.keyword'],
-                                type: 'phrase',
-                                boost: 4
+                                type: 'phrase_prefix',
+                                boost: 2
+                            }
+                        },
+                        {
+                            multi_match: {
+                                query: query,
+                                fields: ['page_title'],
+                                type: 'phrase_prefix',
+                                slop: 5,
+                                max_expansions: 250
                             }
                         }
                     ]
