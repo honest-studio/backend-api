@@ -15,18 +15,26 @@ export class SearchService {
                         {
                             multi_match: {
                                 query: query,
-                                fields: ['page_title'],
-                                type: 'phrase_prefix',
-                                slop: 5,
-                                max_expansions: 250
+                                fields: ['page_title.keyword'],
+                                type: 'phrase',
+                                boost: 4
                             }
                         },
                         {
                             multi_match: {
                                 query: query,
                                 fields: ['page_title.keyword'],
-                                type: 'phrase',
-                                boost: 4
+                                type: 'phrase_prefix',
+                                boost: 2
+                            }
+                        },
+                        {
+                            multi_match: {
+                                query: query,
+                                fields: ['page_title'],
+                                type: 'phrase_prefix',
+                                slop: 5,
+                                max_expansions: 250
                             }
                         }
                     ]
@@ -54,7 +62,8 @@ export class SearchService {
                 SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, art.blurb_snippet,
                 art.photo_url, art.ipfs_hash_current, art.page_lang 
                 FROM enterlink_articletable AS art
-                WHERE art.id IN (${canonical_ids.join(',')})`,
+                WHERE art.id IN (?)`,
+                [canonical_ids],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);

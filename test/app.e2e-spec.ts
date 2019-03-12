@@ -82,43 +82,43 @@ describe('Backend API', () => {
 
   it('Proposal: Multiple proposals', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/50,51,52,12')
+        .get('/v2/proposal/682,692,690')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ preview', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/50,51,52,12?preview=true')
+        .get('/v2/proposal/682,692,690?preview=true')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ diff percent', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/50,51,52,12?diff=percent')
+        .get('/v2/proposal/682,692,690?diff=percent')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ full diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/50,51,52,12?diff=full')
+        .get('/v2/proposal/682,692,690?diff=full')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ preview and full diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/50,51,52,12?diff=full&preview=true')
+        .get('/v2/proposal/682,692,690?diff=full&preview=true')
         .expect(200)
   });
 
   it('History: Get wiki history', () => {
     return request(app.getHttpServer())
-        .get('/v2/history/wiki/en/alexa-dell')
+        .get('/v2/history/wiki/lang_en/alex-miller')
         .expect(200)
   });
 
   it('History: Get wiki history w/ full diff & preview', () => {
     return request(app.getHttpServer())
-        .get('/v2/history/wiki/en/alexa-dell?diff=full&preview=true')
+        .get('/v2/history/wiki/lang_en/alex-miller?diff=full&preview=true')
         .expect(200)
   });
 
@@ -154,13 +154,13 @@ describe('Backend API', () => {
 
   it('Wiki: Get wiki by id', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/id/1000000000')
+        .get('/v2/wiki/id/1000001201')
         .expect(200)
   });
 
   it('Wiki: Get wiki json by id', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/id/1000000000?json=true')
+        .get('/v2/wiki/id/1000001201?json=true')
         .expect(200)
   });
 
@@ -226,13 +226,13 @@ describe('Backend API', () => {
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/50')
+        .get('/v2/diff/proposal/690')
         .expect(200)
   });
 
   it('Diff: Proposal diffs', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/34,52,50')
+        .get('/v2/diff/proposal/682,692,690')
         .expect(200)
   });
 

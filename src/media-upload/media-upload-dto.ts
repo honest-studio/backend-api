@@ -33,7 +33,7 @@ export class MediaUploadDto {
     @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/igum, {
         message: "Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem"
     })
-    upload_type: string;
+    upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
 }
 
 // Mimetype interface

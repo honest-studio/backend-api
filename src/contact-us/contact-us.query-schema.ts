@@ -1,23 +1,15 @@
 import * as Joi from 'joi';
 
-const ContactUSSchema = {
-    // preview: Joi.boolean().default(false),
-    // diff: Joi.string()
-    //     .valid('percent', 'full', 'none')
-    //     .default('none')
-    // preview: Joi.boolean().default(false),
-    // diff: Joi.string()
-    //     .valid('percent', 'full', 'none')
-    //     .default('none')
-    // preview: Joi.boolean().default(false),
-    // diff: Joi.string()
-    //     .valid('percent', 'full', 'none')
-    //     .default('none')
-    // preview: Joi.boolean().default(false),
-    // diff: Joi.string()
-    //     .valid('percent', 'full', 'none')
-    //     .default('none')
-};
+const ContactUSSchema = Joi.object().keys({
+    contactdate: Joi.date().iso().required(),
+    contacttext: Joi.string().required(),
+    contactemail: Joi.string().email().required(),
+    contactname: Joi.string().required(),
+    contactsubject: Joi.string().required(),
+    contacttype: Joi.string().regex(/^(Report Abuse|Report Bug|Verify Account|Anonymous Tip|Investment Inquiry|Other)$/igum).required(),
+    contactip: Joi.string().ip(),
+    contactuseragent: Joi.string().required()
+});
 
 export { ContactUSSchema };
 
