@@ -170,6 +170,47 @@ export interface AWSS3Config {
 }
 
 /**
+ * Configure connection to SES on AWS
+ */
+export interface AWSSESConfig {
+    /**
+     * Default SES email
+     */
+    awsSESDefaultEmail: string;
+    /**
+     * SES key
+     */
+    awsSESKey: string;
+    /**
+     * SES secret
+     */
+    awsSESSecret: string;
+    /**
+     * SES region
+     */
+    awsSESRegion: string;
+}
+
+/**
+ * Configure connection to Azure
+ */
+export interface AzureStorageConfig {
+    /**
+     * Azure account name
+     */
+    azureStorageAccountName: string;
+    /**
+     * Azure key
+     */
+    azureStorageAccountKey: string;
+    /**
+     * Azure container
+     */
+    azureStorageContainer: string;
+}
+
+
+/**
  * Combined config for app
  */
 export interface AppConfigVars {
@@ -197,7 +238,15 @@ export interface AppConfigVars {
     /**
      * AWS S3 connection config
     */
-    AWSS3Config?: AWSS3Config;
+    awsS3Config?: AWSS3Config;
+    /**
+     * AWS SES connection config
+    */
+    awsSESConfig?: AWSSESConfig;
+    /**
+     * Azure connection config
+    */
+    azureStorageConfig?: AzureStorageConfig;
     /**
      * ElasticSearch connection config
      */
@@ -245,6 +294,14 @@ export enum ConfigKeyNames {
     AWS_S3_FAST_CACHE_BUCKET_NAME = 'AWS_S3_FAST_CACHE_BUCKET_NAME',
     AWS_S3_ACCESS_KEY_ID = 'AWS_S3_ACCESS_KEY_ID',
     AWS_S3_SECRET_ACCESS_KEY = 'AWS_S3_SECRET_ACCESS_KEY',
+    AWS_SES_DEFAULT_EMAIL='AWS_SES_DEFAULT_EMAIL',
+    AWS_SES_KEY='AWS_SES_KEY',
+    AWS_SES_SECRET='AWS_SES_SECRET',
+    AWS_SES_REGION='AWS_SES_REGION',
+    AZURE_FILE_STORAGE='AZURE_FILE_STORAGE',
+    AZURE_STORAGE_ACCOUNT_NAME='AZURE_STORAGE_ACCOUNT_NAME',
+    AZURE_STORAGE_ACCOUNT_KEY='AZURE_STORAGE_ACCOUNT_KEY',
+    AZURE_STORAGE_CONTAINER='AZURE_STORAGE_CONTAINER'
 }
 
 /**
