@@ -109,15 +109,42 @@ const GetElasticSearchConfig: PartialConfigMaker = (
  * Build AWS S3 Bucket connection config
  * @param parsed dotenv parsed output
  */
-const GetAWSS3Config: PartialConfigMaker = (
-    parsed: dotenv.DotenvParseOutput
-): Partial<AppConfigVars> | null => {
+const GetAWSS3Config: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
     return {
-        AWSS3Config: {
+        awsS3Config: {
             awsStorageBucketName: parsed[ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME],
             awsFastCacheBucketName: parsed[ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME],
             awsAccessKeyID: parsed[ConfigKeyNames.AWS_S3_ACCESS_KEY_ID],
             awsSecretAccessKey: parsed[ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY],
+        }
+    };
+};
+
+/**
+ * Build AWS SES connection config
+ * @param parsed dotenv parsed output
+ */
+const GetAWSSESConfig: PartialConfigMaker = ( parsed: dotenv.DotenvParseOutput ): Partial<AppConfigVars> | null => {
+    return {
+        awsSESConfig: {
+            awsSESDefaultEmail: parsed[ConfigKeyNames.AWS_SES_DEFAULT_EMAIL],
+            awsSESKey: parsed[ConfigKeyNames.AWS_SES_KEY],
+            awsSESSecret: parsed[ConfigKeyNames.AWS_SES_SECRET],
+            awsSESRegion: parsed[ConfigKeyNames.AWS_SES_REGION]
+        }
+    };
+};
+
+/**
+ * Build Azure Bucket connection config
+ * @param parsed dotenv parsed output
+ */
+const GetAzureStorageConfig: PartialConfigMaker = ( parsed: dotenv.DotenvParseOutput ): Partial<AppConfigVars> | null => {
+    return {
+        azureStorageConfig: {
+            azureStorageAccountName: parsed[ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME],
+            azureStorageAccountKey: parsed[ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY],
+            azureStorageContainer: parsed[ConfigKeyNames.AZURE_STORAGE_CONTAINER],
         }
     };
 };
@@ -149,8 +176,11 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetMongoConnConfig,
     GetIpfsConfig,
     GetElasticSearchConfig,
-    GetMysqlConfig,
-    GetAWSS3Config
+    GetAWSS3Config,
+    GetAWSSESConfig,
+    GetAzureStorageConfig,
+    GetMysqlConfig
+
 ];
 
 /**
@@ -242,7 +272,14 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME]: Joi.string().required(),
     [ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME]: Joi.string().required(),
     [ConfigKeyNames.AWS_S3_ACCESS_KEY_ID]: Joi.string().required(),
-    [ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY]: Joi.string().required()
+    [ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_DEFAULT_EMAIL]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_KEY]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_SECRET]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_REGION]: Joi.string().required(),
+    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME]: Joi.string().required(),
+    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY]: Joi.string().required(),
+    [ConfigKeyNames.AZURE_STORAGE_CONTAINER]: Joi.string().required()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {

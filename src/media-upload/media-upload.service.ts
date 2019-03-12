@@ -29,8 +29,7 @@ const url = require('url');
 const zlib = require('zlib');
 const Jimp = require('jimp');
 const { StringDecoder } = require('string_decoder');
-const AWS = require('aws-sdk');
-import { ConfigService, AWSS3Config } from '../common';
+import { AWSS3Service } from '../feature-modules/database';
 
 const TEMP_DIR = path.join(__dirname, 'tmp')
 const PHOTO_CONSTANTS =  {
@@ -58,20 +57,7 @@ const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a']
 
 @Injectable()
 export class MediaUploadService {
-    // Should probably convert to a service for reusability later
-    private awss3Config
-    private s3;
-
-    constructor( config: ConfigService ) {
-        // Fetch the S3 config info
-        this.awss3Config = config.get('AWSS3Config');
-
-        // Initialize the AWS S3 connection
-        this.s3 = new AWS.S3({
-            accessKeyId: this.awss3Config.awsAccessKeyID,
-            secretAccessKey: this.awss3Config.awsSecretAccessKey
-        });
-    }
+    constructor( private awsS3Service: AWSS3Service ) {}
 
     // Get the YouTube ID from a URL
     getYouTubeIdIfPresent(inputURL: string){
@@ -549,7 +535,7 @@ export class MediaUploadService {
 
                     // Specify S3 upload options
                     let uploadParamsMain = {
-                        Bucket: this.awss3Config.awsStorageBucketName,
+                        Bucket: this.awsS3Service.getBucket(),
                         Key: theMainKey,
                         Body: bufferPack.mainBuf,
                         ACL: 'public-read',
@@ -559,7 +545,7 @@ export class MediaUploadService {
                     };
 
                     // Upload the file to S3
-                    await this.s3.upload(uploadParamsMain, function(s3Err, data) {
+                    await this.awsS3Service.upload(uploadParamsMain, function(s3Err, data) {
                         if (s3Err) throw s3Err;
                     });
 
@@ -623,7 +609,7 @@ export class MediaUploadService {
                         else {
                             // Specify S3 upload options
                             let uploadParamsMain = {
-                                Bucket: this.awss3Config.awsStorageBucketName,
+                                Bucket: this.awsS3Service.getBucket(),
                                 Key: theMainKey,
                                 Body: data,
                                 ACL: 'public-read',
@@ -669,7 +655,7 @@ export class MediaUploadService {
 
             // Specify S3 upload options
             let uploadParamsThumb = {
-                Bucket: this.awss3Config.awsStorageBucketName,
+                Bucket: this.awsS3Service.getBucket(),
                 Key: theThumbKey,
                 Body: bufferPack.thumbBuf,
                 ACL: 'public-read',
@@ -679,7 +665,7 @@ export class MediaUploadService {
             };
 
             // Upload the file to S3
-            await this.s3.upload(uploadParamsThumb, function(s3Err, data) {
+            await this.awsS3Service.upload(uploadParamsThumb, function(s3Err, data) {
                 if (s3Err) throw s3Err;
             });
 

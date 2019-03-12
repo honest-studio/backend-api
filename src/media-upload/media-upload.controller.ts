@@ -1,5 +1,5 @@
-import { Controller, Body, Get, Param, Post, Query, Req, UseInterceptors, FileInterceptor, UploadedFile, ValidationPipe  } from '@nestjs/common';
-import { ApiConsumes, ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitFile, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { Controller, Body, Get, Param, Post, Query, Req, UseInterceptors, FileInterceptor, UploadedFile, ValidationPipe, UsePipes  } from '@nestjs/common';
+import { ApiConsumes, ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitBody, ApiImplicitFile, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { MediaUploadService } from './media-upload.service';
 import { MediaUploadDto } from './media-upload-dto';
 import * as rawbody from 'raw-body';
@@ -23,26 +23,8 @@ export class MediaUploadController {
 		required: true,
         description: 'The media file data'
     })
-    @ApiImplicitParam({
-        name: 'caption',
-        description: 'A description of the file'
-    })
-    @ApiImplicitParam({
-        name: 'upload_type',
-        required: true,
-        description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, or GalleryMediaItem)'
-    })
-    @ApiImplicitParam({
-        name: 'slug',
-        required: true,
-        description: 'The slug of the page where the image is being uploaded to'
-    })
-    @ApiImplicitParam({
-        name: 'lang',
-        required: true,
-        description: 'The language of the page where the image is being uploaded to'
-    })
-    // Need to add a validator here later
+    // KNOWN ISSUE: /docs issue with application/json and multipart/form-data
+    // https://github.com/nestjs/swagger/issues/167
     async uploadMedia(@UploadedFile() file, @Body(new ValidationPipe()) message: MediaUploadDto): Promise<any> {
         return this.MediaUploadService.processMedia(file.buffer, message.lang, message.slug, path.parse(file.originalname).name, message.upload_type, message.caption);
     }

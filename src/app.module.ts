@@ -9,6 +9,7 @@ import { ChainController, ChainService } from './chain';
 import { DiffController, DiffService } from './diff';
 import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
+import { ContactUsController, ContactUsService } from './contact-us';
 import { CacheController, CacheService } from './cache';
 import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
@@ -50,7 +51,8 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         CacheController,
         HistoryController,
         MediaUploadController,
-        UserController
+        UserController,
+        ContactUsController
     ],
     providers: [
         ProposalService,
@@ -63,7 +65,8 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         CacheService,
         HistoryService,
         MediaUploadService,
-        UserService
+        UserService,
+        ContactUsService
     ]
 })
 export class AppModule {}
