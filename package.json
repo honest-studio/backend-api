@@ -111,6 +111,9 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9d578e2e88b602671057e5b35686dee2a90c6932
     "dependencies": {
         "@meltwater/fetch-favicon": "^1.0.4",
         "@nestjs/common": "^5.4.1",
@@ -195,22 +198,26 @@
         "tslint": "5.11.0"
     },
     "jest": {
-        "moduleFileExtensions": [
-            "js",
-            "json",
-            "ts"
-        ],
-        "rootDir": "src",
-        "testRegex": ".spec.ts$",
-        "transform": {
-            "^.+\\.(t|j)s$": "ts-jest"
-        },
-        "coverageDirectory": "../coverage",
-        "testEnvironment": "node"
+      "moduleFileExtensions": [
+        "js",
+        "json",
+        "ts"
+      ],
+      "rootDir": "src",
+      "testRegex": ".spec.ts$",
+      "transform": {
+        "^.+\\.(t|j)s$": "ts-jest"
+      },
+      "coverageDirectory": "../coverage",
+      "testEnvironment": "node"
     }
+<<<<<<< HEAD
 =======
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
 >>>>>>> df4b8b4a5aac6033d3808483d7e1c35a66e235ec
+=======
+  }
+>>>>>>> 9d578e2e88b602671057e5b35686dee2a90c6932
 }
