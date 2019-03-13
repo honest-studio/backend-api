@@ -16,11 +16,15 @@ export class EosSyncService {
         this.mongoDbService = mongo;
         this.dfuseConfig = config.get('dfuseConfig');
         const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${this.dfuseConfig.dfuseApiKey}`;
-        this.dfuse = new WebSocket(url, {
-            headers: {
-                Origin: this.dfuseConfig.dfuseOriginUrl
-            }
-        });
+        try {
+            this.dfuse = new WebSocket(url, {
+                headers: {
+                    Origin: this.dfuseConfig.dfuseOriginUrl
+                }
+            });
+        } catch (err) {
+            console.log('failed to connect to websocket in eos-sync-service ', err);
+        }
     }
 
     async get_start_block(account: string, default_start_block: number = this.DEFAULT_BLOCK_START): Promise<number> {
@@ -80,13 +84,15 @@ export class EosSyncService {
             //dfuse.send(JSON.stringify(safesend_req));
             //dfuse.send(JSON.stringify(fee_req));
         });
-
+        this.dfuse.on('error', (err) => {
+            console.log('-- error connecting to dfuse: ', err);
+        });
         this.dfuse.on('message', (msg_str: string) => {
             this.lastMessageReceived = new Date().getTime();
 
             const msg = JSON.parse(msg_str);
             if (msg.type != 'action_trace') {
-                console.log(msg);
+                // console.log(msg);
                 return;
             }
             this.mongoDbService
@@ -97,11 +103,14 @@ export class EosSyncService {
                     const account = msg.data.trace.act.account;
                     const name = msg.data.trace.act.name;
                     console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
+                })
+                .catch((err) => {
+                    console.log('Eos-Sync-Service: Error inserting action ', msg, ' \n Error message on insert: ', err);
                 });
         });
 
         this.dfuse.on('error', (e) => {
-            console.log(e);
+            console.log('Dfuse error in eos-sync-service: ', e);
         });
     }
 
