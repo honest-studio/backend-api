@@ -67,6 +67,7 @@ export interface Metadata {
     is_indexed?: boolean;
     bing_index_override?: boolean;
     is_locked?: boolean;
+    pageviews?: number;
 }
 
 export interface AmpInfo {

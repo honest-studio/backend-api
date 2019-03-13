@@ -24,28 +24,11 @@ export class WikiService {
         return wikis[0].wiki;
     }
 
-    async getWikiById(wiki_id: number, options: WikiOptions = {}): Promise<any> {
-        const docs = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.wiki_id': wiki_id
-            })
-            .sort({ 'trace.act.data.proposal_id': -1 })
-            .limit(1)
-            .toArray();
-
-        if (docs.length == 0) throw new NotFoundException(`Wiki ${wiki_id} could not be found`);
-
-        return this.getWikiByHash(docs[0].trace.act.data.ipfs_hash, options);
-    }
-
     async getWikiBySlug(lang_code: string, slug: string, options: WikiOptions = {}): Promise<any> {
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT cache.html_blob 
+                SELECT cache.html_blob, art.pageviews
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache 
                 ON art.ipfs_hash_current=cache.ipfs_hash 
@@ -59,9 +42,14 @@ export class WikiService {
             );
         });
         if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
-        const wiki = rows[0].html_blob;
-        if (options.json) return oldHTMLtoJSON(wiki);
-        else return wiki;
+
+        let wiki = rows[0].html_blob;
+        if (options.json) {
+            wiki = oldHTMLtoJSON(wiki);
+            wiki.metadata.pageviews = rows[0].pageviews;
+        }
+
+        return wiki;
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>, options: WikiOptions = {}) {
@@ -133,5 +121,23 @@ export class WikiService {
             );
         });
         return { ipfs_hash };
+    }
+
+    async incrementPageviewCount (lang_code: string, slug: string): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                UPDATE enterlink_articletable 
+                SET pageviews = pageviews + 1
+                WHERE page_lang= ? AND slug = ?
+                `,
+                [lang_code, slug],
+                function(err, res) {
+                    console.log(err);
+                    if (err) reject(err);
+                    else resolve(true);
+                }
+            );
+        });
     }
 }

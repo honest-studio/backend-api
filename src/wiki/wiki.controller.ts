@@ -42,30 +42,6 @@ export class WikiController {
         else return await this.wikiService.getWikisByHash(ipfs_hashes, query);
     }
 
-    @Get('id/:wiki_id')
-    @ApiOperation({ title: 'Get wiki by ID' })
-    @ApiImplicitParam({
-        name: 'wiki_id',
-        description: `ID of a wiki. To get multiple wikis, separate IDs with a comma.  
-            Example 1: 10
-            Example 2: 10,1000000063,323`
-    })
-    @ApiImplicitQuery({
-        name: 'json',
-        description: `Return the wiki in a parsed JSON format instead of raw HTML. The JSON will eventually become a replacement for the HTML`,
-        required: false,
-        type: Boolean
-    })
-    @ApiResponse({
-        status: 200,
-        description: `An HTML wiki or key-value object with hashes as keys to HTML wikis encoded in UTF-8`
-    })
-    @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
-    async getWikiById(@Param('wiki_id') query_id: string, @Query() query): Promise<any> {
-        const wiki_id = Number(query_id);
-        return this.wikiService.getWikiById(wiki_id, query);
-    }
-
     @Get('slug/:lang_code/:slug')
     @ApiOperation({ title: 'Get wiki by article title' })
     @ApiImplicitParam({
@@ -88,7 +64,8 @@ export class WikiController {
     })
     @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
     async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() query): Promise<any> {
-        return await this.wikiService.getWikiBySlug(lang_code, slug, query);
+        this.wikiService.incrementPageviewCount(lang_code, slug);
+        return this.wikiService.getWikiBySlug(lang_code, slug, query);
     }
 
     @Post('/')
