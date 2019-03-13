@@ -50,7 +50,7 @@ export class RecentActivityService {
             const article_info: Array<any> = await new Promise((resolve, reject) => {
                 this.mysql.pool().query(
                     `
-                    SELECT art.page_title, art.photo_url, art.photo_thumb_url, art.page_lang, cache.ipfs_hash
+                    SELECT art.page_title, art.photo_url, art.photo_thumb_url, art.page_lang, cache.ipfs_hash, art.slug
                     FROM enterlink_articletable AS art 
                     JOIN enterlink_hashcache AS cache
                     ON cache.articletable_id=art.id
