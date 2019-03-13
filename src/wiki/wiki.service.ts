@@ -133,7 +133,6 @@ export class WikiService {
                 `,
                 [lang_code, slug],
                 function(err, res) {
-                    console.log(err);
                     if (err) reject(err);
                     else resolve(true);
                 }

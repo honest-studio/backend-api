@@ -152,18 +152,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get wiki by id', () => {
-    return request(app.getHttpServer())
-        .get('/v2/wiki/id/1000001201')
-        .expect(200)
-  });
-
-  it('Wiki: Get wiki json by id', () => {
-    return request(app.getHttpServer())
-        .get('/v2/wiki/id/1000001201?json=true')
-        .expect(200)
-  });
-
   it('Wiki: Get non-existent wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfPc')
