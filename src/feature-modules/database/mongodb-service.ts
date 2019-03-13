@@ -49,9 +49,8 @@ export class MongoDbService {
                         } else {
                             const db = client.db(this.mongoConfig.mongoDbName);
                             const actions = db.collection('actions');
-                            const plagiarism = db.collection('plagiarism');
                             const diffs = db.collection('diffs');
-                            resolve({ client, db, actions, plagiarism, diffs });
+                            resolve({ client, db, actions, diffs });
                         }
                     }
                 );
