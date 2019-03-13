@@ -907,9 +907,11 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
             .find('td.ibox-plural-value')
             .each(function() {
                 // Try to find the value
+                // Only the text is being grabbed now.
+                // If there is any useful HTML in here more complex logic is required
                 let tempValue = decode(
                     $(this)
-                        .html()
+                        .text()
                         .trim(),
                     'all'
                 );
