@@ -31,18 +31,6 @@ const GetSslConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Par
     }
 };
 
-/**
- * Build Copyleaks API config
- * @param parsed dotenv parsed output
- */
-const GetCopyLeaksConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
-    return {
-        copyLeaksConfig: {
-            copyLeaksApiKey: parsed[ConfigKeyNames.COPYLEAKS_API_KEY],
-            copyLeaksApiEmail: parsed[ConfigKeyNames.COPYLEAKS_API_EMAIL]
-        }
-    };
-};
 
 /**
  * Build DFuse.io API config
@@ -171,7 +159,6 @@ const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
 const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetServerConfig,
     GetSslConfig,
-    GetCopyLeaksConfig,
     GetDfuseConfig,
     GetMongoConnConfig,
     GetIpfsConfig,
@@ -227,8 +214,6 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.SERVER_HTTPS_PORT]: Joi.string().optional(),
     [ConfigKeyNames.SSL_KEY_PATH]: Joi.string().optional(),
     [ConfigKeyNames.SSL_CERTIFICATE_PATH]: Joi.string().optional(),
-    [ConfigKeyNames.COPYLEAKS_API_KEY]: Joi.string().required(),
-    [ConfigKeyNames.COPYLEAKS_API_EMAIL]: Joi.string().required(),
     [ConfigKeyNames.MONGODB_URL]: Joi.string().required(),
     [ConfigKeyNames.MONGODB_DATABASE_NAME]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_KEY]: Joi.string().required(),

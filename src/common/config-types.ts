@@ -21,20 +21,6 @@ export interface SslConfig {
 }
 
 /**
- * CopyLeaks API configuration
- */
-export interface CopyLeaksConfig {
-    /**
-     * CopyLeaks API Key
-     */
-    copyLeaksApiKey: string;
-    /**
-     * E-mail used to register with CopyLeaks
-     */
-    copyLeaksApiEmail: string;
-}
-
-/**
  * Dfuse.io API configuration
  */
 export interface DfuseConfig {
@@ -220,10 +206,6 @@ export interface AppConfigVars {
      */
     sslConfig?: SslConfig;
     /**
-     * CopyLeaks API config
-     */
-    copyLeaksConfig: CopyLeaksConfig;
-    /**
      * Dfuse.IO API config
      */
     dfuseConfig: DfuseConfig;
@@ -238,23 +220,23 @@ export interface AppConfigVars {
     /**
      * AWS S3 connection config
     */
-    awsS3Config?: AWSS3Config;
+    awsS3Config: AWSS3Config;
     /**
      * AWS SES connection config
     */
-    awsSESConfig?: AWSSESConfig;
+    awsSESConfig: AWSSESConfig;
     /**
      * Azure connection config
     */
-    azureStorageConfig?: AzureStorageConfig;
+    azureStorageConfig: AzureStorageConfig;
     /**
      * ElasticSearch connection config
      */
-    elasticSearchConfig?: ElasticSearchConfig;
+    elasticSearchConfig: ElasticSearchConfig;
     /**
      * Mysql Connection config
      */
-    mysqlConfig?: MysqlConfig;
+    mysqlConfig: MysqlConfig;
 }
 
 
@@ -268,8 +250,6 @@ export enum ConfigKeyNames {
     SERVER_HTTPS_PORT = 'SERVER_HTTPS_PORT',
     SSL_KEY_PATH = 'SSL_KEY_PATH',
     SSL_CERTIFICATE_PATH = 'SSL_CERTIFICATE_PATH',
-    COPYLEAKS_API_KEY = 'COPYLEAKS_API_KEY',
-    COPYLEAKS_API_EMAIL = 'COPYLEAKS_API_EMAIL',
     MONGODB_URL = 'MONGODB_URL',
     MONGODB_DATABASE_NAME = 'MONGODB_DATABASE_NAME',
     DFUSE_API_KEY = 'DFUSE_API_KEY',
