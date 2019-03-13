@@ -17,15 +17,14 @@ export class AWSSESService {
             secretAccessKey: this._awssesConfig.awsSESSecret,
             region: this._awssesConfig.awsSESRegion
         });
-
     }
     // Return the default email
-    getDefaultEmail(){
+    getDefaultEmail() {
         return this._awssesConfig.awsSESDefaultEmail;
     }
 
     // Return the sendEmail function
-    sendEmail(...args){
+    sendEmail(...args) {
         return this._ses.sendEmail(...args);
     }
 }

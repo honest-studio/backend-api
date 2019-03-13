@@ -3,17 +3,16 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { AppConfigVars, ConfigKeyNames, PartialConfigMaker } from './config-types';
 
-
 const GetServerConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
     return {
         serverConfig: {
             serverProtocol: parsed[ConfigKeyNames.SERVER_PROTOCOL],
             serverHost: parsed[ConfigKeyNames.SERVER_HOST],
             serverHttpPort: parsed[ConfigKeyNames.SERVER_HTTP_PORT],
-            serverHttpsPort: parsed[ConfigKeyNames.SERVER_HTTPS_PORT],
+            serverHttpsPort: parsed[ConfigKeyNames.SERVER_HTTPS_PORT]
         }
-    }
-}
+    };
+};
 /**
  * Build SSL config if SSL key path and cert path are provided
  * @param parsed dotenv parsed output
@@ -30,7 +29,6 @@ const GetSslConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Par
         return null;
     }
 };
-
 
 /**
  * Build DFuse.io API config
@@ -103,7 +101,7 @@ const GetAWSS3Config: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
             awsStorageBucketName: parsed[ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME],
             awsFastCacheBucketName: parsed[ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME],
             awsAccessKeyID: parsed[ConfigKeyNames.AWS_S3_ACCESS_KEY_ID],
-            awsSecretAccessKey: parsed[ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY],
+            awsSecretAccessKey: parsed[ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY]
         }
     };
 };
@@ -112,7 +110,7 @@ const GetAWSS3Config: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
  * Build AWS SES connection config
  * @param parsed dotenv parsed output
  */
-const GetAWSSESConfig: PartialConfigMaker = ( parsed: dotenv.DotenvParseOutput ): Partial<AppConfigVars> | null => {
+const GetAWSSESConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
     return {
         awsSESConfig: {
             awsSESDefaultEmail: parsed[ConfigKeyNames.AWS_SES_DEFAULT_EMAIL],
@@ -127,12 +125,12 @@ const GetAWSSESConfig: PartialConfigMaker = ( parsed: dotenv.DotenvParseOutput )
  * Build Azure Bucket connection config
  * @param parsed dotenv parsed output
  */
-const GetAzureStorageConfig: PartialConfigMaker = ( parsed: dotenv.DotenvParseOutput ): Partial<AppConfigVars> | null => {
+const GetAzureStorageConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
     return {
         azureStorageConfig: {
             azureStorageAccountName: parsed[ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME],
             azureStorageAccountKey: parsed[ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY],
-            azureStorageContainer: parsed[ConfigKeyNames.AZURE_STORAGE_CONTAINER],
+            azureStorageContainer: parsed[ConfigKeyNames.AZURE_STORAGE_CONTAINER]
         }
     };
 };
@@ -167,7 +165,6 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetAWSSESConfig,
     GetAzureStorageConfig,
     GetMysqlConfig
-
 ];
 
 /**

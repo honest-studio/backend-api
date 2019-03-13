@@ -12,6 +12,6 @@ const UserQuerySchema = {
         .max(100)
         .optional()
         .default(10)
-}
+};
 
 export { UserQuerySchema };

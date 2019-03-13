@@ -123,7 +123,7 @@ export class WikiService {
         return { ipfs_hash };
     }
 
-    async incrementPageviewCount (lang_code: string, slug: string): Promise<boolean> {
+    async incrementPageviewCount(lang_code: string, slug: string): Promise<boolean> {
         return new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `

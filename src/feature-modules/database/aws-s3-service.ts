@@ -16,16 +16,15 @@ export class AWSS3Service {
             accessKeyId: this._awss3Config.awsAccessKeyID,
             secretAccessKey: this._awss3Config.awsSecretAccessKey
         });
-
     }
 
     // Return the bucket name
-    getBucket(){
+    getBucket() {
         return this._awss3Config.awsStorageBucketName;
     }
 
     // Return the upload function
-    upload(...args){
+    upload(...args) {
         return this._s3.upload(...args);
     }
 }

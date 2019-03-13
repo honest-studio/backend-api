@@ -41,12 +41,12 @@ export class SearchService {
                 }
             }
         };
-        
-        if (langs){
-            searchJSON.query.bool["must"] = {
-                "terms" : { "lang" : langs }
-            }
-        };
+
+        if (langs) {
+            searchJSON.query.bool['must'] = {
+                terms: { lang: langs }
+            };
+        }
 
         const searchResult = await this.client
             .search({

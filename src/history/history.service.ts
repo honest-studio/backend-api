@@ -19,7 +19,7 @@ export class HistoryService {
                     'trace.act.account': 'eparticlectr',
                     'trace.act.name': 'logpropinfo',
                     'trace.act.data.slug': slug,
-                    'trace.act.data.lang_code': lang_code,
+                    'trace.act.data.lang_code': lang_code
                 },
                 { projection: { 'trace.act.data.proposal_id': 1 } }
             )

@@ -11,7 +11,7 @@ const ROOT_DIR = path.join(__dirname, '../..');
 const CAPTURE_REGEXES = {
     link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
-    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu,
+    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu
 };
 const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
@@ -186,14 +186,12 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 
     const page_body = extractPageBody($);
 
-
     // Deal with citation + media matches
     // If a media item matches an existing citation, update the latter
     //for (let citeObj of citations) {
     //    if (citeObj.url == medium.url && citeObj.url && medium.url) {
     //    }
     //}
-
 
     // Return the dictionary
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
@@ -387,7 +385,10 @@ export function ampSanitizer(
         $(iframeTag).attr('frameborder', 0);
         $(iframeTag).attr('scrolling', 'no');
         $(iframeTag).attr('layout', 'fill');
-        $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`);
+        $(iframeTag).attr(
+            'src',
+            `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
+        );
 
         // Placeholder image (leave this here or it will cause stupid AMP problems)
         let placeholderTag = $('<amp-img />');
@@ -583,24 +584,20 @@ export function ampSanitizer(
 export function extractPageBody($: CheerioStatic): Section[] {
     // Get the body
     // First 2 are wikipedia divs
-    // Default is everipedia body 
+    // Default is everipedia body
     let $body;
-    if ($('.mw-parser-output').length > 0)
-        $body = $( $('.mw-parser-output')[0] );
-    else if ($('.mw-content-ltr').length > 0) 
-        $body = $( $('.mw-content-ltr')[0] );
-    else 
-        $body = $('.blurb-wrap');
+    if ($('.mw-parser-output').length > 0) $body = $($('.mw-parser-output')[0]);
+    else if ($('.mw-content-ltr').length > 0) $body = $($('.mw-content-ltr')[0]);
+    else $body = $('.blurb-wrap');
 
     // Split body into sections
-    let sections: Section[] = splitIntoSections($body)
-        .map(parseSection);
-    
+    let sections: Section[] = splitIntoSections($body).map(parseSection);
+
     return sections;
 }
 
 function extractMetadata($: CheerioStatic): Metadata {
-    const metadata: any = {}
+    const metadata: any = {};
     const ignore_fields = ['pageviews'];
 
     // Loop through the elements and fill the dictionary
@@ -676,10 +673,14 @@ function extractCitations($: CheerioStatic): Citation[] {
             .attr('src');
 
         // Fetch the URL & social media type
-        let href = $(element).find('.link-url').attr('href');
+        let href = $(element)
+            .find('.link-url')
+            .attr('href');
         if (!href)
-            href = $(element).find('.link-url-wrap').text();
-                
+            href = $(element)
+                .find('.link-url-wrap')
+                .text();
+
         if (href) {
             citation.url = href.trim();
             citation.social_type = socialURLType(citation.url);
@@ -712,7 +713,7 @@ function extractMediaGallery($: CheerioStatic) {
         );
 
         // Find any links to other pages that appear in the caption]
-        media.caption = parseSentences(captionText)
+        media.caption = parseSentences(captionText);
 
         // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
         media.type = $(this)
@@ -998,25 +999,24 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
 function splitIntoSections($body: Cheerio): Cheerio[] {
     const bodyHtml = $body.html();
-    return bodyHtml.split(/(?=<h[1-6])/gimu)
-        .map(htmlSection => htmlSection.trim())
-        .map(htmlSection => `<div class="section">${htmlSection}</div>`)
-        .map(htmlSection => cheerio.load(htmlSection))
-        .map($ => $('.section'))
+    return bodyHtml
+        .split(/(?=<h[1-6])/gimu)
+        .map((htmlSection) => htmlSection.trim())
+        .map((htmlSection) => `<div class="section">${htmlSection}</div>`)
+        .map((htmlSection) => cheerio.load(htmlSection))
+        .map(($) => $('.section'));
 }
 
 function parseSection($section: Cheerio): Section {
     const section = { paragraphs: [], images: [] };
 
     // Get all images
-    const $fixed_images = $section.find('.blurb-inline-image-container')
+    const $fixed_images = $section.find('.blurb-inline-image-container');
     $fixed_images.each((i, fixed_image_node) => {
         const $image = $fixed_images.eq(i);
 
         // Get the image node
-        let theImgNode = $image
-            .find('img.caption-img, img.tooltippableImage')
-            .eq(0);
+        let theImgNode = $image.find('img.caption-img, img.tooltippableImage').eq(0);
 
         // Initialize the objects
         const image: Media = {
@@ -1041,13 +1041,15 @@ function parseSection($section: Cheerio): Section {
         }
 
         // Set the caption
-        image.caption = parseSentences( 
-            $image.find('.blurbimage-caption').text().trim() 
+        image.caption = parseSentences(
+            $image
+                .find('.blurbimage-caption')
+                .text()
+                .trim()
         );
 
         // Decode the URL
-        if (image.url)
-            image.url = decodeURIComponent(image.url);
+        if (image.url) image.url = decodeURIComponent(image.url);
 
         // Attribution URLs
         if (image.url && image.url.includes('wikipedia')) {
@@ -1062,7 +1064,7 @@ function parseSection($section: Cheerio): Section {
 
     // Get paragraphs in section
     const $children = $section.children();
-    for (let i=0; i < $children.length; i++) {
+    for (let i = 0; i < $children.length; i++) {
         const $element = $children.eq(i);
         const element = $children[i];
 
@@ -1076,11 +1078,8 @@ function parseSection($section: Cheerio): Section {
         // Process the tag types accordingly
         if (paragraph.tag_type == 'p' || paragraph.tag_type == 'blockquote')
             paragraph.items = parseSentences($element.text());
-
         // Headings
-        else if (paragraph.tag_type.match(/h[1-6]/gimu))
-            paragraph.items = parseSentences($element.text());
-
+        else if (paragraph.tag_type.match(/h[1-6]/gimu)) paragraph.items = parseSentences($element.text());
         // Lists
         else if (paragraph.tag_type.match(/(ul|ol)/gimu)) {
             // Loop through the li's
@@ -1100,8 +1099,7 @@ function parseSection($section: Cheerio): Section {
         else if (paragraph.tag_type == 'table') {
             // ignore images
             const classes = paragraph.attrs.class;
-            if (classes && classes.includes('blurb-inline-image-container'))
-                continue; 
+            if (classes && classes.includes('blurb-inline-image-container')) continue;
 
             const table = parseTable($element);
             paragraph.items.push(table);
@@ -1110,26 +1108,25 @@ function parseSection($section: Cheerio): Section {
         // Add the object to the array
         section.paragraphs.push(paragraph);
     }
-        
-    return section; 
+
+    return section;
 }
 
 // Sanitize a cheerio object and convert some of its HTML to Markdown
 function sanitizeText($: CheerioStatic) {
-
     // Substitute all the links into something that is safe for the parser
     $('a.tooltippable ').each(function() {
         let old_slug = decodeURIComponent($(this).attr('data-username'));
-        if (old_slug.charAt(0) == '/')
-            old_slug = old_slug.substring(1);
-        const display_text = $(this).text().trim();
+        if (old_slug.charAt(0) == '/') old_slug = old_slug.substring(1);
+        const display_text = $(this)
+            .text()
+            .trim();
 
         let lang_code, slug;
         if (old_slug.includes('lang_')) {
             lang_code = old_slug.split('/')[0].substring(5); // ignore the lang_ at the start
             slug = old_slug.split('/')[1];
-        }
-        else {
+        } else {
             lang_code = 'en';
             slug = old_slug;
         }
@@ -1140,9 +1137,7 @@ function sanitizeText($: CheerioStatic) {
     });
 
     // Add whitespace after links when there's no space and it's followed by a letter
-    const spaced_links = $.html()
-        .replace(/\[\[LINK\|[^\]]*\]\][a-zA-Z]/gimu, (token) => `${token} `);
-    
+    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\][a-zA-Z]/gimu, (token) => `${token} `);
 
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
@@ -1201,7 +1196,7 @@ function sanitizeText($: CheerioStatic) {
     badTagSelectors.forEach((selector) => $(selector).remove());
 
     // Replace thumbcaption divs with their text
-    $('.thumbcaption').each(function (index, element) {
+    $('.thumbcaption').each(function(index, element) {
         $(this).replaceWith($(this).html());
     });
 
@@ -1210,9 +1205,9 @@ function sanitizeText($: CheerioStatic) {
 
     // Check for wikipedia divs
     if ($('.mw-parser-output').length > 0) {
-        theBody = $( $('.mw-parser-output')[0] );
+        theBody = $($('.mw-parser-output')[0]);
     } else if ($('.mw-content-ltr').length > 0) {
-        theBody = $( $('.mw-content-ltr')[0] );
+        theBody = $($('.mw-content-ltr')[0]);
     }
 
     // Fix certain elements
@@ -1248,7 +1243,7 @@ function sanitizeText($: CheerioStatic) {
 }
 
 // Convert the plaintext strings for links and citations to the Markdown format
-export function parseSentences( inputString: string ): Sentence[] {
+export function parseSentences(inputString: string): Sentence[] {
     if (!inputString) return [];
 
     // Create the sentence tokens
@@ -1267,7 +1262,6 @@ export function parseSentences( inputString: string ): Sentence[] {
         return sentence;
     });
 }
-
 
 // See if a given URL is a social media URL. If so, return the type
 export function socialURLType(inputURL: string) {
@@ -1304,7 +1298,11 @@ export function socialURLType(inputURL: string) {
             exclusions: [/linkedin.com\/pub\/.*/gimu, /press.linkedin.com\/.*/gimu, /blog.linkedin.com\/.*/gimu]
         },
         { type: 'medium', regex: /medium.com\/@/gimu, exclusions: [/medium.com\/@.*\/.*/gimu] },
-        { type: 'myspace', regex: /myspace.com/gimu, exclusions: [/myspace.com\/.*\/.*/gimu, /blogs.myspace.com\/.*/gimu] },
+        {
+            type: 'myspace',
+            regex: /myspace.com/gimu,
+            exclusions: [/myspace.com\/.*\/.*/gimu, /blogs.myspace.com\/.*/gimu]
+        },
         {
             type: 'pinterest',
             regex: /pinterest.com/gimu,
@@ -1357,9 +1355,8 @@ export function socialURLType(inputURL: string) {
     ];
 
     // Check for a match and make sure it doesn't match an exclusion
-    const match = SOCIAL_MEDIA_REGEXES.find(r => 
-        r.regex.test(inputURL) && 
-        !r.exclusions.some(exclusion => exclusion.test(inputURL))
+    const match = SOCIAL_MEDIA_REGEXES.find(
+        (r) => r.regex.test(inputURL) && !r.exclusions.some((exclusion) => exclusion.test(inputURL))
     );
     if (!match) return null;
     return match.type;
@@ -1369,8 +1366,7 @@ export function socialURLType(inputURL: string) {
 // https://www.npmjs.com/package/natural#tokenizers
 function splitSentences(text: string): Array<string> {
     const splits = text.split(/(?<=[.!?]\s)/gm);
-    return splits.map(split => split.trim())
-        .filter(Boolean)
+    return splits.map((split) => split.trim()).filter(Boolean);
 }
 
 export function linkCategorizer(inputString: string) {
@@ -1399,16 +1395,15 @@ export function linkCategorizer(inputString: string) {
 // Copied with light modifications from NPM package get-youtube-id
 // https://www.npmjs.com/package/get-youtube-id
 function youtubeIdExists(url: string) {
-    if (!/youtu\.?be/.test(url))
-        return false;
+    if (!/youtu\.?be/.test(url)) return false;
 
     // Look first for known patterns
     var patterns = [
-        /youtu\.be\/([^#\&\?]{11})/,  // youtu.be/<id>
-        /\?v=([^#\&\?]{11})/,         // ?v=<id>
-        /\&v=([^#\&\?]{11})/,         // &v=<id>
-        /embed\/([^#\&\?]{11})/,      // embed/<id>
-        /\/v\/([^#\&\?]{11})/         // /v/<id>
+        /youtu\.be\/([^#\&\?]{11})/, // youtu.be/<id>
+        /\?v=([^#\&\?]{11})/, // ?v=<id>
+        /\&v=([^#\&\?]{11})/, // &v=<id>
+        /embed\/([^#\&\?]{11})/, // embed/<id>
+        /\/v\/([^#\&\?]{11})/ // /v/<id>
     ];
 
     // If any pattern matches, return the ID
@@ -1420,11 +1415,11 @@ function youtubeIdExists(url: string) {
     return false;
 }
 
-function markCitations ($: CheerioStatic, citations: Citation[]): CheerioStatic {
+function markCitations($: CheerioStatic, citations: Citation[]): CheerioStatic {
     const cleaned_text = $.html().replace(CAPTURE_REGEXES.cite, (token) => {
         const parts = token.split('|');
         const url = parts[2];
-        const link_id = citations.findIndex(cite => cite.url == url);
+        const link_id = citations.findIndex((cite) => cite.url == url);
         return `CITE|${link_id}|${url}`;
     });
 
@@ -1433,36 +1428,34 @@ function markCitations ($: CheerioStatic, citations: Citation[]): CheerioStatic 
 
 function parseTable($element: Cheerio): Table {
     const table: any = {
-        type: 'wikitable',
+        type: 'wikitable'
     };
 
     // Set the table caption, if present
     const $caption = $element.children('caption');
-    if ($caption.length > 0) 
-        table.caption = $caption.html().trim();
+    if ($caption.length > 0) table.caption = $caption.html().trim();
 
     // Deal with the colgroup
     // TODO
 
     // Setup the head, body, and foot
     const $table_containers = $element.children('thead, tbody, tfoot');
-    for (let j=0; j < $table_containers.length; j++) {
+    for (let j = 0; j < $table_containers.length; j++) {
         const $table_container = $table_containers.eq(j);
 
         // Find the tag name (thead, tbody, or tfoot)
-        let theTagName = $table_container[0].tagName
-                .toLowerCase() || null;
+        let theTagName = $table_container[0].tagName.toLowerCase() || null;
 
         // Push the attributes into the parent object
         table[theTagName] = {
             attrs: $table_container[0].attribs,
             rows: []
-        }
+        };
     }
 
     // Add the rows and cells
     const $rows = $element.find('tr');
-    $rows.each(function (i, row) {
+    $rows.each(function(i, row) {
         const parentTag = row.parentNode.tagName;
         table[parentTag].rows.push({
             index: i,
@@ -1471,12 +1464,20 @@ function parseTable($element: Cheerio): Table {
         });
 
         const $cells = $rows.eq(i).find('td, th');
-        $cells.each(function (j, cell) {
+        $cells.each(function(j, cell) {
             table[parentTag].rows[i].cells.push({
                 index: j,
                 attrs: cell.attribs,
                 tag_type: cell.tagName.toLowerCase(),
-                content: parseSentences( $cells.eq(j).html().trim())
+                // a lot of useless HTML tags are getting stripped out here when we grab only the text.
+                // it's possible those HTML divs may contain useful content for a few articles.
+                // if that turns out to be the case, this logic needs to be more complex.
+                content: parseSentences(
+                    $cells
+                        .eq(j)
+                        .text()
+                        .trim()
+                )
             });
         });
     });

@@ -129,7 +129,6 @@ export interface MysqlConfig {
     mysqlDatabase: string;
 }
 
-
 /**
  * Configure connection to S3 on AWS
  */
@@ -195,7 +194,6 @@ export interface AzureStorageConfig {
     azureStorageContainer: string;
 }
 
-
 /**
  * Combined config for app
  */
@@ -219,15 +217,15 @@ export interface AppConfigVars {
     ipfsConfig: IpfsConfig;
     /**
      * AWS S3 connection config
-    */
+     */
     awsS3Config: AWSS3Config;
     /**
      * AWS SES connection config
-    */
+     */
     awsSESConfig: AWSSESConfig;
     /**
      * Azure connection config
-    */
+     */
     azureStorageConfig: AzureStorageConfig;
     /**
      * ElasticSearch connection config
@@ -238,7 +236,6 @@ export interface AppConfigVars {
      */
     mysqlConfig: MysqlConfig;
 }
-
 
 /**
  * Valid key names for the .env file
@@ -274,14 +271,14 @@ export enum ConfigKeyNames {
     AWS_S3_FAST_CACHE_BUCKET_NAME = 'AWS_S3_FAST_CACHE_BUCKET_NAME',
     AWS_S3_ACCESS_KEY_ID = 'AWS_S3_ACCESS_KEY_ID',
     AWS_S3_SECRET_ACCESS_KEY = 'AWS_S3_SECRET_ACCESS_KEY',
-    AWS_SES_DEFAULT_EMAIL='AWS_SES_DEFAULT_EMAIL',
-    AWS_SES_KEY='AWS_SES_KEY',
-    AWS_SES_SECRET='AWS_SES_SECRET',
-    AWS_SES_REGION='AWS_SES_REGION',
-    AZURE_FILE_STORAGE='AZURE_FILE_STORAGE',
-    AZURE_STORAGE_ACCOUNT_NAME='AZURE_STORAGE_ACCOUNT_NAME',
-    AZURE_STORAGE_ACCOUNT_KEY='AZURE_STORAGE_ACCOUNT_KEY',
-    AZURE_STORAGE_CONTAINER='AZURE_STORAGE_CONTAINER'
+    AWS_SES_DEFAULT_EMAIL = 'AWS_SES_DEFAULT_EMAIL',
+    AWS_SES_KEY = 'AWS_SES_KEY',
+    AWS_SES_SECRET = 'AWS_SES_SECRET',
+    AWS_SES_REGION = 'AWS_SES_REGION',
+    AZURE_FILE_STORAGE = 'AZURE_FILE_STORAGE',
+    AZURE_STORAGE_ACCOUNT_NAME = 'AZURE_STORAGE_ACCOUNT_NAME',
+    AZURE_STORAGE_ACCOUNT_KEY = 'AZURE_STORAGE_ACCOUNT_KEY',
+    AZURE_STORAGE_CONTAINER = 'AZURE_STORAGE_CONTAINER'
 }
 
 /**

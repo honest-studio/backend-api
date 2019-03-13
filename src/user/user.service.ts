@@ -2,13 +2,13 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
 
 export interface UserServiceOptions {
-    limit: number; 
+    limit: number;
     offset: number;
 }
 
 @Injectable()
 export class UserService {
-    constructor( private mongo: MongoDbService ) {};
+    constructor(private mongo: MongoDbService) {}
 
     async getStakes(account_name: string, options: UserServiceOptions) {
         const stakes = await this.mongo
@@ -34,20 +34,20 @@ export class UserService {
             .toArray();
 
         const sum_stakes = stakes
-            .map(s => s.trace.act.data.quantity.split(" ")[0])
+            .map((s) => s.trace.act.data.quantity.split(' ')[0])
             .map(Number)
-            .reduce((sum, addend) => sum += addend, 0);
+            .reduce((sum, addend) => (sum += addend), 0);
 
         const sum_refunds = refunds
-            .map(s => s.trace.act.data.quantity.split(" ")[0])
+            .map((s) => s.trace.act.data.quantity.split(' ')[0])
             .map(Number)
-            .reduce((sum, addend) => sum += addend, 0);
+            .reduce((sum, addend) => (sum += addend), 0);
 
-        return { 
+        return {
             stakes: stakes.slice(options.offset, options.offset + options.limit),
             refunds: refunds.slice(options.offset, options.offset + options.limit),
-            sum_stakes, 
-            sum_refunds 
+            sum_stakes,
+            sum_refunds
         };
     }
 
@@ -73,23 +73,23 @@ export class UserService {
             .toArray();
 
         const sum_rewards = rewards
-            .map(s => s.trace.act.data.quantity.split(" ")[0])
+            .map((s) => s.trace.act.data.quantity.split(' ')[0])
             .map(Number)
-            .reduce((sum, addend) => sum += addend, 0);
+            .reduce((sum, addend) => (sum += addend), 0);
 
         // sum up the iq-seconds of slash time. 1 IQ slashed for 1 second is 1 iq-second
         const sum_slashes = slashes
-            .map(s => [s.trace.act.data.amount, s.trace.act.data.seconds])
-            .reduce((sum, row) => sum += row[0]*row[1], 0);
+            .map((s) => [s.trace.act.data.amount, s.trace.act.data.seconds])
+            .reduce((sum, row) => (sum += row[0] * row[1]), 0);
 
-        return { 
+        return {
             sum_rewards,
             sum_slashes: {
                 number: slashes.length,
                 iq_seconds: sum_slashes
             },
             rewards: rewards.slice(options.offset, options.offset + options.limit),
-            slashes: slashes.slice(options.offset, options.offset + options.limit),
-        }
+            slashes: slashes.slice(options.offset, options.offset + options.limit)
+        };
     }
 }

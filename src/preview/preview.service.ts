@@ -54,7 +54,8 @@ export class PreviewService {
         previews.forEach((preview) => {
             if (!preview.text_preview) return; // continue
             const $ = cheerio.load(preview.text_preview);
-            preview.text_preview = $.root().text()
+            preview.text_preview = $.root()
+                .text()
                 .replace(/\s+/g, ' ')
                 .trim();
         });
