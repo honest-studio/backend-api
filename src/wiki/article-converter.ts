@@ -111,6 +111,7 @@ const VALID_VIDEO_EXTENSIONS = [
     '.avi'
 ];
 const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
+const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 
 // Convert False/True into false/true and None into null
 function pyToJS(inputItem: any) {
@@ -1367,8 +1368,26 @@ export function socialURLType(inputURL: string) {
 // Regex copied from natural NPM package
 // https://www.npmjs.com/package/natural#tokenizers
 function splitSentences(text: string): Array<string> {
-    const splits = text.split(/(?<=[.!?]\s)/gm);
-    return splits.map((split) => split.trim()).filter(Boolean);
+    let splits = text.split(/(?<=[.!?]\s)/gm);
+    splits = splits.map((split) => split.trim()).filter(Boolean);
+
+    // Don't split on certain tricky words like Mr., Mrs., etc.
+    // Don't split inside a LINK, CITE, or INLINE IMAGE
+    for (let i=0; i < splits.length; i++) {
+        const lastWord = splits[i].split(" ").pop();
+        const split = SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord);
+        if (
+            (SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord) ||
+            splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm))
+            && i+1 < splits.length
+        ) {
+            splits[i] = `${splits[i]} ${splits[i+1]}`;
+            splits.splice(i+1, 1);
+            i--; // re-check this sentence in case there's multiple bad splits
+        }
+    }
+
+    return splits;
 }
 
 export function linkCategorizer(inputString: string) {
