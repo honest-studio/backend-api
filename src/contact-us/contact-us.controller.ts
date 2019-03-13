@@ -16,8 +16,8 @@ export class ContactUsController {
         description: `Success`
     })
     // NEED TO FIX THE VALIDATION HERE
-    // @UsePipes(new JoiValidationPipe(ContactUSSchema))
-    async submitContactUsForm(@Body() form): Promise<any> {
-        return await this.contactUsService.submitContactUsForm(form);
+    @UsePipes(new JoiValidationPipe(ContactUSSchema))
+    async submitContactUsForm(@Body() inputJSON): Promise<any> {
+        return await this.contactUsService.submitContactUsForm(inputJSON);
     }
 }

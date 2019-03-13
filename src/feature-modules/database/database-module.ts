@@ -4,7 +4,7 @@ import { EosSyncService } from './eos-sync-service';
 import { MysqlService } from './mysql-service';
 import { AWSS3Service } from './aws-s3-service';
 import { AWSSESService } from './aws-ses-service';
-import { AzureStorageService } from './azure-storage-service';
+// import { AzureStorageService } from './azure-storage-service';
 import { CommonModule } from '../../common';
 
 /**
@@ -12,7 +12,7 @@ import { CommonModule } from '../../common';
  */
 @Module({
     imports: [CommonModule],
-    providers: [MongoDbService, EosSyncService, MysqlService, AWSS3Service, AWSSESService, AzureStorageService],
-    exports: [MongoDbService, MysqlService, AWSS3Service, AWSSESService, AzureStorageService]
+    providers: [MongoDbService, EosSyncService, MysqlService, AWSS3Service, AWSSESService],
+    exports: [MongoDbService, MysqlService, AWSS3Service, AWSSESService]
 })
 export class DatabaseModule {}

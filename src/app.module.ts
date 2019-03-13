@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ProposalController, ProposalService } from './proposal';
 import { WikiController, WikiService } from './wiki';
@@ -15,6 +15,7 @@ import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { EosClientModule, DatabaseModule } from './feature-modules';
+import { RequestIpMiddleware } from './middleware';
 
 @Module({
     imports: [
@@ -69,4 +70,8 @@ import { EosClientModule, DatabaseModule } from './feature-modules';
         ContactUsService
     ]
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(RequestIpMiddleware).forRoutes('v1/search');
+    }
+}

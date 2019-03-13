@@ -32,31 +32,36 @@ export class MongoDbService {
 
     async connect(): Promise<AppConnectionInstance> {
         if (this.appConnectionInstance) return this.appConnectionInstance;
-
-        this.appConnectionInstance = await new Promise<AppConnectionInstance>((resolve, reject) => {
-            MongoClient.connect(
-                this.mongoConfig.mongoConnUrl,
-                { poolSize: 10 },
-                (err: Error, client: MongoClient) => {
-                    if (err) {
-                        console.warn('Is the MongoDB daemon running? Run install/ubuntu_deps.sh to initialize');
-                        console.error(err);
-                        reject(err);
-                    } else if (!client) {
-                        console.error('Mongo client unavailable!');
-                        reject(new Error('Mongo client unavailable'));
-                    } else {
-                        const db = client.db(this.mongoConfig.mongoDbName);
-                        const actions = db.collection('actions');
-                        const diffs = db.collection('diffs');
-                        resolve({ client, db, actions, diffs });
+        console.log(`-- in mongoDbservice.connect() -- connecting to ${this.mongoConfig.mongoConnUrl}`);
+        try {
+            this.appConnectionInstance = await new Promise<AppConnectionInstance>((resolve, reject) => {
+                MongoClient.connect(
+                    this.mongoConfig.mongoConnUrl,
+                    { poolSize: 10, useNewUrlParser: true },
+                    (err: Error, client: MongoClient) => {
+                        if (err) {
+                            console.warn('Is the MongoDB daemon running? Run install/ubuntu_deps.sh to initialize');
+                            console.error(err);
+                            reject(err);
+                        } else if (!client) {
+                            console.error('Mongo client unavailable!');
+                            reject(new Error('Mongo client unavailable'));
+                        } else {
+                            const db = client.db(this.mongoConfig.mongoDbName);
+                            const actions = db.collection('actions');
+                            const diffs = db.collection('diffs');
+                            resolve({ client, db, actions, diffs });
+                        }
                     }
-                }
-            );
-        });
+                );
+            });
+        } catch (ex) {
+            console.log('Failed to connect to mongodb: ', ex);
+        }
 
+        console.log('-- in mongoDbservice.connect() - set indices');
         await this.set_indexes();
-
+        console.log('-- in mongoDbservice.connect() - returning');
         return this.appConnectionInstance;
     }
 
