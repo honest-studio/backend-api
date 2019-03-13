@@ -25,13 +25,20 @@ export class EosClientService extends BaseProvider {
     }
 
     public initWebSocketClient = () => {
-        EosClientService.dfuseConn = new WebSocket(
-            BuildDfuseWebSocketEndpointUrl(this.dfuseConfig),
-            BuildDfuseConnectionHeaders(this.dfuseConfig)
-        );
+        try {
+            EosClientService.dfuseConn = new WebSocket(
+                BuildDfuseWebSocketEndpointUrl(this.dfuseConfig),
+                BuildDfuseConnectionHeaders(this.dfuseConfig)
+            );
 
-        EosClientService.dfuseConn.on('open', async () => {
-            console.log(' ----- OPENED WEBSOCKET -----');
-        });
+            EosClientService.dfuseConn.on('open', async () => {
+                console.log(' ----- OPENED WEBSOCKET -----');
+            });
+            EosClientService.dfuseConn.on('error', async (e) => {
+                console.log(' ----- FAILED TO OPEN DFUSE WEBSOCKET -----', e);
+            });
+        } catch (err) {
+            console.log('failed to connect to websocket in eos-client-service ', err);
+        }
     };
 }
