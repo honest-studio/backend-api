@@ -53,6 +53,7 @@ async function bootstrap() {
         .addTag('Preview')
         .addTag('User')
         .addTag('Cache')
+        .addTag('Contact Us')
         .build();
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('docs', app, document);

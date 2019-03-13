@@ -278,4 +278,21 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Contact Us: Submit', () => {
+    return request(app.getHttpServer())
+        .post('/v2/contact-us')
+        .send({
+          contactdate: "2099-09-15T15:53:00",
+          contacttext: "SAMPLE BODY TEXT",
+          contactemail: "testemail@test.com",
+          contactname: "Tester McTester",
+          contactsubject: "BACKEND API TEST",
+          contacttype: "Report Abuse",
+          contactip: "66.66.66.66",
+          contactuseragent: "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0 Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0."
+        })
+        .set('Accept', 'application/json')
+        .expect(201)
+  });
+
 });
