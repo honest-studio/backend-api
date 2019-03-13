@@ -31,10 +31,6 @@
     "@types/mysql": "^2.15.5",
     "@types/ws": "^6.0.1",
     "aws-sdk": "^2.417.0",
-<<<<<<< HEAD
-    "azure-storage": "^2.10.2",
-=======
->>>>>>> 5a66688fda04d6c3995db9dcc45a5b8edc897f30
     "buffer-image-size": "^0.6.4",
     "canvas": "^2.3.1",
     "chalk": "^2.4.1",
@@ -113,14 +109,8 @@
     "testRegex": ".spec.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
-<<<<<<< HEAD
-    }
-  }
-}
-=======
     },
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
   }
 }
->>>>>>> 5a66688fda04d6c3995db9dcc45a5b8edc897f30
