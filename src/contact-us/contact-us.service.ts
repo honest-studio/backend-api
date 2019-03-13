@@ -5,11 +5,11 @@ import { MysqlService, AWSSESService } from '../feature-modules/database';
 @Injectable()
 export class ContactUsService {
     constructor(private mysql: MysqlService, private awsSESService: AWSSESService) {}
-    async submitContactUsForm(inputForm): Promise<any> {
+    async submitContactUsForm(inputJSON): Promise<any> {
         // Construct the HTML
-        const HTMLBody = `Contact Type: ${inputForm.contacttype}<br><br>Message:<br>------------------------------<br>${inputForm.contacttext}\
-        "<br>------------------------------<br>Sender: ${inputForm.contactname}<br>Email: ${inputForm.contactemail}\
-        "<br>IP: ${inputForm.contactip}<br>User Agent: ${inputForm.contactuseragent}`;
+        const HTMLBody = `Contact Type: ${inputJSON.contacttype}<br><br>Message:<br>------------------------------<br>${inputJSON.contacttext}\
+        "<br>------------------------------<br>Sender: ${inputJSON.contactname}<br>Email: ${inputJSON.contactemail}\
+        "<br>IP: ${inputJSON.contactip}<br>User Agent: ${inputJSON.contactuseragent}`;
 
         // Create sendEmail params
         const emailParams = {
@@ -27,7 +27,7 @@ export class ContactUsService {
                  },
                 Subject: {
                     Charset: 'UTF-8',
-                    Data: inputForm.contactsubject
+                    Data: inputJSON.contactsubject
                 }
             },
             Source: this.awsSESService.getDefaultEmail(),
@@ -51,8 +51,8 @@ export class ContactUsService {
                 `INSERT INTO ebdb.enterlink_contact (contactdate, contacttext, contactemail, contactname, contactsubject, 
                     contacttype, contactip, contactuseragent) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
-                [inputForm.contactdate, inputForm.contacttext, inputForm.contactemail, inputForm.contactname, inputForm.contactsubject,
-                    inputForm.contacttype, inputForm.contactip, inputForm.contactuseragent],
+                [inputJSON.contactdate, inputJSON.contacttext, inputJSON.contactemail, inputJSON.contactname, inputJSON.contactsubject,
+                    inputJSON.contacttype, inputJSON.contactip, inputJSON.contactuseragent],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);
