@@ -1139,9 +1139,6 @@ function sanitizeText($: CheerioStatic) {
         $(this).replaceWith(plaintextString);
     });
 
-    // Add whitespace after links when there's no space and it's followed by a letter
-    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\][a-zA-Z]/gimu, (token) => `${token} `);
-
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
         const url = decodeURIComponent($(this).attr('data-username'));
@@ -1180,6 +1177,12 @@ function sanitizeText($: CheerioStatic) {
         // Replace the tag with the string
         $(this).replaceWith(plaintextString);
     });
+
+    // Add whitespace after links, bold, and italics when there's no space and it's followed by a letter
+    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/gimu, (token) => `${token} `);
+    const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
+    const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
+    $ = cheerio.load(spaced_italics);
 
     // Convert images inside wikitables to markup
     $('.wikitable img').each(function() {
