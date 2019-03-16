@@ -36,6 +36,6 @@ export class DiffController {
         description: 'IPFS hash of new wiki'
     })
     async getDiffByWiki(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
-        return await this.diffService.getDiffsByWiki([[old_hash, new_hash]]);
+        return await this.diffService.getDiffsByHash([[old_hash, new_hash]]);
     }
 }

@@ -8,8 +8,6 @@ import {
     ApiImplicitQuery
 } from '@nestjs/swagger';
 import { WikiService } from './wiki.service';
-import { WikiQuerySchema } from './wiki.query-schema';
-import { JoiValidationPipe } from '../common';
 import * as rawbody from 'raw-body';
 
 @Controller('v2/wiki')
@@ -25,21 +23,14 @@ export class WikiController {
             Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
             Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
     })
-    @ApiImplicitQuery({
-        name: 'json',
-        description: `Return the wiki in a parsed JSON format instead of raw HTML. The JSON will eventually become a replacement for the HTML`,
-        required: false,
-        type: Boolean
-    })
     @ApiResponse({
         status: 200,
         description: `An HTML wiki or key-value object with hashes as keys to HTML wikis encoded in UTF-8`
     })
-    @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
-    async getWikiByHash(@Param('ipfs_hash') query_hashes, @Query() query): Promise<any> {
+    async getWikiByHash(@Param('ipfs_hash') query_hashes): Promise<any> {
         const ipfs_hashes = query_hashes.split(',');
-        if (ipfs_hashes.length == 1) return await this.wikiService.getWikiByHash(ipfs_hashes[0], query);
-        else return await this.wikiService.getWikisByHash(ipfs_hashes, query);
+        if (ipfs_hashes.length == 1) return await this.wikiService.getWikiByHash(ipfs_hashes[0]);
+        else return await this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
     @Get('slug/:lang_code/:slug')
@@ -52,20 +43,13 @@ export class WikiController {
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
     })
-    @ApiImplicitQuery({
-        name: 'json',
-        description: `Return the wiki in a parsed JSON format instead of raw HTML. The JSON will eventually become a replacement for the HTML`,
-        required: false,
-        type: Boolean
-    })
     @ApiResponse({
         status: 200,
         description: `An HTML wiki encoded in UTF-8`
     })
-    @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
-    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() query): Promise<any> {
+    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
-        return this.wikiService.getWikiBySlug(lang_code, slug, query);
+        return this.wikiService.getWikiBySlug(lang_code, slug);
     }
 
     @Post('/')

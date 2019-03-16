@@ -39,6 +39,7 @@
     "class-validator": "^0.9.1",
     "cors": "^2.8.5",
     "cwebp": "^2.0.3",
+    "diff": "^4.0.1",
     "dotenv": "^6.1.0",
     "event-stream": "^4.0.1",
     "ffmpeg-extract-frame": "^1.0.1",

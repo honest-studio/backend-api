@@ -3,7 +3,7 @@ import * as fetch from 'node-fetch';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { ProposalService } from '../proposal';
 import { WikiService } from '../wiki';
-import HtmlDiff from 'htmldiff-js';
+import { ArticleJsonDiff } from './article-json-differ';
 
 @Injectable()
 export class DiffService {
@@ -45,7 +45,7 @@ export class DiffService {
             if (old_proposals.length == 0)
                 // The proposal doesn't have a parent
                 // Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ is an empty file
-                old_hash = 'Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ';
+                old_hash = "Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ";
             else old_hash = old_proposals[0].trace.act.data.ipfs_hash;
 
             // the 3rd element doesn't get used by the diff and is for our
@@ -53,13 +53,13 @@ export class DiffService {
             ipfs_hashes.push([old_hash, new_hash, proposal_id]);
         }
 
-        const diffs = await this.getDiffsByWiki(ipfs_hashes);
+        const diffs = await this.getDiffsByHash(ipfs_hashes);
         diffs.forEach((diff) => (diff.proposal_id = ipfs_hashes.find((row) => row[1] === diff.new_hash)[2]));
 
         return diffs;
     }
 
-    async getDiffsByWiki(ipfs_hashes: Array<Array<string>>): Promise<any> {
+    async getDiffsByHash(ipfs_hashes: Array<Array<string>>): Promise<any> {
         const diffs = [];
         const docs = []; // documents to add to MongoDB cache
 
@@ -69,9 +69,10 @@ export class DiffService {
         for (const i in ipfs_hashes) {
             const old_hash = ipfs_hashes[i][0];
             const new_hash = ipfs_hashes[i][1];
-            const cache = await this.mongo.connection().diffs.findOne({ old_hash, new_hash });
-            if (cache) diffs.push(cache);
-            else diffs.push(null);
+            //const cache = await this.mongo.connection().diffs.findOne({ old_hash, new_hash });
+            //if (cache) diffs.push(cache);
+            //else diffs.push(null);
+            diffs.push(null);
         }
 
         const flattened_hashes = [].concat(...ipfs_hashes);
@@ -82,24 +83,10 @@ export class DiffService {
 
             const old_hash = ipfs_hashes[i][0];
             const new_hash = ipfs_hashes[i][1];
-            const old_wiki = wikis.find((w) => w.ipfs_hash == old_hash);
-            const new_wiki = wikis.find((w) => w.ipfs_hash == new_hash);
-            if (old_wiki.error) {
-                diffs[i] = { error: old_wiki.error, old_hash, new_hash };
-                continue;
-            } else if (new_wiki.error) {
-                diffs[i] = { error: new_wiki.error, old_hash, new_hash };
-                continue;
-            }
+            const old_wiki = wikis.find((w) => w.metadata.ipfs_hash == old_hash);
+            const new_wiki = wikis.find((w) => w.metadata.ipfs_hash == new_hash);
 
-            const diff_wiki = HtmlDiff.execute(old_wiki.wiki, new_wiki.wiki);
-            const diff_words = diff_wiki.split(' ').length;
-            const old_hash_words = old_wiki.wiki.split(' ').length;
-
-            // Why am I multiplying by 3? Because I feel like it and the numbers come out better.
-            // The algo is shitty anyway. I might as well insert an unjustified constant in there.
-            // If you have a problem with it go make your own algo
-            //const diff_percent = (((diff_words - old_hash_words) / diff_words) * 3).toFixed(2);
+            const diff_wiki = ArticleJsonDiff(old_wiki, new_wiki);
             const diff_percent = Math.random().toFixed(2);
 
             const doc = { old_hash, new_hash, diff_percent, diff_wiki };
@@ -108,7 +95,7 @@ export class DiffService {
         }
 
         var cache_docs = docs.filter((doc) => !doc.error);
-        if (cache_docs.length > 0) await this.mongo.connection().diffs.insertMany(cache_docs);
+        //if (cache_docs.length > 0) await this.mongo.connection().diffs.insertMany(cache_docs);
 
         return diffs;
     }

@@ -37,7 +37,12 @@ export interface Section {
     images: Media[];
 }
 
-export interface Infobox {}
+export interface Infobox {
+    key: string;
+    addlSchemaItemProp: string;
+    addlSchematype: string;
+    values: Sentence[]; // each sentence is an individual value
+}
 
 export interface Media {
     type: string;
@@ -68,6 +73,7 @@ export interface Metadata {
     bing_index_override?: boolean;
     is_locked?: boolean;
     pageviews?: number;
+    ipfs_hash: string;
 }
 
 export interface AmpInfo {

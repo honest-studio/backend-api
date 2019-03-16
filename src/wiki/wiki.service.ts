@@ -4,10 +4,7 @@ import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
-
-export interface WikiOptions {
-    json?: boolean;
-}
+import { ArticleJson } from './article-dto';
 
 @Injectable()
 export class WikiService {
@@ -18,13 +15,12 @@ export class WikiService {
         private cacheService: CacheService
     ) {}
 
-    async getWikiByHash(ipfs_hash: string, options: WikiOptions = {}): Promise<any> {
-        const wikis = await this.getWikisByHash([ipfs_hash], options);
-        if (wikis[0].error) throw new NotFoundException('Wiki could not be found');
-        return wikis[0].wiki;
+    async getWikiByHash(ipfs_hash: string): Promise<any> {
+        const wikis = await this.getWikisByHash([ipfs_hash]);
+        return wikis[0];
     }
 
-    async getWikiBySlug(lang_code: string, slug: string, options: WikiOptions = {}): Promise<any> {
+    async getWikiBySlug(lang_code: string, slug: string): Promise<ArticleJson> {
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -43,28 +39,25 @@ export class WikiService {
         });
         if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
-        let wiki = rows[0].html_blob;
-        if (options.json) {
-            wiki = oldHTMLtoJSON(wiki);
-            wiki.metadata.pageviews = rows[0].pageviews;
-        }
+        const wiki = oldHTMLtoJSON(rows[0].html_blob);
+        wiki.metadata.pageviews = rows[0].pageviews;
 
         return wiki;
     }
 
-    async getWikisByHash(ipfs_hashes: Array<string>, options: WikiOptions = {}) {
-        const wikis = [];
+    async getWikisByHash(ipfs_hashes: Array<string>) {
+        const html_wikis = [];
         for (const i in ipfs_hashes) {
-            wikis.push({ ipfs_hash: ipfs_hashes[i] });
+            html_wikis.push({ ipfs_hash: ipfs_hashes[i] });
         }
 
         // try to fetch everything locally first
-        for (const i in wikis) {
-            const ipfs_hash = wikis[i].ipfs_hash;
+        for (const i in html_wikis) {
+            const ipfs_hash = html_wikis[i].ipfs_hash;
             try {
                 const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
                 const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
-                wikis[i].wiki = buffer.toString('utf8');
+                html_wikis[i].wiki = buffer.toString('utf8');
             } catch {
                 continue;
             }
@@ -73,8 +66,7 @@ export class WikiService {
         // if there are no uncached wikis, return the result
         // else fetch them from mysql
         // for now, don't cache JSONs. later we will
-        const uncached_wikis = wikis.filter((w) => !w.wiki).map((w) => w.ipfs_hash);
-        if (uncached_wikis.length == 0 && !options.json) return wikis;
+        const uncached_wikis = html_wikis.filter((w) => !w.wiki).map((w) => w.ipfs_hash);
         if (uncached_wikis.length > 0) {
             // fetch remainder from mysql if they exist
             const rows: Array<any> = await new Promise((resolve, reject) => {
@@ -88,19 +80,23 @@ export class WikiService {
                         else resolve(rows);
                     });
             });
-            rows.forEach((r) => (wikis.find((w) => w.ipfs_hash == r.ipfs_hash).wiki = r.html_blob));
+            rows.forEach((r) => (html_wikis.find((w) => w.ipfs_hash == r.ipfs_hash).wiki = r.html_blob));
 
             // mark wikis that couldn't be found
-            wikis.filter((w) => !w.wiki).forEach((w) => (w.error = `Wiki ${w.ipfs_hash} could not be found`));
+            html_wikis.filter((w) => !w.wiki).forEach((w) => (w.error = `Wiki ${w.ipfs_hash} could not be found`));
 
             // attempt to cache uncached wikis
             uncached_wikis.forEach((hash) => this.cacheService.cacheWiki(hash));
         }
 
         // convert to new JSON structure
-        if (options.json) wikis.forEach((wiki) => (wiki.wiki = oldHTMLtoJSON(wiki.wiki)));
+        const json_wikis = html_wikis.map((wiki) => {
+            const json_wiki = oldHTMLtoJSON(wiki.wiki);
+            json_wiki.metadata.ipfs_hash = wiki.ipfs_hash;
+            return json_wiki;
+        });
 
-        return wikis;
+        return json_wikis;
     }
 
     async submitWiki(html_body: string): Promise<any> {

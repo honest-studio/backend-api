@@ -866,7 +866,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
             schema: null,
             addlSchematype: null,
             addlSchemaItemprop: null,
-            rows: []
+            values: []
         };
 
         // Get the key (plaintext schemaType)
@@ -906,22 +906,18 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
         // Loop through the value rows
         $(this)
             .find('td.ibox-plural-value')
-            .each(function() {
+            .each(function(i) {
                 // Try to find the value
                 // Only the text is being grabbed now.
                 // If there is any useful HTML in here more complex logic is required
-                let tempValue = decode(
-                    $(this)
-                        .text()
-                        .trim(),
-                    'all'
-                );
-
-                // Find any links to other pages that appear in the caption]
-                tempValue = parseSentences(tempValue);
+                const rowText = decode( $(this).text().trim(), 'all');
 
                 // Add the value to the rows
-                infoPackage.rows.push(tempValue);
+                infoPackage.values.push({
+                    type: 'sentence',
+                    index: i,
+                    text: rowText
+                });
             });
 
         // Add to the infobox list
@@ -936,7 +932,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
             schema: null,
             addlSchematype: null,
             addlSchemaItemprop: null,
-            rows: []
+            values: []
         };
 
         // Get the key (plaintext schemaType)
@@ -976,7 +972,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
         // Loop through the value rows (should only be one)
         $(this)
             .find('.ibox-nonplural-value')
-            .each(function() {
+            .each(function(i) {
                 // Try to find the value
                 let tempValue;
                 tempValue = decode(
@@ -986,11 +982,12 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                     'all'
                 );
 
-                // Find any links to other pages that appear in the caption]
-                tempValue = parseSentences(tempValue);
-
                 // Add the value to the rows
-                infoPackage.rows.push(tempValue);
+                infoPackage.values.push({
+                    type: 'sentence',
+                    index: i, 
+                    text: tempValue
+                });
             });
 
         // Add to the infobox list
@@ -1002,6 +999,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
 function splitIntoSections($body: Cheerio): Cheerio[] {
     const bodyHtml = $body.html();
+    if (!bodyHtml) return [];
     return bodyHtml
         .split(/(?=<h[1-6])/gimu)
         .map((htmlSection) => htmlSection.trim())
