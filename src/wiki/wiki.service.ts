@@ -125,7 +125,6 @@ export class WikiService {
             );
         });
         if (theLanguagePacks.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
-        console.log(theLanguagePacks);
         return { theLanguagePacks };
     }
 
