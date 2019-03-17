@@ -4,7 +4,7 @@ import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
-import { ArticleJson } from './article-dto';
+import { ArticleJson, LanguagePack } from './article-dto';
 
 @Injectable()
 export class WikiService {
@@ -28,7 +28,9 @@ export class WikiService {
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache 
                 ON art.ipfs_hash_current=cache.ipfs_hash 
-                WHERE art.slug=? OR art.slug_alt=?
+                WHERE art.redirect_page_id is NULL 
+                AND art.is_removed=0 
+                AND (art.slug=? OR art.slug_alt=?) 
                 AND art.page_lang=?;`,
                 [slug, slug, lang_code],
                 function(err, rows) {
@@ -97,6 +99,34 @@ export class WikiService {
         });
 
         return json_wikis;
+    }
+
+    async getOtherLanguageWikisBySlug(lang_code: string, slug: string): Promise<LanguagePack[]> {
+        const theLanguagePacks: Array<LanguagePack> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT id as article_id, slug as slug, page_title as article_title, page_lang as lang
+                FROM enterlink_articletable
+                WHERE article_group_id = (
+                    SELECT article_group_id
+                    FROM enterlink_articletable
+                    WHERE (slug=? OR slug_alt=?)
+                    AND page_lang=?
+                    AND redirect_page_id is NULL
+                    AND is_removed=0
+                )
+                AND redirect_page_id is NULL
+                AND is_removed=0`,
+                [slug, slug, lang_code],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        if (theLanguagePacks.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        console.log(theLanguagePacks);
+        return theLanguagePacks;
     }
 
     async submitWiki(html_body: string): Promise<any> {

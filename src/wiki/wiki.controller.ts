@@ -52,6 +52,24 @@ export class WikiController {
         return this.wikiService.getWikiBySlug(lang_code, slug);
     }
 
+    @Get('all-langs/:lang_code/:slug')
+    @ApiOperation({ title: 'Get all the language versions of a page' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `A JSON with a list of the languages available`
+    })
+    async getLanguagesBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        return this.wikiService.getOtherLanguageWikisBySlug(lang_code, slug);
+    }
+
     @Post('/')
     @ApiOperation({ title: 'Submit a wiki to IPFS' })
     @ApiResponse({
