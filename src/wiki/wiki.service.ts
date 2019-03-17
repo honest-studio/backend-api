@@ -101,7 +101,7 @@ export class WikiService {
         return json_wikis;
     }
 
-    async getOtherLanguageWikisBySlug(lang_code: string, slug: string): Promise<LanguagePack[]> {
+    async getOtherLanguageWikisBySlug(lang_code: string, slug: string): Promise<any> {
         const theLanguagePacks: Array<LanguagePack> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -126,7 +126,7 @@ export class WikiService {
         });
         if (theLanguagePacks.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
         console.log(theLanguagePacks);
-        return theLanguagePacks;
+        return { theLanguagePacks };
     }
 
     async submitWiki(html_body: string): Promise<any> {
