@@ -54,7 +54,6 @@ export class DiffService {
         }
 
         const diffs = await this.getDiffsByHash(ipfs_hashes);
-        console.log(diffs);
         diffs.forEach((diff) => (diff.proposal_id = ipfs_hashes.find((row) => row[1] === diff.new_hash)[2]));
 
         return diffs;

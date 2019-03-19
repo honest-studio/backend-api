@@ -20,8 +20,8 @@ export async function ArticleJsonDiff (old_wiki: ArticleJson, new_wiki: ArticleJ
 function diffMetadata(old_metadata: Metadata, new_metadata: Metadata): MetadataDiff[] {
     const old_entries = Object.entries(old_metadata);
     const new_entries = Object.entries(old_metadata);
-    const old_lines = old_entries.map(arr => `arr[0]:arr[1]`);
-    const new_lines = new_entries.map(arr => `arr[0]:arr[1]`);
+    const old_lines = old_entries.map(arr => `${arr[0]}:${arr[1]}`).join('\n');
+    const new_lines = new_entries.map(arr => `${arr[0]}:${arr[1]}`).join('\n');
     const diff = JsDiff.diffLines(old_lines, new_lines);
 
     const metadata_diffs = [];
@@ -102,8 +102,6 @@ function diffMedia (old_media: Media[], new_media: Media[]): MediaDiff[] {
         if (c.caption) return `${c.url}:${hashSentences(c.caption)}`;
         else return `${c.url}`;
     }).join('\n');
-    console.log(old_lines);
-    console.log(new_lines);
     const diff = JsDiff.diffLines(old_lines, new_lines);
 
     const media_diffs = [];
