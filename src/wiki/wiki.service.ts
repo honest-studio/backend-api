@@ -41,9 +41,14 @@ export class WikiService {
         });
         if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
+        // const wiki = rows[0].html_blob;
+        // if (false) return oldHTMLtoJSON(wiki);
+        // else return wiki;
+
         const wiki = oldHTMLtoJSON(rows[0].html_blob);
         wiki.metadata.pageviews = rows[0].pageviews;
         return wiki;
+
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>) {
