@@ -122,13 +122,6 @@ export interface TableCell {
     content: Sentence[];
 }
 
-export interface LanguagePack {
-    lang: string;
-    article_title: string;
-    article_id: number;
-    slug: string;
-}
-
 export interface ArticleJson {
     page_title: string;
     main_photo: Media;

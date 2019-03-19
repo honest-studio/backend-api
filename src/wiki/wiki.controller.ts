@@ -54,7 +54,7 @@ export class WikiController {
         return this.wikiService.getWikiBySlug(lang_code, slug);
     }
 
-    @Get('all-langs/lang_:lang_code/:slug')
+    @Get('group/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get all the language versions of a page' })
     @ApiImplicitParam({
         name: 'lang_code',
@@ -68,8 +68,8 @@ export class WikiController {
         status: 200,
         description: `A JSON with a list of the languages available`
     })
-    async getLanguagesByLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
-        return this.wikiService.getOtherLanguageWikisBySlug(lang_code, slug);
+    async getWikiGroup(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        return this.wikiService.getWikiGroup(lang_code, slug);
     }
 
     @Post('/')

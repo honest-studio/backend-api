@@ -4,7 +4,13 @@ import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
-import { ArticleJson, LanguagePack } from './article-dto';
+import { ArticleJson } from './article-dto';
+
+export interface LanguagePack {
+    lang: string;
+    article_title: string;
+    slug: string;
+}
 
 @Injectable()
 export class WikiService {
@@ -105,11 +111,11 @@ export class WikiService {
         return json_wikis;
     }
 
-    async getOtherLanguageWikisBySlug(lang_code: string, slug: string): Promise<any> {
-        const theLanguagePacks: Array<LanguagePack> = await new Promise((resolve, reject) => {
+    async getWikiGroup(lang_code: string, slug: string): Promise<LanguagePack[]> {
+        const lang_packs: LanguagePack[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT id as article_id, slug as slug, page_title as article_title, page_lang as lang
+                SELECT slug as slug, page_title as article_title, page_lang as lang
                 FROM enterlink_articletable
                 WHERE article_group_id = (
                     SELECT article_group_id
@@ -128,8 +134,8 @@ export class WikiService {
                 }
             );
         });
-        if (theLanguagePacks.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
-        return { theLanguagePacks };
+        if (lang_packs.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        return lang_packs;
     }
 
     async submitWiki(html_body: string): Promise<any> {

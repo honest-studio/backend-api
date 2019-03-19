@@ -86,7 +86,7 @@ export class DiffService {
             const old_wiki = wikis.find((w) => w.metadata.ipfs_hash == old_hash);
             const new_wiki = wikis.find((w) => w.metadata.ipfs_hash == new_hash);
 
-            const diff_wiki = ArticleJsonDiff(old_wiki, new_wiki);
+            const diff_wiki = await ArticleJsonDiff(old_wiki, new_wiki);
             const diff_percent = Math.random().toFixed(2);
 
             const doc = { old_hash, new_hash, diff_percent, diff_wiki };

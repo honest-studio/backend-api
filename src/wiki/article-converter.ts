@@ -1479,15 +1479,15 @@ function parseTable($element: Cheerio): Table {
     const $rows = $element.find('tr');
     $rows.each(function(i, row) {
         const parentTag = row.parentNode.tagName;
-        table[parentTag].rows.push({
+        const table_row = {
             index: i,
             attrs: row.attribs,
             cells: []
-        });
+        };
 
         const $cells = $rows.eq(i).find('td, th');
         $cells.each(function(j, cell) {
-            table[parentTag].rows[i].cells.push({
+            table_row.cells.push({
                 index: j,
                 attrs: cell.attribs,
                 tag_type: cell.tagName.toLowerCase(),
@@ -1502,6 +1502,8 @@ function parseTable($element: Cheerio): Table {
                 )
             });
         });
+
+        table[parentTag].rows.push(table_row);
     });
 
     return table;
