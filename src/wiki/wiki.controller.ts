@@ -13,7 +13,9 @@ import * as rawbody from 'raw-body';
 @Controller('v2/wiki')
 @ApiUseTags('Wikis')
 export class WikiController {
-    constructor(private readonly wikiService: WikiService) {}
+    constructor(private readonly wikiService: WikiService) {
+    }
+
 
     @Get('hash/:ipfs_hash')
     @ApiOperation({ title: 'Get wiki by IPFS hash' })
@@ -66,7 +68,7 @@ export class WikiController {
         status: 200,
         description: `A JSON with a list of the languages available`
     })
-    async getLanguagesBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+    async getLanguagesByLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         return this.wikiService.getOtherLanguageWikisBySlug(lang_code, slug);
     }
 
