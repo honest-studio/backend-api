@@ -121,6 +121,7 @@ export interface TableCell {
     tag_type: string;
     content: Sentence[];
 }
+
 export interface LanguagePack {
     lang: string;
     article_title: string;

@@ -33,7 +33,7 @@ export class WikiController {
         else return await this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
-    @Get('slug/:lang_code/:slug')
+    @Get('slug/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get wiki by article title' })
     @ApiImplicitParam({
         name: 'lang_code',
@@ -52,7 +52,7 @@ export class WikiController {
         return this.wikiService.getWikiBySlug(lang_code, slug);
     }
 
-    @Get('all-langs/:lang_code/:slug')
+    @Get('all-langs/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get all the language versions of a page' })
     @ApiImplicitParam({
         name: 'lang_code',

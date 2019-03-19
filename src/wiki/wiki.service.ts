@@ -43,7 +43,6 @@ export class WikiService {
 
         const wiki = oldHTMLtoJSON(rows[0].html_blob);
         wiki.metadata.pageviews = rows[0].pageviews;
-
         return wiki;
     }
 
