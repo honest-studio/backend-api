@@ -1,8 +1,6 @@
-export const styleNugget = html`
+export const styleNugget = `
 
 <style amp-custom>
-
-
 body, html{
     width: 100%;
     text-align: center;

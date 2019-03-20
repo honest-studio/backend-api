@@ -1,8 +1,11 @@
 import { ArticleJson } from './article-dto';
+import { styleNugget } from './amp-style'
+import { AmpRenderPartial } from './amp-render-partial'
 
 export const renderAMP = (inputJSON: ArticleJson): string => {
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = Math.random().toString(36).substring(7);
+    let ampPartialRenderer = new AmpRenderPartial(inputJSON);
     const theHTML = `
     <!DOCTYPE html>
     <html amp lang="${inputJSON.metadata.page_lang}">
@@ -82,9 +85,41 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia">
+
+
+            <link rel="canonical" href="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" />
+            ${"// NEED TO PUT THE HREFLANGS HERE"}
+        
+            <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+            <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+            ${styleNugget}
         </head>
         <body>
-
+            <nav class="amp-header-bar">
+                <ul>
+                    <li class="amp-header-toc">
+                        <button on='tap:sidebar.toggle'>
+                            <amp-img height="24" width="30" layout="fixed" alt="{% trans 'Table of contents and facts for this wiki' %}" src="https://epcdn-vz.azureedge.net/static/images/bull-icon.png" ></amp-img>
+                        </button>
+                    </li>
+                    <li class="amp-header-logo">
+                        <a rel='nofollow' href="https://everipedia.org">
+                            <amp-img width='45' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/Everipedia_Logo.svg' alt='Everipedia Logo' ></amp-img>
+                        </a>
+                    </li>
+                    <li class="amp-header-menu">
+                        <button on='tap:guestmenu-lightbox'>
+                        <span class="bull-menu">
+                            <amp-img height="25" width="7" layout="fixed" alt="{% trans 'Bullet' %}" src="https://epcdn-vz.azureedge.net/static/images/bull-menu.png" ></amp-img>
+                        </span>
+                        </button>
+                    </li>
+                    <li class="amp-header-search">
+                        <button on="tap:search-lightbox" data-description="Search Bar"><span class="svgIcon svgIcon--search svgIcon--25px u-textColorNormal u-baseColor--iconLight"><svg class="svgIcon-use" width="30" height="30" viewBox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span></button>
+                    </li>
+                </ul>
+            </nav>
+            ${ampPartialRenderer.renderMainPhoto()}
         </body>
     </html>
    `;
