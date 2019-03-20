@@ -1,6 +1,7 @@
 import { ArticleJson } from './article-dto';
 
 export const renderAMP = (inputJSON: ArticleJson): string => {
+    // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = Math.random().toString(36).substring(7);
     const theHTML = `
     <!DOCTYPE html>
