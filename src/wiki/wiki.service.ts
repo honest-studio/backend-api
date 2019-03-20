@@ -5,6 +5,7 @@ import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
 import { ArticleJson } from './article-dto';
+import { renderAMP } from './amp-template';
 
 export interface LanguagePack {
     lang: string;
@@ -55,6 +56,10 @@ export class WikiService {
         wiki.metadata.pageviews = rows[0].pageviews;
         return wiki;
 
+    }
+
+    async getAMPBySlug(lang_code: string, slug: string): Promise<string> {
+        return renderAMP(await this.getWikiBySlug(lang_code, slug));
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>) {
@@ -112,6 +117,7 @@ export class WikiService {
     }
 
     async getWikiGroup(lang_code: string, slug: string): Promise<LanguagePack[]> {
+        console.log(arguments);
         const lang_packs: LanguagePack[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `

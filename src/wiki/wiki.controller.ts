@@ -47,11 +47,30 @@ export class WikiController {
     })
     @ApiResponse({
         status: 200,
-        description: `An HTML wiki encoded in UTF-8`
+        description: `A JSON for the wiki encoded in UTF-8`
     })
     async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
         return this.wikiService.getWikiBySlug(lang_code, slug);
+    }
+
+    @Get('amp-slug/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get AMP HTML for a given article' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `An AMP HTML wiki encoded in UTF-8`
+    })
+    async getAMPBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        this.wikiService.incrementPageviewCount(lang_code, slug);
+        return this.wikiService.getAMPBySlug(lang_code, slug);
     }
 
     @Get('group/lang_:lang_code/:slug')
