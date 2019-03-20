@@ -30,7 +30,7 @@ export class WikiService {
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT cache.html_blob, art.pageviews
+                SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache 
                 ON art.ipfs_hash_current=cache.ipfs_hash 
@@ -47,44 +47,60 @@ export class WikiService {
         });
         if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
-        // const wiki = rows[0].html_blob;
-        // if (false) return oldHTMLtoJSON(wiki);
-        // else return wiki;
+        // check cache for json wiki
+        // else compute the JSON and cache it
+        const cache_wiki = await this.mongo.connection().json_wikis.findOne({
+            'metadata.ipfs_hash': rows[0].ipfs_hash_current
+        });
+        let wiki;
+        if (cache_wiki)
+            wiki = cache_wiki;
+        else {
+            wiki = oldHTMLtoJSON(rows[0].html_blob);
+            wiki.metadata.pageviews = rows[0].pageviews;
+            wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
+            this.mongo.connection().json_wikis.insertOne(wiki);
+        }
 
-        const wiki = oldHTMLtoJSON(rows[0].html_blob);
         wiki.metadata.pageviews = rows[0].pageviews;
         return wiki;
-
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>) {
-        const html_wikis = [];
-        for (const i in ipfs_hashes) {
-            html_wikis.push({ ipfs_hash: ipfs_hashes[i] });
-        }
+        const json_wikis = [];
 
-        // try to fetch everything locally first
-        for (const i in html_wikis) {
-            const ipfs_hash = html_wikis[i].ipfs_hash;
+        // try to directly fetch cached json wikis
+        const cached_json_wikis = await this.mongo.connection().json_wikis.find({
+            'metadata.ipfs_hash': { $in: ipfs_hashes }
+        }).toArray();
+        for (let json_wiki of cached_json_wikis) {
+            const index = ipfs_hashes.findIndex(hash => hash == json_wiki.metadata.ipfs_hash);
+            json_wikis.push(json_wiki);
+        }
+        
+        // try to fetch wikis from local IPFS node
+        const uncached_json_hashes = ipfs_hashes.filter(hash => !json_wikis.find(json => json.metadata.ipfs_hash == hash));
+        for (const i in uncached_json_hashes) {
+            const ipfs_hash = uncached_json_hashes[i];
             try {
                 const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
                 const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
-                html_wikis[i].wiki = buffer.toString('utf8');
+                const wiki = buffer.toString('utf8');
+                const json_wiki = oldHTMLtoJSON(wiki);
+                json_wiki.metadata.ipfs_hash = ipfs_hash;
+                json_wikis.push(json_wiki);
             } catch {
                 continue;
             }
         }
 
-        // if there are no uncached wikis, return the result
-        // else fetch them from mysql
-        // for now, don't cache JSONs. later we will
-        const uncached_wikis = html_wikis.filter((w) => !w.wiki).map((w) => w.ipfs_hash);
-        if (uncached_wikis.length > 0) {
+        const uncached_html_hashes = ipfs_hashes.filter(hash => !json_wikis.find(json => json.metadata.ipfs_hash == hash));
+        if (uncached_html_hashes.length > 0) {
             // fetch remainder from mysql if they exist
             const rows: Array<any> = await new Promise((resolve, reject) => {
                 this.mysql
                     .pool()
-                    .query(`SELECT * FROM enterlink_hashcache WHERE ipfs_hash IN (?)`, [uncached_wikis], function(
+                    .query(`SELECT * FROM enterlink_hashcache WHERE ipfs_hash IN (?)`, [uncached_html_hashes], function(
                         err,
                         rows
                     ) {
@@ -92,21 +108,28 @@ export class WikiService {
                         else resolve(rows);
                     });
             });
-            rows.forEach((r) => (html_wikis.find((w) => w.ipfs_hash == r.ipfs_hash).wiki = r.html_blob));
+            rows.forEach((r) => {
+                const json_wiki = oldHTMLtoJSON(r.html_blob);
+                json_wiki.metadata.ipfs_hash = r.ipfs_hash;
+                json_wikis.push(json_wiki);
+            });
+
+            // cache uncached json wikis
+            const uncached_json_wikis = uncached_json_hashes
+                .map(hash => json_wikis.find(json => json.metadata.ipfs_hash == hash))
+                .filter(json => json); // filter out non-existent wikis
+            this.mongo.connection().json_wikis.insertMany(uncached_json_wikis);
+
+            // attempt to cache uncached IPFS hashes
+            uncached_html_hashes.forEach((hash) => this.cacheService.cacheWiki(hash));
 
             // mark wikis that couldn't be found
-            html_wikis.filter((w) => !w.wiki).forEach((w) => (w.error = `Wiki ${w.ipfs_hash} could not be found`));
-
-            // attempt to cache uncached wikis
-            uncached_wikis.forEach((hash) => this.cacheService.cacheWiki(hash));
+            for (let hash of ipfs_hashes) {
+                const json = json_wikis.find(json => json.metadata.ipfs_hash == hash);
+                if (!json)
+                    json_wikis.push({ error: `Wiki ${hash} could not be found` });
+            }
         }
-
-        // convert to new JSON structure
-        const json_wikis = html_wikis.map((wiki) => {
-            const json_wiki = oldHTMLtoJSON(wiki.wiki);
-            json_wiki.metadata.ipfs_hash = wiki.ipfs_hash;
-            return json_wiki;
-        });
 
         return json_wikis;
     }
