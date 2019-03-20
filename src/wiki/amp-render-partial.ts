@@ -12,11 +12,6 @@ export class AmpRenderPartial {
         return `PAGE BODY`;
     }
 
-    renderMainPhoto = (): string => {
-        let mainphoto: Media = this.articleJSON.main_photo
-        return `MAIN PHOTO`;
-    }
-
     renderInfoboxes = (): string => {
         let infoboxes: Infobox[] = this.articleJSON.infoboxes
         return `INFOBOXES`;

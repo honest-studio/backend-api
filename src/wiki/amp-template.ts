@@ -6,6 +6,7 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = Math.random().toString(36).substring(7);
     let ampPartialRenderer = new AmpRenderPartial(inputJSON);
+    let AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '', BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = false;
     const theHTML = `
     <!DOCTYPE html>
     <html amp lang="${inputJSON.metadata.page_lang}">
@@ -37,7 +38,7 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
             }
             ${ inputJSON.metadata.page_type == 'Person' ?
                 `<title>${inputJSON.page_title} | Wiki & Bio | Everipedia</title>
-                <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
+                <meta name="description" content="${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} bio, ${inputJSON.page_title} encyclopedia')>">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, who is ${inputJSON.page_title}, where is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} bio, ${inputJSON.page_title} encyclopedia')>">
@@ -45,7 +46,7 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                 <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Bio |">` :
             inputJSON.metadata.page_type == 'Product' ?
                 `<title>${inputJSON.page_title} | Wiki & Review | Everipedia</title>
-                <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
+                <meta name="description" content="${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>, ${inputJSON.page_title} review">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, what is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>, ${inputJSON.page_title} review">
@@ -53,7 +54,7 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                 <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Review |">` :
             inputJSON.metadata.page_type == 'Organization' ?
                 `<title>${inputJSON.page_title} | Wiki & Review | Everipedia</title>
-                <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
+                <meta name="description" content="${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history')>, ${inputJSON.page_title} encyclopedia')>">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, what is ${inputJSON.page_title}, where is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history, ${inputJSON.page_title} encyclopedia')>">
@@ -61,7 +62,7 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                 <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Review |">` :
             inputJSON.metadata.page_type ?
                 `<title>${inputJSON.page_title} | Wiki | Everipedia</title>
-                <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
+                <meta name="description" content="${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, what is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>">
@@ -74,12 +75,12 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
             <meta property="article:modified_time" content="${inputJSON.metadata.last_modified }" />
             <meta property="og:image" content="${inputJSON.main_photo.url}?nocache=${RANDOMSTRING}" />
             <meta property="og:image" content="${inputJSON.main_photo.thumb}" />
-            <meta property="og:description" content="NEED BLURB SNIPPET HERE"/>
+            <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta name="og:url" content="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}">
 
             <meta name="twitter:image" content="${inputJSON.main_photo.url}?nocache=${RANDOMSTRING}">
             <meta name="twitter:image" content="${inputJSON.main_photo.thumb}">
-            <meta name="twitter:description" content="NEED BLURB SNIPPET HERE">
+            <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}">
             <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}">
             
             <meta property="fb:app_id" content="1617004011913755" />
@@ -119,7 +120,57 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                     </li>
                 </ul>
             </nav>
-            ${ampPartialRenderer.renderMainPhoto()}
+            <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" class="schema">
+                ${ inputJSON.metadata.page_type == 'Person' ?
+                    `<meta itemprop="keywords" content="${inputJSON.page_title} wiki, ${inputJSON.page_title} bio" >` :
+                inputJSON.metadata.page_type == 'Product' ?
+                    `<meta itemprop="keywords" content="${inputJSON.page_title} wiki, ${inputJSON.page_title} review">` :
+                inputJSON.metadata.page_type == 'Organization' ?
+                    `<meta itemprop="keywords" content="${inputJSON.page_title} wiki, ${inputJSON.page_title} review">` :
+                inputJSON.metadata.page_type ?
+                    `<meta itemprop="keywords" content="${inputJSON.page_title} wiki, ${inputJSON.page_title} history, ${inputJSON.page_title} review">` : ``
+                }
+
+                <meta itemprop="mainEntityOfPage" content="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}"/>
+                <meta itemprop="url" content="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}">
+                ${ inputJSON.metadata.page_type == 'Person' ?
+                    `<meta itemprop="headline" content="${inputJSON.page_title}'s biography and wiki on Everipedia">` :
+                inputJSON.metadata.page_type == 'Product' ?
+                    `<meta itemprop="headline" content="${inputJSON.page_title}'s wiki & review on Everipedia">` :
+                inputJSON.metadata.page_type == 'Organization' ?
+                    `<meta itemprop="headline" content="${inputJSON.page_title}'s wiki & review on Everipedia">` :
+                inputJSON.metadata.page_type ?
+                    `<meta itemprop="headline" content="${inputJSON.page_title}'s wiki on Everipedia">` : ``
+                }
+                
+                <meta itemprop="articleSection" content="News, Trending">
+                <meta itemprop="author" content="Everipedia">
+                <meta itemprop="copyrightHolder" content="Everipedia">
+
+                ${ inputJSON.main_photo.url ?
+                    `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                        ${ OVERRIDE_MAIN_THUMB ? 
+                            `<meta itemprop="url" content="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}">` : 
+                        inputJSON.main_photo.url ? 
+                            `<meta itemprop="url" content="${inputJSON.main_photo.url}?nocache=${RANDOMSTRING}">` : ``
+                        }
+                        <meta itemprop="name" content="${inputJSON.page_title}">
+                        <meta itemprop="caption" content="${inputJSON.page_title}">
+                        <meta itemprop="uploadDate" content="${inputJSON.metadata.last_modified}">
+                        <meta itemprop="height" content="${AMP_PHOTO_HEIGHT}">
+                        <meta itemprop="width" content="${AMP_PHOTO_WIDTH}">
+                    </abbr>` :
+                true ?
+                    `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                        <meta itemprop="url" content="https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png">
+                        <meta itemprop="name" content="${inputJSON.page_title}">
+                        <meta itemprop="caption" content="${inputJSON.page_title}">
+                        <meta itemprop="uploadDate" content="${inputJSON.metadata.last_modified}">
+                        <meta itemprop="height" content="1274">
+                        <meta itemprop="width" content="1201">
+                    </abbr>` : ``
+                }
+            </main>
         </body>
     </html>
    `;
