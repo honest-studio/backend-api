@@ -11,59 +11,59 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,600&amp;subset=latin-ext" rel="stylesheet">
             <script async src="https://cdn.ampproject.org/v0.js"></script>
-            <if(inputJSON.amp_info.load_youtube_js)>
-                <script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>
-            <endif>
+            ${ inputJSON.amp_info.load_youtube_js ? 
+                '<script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>' : ''
+            }
             <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
             <script async custom-element="amp-anim" src="https://cdn.ampproject.org/v0/amp-anim-0.1.js"></script>
             <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
-            <if(inputJSON.amp_info.load_audio_js)>
-                <script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>
-            <endif>
+            ${ inputJSON.amp_info.load_audio_js ?
+                '<script async custom-element="amp-audio" src="https://cdn.ampproject.org/v0/amp-audio-0.1.js"></script>' : ''
+            }
             <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
             <script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>
             <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
-            <if(inputJSON.amp_info.load_video_js)>
-                <script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
-            <endif>
+            ${ inputJSON.amp_info.load_video_js ?
+                '<script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>' : ''
+            }
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary">
-            <if(!inputJSON.metadata.is_indexed)>
-                <meta name="googlebot" content="noindex, nofollow, noarchive">
-            <endif>
-            <if(inputJSON.metadata.page_type == 'Person')>
-                <title>${inputJSON.page_title} | Wiki & Bio | Everipedia</title>
+            ${ !inputJSON.metadata.is_indexed ?
+                '<meta name="googlebot" content="noindex, nofollow, noarchive">' : ''
+            }
+            ${ inputJSON.metadata.page_type == 'Person' ?
+                `<title>${inputJSON.page_title} | Wiki & Bio | Everipedia</title>
                 <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} bio, ${inputJSON.page_title} encyclopedia')>">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, who is ${inputJSON.page_title}, where is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} bio, ${inputJSON.page_title} encyclopedia')>">
                 <meta property="og:title" content="${inputJSON.page_title}"/>
-                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Bio |">
-            <elseif(PAGEMETADATA.page_type == 'Product')>
-                <title>${inputJSON.page_title} | Wiki & Review | Everipedia</title>
+                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Bio |">` :
+            inputJSON.metadata.page_type == 'Product' ?
+                `<title>${inputJSON.page_title} | Wiki & Review | Everipedia</title>
                 <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>, ${inputJSON.page_title} review">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, what is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>, ${inputJSON.page_title} review">
                 <meta property="og:title" content="${inputJSON.page_title}"/>
-                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Review |">
-            <elseif(PAGEMETADATA.page_type == 'Organization')>
-                <title>${inputJSON.page_title} | Wiki & Review | Everipedia</title>
+                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Review |">` :
+            inputJSON.metadata.page_type == 'Organization' ?
+                `<title>${inputJSON.page_title} | Wiki & Review | Everipedia</title>
                 <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history')>, ${inputJSON.page_title} encyclopedia')>">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, what is ${inputJSON.page_title}, where is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history, ${inputJSON.page_title} encyclopedia')>">
                 <meta property="og:title" content="${inputJSON.page_title}"/>
-                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Review |">
-            <else>
-                <title>${inputJSON.page_title} | Wiki | Everipedia</title>
+                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki & Review |">` :
+            inputJSON.metadata.page_type ?
+                `<title>${inputJSON.page_title} | Wiki | Everipedia</title>
                 <meta name="description" content="${inputJSON.page_title}'s wiki: NEED_BLURB_SNIPPET_HERE ">
                 <meta name="keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>">
                 <meta itemprop="keywords" content="${inputJSON.page_title} news, what is ${inputJSON.page_title}" >
                 <meta name="news_keywords" content="${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia')>">
                 <meta property="og:title" content="${inputJSON.page_title}"/>
-                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki |">
-            <endif>
+                <meta name="twitter:title" content="${inputJSON.page_title} | Wiki |">` : ''
+            }
 
             <meta property="article:tag" content="${inputJSON.page_title}">
             <meta property="article:published_time" content="${inputJSON.metadata.creation_timestamp }" />
