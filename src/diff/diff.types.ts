@@ -1,6 +1,7 @@
 import {
-    Citation
-} from '../wiki/article-dto.ts';
+    Citation,
+    Media
+} from '../wiki/article-dto';
 
 export type DiffType = 'add | delete | none';
 

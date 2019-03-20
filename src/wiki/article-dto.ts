@@ -11,7 +11,7 @@ export interface WikiLink {
 }
 
 export interface Sentence {
-    type: string; // sentence | inline_image | fixed_image
+    type: string; // sentence
     index: number;
     text: string; // contains inline WikiLink markup + some light markdown for formatting
 }
@@ -48,7 +48,7 @@ export interface Media {
     type: string;
     url: string;
     thumb: string;
-    caption: Sentence[];
+    caption: Sentence[]; // TODO: change to string
     timestamp?: Date;
     attribution_url?: string;
     mime?: string;
@@ -97,7 +97,7 @@ export interface Citation {
 }
 
 export interface Table {
-    type: string;
+    type: string; // table
     caption: string;
     thead?: TableSection;
     tbody: TableSection;

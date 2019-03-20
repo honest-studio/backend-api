@@ -1,4 +1,4 @@
-import { ArticleJson, Metadata, Paragraph, Section, Media, Sentence, ParagraphItem, ListItem, Table, Infobox, Citation } from '../wiki/article-dto';
+import { ArticleJson, Metadata, Paragraph, Section, Media, Sentence, ParagraphItem, ListItem, Table, TableRow, Infobox, Citation } from '../wiki/article-dto';
 import { CitationDiff, MetadataDiff, MediaDiff } from './diff.types';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
@@ -12,7 +12,9 @@ export async function ArticleJsonDiff (old_wiki: ArticleJson, new_wiki: ArticleJ
         page_body: diffPageBody(old_wiki.page_body, new_wiki.page_body),
         infoboxes: diffInfoboxes(old_wiki.infoboxes, new_wiki.infoboxes),
         citations: diffCitations(old_wiki.citations, new_wiki.citations),
-        metadata: diffMetadata(old_wiki.metadata, new_wiki.metadata)
+        metadata: diffMetadata(old_wiki.metadata, new_wiki.metadata),
+        media_gallery: diffMedia(old_wiki.media_gallery, new_wiki.media_gallery),
+        infobox_html: new_wiki.infobox_html
     }
     return diff_json;
 }
@@ -128,19 +130,102 @@ function diffMedia (old_media: Media[], new_media: Media[]): MediaDiff[] {
     return media_diffs;
 }
 
+// Page Body diffs:
+// Break the page body down into a pseudo-markdown format
+//
+// 3 line breaks indicate a section break
+// ------------- on its own line separates a section's text from its images
+// 2 line breaks indicate a paragraph break
+// 1 sentence per line
+//
+// Tables are diffed one row at a time
+//
+// ============= 
+// Text in between lines of equal signs indicate a table.
+// ~~~~~~~~~~~~~
+// Tilde lines split thead | tbody | tfoot | and caption
+// One line per row.
+// Pipes|indicate|splits|between|cells
+// ~~~~~~~~~~~~~
+// this is a tfoot | it will often be blank
+// ~~~~~~~~~~~~~
+// The last line of a table is the caption.
+// ============= 
+
+const TABLE_WRAPPER = '=============';
+const SECTION_SEPARATOR = '\n\n\n';
+const TEXT_IMAGE_SEPARATOR = '\n-------------\n';
+const PARAGRAPH_SEPARATOR = '\n\n';
+const PARAGRAPH_ITEM_SEPARATOR = '\n';
+const IMAGE_SEPARATOR = '\n';
+const LIST_ITEM_PREFIX = '\n';
+const TABLE_ROW_SEPARATOR = '\n';
+const TABLE_SECTION_SEPARATOR = '\n~~~~~~~~~~~~~\n';
+const TABLE_CELL_SEPARATOR = '|';
+const IMAGE_URL_CAPTION_SEPARATOR = '|';
+
 function diffPageBody (old_page_body: Section[], new_page_body: Section[]) {
-    const old_paragraphs = old_page_body.map(section => section.paragraphs)
-        .reduce((acc, item) => acc.concat(item), []); // flatten
-    const new_paragraphs = new_page_body.map(section => section.paragraphs)
-        .reduce((acc, item) => acc.concat(item), []); // flatten
+    // 3 line breaks to indicate a section break
+    const old_lines = old_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
+    const new_lines = new_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
+    const diff = JsDiff.diffLines(old_lines, new_lines);
+        
+    return diff;
+}
 
-    const old_items = old_paragraphs.map(para => para.items)
-        .reduce((acc, item) => acc.concat(item), []); // flatten
-    const new_items = new_paragraphs.map(para => para.items)
-        .reduce((acc, item) => acc.concat(item), []); // flatten
-    
-    return {};
+function sectionToLines (section: Section) {
+    const section_text = section.paragraphs.map(paragraphToLines).join(PARAGRAPH_SEPARATOR);
+    const section_image_lines = section.images.map(sectionImageToLine).join(IMAGE_SEPARATOR);
+    return section_text + TEXT_IMAGE_SEPARATOR + section_image_lines;
+}
 
+function sectionImageToLine (image: Media) {
+    return image.url + IMAGE_URL_CAPTION_SEPARATOR + image.caption.map(s => s.text).join(' ');
+}
+
+function paragraphToLines (paragraph: Paragraph) {
+    const lines = paragraph.items.map(item => {
+        if (item.type == 'sentence') {
+            const sentence = item as Sentence;
+            return sentence.text;
+        }
+        else if (item.type == 'list_item') {
+            const list_item =  item as ListItem;
+            return LIST_ITEM_PREFIX + list_item.sentences.map(s => s.text).join(' ');
+        }
+        else if (item.type == 'table') {
+            const table = item as Table;
+            return tableToLines(table);
+        }
+        else throw new Error("Unsupported ParagraphItem type");
+    })
+    .join(PARAGRAPH_ITEM_SEPARATOR);
+
+    return lines;
+}
+
+function tableToLines (table: Table) {
+    const thead_lines = table.thead.rows.map(tableRowToLine).join(TABLE_ROW_SEPARATOR);
+    const tbody_lines = table.tbody.rows.map(tableRowToLine).join(TABLE_ROW_SEPARATOR);
+    const tfoot_lines = table.tfoot.rows.map(tableRowToLine).join(TABLE_ROW_SEPARATOR);
+    const caption_line = table.caption;
+
+    return thead_lines +
+        TABLE_SECTION_SEPARATOR +
+        tbody_lines +
+        TABLE_SECTION_SEPARATOR +
+        tfoot_lines
+        TABLE_SECTION_SEPARATOR +
+        caption_line;
+}
+
+function tableRowToLine (row: TableRow) {
+    return row.cells.map(cell => 
+        cell.content
+            .map(sentence => sentence.text)
+            .join(' ')
+    )
+    .join(TABLE_CELL_SEPARATOR);
 }
 
 function diffInfoboxes (old_infoboxes: Infobox[], new_infoboxes: Infobox[]) {
