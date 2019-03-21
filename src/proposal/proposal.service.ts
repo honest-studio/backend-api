@@ -73,7 +73,7 @@ export class ProposalService {
 
         if (options.preview) {
             const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
-            const previews = await this.previewService.getWikiPreviews(ipfs_hashes);
+            const previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
             previews.forEach(
                 (preview) =>
                     (proposals.find((p) => p.info.trace.act.data.ipfs_hash === preview.ipfs_hash).preview = preview)

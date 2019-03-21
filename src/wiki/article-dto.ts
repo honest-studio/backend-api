@@ -29,7 +29,7 @@ export interface Paragraph {
     index: number;
     items: ParagraphItem[];
     tag_type: string;
-    attrs: { string: string };
+    attrs: {}
 }
 
 export interface Section {
@@ -105,19 +105,19 @@ export interface Table {
 }
 
 export interface TableSection {
-    attrs: { string: string };
+    attrs: {}
     rows: TableRow[];
 }
 
 export interface TableRow {
     index: number;
-    attrs: { string: string };
+    attrs: {}
     cells: TableCell[];
 }
 
 export interface TableCell {
     index: number;
-    attrs: { string: string };
+    attrs: {}
     tag_type: string;
     content: Sentence[];
 }

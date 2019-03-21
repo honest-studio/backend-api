@@ -230,15 +230,15 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Preview: Wiki', () => {
+  it('Preview: By Hash', () => {
     return request(app.getHttpServer())
-        .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .get('/v2/preview/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
         .expect(200)
   });
 
-  it('Preview: Wikis', () => {
+  it('Preview: By Slug', () => {
     return request(app.getHttpServer())
-        .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
+        .get('/v2/preview/slug/lang_en/wikipedia')
         .expect(200)
   });
 
