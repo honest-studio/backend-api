@@ -13,7 +13,7 @@ import {
     Infobox,
     Citation
 } from '../wiki/article-dto';
-import { ArticleJsonDiff, CitationDiff, MetadataDiff, MediaDiff } from './diff.types';
+import { ArticleJsonDiff, CitationDiff, MetadataDiff, MediaDiff, SectionDiff, TableDiff, TableRowDiff, ParagraphDiff, DiffType, InfoboxDiff, TableSectionDiff } from './diff.types';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
 
@@ -181,7 +181,7 @@ const DIFF_ADD_MARKER = ' d+++d';
 const DIFF_DELETE_MARKER = ' d---d';
 const DIFF_NONE_MARKER = ' d===d';
 
-function diffPageBody(old_page_body: Section[], new_page_body: Section[]) {
+function diffPageBody(old_page_body: Section[], new_page_body: Section[]): SectionDiff[] {
     const old_lines = old_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
     const new_lines = new_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
 
@@ -216,7 +216,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]) {
     return diffToSections(diff_text);
 }
 
-function diffToSections(diff_text): Section[] {
+function diffToSections(diff_text): SectionDiff[] {
     const sections = [];
 
     const section_texts = diff_text.split(SECTION_SEPARATOR);
@@ -240,7 +240,7 @@ function diffToSections(diff_text): Section[] {
     return sections;
 }
 
-function linesToParagraph(lines: string): Paragraph {
+function linesToParagraph(lines: string): ParagraphDiff {
     const items = lines
         .split(PARAGRAPH_ITEM_SEPARATOR)
         .filter((lines) => lines.trim()) // no blank items
@@ -265,7 +265,8 @@ function linesToParagraph(lines: string): Paragraph {
                             text: lines.substring(10).slice(0, -6),
                             diff: getLineDiffType(lines)
                         }
-                    ]
+                    ],
+                    diff: getLineDiffType(lines)
                 };
             // if (prefix == TABLE_PREFIX)
             else return linesToTable(lines);
@@ -274,7 +275,7 @@ function linesToParagraph(lines: string): Paragraph {
     return { index: 0, items, tag_type: 'p', attrs: {} };
 }
 
-function linesToTable(lines: string): Table {
+function linesToTable(lines: string): TableDiff {
     console.log(lines);
     lines = lines.substring(10);
     const table_sections = lines.split(TABLE_SECTION_SEPARATOR);
@@ -286,13 +287,13 @@ function linesToTable(lines: string): Table {
     return { type: 'table', thead, tbody, tfoot, caption };
 }
 
-function linesToTableSection(lines: string): TableSection {
+function linesToTableSection(lines: string): TableSectionDiff {
     const rows = lines.split(TABLE_ROW_SEPARATOR).map(lineToTableRow);
 
     return { rows, attrs: {} };
 }
 
-function lineToTableRow(line: string): TableRow {
+function lineToTableRow(line: string): TableRowDiff {
     const difftype = getLineDiffType(line);
     line = line.slice(0, -6);
     const cells = line.split(TABLE_CELL_SEPARATOR).map((text, index) => ({
@@ -301,7 +302,6 @@ function lineToTableRow(line: string): TableRow {
                 index: 0,
                 type: 'sentence',
                 text: text,
-                diff: difftype
             }
         ],
         index,
@@ -309,7 +309,7 @@ function lineToTableRow(line: string): TableRow {
         tag_type: 'td'
     }));
 
-    return { index: 0, attrs: {}, cells };
+    return { index: 0, attrs: {}, cells, diff: difftype };
 }
 
 function lineToImage(line: string): MediaDiff {
@@ -329,7 +329,7 @@ function lineToImage(line: string): MediaDiff {
     };
 }
 
-function getLineDiffType(line: string) {
+function getLineDiffType(line: string): DiffType {
     const last_six_chars = line.slice(-6);
 
     let difftype;
@@ -340,17 +340,17 @@ function getLineDiffType(line: string) {
     return difftype;
 }
 
-function sectionToLines(section: Section) {
+function sectionToLines(section: Section): string {
     const section_text = section.paragraphs.map(paragraphToLines).join(PARAGRAPH_SEPARATOR);
     const section_image_lines = section.images.map(sectionImageToLine).join(IMAGE_SEPARATOR);
     return section_text + SECTION_TEXT_IMAGE_SEPARATOR + section_image_lines;
 }
 
-function sectionImageToLine(image: Media) {
+function sectionImageToLine(image: Media): string {
     return image.url + IMAGE_URL_CAPTION_SEPARATOR + image.caption.map((s) => s.text).join(' ');
 }
 
-function paragraphToLines(paragraph: Paragraph) {
+function paragraphToLines(paragraph: Paragraph): string {
     const lines = paragraph.items
         .map((item) => {
             if (item.type == 'sentence') {
@@ -369,7 +369,7 @@ function paragraphToLines(paragraph: Paragraph) {
     return lines;
 }
 
-function tableToLines(table: Table) {
+function tableToLines(table: Table): string {
     const thead_lines = table.thead.rows.map(tableRowToLine).join(TABLE_ROW_SEPARATOR);
     const tbody_lines = table.tbody.rows.map(tableRowToLine).join(TABLE_ROW_SEPARATOR);
     const tfoot_lines = table.tfoot.rows.map(tableRowToLine).join(TABLE_ROW_SEPARATOR);
@@ -379,11 +379,11 @@ function tableToLines(table: Table) {
     TABLE_SECTION_SEPARATOR + caption_line;
 }
 
-function tableRowToLine(row: TableRow) {
+function tableRowToLine(row: TableRow): string {
     return row.cells.map((cell) => cell.content.map((sentence) => sentence.text).join(' ')).join(TABLE_CELL_SEPARATOR);
 }
 
-function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]) {
+function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]): InfoboxDiff[] {
     const hash = crypto.createHash('sha256');
     const old_hashes = old_infoboxes.map(hashInfobox).join('\n');
     const new_hashes = new_infoboxes.map(hashInfobox).join('\n');
@@ -412,14 +412,14 @@ function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]) {
     return infoboxes_diff;
 }
 
-function hashInfobox(infobox: Infobox) {
+function hashInfobox(infobox: Infobox): string {
     const hash = crypto.createHash('sha256');
     hash.update(infobox.key);
     hash.update(Buffer.from(hashSentences(infobox.values), 'hex'));
     return hash.digest('hex');
 }
 
-function hashSentences(sentences: Sentence[]) {
+function hashSentences(sentences: Sentence[]): string {
     const hash = crypto.createHash('sha256');
     for (let sentence of sentences) {
         hash.update(sentence.text);
