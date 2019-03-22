@@ -54,6 +54,7 @@ export class WikiService {
 
         const wiki = oldHTMLtoJSON(rows[0].html_blob);
         wiki.metadata.pageviews = rows[0].pageviews;
+        wiki.metadata.page_lang = lang_code;
         return wiki;
 
     }

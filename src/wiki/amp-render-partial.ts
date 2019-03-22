@@ -7,6 +7,17 @@ export class AmpRenderPartial {
         this.artJSON = inputJSN;
     }
 
+
+    // ${ this.artJSON.metadata.page_type == 'Person' ?
+    //     `AAAA` : 
+    // this.artJSON.metadata.page_type == 'Product' ?
+    //     `BBBB` : 
+    // this.artJSON.metadata.page_type == 'Organization' ?
+    //     `CCCC` : 
+    // true ? 
+    //     `DDDD` : ``
+    // }
+
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
         return `
             <meta charset="utf-8">
@@ -272,6 +283,65 @@ export class AmpRenderPartial {
         `;
     }
 
+    renderNameContainer = (): string => {
+        return `
+            <div class="name-container">
+                <h1>
+                    <span>${this.artJSON.page_title}</span>
+                </h1>
+                ${ this.artJSON.metadata.page_type == 'Person' ?
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>
+                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} real name, how old is ${this.artJSON.page_title}" ></amp-anim>` : 
+                this.artJSON.metadata.page_type == 'Product' ?
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : 
+                this.artJSON.metadata.page_type == 'Organization' ?
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
+                true ? 
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : ``
+                }
+                <div id="title-buttonset">
+                    <div class="tlbx-ct-wrapper">
+                        <div class="tlbx-ct">
+                            <ul>
+                                <li><a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}/edit/" class="icon"><i class="fa fa-pencil"></i></a></li>
+                                <li><button on="tap:share-lightbox" aria-label="Share" class="icon"><i class="fa fa-share-alt"></i></button></li>
+                                <li><a rel='nofollow' href="https://everipedia.org/vote/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}" class="icon"><i class="fa fa-archive"></i></a></li>
+                                <li class="language-tile">
+                                    <button on="tap:language-lightbox" aria-label="Languages" class="icon">
+                                        <amp-img id="flag-button" height="35" width="35" alt="Language flag" layout="fixed" class="page-lang-dropdown-flag" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${this.artJSON.metadata.page_lang}.png"></amp-img>
+                                        <span class="flag-lang-plain">${this.artJSON.metadata.page_lang.substring(0,2)}</span>
+                                    </button>
+                                </li>
+                                ${ this.artJSON.metadata.pageviews > 50 ?
+                                    `<li class="pageviews-tile">
+                                        <a rel='nofollow' href="#" class="icon"><i class="fa fa-eye"></i></a>
+                                        <span class="views-nr">${this.artJSON.metadata.pageviews.toLocaleString()}</span>
+                                    </li>` : ``
+                                }
+                                ${ this.artJSON.metadata.page_type == 'Person' ?
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} religion, ${this.artJSON.page_title} interview, ${this.artJSON.page_title} life, ${this.artJSON.page_title} website" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wife, ${this.artJSON.page_title} family, ${this.artJSON.page_title} education, ${this.artJSON.page_title} measurements, ${this.artJSON.page_title} email" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} phone, ${this.artJSON.page_title} salary, ${this.artJSON.page_title} address, ${this.artJSON.page_title} history, ${this.artJSON.page_title} facts" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
+                                this.artJSON.metadata.page_type == 'Product' ?
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} designer, ${this.artJSON.page_title} sales, ${this.artJSON.page_title} facts" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : 
+                                this.artJSON.metadata.page_type == 'Organization' ?
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} ownership, ${this.artJSON.page_title} email, ${this.artJSON.page_title} address, ${this.artJSON.page_title} phone, ${this.artJSON.page_title} headquarters" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} revenue, ${this.artJSON.page_title} employees, ${this.artJSON.page_title} location, ${this.artJSON.page_title} facts" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
+                                true ? 
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} information, ${this.artJSON.page_title} definition, ${this.artJSON.page_title} timeline, ${this.artJSON.page_title} location" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : ``
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     renderPageBody = (): string => {
         let sections: Section[] = this.artJSON.page_body
         return `PAGE BODY`;
@@ -288,9 +358,168 @@ export class AmpRenderPartial {
     }
 
     renderCitations = (): string => {
-        let citations: Citation[] = this.artJSON.citations
-        return `CITATIONS`; 
+        let citations: Citation[] = this.artJSON.citations;
+        return (citations.length > 0) ? `
+            <div id="link_list_container_mobile_wrapper">
+                <span id="referenceList" class="toc-span-fix"></span>
+                <amp-accordion>
+                <section expanded>
+                    <h2 class="acc-header">
+                        ${ this.artJSON.metadata.page_type == 'Person' ?
+                            `Reference Links For This Biography` :
+                        true ?
+                            `Reference Links For This Wiki` : ``
+                        }
+                        <span class="icon"><i class="fa fa-chevron-down"></i>
+                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
+                        </span>
+                    </h2>
+                    <div class="l-lst-header" id="link_list_container">
+                        <div class="ll-wrapper">
+                            <div class="disclaimer">All information for ${this.artJSON.page_title}'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${this.artJSON.page_title} are also acceptable encyclopedic sources.</div>
+                            <ul class="l-lst">
+                                LINK LOOP HERE
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                </amp-accordion>
+            </div>
+        ` : ``;
     }    
+
+    renderSeeAlso = (): string => {
+        return `SEEALSO`
+    }
+
+    renderFooter = (): string => {
+        // let seealsos: SeeAlso[] = calculatedSeeAlsos
+        return `
+            <div class="footer-wrapper">
+                <amp-anim class='gif-pixel-fix' width=1 height=1 alt="GIF Pixel" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+                    <amp-img placeholder width=1 height=1 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png">
+                    </amp-img>
+                </amp-anim>
+                <div class="footer-links">
+                    <a href="/everipedia/">About</a>
+                    <a href="/wiki/everipedia-faq/">FAQ</a>
+                    <a href="/contact/">Contact</a>
+                    <a rel="nofollow" href="https://www.reddit.com/r/Everipedia/">Forum</a>
+                    <a href="/wiki/everipedia-terms/">Terms</a>
+                    <a href="/exchange-listings/">Get IQ</a>
+                    <a rel="nofollow" href="/investor-relations/">Investors</a>
+                </div>
+                <div class="footer-separator"></div>
+                <div class="copyright">
+                <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
+                    <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>
+                    <span class="disclaimer">By using this website, you agree to the <a href="/wiki/everipedia-terms/">Terms of Use</a>. Everipedia® is a trademark of Everipedia International.</span>
+                </div>
+            </div>
+            <div class="footer-social">
+                <a class='social-logo' href="http://facebook.com/everipedia" title="Everipedia on Facebook">
+                    <amp-img height="26" width="26" layout="fixed" alt="Facebook" src="https://epcdn-vz.azureedge.net/static/images/facebook.png"></amp-img>
+                </a>
+                <a class='social-logo' href="http://twitter.com/everipedia" title="Everipedia on Twitter">
+                    <amp-img height="26" width="26" layout="fixed" alt="Twitter" src="https://epcdn-vz.azureedge.net/static/images/twitter.png"></amp-img>
+                </a>
+                    <a class='social-logo' href="https://www.reddit.com/r/Everipedia/" title="Everipedia on Reddit">
+                    <amp-img height="26" width="26" layout="fixed" alt="Reddit" src="https://epcdn-vz.azureedge.net/static/images/reddit.png"></amp-img>
+                </a>
+                <a class='social-logo' href="https://t.me/everipedia" title="Everipedia on Telegram">
+                    <amp-img height="26" width="26" layout="fixed" alt="Telegram" src="https://epcdn-vz.azureedge.net/static/images/telegram.png"></amp-img>
+                </a>
+                <a class='social-logo' href="https://blockfolio.com/coin/IQ" title="IQ token on Blockfolio">
+                    <amp-img height="26" width="26" layout="fixed" alt="Blockfolio" src="https://epcdn-vz.azureedge.net/static/images/blockfolio.svg"></amp-img>
+                </a>
+            </div>
+            <div class="eos-powered-line">
+                <span id="powered-by-eos">Powered by <a class="eos-link" href="https://eos.io/">EOS.IO</a></span>
+                <a class="eos-link" href="https://eos.io/">
+                    <amp-img class="eos-footer-img" height="26" width="26" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/eos-logo.png" ></amp-img>
+                </a>
+                <span id="api-by-libertyblock">API by <a class="liberty-link" href="https://libertyblock.io/">LibertyBlock</a></span>
+                <a class="liberty-link" href="https://eos.io/">
+                    <amp-img class="liberty-footer-img" height="40" width="50" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/libertyblock.png" ></amp-img>
+                </a>
+                <span id="api-by-scatter">and <a class="scatter-link" href="https://get-scatter.com/">Scatter</a></span>
+                <a class="scatter-link" href="https://get-scatter.com/">
+                    <amp-img class="scatter-footer-img" height="35" width="26" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/scatter.png" ></amp-img>
+                </a>
+            </div>
+        `; 
+    }   
+
+    renderTableOfContents = (): string => {
+        return `TABLE OF CONTENTS`
+    }
+
+    renderUserMenu = (): string => {
+        return `
+            <div class="lightbox" tabindex="1" role="menubar">
+                <div class="usermenu-toggle-space" on='tap:guestmenu-lightbox.close' tabindex="3" role="menubar">
+                </div>
+                <div class="usermenu-ct">
+                    <div class="usermenu-header">
+                            <div class="loggedin-default">Menu</div>
+                    </div>
+                    <ul>
+                        <li>
+                            <a rel="nofollow" href="/login/">
+                                <span class="icon"><i class="fa fa-key"></i></span>
+                                <div class="fixed-items-description">Log In / Register</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="/wiki/everipedia-faq/">
+                                <span class="icon"><i class="fa fa-question"></i></span>
+                                <div class="fixed-items-description">Help</div>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a rel="nofollow" href="https://www.reddit.com/r/Everipedia/">
+                                <span class="icon"><i class="fa fa-list"></i></span>
+                                <div class="fixed-items-description">Forum</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="/recent-activity/">
+                                <span class="icon"><i class="fa fa-bolt"></i></span>
+                                <div class="fixed-items-description">Feed</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="/language-selector/">
+                                <span class="icon"><i class="fa fa-language"></i></span>
+                                <div class="fixed-items-description">Language</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        `
+    }
+
+    renderSearch = (): string => {
+        return `  
+        <div class="lightbox" tabindex="3" role="search">
+            <div class="search-lb-ct">
+                <div class="global-search" id="searchfield_index">
+                    <amp-iframe
+                        sandbox="allow-scripts allow-pointer-lock allow-popups allow-top-navigation allow-same-origin"
+                        layout="flex-item"
+                        frameborder="0"
+                        src="https://www.everipedia.org/search/iframe/">
+                        <div placeholder></div>
+                    </amp-iframe>
+                </div>
+                <div class="search-toggle-space-bottom" on='tap:search-lightbox.close' tabindex="5" role="button">
+                </div>
+            </div>
+	    </div>
+        `
+    }
 
     renderSchemaJSON = (): string => {
         // Perhaps you should do this while you are looping through the other functions
