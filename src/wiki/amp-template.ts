@@ -50,10 +50,8 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
             <amp-lightbox id="language-lightbox" layout="nodisplay">
                 ${arp.renderLanguageLightbox()}
             </amp-lightbox>
-
+            ${arp.renderLightboxes()}
             ${arp.renderAnalyticsBlock()}
-
-
         </body>
     </html>
    `;

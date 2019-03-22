@@ -4,6 +4,7 @@ import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
 
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
+    public allLightBoxes: string[] = [];
     constructor(inputJSN) {
         this.artJSON = inputJSN;
     }
@@ -344,16 +345,21 @@ export class AmpRenderPartial {
 
     renderOneMedia = (media: Media, index: number): string => {
         const RANDOMSTRING = Math.random().toString(36).substring(7);
-        let sanitizedDescription = media.caption.map((value, index) => {
-            return CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations);
+        let sanitizedCaption = media.caption.map((value, index) => {
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations);
+            result.lightboxes.forEach((value, index) => {
+                this.allLightBoxes.push(value);
+            })
+            return result.text;
         }).join("");
+        
         return `
             ${ media.type == "PICTURE" ?
                 `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedDescription}">
-                                <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedDescription}" alt="${sanitizedDescription}" data-width="640" data-height="640">
+                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedCaption}">
+                                <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaption}" alt="${sanitizedCaption}" data-width="640" data-height="640">
                                     <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                                 </amp-img>
                             </a>
@@ -365,15 +371,15 @@ export class AmpRenderPartial {
                                 <i class="fa fa-info-circle"></i>
                             </a>` : ``
                         }
-                        ${sanitizedDescription}
+                        ${sanitizedCaption}
                     </div>
                 </div>` : 
             media.type == "GIF" ?
                 `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedDescription}">
-                                <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedDescription}" alt="${sanitizedDescription}" data-width="640" data-height="640">
+                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedCaption}">
+                                <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaption}" alt="${sanitizedCaption}" data-width="640" data-height="640">
                                 <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                                 </amp-anim>
                             </a>
@@ -385,7 +391,7 @@ export class AmpRenderPartial {
                                 <i class="fa fa-info-circle"></i>
                             </a>` : ``
                         }
-                        ${sanitizedDescription}
+                        ${sanitizedCaption}
                     </div>
                 </div>` : 
             media.type == "YOUTUBE" ?
@@ -405,7 +411,7 @@ export class AmpRenderPartial {
                                 <i class="fa fa-info-circle"></i>
                             </a>` : ``
                         }
-                        ${sanitizedDescription}
+                        ${sanitizedCaption}
                     </div>
                     </a>
                 </div>` :  
@@ -432,7 +438,7 @@ export class AmpRenderPartial {
                                 <i class="fa fa-info-circle"></i>
                             </a>` : ``
                         }
-                        ${sanitizedDescription}
+                        ${sanitizedCaption}
                     </div>
                     </a>
                 </div>` : 
@@ -440,7 +446,7 @@ export class AmpRenderPartial {
                 `<div class="tile-ct">
                     <a rel='nofollow' href="${media.url}" title="Link to recording">
                     <span>
-                        <amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${sanitizedDescription}" alt="${sanitizedDescription}" data-width="640" data-height="640">
+                        <amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${sanitizedCaption}" alt="${sanitizedCaption}" data-width="640" data-height="640">
                             <amp-img placeholder width=150 height=150 src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" layout="fill"></amp-img>
                         </amp-img>
                     </span>
@@ -450,7 +456,7 @@ export class AmpRenderPartial {
                                 <i class="fa fa-info-circle"></i>
                             </a>` : ``
                         }
-                        ${sanitizedDescription}
+                        ${sanitizedCaption}
                     </div>
                     </a>
                 </div>` : 
@@ -462,7 +468,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} Image #${index}">
-                    <meta itemprop="caption" content="${sanitizedDescription}">
+                    <meta itemprop="caption" content="${sanitizedCaption}">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
                     <meta itemprop="width" content="300">
@@ -471,7 +477,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} GIF Image #${index}">
-                    <meta itemprop="caption" content="${sanitizedDescription}">
+                    <meta itemprop="caption" content="${sanitizedCaption}">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
                     <meta itemprop="width" content="300">
@@ -480,7 +486,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} YouTube Video #${index}">
-                    <meta itemprop="description" content="${sanitizedDescription}">
+                    <meta itemprop="description" content="${sanitizedCaption}">
                     <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi/YOUTUBE_ID_HERE/default.jpg">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
@@ -490,7 +496,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} Video #${index}">
-                    <meta itemprop="description" content="${sanitizedDescription}">
+                    <meta itemprop="description" content="${sanitizedCaption}">
                     <meta itemprop="thumbnailUrl" content="${media.url}?nocache=${RANDOMSTRING}">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
@@ -529,7 +535,11 @@ export class AmpRenderPartial {
 
     renderOneCitation = (citation: Citation, index: number): string => {
         let sanitizedDescription = citation.description.map((value, index) => {
-            return CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations);
+            result.lightboxes.forEach((value, index) => {
+                this.allLightBoxes.push(value);
+            })
+            return result.text;
         }).join("");
 
         return `
@@ -858,6 +868,10 @@ export class AmpRenderPartial {
             </amp-analytics>
         `;
     }   
+
+    renderLightboxes = (): string => {
+        return this.allLightBoxes.join("");
+    }
 
     renderSchemaJSON = (): string => {
         // Perhaps you should do this while you are looping through the other functions

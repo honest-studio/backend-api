@@ -1,4 +1,4 @@
-import { Citation } from '../../wiki/article-dto';
+import { Citation, AMPParseCollection } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
 const decode = require('unescape');
 import * as htmlparser2 from 'htmlparser2';
@@ -9,8 +9,8 @@ export const CheckForLinksOrCitationsAMP = (
     ampLightBoxes: string[] = [],
 	returnPlaintext?: boolean,
     tagType?: string
-) => {
-	if (!textProcessing) return '';
+): AMPParseCollection => {
+	if (!textProcessing) return {'text': '', 'lightboxes': []};
 
 	let text = textProcessing;
 	// if (text.indexOf('<div')) text = textProcessing.innerHtml;
@@ -34,7 +34,8 @@ export const CheckForLinksOrCitationsAMP = (
 			const linkBreakIndex = linkUrlFull.indexOf('|');
 			const lang_code = linkUrlFull.substring(0, linkBreakIndex);
 			const slug = linkUrlFull.substring(linkBreakIndex + 1, linkUrlFull.length);
-			const linkCodeAndSlug = '/wiki/' + lang_code + '/' + slug;
+            const linkCodeAndSlug = '/wiki/' + lang_code + '/' + slug;
+            const linkCodeAndSlugNoWiki = lang_code + '/' + slug;
             const nextLetter = text.charAt(end);
             const endingString = !!nextLetter.match(/[.,:;!?']/) ? '' : ' ';
             const unique_id = Math.random().toString(36).substring(2);
@@ -73,7 +74,7 @@ export const CheckForLinksOrCitationsAMP = (
             $(iframeTag).attr('frameborder', 0);
             $(iframeTag).attr('scrolling', 'no');
             $(iframeTag).attr('layout', 'fill');
-            $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${linkCodeAndSlug}/`);
+            $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${linkCodeAndSlugNoWiki}/`);
 
             // Placeholder image (leave this here or it will cause stupid AMP problems)
             let placeholderTag = $('<amp-img />');
@@ -91,9 +92,8 @@ export const CheckForLinksOrCitationsAMP = (
             ampLightBoxes.push($.html(lightBoxTag));
 
             // Set the new string
-            newString = decode($.html()  + endingString, 'all');
-            
-            console.log(newString);
+            newString = decode($.html() + endingString, 'all');
+
 
 		} else if (isCitation >= 0 && citations) {
 			const citationIndex: number = parseInt(link.charAt(isCitation + citeString.length + 1));
@@ -116,5 +116,5 @@ export const CheckForLinksOrCitationsAMP = (
 		// Recursive
 		return CheckForLinksOrCitationsAMP(newString, citations, ampLightBoxes, returnPlaintext);
 	}
-	return text;
+	return {'text': text, 'lightboxes': ampLightBoxes};
 };

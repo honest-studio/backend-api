@@ -16,6 +16,11 @@ export interface Sentence {
     text: string; // contains inline WikiLink markup + some light markdown for formatting
 }
 
+export interface AMPParseCollection {
+    text: string;
+    lightboxes: string[];
+}
+
 export interface ListItem {
     type: string; // list_item
     index: number;
