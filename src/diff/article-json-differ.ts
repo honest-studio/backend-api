@@ -13,7 +13,19 @@ import {
     Infobox,
     Citation
 } from '../wiki/article-dto';
-import { ArticleJsonDiff, CitationDiff, MetadataDiff, MediaDiff, SectionDiff, TableDiff, TableRowDiff, ParagraphDiff, DiffType, InfoboxDiff, TableSectionDiff } from './diff.types';
+import {
+    ArticleJsonDiff,
+    CitationDiff,
+    MetadataDiff,
+    MediaDiff,
+    SectionDiff,
+    TableDiff,
+    TableRowDiff,
+    ParagraphDiff,
+    DiffType,
+    InfoboxDiff,
+    TableSectionDiff
+} from './diff-dto';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
 
@@ -301,7 +313,7 @@ function lineToTableRow(line: string): TableRowDiff {
             {
                 index: 0,
                 type: 'sentence',
-                text: text,
+                text: text
             }
         ],
         index,

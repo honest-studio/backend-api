@@ -1,4 +1,15 @@
-import { Citation, Media, Infobox, Sentence, ListItem, ParagraphItem, Table, Paragraph, TableRow, TableSection } from '../wiki/article-dto';
+import {
+    Citation,
+    Media,
+    Infobox,
+    Sentence,
+    ListItem,
+    ParagraphItem,
+    Table,
+    Paragraph,
+    TableRow,
+    TableSection
+} from '../wiki/article-dto';
 
 export type DiffType = 'add | delete | none';
 
@@ -11,7 +22,7 @@ export interface ParagraphDiff extends Paragraph {
     items: ParagraphItemDiff[];
 }
 
-export type ParagraphItemDiff = (SentenceDiff | ListItemDiff | TableDiff)
+export type ParagraphItemDiff = SentenceDiff | ListItemDiff | TableDiff;
 
 export interface SentenceDiff extends Sentence {
     diff: DiffType;
