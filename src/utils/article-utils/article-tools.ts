@@ -116,5 +116,5 @@ export const CheckForLinksOrCitationsAMP = (
 		// Recursive
 		return CheckForLinksOrCitationsAMP(newString, citations, ampLightBoxes, returnPlaintext);
 	}
-	return {'text': text, 'lightboxes': ampLightBoxes};
+	return {'text': text,  'lightboxes': ampLightBoxes};
 };

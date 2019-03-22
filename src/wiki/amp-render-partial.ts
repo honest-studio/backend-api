@@ -1,6 +1,7 @@
 import { ArticleJson } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
+var striptags = require('striptags');
 
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
@@ -352,14 +353,15 @@ export class AmpRenderPartial {
             })
             return result.text;
         }).join("");
+        let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
         
         return `
             ${ media.type == "PICTURE" ?
                 `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedCaption}">
-                                <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaption}" alt="${sanitizedCaption}" data-width="640" data-height="640">
+                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedCaptionPlaintext}">
+                                <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                                     <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                                 </amp-img>
                             </a>
@@ -378,8 +380,8 @@ export class AmpRenderPartial {
                 `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedCaption}">
-                                <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaption}" alt="${sanitizedCaption}" data-width="640" data-height="640">
+                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${sanitizedCaptionPlaintext}">
+                                <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                                 <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                                 </amp-anim>
                             </a>
@@ -446,7 +448,7 @@ export class AmpRenderPartial {
                 `<div class="tile-ct">
                     <a rel='nofollow' href="${media.url}" title="Link to recording">
                     <span>
-                        <amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${sanitizedCaption}" alt="${sanitizedCaption}" data-width="640" data-height="640">
+                        <amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                             <amp-img placeholder width=150 height=150 src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" layout="fill"></amp-img>
                         </amp-img>
                     </span>
@@ -468,7 +470,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} Image #${index}">
-                    <meta itemprop="caption" content="${sanitizedCaption}">
+                    <meta itemprop="caption" content="${sanitizedCaptionPlaintext}">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
                     <meta itemprop="width" content="300">
@@ -477,7 +479,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} GIF Image #${index}">
-                    <meta itemprop="caption" content="${sanitizedCaption}">
+                    <meta itemprop="caption" content="${sanitizedCaptionPlaintext}">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
                     <meta itemprop="width" content="300">
@@ -486,7 +488,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} YouTube Video #${index}">
-                    <meta itemprop="description" content="${sanitizedCaption}">
+                    <meta itemprop="description" content="${sanitizedCaptionPlaintext}">
                     <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi/YOUTUBE_ID_HERE/default.jpg">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
@@ -496,7 +498,7 @@ export class AmpRenderPartial {
                 `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
                     <meta itemprop="url" content="${media.url}">
                     <meta itemprop="name" content="${this.artJSON.page_title} Video #${index}">
-                    <meta itemprop="description" content="${sanitizedCaption}">
+                    <meta itemprop="description" content="${sanitizedCaptionPlaintext}">
                     <meta itemprop="thumbnailUrl" content="${media.url}?nocache=${RANDOMSTRING}">
                     <meta itemprop="uploadDate" content="${media.timestamp}">
                     <meta itemprop="height" content="300">
