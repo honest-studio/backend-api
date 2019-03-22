@@ -1,10 +1,14 @@
 import { Citation } from '../../wiki/article-dto';
+const cheerio = require('cheerio');
+const decode = require('unescape');
+import * as htmlparser2 from 'htmlparser2';
 
-export const CheckForLinksOrCitations = (
+export const CheckForLinksOrCitationsAMP = (
 	textProcessing: string,
-	citations: Citation[],
+    citations: Citation[],
+    ampLightBoxes: string[] = [],
 	returnPlaintext?: boolean,
-	tagType?: string
+    tagType?: string
 ) => {
 	if (!textProcessing) return '';
 
@@ -31,18 +35,66 @@ export const CheckForLinksOrCitations = (
 			const lang_code = linkUrlFull.substring(0, linkBreakIndex);
 			const slug = linkUrlFull.substring(linkBreakIndex + 1, linkUrlFull.length);
 			const linkCodeAndSlug = '/wiki/' + lang_code + '/' + slug;
-			// const pulledLink = links[linkIndex];
-			// if (pulledLink) {
-			const nextLetter = text.charAt(end);
-			if (!returnPlaintext) {
-				newString = text.replace(
-					link,
-					`[${linkText}](${linkCodeAndSlug})${!!nextLetter.match(/[.,:;!?']/) ? '' : ' '}`
-				);
-			} else {
-				newString = text.replace(link, `${linkText}${!!nextLetter.match(/[.,:;!?']/) ? '' : ' '}`);
-			}
-			// }
+            const nextLetter = text.charAt(end);
+            const endingString = !!nextLetter.match(/[.,:;!?']/) ? '' : ' ';
+            const unique_id = Math.random().toString(36).substring(2);
+            // Load the HTML into htmlparser2 beforehand since it is more forgiving
+            let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
+
+            // Load the HTML into cheerio for parsing
+            let $ = cheerio.load(dom);
+
+            // Create the button that will be substituted
+            let openButtonTag = $('<button />');
+            $(openButtonTag).addClass('tooltippable');
+            $(openButtonTag).attr('role', 'button');
+            $(openButtonTag).attr('tabindex', 0);
+            $(openButtonTag).attr('aria-label', linkCodeAndSlug);
+            $(openButtonTag).attr('aria-labelledby', `${linkCodeAndSlug}__${unique_id}`);
+            $(openButtonTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}`);
+            $(openButtonTag).text(linkText);
+
+            // Replace the <a> tag with a button
+            $("a").replaceWith(openButtonTag);
+
+            // Construct the amp-lightbox
+            let lightBoxTag = $('<amp-lightbox />');
+            $(lightBoxTag).addClass('amp-hc');
+            $(lightBoxTag).attr('id', `hvrblb-${linkCodeAndSlug}__${unique_id}`);
+            $(lightBoxTag).attr('role', 'button');
+            $(lightBoxTag).attr('tabindex', 0);
+            $(lightBoxTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}.close`);
+            $(lightBoxTag).attr('layout', 'nodisplay');
+
+            // Construct the amp-iframe
+            let iframeTag = $('<amp-iframe />');
+            $(iframeTag).addClass('amp-hc');
+            $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
+            $(iframeTag).attr('frameborder', 0);
+            $(iframeTag).attr('scrolling', 'no');
+            $(iframeTag).attr('layout', 'fill');
+            $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${linkCodeAndSlug}/`);
+
+            // Placeholder image (leave this here or it will cause stupid AMP problems)
+            let placeholderTag = $('<amp-img />');
+            $(placeholderTag).attr('placeholder', '');
+            $(placeholderTag).attr('layout', 'fill');
+            $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
+
+            // Put the placeholder inside the iframe
+            $(iframeTag).append(placeholderTag);
+
+            // Put the iframe inside of the lightbox
+            $(lightBoxTag).append(iframeTag);
+
+            // Add the lightboxes to the list, as text and not a jQuery object
+            ampLightBoxes.push($.html(lightBoxTag));
+
+            // Set the new string
+            newString = decode($.html()  + endingString, 'all');
+            
+            console.log(newString);
+
 		} else if (isCitation >= 0 && citations) {
 			const citationIndex: number = parseInt(link.charAt(isCitation + citeString.length + 1));
 			const pulledCitation = citations[citationIndex];
@@ -62,7 +114,7 @@ export const CheckForLinksOrCitations = (
 			}
 		}
 		// Recursive
-		return CheckForLinksOrCitations(newString, citations, returnPlaintext);
+		return CheckForLinksOrCitationsAMP(newString, citations, ampLightBoxes, returnPlaintext);
 	}
 	return text;
 };
