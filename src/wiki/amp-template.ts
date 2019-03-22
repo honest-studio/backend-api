@@ -5,25 +5,27 @@ import { AmpRenderPartial } from './amp-render-partial'
 export const renderAMP = (inputJSON: ArticleJson): string => {
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = Math.random().toString(36).substring(7);
-    let ampPartialRenderer = new AmpRenderPartial(inputJSON);
+    let arp = new AmpRenderPartial(inputJSON);
     let AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '', BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = null;
     let CURRENT_IPFS_HASH = '';
     const theHTML = `
     <!DOCTYPE html>
     <html amp lang="${inputJSON.metadata.page_lang}">
         <head>
-            ${ampPartialRenderer.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
+            ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
             ${styleNugget}
         </head>
         <body>
-            ${ampPartialRenderer.renderNavBar()}
+            ${arp.renderNavBar()}
             <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" class="schema">
-                ${ampPartialRenderer.renderMainMeta(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
-                ${ampPartialRenderer.renderMainPhoto(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
-                ${ampPartialRenderer.renderNameContainer()}
-                ${ampPartialRenderer.renderPageBody()}
-                ${ampPartialRenderer.renderCitations()}
-                ${ampPartialRenderer.renderSeeAlso()}
+                ${arp.renderMainMeta(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
+                ${arp.renderMainPhoto(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
+                ${arp.renderNameContainer()}
+                ${arp.renderInfoboxes()}
+                ${arp.renderPageBody()}
+                ${arp.renderMediaGallery()}
+                ${arp.renderCitations()}
+                ${arp.renderSeeAlso()}
                 <div class="page-times">
                     <div>Created: <span id="page_create_time">${inputJSON.metadata.creation_timestamp}</span></div>
                     <div>Last Modified: <span id="page_last_modified_time">${inputJSON.metadata.last_modified}</span></div>
@@ -31,17 +33,25 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                 </div>
             </main>
             <footer class="footer everi_footer">
-                ${ampPartialRenderer.renderFooter()}
+                ${arp.renderFooter()}
             </footer>
             <amp-sidebar id='sidebar' layout="nodisplay" side="left">
-                ${ampPartialRenderer.renderTableOfContents()}
+                ${arp.renderTableOfContents()}
             </amp-sidebar>
-            <amp-lightbox id="guestmenu-lightbox" layout="nodisplay">
-                ${ampPartialRenderer.renderUserMenu()}
+            <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
+                ${arp.renderUserMenu()}
             </amp-lightbox> 
             <amp-lightbox id="search-lightbox" layout="nodisplay">
-                ${ampPartialRenderer.renderSearch()}
-            </amp-lightbox> 
+                ${arp.renderSearchLightbox()}
+            </amp-lightbox>
+            <amp-lightbox id="share-lightbox" layout="nodisplay">
+                ${arp.renderShareLightbox()}
+            </amp-lightbox>
+            <amp-lightbox id="language-lightbox" layout="nodisplay">
+                ${arp.renderLanguageLightbox()}
+            </amp-lightbox>
+
+            ${arp.renderAnalyticsBlock()}
 
 
         </body>

@@ -1587,14 +1587,14 @@ color: #3097d1;
 font-weight: normal;
 }
 
-#guestmenu-lightbox .lb-button, #usermenu-lightbox .lb-button {
+#usermenu-lightbox .lb-button, #usermenu-lightbox .lb-button {
 	position: absolute;
 	z-index: 9999;
 	right: 8px;
 	top: 8px;
 }
 
-#guestmenu-lightbox .lightbox, #usermenu-lightbox .lightbox {
+#usermenu-lightbox .lightbox, #usermenu-lightbox .lightbox {
 	width:100%;
 	min-height: 700px;
 	background: rgba(0, 0, 0, 0.80);

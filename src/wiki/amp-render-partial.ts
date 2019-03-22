@@ -1,5 +1,6 @@
 import { ArticleJson } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
+import { CheckForLinksOrCitations } from '../utils/article-utils';
 
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
@@ -352,14 +353,225 @@ export class AmpRenderPartial {
         return `INFOBOXES`;
     }
 
+    renderOneMedia = (media: Media, index: number): string => {
+        const RANDOMSTRING = Math.random().toString(36).substring(7);
+        return `
+            ${ media.type == "PICTURE" ?
+                `<div class="tile-ct">
+                    <div class="">
+                        <span>
+                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${media.caption}">
+                                <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${media.caption}" alt="${media.caption}" data-width="640" data-height="640">
+                                    <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
+                                </amp-img>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="tile-desc">
+                        ${ media.attribution_url && media.attribution_url != "None" ? 
+                            `<a class="grid-attribution" rel="nofollow" target="_blank" href="${media.attribution_url}">
+                                <i class="fa fa-info-circle"></i>
+                            </a>` : ``
+                        }
+                        ${media.caption}
+                    </div>
+                </div>` : 
+            media.type == "GIF" ?
+                `<div class="tile-ct">
+                    <div class="">
+                        <span>
+                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${media.url}" title="${media.caption}">
+                                <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${media.caption}" alt="${media.caption}" data-width="640" data-height="640">
+                                <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
+                                </amp-anim>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="tile-desc">
+                        ${ media.attribution_url && media.attribution_url != "None" ? 
+                            `<a class="grid-attribution" rel="nofollow" target="_blank" href="${media.attribution_url}">
+                                <i class="fa fa-info-circle"></i>
+                            </a>` : ``
+                        }
+                        ${media.caption}
+                    </div>
+                </div>` : 
+            media.type == "YOUTUBE" ?
+                `<div class="tile-ct">
+                    <a rel='nofollow' href="${media.url}" title="Link to video">
+                    <span>
+                        <amp-youtube
+                            data-videoid="YOUTUBE ID HERE"
+                            layout="responsive"
+                            width=150
+                            height=150>
+                        </amp-youtube>
+                    </span>
+                    <div class="tile-desc">
+                        ${ media.attribution_url && media.attribution_url != "None" ? 
+                            `<a class="grid-attribution" rel="nofollow" target="_blank" href="${media.attribution_url}">
+                                <i class="fa fa-info-circle"></i>
+                            </a>` : ``
+                        }
+                        ${media.caption}
+                    </div>
+                    </a>
+                </div>` :  
+            media.type == "NORMAL_VIDEO" ?
+                `<div class="tile-ct">
+                    <a rel='nofollow' href="${media.url}" title='Link to video'>
+                    <span>
+                        <div id="video-${media.url}" class="video-wrapper">
+                            <div class="video-overlay"></div>
+                            <amp-video
+                                width=150
+                                height=150
+                                layout="responsive"
+                                preload="metadata"
+                                poster='https://epcdn-vz.azureedge.net/static/images/placeholder-video.png'>
+                                    <source src="${media.url}#t=0.1" type="${media.mime}">
+                                    Please click to play the video.
+                            </amp-video>
+                        </div>
+                    </span>
+                    <div class="tile-desc">
+                        ${ media.attribution_url && media.attribution_url != "None" ? 
+                            `<a class="grid-attribution" rel="nofollow" target="_blank" href="${media.attribution_url}">
+                                <i class="fa fa-info-circle"></i>
+                            </a>` : ``
+                        }
+                        ${media.caption}
+                    </div>
+                    </a>
+                </div>` : 
+            media.type == "AUDIO" ?
+                `<div class="tile-ct">
+                    <a rel='nofollow' href="${media.url}" title="Link to recording">
+                    <span>
+                        <amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${media.caption}" alt="${media.caption}" data-width="640" data-height="640">
+                            <amp-img placeholder width=150 height=150 src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" layout="fill"></amp-img>
+                        </amp-img>
+                    </span>
+                    <div class="tile-desc">
+                        ${ media.attribution_url && media.attribution_url != "None" ? 
+                            `<a class="grid-attribution" rel="nofollow" target="_blank" href="${media.attribution_url}">
+                                <i class="fa fa-info-circle"></i>
+                            </a>` : ``
+                        }
+                        ${media.caption}
+                    </div>
+                    </a>
+                </div>` : 
+            true ? 
+                `` : ``
+            }
+
+            ${ media.type == "PICTURE" ?
+                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                    <meta itemprop="url" content="${media.url}">
+                    <meta itemprop="name" content="${this.artJSON.page_title} Image #${index}">
+                    <meta itemprop="caption" content="${media.caption}">
+                    <meta itemprop="uploadDate" content="${media.timestamp}">
+                    <meta itemprop="height" content="300">
+                    <meta itemprop="width" content="300">
+                </abbr>` : 
+            media.type == "GIF" ?
+                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+                    <meta itemprop="url" content="${media.url}">
+                    <meta itemprop="name" content="${this.artJSON.page_title} GIF Image #${index}">
+                    <meta itemprop="caption" content="${media.caption}">
+                    <meta itemprop="uploadDate" content="${media.timestamp}">
+                    <meta itemprop="height" content="300">
+                    <meta itemprop="width" content="300">
+                </abbr>` : 
+            media.type == "YOUTUBE" ?
+                `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+                    <meta itemprop="url" content="${media.url}">
+                    <meta itemprop="name" content="${this.artJSON.page_title} YouTube Video #${index}">
+                    <meta itemprop="description" content="${media.caption}">
+                    <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi/YOUTUBE_ID_HERE/default.jpg">
+                    <meta itemprop="uploadDate" content="${media.timestamp}">
+                    <meta itemprop="height" content="300">
+                    <meta itemprop="width" content="300">
+                </abbr>` :  
+            media.type == "NORMAL_VIDEO" ?
+                `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
+                    <meta itemprop="url" content="${media.url}">
+                    <meta itemprop="name" content="${this.artJSON.page_title} Video #${index}">
+                    <meta itemprop="description" content="${media.caption}">
+                    <meta itemprop="thumbnailUrl" content="${media.url}?nocache=${RANDOMSTRING}">
+                    <meta itemprop="uploadDate" content="${media.timestamp}">
+                    <meta itemprop="height" content="300">
+                    <meta itemprop="width" content="300">
+                </abbr>` : 
+            true ? 
+                `` : ``
+            }
+        `;
+    }
+
     renderMediaGallery = (): string => {
         let media: Media[] = this.artJSON.media_gallery
-        return `MEDIA GALLERY`;
+        if(media.length == 0) return ``;
+        let mediaComboString = '';
+        media.forEach( (value, index) => {
+            mediaComboString = mediaComboString.concat(this.renderOneMedia(value, index));
+        });
+        return `
+            <span id="gallery" class="toc-span-fix"></span>
+            <amp-accordion>
+                <section expanded>
+                    <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
+                        <span class="icon"><i class="fa fa-chevron-down"></i>
+                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} images, pictures, and videos" />
+                        </span>
+                    </h2>
+                    <div class="pic-video-container">
+                        <div class="photo-gallery">
+                            ${mediaComboString}
+                        </div>
+                    </div>
+                </section>
+            </amp-accordion>
+        `;
+    }
+
+    renderOneCitation = (citation: Citation): string => {
+        return `
+            <li>
+                ${ citation.thumb && citation.thumb != 'None' ?
+                    `<a class='avatar-wrap' ${citation.attribution} href="${citation.url}" title="Preview Thumbnail">
+                        <amp-img alt='Thumbnail' class="link-image" width=50 height=50 layout="fixed" src="${citation.url}" >
+                            <amp-img placeholder width=50 height=50 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
+                        </amp-img>
+                    </a>` : ``
+                }
+
+                <div class="link-box-right">
+                    <div class="link-url">
+                        ${ citation.social_type && citation.social_type != 'None' ? 
+                            `<span itemprop="sameAs"><a href="${citation.url}" class="link-box-url" ${citation.attribution} target="_blank">${citation.url}</a></span>` : 
+                        true ? 
+                            `<a href="${citation.url}" class="link-box-url" ${citation.attribution} target="_blank">${citation.url}</a>` : ``
+                        }
+                    </div>
+                    <div id="linksetid${citation.url}" class="link-comment">${citation.description}</div>
+                    <div class="link-box-details">
+                        <div class="link-date"><a href="${citation.url}" rel="nofollow">${citation.timestamp}</a></div>
+                    </div>
+            </li>
+        `;
     }
 
     renderCitations = (): string => {
         let citations: Citation[] = this.artJSON.citations;
-        return (citations.length > 0) ? `
+        if(citations.length == 0) return ``;
+        let citationComboString = '';
+        citations.forEach( (value, index) => {
+            citationComboString = citationComboString.concat(this.renderOneCitation(value));
+        });
+
+        return `
             <div id="link_list_container_mobile_wrapper">
                 <span id="referenceList" class="toc-span-fix"></span>
                 <amp-accordion>
@@ -378,14 +590,14 @@ export class AmpRenderPartial {
                         <div class="ll-wrapper">
                             <div class="disclaimer">All information for ${this.artJSON.page_title}'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${this.artJSON.page_title} are also acceptable encyclopedic sources.</div>
                             <ul class="l-lst">
-                                LINK LOOP HERE
+                                ${citationComboString}
                             </ul>
                         </div>
                     </div>
                 </section>
                 </amp-accordion>
             </div>
-        ` : ``;
+        `;
     }    
 
     renderSeeAlso = (): string => {
@@ -501,7 +713,7 @@ export class AmpRenderPartial {
         `
     }
 
-    renderSearch = (): string => {
+    renderSearchLightbox = (): string => {
         return `  
         <div class="lightbox" tabindex="3" role="search">
             <div class="search-lb-ct">
@@ -520,6 +732,138 @@ export class AmpRenderPartial {
 	    </div>
         `
     }
+
+    renderShareLightbox = (): string => {
+        return `  
+            <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
+            <nav class="lightbox" tabindex="7" role="widget">
+                <div class="share-ct">
+                    <div class="share-ct-inner">
+                        <h2>Share this page</h2>
+                        <div class="social-share-block-wrap">
+                            <div class="social-share-block">
+                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}"></a>
+                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}"></a>
+                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}"></a>
+                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="share-pad"></div>
+                    <div class="share-ct-link">
+                        <h4>DIRECT LINK</h4>
+                        <a href="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}</a>
+                    </div>
+                    <div class="share-pad"></div>
+                    <div class="share-hshtgs">
+                        <div class="suggested-tags">Suggested Hashtags</div>
+                        <div class="social-share-block-wrap">
+                            <ul class="tag-list">
+                                ${ this.artJSON.metadata.page_type == 'Person' ?
+                                    `<li>${this.artJSON.page_title} wiki</li>
+                                    <li>${this.artJSON.page_title} bio</li>
+                                    <li>${this.artJSON.page_title} net worth</li>
+                                    <li>${this.artJSON.page_title} age</li>
+                                    <li>${this.artJSON.page_title} married</li>` : 
+                                this.artJSON.metadata.page_type == 'Product' ?
+                                    `<li>${this.artJSON.page_title} wiki</li>
+                                    <li>${this.artJSON.page_title} review</li>
+                                    <li>${this.artJSON.page_title} history</li>
+                                    <li>${this.artJSON.page_title} sales</li>
+                                    <li>${this.artJSON.page_title} facts</li>` : 
+                                this.artJSON.metadata.page_type == 'Organization' ?
+                                    `<li>${this.artJSON.page_title} wiki</li>
+                                    <li>${this.artJSON.page_title} review</li>
+                                    <li>${this.artJSON.page_title} history</li>
+                                    <li>${this.artJSON.page_title} founders</li>
+                                    <li>${this.artJSON.page_title} facts</li>` : 
+                                true ? 
+                                    `<li>${this.artJSON.page_title} wiki</li>
+                                    <li>${this.artJSON.page_title} review</li>
+                                    <li>${this.artJSON.page_title} history</li>
+                                    <li>${this.artJSON.page_title} encyclopedia</li>
+                                    <li>${this.artJSON.page_title} facts</li>` : ``
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="share-pad"></div>
+                    <div class="share-ct-link qr-code-container">
+                        <h4>QR Code</h4>
+                        <amp-iframe
+                            sandbox="allow-scripts allow-pointer-lock allow-popups allow-top-navigation"
+                            layout="fixed"
+                            height="225"
+                            width="216"
+                            frameborder="0"
+                            src="https://www.everipedia.org/AJAX-REQUEST/AJAX_QR_Code_Iframe/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">
+                            <div placeholder></div>
+                        </amp-iframe>
+                    </div>
+        
+        
+                </div>
+            </nav>
+        `
+    }
+
+    renderLanguageLightbox = (): string => {
+        const langLoop = `
+        
+            <li class="lang-li">
+                <a rel="nofollow" href="/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">
+                    <amp-img class="mini-lang-flag" height="35" width="35" layout="fixed" alt="Telegram" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${this.artJSON.metadata.page_lang}.png"></amp-img>
+                    <span class="mini-lang-title">${this.artJSON.page_title}</span>
+                </a>
+            </li>
+        
+        `
+
+        return `
+            <span class="lb-button cls-lang-lgbx"><button  on='tap:language-lightbox.close'></button></span>
+            <nav class="lightbox" tabindex="7" role="widget">
+                <div class="lang-ct">
+                    <h2>Alternate Languages</h2>
+                    <ul class="lang-ul">
+                        LANGUAGE LOOP HERE
+                    </ul>
+                </div>
+            </nav>
+        `
+    }
+
+    renderAnalyticsBlock = (): string => {
+        return `
+            <amp-analytics type="googleanalytics" id="analytics1">
+                <script type="application/json">
+                {
+                    "vars": {
+                    "account": "UA-57561457-3"
+                    },
+                    "triggers": {
+                    "trackPageview": {
+                        "on": "visible",
+                        "request": "pageview",
+                        "vars": {
+                        "title": "{{ PAGETITLE }}"
+                        }
+                    }
+                    }
+                }
+                </script>
+            </amp-analytics>
+            <amp-analytics type="quantcast">
+                <script type="application/json">
+                {
+                    "vars": {
+                    "pcode": "p-zX_L0rFEaESwg",
+                    "labels": ["AMPProject","AMP" ]
+                    }
+                }
+                </script>
+            </amp-analytics>
+        `;
+    }   
 
     renderSchemaJSON = (): string => {
         // Perhaps you should do this while you are looping through the other functions
