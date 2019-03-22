@@ -1,2 +1,2 @@
 export * from './eos-client.module';
-export * from './eos-client.service';
+export * from './eos-sync.service';

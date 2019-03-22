@@ -1,30 +1,29 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
-import { MongoDbService } from './mongodb-service';
+import { MongoDbService } from '../database/mongodb-service';
 import { DfuseConfig, ConfigService } from '../../common';
+import * as fetch from 'node-fetch';
 import * as WebSocket from 'ws';
+
+export interface DfuseToken {
+    token: string, // JWT
+    expires_at: number
+}   
 
 @Injectable()
 export class EosSyncService {
     private readonly mongoDbService: MongoDbService;
-    private readonly dfuse: WebSocket;
     private readonly dfuseStartBlock;
     private readonly dfuseConfig: DfuseConfig;
     private lastMessageReceived: number;
+    private dfuseJwtToken: string;
+    private dfuse: WebSocket;
+
+    public DFUSE_AUTH_URL = 'https://auth.dfuse.io/v1/auth/issue';
 
     constructor(mongo: MongoDbService, config: ConfigService) {
         this.mongoDbService = mongo;
         this.dfuseConfig = config.get('dfuseConfig');
-        const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${this.dfuseConfig.dfuseApiKey}`;
-        try {
-            this.dfuse = new WebSocket(url, {
-                headers: {
-                    Origin: this.dfuseConfig.dfuseOriginUrl
-                }
-            });
-        } catch (err) {
-            console.log('failed to connect to websocket in eos-sync-service ', err);
-        }
     }
 
     async get_start_block(account: string, default_start_block: number = this.dfuseStartBlock): Promise<number> {
@@ -42,6 +41,19 @@ export class EosSyncService {
     }
 
     async start() {
+        const dfuseToken = await this.obtainDfuseToken();
+
+        try {
+            const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${dfuseToken.token}`;
+            this.dfuse = new WebSocket(url, {
+                headers: {
+                    Origin: this.dfuseConfig.dfuseOriginUrl
+                }
+            });
+        } catch (err) {
+            console.log('failed to connect to websocket in eos-sync-service ', err);
+        }
+
         this.dfuse.on('open', async () => {
             const article_req = {
                 type: 'get_actions',
@@ -113,6 +125,14 @@ export class EosSyncService {
         this.dfuse.on('error', (e) => {
             console.log('Dfuse error in eos-sync-service: ', e);
         });
+    }
+
+    async obtainDfuseToken (): Promise<DfuseToken> {
+        return fetch(this.DFUSE_AUTH_URL, {
+            method: "POST",
+            body: JSON.stringify({ api_key: this.dfuseConfig.dfuseApiKey })
+        })
+        .then(response => response.json())
     }
 
     restartIfFailing() {
