@@ -1,11 +1,11 @@
-import { ArticleJson, Metadata, Paragraph, Section, Media, Sentence, ParagraphItem, ListItem, Table, TableRow, Infobox, Citation } from '../wiki/article-dto';
-import { CitationDiff, MetadataDiff, MediaDiff } from './diff.types';
+import { ArticleJson, Metadata, Paragraph, Section, Media, Sentence, ParagraphItem, ListItem, Table, TableRow, TableSection, Infobox, Citation } from '../wiki/article-dto';
+import { ArticleJsonDiff, CitationDiff, MetadataDiff, MediaDiff } from './diff.types';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
 
 const METADATA_EXCLUDE_FIELDS = ["pageviews"];
 
-export async function ArticleJsonDiff (old_wiki: ArticleJson, new_wiki: ArticleJson) {
+export function diffArticleJson (old_wiki: ArticleJson, new_wiki: ArticleJson): ArticleJsonDiff {
     const diff_json = {
         page_title: diffPageTitle(old_wiki.page_title, new_wiki.page_title),
         main_photo: diffMedia([old_wiki.main_photo], [new_wiki.main_photo]),
@@ -14,7 +14,11 @@ export async function ArticleJsonDiff (old_wiki: ArticleJson, new_wiki: ArticleJ
         citations: diffCitations(old_wiki.citations, new_wiki.citations),
         metadata: diffMetadata(old_wiki.metadata, new_wiki.metadata),
         media_gallery: diffMedia(old_wiki.media_gallery, new_wiki.media_gallery),
-        infobox_html: new_wiki.infobox_html
+        infobox_html: new_wiki.infobox_html,
+        diff_metadata: {
+            old_hash: old_wiki.metadata.ipfs_hash,
+            new_hash: new_wiki.metadata.ipfs_hash
+        }
     }
     return diff_json;
 }
@@ -152,10 +156,10 @@ function diffMedia (old_media: Media[], new_media: Media[]): MediaDiff[] {
 // The last line of a table is the caption.
 // ============= 
 
-const SECTION_SEPARATOR = '\n-----------n\n------------\n';
+const SECTION_SEPARATOR = '\n---sb---sb---\n';
 const SECTION_TEXT_IMAGE_SEPARATOR = '\ntititititititi\n';
 const PARAGRAPH_SEPARATOR = '\npppppppppppp\n';
-const PARAGRAPH_ITEM_SEPARATOR = '\npipipi\n';
+const PARAGRAPH_ITEM_SEPARATOR = '\n';
 const IMAGE_SEPARATOR = '\niiiiiiiiiii\n';
 const LIST_ITEM_PREFIX = 'lilili^^^ ';
 const SENTENCE_PREFIX =  'ssssss^^^ ';
@@ -164,66 +168,171 @@ const TABLE_ROW_SEPARATOR = '\n';
 const TABLE_SECTION_SEPARATOR = '\n~~~~~~~~~~~~~\n';
 const TABLE_CELL_SEPARATOR = '|';
 const IMAGE_URL_CAPTION_SEPARATOR = '|';
+const DIFF_ADD_MARKER = ' d+++d';
+const DIFF_DELETE_MARKER = ' d---d';
+const DIFF_NONE_MARKER = ' d===d';
 
 function diffPageBody (old_page_body: Section[], new_page_body: Section[]) {
-    // 3 line breaks to indicate a section break
     const old_lines = old_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
     const new_lines = new_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
-    const diff = JsDiff.diffLines(old_lines, new_lines);
-        
-    return diffToSections(diff);
+
+    const diff_json = JsDiff.diffLines(old_lines, new_lines);
+
+    // mark diffs and combine text
+    let diff_text = "";
+    for (let part of diff_json) {
+        let DIFF_MARKER;
+        if (part.added) DIFF_MARKER = DIFF_ADD_MARKER;
+        else if (part.removed) DIFF_MARKER = DIFF_DELETE_MARKER;
+        else DIFF_MARKER = DIFF_NONE_MARKER;
+
+        let full_line_separators = ([ 
+            SECTION_SEPARATOR,
+            SECTION_TEXT_IMAGE_SEPARATOR,
+            PARAGRAPH_SEPARATOR,
+            TABLE_SECTION_SEPARATOR,
+            IMAGE_SEPARATOR,
+            '' // somtimes blank lines get created by combinations of full line separators
+        ]).map(sep => sep.replace(/\n/g, ''));
+
+        diff_text += part.value
+            .split('\n')
+            .map(text => {
+                if (full_line_separators.includes(text))
+                    return text;
+                else 
+                    return text + DIFF_MARKER
+            })
+            .join('\n');
+    }
+    
+    return diffToSections(diff_text);
 }
 
-function diffToSections(diff): Section[] {
+function diffToSections(diff_text): Section[] {
     const sections = [];
-    for (let part of diff) {
-        let difftype;
-        if (part.added) difftype = 'add';
-        else if (part.removed) difftype = 'delete';
-        else difftype = 'none';   
 
-        const section_texts = part.value.split(SECTION_SEPARATOR);
-        let carryover;
-        for (let section_text of section_texts) {
-            if (!section_text.match(SECTION_TEXT_IMAGE_SEPARATOR)) {
-                carryover = section_text;
-                continue;
-            }
+    const section_texts = diff_text.split(SECTION_SEPARATOR);
 
-            const paragraphs_text = section_text
-                .split(SECTION_TEXT_IMAGE_SEPARATOR)[0];
+    for (let section_text of section_texts) {
+        const paragraphs = section_text
+            .split(SECTION_TEXT_IMAGE_SEPARATOR)[0]
+            .split(PARAGRAPH_SEPARATOR)
+            .filter(text => text.trim()) // no blank lines
+            .map(linesToParagraph);
 
-                
-            const paragraphs = paragraphs_text
-                .split(PARAGRAPH_SEPARATOR)
-                .map(linesToParagraph);
+        const images = section_text
+            .split(SECTION_TEXT_IMAGE_SEPARATOR)[1]
+            .split(IMAGE_SEPARATOR)
+            .filter(line => line.trim()) // no blank lines
+            .map(lineToImage);
 
-            // mark diff types
-            for (let para of paragraphs) {
-                for (let item of para.items) {
-                    item.diff = difftype;
-                }
-            }
-
-            const images = section_text
-                .split(SECTION_TEXT_IMAGE_SEPARATOR)[1]
-                .split(IMAGE_SEPARATOR)
-                .map(lineToImage);
-
-            sections.push({ paragraphs, images })
-        }
+        sections.push({ paragraphs, images })
     }
 
     return sections;
 }
 
 function linesToParagraph(lines: string): Paragraph {
-    const items = lines.split(PARAGRAPH_ITEM_SEPARATOR);
-    return { index: 0, items: [], tag_type: 'p', attrs: {} }
+    const items = lines
+        .split(PARAGRAPH_ITEM_SEPARATOR)
+        .filter(lines => lines.trim()) // no blank items
+        .map((lines, index) => {
+            const prefix = lines.substring(0, 10);
+            if (prefix == SENTENCE_PREFIX)
+                return {
+                    index,
+                    type: 'sentence',
+                    text: lines.substring(10).slice(0, -6),
+                    diff: getLineDiffType(lines)
+                };
+            else if (prefix == LIST_ITEM_PREFIX)
+                return {
+                    index,
+                    type: 'list_item',
+                    tag_type: 'li',
+                    sentences: [{
+                        index: 0,
+                        type: 'sentence',
+                        text: lines.substring(10).slice(0, -6),
+                        diff: getLineDiffType(lines)
+                    }]
+                };
+            else  // if (prefix == TABLE_PREFIX)
+                return linesToTable(lines);
+        });
+
+    return { index: 0, items, tag_type: 'p', attrs: {} }
 }
 
-function lineToImage(line: string): Media {
-    return null;
+function linesToTable (lines: string): Table {
+    console.log(lines);
+    lines = lines.substring(10);
+    const table_sections = lines.split(TABLE_SECTION_SEPARATOR);
+    const thead = linesToTableSection(table_sections[0]);
+    const tbody = linesToTableSection(table_sections[1]);
+    const tfoot = linesToTableSection(table_sections[2]);
+    const caption = table_sections[3];
+
+    return { type: 'table', thead, tbody, tfoot, caption }
+}
+
+function linesToTableSection (lines: string): TableSection {
+    const rows = lines
+        .split(TABLE_ROW_SEPARATOR)
+        .map(lineToTableRow);
+
+    return { rows, attrs: {} }
+}
+
+function lineToTableRow (line: string): TableRow {
+    const difftype = getLineDiffType(line);
+    line = line.slice(0, -6);
+    const cells = line.split(TABLE_CELL_SEPARATOR)
+        .map((text, index) => ({
+            content: [{
+                index: 0,
+                type: 'sentence',
+                text: text,
+                diff: difftype
+            }],
+            index,
+            attrs: {},
+            tag_type: 'td'
+        }));
+
+    return { index: 0, attrs: {}, cells }
+}
+
+function lineToImage(line: string): MediaDiff {
+    const url = line.split(IMAGE_URL_CAPTION_SEPARATOR)[0];
+    const caption = [{
+        index: 0,
+        type: 'sentence',
+        text: line
+            .split(IMAGE_URL_CAPTION_SEPARATOR)[1]
+            .slice(0, -6)
+    }];
+    return {
+        url,
+        caption,
+        type: 'section_image',
+        diff: getLineDiffType(line)
+    }
+}
+
+function getLineDiffType (line: string) {
+    const last_six_chars = line.slice(-6);
+
+    let difftype;
+    if (last_six_chars == DIFF_ADD_MARKER)
+        difftype = 'add';    
+    else if (last_six_chars == DIFF_DELETE_MARKER)
+        difftype = 'remove';    
+    else if (last_six_chars == DIFF_NONE_MARKER)
+        difftype = 'none';    
+
+    return difftype;
 }
 
 function sectionToLines (section: Section) {

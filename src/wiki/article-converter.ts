@@ -1012,16 +1012,16 @@ function parseSection($section: Cheerio): Section {
     const section = { paragraphs: [], images: [] };
 
     // Get all images
-    const $fixed_images = $section.find('.blurb-inline-image-container');
-    $fixed_images.each((i, fixed_image_node) => {
-        const $image = $fixed_images.eq(i);
+    const $section_images = $section.find('.blurb-inline-image-container');
+    $section_images.each((i, section_image_node) => {
+        const $image = $section_images.eq(i);
 
         // Get the image node
         let theImgNode = $image.find('img.caption-img, img.tooltippableImage').eq(0);
 
         // Initialize the objects
         const image: Media = {
-            type: 'fixed_image',
+            type: 'section_image',
             url: theImgNode.attr('src'),
             mime: theImgNode.attr('data-mimetype'),
             thumb: null,

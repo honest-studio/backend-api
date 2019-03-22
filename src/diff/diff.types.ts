@@ -18,3 +18,20 @@ export interface MetadataDiff {
     value: string | Date;
     diff: DiffType
 }
+
+export interface ArticleJsonDiff {
+    page_title: any,
+    main_photo: MediaDiff[],
+    page_body: any,
+    metadata: MetadataDiff[],
+    infoboxes: any,
+    citations: CitationDiff[],
+    media_gallery: MediaDiff[],
+    infobox_html: string,
+    diff_metadata: {
+        old_hash: string,
+        new_hash: string,
+        proposal_id?: number
+        diff_percent?: number
+    }
+}

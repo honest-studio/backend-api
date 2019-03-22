@@ -3,7 +3,7 @@ import * as fetch from 'node-fetch';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { ProposalService } from '../proposal';
 import { WikiService } from '../wiki';
-import { ArticleJsonDiff } from './article-json-differ';
+import { diffArticleJson } from './article-json-differ';
 
 @Injectable()
 export class DiffService {
@@ -54,7 +54,10 @@ export class DiffService {
         }
 
         const diffs = await this.getDiffsByHash(ipfs_hashes);
-        diffs.forEach((diff) => (diff.proposal_id = ipfs_hashes.find((row) => row[1] === diff.new_hash)[2]));
+        diffs.forEach((diff) => {
+            const match = ipfs_hashes.find((row) => row[1] === diff.diff_metadata.new_hash);
+            diff.metadata.proposal_id = match[2];
+        });
 
         return diffs;
     }
@@ -86,16 +89,14 @@ export class DiffService {
             const old_wiki = wikis.find((w) => w.metadata.ipfs_hash == old_hash);
             const new_wiki = wikis.find((w) => w.metadata.ipfs_hash == new_hash);
 
-            const diff_wiki = await ArticleJsonDiff(old_wiki, new_wiki);
-            const diff_percent = Math.random().toFixed(2);
+            const diff_wiki = await diffArticleJson(old_wiki, new_wiki);
+            diff_wiki.diff_metadata.diff_percent = Number(Math.random().toFixed(2));
 
-            const doc = { old_hash, new_hash, diff_percent, diff_wiki };
-            docs.push(doc);
-            diffs[i] = doc;
+            docs.push(diff_wiki);
+            diffs[i] = diff_wiki;
         }
 
-        var cache_docs = docs.filter((doc) => !doc.error);
-        //if (cache_docs.length > 0) await this.mongo.connection().diffs.insertMany(cache_docs);
+        //if (docs.length > 0) await this.mongo.connection().diffs.insertMany(cache_docs);
 
         return diffs;
     }

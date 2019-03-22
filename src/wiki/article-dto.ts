@@ -45,10 +45,10 @@ export interface Infobox {
 }
 
 export interface Media {
-    type: string;
+    type: string; // section_image, main_photo, inline_image
     url: string;
-    thumb: string;
     caption: Sentence[]; // TODO: change to string
+    thumb?: string;
     timestamp?: Date;
     attribution_url?: string;
     mime?: string;
