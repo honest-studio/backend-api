@@ -910,7 +910,12 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                 // Try to find the value
                 // Only the text is being grabbed now.
                 // If there is any useful HTML in here more complex logic is required
-                const rowText = decode( $(this).text().trim(), 'all');
+                const rowText = decode(
+                    $(this)
+                        .text()
+                        .trim(),
+                    'all'
+                );
 
                 // Add the value to the rows
                 infoPackage.values.push({
@@ -985,7 +990,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                 // Add the value to the rows
                 infoPackage.values.push({
                     type: 'sentence',
-                    index: i, 
+                    index: i,
                     text: tempValue
                 });
             });
@@ -1374,16 +1379,16 @@ function splitSentences(text: string): Array<string> {
 
     // Don't split on certain tricky words like Mr., Mrs., etc.
     // Don't split inside a LINK, CITE, or INLINE IMAGE
-    for (let i=0; i < splits.length; i++) {
-        const lastWord = splits[i].split(" ").pop();
+    for (let i = 0; i < splits.length; i++) {
+        const lastWord = splits[i].split(' ').pop();
         const split = SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord);
         if (
             (SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord) ||
-            splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm))
-            && i+1 < splits.length
+                splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm)) &&
+            i + 1 < splits.length
         ) {
-            splits[i] = `${splits[i]} ${splits[i+1]}`;
-            splits.splice(i+1, 1);
+            splits[i] = `${splits[i]} ${splits[i + 1]}`;
+            splits.splice(i + 1, 1);
             i--; // re-check this sentence in case there's multiple bad splits
         }
     }

@@ -36,11 +36,11 @@ export class PreviewController {
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'ISO 639 language code',
+        description: 'ISO 639 language code'
     })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'ISO 639 language code',
+        description: 'ISO 639 language code'
     })
     @ApiResponse({
         status: 200,

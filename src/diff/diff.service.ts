@@ -45,7 +45,7 @@ export class DiffService {
             if (old_proposals.length == 0)
                 // The proposal doesn't have a parent
                 // Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ is an empty file
-                old_hash = "Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ";
+                old_hash = 'Qmc5m94Gu7z62RC8waSKkZUrCCBJPyHbkpmGzEePxy2oXJ';
             else old_hash = old_proposals[0].trace.act.data.ipfs_hash;
 
             // the 3rd element doesn't get used by the diff and is for our

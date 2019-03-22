@@ -108,7 +108,7 @@ export class PreviewService {
                 }
             );
         });
-        if (previews.length == 0) 
+        if (previews.length == 0)
             throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
 
         // clean up text previews

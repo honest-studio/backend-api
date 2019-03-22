@@ -1,7 +1,4 @@
-import {
-    Citation,
-    Media
-} from '../wiki/article-dto';
+import { Citation, Media } from '../wiki/article-dto';
 
 export type DiffType = 'add | delete | none';
 
@@ -16,22 +13,22 @@ export interface MediaDiff extends Media {
 export interface MetadataDiff {
     key: string;
     value: string | Date;
-    diff: DiffType
+    diff: DiffType;
 }
 
 export interface ArticleJsonDiff {
-    page_title: any,
-    main_photo: MediaDiff[],
-    page_body: any,
-    metadata: MetadataDiff[],
-    infoboxes: any,
-    citations: CitationDiff[],
-    media_gallery: MediaDiff[],
-    infobox_html: string,
+    page_title: any;
+    main_photo: MediaDiff[];
+    page_body: any;
+    metadata: MetadataDiff[];
+    infoboxes: any;
+    citations: CitationDiff[];
+    media_gallery: MediaDiff[];
+    infobox_html: string;
     diff_metadata: {
-        old_hash: string,
-        new_hash: string,
-        proposal_id?: number
-        diff_percent?: number
-    }
+        old_hash: string;
+        new_hash: string;
+        proposal_id?: number;
+        diff_percent?: number;
+    };
 }
