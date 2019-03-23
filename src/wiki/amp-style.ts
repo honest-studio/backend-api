@@ -47,7 +47,7 @@ amp-accordion, .toc-button, button, a{
 -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-amp-accordion.infobox-accordion{
+amp-accordion.infobox-accordion, amp-accordion.media-gallery-accordion, amp-accordion.link-list-accordion{
     float: left;
     width: 100%;
 }
@@ -88,12 +88,15 @@ ul.infobox.list-plural{
 }
 ul.infobox.list-plural li:first-child{
     float: left;
-    width:25%;
     border: 0px;
 }
 ul.infobox.list-plural li{
-    float: right;
     font-size: 12.5px;
+    border-top:1px solid #ececec;
+    float: left;
+    width: 100%;
+    padding-top: 5px;
+    min-height: 20px;
 }
 
 ul.infobox.list-plural li p {
@@ -121,14 +124,6 @@ ul.infobox.list-plural .info-an li:last-child {
 	padding-left:0px;
 }
 
-.list-plural .row {
-	border-top:1px solid #ececec;
-    float: left;
-    width: 100%;
-    padding-top: 5px;
-    min-height: 20px;
-
-}
 
 ul.infobox.list-plural > .info-an {
     width: 73%;
@@ -197,7 +192,6 @@ ul.infobox li {
     width: 100%;
     float: left;
     line-height: 1.6;
-	border-bottom: 1px solid #ECECEC;
 }
 
 ul.infobox li:last-child {
@@ -751,11 +745,6 @@ font-family: 'Poppins', Helvetica, Arial;
     line-height: 1.4;
 }
 
-#link_list_container_mobile_wrapper{
-    float: left;
-    display: block;
-    width: 100%;
-}
 
 .l-lst-header {
     float: left;

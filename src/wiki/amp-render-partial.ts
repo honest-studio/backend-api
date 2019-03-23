@@ -238,54 +238,24 @@ export class AmpRenderPartial {
     }
 
     renderOneInfobox = (infobox: Infobox, index: number): string => {
-        let sanitizedValue = infobox.values.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
-            result.lightboxes.forEach((value, index) => {
-                this.allLightBoxes.push(value);
-            })
-            return result.text;
-        }).join("");
-        console.log(infobox);
         return `
-            <div class="row">
             <li>
                 <div class="info-qt">
                     <h3>${infobox.key}</h3>
                 </div>
-                    {% for pluralbox in refbox.objects %}
+                ${infobox.values.map((value, index) => {
+                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
+                    result.lightboxes.forEach((value, index) => {
+                        this.allLightBoxes.push(value);
+                    })
+                    // return result.text;
+                    return `
                         <div class="info-an">
-                            {% if pluralbox.schema != "None" %}
-                                {%  if pluralbox.addlSchematype != "None" %}
-                                    <li class="plural-infobox">
-                                        {% if pluralbox.addlSchemaItemprop == "NOTHING" %}
-                                            <abbr itemprop="{{ pluralbox.schema }}">
-                                                <div class="schema addl-schema-line" itemscope itemtype="http://schema.org/{{ pluralbox.addlSchematype }}">
-                                                    {{ pluralbox.value|safe }}
-                                                </div>
-                                            </abbr>
-                                        {% else %}
-                                            <div itemprop="{{ pluralbox.schema }}" class="schema addl-schema-line" itemscope itemtype="http://schema.org/{{ pluralbox.addlSchematype }}">
-                                                <abbr itemprop="{{ pluralbox.addlSchemaItemprop }}" content="{{ pluralbox.value|striptags }}"></abbr>
-                                                {{ pluralbox.value|safe }}
-                                            </div>
-                                        {% endif %}
-                                    </li>
-                                {% else %}
-                                    <li class="plural-infobox">
-                                        <abbr itemprop="{{ pluralbox.schema }}" content="{{ pluralbox.value|striptags }}"></abbr>
-                                        {{ pluralbox.value|safe }}
-                                    </li>
-                                {% endif %}
-
-                            {% else %}
-                                <li class="plural-infobox">
-                                    {{ pluralbox.value|safe }}
-                                </li>
-                            {% endif %}
+                            ${result.text}
                         </div>
-                    {% endfor %}
+                    `
+                }).join("")}
             </li>
-            </div>
         `;
     }
 
@@ -307,7 +277,7 @@ export class AmpRenderPartial {
                         }
                         <span class="icon"><i class="fa fa-chevron-down"></i></span>
                     </h2>
-                    ${ this.artJSON.infobox_html.length != 0 ? 
+                    ${ this.artJSON.infobox_html && this.artJSON.infobox_html.length != 0 ? 
                         `<div id="blobBox_container">
                             ${blobboxComboString}
                         </div>` : ``
@@ -315,10 +285,9 @@ export class AmpRenderPartial {
                     <div class="infbx-ct">
                     ${ infoboxes.length != 0 ? 
                         `<ul class="list-unstyled list-spaced list-plural infobox">
-
+                            ${infoboxComboString}
                         </ul>` : ``
                     }
-                            INFOBOX HERE
                     </div>
                 </section>
             </amp-accordion>
@@ -459,7 +428,7 @@ export class AmpRenderPartial {
         }).join("");
         return `
             <span id="gallery" class="toc-span-fix"></span>
-            <amp-accordion>
+            <amp-accordion  class="media-gallery-accordion">
                 <section expanded>
                     <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
                         <span class="icon"><i class="fa fa-chevron-down"></i>
@@ -519,31 +488,29 @@ export class AmpRenderPartial {
         }).join("");
 
         return `
-            <div id="link_list_container_mobile_wrapper">
-                <span id="referenceList" class="toc-span-fix"></span>
-                <amp-accordion>
-                <section expanded>
-                    <h2 class="acc-header">
-                        ${ this.artJSON.metadata.page_type == 'Person' ?
-                            `Reference Links For This Biography` :
-                        true ?
-                            `Reference Links For This Wiki` : ``
-                        }
-                        <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
-                        </span>
-                    </h2>
-                    <div class="l-lst-header" id="link_list_container">
-                        <div class="ll-wrapper">
-                            <div class="disclaimer">All information for ${this.artJSON.page_title}'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${this.artJSON.page_title} are also acceptable encyclopedic sources.</div>
-                            <ul class="l-lst">
-                                ${citationComboString}
-                            </ul>
-                        </div>
+            <span id="referenceList" class="toc-span-fix"></span>
+            <amp-accordion class='link-list-accordion'>
+            <section expanded>
+                <h2 class="acc-header">
+                    ${ this.artJSON.metadata.page_type == 'Person' ?
+                        `Reference Links For This Biography` :
+                    true ?
+                        `Reference Links For This Wiki` : ``
+                    }
+                    <span class="icon"><i class="fa fa-chevron-down"></i>
+                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
+                    </span>
+                </h2>
+                <div class="l-lst-header" id="link_list_container">
+                    <div class="ll-wrapper">
+                        <div class="disclaimer">All information for ${this.artJSON.page_title}'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${this.artJSON.page_title} are also acceptable encyclopedic sources.</div>
+                        <ul class="l-lst">
+                            ${citationComboString}
+                        </ul>
                     </div>
-                </section>
-                </amp-accordion>
-            </div>
+                </div>
+            </section>
+            </amp-accordion>
         `;
     }    
 

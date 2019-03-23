@@ -905,7 +905,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
         // Loop through the value rows
         $(this)
-            .find('td.ibox-plural-value')
+            .find('td.ibox-plural-value, .ibox-nonplural-value')
             .each(function(i) {
                 // Try to find the value
                 // Only the text is being grabbed now.
@@ -971,7 +971,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
         // Loop through the value rows (should only be one)
         $(this)
-            .find('.ibox-nonplural-value')
+            .find('.ibox-nonplural-value',)
             .each(function(i) {
                 // Try to find the value
                 let tempValue;
@@ -988,11 +988,12 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                     index: i, 
                     text: tempValue
                 });
-            });
+        });
 
         // Add to the infobox list
         infoboxes.push(infoPackage);
     });
+
 
     return infoboxes;
 }
