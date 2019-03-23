@@ -7,7 +7,7 @@ import { MysqlService } from '../feature-modules/database';
 export class SearchService {
     constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
 
-    async searchTitle(query: string, langs?: string[]): Promise<any> {
+    async searchTitle(query: string, langs?: string): Promise<any> {
         const searchJSON = {
             query: {
                 bool: {
@@ -44,7 +44,7 @@ export class SearchService {
 
         if (langs) {
             searchJSON.query.bool['must'] = {
-                terms: { lang: langs }
+                terms: { lang: JSON.parse(langs) }
             };
         }
 

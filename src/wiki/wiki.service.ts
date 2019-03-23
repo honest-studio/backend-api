@@ -6,6 +6,7 @@ import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
 import { ArticleJson } from './article-dto';
 import { renderAMP } from './amp-template';
+import { renderSchema } from './schema-template';
 
 export interface LanguagePack {
     lang: string;
@@ -61,6 +62,10 @@ export class WikiService {
 
     async getAMPBySlug(lang_code: string, slug: string): Promise<string> {
         return renderAMP(await this.getWikiBySlug(lang_code, slug));
+    }
+
+    async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
+        return renderSchema(await this.getWikiBySlug(lang_code, slug));
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>) {

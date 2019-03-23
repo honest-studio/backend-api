@@ -54,6 +54,24 @@ export class WikiController {
         return this.wikiService.getWikiBySlug(lang_code, slug);
     }
 
+    @Get('schema-slug/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get the schema.org for the page in JSON-LD format https://developers.google.com/search/docs/guides/intro-structured-data' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `A JSON-LD for the wiki encoded in UTF-8`
+    })
+    async getSchemaBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        return this.wikiService.getSchemaBySlug(lang_code, slug);
+    }
+
     @Get('amp-slug/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get AMP HTML for a given article' })
     @ApiImplicitParam({

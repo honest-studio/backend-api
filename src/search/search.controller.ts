@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req } from '@nestjs/common';
+import { Controller, Get, Param, Req, Query } from '@nestjs/common';
 import { Request } from 'express';
 import { ApiOperation, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { SearchService } from './search.service';
@@ -10,15 +10,21 @@ export class SearchController {
     constructor(private readonly searchService: SearchService) {}
 
     @Get('title/:query')
-    @ApiOperation({ title: 'Search the Everipedia database by article title' })
+    @ApiOperation({ title: 'Search the Everipedia database by article title and optionally, by language' })
     @ApiImplicitParam({
         name: 'query',
         description: 'Search term',
         required: true,
         type: 'string'
     })
-    async searchTitle(@Param('query') query): Promise<any> {
-        return await this.searchService.searchTitle(query);
+    @ApiImplicitParam({
+        name: 'langs',
+        description: 'Language',
+        required: false,
+        type: 'string'
+    })
+    async searchTitle(@Param('query') query, @Query('langs') langs): Promise<any> {
+        return await this.searchService.searchTitle(query, langs);
     }
 
     @Get('test/:query')

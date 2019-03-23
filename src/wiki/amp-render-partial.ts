@@ -6,6 +6,7 @@ var striptags = require('striptags');
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
     public allLightBoxes: string[] = [];
+    public currentIPFS = "Qm209823098409328430298430298439";
     constructor(inputJSN) {
         this.artJSON = inputJSN;
     }
@@ -39,34 +40,18 @@ export class AmpRenderPartial {
             }
             ${ this.artJSON.metadata.page_type == 'Person' ?
                 `<title>${this.artJSON.page_title} | Wiki & Bio | Everipedia</title>
-                <meta name="description" content="${this.artJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
-                <meta name="keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio, ${this.artJSON.page_title} encyclopedia')>">
-                <meta itemprop="keywords" content="${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" >
-                <meta name="news_keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio, ${this.artJSON.page_title} encyclopedia')>">
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Bio |">` :
             this.artJSON.metadata.page_type == 'Product' ?
                 `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
-                <meta name="description" content="${this.artJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
-                <meta name="keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} encyclopedia')>, ${this.artJSON.page_title} review">
-                <meta itemprop="keywords" content="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" >
-                <meta name="news_keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} encyclopedia')>, ${this.artJSON.page_title} review">
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |">` :
             this.artJSON.metadata.page_type == 'Organization' ?
                 `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
-                <meta name="description" content="${this.artJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
-                <meta name="keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} history')>, ${this.artJSON.page_title} encyclopedia')>">
-                <meta itemprop="keywords" content="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" >
-                <meta name="news_keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} history, ${this.artJSON.page_title} encyclopedia')>">
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |">` :
             this.artJSON.metadata.page_type ?
                 `<title>${this.artJSON.page_title} | Wiki | Everipedia</title>
-                <meta name="description" content="${this.artJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}">
-                <meta name="keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} encyclopedia')>">
-                <meta itemprop="keywords" content="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" >
-                <meta name="news_keywords" content="${this.artJSON.page_title}, ${this.artJSON.page_title} wiki, ${this.artJSON.page_title} encyclopedia')>">
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki |">` : ''
             }
@@ -126,73 +111,7 @@ export class AmpRenderPartial {
         `
     }
 
-    renderMainMeta = (AMP_PHOTO_HEIGHT: string, AMP_PHOTO_WIDTH: string, OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        return `
-            ${ this.artJSON.metadata.page_type == 'Person' ?
-                `<meta itemprop="keywords" content="${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio" >` :
-            this.artJSON.metadata.page_type == 'Product' ?
-                `<meta itemprop="keywords" content="${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review">` :
-            this.artJSON.metadata.page_type == 'Organization' ?
-                `<meta itemprop="keywords" content="${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review">` :
-            this.artJSON.metadata.page_type ?
-                `<meta itemprop="keywords" content="${this.artJSON.page_title} wiki, ${this.artJSON.page_title} history, ${this.artJSON.page_title} review">` : ``
-            }
-
-            <meta itemprop="mainEntityOfPage" content="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}"/>
-            <meta itemprop="url" content="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">
-            ${ this.artJSON.metadata.page_type == 'Person' ?
-                `<meta itemprop="headline" content="${this.artJSON.page_title}'s biography and wiki on Everipedia">` :
-            this.artJSON.metadata.page_type == 'Product' ?
-                `<meta itemprop="headline" content="${this.artJSON.page_title}'s wiki & review on Everipedia">` :
-            this.artJSON.metadata.page_type == 'Organization' ?
-                `<meta itemprop="headline" content="${this.artJSON.page_title}'s wiki & review on Everipedia">` :
-            this.artJSON.metadata.page_type ?
-                `<meta itemprop="headline" content="${this.artJSON.page_title}'s wiki on Everipedia">` : ``
-            }
-            
-            <meta itemprop="articleSection" content="News, Trending">
-            <meta itemprop="author" content="Everipedia">
-            <meta itemprop="copyrightHolder" content="Everipedia">
-
-            ${ this.artJSON.main_photo.url ?
-                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                    ${ OVERRIDE_MAIN_THUMB ? 
-                        `<meta itemprop="url" content="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}">` : 
-                    this.artJSON.main_photo.url ? 
-                        `<meta itemprop="url" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}">` : ``
-                    }
-                    <meta itemprop="name" content="${this.artJSON.page_title}">
-                    <meta itemprop="caption" content="${this.artJSON.page_title}">
-                    <meta itemprop="uploadDate" content="${this.artJSON.metadata.last_modified}">
-                    <meta itemprop="height" content="${AMP_PHOTO_HEIGHT}">
-                    <meta itemprop="width" content="${AMP_PHOTO_WIDTH}">
-                </abbr>` :
-            true ?
-                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                    <meta itemprop="url" content="https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png">
-                    <meta itemprop="name" content="${this.artJSON.page_title}">
-                    <meta itemprop="caption" content="${this.artJSON.page_title}">
-                    <meta itemprop="uploadDate" content="${this.artJSON.metadata.last_modified}">
-                    <meta itemprop="height" content="1274">
-                    <meta itemprop="width" content="1201">
-                </abbr>` : ``
-            }
-
-            <abbr itemprop="publisher" itemid="https://everipedia.org/" itemscope itemtype="https://schema.org/Organization">
-                <meta itemprop="name" content="Everipedia">
-                <meta itemprop="legalName" content="Everipedia International">
-                <meta itemprop="sameAs" content="https://twitter.com/everipedia">
-                <meta itemprop="sameAs" content="https://www.facebook.com/everipedia/">
-                <abbr itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-                    <meta itemprop="url" content="https://epcdn-vz.azureedge.net/static/images/logo_600x60.png">
-                    <meta itemprop="width" content="600">
-                    <meta itemprop="height" content="60">
-                </abbr >
-            </abbr >
-            <meta itemprop="datePublished" content="${this.artJSON.metadata.creation_timestamp}"/>
-            <meta itemprop="dateModified" content="${this.artJSON.metadata.last_modified}"/>
-        `
-    }
+    
 
     renderMainPhoto = (AMP_PHOTO_HEIGHT: string, AMP_PHOTO_WIDTH: string, OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
         let ampSanitizedPhotoComment = "NEED TO HAVE SENTENCE-CONCATTED, AMP SANITIZED CAPTION HERE";
@@ -200,29 +119,6 @@ export class AmpRenderPartial {
             ${ this.artJSON.metadata.page_type == 'Person' ?
                 `<abbr itemprop="homeLocation" itemscope itemtype="http://schema.org/Place" >
                     <meta itemprop="name" content="Earth" />
-                </abbr>` : ``
-            }
-            ${ this.artJSON.main_photo.url ?
-                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                    ${ OVERRIDE_MAIN_THUMB ? 
-                        `<meta itemprop="url" content="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}">` : 
-                    this.artJSON.main_photo.url ? 
-                        `<meta itemprop="url" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}">` : ``
-                    }
-                    <meta itemprop="name" content="${this.artJSON.page_title}">
-                    <meta itemprop="caption" content="${this.artJSON.page_title}">
-                    <meta itemprop="uploadDate" content="${this.artJSON.metadata.last_modified}">
-                    <meta itemprop="height" content="${AMP_PHOTO_HEIGHT}">
-                    <meta itemprop="width" content="${AMP_PHOTO_WIDTH}">
-                </abbr>` : 
-            true ? 
-                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                    <meta itemprop="url" content="https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png">
-                    <meta itemprop="name" content="${this.artJSON.page_title}">
-                    <meta itemprop="caption" content="${this.artJSON.page_title}">
-                    <meta itemprop="uploadDate" content="${this.artJSON.metadata.last_modified}">
-                    <meta itemprop="height" content="1274">
-                    <meta itemprop="width" content="1201">
                 </abbr>` : ``
             }
             ${ this.artJSON.main_photo.url ?
@@ -347,7 +243,7 @@ export class AmpRenderPartial {
     renderOneMedia = (media: Media, index: number): string => {
         const RANDOMSTRING = Math.random().toString(36).substring(7);
         let sanitizedCaption = media.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
             result.lightboxes.forEach((value, index) => {
                 this.allLightBoxes.push(value);
             })
@@ -466,47 +362,7 @@ export class AmpRenderPartial {
                 `` : ``
             }
 
-            ${ media.type == "PICTURE" ?
-                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                    <meta itemprop="url" content="${media.url}">
-                    <meta itemprop="name" content="${this.artJSON.page_title} Image #${index}">
-                    <meta itemprop="caption" content="${sanitizedCaptionPlaintext}">
-                    <meta itemprop="uploadDate" content="${media.timestamp}">
-                    <meta itemprop="height" content="300">
-                    <meta itemprop="width" content="300">
-                </abbr>` : 
-            media.type == "GIF" ?
-                `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-                    <meta itemprop="url" content="${media.url}">
-                    <meta itemprop="name" content="${this.artJSON.page_title} GIF Image #${index}">
-                    <meta itemprop="caption" content="${sanitizedCaptionPlaintext}">
-                    <meta itemprop="uploadDate" content="${media.timestamp}">
-                    <meta itemprop="height" content="300">
-                    <meta itemprop="width" content="300">
-                </abbr>` : 
-            media.type == "YOUTUBE" ?
-                `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-                    <meta itemprop="url" content="${media.url}">
-                    <meta itemprop="name" content="${this.artJSON.page_title} YouTube Video #${index}">
-                    <meta itemprop="description" content="${sanitizedCaptionPlaintext}">
-                    <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi/YOUTUBE_ID_HERE/default.jpg">
-                    <meta itemprop="uploadDate" content="${media.timestamp}">
-                    <meta itemprop="height" content="300">
-                    <meta itemprop="width" content="300">
-                </abbr>` :  
-            media.type == "NORMAL_VIDEO" ?
-                `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-                    <meta itemprop="url" content="${media.url}">
-                    <meta itemprop="name" content="${this.artJSON.page_title} Video #${index}">
-                    <meta itemprop="description" content="${sanitizedCaptionPlaintext}">
-                    <meta itemprop="thumbnailUrl" content="${media.url}?nocache=${RANDOMSTRING}">
-                    <meta itemprop="uploadDate" content="${media.timestamp}">
-                    <meta itemprop="height" content="300">
-                    <meta itemprop="width" content="300">
-                </abbr>` : 
-            true ? 
-                `` : ``
-            }
+            
         `;
     }
 
@@ -537,7 +393,7 @@ export class AmpRenderPartial {
 
     renderOneCitation = (citation: Citation, index: number): string => {
         let sanitizedDescription = citation.description.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
             result.lightboxes.forEach((value, index) => {
                 this.allLightBoxes.push(value);
             })

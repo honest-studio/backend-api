@@ -18,7 +18,6 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
         <body>
             ${arp.renderNavBar()}
             <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" class="schema">
-                ${arp.renderMainMeta(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
                 ${arp.renderMainPhoto(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
                 ${arp.renderNameContainer()}
                 ${arp.renderInfoboxes()}
