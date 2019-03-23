@@ -205,6 +205,12 @@ describe('Backend API', () => {
         .get('/v2/search/title/Travis%20Moore')
         .expect(200)
   });
+
+  it('Search: No Results', () => {
+    return request(app.getHttpServer())
+        .get('/v2/search/title/Coloossed')
+        .expect(200)
+  });
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())
