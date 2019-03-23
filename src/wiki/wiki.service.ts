@@ -61,7 +61,8 @@ export class WikiService {
     }
 
     async getAMPBySlug(lang_code: string, slug: string): Promise<string> {
-        return renderAMP(await this.getWikiBySlug(lang_code, slug));
+        let langPacks = await this.getWikiGroup(lang_code, slug);
+        return renderAMP(await this.getWikiBySlug(lang_code, slug), langPacks);
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {

@@ -1,6 +1,8 @@
 import { ArticleJson } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
+import { youtubeIdExists } from './article-converter';
+import { LanguagePack } from './wiki.service';
 var striptags = require('striptags');
 
 export class AmpRenderPartial {
@@ -297,7 +299,7 @@ export class AmpRenderPartial {
                     <a rel='nofollow' href="${media.url}" title="Link to video">
                     <span>
                         <amp-youtube
-                            data-videoid="YOUTUBE ID HERE"
+                            data-videoid="${youtubeIdExists(media.url)}"
                             layout="responsive"
                             width=150
                             height=150>
@@ -669,17 +671,22 @@ export class AmpRenderPartial {
         `
     }
 
-    renderLanguageLightbox = (): string => {
-        const langLoop = `
-        
+    renderOneLanguage = (langPack: LanguagePack): string => {
+        return `
             <li class="lang-li">
-                <a rel="nofollow" href="/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">
-                    <amp-img class="mini-lang-flag" height="35" width="35" layout="fixed" alt="Telegram" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${this.artJSON.metadata.page_lang}.png"></amp-img>
-                    <span class="mini-lang-title">${this.artJSON.page_title}</span>
+                <a rel="nofollow" href="/wiki/lang_${langPack.lang}/${langPack.slug}">
+                    <amp-img class="mini-lang-flag" height="35" width="35" layout="fixed" alt="${langPack.article_title}" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${langPack.lang}.png"></amp-img>
+                    <span class="mini-lang-title">${langPack.article_title}</span>
                 </a>
             </li>
-        
         `
+    }
+
+    renderLanguageLightboxes = (langPacks: LanguagePack[]): string => {
+        if(langPacks.length == 0) return ``;
+        let languageComboString = langPacks.map((value, index) => {
+            return this.renderOneLanguage(value);
+        }).join("");
 
         return `
             <span class="lb-button cls-lang-lgbx"><button  on='tap:language-lightbox.close'></button></span>
@@ -687,7 +694,7 @@ export class AmpRenderPartial {
                 <div class="lang-ct">
                     <h2>Alternate Languages</h2>
                     <ul class="lang-ul">
-                        LANGUAGE LOOP HERE
+                        ${languageComboString}
                     </ul>
                 </div>
             </nav>

@@ -1,8 +1,13 @@
 import { ArticleJson } from './article-dto';
+import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
+import { youtubeIdExists } from './article-converter';
+import { LanguagePack } from './wiki.service';
+var striptags = require('striptags');
 
 export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = Math.random().toString(36).substring(7);
     const BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = false, AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '';
+    const currentIPFS = 'Qmaskdjaslkdjslakjdlkdsad'
     let schemaJSON = { 
         "@context": `http://schema.org`, 
         "@type": [`Article`, inputJSON.metadata.sub_page_type ? inputJSON.metadata.sub_page_type : inputJSON.metadata.page_type],
@@ -77,106 +82,62 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
         });
     }
     inputJSON.media_gallery.forEach((media, index) => {
+        let sanitizedCaption = media.caption.map((value, index) => {
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, this.currentIPFS);
+            return result.text;
+        }).join("");
+        let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
         switch (media.type){
             case 'PICTURE':
                 schemaJSON["image"].push({
                     "@type": "ImageObject",
                     "url": media.url,
-                    "name": `${this.artJSON.page_title} Image #${index}`,
-                    "caption": inputJSON.page_title,
-                    "uploadDate": inputJSON.metadata.last_modified,
+                    "name": `${inputJSON.page_title} Image #${index}`,
+                    "caption": sanitizedCaptionPlaintext,
+                    "uploadDate": media.timestamp,
+                    "height": 300,
+                    "width": 300,
+                });
+                break;
+            case 'GIF':
+                schemaJSON["image"].push({
+                    "@type": "ImageObject",
+                    "url": media.url,
+                    "name": `${inputJSON.page_title} GIF Image #${index}`,
+                    "caption": sanitizedCaptionPlaintext,
+                    "uploadDate": media.timestamp,
+                    "height": 300,
+                    "width": 300,
+                });
+                break;
+            case 'YOUTUBE':
+                schemaJSON["image"].push({
+                    "@type": "ImageObject",
+                    "url": media.url,
+                    "name": `${inputJSON.page_title} YouTube Video #${index}`,
+                    "thumbnailUrl": `https://i.ytimg.com/vi/${youtubeIdExists(media.url)}/default.jpg`,
+                    "caption": sanitizedCaptionPlaintext,
+                    "uploadDate": media.timestamp,
+                    "height": 300,
+                    "width": 300,
+                });
+                break;
+            case 'NORMAL_VIDEO':
+                schemaJSON["image"].push({
+                    "@type": "ImageObject",
+                    "url": media.url,
+                    "name": `${inputJSON.page_title} Video #${index}`,
+                    "thumbnailUrl": `${media.url}?nocache=${RANDOMSTRING}`,
+                    "caption": sanitizedCaptionPlaintext,
+                    "uploadDate": media.timestamp,
                     "height": 1274,
                     "width": 1201,
                 });
-
-
-//     ${ media.type == "PICTURE" ?
-//     `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-//         <meta itemprop="url" content="${media.url}">
-//         <meta itemprop="name" content="${this.artJSON.page_title} Image #${index}">
-//         <meta itemprop="caption" content="${sanitizedCaptionPlaintext}">
-//         <meta itemprop="uploadDate" content="${media.timestamp}">
-//         <meta itemprop="height" content="300">
-//         <meta itemprop="width" content="300">
-//     </abbr>` : 
-
-
-
-
-
-
-
-                break;
-            case 'GIF':
-                schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-                schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} review, ${inputJSON.page_title} news, what is ${inputJSON.page_title}`;
-                schemaJSON["headline"] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
-                break;
-            case 'YOUTUBE':
-                schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-                schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, what is ${inputJSON.page_title}, where is ${inputJSON.page_title}`;
-                schemaJSON["headline"] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
-                break;
-            case 'NORMAL_VIDEO':
-                schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-                schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, what is ${inputJSON.page_title}, where is ${inputJSON.page_title}`;
-                schemaJSON["headline"] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
                 break;
             default:
-                schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-                schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, what is ${inputJSON.page_title}`;
-                schemaJSON["headline"] = `${inputJSON.page_title}'s wiki on Everipedia`;
+                
         }
 
-
-
-
-
-// media.type == "GIF" ?
-//     `<abbr itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-//         <meta itemprop="url" content="${media.url}">
-//         <meta itemprop="name" content="${this.artJSON.page_title} GIF Image #${index}">
-//         <meta itemprop="caption" content="${sanitizedCaptionPlaintext}">
-//         <meta itemprop="uploadDate" content="${media.timestamp}">
-//         <meta itemprop="height" content="300">
-//         <meta itemprop="width" content="300">
-//     </abbr>` : 
-// media.type == "YOUTUBE" ?
-//     `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-//         <meta itemprop="url" content="${media.url}">
-//         <meta itemprop="name" content="${this.artJSON.page_title} YouTube Video #${index}">
-//         <meta itemprop="description" content="${sanitizedCaptionPlaintext}">
-//         <meta itemprop="thumbnailUrl" content="https://i.ytimg.com/vi/YOUTUBE_ID_HERE/default.jpg">
-//         <meta itemprop="uploadDate" content="${media.timestamp}">
-//         <meta itemprop="height" content="300">
-//         <meta itemprop="width" content="300">
-//     </abbr>` :  
-// media.type == "NORMAL_VIDEO" ?
-//     `<abbr itemprop="video" itemscope itemtype="http://schema.org/VideoObject">
-//         <meta itemprop="url" content="${media.url}">
-//         <meta itemprop="name" content="${this.artJSON.page_title} Video #${index}">
-//         <meta itemprop="description" content="${sanitizedCaptionPlaintext}">
-//         <meta itemprop="thumbnailUrl" content="${media.url}?nocache=${RANDOMSTRING}">
-//         <meta itemprop="uploadDate" content="${media.timestamp}">
-//         <meta itemprop="height" content="300">
-//         <meta itemprop="width" content="300">
-//     </abbr>` : 
-// true ? 
-//     `` : ``
-// }
-
-
-
-
-        schemaJSON["image"].push({
-            "@type": "ImageObject",
-            "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
-            "name": inputJSON.page_title,
-            "caption": inputJSON.page_title,
-            "uploadDate": inputJSON.metadata.last_modified,
-            "height": 1274,
-            "width": 1201,
-        });
     })
     
 

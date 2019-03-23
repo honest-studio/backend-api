@@ -1416,7 +1416,7 @@ export function linkCategorizer(inputString: string) {
 
 // Copied with light modifications from NPM package get-youtube-id
 // https://www.npmjs.com/package/get-youtube-id
-function youtubeIdExists(url: string) {
+export function youtubeIdExists(url: string) {
     if (!/youtu\.?be/.test(url)) return false;
 
     // Look first for known patterns

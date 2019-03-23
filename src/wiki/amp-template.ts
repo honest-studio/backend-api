@@ -1,8 +1,9 @@
 import { ArticleJson } from './article-dto';
 import { styleNugget } from './amp-style'
 import { AmpRenderPartial } from './amp-render-partial'
+import { LanguagePack } from './wiki.service';
 
-export const renderAMP = (inputJSON: ArticleJson): string => {
+export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): string => {
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = Math.random().toString(36).substring(7);
     let arp = new AmpRenderPartial(inputJSON);
@@ -47,7 +48,7 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                 ${arp.renderShareLightbox()}
             </amp-lightbox>
             <amp-lightbox id="language-lightbox" layout="nodisplay">
-                ${arp.renderLanguageLightbox()}
+                ${arp.renderLanguageLightboxes(langPacks)}
             </amp-lightbox>
             ${arp.renderLightboxes()}
             ${arp.renderAnalyticsBlock()}
