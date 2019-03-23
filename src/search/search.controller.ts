@@ -19,7 +19,7 @@ export class SearchController {
     })
     @ApiImplicitParam({
         name: 'langs',
-        description: 'Language',
+        description: 'Language(s). Example: /v2/search/title/travis%20moore?langs=["en,"es"]',
         required: false,
         type: 'string'
     })
