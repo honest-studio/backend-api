@@ -211,6 +211,12 @@ describe('Backend API', () => {
         .get('/v2/search/title/Coloossed')
         .expect(200)
   });
+
+  it('Search: English only', () => {
+    return request(app.getHttpServer())
+        .get('/v2/search/title/Travis?langs=en')
+        .expect(200)
+  });
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())
