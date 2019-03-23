@@ -237,9 +237,92 @@ export class AmpRenderPartial {
         return `PAGE BODY`;
     }
 
+    renderOneInfobox = (infobox: Infobox, index: number): string => {
+        let sanitizedValue = infobox.values.map((value, index) => {
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
+            result.lightboxes.forEach((value, index) => {
+                this.allLightBoxes.push(value);
+            })
+            return result.text;
+        }).join("");
+        console.log(infobox);
+        return `
+            <div class="row">
+            <li>
+                <div class="info-qt">
+                    <h3>${infobox.key}</h3>
+                </div>
+                    {% for pluralbox in refbox.objects %}
+                        <div class="info-an">
+                            {% if pluralbox.schema != "None" %}
+                                {%  if pluralbox.addlSchematype != "None" %}
+                                    <li class="plural-infobox">
+                                        {% if pluralbox.addlSchemaItemprop == "NOTHING" %}
+                                            <abbr itemprop="{{ pluralbox.schema }}">
+                                                <div class="schema addl-schema-line" itemscope itemtype="http://schema.org/{{ pluralbox.addlSchematype }}">
+                                                    {{ pluralbox.value|safe }}
+                                                </div>
+                                            </abbr>
+                                        {% else %}
+                                            <div itemprop="{{ pluralbox.schema }}" class="schema addl-schema-line" itemscope itemtype="http://schema.org/{{ pluralbox.addlSchematype }}">
+                                                <abbr itemprop="{{ pluralbox.addlSchemaItemprop }}" content="{{ pluralbox.value|striptags }}"></abbr>
+                                                {{ pluralbox.value|safe }}
+                                            </div>
+                                        {% endif %}
+                                    </li>
+                                {% else %}
+                                    <li class="plural-infobox">
+                                        <abbr itemprop="{{ pluralbox.schema }}" content="{{ pluralbox.value|striptags }}"></abbr>
+                                        {{ pluralbox.value|safe }}
+                                    </li>
+                                {% endif %}
+
+                            {% else %}
+                                <li class="plural-infobox">
+                                    {{ pluralbox.value|safe }}
+                                </li>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+            </li>
+            </div>
+        `;
+    }
+
     renderInfoboxes = (): string => {
         let infoboxes: Infobox[] = this.artJSON.infoboxes
-        return `INFOBOXES`;
+        if(infoboxes.length == 0 && this.artJSON.infobox_html.length == 0) return ``;
+        let blobboxComboString = this.artJSON.infobox_html;
+        let infoboxComboString = infoboxes.map((value, index) => {
+            return this.renderOneInfobox(value, index);
+        }).join("");
+        return `
+            <amp-accordion class="infobox-accordion">
+                <section id="infobox_section" class="infobox-main-wrap" expanded>
+                    <h2 class="qf-header">
+                        ${ this.artJSON.metadata.page_type == 'Person' ?
+                            `Quick Biography` :
+                        true ?
+                            `Quick Facts For This Wiki` : ``
+                        }
+                        <span class="icon"><i class="fa fa-chevron-down"></i></span>
+                    </h2>
+                    ${ this.artJSON.infobox_html.length != 0 ? 
+                        `<div id="blobBox_container">
+                            ${blobboxComboString}
+                        </div>` : ``
+                    }
+                    <div class="infbx-ct">
+                    ${ infoboxes.length != 0 ? 
+                        `<ul class="list-unstyled list-spaced list-plural infobox">
+
+                        </ul>` : ``
+                    }
+                            INFOBOX HERE
+                    </div>
+                </section>
+            </amp-accordion>
+        `;
     }
 
     renderOneMedia = (media: Media, index: number): string => {
