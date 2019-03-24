@@ -134,12 +134,29 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
                     "width": 1201,
                 });
                 break;
-            default:
-                
+            default:  
         }
-
     })
-    
+    inputJSON.infoboxes.forEach((infobox, index) => {
+        let valuesBlock = [];
+        infobox.values.forEach((value, index) => {
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, this.currentIPFS);
+            valuesBlock.push(striptags(result.text));
+        });
+
+        if (infobox.addlSchematype){
+                schemaJSON[infobox.schema] = { "@type": infobox.addlSchematype };
+                if (infobox.addlSchemaItemProp) {
+                    schemaJSON[infobox.schema][infobox.addlSchemaItemProp] = valuesBlock;
+                }
+                else {
+                    schemaJSON[infobox.schema]["name"] = valuesBlock;
+                }
+        }
+        else {
+            schemaJSON[infobox.schema] = "";
+        }
+    })
 
 
 
