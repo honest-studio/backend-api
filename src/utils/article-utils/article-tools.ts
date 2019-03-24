@@ -105,7 +105,8 @@ export const CheckForLinksOrCitationsAMP = (
 
 		} else if (isCitation >= 0 && citations) {
 			const citationIndex: number | string = parseInt(link.charAt(isCitation + citeString.length + 1)) || link.charAt(isCitation + citeString.length + 1);
-            const pulledCitation = citations[citationIndex];
+            const pulledCitationURL = citations[citationIndex] ? citations[citationIndex].url : '';
+
             // Load the HTML into htmlparser2 beforehand since it is more forgiving
             let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
@@ -119,9 +120,9 @@ export const CheckForLinksOrCitationsAMP = (
             // Encode the URL
             let linkURLEncoded = '';
             try {
-                linkURLEncoded = encodeURIComponent(pulledCitation.url);
+                linkURLEncoded = encodeURIComponent(pulledCitationURL);
             } catch (e) {
-                linkURLEncoded = pulledCitation.url;
+                linkURLEncoded = pulledCitationURL;
             }
 
             // Create the button that will be substituted

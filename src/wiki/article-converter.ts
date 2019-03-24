@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection } from './article-dto';
+import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection, ListItem } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
@@ -1516,37 +1516,6 @@ function parseTable($element: Cheerio): Table {
     return table;
 }
 
-// export function renderSentences(sentenceItems: any[], tagType: string, index: number): any => {
-//     // const { useSpan } = this.state;
-//     if (sentenceItems && sentenceItems.map) {
-//         // let useSpan: boolean = false;
-//         return sentenceItems.map((sentence, index) => {
-//             if (!sentence) return;
-//             const { text } = sentence;
-
-//             if (sentence.sentences) return this.renderSentences(sentence.sentences, 'li', index);
-//             const sanitizedText: string = CheckForLinksOrCitations(text, this.props.citations, false, tagType);
-
-//             if (tagType === 'h2') return <SectionHeader key={index}>{text}</SectionHeader>;
-//             if (tagType === 'h3') return <SectionH3 key={index}>{text}</SectionH3>;
-//             if (tagType === 'h4') return <SectionH4 key={index}>{text}</SectionH4>;
-//             if (tagType === 'table') return <Table key={index} table={sentence} />;
-
-//             const Tag: any = tagType && tagType !== 'p' ? tagType : SentenceFormatted;
-
-//             // Need to handle blockquote differently so that open and closing blockquote contains all sentences rather than new blockquote tag per sentence.
-//             // if (tagType === 'blockquote') useSpan = tagType === 'blockquote';
-
-//             return (
-//                 <Tag key={index}>
-//                     <ReactMarkdown source={sanitizedText} renderers={{ link: LinkRenderer, paragraph: 'span' }} />
-//                 </Tag>
-//             );
-//         });
-//     }
-//     return <SentenceFormatted key={`${index}Empty`} />;
-// };
-
 export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
     let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
     const { tag_type, items } = paragraph;
@@ -1556,12 +1525,24 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
         returnCollection.text = `<${tag_type}>${text}</${tag_type}>`;
     }
     else if (tag_type === 'p') {
-        let sanitizedText = items.map((value , index) => {
-            let result = CheckForLinksOrCitationsAMP((value as Sentence).text, passedCitations, passedIPFS);
+        let sanitizedText = items.map((sentenceItem: Sentence, sentenceIndex) => {
+            let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS);
             result.lightboxes.forEach((value, index) => {
                 returnCollection.lightboxes.push(value);
             })
             return result.text;
+        }).join("");
+        returnCollection.text = `<${tag_type}>${sanitizedText}</${tag_type}>`;
+    }
+    else if (tag_type === 'ul') {
+        let sanitizedText = items.map((liItem: ListItem , listIndex) => {
+            return liItem.sentences.map((sentenceItem: Sentence , sentenceIndex) => {
+                let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS);
+                result.lightboxes.forEach((value, index) => {
+                    returnCollection.lightboxes.push(value);
+                })
+                return `<${liItem.tag_type}>${result.text}</${liItem.tag_type}>` ;
+            }).join("");
         }).join("");
         returnCollection.text = `<${tag_type}>${sanitizedText}</${tag_type}>`;
     }
@@ -1574,32 +1555,35 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
     return returnCollection
 };
 
-// export function renderImages = function() {
-//     const { section } = this.props;
-//     const { images } = section;
+export const renderImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    
+    
+    
+    // const { tag_type, items } = paragraph;
 
-//     const renderedImages = images.map((item, index) => {
-//         const imgUrl = item.url ? item.url : null;
+    // const renderedImages = images.map((item, index) => {
+    //     const imgUrl = item.url ? item.url : null;
 
-//         const captionText = item.caption && item.caption[0] ? item.caption[0].text : null;
+    //     const captionText = item.caption && item.caption[0] ? item.caption[0].text : null;
 
-//         const sanitizedCaption: string = CheckForLinksOrCitations(captionText, this.props.citations, false);
+    //     const sanitizedCaption: string = CheckForLinksOrCitations(captionText, this.props.citations, false);
 
-//         return (
-//             <ImageInline key={index}>
-//                 <ImageContainer>
-//                     <SectionImage src={imgUrl} />
-//                     {sanitizedCaption && (
-//                         <CaptionSentence border={true}>
-//                             <ReactMarkdown
-//                                 source={sanitizedCaption}
-//                                 renderers={{ link: LinkRenderer, paragraph: 'span' }}
-//                             />
-//                         </CaptionSentence>
-//                     )}
-//                 </ImageContainer>
-//             </ImageInline>
-//         );
-//     });
-//     this.setState({ renderedImages });
-// };
+    //     return (
+    //         <ImageInline key={index}>
+    //             <ImageContainer>
+    //                 <SectionImage src={imgUrl} />
+    //                 {sanitizedCaption && (
+    //                     <CaptionSentence border={true}>
+    //                         <ReactMarkdown
+    //                             source={sanitizedCaption}
+    //                             renderers={{ link: LinkRenderer, paragraph: 'span' }}
+    //                         />
+    //                     </CaptionSentence>
+    //                 )}
+    //             </ImageContainer>
+    //         </ImageInline>
+    //     );
+    // });
+    return returnCollection;
+};

@@ -1,7 +1,7 @@
 import { ArticleJson, AMPParseCollection } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
-import { youtubeIdExists, renderParagraph } from './article-converter';
+import { youtubeIdExists, renderParagraph, renderImage } from './article-converter';
 import { LanguagePack } from './wiki.service';
 var striptags = require('striptags');
 
@@ -233,7 +233,12 @@ export class AmpRenderPartial {
 
     renderFirstParagraph = (): string => {
         let firstSection: Section = this.artJSON.page_body[0];
-        let comboParagraph = firstSection.paragraphs.map((value, index) => {
+        let imageBlock = firstSection.images.map((image, imageIndex) => {
+            let result: AMPParseCollection = renderImage(image, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
+            this.allLightBoxes.push(...result.lightboxes);
+            return result.text;
+        }).join("");
+        let paraBlock = firstSection.paragraphs.map((value, index) => {
             let result: AMPParseCollection = renderParagraph(value, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
@@ -241,7 +246,7 @@ export class AmpRenderPartial {
         return `
             <div class="entry-content" id="first-paragraph" itemprop="description">
                 <div class="entry-content-inner-wrap">
-                    ${comboParagraph}
+                    ${imageBlock}${paraBlock}
                 </div>
             </div>
         `;
@@ -250,11 +255,17 @@ export class AmpRenderPartial {
     renderPageBody = (): string => {
         let otherSections: Section[] = this.artJSON.page_body.slice(1);
         let comboSections = otherSections.map((section, sectionIndex) => {
-            return section.paragraphs.map((paragraph, paraIndex) => {
+            let imageBlock = section.images.map((image, imageIndex) => {
+                let result: AMPParseCollection = renderImage(image, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
+                this.allLightBoxes.push(...result.lightboxes);
+                return result.text;
+            }).join("");
+            let paraBlock = section.paragraphs.map((paragraph, paraIndex) => {
                 let result: AMPParseCollection = renderParagraph(paragraph, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
             }).join("");
+            return `${imageBlock}${paraBlock}`;
         }).join("");
 
         return `
@@ -289,8 +300,8 @@ export class AmpRenderPartial {
     }
 
     renderInfoboxes = (): string => {
-        let infoboxes: Infobox[] = this.artJSON.infoboxes
-        if(infoboxes.length == 0 && this.artJSON.infobox_html.length == 0) return ``;
+        let infoboxes: Infobox[] = this.artJSON.infoboxes;
+        if  (!((infoboxes && infoboxes.length > 0) || (this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0))){ return ``; }
         let blobboxComboString = this.artJSON.infobox_html;
         let infoboxComboString = infoboxes.map((value, index) => {
             return this.renderOneInfobox(value, index);
