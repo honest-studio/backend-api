@@ -140,6 +140,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki: Get wiki redirect', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/slug/lang_en/Polymaths')
+        .expect(200)
+  });
+
   it('Wiki: Get non-existent wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/slug/lang_es/jonah_kabidiman')

@@ -27,7 +27,7 @@ export class WikiService {
     }
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
-        const rows: Array<any> = await new Promise((resolve, reject) => {
+        let rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
                 SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
@@ -45,6 +45,29 @@ export class WikiService {
                 }
             );
         });
+        if (rows.length == 0) {
+            // check for redirect
+            rows = await new Promise((resolve, reject) => {
+                this.mysql.pool().query(
+                    `
+                    SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
+                    FROM enterlink_articletable AS art 
+                    JOIN enterlink_hashcache AS cache 
+                    ON cache.ipfs_hash=art.ipfs_hash_current 
+                    WHERE art.id = (
+                        SELECT redirect_page_id 
+                        FROM enterlink_articletable AS art 
+                        WHERE (art.slug=? OR art.slug_alt=?)
+                        AND art.page_lang=?
+                    );`,
+                    [slug, slug, lang_code],
+                    function(err, rows) {
+                        if (err) reject(err);
+                        else resolve(rows);
+                    }
+                );
+            });
+        }
         if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
         // check cache for json wiki
