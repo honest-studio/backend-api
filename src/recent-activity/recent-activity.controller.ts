@@ -117,6 +117,15 @@ export class RecentActivityController {
         required: false,
         type: Boolean
     })
+    @ApiImplicitQuery({
+        name: 'langs',
+        description: `Language(s) if you wish to restrict the return output.
+            Default: Return all languages
+            Example: /v2/recent-activity/proposals?langs=en,es`,
+        required: false,
+        isArray: true,
+        type: 'string'
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getProposals(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getProposals(query);

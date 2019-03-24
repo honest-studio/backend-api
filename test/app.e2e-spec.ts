@@ -74,6 +74,12 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Proposals in Spanish', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/proposals?langs=es')
+      .expect(200)
+  });
+
   it('Proposal: Basic proposal', () => {
     return request(app.getHttpServer())
         .get('/v2/proposal/1011')

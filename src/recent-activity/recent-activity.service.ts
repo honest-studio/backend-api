@@ -47,20 +47,19 @@ export class RecentActivityService {
     async getProposals(query): Promise<Array<Proposal>> {
         let find_query;
         let sort_direction;
+        find_query = {
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo',
+        }
         if (query.expiring) {
             const now = (Date.now() / 1000) | 0;
-            find_query = {
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.endtime': { $gt: now }
-            };
+            find_query['trace.act.data.endtime'] = { $gt: now }
             sort_direction = 1;
         } else {
-            find_query = {
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo'
-            };
             sort_direction = -1;
+        }
+        if (query.langs) {
+            find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') }
         }
         const proposal_id_docs = await this.mongo
             .connection()
