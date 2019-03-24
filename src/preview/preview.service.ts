@@ -16,12 +16,7 @@ export class PreviewService {
         private cacheService: CacheService
     ) {}
 
-    async getWikiPreview(ipfs_hash: string): Promise<any> {
-        const previews = await this.getWikiPreviews([ipfs_hash]);
-        return previews[ipfs_hash];
-    }
-
-    async getWikiPreviews(ipfs_hashes: Array<string>): Promise<any> {
+    async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<any> {
         if (ipfs_hashes.length == 0) return [];
 
         const previews = [];
@@ -95,5 +90,35 @@ export class PreviewService {
         previews.filter((p) => !p.title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
 
         return previews;
+    }
+
+    async getPreviewBySlug(lang_code: string, slug: string): Promise<any> {
+        const previews: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+                    art.ipfs_hash_current, art.blurb_snippet AS text_preview
+                FROM enterlink_articletable AS art 
+                WHERE art.slug = ? 
+                AND art.page_lang = ?`,
+                [slug, lang_code],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        if (previews.length == 0)
+            throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
+
+        // clean up text previews
+        const preview = previews[0];
+        const $ = cheerio.load(preview.text_preview);
+        preview.text_preview = $.root()
+            .text()
+            .replace(/\s+/g, ' ')
+            .trim();
+
+        return preview;
     }
 }

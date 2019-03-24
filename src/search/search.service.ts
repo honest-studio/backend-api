@@ -56,6 +56,9 @@ export class SearchService {
             })
             .toPromise();
         const canonical_ids = searchResult[0].hits.hits.map((h) => h._source.canonical_id);
+
+        if (canonical_ids.length == 0) return [];
+
         return new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `

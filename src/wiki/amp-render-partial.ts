@@ -8,7 +8,6 @@ var striptags = require('striptags');
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
     public allLightBoxes: string[] = [];
-    public currentIPFS = "Qm209823098409328430298430298439";
     constructor(inputJSN) {
         this.artJSON = inputJSN;
     }
@@ -235,7 +234,7 @@ export class AmpRenderPartial {
     renderFirstParagraph = (): string => {
         let firstSection: Section = this.artJSON.page_body[0];
         let comboParagraph = firstSection.paragraphs.map((value, index) => {
-            let result: AMPParseCollection = renderParagraph(value, this.artJSON.citations, this.currentIPFS);
+            let result: AMPParseCollection = renderParagraph(value, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
         }).join("");
@@ -252,7 +251,7 @@ export class AmpRenderPartial {
         let otherSections: Section[] = this.artJSON.page_body.slice(1);
         let comboSections = otherSections.map((section, sectionIndex) => {
             return section.paragraphs.map((paragraph, paraIndex) => {
-                let result: AMPParseCollection = renderParagraph(paragraph, this.artJSON.citations, this.currentIPFS);
+                let result: AMPParseCollection = renderParagraph(paragraph, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
             }).join("");
@@ -274,7 +273,7 @@ export class AmpRenderPartial {
                     <h3>${infobox.key}</h3>
                 </div>
                 ${infobox.values.map((value, index) => {
-                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
+                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
                     result.lightboxes.forEach((value, index) => {
                         this.allLightBoxes.push(value);
                     })
@@ -327,7 +326,7 @@ export class AmpRenderPartial {
     renderOneMedia = (media: Media, index: number): string => {
         const RANDOMSTRING = Math.random().toString(36).substring(7);
         let sanitizedCaption = media.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             result.lightboxes.forEach((value, index) => {
                 this.allLightBoxes.push(value);
             })
@@ -477,7 +476,7 @@ export class AmpRenderPartial {
 
     renderOneCitation = (citation: Citation, index: number): string => {
         let sanitizedDescription = citation.description.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.currentIPFS);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             result.lightboxes.forEach((value, index) => {
                 this.allLightBoxes.push(value);
             })

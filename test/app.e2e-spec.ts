@@ -74,9 +74,15 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Proposals in Spanish', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/proposals?langs=es')
+      .expect(200)
+  });
+
   it('Proposal: Basic proposal', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/50')
+        .get('/v2/proposal/1011')
         .expect(200)
   });
 
@@ -128,12 +134,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get wiki json by hash', () => {
-    return request(app.getHttpServer())
-        .get('/v2/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd?json=true')
-        .expect(200)
-  });
-
   it('Wiki: Get wikis by hash', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
@@ -145,10 +145,10 @@ describe('Backend API', () => {
         .get('/v2/wiki/slug/lang_en/William_Legate')
         .expect(200)
   });
-  
-  it('Wiki: Get wiki json by slug', () => {
+
+  it('Wiki: Get wiki redirect', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/William_Legate?json=true')
+        .get('/v2/wiki/slug/lang_en/Polymaths')
         .expect(200)
   });
 
@@ -177,25 +177,25 @@ describe('Backend API', () => {
 
   it('Wiki Json: Manaus', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/Manaus?json=true')
+        .get('/v2/wiki/slug/lang_en/Manaus')
         .expect(200)
   });
 
   it('Wiki Json: 2016 Summer Olympics', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/2016_Summer_Olympics?json=true')
+        .get('/v2/wiki/slug/lang_en/2016_Summer_Olympics')
         .expect(200)
   });
 
   it('Wiki Json: Ghana', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/Ghana?json=true')
+        .get('/v2/wiki/slug/lang_en/Ghana')
         .expect(200)
   });
 
   it('Wiki Json: Real Matrix', () => {
     return request(app.getHttpServer())
-    .get('/v2/wiki/slug/lang_en/Real_matrix?json=true')
+    .get('/v2/wiki/slug/lang_en/Real_matrix')
         .expect(200)
   });
 
@@ -215,6 +215,18 @@ describe('Backend API', () => {
   it('Search: Title', () => {
     return request(app.getHttpServer())
         .get('/v2/search/title/Travis%20Moore')
+        .expect(200)
+  });
+
+  it('Search: No Results', () => {
+    return request(app.getHttpServer())
+        .get('/v2/search/title/Coloossed')
+        .expect(200)
+  });
+
+  it('Search: English only', () => {
+    return request(app.getHttpServer())
+        .get('/v2/search/title/Travis?langs=en')
         .expect(200)
   });
   
@@ -242,15 +254,15 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Preview: Wiki', () => {
+  it('Preview: By Hash', () => {
     return request(app.getHttpServer())
-        .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
+        .get('/v2/preview/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
         .expect(200)
   });
 
-  it('Preview: Wikis', () => {
+  it('Preview: By Slug', () => {
     return request(app.getHttpServer())
-        .get('/v2/preview/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
+        .get('/v2/preview/slug/lang_en/wikipedia')
         .expect(200)
   });
 
@@ -263,6 +275,12 @@ describe('Backend API', () => {
   it('User: Rewards', () => {
     return request(app.getHttpServer())
         .get('/v2/user/eptestusersf/rewards')
+        .expect(200)
+  });
+
+  it('User: Activity', () => {
+    return request(app.getHttpServer())
+        .get('/v2/user/eptestusersf/activity')
         .expect(200)
   });
 

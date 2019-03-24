@@ -83,7 +83,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
     }
     inputJSON.media_gallery.forEach((media, index) => {
         let sanitizedCaption = media.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, this.currentIPFS);
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.metadata.ipfs_hash);
             return result.text;
         }).join("");
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
@@ -140,7 +140,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
     inputJSON.infoboxes.forEach((infobox, index) => {
         let valuesBlock = [];
         infobox.values.forEach((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, this.currentIPFS);
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.metadata.ipfs_hash);
             valuesBlock.push(striptags(result.text));
         });
 

@@ -118,9 +118,9 @@ export const CheckForLinksOrCitationsAMP = (
             // Encode the URL
             let linkURLEncoded = '';
             try {
-                linkURLEncoded = encodeURIComponent($(this).attr('data-username'));
+                linkURLEncoded = encodeURIComponent(pulledCitation.url);
             } catch (e) {
-                linkURLEncoded = $(this).attr('data-username');
+                linkURLEncoded = pulledCitation.url;
             }
 
             // Create the button that will be substituted

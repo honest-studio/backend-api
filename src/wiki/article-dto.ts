@@ -11,7 +11,7 @@ export interface WikiLink {
 }
 
 export interface Sentence {
-    type: string; // sentence | inline_image | fixed_image
+    type: string; // sentence
     index: number;
     text: string; // contains inline WikiLink markup + some light markdown for formatting
 }
@@ -34,7 +34,7 @@ export interface Paragraph {
     index: number;
     items: ParagraphItem[];
     tag_type: string;
-    attrs: { string: string };
+    attrs: {};
 }
 
 export interface Section {
@@ -51,10 +51,10 @@ export interface Infobox {
 }
 
 export interface Media {
-    type: string;
+    type: string; // section_image, main_photo, inline_image
     url: string;
-    thumb: string;
-    caption: Sentence[];
+    caption: Sentence[]; // TODO: change to string
+    thumb?: string;
     timestamp?: Date;
     attribution_url?: string;
     mime?: string;
@@ -103,7 +103,7 @@ export interface Citation {
 }
 
 export interface Table {
-    type: string;
+    type: string; // table
     caption: string;
     thead?: TableSection;
     tbody: TableSection;
@@ -111,19 +111,19 @@ export interface Table {
 }
 
 export interface TableSection {
-    attrs: { string: string };
+    attrs: {};
     rows: TableRow[];
 }
 
 export interface TableRow {
     index: number;
-    attrs: { string: string };
+    attrs: {};
     cells: TableCell[];
 }
 
 export interface TableCell {
     index: number;
-    attrs: { string: string };
+    attrs: {};
     tag_type: string;
     content: Sentence[];
 }

@@ -73,7 +73,7 @@ export class ProposalService {
 
         if (options.preview) {
             const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
-            const previews = await this.previewService.getWikiPreviews(ipfs_hashes);
+            const previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
             previews.forEach(
                 (preview) =>
                     (proposals.find((p) => p.info.trace.act.data.ipfs_hash === preview.ipfs_hash).preview = preview)
@@ -83,7 +83,7 @@ export class ProposalService {
         if (options.diff != 'none') {
             const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
             if (options.diff === 'percent') diffs.forEach((diff) => delete diff.diff_wiki);
-            diffs.forEach((diff) => (proposals.find((p) => p.proposal_id == diff.proposal_id).diff = diff));
+            diffs.forEach((diff) => (proposals.find((p) => p.proposal_id == diff.metadata.proposal_id).diff = diff));
         }
 
         return proposals;

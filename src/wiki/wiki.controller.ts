@@ -7,7 +7,9 @@ import {
     ApiImplicitBody,
     ApiImplicitQuery
 } from '@nestjs/swagger';
+import { JoiValidationPipe } from '../common';
 import { WikiService } from './wiki.service';
+import { WikiQuerySchema } from './wiki.query-schema';
 import * as rawbody from 'raw-body';
 
 @Controller('v2/wiki')
@@ -45,13 +47,18 @@ export class WikiController {
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
     })
+    @ApiImplicitQuery({
+        name: 'cache',
+        description: `Set to false if you don't want to use the cache`
+    })
     @ApiResponse({
         status: 200,
         description: `A JSON for the wiki encoded in UTF-8`
     })
-    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+    @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
+    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<any> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
-        return this.wikiService.getWikiBySlug(lang_code, slug);
+        return this.wikiService.getWikiBySlug(lang_code, slug, options.cache);
     }
 
     @Get('schema-slug/lang_:lang_code/:slug')

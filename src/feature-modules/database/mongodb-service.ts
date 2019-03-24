@@ -7,12 +7,14 @@ export type ActionEntity = any;
 export type PlagiarismEntity = any;
 export type WikiEntity = any;
 export type DiffEntity = any;
+export type JsonWikiEntity = any;
 
 export type AppConnectionInstance = {
     client: MongoClient;
     db: Db;
     actions: Collection<ActionEntity>;
     diffs: Collection<DiffEntity>;
+    json_wikis: Collection<JsonWikiEntity>;
 };
 
 /**
@@ -50,7 +52,8 @@ export class MongoDbService {
                             const db = client.db(this.mongoConfig.mongoDbName);
                             const actions = db.collection('actions');
                             const diffs = db.collection('diffs');
-                            resolve({ client, db, actions, diffs });
+                            const json_wikis = db.collection('json_wikis');
+                            resolve({ client, db, actions, diffs, json_wikis });
                         }
                     }
                 );
@@ -80,7 +83,7 @@ export class MongoDbService {
 
         const index2 = this.connection().actions.createIndex({ 'trace.act.name': 1, 'trace.act.account': 1 });
 
-        const index3 = this.connection().diffs.createIndex({ old_hash: 1, new_hash: 1 }, { unique: true });
+        const index3 = this.connection().json_wikis.createIndex({ 'metadata.ipfs_hash': 1 }, { unique: true });
 
         return Promise.all([index1, index2, index3]);
     }

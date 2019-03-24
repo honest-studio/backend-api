@@ -92,4 +92,26 @@ export class UserService {
             slashes: slashes.slice(options.offset, options.offset + options.limit)
         };
     }
+
+    async getActivity (account_name: string) {
+        const votes = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'vote',
+                'trace.act.data.voter': account_name
+            })
+            .toArray();
+
+        const proposals = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo',
+                'trace.act.data.proposer': account_name
+            })
+            .toArray();
+
+        return { votes, proposals }
+    }
 }

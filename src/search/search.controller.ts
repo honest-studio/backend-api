@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Req, Query } from '@nestjs/common';
 import { Request } from 'express';
-import { ApiOperation, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
+import { ApiOperation, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { SearchService } from './search.service';
 import { AddRemoteIp } from '../utils/request-tools';
 
@@ -35,14 +35,27 @@ export class SearchController {
         required: true,
         type: 'string'
     })
-    async searchTest(@Param('query') query, @Req() request: Request): Promise<any> {
-        // get original route params
-        const reqParams = request.params;
-
-        console.log('route params: ', reqParams);
-        // with IP
-        const enhancedReq = AddRemoteIp(reqParams, request);
-        console.log('route params enhanced with client IP: ', enhancedReq);
-        return await this.searchService.searchTitle(query);
+    async searchTitleTest(@Param('query') query, @Query('langs') langs): Promise<any> {
+        if (langs) langs = langs.split(',');
+        return await this.searchService.searchTitle(query, langs);
     }
+
+    //@Get('test/:query')
+    //@ApiOperation({ title: 'Shows injection of client IP into params' })
+    //@ApiImplicitParam({
+    //    name: 'query',
+    //    description: 'Search term',
+    //    required: true,
+    //    type: 'string'
+    //})
+    //async searchTest(@Param('query') query, @Req() request: Request): Promise<any> {
+    //    // get original route params
+    //    const reqParams = request.params;
+
+    //    console.log('route params: ', reqParams);
+    //    // with IP
+    //    const enhancedReq = AddRemoteIp(reqParams, request);
+    //    console.log('route params enhanced with client IP: ', enhancedReq);
+    //    return await this.searchService.searchTitle(query);
+    //}
 }

@@ -44,4 +44,23 @@ export class UserController {
     async getRewards(@Param('eos_account_name') eos_account_name, @Query() query): Promise<any> {
         return this.userService.getRewards(eos_account_name, query);
     }
+
+    @Get(':eos_account_name/activity')
+    @ApiOperation({ title: 'Get miscellaneous stats for a user' })
+    @ApiImplicitParam({
+        name: 'eos_account_name',
+        description: `Max 12-char EOS account name
+        Example: kedartheiyer`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `returns 
+            {
+                votes: Array, 
+                proposals: Array 
+            }`
+    })
+    async getActivity(@Param('eos_account_name') eos_account_name): Promise<any> {
+        return this.userService.getActivity(eos_account_name);
+    }
 }

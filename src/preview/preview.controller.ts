@@ -7,7 +7,7 @@ import { PreviewService } from './preview.service';
 export class PreviewController {
     constructor(private readonly previewService: PreviewService) {}
 
-    @Get('wiki/:ipfs_hashes')
+    @Get('hash/:ipfs_hashes')
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
         name: 'ipfs_hash',
@@ -27,8 +27,34 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getWikiPreview(@Param('ipfs_hashes') query_hashes): Promise<any> {
+    async getPreviewsByHash(@Param('ipfs_hashes') query_hashes): Promise<any> {
         const ipfs_hashes = query_hashes.split(',');
-        return this.previewService.getWikiPreviews(ipfs_hashes);
+        return this.previewService.getPreviewsByHash(ipfs_hashes);
+    }
+
+    @Get('slug/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get preview of a wiki' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'ISO 639 language code'
+    })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'ISO 639 language code'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Object or array of objects with the following schema:
+            {
+                title: Article title,
+                mainimage: Main article image,
+                thumbnail: Article main image thumbnail,
+                page_lang: ISO 639 language code,
+                ipfs_hash: Article IPFS hash,
+                text_preview: Snippet of text from the article
+            }`
+    })
+    async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        return this.previewService.getPreviewBySlug(lang_code, slug);
     }
 }
