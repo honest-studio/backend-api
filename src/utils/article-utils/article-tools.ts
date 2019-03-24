@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const decode = require('unescape');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
-import { youtubeIdExists } from 'src/wiki/article-converter';
+import { getYouTubeID } from 'src/wiki/article-converter';
 
 export const CheckForLinksOrCitationsAMP = (
 	textProcessing: string,
@@ -191,13 +191,6 @@ export const CheckForLinksOrCitationsAMP = (
 };
 
 export const ConstructAMPImage = (media: Media, sanitizedCaption: string, sanitizedCaptionPlaintext: string): string  => {
-
-
-    // <amp-img data-mimetype="image/png" height="250" layout="fixed-height" src="https://s3.amazonaws.com/everipedia-storage/NewlinkFiles/65173/865820.png" width="auto" class="i-amphtml-element i-amphtml-layout-fixed-height i-amphtml-layout-size-defined i-amphtml-layout" i-amphtml-layout="fixed-height" style="height: 250px;">
-    //     <amp-img height="1" layout="fill" placeholder="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1" class="i-amphtml-element i-amphtml-layout-fill i-amphtml-layout-size-defined i-amphtml-layout amp-hidden" i-amphtml-layout="fill"><img decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="i-amphtml-fill-content i-amphtml-replaced-content"></amp-img>
-    //     <img decoding="async" src="https://s3.amazonaws.com/everipedia-storage/NewlinkFiles/65173/865820.png" class="i-amphtml-fill-content i-amphtml-replaced-content">
-    // </amp-img>
-
     switch(media.type){
         case 'section_image':
             let imageHTML = 
@@ -212,7 +205,7 @@ export const ConstructAMPImage = (media: Media, sanitizedCaption: string, saniti
                     </amp-anim>` : 
                 media.category == "YOUTUBE" ?
                     `<amp-youtube
-                        data-videoid="${youtubeIdExists(media.url)}"
+                        data-videoid="${getYouTubeID(media.url)}"
                         layout="responsive"
                         width=150
                         height=150>

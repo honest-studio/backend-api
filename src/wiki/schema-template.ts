@@ -1,6 +1,6 @@
 import { ArticleJson } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
-import { youtubeIdExists } from './article-converter';
+import { getYouTubeID } from './article-converter';
 import { LanguagePack } from './wiki.service';
 const crypto = require("crypto");
 var striptags = require('striptags');
@@ -116,7 +116,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
                     "@type": "ImageObject",
                     "url": media.url,
                     "name": `${inputJSON.page_title} YouTube Video #${index}`,
-                    "thumbnailUrl": `https://i.ytimg.com/vi/${youtubeIdExists(media.url)}/default.jpg`,
+                    "thumbnailUrl": `https://i.ytimg.com/vi/${getYouTubeID(media.url)}/default.jpg`,
                     "caption": sanitizedCaptionPlaintext,
                     "uploadDate": media.timestamp,
                     "height": 300,

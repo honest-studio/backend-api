@@ -1,7 +1,7 @@
 import { ArticleJson, AMPParseCollection } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
-import { youtubeIdExists, renderParagraph, renderImage } from './article-converter';
+import { getYouTubeID, renderParagraph, renderImage } from './article-converter';
 import { LanguagePack } from './wiki.service';
 var striptags = require('striptags');
 
@@ -391,7 +391,7 @@ export class AmpRenderPartial {
                     <a rel='nofollow' href="${media.url}" title="Link to video">
                     <span>
                         <amp-youtube
-                            data-videoid="${youtubeIdExists(media.url)}"
+                            data-videoid="${getYouTubeID(media.url)}"
                             layout="responsive"
                             width=150
                             height=150>

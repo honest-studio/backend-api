@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection, ListItem } from './article-dto';
+import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection, ListItem, AmpInfo } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
 var striptags = require('striptags');
@@ -162,17 +162,17 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
         load_video_js: false,
         lightboxes: []
     };
-    if (useAMP) {
-        // Sanitize the blurb and collect the lightboxes
-        let resultDict = ampSanitizer(oldHTML, metadata, 'QmdddTESTTEST_REPLACE_ME', 'en', false);
-        amp_info.lightboxes.push(resultDict.lightBoxes);
+    // if (useAMP) {
+    //     // Sanitize the blurb and collect the lightboxes
+    //     let resultDict = ampSanitizer(oldHTML, metadata, 'QmdddTESTTEST_REPLACE_ME', 'en', false);
+    //     amp_info.lightboxes.push(resultDict.lightBoxes);
 
-        // Load the AMP-sanitized HTML into htmlparser2
-        dom = htmlparser2.parseDOM(resultDict.text, { decodeEntities: true });
+    //     // Load the AMP-sanitized HTML into htmlparser2
+    //     dom = htmlparser2.parseDOM(resultDict.text, { decodeEntities: true });
 
-        // Load the AMP-sanitized HTML into cheerio for parsing
-        $ = cheerio.load(dom);
-    }
+    //     // Load the AMP-sanitized HTML into cheerio for parsing
+    //     $ = cheerio.load(dom);
+    // }
 
     const page_title =
         $('h1.page-title')
@@ -189,12 +189,25 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 
     const page_body = extractPageBody($);
 
-    // Deal with citation + media matches
-    // If a media item matches an existing citation, update the latter
-    //for (let citeObj of citations) {
-    //    if (citeObj.url == medium.url && citeObj.url && medium.url) {
-    //    }
-    //}
+    media_gallery.forEach((value, index) => {
+        switch (value.category) {
+            
+            case 'YOUTUBE': {
+                amp_info.load_youtube_js = true;
+                break;
+            }
+            case 'NORMAL_VIDEO': {
+                amp_info.load_video_js = true;
+                break;
+            }
+            case 'AUDIO': {
+                amp_info.load_audio_js = true;
+                break;
+            }
+            default:
+                break;
+        }
+    })
 
     // Return the dictionary
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
@@ -1416,7 +1429,7 @@ export function linkCategorizer(inputString: string) {
         return 'GIF';
     } else if (theMIME.includes('image')) {
         return 'PICTURE';
-    } else if (youtubeIdExists(inputString)) {
+    } else if (getYouTubeID(inputString)) {
         return 'YOUTUBE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
         return 'NORMAL_VIDEO';
@@ -1429,7 +1442,7 @@ export function linkCategorizer(inputString: string) {
 
 // Copied with light modifications from NPM package get-youtube-id
 // https://www.npmjs.com/package/get-youtube-id
-export function youtubeIdExists(url: string) {
+export function getYouTubeID(url: string) {
     if (!/youtu\.?be/.test(url)) return false;
 
     // Look first for known patterns
@@ -1444,7 +1457,7 @@ export function youtubeIdExists(url: string) {
     // If any pattern matches, return the ID
     for (let i = 0; i < patterns.length; ++i) {
         if (patterns[i].test(url)) {
-            return true;
+            return patterns[i].exec(url)[1];
         }
     }
     return false;
