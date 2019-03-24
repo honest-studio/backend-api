@@ -1,9 +1,10 @@
-import { Citation, AMPParseCollection } from '../../wiki/article-dto';
+import { Citation, AMPParseCollection, Media } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
 const crypto = require("crypto");
 const decode = require('unescape');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
+import { youtubeIdExists } from 'src/wiki/article-converter';
 
 export const CheckForLinksOrCitationsAMP = (
 	textProcessing: string,
@@ -188,3 +189,68 @@ export const CheckForLinksOrCitationsAMP = (
 
 	return {'text': text, 'lightboxes': ampLightBoxes};
 };
+
+export const ConstructAMPImage = (media: Media, sanitizedCaption: string, sanitizedCaptionPlaintext: string): string  => {
+
+
+    // <amp-img data-mimetype="image/png" height="250" layout="fixed-height" src="https://s3.amazonaws.com/everipedia-storage/NewlinkFiles/65173/865820.png" width="auto" class="i-amphtml-element i-amphtml-layout-fixed-height i-amphtml-layout-size-defined i-amphtml-layout" i-amphtml-layout="fixed-height" style="height: 250px;">
+    //     <amp-img height="1" layout="fill" placeholder="" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" width="1" class="i-amphtml-element i-amphtml-layout-fill i-amphtml-layout-size-defined i-amphtml-layout amp-hidden" i-amphtml-layout="fill"><img decoding="async" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" class="i-amphtml-fill-content i-amphtml-replaced-content"></amp-img>
+    //     <img decoding="async" src="https://s3.amazonaws.com/everipedia-storage/NewlinkFiles/65173/865820.png" class="i-amphtml-fill-content i-amphtml-replaced-content">
+    // </amp-img>
+
+    switch(media.type){
+        case 'section_image':
+            let imageHTML = 
+                `${ media.category == "PICTURE" ?
+                    `<amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" 
+                        data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
+                        <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
+                    </amp-img>` : 
+                media.category == "GIF" ?
+                    `<amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${media.url}" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
+                        <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
+                    </amp-anim>` : 
+                media.category == "YOUTUBE" ?
+                    `<amp-youtube
+                        data-videoid="${youtubeIdExists(media.url)}"
+                        layout="responsive"
+                        width=150
+                        height=150>
+                    </amp-youtube>` :  
+                media.category == "NORMAL_VIDEO" ?
+                    `<amp-video
+                        width=150
+                        height=150
+                        layout="responsive"
+                        preload="metadata"
+                        poster='https://epcdn-vz.azureedge.net/static/images/placeholder-video.png'>
+                            <source src="${media.url}#t=0.1" type="${media.mime}">
+                            Please click to play the video.
+                    </amp-video>` : 
+                media.category == "AUDIO" ?
+                    `<amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
+                        <amp-img placeholder width=150 height=150 src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" layout="fill"></amp-img>
+                    </amp-img>` : ``
+                }
+            `; 
+            
+            return `
+                <table class=" blurb-inline-image-container">
+                    <tbody>
+                        <tr>
+                            <td>
+                                ${imageHTML}
+                            </td>
+                        </tr>
+                     </tbody>
+                     <caption class="blurbimage-caption">${sanitizedCaption}</caption>
+                </table>
+            `
+            break
+        case 'inline_image':
+            break
+        default:
+            break
+    }
+    return ``;
+}

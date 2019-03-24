@@ -2610,6 +2610,10 @@ table.blurb-inline-image-container amp-anim, div.amp-san-picfix amp-anim{
     margin-left: -22px;
 }
 
+table.blurb-inline-image-container amp-img{
+    height: 250px;
+}
+
 table.blurb-inline-image-container tbody img, div.amp-san-picfix img{
 height: 250px;
 object-fit: cover;

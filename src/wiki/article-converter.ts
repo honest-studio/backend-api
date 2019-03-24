@@ -5,7 +5,8 @@ import * as htmlparser2 from 'htmlparser2';
 import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection, ListItem } from './article-dto';
 import * as mimePackage from 'mime';
 const decode = require('unescape');
-import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
+var striptags = require('striptags');
+import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '../utils/article-utils';
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
@@ -718,7 +719,7 @@ function extractMediaGallery($: CheerioStatic) {
         media.caption = parseSentences(captionText);
 
         // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
-        media.type = $(this)
+        media.category = media.type = $(this)
             .find('.media-class')
             .eq(0)
             .text()
@@ -756,7 +757,7 @@ function extractMediaGallery($: CheerioStatic) {
         let mediaElement = $(this)
             .find('.media-obj')
             .eq(0);
-        switch (media.type) {
+        switch (media.category) {
             case 'PICTURE':
             case 'GIF': {
                 media.url = mediaElement.attr('src');
@@ -820,6 +821,7 @@ function extractMainPhoto($: CheerioStatic): Media {
     main_photo.url = photoElement.attr('src') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
     main_photo.thumb =
         photoElement.attr('data-thumbnail') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+    main_photo.category = linkCategorizer(main_photo.url);
 
     // Find any links to other pages that appear in the caption
     const caption = $('figcaption.main-photo-caption');
@@ -1020,6 +1022,7 @@ function parseSection($section: Cheerio): Section {
 
     // Get all images
     const $section_images = $section.find('.blurb-inline-image-container');
+
     $section_images.each((i, section_image_node) => {
         const $image = $section_images.eq(i);
 
@@ -1032,8 +1035,10 @@ function parseSection($section: Cheerio): Section {
             url: theImgNode.attr('src'),
             mime: theImgNode.attr('data-mimetype'),
             thumb: null,
-            caption: null
+            caption: null,
+            category: linkCategorizer(theImgNode.attr('src')) || null
         };
+
 
         // Deal with images in tables
         if (!image.url) {
@@ -1045,6 +1050,7 @@ function parseSection($section: Cheerio): Section {
                 image.height = Number(parts[3].substring(1));
                 image.width = Number(parts[4].substring(1));
                 image.type = 'inline_image';
+                image.category = linkCategorizer(image.url);
             }
         }
 
@@ -1557,33 +1563,14 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
 
 export const renderImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
     let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
-    
-    
-    
-    // const { tag_type, items } = paragraph;
-
-    // const renderedImages = images.map((item, index) => {
-    //     const imgUrl = item.url ? item.url : null;
-
-    //     const captionText = item.caption && item.caption[0] ? item.caption[0].text : null;
-
-    //     const sanitizedCaption: string = CheckForLinksOrCitations(captionText, this.props.citations, false);
-
-    //     return (
-    //         <ImageInline key={index}>
-    //             <ImageContainer>
-    //                 <SectionImage src={imgUrl} />
-    //                 {sanitizedCaption && (
-    //                     <CaptionSentence border={true}>
-    //                         <ReactMarkdown
-    //                             source={sanitizedCaption}
-    //                             renderers={{ link: LinkRenderer, paragraph: 'span' }}
-    //                         />
-    //                     </CaptionSentence>
-    //                 )}
-    //             </ImageContainer>
-    //         </ImageInline>
-    //     );
-    // });
+    let sanitizedCaption = image.caption.map((sentenceItem: Sentence, sentenceIndex) => {
+        let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS);
+        result.lightboxes.forEach((value, index) => {
+            returnCollection.lightboxes.push(value);
+        })
+        return result.text;
+    }).join("");
+    let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
+    returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
     return returnCollection;
 };

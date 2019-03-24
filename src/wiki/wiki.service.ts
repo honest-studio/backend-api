@@ -78,7 +78,9 @@ export class WikiService {
             'metadata.ipfs_hash': rows[0].ipfs_hash_current
         });
         let wiki;
-        if (cache_wiki && use_cache) wiki = cache_wiki;
+        if (cache_wiki && use_cache){
+            wiki = cache_wiki;
+        } 
         else {
             wiki = oldHTMLtoJSON(rows[0].html_blob);
             wiki.metadata.pageviews = rows[0].pageviews;
@@ -103,9 +105,9 @@ export class WikiService {
         return wiki;
     }
 
-    async getAMPBySlug(lang_code: string, slug: string): Promise<string> {
+    async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
         let langPacks = await this.getWikiGroup(lang_code, slug);
-        return renderAMP(await this.getWikiBySlug(lang_code, slug), langPacks);
+        return renderAMP(await this.getWikiBySlug(lang_code, slug, use_cache), langPacks);
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {

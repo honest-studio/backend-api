@@ -346,7 +346,7 @@ export class AmpRenderPartial {
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
         
         return `
-            ${ media.type == "PICTURE" ?
+            ${ media.category == "PICTURE" ?
                 `<div class="tile-ct">
                     <div class="">
                         <span>
@@ -366,7 +366,7 @@ export class AmpRenderPartial {
                         ${sanitizedCaption}
                     </div>
                 </div>` : 
-            media.type == "GIF" ?
+            media.category == "GIF" ?
                 `<div class="tile-ct">
                     <div class="">
                         <span>
@@ -386,7 +386,7 @@ export class AmpRenderPartial {
                         ${sanitizedCaption}
                     </div>
                 </div>` : 
-            media.type == "YOUTUBE" ?
+            media.category == "YOUTUBE" ?
                 `<div class="tile-ct">
                     <a rel='nofollow' href="${media.url}" title="Link to video">
                     <span>
@@ -407,7 +407,7 @@ export class AmpRenderPartial {
                     </div>
                     </a>
                 </div>` :  
-            media.type == "NORMAL_VIDEO" ?
+            media.category == "NORMAL_VIDEO" ?
                 `<div class="tile-ct">
                     <a rel='nofollow' href="${media.url}" title='Link to video'>
                     <span>
@@ -434,7 +434,7 @@ export class AmpRenderPartial {
                     </div>
                     </a>
                 </div>` : 
-            media.type == "AUDIO" ?
+            media.category == "AUDIO" ?
                 `<div class="tile-ct">
                     <a rel='nofollow' href="${media.url}" title="Link to recording">
                     <span>

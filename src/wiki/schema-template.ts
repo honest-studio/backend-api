@@ -88,7 +88,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             return result.text;
         }).join("");
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
-        switch (media.type){
+        switch (media.category){
             case 'PICTURE':
                 schemaJSON["image"].push({
                     "@type": "ImageObject",

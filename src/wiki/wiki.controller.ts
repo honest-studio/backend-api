@@ -11,6 +11,7 @@ import { JoiValidationPipe } from '../common';
 import { WikiService } from './wiki.service';
 import { WikiQuerySchema } from './wiki.query-schema';
 import * as rawbody from 'raw-body';
+const boolean = require('boolean');
 
 @Controller('v2/wiki')
 @ApiUseTags('Wikis')
@@ -58,7 +59,7 @@ export class WikiController {
     @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
     async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<any> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
-        return this.wikiService.getWikiBySlug(lang_code, slug, options.cache);
+        return this.wikiService.getWikiBySlug(lang_code, slug, boolean(options.cache));
     }
 
     @Get('schema-slug/lang_:lang_code/:slug')
@@ -89,13 +90,17 @@ export class WikiController {
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
     })
+    @ApiImplicitQuery({
+        name: 'cache',
+        description: `Set to false if you don't want to use the cache`
+    })
     @ApiResponse({
         status: 200,
         description: `An AMP HTML wiki encoded in UTF-8`
     })
-    async getAMPBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+    async getAMPBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<any> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
-        return this.wikiService.getAMPBySlug(lang_code, slug);
+        return this.wikiService.getAMPBySlug(lang_code, slug, boolean(options.cache));
     }
 
     @Get('group/lang_:lang_code/:slug')

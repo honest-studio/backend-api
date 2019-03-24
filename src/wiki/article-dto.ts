@@ -61,6 +61,7 @@ export interface Media {
     alt?: string;
     height?: number;
     width?: number;
+    category?: string;
 }
 
 export interface Metadata {
