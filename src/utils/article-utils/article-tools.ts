@@ -23,7 +23,7 @@ export const CheckForLinksOrCitationsAMP = (
 		const citeString: string = 'CITE';
 		const isLink = link.indexOf(linkString);
 		const isCitation = link.indexOf(citeString);
-		let newString: string;
+		let newString: string, newText: string;
 		// Check whether link or citation
 		if (isLink >= 0) {
 			const linkBegin = isLink + linkString.length + 1;
@@ -95,6 +95,8 @@ export const CheckForLinksOrCitationsAMP = (
             // Set the new string
             newString = decode($.html() + endingString, 'all');
 
+            // Substitute in the new string
+            newText = text.replace(link, newString);
 
 		} else if (isCitation >= 0 && citations) {
 			const citationIndex: number = parseInt(link.charAt(isCitation + citeString.length + 1));
@@ -169,9 +171,12 @@ export const CheckForLinksOrCitationsAMP = (
 
             // Set the new string
             newString = decode($.html() + endingString, 'all');
+
+            // Substitute in the new string
+            newText = text.replace(link, newString);
 		}
 		// Recursive
-		return CheckForLinksOrCitationsAMP(newString, citations, currentIPFS, ampLightBoxes, returnPlaintext);
+		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, returnPlaintext);
 	}
 	return {'text': text,  'lightboxes': ampLightBoxes};
 };

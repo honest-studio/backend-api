@@ -1,7 +1,7 @@
-import { ArticleJson } from './article-dto';
+import { ArticleJson, AMPParseCollection } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
-import { youtubeIdExists } from './article-converter';
+import { youtubeIdExists, renderParagraph } from './article-converter';
 import { LanguagePack } from './wiki.service';
 var striptags = require('striptags');
 
@@ -232,9 +232,39 @@ export class AmpRenderPartial {
         `;
     }
 
+    renderFirstParagraph = (): string => {
+        let firstSection: Section = this.artJSON.page_body[0];
+        let comboParagraph = firstSection.paragraphs.map((value, index) => {
+            let result: AMPParseCollection = renderParagraph(value, this.artJSON.citations, this.currentIPFS);
+            this.allLightBoxes.push(...result.lightboxes);
+            return result.text;
+        }).join("");
+        return `
+            <div class="entry-content" id="first-paragraph" itemprop="description">
+                <div class="entry-content-inner-wrap">
+                    ${comboParagraph}
+                </div>
+            </div>
+        `;
+    }
+
     renderPageBody = (): string => {
-        let sections: Section[] = this.artJSON.page_body
-        return `PAGE BODY`;
+        let otherSections: Section[] = this.artJSON.page_body.slice(1);
+        let comboSections = otherSections.map((section, sectionIndex) => {
+            return section.paragraphs.map((paragraph, paraIndex) => {
+                let result: AMPParseCollection = renderParagraph(paragraph, this.artJSON.citations, this.currentIPFS);
+                this.allLightBoxes.push(...result.lightboxes);
+                return result.text;
+            }).join("");
+        }).join("");
+
+        return `
+            <div class="entry-content">
+                <div class="entry-content-inner-wrap">
+                    ${comboSections}
+                </div>
+            </div>
+        `;
     }
 
     renderOneInfobox = (infobox: Infobox, index: number): string => {

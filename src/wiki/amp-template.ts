@@ -21,6 +21,7 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
             <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" class="schema">
                 ${arp.renderMainPhoto(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
                 ${arp.renderNameContainer()}
+                ${arp.renderFirstParagraph()}
                 ${arp.renderInfoboxes()}
                 ${arp.renderPageBody()}
                 ${arp.renderMediaGallery()}

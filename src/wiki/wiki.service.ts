@@ -124,7 +124,6 @@ export class WikiService {
     }
 
     async getWikiGroup(lang_code: string, slug: string): Promise<LanguagePack[]> {
-        console.log(arguments);
         const lang_packs: LanguagePack[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `

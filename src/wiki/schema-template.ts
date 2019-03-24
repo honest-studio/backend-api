@@ -157,24 +157,5 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             schemaJSON[infobox.schema] = "";
         }
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    console.log(schemaJSON);
     return `<script type="application/ld+json">${JSON.stringify(schemaJSON)}</script>`;
 }
