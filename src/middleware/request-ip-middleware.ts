@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { Injectable, NestMiddleware, MiddlewareFunction } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { getClientIp } from 'request-ip';
 import { ResolveIpFromRequest } from '../utils/request-tools';
 
@@ -38,7 +38,7 @@ const fallbackErrorUrl = '/error';
  */
 @Injectable()
 export class RequestIpMiddleware implements NestMiddleware {
-    async resolve(...args: any[]): Promise<MiddlewareFunction> {
+    async use(req: Request, res: Response, next: Function): Promise<any> {
         return async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const remoteIp = await resolveIpAsync(req);
