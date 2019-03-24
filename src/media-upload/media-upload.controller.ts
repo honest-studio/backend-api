@@ -7,7 +7,6 @@ import {
     Query,
     Req,
     UseInterceptors,
-    FileInterceptor,
     UploadedFile,
     ValidationPipe,
     UsePipes
@@ -25,6 +24,7 @@ import {
 import { MediaUploadService } from './media-upload.service';
 import { MediaUploadDto } from './media-upload-dto';
 import * as rawbody from 'raw-body';
+import { FileInterceptor } from '@nestjs/platform-express';
 const path = require('path');
 
 @Controller('v2/media-upload')

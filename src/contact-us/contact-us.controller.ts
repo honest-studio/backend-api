@@ -1,5 +1,5 @@
-import { Body, Query, Controller, Post, Param, UseInterceptors, ValidationPipe, UsePipes } from '@nestjs/common';
-import { ApiConsumes, ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
+import { Body, Controller, Post, UsePipes } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { ContactUsService } from './contact-us.service';
 import { ContactUSSchema } from './contact-us.query-schema';
 import { JoiValidationPipe } from '../common';
