@@ -26,11 +26,11 @@ export class WikiService {
         return wikis[0];
     }
 
-    async getWikiBySlug(lang_code: string, slug: string): Promise<ArticleJson> {
+    async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
         const rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current
+                SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache 
                 ON art.ipfs_hash_current=cache.ipfs_hash 
@@ -53,11 +53,23 @@ export class WikiService {
             'metadata.ipfs_hash': rows[0].ipfs_hash_current
         });
         let wiki;
-        if (cache_wiki) wiki = cache_wiki;
+        if (cache_wiki && use_cache) wiki = cache_wiki;
         else {
             wiki = oldHTMLtoJSON(rows[0].html_blob);
             wiki.metadata.pageviews = rows[0].pageviews;
             wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
+            if (wiki.metadata.is_wikipedia_import) {
+                const categories = await fetch(
+                    `https://en.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`
+                )
+                .then(response => response.json())
+                .then(json => json.query.pages)
+                .then(pages => Object.values(pages)[0])
+                .then(obj => obj.categories)
+                .then(cats => cats.map(cat => cat.title.split(':')[1]));
+
+                wiki.categories = categories;
+            }
             this.mongo.connection().json_wikis.insertOne(wiki);
         }
 

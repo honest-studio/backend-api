@@ -43,7 +43,6 @@ export class SearchService {
         };
 
         if (langs) {
-            console.log(langs);
             searchJSON.query.bool['must'] = {
                 terms: { lang: langs }
             };
