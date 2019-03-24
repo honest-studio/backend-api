@@ -1,5 +1,6 @@
 import { Citation, AMPParseCollection } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
+const crypto = require("crypto");
 const decode = require('unescape');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
@@ -43,7 +44,7 @@ export const CheckForLinksOrCitationsAMP = (
             const linkCodeAndSlugNoWiki = lang_code + '/' + slug;
             const nextLetter = text.charAt(end);
             const endingString = !!nextLetter.match(/[.,:;!?']/) ? '' : ' ';
-            const unique_id = Math.random().toString(36).substring(2);
+            const unique_id = crypto.randomBytes(5).toString('hex');
             // Load the HTML into htmlparser2 beforehand since it is more forgiving
             let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
@@ -110,7 +111,7 @@ export const CheckForLinksOrCitationsAMP = (
 
             // Load the HTML into cheerio for parsing
             let $ = cheerio.load(dom);
-            let unique_id = Math.random().toString(36);
+            const unique_id = crypto.randomBytes(5).toString('hex');
 
             const nextLetter = text.charAt(end);
             const endingString = !!nextLetter.match(/[.,:;!?']/) ? '' : ' ';

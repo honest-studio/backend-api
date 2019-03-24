@@ -2,10 +2,11 @@ import { ArticleJson } from './article-dto';
 import { styleNugget } from './amp-style'
 import { AmpRenderPartial } from './amp-render-partial'
 import { LanguagePack } from './wiki.service';
+const crypto = require("crypto");
 
 export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): string => {
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
-    const RANDOMSTRING = Math.random().toString(36).substring(7);
+    const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     let arp = new AmpRenderPartial(inputJSON);
     let AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '', BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = null;
     let CURRENT_IPFS_HASH = '';

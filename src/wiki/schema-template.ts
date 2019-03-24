@@ -2,10 +2,11 @@ import { ArticleJson } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
 import { youtubeIdExists } from './article-converter';
 import { LanguagePack } from './wiki.service';
+const crypto = require("crypto");
 var striptags = require('striptags');
 
 export const renderSchema = (inputJSON: ArticleJson): any => {
-    const RANDOMSTRING = Math.random().toString(36).substring(7);
+    const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     const BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = false, AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '';
     const currentIPFS = 'Qmaskdjaslkdjslakjdlkdsad'
     let schemaJSON = { 
