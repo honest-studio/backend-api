@@ -1,6 +1,7 @@
 import { Citation, AMPParseCollection } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
 const decode = require('unescape');
+import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
 
 export const CheckForLinksOrCitationsAMP = (
@@ -13,7 +14,10 @@ export const CheckForLinksOrCitationsAMP = (
 ): AMPParseCollection => {
 	if (!textProcessing) return {'text': '', 'lightboxes': []};
 
-	let text = textProcessing;
+    let text = textProcessing;
+    let md = new MarkdownIt({ html: true, });
+    text = md.renderInline(text);
+
 	// if (text.indexOf('<div')) text = textProcessing.innerHtml;
 	const check = text.indexOf('[[');
 	if (check >= 0) {
@@ -99,7 +103,7 @@ export const CheckForLinksOrCitationsAMP = (
             newText = text.replace(link, newString);
 
 		} else if (isCitation >= 0 && citations) {
-			const citationIndex: number = parseInt(link.charAt(isCitation + citeString.length + 1));
+			const citationIndex: number | string = parseInt(link.charAt(isCitation + citeString.length + 1)) || link.charAt(isCitation + citeString.length + 1);
             const pulledCitation = citations[citationIndex];
             // Load the HTML into htmlparser2 beforehand since it is more forgiving
             let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
@@ -127,7 +131,7 @@ export const CheckForLinksOrCitationsAMP = (
             $(openButtonTag).attr('aria-label', citationIndex);
             $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
             $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
-            $(openButtonTag).text(citationIndex);
+            $(openButtonTag).text(`[${citationIndex}]`);
     
             // Replace the <a> tag with a button
             $("a").replaceWith(openButtonTag);
@@ -174,9 +178,11 @@ export const CheckForLinksOrCitationsAMP = (
 
             // Substitute in the new string
             newText = text.replace(link, newString);
-		}
+        }
+    
 		// Recursive
 		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, returnPlaintext);
-	}
-	return {'text': text,  'lightboxes': ampLightBoxes};
+    }
+
+	return {'text': text, 'lightboxes': ampLightBoxes};
 };

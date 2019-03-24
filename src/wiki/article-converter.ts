@@ -1552,7 +1552,6 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
     }
     else if (tag_type === 'p') {
         let sanitizedText = items.map((value , index) => {
-            console.log(`-------\n${(value as Sentence).text}\n-------\n`)
             let result = CheckForLinksOrCitationsAMP((value as Sentence).text, passedCitations, passedIPFS);
             result.lightboxes.forEach((value, index) => {
                 returnCollection.lightboxes.push(value);
