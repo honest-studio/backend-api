@@ -1537,7 +1537,7 @@ function parseTable($element: Cheerio): Table {
 }
 
 export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
-    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: [], seealsos: []};
     const { tag_type, items } = paragraph;
     if (items && items.length > 0){} else return returnCollection;
     if (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4' || tag_type === 'h5' || tag_type === 'h6') {
@@ -1546,10 +1546,9 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
     }
     else if (tag_type === 'p') {
         let sanitizedText = items.map((sentenceItem: Sentence, sentenceIndex) => {
-            let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS);
-            result.lightboxes.forEach((value, index) => {
-                returnCollection.lightboxes.push(value);
-            })
+            let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, [], [], true);
+            returnCollection.lightboxes.push(...result.lightboxes);
+            returnCollection.seealsos.push(...result.seealsos);
             return result.text;
         }).join("");
         returnCollection.text = `<${tag_type}>${sanitizedText}</${tag_type}>`;
@@ -1557,10 +1556,9 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
     else if (tag_type === 'ul') {
         let sanitizedText = items.map((liItem: ListItem , listIndex) => {
             return liItem.sentences.map((sentenceItem: Sentence , sentenceIndex) => {
-                let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS);
-                result.lightboxes.forEach((value, index) => {
-                    returnCollection.lightboxes.push(value);
-                })
+                let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, [], [], true);
+                returnCollection.lightboxes.push(...result.lightboxes);
+                returnCollection.seealsos.push(...result.seealsos);
                 return `<${liItem.tag_type}>${result.text}</${liItem.tag_type}>` ;
             }).join("");
         }).join("");
@@ -1576,12 +1574,11 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
 };
 
 export const renderImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
-    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: [], seealsos: []};
     let sanitizedCaption = image.caption.map((sentenceItem: Sentence, sentenceIndex) => {
-        let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS);
-        result.lightboxes.forEach((value, index) => {
-            returnCollection.lightboxes.push(value);
-        })
+        let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, [], [], true);
+        returnCollection.lightboxes.push(...result.lightboxes);
+        returnCollection.seealsos.push(...result.seealsos);
         return result.text;
     }).join("");
     let sanitizedCaptionPlaintext = striptags(sanitizedCaption);

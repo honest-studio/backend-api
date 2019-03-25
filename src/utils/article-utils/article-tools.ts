@@ -1,4 +1,4 @@
-import { Citation, AMPParseCollection, Media } from '../../wiki/article-dto';
+import { Citation, AMPParseCollection, Media, SeeAlso } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
 const crypto = require("crypto");
 const decode = require('unescape');
@@ -11,10 +11,13 @@ export const CheckForLinksOrCitationsAMP = (
     citations: Citation[],
     currentIPFS: string,
     ampLightBoxes: string[] = [],
+    seeAlsos: SeeAlso[] = [],
+    countSeeAlsos: boolean = true,
 	returnPlaintext?: boolean,
     tagType?: string
+    
 ): AMPParseCollection => {
-	if (!textProcessing) return {'text': '', 'lightboxes': []};
+	if (!textProcessing) return {'text': '', 'lightboxes': [], 'seealsos': []};
 
     let text = textProcessing;
     let md = new MarkdownIt({ html: true, });
@@ -46,6 +49,17 @@ export const CheckForLinksOrCitationsAMP = (
             const nextLetter = text.charAt(end);
             const endingString = !!nextLetter.match(/[.,:;!?']/) ? '' : ' ';
             const unique_id = crypto.randomBytes(5).toString('hex');
+
+            // Collect the seeAlsos (they will be tallied later)
+            if (countSeeAlsos){
+                seeAlsos.push({
+                    lang_code: lang_code,
+                    slug: slug,
+                    text: linkText,
+                    thumbnail: ""
+                });
+            }
+
             // Load the HTML into htmlparser2 beforehand since it is more forgiving
             let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
@@ -184,10 +198,10 @@ export const CheckForLinksOrCitationsAMP = (
         }
     
 		// Recursive
-		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, returnPlaintext);
+		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, seeAlsos, returnPlaintext);
     }
 
-	return {'text': text, 'lightboxes': ampLightBoxes};
+	return {'text': text, 'lightboxes': ampLightBoxes, 'seealsos': seeAlsos};
 };
 
 export const ConstructAMPImage = (media: Media, sanitizedCaption: string, sanitizedCaptionPlaintext: string): string  => {

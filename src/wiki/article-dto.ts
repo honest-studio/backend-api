@@ -10,6 +10,22 @@ export interface WikiLink {
     text: string; // the link's display text
 }
 
+export interface SeeAlso {
+    lang_code: string;
+    slug: string;
+    text: string;
+    thumbnail: string;
+}
+
+export interface SeeAlsoCountGroup {
+    count: number;
+    data: SeeAlso;
+}
+
+export interface SeeAlsoCollection {
+    [key: string]: SeeAlsoCountGroup;
+}
+
 export interface Sentence {
     type: string; // sentence
     index: number;
@@ -19,6 +35,7 @@ export interface Sentence {
 export interface AMPParseCollection {
     text: string;
     lightboxes: string[];
+    seealsos: SeeAlso[];
 }
 
 export interface ListItem {
