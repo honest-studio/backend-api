@@ -316,6 +316,7 @@ export class AmpRenderPartial {
             return this.renderOneInfobox(value, index);
         }).join("");
         return `
+            <span id='infoboxHeader'></span>
             <amp-accordion class="infobox-accordion">
                 <section id="infobox_section" class="infobox-main-wrap" expanded>
                     <h2 class="qf-header">
@@ -633,7 +634,21 @@ export class AmpRenderPartial {
                 </a>
             </li>
         `;
-        
+        if (this.artJSON.infoboxes.length > 0){
+            comboString += `
+                <li class='toc-header-infobox' data-blurb-id="infobox_section">
+                    <a rel="nofollow" class='toc-header-infobox' href="#infoboxHeader">
+                        <div class="fixed-items-description">
+                            ${ this.artJSON.metadata.page_type == 'Person' ?
+                                `Quick Biography` :
+                            true ?
+                                `Quick Facts For This Wiki` : ``
+                            }
+                        </div>
+                    </a>
+                </li>
+            `;
+        }
         comboString += this.artJSON.page_body.map((section, sectionIndex) => {
             return section.paragraphs.map((para, paraIndex) => {
                 if (para.tag_type === 'h2' || para.tag_type === 'h3' || para.tag_type === 'h4' || para.tag_type === 'h5' || para.tag_type === 'h6') {

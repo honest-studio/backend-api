@@ -1504,7 +1504,11 @@ margin: 0px;
 
 .entry-content h2:before,
 .entry-content h3:before,
-.entry-content h4:before
+.entry-content h4:before,
+.entry-content h5:before,
+.entry-content h6:before,
+#infoboxHeader
+
 {
   display: block;
   content: " ";
@@ -1515,7 +1519,9 @@ margin: 0px;
 
 .entry-content h2 > span.mw-headline:before,
 .entry-content h3 > span.mw-headline:before,
-.entry-content h4 > span.mw-headline:before
+.entry-content h4 > span.mw-headline:before,
+.entry-content h5 > span.mw-headline:before,
+.entry-content h6 > span.mw-headline:before
 {
   display: block;
   content: " ";
@@ -2593,7 +2599,6 @@ font-size: 17px;
 }
 
 table.blurb-inline-image-container, div.amp-san-picfix {
-    float: left;
     margin: 15px 0px 15px 0px;
     background-color: transparent;
     border-bottom: 0px;
