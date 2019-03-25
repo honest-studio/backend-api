@@ -11,10 +11,11 @@ export interface WikiLink {
 }
 
 export interface SeeAlso {
-    lang_code: string;
+    lang_string: string;
     slug: string;
-    text: string;
-    thumbnail: string;
+    title: string;
+    thumbnail_url: string;
+    snippet: string;
 }
 
 export interface SeeAlsoCountGroup {

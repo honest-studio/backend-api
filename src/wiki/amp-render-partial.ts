@@ -565,11 +565,25 @@ export class AmpRenderPartial {
         `;
     }    
 
+    renderOneSeeAlso = (seealso: SeeAlso): string => {
+        return `
+            <a class='sa-ancr-wrp' href="/wiki/${seealso.lang_string}/${seealso.slug}">
+                <amp-img layout="fixed-height" height=80 src="${seealso.thumbnail_url}" alt="${seealso.title} wiki">
+                    <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${seealso.title}"></amp-img>
+                </amp-img>
+                <div class="sa-contentwrap">
+                    <div class="sa-title">${seealso.title}</div>
+                    <div class="sa-blurb">${seealso.snippet}</div>
+                </div>
+            </a>
+        `;
+    }
+
     renderSeeAlso = (): string => {
         let seeAlsoTally: SeeAlsoCollection = {};
         let sortedSeeAlsos = [];
         this.allSeeAlsos.forEach((value, index) => {
-            let key = `${value.lang_code}__${value.slug}`;
+            let key = `${value.lang_string}__${value.slug}`;
             if (seeAlsoTally[key]){
                 seeAlsoTally[key].count = seeAlsoTally[key].count + 1;
             }else{
@@ -585,12 +599,33 @@ export class AmpRenderPartial {
         sortedSeeAlsos = sortedSeeAlsos.slice(0, 3);
         let newSeeAlsos = [];
         sortedSeeAlsos.forEach((key, index) => {
+            seeAlsoTally[key].data.thumbnail_url = "https://cdn.the-scientist.com/assets/articleNo/29922/iImg/611/honeybee.png";
+            seeAlsoTally[key].data.snippet = "A BEEFUL ARTICLE";
             newSeeAlsos.push(seeAlsoTally[key].data);
         });
         this.allSeeAlsos = newSeeAlsos;
+        let seeAlsoComboString = this.allSeeAlsos.map((value, index) => {
+            return this.renderOneSeeAlso(value);
+        }).join("");
+        return `
+            <span id="seeAlsoPanel" class="toc-span-fix"></span>
+                <amp-accordion id="seeAlsoPanelContainer" >
+                <section expanded>
+                    <h2 class="acc-header" >See Also
+                        <span class="icon"><i class="fa fa-chevron-down"></i>
+                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="{% trans 'See related encyclopedia articles, biographies, reviews, and historical facts.' %}" />
+                        </span>
+                    </h2>
+                    <div>
+                        <div class="disclaimer">Other wiki pages related to ${this.artJSON.page_title}.</div>
+                        ${seeAlsoComboString}
+                    </div>
+                </section>
+                </amp-accordion>
+        
+        
 
-        console.log(this.allSeeAlsos);
-        return `SEEALSO`
+        `
     }
 
     renderFooter = (): string => {

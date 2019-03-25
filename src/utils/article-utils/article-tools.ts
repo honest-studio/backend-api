@@ -53,10 +53,11 @@ export const CheckForLinksOrCitationsAMP = (
             // Collect the seeAlsos (they will be tallied later)
             if (countSeeAlsos){
                 seeAlsos.push({
-                    lang_code: lang_code,
+                    lang_string: lang_code,
                     slug: slug,
-                    text: linkText,
-                    thumbnail: ""
+                    title: linkText,
+                    thumbnail_url: "",
+                    snippet: ""
                 });
             }
 
