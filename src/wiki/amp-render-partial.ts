@@ -3,7 +3,9 @@ import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
 import { getYouTubeID, renderParagraph, renderImage } from './article-converter';
 import { LanguagePack } from './wiki.service';
-var striptags = require('striptags');
+const striptags = require('striptags');
+const urlSlug = require('url-slug');
+
 
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
@@ -474,7 +476,7 @@ export class AmpRenderPartial {
             return this.renderOneMedia(value, index);
         }).join("");
         return `
-            <span id="gallery" class="toc-span-fix"></span>
+            <span id="mediaGallerySpan" class="toc-span-fix"></span>
             <amp-accordion  class="media-gallery-accordion">
                 <section expanded>
                     <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
@@ -631,13 +633,14 @@ export class AmpRenderPartial {
                 </a>
             </li>
         `;
+        
         comboString += this.artJSON.page_body.map((section, sectionIndex) => {
             return section.paragraphs.map((para, paraIndex) => {
                 if (para.tag_type === 'h2' || para.tag_type === 'h3' || para.tag_type === 'h4' || para.tag_type === 'h5' || para.tag_type === 'h6') {
                     const text: string = (para.items[0] as Sentence).text;
                     return `
-                        <li class='toc-header-${para.tag_type}' data-blurb-id="${para.index}">
-                            <a rel="nofollow" class='toc-header-${para.tag_type}' href="#${para.index}">
+                        <li class='toc-header-${para.tag_type}' data-blurb-id="${urlSlug(text).slice(0,15)}">
+                            <a rel="nofollow" class='toc-header-${para.tag_type}' href="#${urlSlug(text).slice(0,15)}">
                                 <div class="fixed-items-description">${text}</div>
                             </a>
                         </li>
@@ -651,7 +654,7 @@ export class AmpRenderPartial {
         if (this.artJSON.media_gallery.length > 0){
             comboString += `
                 <li class='toc-header-gallery' data-blurb-id="Gallery_Pseudo_ID">
-                    <a rel="nofollow" class='toc-header-gallery' href="#mediaGallery">
+                    <a rel="nofollow" class='toc-header-gallery' href="#mediaGallerySpan">
                         <div class="fixed-items-description">Images & Videos</div>
                     </a>
                 </li>
@@ -665,9 +668,9 @@ export class AmpRenderPartial {
             </li>
         `;
         comboString += `
-            <li class='toc-header-references' data-blurb-id="Reference_Links">
-                <a rel="nofollow" class='toc-header-references' href="#link_list_container">
-                    <div class="fixed-items-description">References</div>
+            <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
+                <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
+                    <div class="fixed-items-description">See Also</div>
                 </a>
             </li>
         `;

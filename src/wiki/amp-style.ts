@@ -1499,6 +1499,7 @@ margin: 0px;
 .toc-span-fix{
     float:left;
     margin-top:-50px;
+    display: block;
 }
 
 .entry-content h2:before,
