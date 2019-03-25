@@ -38,7 +38,9 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
                 ${arp.renderFooter()}
             </footer>
             <amp-sidebar id='sidebar' layout="nodisplay" side="left">
-                ${arp.renderTableOfContents()}
+                <ul class="heading-collection">
+                    ${arp.renderTableOfContents()}
+                </ul>
             </amp-sidebar>
             <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
                 ${arp.renderUserMenu()}

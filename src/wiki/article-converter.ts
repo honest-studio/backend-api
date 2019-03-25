@@ -1539,9 +1539,9 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
     let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
     const { tag_type, items } = paragraph;
     if (items && items.length > 0){} else return returnCollection;
-    if (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4') {
+    if (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4' || tag_type === 'h5' || tag_type === 'h6') {
         const text: string = (items[0] as Sentence).text;
-        returnCollection.text = `<${tag_type}>${text}</${tag_type}>`;
+        returnCollection.text = `<${tag_type} id=${paragraph.index}>${text}</${tag_type}>`;
     }
     else if (tag_type === 'p') {
         let sanitizedText = items.map((sentenceItem: Sentence, sentenceIndex) => {

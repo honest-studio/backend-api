@@ -1,4 +1,4 @@
-import { ArticleJson, AMPParseCollection } from './article-dto';
+import { ArticleJson, AMPParseCollection, Sentence } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
 import { getYouTubeID, renderParagraph, renderImage } from './article-converter';
@@ -115,7 +115,14 @@ export class AmpRenderPartial {
     
 
     renderMainPhoto = (AMP_PHOTO_HEIGHT: string, AMP_PHOTO_WIDTH: string, OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        let ampSanitizedPhotoComment = "NEED TO HAVE SENTENCE-CONCATTED, AMP SANITIZED CAPTION HERE";
+        let ampSanitizedPhotoComment = this.artJSON.main_photo.caption.map((value, index) => {
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
+            result.lightboxes.forEach((value, index) => {
+                this.allLightBoxes.push(value);
+            })
+            return result.text;
+        }).join("");
+
         return `
             ${ this.artJSON.metadata.page_type == 'Person' ?
                 `<abbr itemprop="homeLocation" itemscope itemtype="http://schema.org/Place" >
@@ -617,7 +624,54 @@ export class AmpRenderPartial {
     }   
 
     renderTableOfContents = (): string => {
-        return `TABLE OF CONTENTS`
+        let comboString: string = `
+            <li class='toc-header-description' data-blurb-id="top_header">
+                <a rel="nofollow" class='toc-header-description' href="#toc-top">
+                    <div class="fixed-items-description">${this.artJSON.page_title}</div>
+                </a>
+            </li>
+        `;
+        comboString += this.artJSON.page_body.map((section, sectionIndex) => {
+            return section.paragraphs.map((para, paraIndex) => {
+                if (para.tag_type === 'h2' || para.tag_type === 'h3' || para.tag_type === 'h4' || para.tag_type === 'h5' || para.tag_type === 'h6') {
+                    const text: string = (para.items[0] as Sentence).text;
+                    return `
+                        <li class='toc-header-${para.tag_type}' data-blurb-id="${para.index}">
+                            <a rel="nofollow" class='toc-header-${para.tag_type}' href="#${para.index}">
+                                <div class="fixed-items-description">${text}</div>
+                            </a>
+                        </li>
+                    `
+                }
+                else{
+                    return ``;
+                }
+            }).join("");
+        }).join("");
+        if (this.artJSON.media_gallery.length > 0){
+            comboString += `
+                <li class='toc-header-gallery' data-blurb-id="Gallery_Pseudo_ID">
+                    <a rel="nofollow" class='toc-header-gallery' href="#mediaGallery">
+                        <div class="fixed-items-description">Images & Videos</div>
+                    </a>
+                </li>
+            `;
+        }
+        comboString += `
+            <li class='toc-header-references' data-blurb-id="Reference_Links">
+                <a rel="nofollow" class='toc-header-references' href="#link_list_container">
+                    <div class="fixed-items-description">References</div>
+                </a>
+            </li>
+        `;
+        comboString += `
+            <li class='toc-header-references' data-blurb-id="Reference_Links">
+                <a rel="nofollow" class='toc-header-references' href="#link_list_container">
+                    <div class="fixed-items-description">References</div>
+                </a>
+            </li>
+        `;
+        return comboString;
     }
 
     renderUserMenu = (): string => {
