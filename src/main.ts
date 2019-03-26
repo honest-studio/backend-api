@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ExpressAdapter } from '@nestjs/platform-express';
 import * as WebSocket from 'ws';
 import * as querystring from 'querystring';
 import { ConfigService } from './common';
@@ -30,7 +31,7 @@ async function bootstrap() {
         next();
     });
 
-    const app = await NestFactory.create(AppModule, expressApp);
+    const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
     // Swagger
     const serverConfig = app.get(ConfigService).get('serverConfig');
