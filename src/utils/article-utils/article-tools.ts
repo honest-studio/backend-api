@@ -285,9 +285,9 @@ export const getSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
         let result;
         while((result = CAPTURE_REGEXES.link_match.exec(text)) !== null) {
             tempSeeAlsos.push({
-                lang_string: result[1],
+                lang: result[1],
                 slug: result[2],
-                title: result[3],
+                title: "",
                 thumbnail_url: "",
                 snippet: ""
             });
@@ -297,7 +297,7 @@ export const getSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     let seeAlsoTally: SeeAlsoCollection = {};
     let sortedSeeAlsos = [];
     tempSeeAlsos.forEach((value, index) => {
-        let key = `${value.lang_string}__${value.slug}`;
+        let key = `${value.lang}__${value.slug}`;
         if (seeAlsoTally[key]){
             seeAlsoTally[key].count = seeAlsoTally[key].count + 1;
         }else{
@@ -313,8 +313,6 @@ export const getSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     sortedSeeAlsos = sortedSeeAlsos.slice(0, 3);
     let newSeeAlsos = [];
     sortedSeeAlsos.forEach((key, index) => {
-        seeAlsoTally[key].data.thumbnail_url = "https://cdn.the-scientist.com/assets/articleNo/29922/iImg/611/honeybee.png";
-        seeAlsoTally[key].data.snippet = "A BEEFUL ARTICLeeE";
         newSeeAlsos.push(seeAlsoTally[key].data);
     });
 	return newSeeAlsos;

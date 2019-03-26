@@ -5,9 +5,10 @@ import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
 import { getSeeAlsos } from '../utils/article-utils'
-import { ArticleJson } from './article-dto';
+import { ArticleJson, SeeAlso } from './article-dto';
 import { renderAMP } from './amp-template';
 import { renderSchema } from './schema-template';
+const SqlString = require('sqlstring');
 
 export interface LanguagePack {
     lang: string;
@@ -78,7 +79,7 @@ export class WikiService {
         const cache_wiki = await this.mongo.connection().json_wikis.findOne({
             'metadata.ipfs_hash': rows[0].ipfs_hash_current
         });
-        let wiki;
+        let wiki: ArticleJson;
         if (cache_wiki && use_cache){
             wiki = cache_wiki;
         } 
@@ -100,7 +101,31 @@ export class WikiService {
             }
             this.mongo.connection().json_wikis.insertOne(wiki);
         }
-        wiki.seealsos = getSeeAlsos(wiki)
+        wiki.seealsos = getSeeAlsos(wiki);
+        let seeAlsoWhere = wiki.seealsos.map((value, index) => {
+            // performance is slow when ORing slug_alt for some reason, even though it is indexed
+            return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
+        }).join(" OR ");
+        let seeAlsoRows = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
+                COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS snippet
+                FROM enterlink_articletable art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE ${seeAlsoWhere};`,
+                [],
+                function(err, rows) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    else resolve(rows);
+                }
+            );
+        });
+        wiki.seealsos = seeAlsoRows as SeeAlso[];
         wiki.metadata.pageviews = rows[0].pageviews;
         wiki.metadata.page_lang = lang_code;
         return wiki;

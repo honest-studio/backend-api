@@ -11,7 +11,7 @@ export interface WikiLink {
 }
 
 export interface SeeAlso {
-    lang_string: string;
+    lang: string;
     slug: string;
     title: string;
     thumbnail_url: string;

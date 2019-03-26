@@ -13,7 +13,7 @@ import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '../utils/article
 const ROOT_DIR = path.join(__dirname, '../..');
 export const CAPTURE_REGEXES = {
     link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
-    link_match: /\[\[LINK\|(.*?)\|(.*?)\|(.*?)\]\]/gimu,
+    link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/gimu,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
     inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu
 };
