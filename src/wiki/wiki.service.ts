@@ -82,16 +82,7 @@ export class WikiService {
             wiki.metadata.pageviews = rows[0].pageviews;
             wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
             if (wiki.metadata.is_wikipedia_import) {
-                const categories = await fetch(
-                    `https://en.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`
-                )
-                .then(response => response.json())
-                .then(json => json.query.pages)
-                .then(pages => Object.values(pages)[0])
-                .then(obj => obj.categories)
-                .then(cats => cats.map(cat => cat.title.split(':')[1]));
-
-                wiki.categories = categories;
+                wiki.categories = await this.getCategories(lang_code, slug);
             }
             this.mongo.connection().json_wikis.insertOne(wiki);
         }
@@ -237,4 +228,16 @@ export class WikiService {
             );
         });
     }
+
+    async getCategories(lang_code: string, slug: string) {
+        return fetch(
+            `https://en.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`
+        )
+        .then(response => response.json())
+        .then(json => json.query.pages)
+        .then(pages => Object.values(pages)[0])
+        .then(obj => obj.categories)
+        .then(cats => cats.map(cat => cat.title.split(':')[1]));
+    }
+
 }

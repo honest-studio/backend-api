@@ -28,7 +28,7 @@ export class PreviewService {
             this.mysql.pool().query(
                 `
                 SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    cache.ipfs_hash, art.blurb_snippet AS text_preview
+                    cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache
                 ON cache.articletable_id=art.id
@@ -97,7 +97,7 @@ export class PreviewService {
             this.mysql.pool().query(
                 `
                 SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    art.ipfs_hash_current, art.blurb_snippet AS text_preview
+                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews
                 FROM enterlink_articletable AS art 
                 WHERE art.slug = ? 
                 AND art.page_lang = ?`,
@@ -118,6 +118,7 @@ export class PreviewService {
             .text()
             .replace(/\s+/g, ' ')
             .trim();
+        preview.categories = await this.wikiService.getCategories(lang_code, slug);
 
         return preview;
     }
