@@ -290,6 +290,18 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Stat: Site Usage', () => {
+    return request(app.getHttpServer())
+        .get('/v2/stat/site-usage')
+        .expect(200)
+  });
+
+  it('Stat: Editor Leaderboard', () => {
+    return request(app.getHttpServer())
+        .get('/v2/stat/editor-leaderboard')
+        .expect(200)
+  });
+
   it('Contact Us: Submit', () => {
     return request(app.getHttpServer())
         .post('/v2/contact-us')

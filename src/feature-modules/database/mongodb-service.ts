@@ -8,12 +8,14 @@ export type PlagiarismEntity = any;
 export type WikiEntity = any;
 export type DiffEntity = any;
 export type JsonWikiEntity = any;
+export type StatEntity = any;
 
 export type AppConnectionInstance = {
     client: MongoClient;
     db: Db;
     actions: Collection<ActionEntity>;
     diffs: Collection<DiffEntity>;
+    stats: Collection<StatEntity>;
     json_wikis: Collection<JsonWikiEntity>;
 };
 
@@ -53,7 +55,8 @@ export class MongoDbService {
                             const actions = db.collection('actions');
                             const diffs = db.collection('diffs');
                             const json_wikis = db.collection('json_wikis');
-                            resolve({ client, db, actions, diffs, json_wikis });
+                            const stats = db.collection('stats');
+                            resolve({ client, db, actions, diffs, json_wikis, stats });
                         }
                     }
                 );

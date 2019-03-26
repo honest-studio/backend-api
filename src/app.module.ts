@@ -14,6 +14,7 @@ import { CacheController, CacheService } from './cache';
 import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
+import { StatController, StatService } from './stat';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 import { RequestIpMiddleware } from './middleware';
 
@@ -53,6 +54,7 @@ import { RequestIpMiddleware } from './middleware';
         HistoryController,
         MediaUploadController,
         UserController,
+        StatController,
         ContactUsController
     ],
     providers: [
@@ -67,6 +69,7 @@ import { RequestIpMiddleware } from './middleware';
         HistoryService,
         MediaUploadService,
         UserService,
+        StatService,
         ContactUsService
     ]
 })
