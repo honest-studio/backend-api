@@ -31,7 +31,7 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
                 <div class="page-times">
                     <div>Created: <span id="page_create_time">${inputJSON.metadata.creation_timestamp}</span></div>
                     <div>Last Modified: <span id="page_last_modified_time">${inputJSON.metadata.last_modified}</span></div>
-                    <div>IPFS: <span id="page_last_modified_time">${CURRENT_IPFS_HASH}</span></div>
+                    <div>IPFS: <span id="page_last_modified_time">${inputJSON.metadata.ipfs_hash}</span></div>
                 </div>
             </main>
             <footer class="footer everi_footer">

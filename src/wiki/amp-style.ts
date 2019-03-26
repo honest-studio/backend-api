@@ -3036,6 +3036,9 @@ visibility: hidden;
 	margin-top: 2px;
     text-align: left;
 }
+.sa-ancr-wrp .sa-blurb p {
+    margin: 3px 0px;
+}
 
 .sa-ancr-wrp .sa-noimg {
 	background:url("https://epcdn-vz.azureedge.net/static/images/no-image-slide.png");
