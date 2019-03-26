@@ -146,6 +146,12 @@ export interface TableCell {
     content: Sentence[];
 }
 
+export interface PhotoExtraData {
+    width: number;
+    height: number;
+    mime: string;
+}
+
 export interface ArticleJson {
     page_title: string;
     main_photo: Media;

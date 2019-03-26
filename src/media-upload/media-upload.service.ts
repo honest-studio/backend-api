@@ -30,6 +30,7 @@ const zlib = require('zlib');
 const Jimp = require('jimp');
 const { StringDecoder } = require('string_decoder');
 import { AWSS3Service } from '../feature-modules/database';
+import { PhotoExtraData } from 'src/wiki/article-dto';
 
 const TEMP_DIR = path.join(__dirname, 'tmp');
 const PHOTO_CONSTANTS = {
@@ -162,12 +163,12 @@ export class MediaUploadService {
     }
 
     // Get the dimensions and the MIME type of a photo. This is used for AMP
-    async getImageData(inputURL: string) {
-        let photoDataResult = { width: null, height: null, mime: null };
+    async getImageData(inputURL: string): Promise<PhotoExtraData> {
+        let photoDataResult: PhotoExtraData = { width: null, height: null, mime: null };
         try {
             let imgBuffer = await this.getImageBufferFromURL(inputURL);
             let mimeResult = fileType(imgBuffer);
-            let sizeResult = sizeOf.sizeOf(imgBuffer);
+            let sizeResult = sizeOf(imgBuffer);
             photoDataResult.width = sizeResult.width;
             photoDataResult.height = sizeResult.height;
             photoDataResult.mime = mimeResult.mime;

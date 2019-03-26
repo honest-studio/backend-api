@@ -116,7 +116,7 @@ export class AmpRenderPartial {
 
     
 
-    renderMainPhoto = (AMP_PHOTO_HEIGHT: string, AMP_PHOTO_WIDTH: string, OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
+    renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
         let ampSanitizedPhotoComment = this.artJSON.main_photo.caption.map((value, index) => {
             let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
             this.allLightBoxes.push(...result.lightboxes);
@@ -137,7 +137,7 @@ export class AmpRenderPartial {
                     `<a class="blurb-photo-anchor" href="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" rel="nofollow" target="_blank">` : ``
                 }
                     ${ OVERRIDE_MAIN_THUMB ? 
-                        `<amp-anim id="mainphoto" itemprop="image" width='${AMP_PHOTO_WIDTH}' height='${AMP_PHOTO_HEIGHT}' layout='responsive' src="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}" 
+                        `<amp-anim id="mainphoto" itemprop="image" width='${this.artJSON.main_photo.width}' height='${this.artJSON.main_photo.height}' layout='responsive' src="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${ this.artJSON.metadata.page_type == 'Person' ?
                                     `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio` : 
@@ -152,7 +152,7 @@ export class AmpRenderPartial {
                             <amp-img placeholder class="mainphoto-placeholder" width="1274" height="1201" layout='responsive' src="https://epcdn-vz.azureedge.net/static/images/no-image-slide.png"></amp-img>
                         </amp-anim>` : 
                     true ? 
-                        `<amp-img id="mainphoto" itemprop="image" width='${AMP_PHOTO_WIDTH}' height='${AMP_PHOTO_HEIGHT}' layout='responsive' src="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" 
+                        `<amp-img id="mainphoto" itemprop="image" width='${this.artJSON.main_photo.width}' height='${this.artJSON.main_photo.height}' layout='responsive' src="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${ this.artJSON.metadata.page_type == 'Person' ?
                                     `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio` : 

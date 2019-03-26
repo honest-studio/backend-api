@@ -5,9 +5,10 @@ import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
 import { getSeeAlsos } from '../utils/article-utils'
-import { ArticleJson, SeeAlso } from './article-dto';
+import { ArticleJson, SeeAlso, PhotoExtraData } from './article-dto';
 import { renderAMP } from './amp-template';
 import { renderSchema } from './schema-template';
+import { MediaUploadService } from '../media-upload'
 const SqlString = require('sqlstring');
 
 export interface LanguagePack {
@@ -133,7 +134,13 @@ export class WikiService {
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
         let langPacks = await this.getWikiGroup(lang_code, slug);
-        return renderAMP(await this.getWikiBySlug(lang_code, slug, use_cache), langPacks);
+        let ampWiki = await this.getWikiBySlug(lang_code, slug, use_cache);
+        let tempService = new MediaUploadService(null);
+        let photoExtraData: PhotoExtraData = await tempService.getImageData(ampWiki.main_photo.url);
+        ampWiki.main_photo.width = photoExtraData.width;
+        ampWiki.main_photo.height = photoExtraData.height;
+        ampWiki.main_photo.mime = photoExtraData.mime;
+        return renderAMP(ampWiki, langPacks);
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {

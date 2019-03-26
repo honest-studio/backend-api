@@ -7,7 +7,7 @@ var striptags = require('striptags');
 
 export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
-    const BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = false, AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '';
+    const BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = false;
     const currentIPFS = 'Qmaskdjaslkdjslakjdlkdsad'
     let schemaJSON = { 
         "@context": `http://schema.org`, 
@@ -67,8 +67,8 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             "name": inputJSON.page_title,
             "caption": inputJSON.page_title,
             "uploadDate": inputJSON.metadata.last_modified,
-            "height": AMP_PHOTO_HEIGHT,
-            "width": AMP_PHOTO_WIDTH,
+            "height": inputJSON.main_photo.height,
+            "width": inputJSON.main_photo.width,
         })
     }
     else {

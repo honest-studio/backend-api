@@ -8,7 +8,7 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     let arp = new AmpRenderPartial(inputJSON);
-    let AMP_PHOTO_HEIGHT = '', AMP_PHOTO_WIDTH = '', BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = null;
+    let BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = null;
     let CURRENT_IPFS_HASH = '';
     const theHTML = `
     <!DOCTYPE html>
@@ -20,7 +20,7 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
         <body>
             ${arp.renderNavBar()}
             <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" class="schema">
-                ${arp.renderMainPhoto(AMP_PHOTO_HEIGHT, AMP_PHOTO_WIDTH, OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
+                ${arp.renderMainPhoto(OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
                 ${arp.renderNameContainer()}
                 ${arp.renderFirstParagraph()}
                 ${arp.renderInfoboxes()}
