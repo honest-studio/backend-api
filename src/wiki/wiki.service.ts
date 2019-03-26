@@ -4,6 +4,7 @@ import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
+import { getSeeAlsos } from '../utils/article-utils'
 import { ArticleJson } from './article-dto';
 import { renderAMP } from './amp-template';
 import { renderSchema } from './schema-template';
@@ -99,7 +100,7 @@ export class WikiService {
             }
             this.mongo.connection().json_wikis.insertOne(wiki);
         }
-
+        wiki.seealsos = getSeeAlsos(wiki)
         wiki.metadata.pageviews = rows[0].pageviews;
         wiki.metadata.page_lang = lang_code;
         return wiki;

@@ -1,23 +1,21 @@
-import { Citation, AMPParseCollection, Media, SeeAlso } from '../../wiki/article-dto';
+import { Citation, AMPParseCollection, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
 const crypto = require("crypto");
 const decode = require('unescape');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
-import { getYouTubeID } from 'src/wiki/article-converter';
+import { getYouTubeID, CAPTURE_REGEXES } from 'src/wiki/article-converter';
 
 export const CheckForLinksOrCitationsAMP = (
 	textProcessing: string,
     citations: Citation[],
     currentIPFS: string,
     ampLightBoxes: string[] = [],
-    seeAlsos: SeeAlso[] = [],
-    countSeeAlsos: boolean = true,
 	returnPlaintext?: boolean,
     tagType?: string
     
 ): AMPParseCollection => {
-	if (!textProcessing) return {'text': '', 'lightboxes': [], 'seealsos': []};
+	if (!textProcessing) return {'text': '', 'lightboxes': []};
 
     let text = textProcessing;
     let md = new MarkdownIt({ html: true, });
@@ -51,15 +49,15 @@ export const CheckForLinksOrCitationsAMP = (
             const unique_id = crypto.randomBytes(5).toString('hex');
 
             // Collect the seeAlsos (they will be tallied later)
-            if (countSeeAlsos){
-                seeAlsos.push({
-                    lang_string: lang_code,
-                    slug: slug,
-                    title: linkText,
-                    thumbnail_url: "",
-                    snippet: ""
-                });
-            }
+            // if (countSeeAlsos){
+            //     seeAlsos.push({
+            //         lang_string: lang_code,
+            //         slug: slug,
+            //         title: linkText,
+            //         thumbnail_url: "",
+            //         snippet: ""
+            //     });
+            // }
 
             // Load the HTML into htmlparser2 beforehand since it is more forgiving
             let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
@@ -199,10 +197,10 @@ export const CheckForLinksOrCitationsAMP = (
         }
     
 		// Recursive
-		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, seeAlsos, returnPlaintext);
+		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, returnPlaintext);
     }
 
-	return {'text': text, 'lightboxes': ampLightBoxes, 'seealsos': seeAlsos};
+	return {'text': text, 'lightboxes': ampLightBoxes};
 };
 
 export const ConstructAMPImage = (media: Media, sanitizedCaption: string, sanitizedCaptionPlaintext: string): string  => {
@@ -262,3 +260,62 @@ export const ConstructAMPImage = (media: Media, sanitizedCaption: string, saniti
     }
     return ``;
 }
+
+export const getSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
+    let allSentences: Sentence[] = [];
+    passedJSON.page_body.forEach((section, index) => {
+        section.paragraphs.forEach((paragraph, index) => {
+            allSentences.push(...(paragraph.items as Sentence[]))
+        })
+    });
+    allSentences.push(...(passedJSON.main_photo.caption as Sentence[]));
+    passedJSON.infoboxes.forEach((infobox, index) => {
+        allSentences.push(...(infobox.values as Sentence[]))
+    });
+    passedJSON.media_gallery.forEach((media, index) => {
+        allSentences.push(...(media.caption as Sentence[]))
+    });
+    passedJSON.citations.forEach((citation, index) => {
+        allSentences.push(...(citation.description as Sentence[]))
+    });
+    let tempSeeAlsos: SeeAlso[] = [];
+
+    allSentences.forEach((sentence, index) => {
+        let text = sentence.text;
+        let result;
+        while((result = CAPTURE_REGEXES.link_match.exec(text)) !== null) {
+            tempSeeAlsos.push({
+                lang_string: result[1],
+                slug: result[2],
+                title: result[3],
+                thumbnail_url: "",
+                snippet: ""
+            });
+        }
+    });
+
+    let seeAlsoTally: SeeAlsoCollection = {};
+    let sortedSeeAlsos = [];
+    tempSeeAlsos.forEach((value, index) => {
+        let key = `${value.lang_string}__${value.slug}`;
+        if (seeAlsoTally[key]){
+            seeAlsoTally[key].count = seeAlsoTally[key].count + 1;
+        }else{
+            seeAlsoTally[key] = {
+                count: 1,
+                data: value
+            };
+        }
+    });
+    sortedSeeAlsos = Object.keys(seeAlsoTally).sort(function(a,b){
+        return seeAlsoTally[a].count -seeAlsoTally[b].count
+    });
+    sortedSeeAlsos = sortedSeeAlsos.slice(0, 3);
+    let newSeeAlsos = [];
+    sortedSeeAlsos.forEach((key, index) => {
+        seeAlsoTally[key].data.thumbnail_url = "https://cdn.the-scientist.com/assets/articleNo/29922/iImg/611/honeybee.png";
+        seeAlsoTally[key].data.snippet = "A BEEFUL ARTICLeeE";
+        newSeeAlsos.push(seeAlsoTally[key].data);
+    });
+	return newSeeAlsos;
+};

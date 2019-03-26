@@ -36,7 +36,6 @@ export interface Sentence {
 export interface AMPParseCollection {
     text: string;
     lightboxes: string[];
-    seealsos: SeeAlso[];
 }
 
 export interface ListItem {
@@ -160,4 +159,5 @@ export interface ArticleJson {
 
     categories?: string[];
     type?: string;
+    seealsos?: SeeAlso[];
 }

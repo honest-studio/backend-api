@@ -10,7 +10,6 @@ const urlSlug = require('url-slug');
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
     public allLightBoxes: string[] = [];
-    public allSeeAlsos: SeeAlso[] = [];
     constructor(inputJSN) {
         this.artJSON = inputJSN;
     }
@@ -119,9 +118,8 @@ export class AmpRenderPartial {
 
     renderMainPhoto = (AMP_PHOTO_HEIGHT: string, AMP_PHOTO_WIDTH: string, OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
         let ampSanitizedPhotoComment = this.artJSON.main_photo.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], [], true);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
             this.allLightBoxes.push(...result.lightboxes);
-            this.allSeeAlsos.push(...result.seealsos);
             return result.text;
         }).join("");
 
@@ -245,13 +243,11 @@ export class AmpRenderPartial {
         let imageBlock = firstSection.images.map((image, imageIndex) => {
             let result: AMPParseCollection = renderImage(image, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             this.allLightBoxes.push(...result.lightboxes);
-            this.allSeeAlsos.push(...result.seealsos);
             return result.text;
         }).join("");
         let paraBlock = firstSection.paragraphs.map((value, index) => {
             let result: AMPParseCollection = renderParagraph(value, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             this.allLightBoxes.push(...result.lightboxes);
-            this.allSeeAlsos.push(...result.seealsos);
             return result.text;
         }).join("");
         return `
@@ -269,13 +265,11 @@ export class AmpRenderPartial {
             let imageBlock = section.images.map((image, imageIndex) => {
                 let result: AMPParseCollection = renderImage(image, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
                 this.allLightBoxes.push(...result.lightboxes);
-                this.allSeeAlsos.push(...result.seealsos);
                 return result.text;
             }).join("");
             let paraBlock = section.paragraphs.map((paragraph, paraIndex) => {
                 let result: AMPParseCollection = renderParagraph(paragraph, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
                 this.allLightBoxes.push(...result.lightboxes);
-                this.allSeeAlsos.push(...result.seealsos);
                 return result.text;
             }).join("");
             return `${imageBlock}${paraBlock}`;
@@ -297,9 +291,8 @@ export class AmpRenderPartial {
                     <h3>${infobox.key}</h3>
                 </div>
                 ${infobox.values.map((value, index) => {
-                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], [], true);
+                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
                     this.allLightBoxes.push(...result.lightboxes);
-                    this.allSeeAlsos.push(...result.seealsos);
                     // return result.text;
                     return `
                         <div class="info-an">
@@ -350,9 +343,8 @@ export class AmpRenderPartial {
     renderOneMedia = (media: Media, index: number): string => {
         const RANDOMSTRING = Math.random().toString(36).substring(7);
         let sanitizedCaption = media.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], [], true);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
             this.allLightBoxes.push(...result.lightboxes);
-            this.allSeeAlsos.push(...result.seealsos);
             return result.text;
         }).join("");
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
@@ -499,9 +491,8 @@ export class AmpRenderPartial {
 
     renderOneCitation = (citation: Citation, index: number): string => {
         let sanitizedDescription = citation.description.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], [], true);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
             this.allLightBoxes.push(...result.lightboxes);
-            this.allSeeAlsos.push(...result.seealsos);
             return result.text;
         }).join("");
 
@@ -580,51 +571,24 @@ export class AmpRenderPartial {
     }
 
     renderSeeAlso = (): string => {
-        let seeAlsoTally: SeeAlsoCollection = {};
-        let sortedSeeAlsos = [];
-        this.allSeeAlsos.forEach((value, index) => {
-            let key = `${value.lang_string}__${value.slug}`;
-            if (seeAlsoTally[key]){
-                seeAlsoTally[key].count = seeAlsoTally[key].count + 1;
-            }else{
-                seeAlsoTally[key] = {
-                    count: 1,
-                    data: value
-                };
-            }
-        });
-        sortedSeeAlsos = Object.keys(seeAlsoTally).sort(function(a,b){
-            return seeAlsoTally[a].count -seeAlsoTally[b].count
-        });
-        sortedSeeAlsos = sortedSeeAlsos.slice(0, 3);
-        let newSeeAlsos = [];
-        sortedSeeAlsos.forEach((key, index) => {
-            seeAlsoTally[key].data.thumbnail_url = "https://cdn.the-scientist.com/assets/articleNo/29922/iImg/611/honeybee.png";
-            seeAlsoTally[key].data.snippet = "A BEEFUL ARTICLE";
-            newSeeAlsos.push(seeAlsoTally[key].data);
-        });
-        this.allSeeAlsos = newSeeAlsos;
-        let seeAlsoComboString = this.allSeeAlsos.map((value, index) => {
+        let seeAlsoComboString = this.artJSON.seealsos.map((value, index) => {
             return this.renderOneSeeAlso(value);
         }).join("");
         return `
             <span id="seeAlsoPanel" class="toc-span-fix"></span>
-                <amp-accordion id="seeAlsoPanelContainer" >
-                <section expanded>
-                    <h2 class="acc-header" >See Also
-                        <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="{% trans 'See related encyclopedia articles, biographies, reviews, and historical facts.' %}" />
-                        </span>
-                    </h2>
-                    <div>
-                        <div class="disclaimer">Other wiki pages related to ${this.artJSON.page_title}.</div>
-                        ${seeAlsoComboString}
-                    </div>
-                </section>
-                </amp-accordion>
-        
-        
-
+            <amp-accordion id="seeAlsoPanelContainer" >
+            <section expanded>
+                <h2 class="acc-header" >See Also
+                    <span class="icon"><i class="fa fa-chevron-down"></i>
+                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="{% trans 'See related encyclopedia articles, biographies, reviews, and historical facts.' %}" />
+                    </span>
+                </h2>
+                <div>
+                    <div class="disclaimer">Other wiki pages related to ${this.artJSON.page_title}.</div>
+                    ${seeAlsoComboString}
+                </div>
+            </section>
+            </amp-accordion>
         `
     }
 
