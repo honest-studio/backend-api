@@ -1,17 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 
+export interface LeaderboardOptions {
+    period: 'today' | 'this-week' | 'this-month' | 'all-time';
+    since: number; // UNIX timestamp. overrides period
+    cache: boolean; 
+}
+
 @Injectable()
 export class StatService {
     constructor(private mongo: MongoDbService, private mysql: MysqlService) {}
     
     private readonly SITE_USAGE_CACHE_EXPIRE_MS = 30 * 60 * 1000; // 30 minutes
+    private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
-    async editorLeaderboard(use_cache: boolean = true): Promise<any> {
+    async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
+        let starttime;
+        if (options.since) {
+            starttime = options.since * 1000;
+        }
+        else if (options.period == 'today') {
+            starttime = Date.now() - 24*3600*1000;
+        }
+        else if (options.period == 'this-week') {
+            starttime = Date.now() - 7*24*3600*1000;
+        }
+        else if (options.period == 'this-month') {
+            starttime = Date.now() - 30*24*3600*1000;
+        }
+        else if (options.period == 'all-time') {
+            starttime = 0;
+        }
         const editor_rewards = await this.mongo
             .connection()
             .actions.mapReduce(
-                'function () { emit( this.trace.act.data.to, Number(this.trace.act.data.quantity.split(" ")[0]) ) }',
+                `function () { emit( this.trace.act.data.to, new Date(this.block_time) > ${starttime} ? Number(this.trace.act.data.quantity.split(' ')[0]) : 0) }`,
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
@@ -39,6 +62,7 @@ export class StatService {
                     return cache;
             }
         }
+            
 
         const total_article_count: Array<any> = await new Promise((resolve, reject) => {
             this.mysql

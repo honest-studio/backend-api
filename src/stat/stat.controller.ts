@@ -12,12 +12,22 @@ export class StatController {
     @Get('editor-leaderboard')
     @ApiOperation({ title: 'All-time editor leaderboard' })
     @ApiImplicitQuery({
+        name: 'period',
+        description: `today | this-week | this-month | all-time`
+    })
+    @ApiImplicitQuery({
+        name: 'since',
+        description: `UNIX timestamp of point in time to start leaderboard calculation
+            If specified, this overrides 'period'.
+            Example: 1553712876`
+    })
+    @ApiImplicitQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`
     })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
-    async editorLeaderboard(): Promise<any> {
-        return await this.statService.editorLeaderboard();
+    async editorLeaderboard(@Query() query): Promise<any> {
+        return await this.statService.editorLeaderboard(query);
     }
 
     @Get('site-usage')
