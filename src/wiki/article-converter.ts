@@ -1550,20 +1550,21 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
             returnCollection.lightboxes.push(...result.lightboxes);
             return result.text;
         }).join("");
-        returnCollection.text = `<${tag_type}>${sanitizedText}</${tag_type}>`;
+        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
     }
     else if (tag_type === 'ul') {
         let sanitizedText = (items as ListItem[]).map((liItem: ListItem , listIndex) => {
             return liItem.sentences.map((sentenceItem: Sentence , sentenceIndex) => {
                 let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
                 returnCollection.lightboxes.push(...result.lightboxes);
-                return `<${liItem.tag_type}>${result.text}</${liItem.tag_type}>`;
+                return tag(liItem.tag_type, {}, result.text);
             }).join("");
         }).join("");
-        returnCollection.text = `<${tag_type}>${sanitizedText}</${tag_type}>`;
+        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
     }
     else if (tag_type === 'table') {
         let sanitizedText = (items as Table[]).map((tableItem: Table , tableIndex) => {
+            // Create the thead if present
             let sanitizedHeadRows = tableItem.thead ? tableItem.thead.rows.map((row: TableRow , rowIndex) => {
                 let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
                     let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
@@ -1573,10 +1574,11 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
                     }).join("");
                     return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
                 }).join("") : '';
-                return `<tr>${sanitizedCells}</tr>`;
+                return tag('tr', row.attrs, sanitizedCells);
             }).join("") : '';
-            let sanitizedHead = `<thead>${sanitizedHeadRows}</thead>`;
+            let sanitizedHead = tableItem.thead ? tag('thead', tableItem.thead.attrs, sanitizedHeadRows) : '';
 
+            // Create the tbody
             let sanitizedBodyRows = tableItem.tbody ? tableItem.tbody.rows.map((row: TableRow , rowIndex) => {
                 let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
                     let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
@@ -1586,10 +1588,11 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
                     }).join("");
                     return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
                 }).join("") : '';
-                return `<tr>${sanitizedCells}</tr>`;
+                return tag('tr', row.attrs, sanitizedCells);
             }).join("") : '';
-            let sanitizedBody = `<tbody>${sanitizedBodyRows}</tbody>`;
+            let sanitizedBody = tableItem.tbody ? tag('tbody', tableItem.tbody.attrs, sanitizedBodyRows) : '';
 
+            // Create the tfoot if present
             let sanitizedFootRows = tableItem.tfoot ? tableItem.tfoot.rows.map((row: TableRow , rowIndex) => {
                 let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
                     let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
@@ -1599,10 +1602,11 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
                     }).join("");
                     return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
                 }).join("") : '';
-                return `<tr>${sanitizedCells}</tr>`;
+                return tag('tr', row.attrs, sanitizedCells);
             }).join("") : '';
-            let sanitizedFoot = `<tfoot>${sanitizedFootRows}</tfoot>`;
+            let sanitizedFoot = tableItem.tfoot ? tag('tfoot', tableItem.tfoot.attrs, sanitizedFootRows) : '';
 
+            // Create the caption if present
             let sanitizedCaption = tableItem.caption ? [tableItem.caption].map((caption: string , rowIndex) => {
                 let result = CheckForLinksOrCitationsAMP(caption, passedCitations, passedIPFS, []);
                 returnCollection.lightboxes.push(...result.lightboxes);
@@ -1610,7 +1614,7 @@ export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[
                 }).join("") : '';
             return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join("");
         });
-        returnCollection.text = `<table>${sanitizedText}</table>`;
+        returnCollection.text = tag('table', paragraph.attrs, sanitizedText.join(""));
     }
 
     // const sentences: Sentence[] = this.renderSentences(items, tag_type, index);
