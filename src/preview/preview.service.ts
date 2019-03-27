@@ -97,7 +97,7 @@ export class PreviewService {
             this.mysql.pool().query(
                 `
                 SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews
+                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note
                 FROM enterlink_articletable AS art 
                 WHERE art.slug = ? 
                 AND art.page_lang = ?`,
@@ -118,7 +118,13 @@ export class PreviewService {
             .text()
             .replace(/\s+/g, ' ')
             .trim();
-        preview.categories = await this.wikiService.getCategories(lang_code, slug);
+
+        // grab categories for wiki scrapes
+        if (preview.page_note && preview.page_note.includes('EN_WIKI_IMPORT'))
+            preview.categories = await this.wikiService.getCategories(lang_code, slug);
+        else
+            preview.categories = [];
+        delete preview.page_note;
 
         return preview;
     }

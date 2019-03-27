@@ -31,9 +31,13 @@ export class StatService {
     async siteUsage(use_cache: boolean = true): Promise<any> {
         // pull from cache if available
         if (use_cache) {
-            const cache = await this.mongo.connection().stats.findOne({ key: "site_usage" });
-            const cache_age = Date.now() - cache.timestamp.getTime();
-            if (cache && cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
+            const cache = await this.mongo.connection().statistics.findOne({ key: "site_usage" });
+            if (cache) {
+                delete cache._id;
+                const cache_age = Date.now() - cache.timestamp.getTime();
+                if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS)
+                    return cache;
+            }
         }
 
         const total_article_count: Array<any> = await new Promise((resolve, reject) => {
@@ -87,8 +91,8 @@ export class StatService {
             total_editors, 
             total_iq_rewards 
         };
-        this.mongo.connection().stats.deleteMany({ key: "site_usage" });
-        this.mongo.connection().stats.insertOne(doc);
+        this.mongo.connection().statistics.deleteMany({ key: "site_usage" });
+        this.mongo.connection().statistics.insertOne(doc);
 
         return doc;
     }

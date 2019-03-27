@@ -76,7 +76,10 @@ export class WikiService {
             'metadata.ipfs_hash': rows[0].ipfs_hash_current
         });
         let wiki;
-        if (cache_wiki && use_cache) wiki = cache_wiki;
+        if (cache_wiki && use_cache) {
+            delete cache_wiki._id;
+            wiki = cache_wiki;
+        }
         else {
             wiki = oldHTMLtoJSON(rows[0].html_blob);
             wiki.metadata.pageviews = rows[0].pageviews;
@@ -150,7 +153,11 @@ export class WikiService {
             const uncached_json_wikis = uncached_json_hashes
                 .map((hash) => json_wikis.find((json) => json.metadata.ipfs_hash == hash))
                 .filter((json) => json); // filter out non-existent wikis
-            this.mongo.connection().json_wikis.insertMany(uncached_json_wikis);
+            try {
+                this.mongo.connection().json_wikis.insertMany(uncached_json_wikis, { ordered: false });
+            } catch (e) {
+                console.log('Failed to cache some wikis:', e);
+            }
 
             // attempt to cache uncached IPFS hashes
             uncached_html_hashes.forEach((hash) => this.cacheService.cacheWiki(hash));

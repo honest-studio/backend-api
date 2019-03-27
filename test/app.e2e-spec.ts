@@ -260,9 +260,15 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Preview: By Slug', () => {
+  it('Preview: By Slug - Scraped Wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/slug/lang_en/wikipedia')
+        .expect(200)
+  });
+
+  it('Preview: By Slug - Original Wiki', () => {
+    return request(app.getHttpServer())
+        .get('/v2/preview/slug/lang_en/mvgenvideos')
         .expect(200)
   });
 
@@ -294,7 +300,7 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/site-usage')
         .expect(200)
-  });
+  }, 20000);
 
   it('Stat: Editor Leaderboard', () => {
     return request(app.getHttpServer())

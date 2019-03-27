@@ -288,7 +288,6 @@ function linesToParagraph(lines: string): ParagraphDiff {
 }
 
 function linesToTable(lines: string): TableDiff {
-    console.log(lines);
     lines = lines.substring(10);
     const table_sections = lines.split(TABLE_SECTION_SEPARATOR);
     const thead = linesToTableSection(table_sections[0]);
