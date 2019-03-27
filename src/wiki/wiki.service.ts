@@ -136,6 +136,7 @@ export class WikiService {
         console.log('\x1b[41;1m%s\x1b[0m', "FORCING USE_CACHE TO FALSE. FIX THIS LATER");
         console.log('\x1b[41;1m%s\x1b[0m', "DO NOT FORGET TO PRESERVE ATTRS IN ALL OF YOUR LOOPING FUNCTIONS!!!");
         console.log('\x1b[41;1m%s\x1b[0m', "NEED TO DO A BUNCH OF ERROR CHECKING TOO");
+        console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
         let langPacks = await this.getWikiGroup(lang_code, slug);
         let ampWiki = await this.getWikiBySlug(lang_code, slug, false);
         let tempService = new MediaUploadService(null);

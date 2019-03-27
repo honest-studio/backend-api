@@ -101,7 +101,7 @@ export class AmpRenderPartial {
                         </a>
                     </li>
                     <li class="amp-header-menu">
-                        <button on='tap:guestmenu-lightbox'>
+                        <button on='tap:usermenu-lightbox'>
                         <span class="bull-menu">
                             <amp-img height="25" width="7" layout="fixed" alt="{% trans 'Bullet' %}" src="https://epcdn-vz.azureedge.net/static/images/bull-menu.png" ></amp-img>
                         </span>
@@ -721,7 +721,7 @@ export class AmpRenderPartial {
     renderUserMenu = (): string => {
         return `
             <div class="lightbox" tabindex="1" role="menubar">
-                <div class="usermenu-toggle-space" on='tap:guestmenu-lightbox.close' tabindex="3" role="menubar">
+                <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
                 </div>
                 <div class="usermenu-ct">
                     <div class="usermenu-header">
