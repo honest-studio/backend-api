@@ -17,6 +17,7 @@ const RecentActivityQuerySchema = {
         .valid('percent', 'full', 'none')
         .default('none'),
     expiring: Joi.boolean().default(false),
+    completed: Joi.boolean().default(false),
     langs: Joi.string()
 };
 
