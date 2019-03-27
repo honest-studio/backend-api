@@ -13,17 +13,20 @@ export class StatController {
     @ApiOperation({ title: 'All-time editor leaderboard' })
     @ApiImplicitQuery({
         name: 'period',
-        description: `today | this-week | this-month | all-time`
+        description: `today | this-week | this-month | all-time`,
+        required: false
     })
     @ApiImplicitQuery({
         name: 'since',
         description: `UNIX timestamp of point in time to start leaderboard calculation
             If specified, this overrides 'period'.
-            Example: 1553712876`
+            Example: 1553712876`,
+        required: false
     })
     @ApiImplicitQuery({
         name: 'cache',
-        description: `Set to false if you don't want to use the cache`
+        description: `Set to false if you don't want to use the cache`,
+        required: false
     })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
     async editorLeaderboard(@Query() query): Promise<any> {
@@ -34,7 +37,8 @@ export class StatController {
     @ApiOperation({ title: 'All-time site usage' })
     @ApiImplicitQuery({
         name: 'cache',
-        description: `Set to false if you don't want to use the cache`
+        description: `Set to false if you don't want to use the cache`, 
+        required: false
     })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
     async siteUsage(@Query() query): Promise<any> {
