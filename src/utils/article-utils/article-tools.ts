@@ -11,7 +11,6 @@ export const CheckForLinksOrCitationsAMP = (
     citations: Citation[],
     currentIPFS: string,
     ampLightBoxes: string[] = [],
-	returnPlaintext?: boolean,
     tagType?: string
     
 ): AMPParseCollection => {
@@ -197,7 +196,7 @@ export const CheckForLinksOrCitationsAMP = (
         }
     
 		// Recursive
-		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes, returnPlaintext);
+		return CheckForLinksOrCitationsAMP(newText, citations, currentIPFS, ampLightBoxes);
     }
 
 	return {'text': text, 'lightboxes': ampLightBoxes};

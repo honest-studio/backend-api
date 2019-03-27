@@ -118,7 +118,7 @@ export class AmpRenderPartial {
 
     renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
         let ampSanitizedPhotoComment = this.artJSON.main_photo.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
         }).join("");
@@ -291,7 +291,7 @@ export class AmpRenderPartial {
                     <h3>${infobox.key}</h3>
                 </div>
                 ${infobox.values.map((value, index) => {
-                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
+                    let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
                     this.allLightBoxes.push(...result.lightboxes);
                     // return result.text;
                     return `
@@ -307,7 +307,8 @@ export class AmpRenderPartial {
     renderInfoboxes = (): string => {
         let infoboxes: Infobox[] = this.artJSON.infoboxes;
         if  (!((infoboxes && infoboxes.length > 0) || (this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0))){ return ``; }
-        let blobboxComboString = this.artJSON.infobox_html;
+        let blobBoxResult = CheckForLinksOrCitationsAMP(this.artJSON.infobox_html, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
+        this.allLightBoxes.push(...blobBoxResult.lightboxes);
         let infoboxComboString = infoboxes.map((value, index) => {
             return this.renderOneInfobox(value, index);
         }).join("");
@@ -324,8 +325,8 @@ export class AmpRenderPartial {
                         <span class="icon"><i class="fa fa-chevron-down"></i></span>
                     </h2>
                     ${ this.artJSON.infobox_html && this.artJSON.infobox_html.length != 0 ? 
-                        `<div id="blobBox_container">
-                            ${blobboxComboString}
+                        `<div id="blobBox_container" class='infbx-ct'>
+                            ${blobBoxResult.text}
                         </div>` : ``
                     }
                     <div class="infbx-ct">
@@ -343,7 +344,7 @@ export class AmpRenderPartial {
     renderOneMedia = (media: Media, index: number): string => {
         const RANDOMSTRING = Math.random().toString(36).substring(7);
         let sanitizedCaption = media.caption.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
         }).join("");
@@ -491,7 +492,7 @@ export class AmpRenderPartial {
 
     renderOneCitation = (citation: Citation, index: number): string => {
         let sanitizedDescription = citation.description.map((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, [], true);
+            let result = CheckForLinksOrCitationsAMP(value.text, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
         }).join("");

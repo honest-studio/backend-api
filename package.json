@@ -51,6 +51,7 @@
     "file-type": "^10.9.0",
     "get-pixels": "^3.3.2",
     "get-youtube-id": "^1.0.1",
+    "html-tag": "^2.0.0",
     "htmldiff-js": "^1.0.5",
     "htmlparser2": "^3.10.1",
     "imagemin": "^6.1.0",

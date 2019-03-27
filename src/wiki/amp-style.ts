@@ -95,7 +95,6 @@ ul.infobox.list-plural li{
     border-top:1px solid #ececec;
     float: left;
     width: 100%;
-    padding-top: 5px;
     min-height: 20px;
 }
 
@@ -1137,6 +1136,7 @@ overflow:hidden;
 list-style-position:inside;
 background-color:transparent;
 font-size:13px;
+color: #262626;
 }
 
 #blobBox_container .infobox {

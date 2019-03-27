@@ -133,8 +133,11 @@ export class WikiService {
     }
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
+        console.log('\x1b[41;1m%s\x1b[0m', "FORCING USE_CACHE TO FALSE. FIX THIS LATER");
+        console.log('\x1b[41;1m%s\x1b[0m', "DO NOT FORGET TO PRESERVE ATTRS IN ALL OF YOUR LOOPING FUNCTIONS!!!");
+        console.log('\x1b[41;1m%s\x1b[0m', "NEED TO DO A BUNCH OF ERROR CHECKING TOO");
         let langPacks = await this.getWikiGroup(lang_code, slug);
-        let ampWiki = await this.getWikiBySlug(lang_code, slug, use_cache);
+        let ampWiki = await this.getWikiBySlug(lang_code, slug, false);
         let tempService = new MediaUploadService(null);
         let photoExtraData: PhotoExtraData = await tempService.getImageData(ampWiki.main_photo.url);
         ampWiki.main_photo.width = photoExtraData.width;
