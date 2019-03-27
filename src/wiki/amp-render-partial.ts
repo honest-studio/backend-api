@@ -5,12 +5,13 @@ import { getYouTubeID, renderParagraph, renderImage } from './article-converter'
 import { LanguagePack } from './wiki.service';
 const striptags = require('striptags');
 const urlSlug = require('url-slug');
+const tag = require('html-tag');
 
 
 export class AmpRenderPartial {
     public artJSON: ArticleJson;
     public allLightBoxes: string[] = [];
-    constructor(inputJSN) {
+    constructor(inputJSN: ArticleJson) {
         this.artJSON = inputJSN;
     }
 
