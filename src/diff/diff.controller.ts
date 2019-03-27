@@ -25,8 +25,8 @@ export class DiffController {
         return await this.diffService.getDiffsByProposal(proposal_ids);
     }
 
-    @Get('/wiki/:old_hash/:new_hash')
-    @ApiOperation({ title: 'Get diff between 2 wikis' })
+    @Get('/hash/:old_hash/:new_hash')
+    @ApiOperation({ title: 'Get diff between 2 wiki version hashes' })
     @ApiImplicitParam({
         name: 'old_hash',
         description: 'IPFS hash of old wiki'
@@ -35,7 +35,7 @@ export class DiffController {
         name: 'new_hash',
         description: 'IPFS hash of new wiki'
     })
-    async getDiffByWiki(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
-        return await this.diffService.getDiffsByHash([[old_hash, new_hash]]);
+    async getDiffByHash(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
+        return await this.diffService.getDiffByHash(old_hash, new_hash);
     }
 }

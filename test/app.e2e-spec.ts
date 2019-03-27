@@ -254,9 +254,9 @@ describe('Backend API', () => {
         .expect(404)
   });
 
-  it('Diff: Wiki diff', () => {
+  it('Diff: Hash diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
+        .get('/v2/diff/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
         .expect(200)
   });
 
