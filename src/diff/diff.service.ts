@@ -3,6 +3,7 @@ import * as fetch from 'node-fetch';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { WikiService } from '../wiki';
 import { diffArticleJson } from './article-json-differ';
+import { ArticleJsonDiff } from './diff-dto';
 
 @Injectable()
 export class DiffService {
@@ -55,23 +56,29 @@ export class DiffService {
         const diffs = proposal_hashes.map(prop => {
             const old_wiki = wikis.find(w => w.metadata.ipfs_hash == prop.old_hash);
             const new_wiki = wikis.find(w => w.metadata.ipfs_hash == prop.new_hash);
-            const diff = diffArticleJson(old_wiki, new_wiki);
-            diff.diff_metadata.proposal_id = prop.proposal_id;
-            return diff;
+            const diff_wiki = diffArticleJson(old_wiki, new_wiki);
+            diff_wiki.diff_metadata.proposal_id = prop.proposal_id;
+            diff_wiki.diff_metadata.proposal_id = prop.proposal_id;
+            diff_wiki.diff_metadata.diff_percent = this.calcDiffPercent(diff_wiki);
+            return diff_wiki;
         });
 
         return diffs;
     }
 
     // TODO: add caching
-    async getDiffByHash(old_hash: string, new_hash: string): Promise<any> {
+    async getDiffByHash(old_hash: string, new_hash: string): Promise<ArticleJsonDiff> {
         const wikis = await this.wikiService.getWikisByHash([old_hash, new_hash]);
 
         const old_wiki = wikis.find((w) => w.metadata.ipfs_hash == old_hash);
         const new_wiki = wikis.find((w) => w.metadata.ipfs_hash == new_hash);
         const diff_wiki = await diffArticleJson(old_wiki, new_wiki);
-        diff_wiki.diff_metadata.diff_percent = Number(Math.random().toFixed(2));
+        diff_wiki.diff_metadata.diff_percent = this.calcDiffPercent(diff_wiki);
 
         return diff_wiki;
+    }
+
+    calcDiffPercent(diff_wiki: ArticleJsonDiff): number {
+        return Number(Math.random().toFixed(2));
     }
 }
