@@ -27,6 +27,13 @@ export interface SeeAlsoCollection {
     [key: string]: SeeAlsoCountGroup;
 }
 
+export interface InlineImage {
+    src: string;
+    alt: string;
+    height: string;
+    width: string;
+}
+
 export interface Sentence {
     type: string; // sentence
     index: number;

@@ -16,7 +16,8 @@ export const CAPTURE_REGEXES = {
     link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
     link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/gimu,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
-    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu
+    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu,
+    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/gimu
 };
 const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
@@ -1417,7 +1418,7 @@ function splitSentences(text: string): Array<string> {
             i--; // re-check this sentence in case there's multiple bad splits
         }
     }
-    
+
     return splits;
 }
 

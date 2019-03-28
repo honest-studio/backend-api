@@ -1,7 +1,8 @@
-import { Citation, AMPParseCollection, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection } from '../../wiki/article-dto';
+import { Citation, AMPParseCollection, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection, InlineImage } from '../../wiki/article-dto';
 const cheerio = require('cheerio');
 const crypto = require("crypto");
 const decode = require('unescape');
+const normalizeUrl = require('normalize-url');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
 import { getYouTubeID, CAPTURE_REGEXES } from 'src/wiki/article-converter';
@@ -33,7 +34,7 @@ export const CheckForLinksOrCitationsAMP = (
         const isInlineImage = link.indexOf(inlineImageString);
 		let newString: string, newText: string;
 		// Check whether link or citation
-		if (isLink >= 0) {
+		if (isLink > 0) {
 			const linkBegin = isLink + linkString.length + 1;
 			const linkEnd = link.lastIndexOf('|');
 			const textBegin = linkEnd + 1;
@@ -48,17 +49,6 @@ export const CheckForLinksOrCitationsAMP = (
             const nextLetter = text.charAt(end);
             const endingString = !!nextLetter.match(/[.,:;!?']/) ? '' : ' ';
             const unique_id = crypto.randomBytes(5).toString('hex');
-
-            // Collect the seeAlsos (they will be tallied later)
-            // if (countSeeAlsos){
-            //     seeAlsos.push({
-            //         lang_string: lang_code,
-            //         slug: slug,
-            //         title: linkText,
-            //         thumbnail_url: "",
-            //         snippet: ""
-            //     });
-            // }
 
             // Load the HTML into htmlparser2 beforehand since it is more forgiving
             let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
@@ -195,8 +185,51 @@ export const CheckForLinksOrCitationsAMP = (
 
             // Substitute in the new string
             newText = text.replace(link, newString);
-        } else if (isInlineImage >= 0){
-            console.log(textProcessing);
+        } else if (isInlineImage > 0){
+            // Load the HTML into htmlparser2 beforehand since it is more forgiving
+            let dom = htmlparser2.parseDOM('<img />', { decodeEntities: true });
+
+            // Load the HTML into cheerio for parsing
+            let $ = cheerio.load(dom);
+            const unique_id = crypto.randomBytes(5).toString('hex');
+
+            let result = CAPTURE_REGEXES.inline_image_match.exec(text);
+
+            let workingImage: InlineImage = {
+                src: result ? normalizeUrl(result[1]) : '',
+                alt: result ? result[2] : '',
+                height: result ? result[3] : '1',
+                width: result ? result[4] : '1'
+            }
+
+            // Create the amp-img
+            let ampImgTag = $('<amp-img />');
+            $(ampImgTag).attr('width', workingImage.width);
+            $(ampImgTag).attr('height', workingImage.height);
+            $(ampImgTag).attr('layout', 'fixed');
+            $(ampImgTag).attr('alt', workingImage.alt);
+            $(ampImgTag).attr('src', workingImage.src);
+
+            // Create the placeholder / thumbnail image
+            let placeholderTag = $('<amp-img />');
+            $(placeholderTag).attr('layout', 'fill');
+            $(placeholderTag).attr('width', '1');
+            $(placeholderTag).attr('height', '1');
+            $(ampImgTag).attr('layout', 'fixed');
+            $(placeholderTag).attr('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=');
+            $(placeholderTag).attr('placeholder', '');
+
+            // Put the placeholder inside the amp-img
+            $(ampImgTag).append(placeholderTag);
+
+            // Replace the image with the amp-img
+            $('img').replaceWith(ampImgTag);
+
+            // Set the new string
+            newString = decode($.html(), 'all');
+
+            // Substitute in the new string
+            newText = text.replace(result ? result[0] : '', newString);
         }
     
 		// Recursive
