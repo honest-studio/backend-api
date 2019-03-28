@@ -19,17 +19,6 @@ async function bootstrap() {
     // const ipfsIsRunning = await isIpfsRunning();
 
     const expressApp = express();
-    expressApp.use(cors());
-    expressApp.use(morgan('combined'));
-
-    // Automatically set the Content-Type headers for the /v1/chain routes
-    // Both eosjs and cleos don't set those headers explicitly, and Nestjs
-    // doesn't read in the body with the @Body function unless that header
-    // is explicitly set
-    expressApp.use(function(req, res, next) {
-        if (req.path.startsWith('/v1/chain/')) req.headers['content-type'] = 'application/json';
-        next();
-    });
 
     const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 

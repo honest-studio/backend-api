@@ -80,6 +80,7 @@
     "swagger-ui-express": "^4.0.2",
     "typescript": "^3.2.1",
     "unescape": "^1.0.1",
+    "universal-analytics": "^0.4.20",
     "webpack": "^4.29.6",
     "ws": "^6.1.2"
   },
