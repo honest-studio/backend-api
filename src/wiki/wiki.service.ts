@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
+const { URL } = require('url');
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
@@ -90,7 +91,7 @@ export class WikiService {
             wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
             if (wiki.metadata.is_wikipedia_import) {
                 const categories = await fetch(
-                    `https://en.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`
+                    new URL(`https://${lang_code.substring(0, 2)}.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`)
                 )
                 .then(response => response.json())
                 .then(json => json.query.pages)
@@ -133,12 +134,10 @@ export class WikiService {
     }
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
-        console.log('\x1b[41;1m%s\x1b[0m', "FORCING USE_CACHE TO FALSE. FIX THIS LATER");
-        console.log('\x1b[41;1m%s\x1b[0m', "DO NOT FORGET TO PRESERVE ATTRS IN ALL OF YOUR LOOPING FUNCTIONS!!!");
-        console.log('\x1b[41;1m%s\x1b[0m', "NEED TO DO A BUNCH OF ERROR CHECKING TOO");
-        console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
+        // console.log('\x1b[41;1m%s\x1b[0m', "FORCING USE_CACHE TO FALSE. FIX THIS LATER");
+        // console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
         let langPacks = await this.getWikiGroup(lang_code, slug);
-        let ampWiki = await this.getWikiBySlug(lang_code, slug, false);
+        let ampWiki = await this.getWikiBySlug(lang_code, slug, use_cache);
         let tempService = new MediaUploadService(null);
         let photoExtraData: PhotoExtraData = await tempService.getImageData(ampWiki.main_photo.url);
         ampWiki.main_photo.width = photoExtraData.width;
