@@ -1054,6 +1054,7 @@ function parseSection($section: Cheerio): Section {
 
         // Deal with images in tables
         if (!image.url) {
+            
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
@@ -1207,13 +1208,15 @@ function sanitizeText($: CheerioStatic) {
     const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
     $ = cheerio.load(spaced_italics);
 
-    // Convert images inside wikitables to markup
-    $('.wikitable img').each(function() {
+    
+
+    // Convert images inside wikitables and ul's to markup
+    $('.wikitable img, .blurb-wrap ul img').each(function(eThis) {
         // Construct a dictionary
         const src = $(this).attr('src');
         const height = $(this).attr('height');
         const width = $(this).attr('width');
-        const alt = $(this).attr('alt');
+        const alt = $(this).attr('alt') || '';
 
         // Replace the tag with the string
         const plaintextString = `[[INLINE_IMAGE|${src}|${alt}|h${height}|w${width}]]`;
@@ -1414,7 +1417,7 @@ function splitSentences(text: string): Array<string> {
             i--; // re-check this sentence in case there's multiple bad splits
         }
     }
-
+    
     return splits;
 }
 

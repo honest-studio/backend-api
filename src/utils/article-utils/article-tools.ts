@@ -26,9 +26,11 @@ export const CheckForLinksOrCitationsAMP = (
 		const end = text.indexOf(']]') + 2;
 		const link: string = text.substring(check, end);
 		const linkString: string = 'LINK';
-		const citeString: string = 'CITE';
+        const citeString: string = 'CITE';
+        const inlineImageString: string = 'INLINE_IMAGE';
 		const isLink = link.indexOf(linkString);
-		const isCitation = link.indexOf(citeString);
+        const isCitation = link.indexOf(citeString);
+        const isInlineImage = link.indexOf(inlineImageString);
 		let newString: string, newText: string;
 		// Check whether link or citation
 		if (isLink >= 0) {
@@ -193,6 +195,8 @@ export const CheckForLinksOrCitationsAMP = (
 
             // Substitute in the new string
             newText = text.replace(link, newString);
+        } else if (isInlineImage >= 0){
+            console.log(textProcessing);
         }
     
 		// Recursive
