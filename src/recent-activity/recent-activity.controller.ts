@@ -117,6 +117,12 @@ export class RecentActivityController {
         type: Boolean
     })
     @ApiImplicitQuery({
+        name: 'completed',
+        description: `Get completed proposals instead of the most recent ones`,
+        required: false,
+        type: Boolean
+    })
+    @ApiImplicitQuery({
         name: 'langs',
         description: `Language(s) if you wish to restrict the return output.
             Default: Return all languages

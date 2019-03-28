@@ -47,16 +47,20 @@ export class RecentActivityService {
     async getProposals(query): Promise<Array<Proposal>> {
         let find_query;
         let sort_direction;
+        const now = (Date.now() / 1000) | 0;
+
         find_query = {
             'trace.act.account': 'eparticlectr',
             'trace.act.name': 'logpropinfo',
         }
         if (query.expiring) {
-            const now = (Date.now() / 1000) | 0;
             find_query['trace.act.data.endtime'] = { $gt: now }
             sort_direction = 1;
         } else {
             sort_direction = -1;
+        }
+        if (query.completed) {
+            find_query['trace.act.data.endtime'] = { $lt: now }
         }
         if (query.langs) {
             find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') }

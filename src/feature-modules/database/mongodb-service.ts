@@ -15,7 +15,7 @@ export type AppConnectionInstance = {
     db: Db;
     actions: Collection<ActionEntity>;
     diffs: Collection<DiffEntity>;
-    stats: Collection<StatEntity>;
+    statistics: Collection<StatEntity>;
     json_wikis: Collection<JsonWikiEntity>;
 };
 
@@ -55,8 +55,8 @@ export class MongoDbService {
                             const actions = db.collection('actions');
                             const diffs = db.collection('diffs');
                             const json_wikis = db.collection('json_wikis');
-                            const stats = db.collection('stats');
-                            resolve({ client, db, actions, diffs, json_wikis, stats });
+                            const statistics = db.collection('statistics');
+                            resolve({ client, db, actions, diffs, json_wikis, statistics });
                         }
                     }
                 );

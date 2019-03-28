@@ -9,7 +9,7 @@ import { JoiValidationPipe } from '../common';
 export class HistoryController {
     constructor(private readonly historyService: HistoryService) {}
 
-    @Get('wiki/:lang_code/:slug')
+    @Get('wiki/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get edit history for a wiki' })
     @ApiImplicitParam({
         name: 'lang_code',
@@ -38,8 +38,6 @@ export class HistoryController {
     })
     @UsePipes(new JoiValidationPipe(HistoryWikiSchema, ['query']))
     async getWikiHistory(@Param('lang_code') lang_code: string, @Param('slug') slug, @Query() query): Promise<any> {
-        if (lang_code.substring(0, 5) != 'lang_') throw new BadRequestException(`lang_code must start with 'lang_'`);
-        lang_code = lang_code.substring(5);
         return this.historyService.getWikiHistory(lang_code, slug, query);
     }
 }

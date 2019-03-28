@@ -68,6 +68,12 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Completed Proposals', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/proposals?completed=true')
+      .expect(200)
+  });
+
   it('Recent Activity: Proposals w/ Preview and Diff Percent', () => {
     return request(app.getHttpServer())
       .get('/v2/recent-activity/proposals?diff=percent&preview=true')
@@ -266,9 +272,9 @@ describe('Backend API', () => {
         .expect(404)
   });
 
-  it('Diff: Wiki diff', () => {
+  it('Diff: Hash diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
+        .get('/v2/diff/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
         .expect(200)
   });
 
@@ -278,9 +284,15 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Preview: By Slug', () => {
+  it('Preview: By Slug - Scraped Wiki', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/slug/lang_en/wikipedia')
+        .expect(200)
+  });
+
+  it('Preview: By Slug - Original Wiki', () => {
+    return request(app.getHttpServer())
+        .get('/v2/preview/slug/lang_en/mvgenvideos')
         .expect(200)
   });
 
@@ -312,11 +324,23 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/site-usage')
         .expect(200)
-  });
+  }, 20000);
 
   it('Stat: Editor Leaderboard', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/editor-leaderboard')
+        .expect(200)
+  });
+
+  it('Stat: Editor Leaderboard - Today', () => {
+    return request(app.getHttpServer())
+        .get('/v2/stat/editor-leaderboard?period=today')
+        .expect(200)
+  });
+
+  it('Stat: Editor Leaderboard - Since long time', () => {
+    return request(app.getHttpServer())
+        .get('/v2/stat/editor-leaderboard?since=1573243')
         .expect(200)
   });
 

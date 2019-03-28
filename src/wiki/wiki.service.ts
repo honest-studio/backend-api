@@ -90,16 +90,7 @@ export class WikiService {
             wiki.metadata.pageviews = rows[0].pageviews;
             wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
             if (wiki.metadata.is_wikipedia_import) {
-                const categories = await fetch(
-                    new URL(`https://${lang_code.substring(0, 2)}.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`)
-                )
-                .then(response => response.json())
-                .then(json => json.query.pages)
-                .then(pages => Object.values(pages)[0])
-                .then(obj => obj.categories)
-                .then(cats => cats.map(cat => cat.title.split(':')[1]));
-
-                wiki.categories = categories;
+                wiki.categories = await this.getCategories(lang_code, slug);
             }
             this.mongo.connection().json_wikis.insertOne(wiki);
         }
@@ -209,7 +200,11 @@ export class WikiService {
             const uncached_json_wikis = uncached_json_hashes
                 .map((hash) => json_wikis.find((json) => json.metadata.ipfs_hash == hash))
                 .filter((json) => json); // filter out non-existent wikis
-            this.mongo.connection().json_wikis.insertMany(uncached_json_wikis);
+            try {
+                this.mongo.connection().json_wikis.insertMany(uncached_json_wikis, { ordered: false });
+            } catch (e) {
+                console.log('Failed to cache some wikis:', e);
+            }
 
             // attempt to cache uncached IPFS hashes
             uncached_html_hashes.forEach((hash) => this.cacheService.cacheWiki(hash));
@@ -287,4 +282,16 @@ export class WikiService {
             );
         });
     }
+
+    async getCategories(lang_code: string, slug: string) {
+        return fetch(
+            new URL(`https://${lang_code.substring(0, 2)}.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`)
+        )
+        .then(response => response.json())
+        .then(json => json.query.pages)
+        .then(pages => Object.values(pages)[0])
+        .then(obj => obj.categories)
+        .then(cats => cats.map(cat => cat.title.split(':')[1]));
+    }
+
 }
