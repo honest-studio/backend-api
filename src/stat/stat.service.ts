@@ -31,7 +31,7 @@ export class StatService {
         else if (options.period == 'all-time') {
             starttime = 0;
         }
-        const editor_rewards = await this.mongo
+        let editor_rewards = await this.mongo
             .connection()
             .actions.mapReduce(
                 `function () { emit( this.trace.act.data.to, new Date(this.block_time) > ${starttime} ? Number(this.trace.act.data.quantity.split(' ')[0]) : 0) }`,
@@ -44,11 +44,25 @@ export class StatService {
                     out: { inline: 1 }
                 }
             );
-
-        return editor_rewards
+        editor_rewards = editor_rewards
             .sort((a,b) => b.value - a.value)
             .map(doc => ({ user: doc._id, cumulative_iq_rewards: Number(doc.value.toFixed(3)) }))
-            .slice(0,10);
+        const edits = await this.mongo
+            .connection()
+            .actions.mapReduce(
+                `function () { emit( this.trace.act.data.to, new Date(this.block_time) > ${starttime} ? 1:0) }`,
+                'function (key, values) { return Array.sum(values) }',
+                {
+                    query: {
+                        'trace.act.account': 'everipediaiq',
+                        'trace.act.name': 'issue'
+                    },
+                    out: { inline: 1 }
+                }
+            );
+            edits.forEach(edit => editor_rewards.find(reward => reward.user == edit._id).edits = edit.value);
+
+        return editor_rewards;
     }
 
     async siteUsage(use_cache: boolean = true): Promise<any> {
