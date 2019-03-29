@@ -19,11 +19,15 @@ export class AmpRenderPartial {
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
         let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
+        let comboHreflangs = this.artJSON.alt_langs.length > 0 ? this.artJSON.alt_langs.map((langPack, index) => {
+            return `<link rel="alternate" href="https://everipedia.org/wiki/lang_${langPack.lang}/${langPack.slug}" hreflang="${langPack.lang}" />`
+        }).join('') : '';
         return `
             <meta charset="utf-8" />
             <meta name="theme-color" content="#FFFFFF" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,600&amp;subset=latin-ext" rel="stylesheet">
+            ${comboHreflangs}
             <script async src="https://cdn.ampproject.org/v0.js"></script>
             <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
             <style amp-boilerplate>
@@ -248,8 +252,8 @@ export class AmpRenderPartial {
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
         }).join("");
-        let paraBlock = firstSection.paragraphs.map((value, index) => {
-            let result: AMPParseCollection = renderParagraph(value, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
+        let paraBlock = firstSection.paragraphs.map((para, index) => {
+            let result: AMPParseCollection = renderParagraph(para, this.artJSON.citations, this.artJSON.metadata.ipfs_hash);
             this.allLightBoxes.push(...result.lightboxes);
             return result.text;
         }).join("");
@@ -310,8 +314,11 @@ export class AmpRenderPartial {
     renderInfoboxes = (): string => {
         let infoboxes: Infobox[] = this.artJSON.infoboxes;
         if  (!((infoboxes && infoboxes.length > 0) || (this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0))){ return ``; }
-        let blobBoxResult = CheckForLinksOrCitationsAMP(blobBoxPreSanitize(this.artJSON.infobox_html), this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
-        this.allLightBoxes.push(...blobBoxResult.lightboxes);
+        let blobBoxResult;
+        if(this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0){
+            blobBoxResult = CheckForLinksOrCitationsAMP(blobBoxPreSanitize(this.artJSON.infobox_html), this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
+            this.allLightBoxes.push(...blobBoxResult.lightboxes);
+        }
         let infoboxComboString = infoboxes.map((value, index) => {
             return this.renderOneInfobox(value, index);
         }).join("");

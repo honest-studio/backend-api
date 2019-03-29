@@ -194,6 +194,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 
     const page_body = extractPageBody($);
 
+
     media_gallery.forEach((value, index) => {
         switch (value.category) {
             
@@ -1205,10 +1206,11 @@ function sanitizeText($: CheerioStatic) {
     });
 
     // Add whitespace after links, bold, and italics when there's no space and it's followed by a letter
-    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/gimu, (token) => `${token} `);
-    const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
-    const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
-    $ = cheerio.load(spaced_italics);
+    // THE * WORD* SPACING PROBLEM IS HERE
+    // const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/gimu, (token) => `${token} `);
+    // const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
+    // const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
+    // $ = cheerio.load(spaced_italics);
 
     // Convert images inside wikitables and ul's to markup
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(eThis) {
@@ -1242,8 +1244,6 @@ function sanitizeText($: CheerioStatic) {
         theBody = $($('.mw-content-ltr')[0]);
     }
 
-    
-
     // Fix certain elements
     $(theBody)
         .children('div.thumb')
@@ -1272,6 +1272,7 @@ function sanitizeText($: CheerioStatic) {
             // Convert the div to a <p>
             $(element).replaceWith('<p>' + $(element).html() + '</p>');
         });
+
     return $;
 }
 

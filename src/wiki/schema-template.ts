@@ -1,6 +1,6 @@
 import { ArticleJson } from './article-dto';
 import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
-import { getYouTubeID } from './article-converter';
+import { getYouTubeID, renderParagraph } from './article-converter';
 import { LanguagePack } from './wiki.service';
 const crypto = require("crypto");
 var striptags = require('striptags');
@@ -8,13 +8,12 @@ var striptags = require('striptags');
 export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     const BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = false;
-    const currentIPFS = 'Qmaskdjaslkdjslakjdlkdsad'
     let schemaJSON = { 
         "@context": `http://schema.org`, 
-        "@type": [`Article`, inputJSON.metadata.sub_page_type ? inputJSON.metadata.sub_page_type : inputJSON.metadata.page_type],
+        "@type": [`Article`],
         "mainEntityOfPage": `https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}`,
         "url": `https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}`,
-        "articleSection": `News, Trending`,
+        "inLanguage": `${inputJSON.metadata.page_lang}`,
         "author": {
             "@type": "Organization",
             "name": "The Everipedia Community",
@@ -33,32 +32,39 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
         },
         "copyrightHolder": `Everipedia`,
         "datePublished": `${inputJSON.metadata.creation_timestamp}`,
-        "dateModified": `${inputJSON.metadata.last_modified}`
+        "dateModified": `${inputJSON.metadata.last_modified}`,
+        "about": {},
+        "citation": []
     };
+    schemaJSON.about["name"] = inputJSON.page_title;
     switch (inputJSON.metadata.page_type){
         case 'Person':
             schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} bio, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, who is ${inputJSON.page_title}, where is ${inputJSON.page_title}`;
             schemaJSON["headline"] = `${inputJSON.page_title}'s biography and wiki on Everipedia`;
+            schemaJSON.about['@type'] = 'Person';
             break;
         case 'Product':
             schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} review, ${inputJSON.page_title} news, what is ${inputJSON.page_title}`;
             schemaJSON["headline"] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
+            schemaJSON.about['@type'] = 'Product';
             break;
         case 'Organization':
             schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} history, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, what is ${inputJSON.page_title}, where is ${inputJSON.page_title}`;
             schemaJSON["headline"] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
+            schemaJSON.about['@type'] = 'Organization';
             break;
         default:
             schemaJSON["description"] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON["keywords"] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, what is ${inputJSON.page_title}`;
             schemaJSON["headline"] = `${inputJSON.page_title}'s wiki on Everipedia`;
+            schemaJSON.about['@type'] = 'Thing';
     }
-    schemaJSON["image"] = [];
+    schemaJSON["image"] = [], schemaJSON.about["image"] = [];
     if (inputJSON.main_photo.url){
-        schemaJSON["image"].push({
+        let pushObj = {
             "@type": "ImageObject",
             "url": `${ OVERRIDE_MAIN_THUMB ? 
                         `${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}` : 
@@ -69,10 +75,12 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             "uploadDate": inputJSON.metadata.last_modified,
             "height": inputJSON.main_photo.height,
             "width": inputJSON.main_photo.width,
-        })
+        };
+        schemaJSON.about["image"].push(pushObj);
+        schemaJSON["image"].push(pushObj);
     }
     else {
-        schemaJSON["image"].push({
+        let pushObj = {
             "@type": "ImageObject",
             "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
             "name": inputJSON.page_title,
@@ -80,7 +88,9 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             "uploadDate": inputJSON.metadata.last_modified,
             "height": 1274,
             "width": 1201,
-        });
+        }
+        schemaJSON.about["image"].push(pushObj);
+        schemaJSON["image"].push(pushObj);
     }
     inputJSON.media_gallery.forEach((media, index) => {
         let sanitizedCaption = media.caption.map((value, index) => {
@@ -146,17 +156,38 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
         });
 
         if (infobox.addlSchematype){
-                schemaJSON[infobox.schema] = { "@type": infobox.addlSchematype };
+                schemaJSON.about[infobox.schema] = { "@type": infobox.addlSchematype };
                 if (infobox.addlSchemaItemProp) {
-                    schemaJSON[infobox.schema][infobox.addlSchemaItemProp] = valuesBlock;
+                    schemaJSON.about[infobox.schema][infobox.addlSchemaItemProp] = valuesBlock;
                 }
                 else {
-                    schemaJSON[infobox.schema]["name"] = valuesBlock;
+                    schemaJSON.about[infobox.schema]["name"] = valuesBlock;
                 }
         }
         else {
-            schemaJSON[infobox.schema] = "";
+            schemaJSON.about[infobox.schema] = "";
         }
     })
+    inputJSON.citations.forEach((citation, index) => {
+         let citationText = citation.description.map((value, index) => {
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.metadata.ipfs_hash, []);
+            return striptags(result.text);
+        }).join("");
+
+        schemaJSON.citation.push({
+            "@type": 'CreativeWork',
+            "url": citation.url,
+            "encodingFormat": citation.mime,
+            "datePublished": citation.timestamp,
+            "image": citation.thumb,
+            "description": citationText
+        });
+    })
+    let pageBodyText = inputJSON.page_body.map((section, indexSection) => {
+        return section.paragraphs.map((para, indexPara) => {
+            return renderParagraph(para, inputJSON.citations, inputJSON.metadata.ipfs_hash).text;
+        }).join();
+    }).join();
+    schemaJSON["articleBody"] = pageBodyText;
     return `<script type="application/ld+json">${JSON.stringify(schemaJSON)}</script>`;
 }
