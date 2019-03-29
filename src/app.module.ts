@@ -16,7 +16,7 @@ import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
 import { EosClientModule, DatabaseModule } from './feature-modules';
-import { RequestIpMiddleware } from './middleware';
+import { GoogleAnalyticsMiddleware, RequestIpMiddleware, JsonRequestMiddleware, CorsMiddleware, MorganMiddleware } from './middleware';
 
 @Module({
     imports: [
@@ -75,6 +75,15 @@ import { RequestIpMiddleware } from './middleware';
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(RequestIpMiddleware).forRoutes('v1/search');
+        //consumer.apply(RequestIpMiddleware).forRoutes('*');
+        consumer.apply(CorsMiddleware).forRoutes('*');
+        consumer.apply(MorganMiddleware).forRoutes('*');
+        consumer.apply(GoogleAnalyticsMiddleware).forRoutes('*');
+
+        // Automatically set the Content-Type headers for the /v2/chain routes
+        // Both eosjs and cleos don't set those headers explicitly, and Nestjs
+        // doesn't read in the body with the @Body function unless that header
+        // is explicitly set
+        consumer.apply(JsonRequestMiddleware).forRoutes('/v2/chain');
     }
 }
