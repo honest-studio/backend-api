@@ -2,10 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
 import { ProposalService, Proposal } from '../proposal';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
+import { OAuthService } from '../oauth/oauth.service';
+import * as fetch from 'node-fetch';
 
 @Injectable()
 export class RecentActivityService {
-    constructor(private mongo: MongoDbService, private proposalService: ProposalService) {}
+    constructor(private mongo: MongoDbService, private proposalService: ProposalService, private oauthService: OAuthService) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
         const docs = this.mongo.connection().actions.find({});
@@ -80,5 +82,34 @@ export class RecentActivityService {
         };
 
         return this.proposalService.getProposals(proposal_ids, proposal_options);
+    }
+
+    async getTrendingWikis() {
+        const app_client_id = '80590894345-4t329ejhftucsucsfojlfq6ed2seklrh.apps.googleusercontent.com';
+        const app_secret = 'hZW9EJUDBkKTj6ShCpdhIAyC';
+        const redirect_uri = encodeURIComponent("http://localhost:3001/v2/recent-activity/trending");
+
+        const access_token = await this.oauthService.refreshGoogleAnalyticsToken();
+
+
+        const body = {
+          "reportRequests":
+          [
+            {
+                viewId: 192421339,
+                dateRanges: [{ startDate: "2019-01-01", endDate: "2019-11-30" }],
+                metrics: [{ expression: "ga:users" }]
+            }
+          ]
+        }
+        return fetch("https://analyticsreporting.googleapis.com/v4/reports:batchGet", {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        })
+        .then(response => response.json());
+
     }
 }

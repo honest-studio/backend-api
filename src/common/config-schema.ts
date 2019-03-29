@@ -152,6 +152,19 @@ const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
 };
 
 /**
+ * Build MySQL connection config
+ * @param parsed dotenv parsed output
+ */
+ //const GetGoogleAnalyticsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+ //    return {
+ //        googleAnalyticsConfig: {
+ //            googleAnalyticsAppId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_APP_ID],
+ //            googleAnalyticsViewId: Number(parsed[ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID]),
+ //        }
+ //    };
+ //};
+
+/**
  * Array of functions that will be applied, in order, to build AppConfigVars
  */
 const ConfigMappingFunctions: PartialConfigMaker[] = [
@@ -164,7 +177,7 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetAWSS3Config,
     GetAWSSESConfig,
     GetAzureStorageConfig,
-    GetMysqlConfig
+    GetMysqlConfig,
 ];
 
 /**
