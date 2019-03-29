@@ -1,10 +1,10 @@
 import { ArticleJson } from './article-dto';
-import { styleNugget } from './amp-style'
-import { AmpRenderPartial } from './amp-render-partial'
+import { AmpRenderPartial } from './amp-render-partial';
 import { LanguagePack } from './wiki.service';
+const fs = require('fs');
 const crypto = require("crypto");
 
-export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): string => {
+export const renderAMP = (inputJSON: ArticleJson): string => {
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     let arp = new AmpRenderPartial(inputJSON);
@@ -15,7 +15,6 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
     <html amp lang="${inputJSON.metadata.page_lang}">
         <head>
             ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
-            ${styleNugget}
         </head>
         <body>
             ${arp.renderNavBar()}
@@ -52,12 +51,17 @@ export const renderAMP = (inputJSON: ArticleJson, langPacks: LanguagePack[]): st
                 ${arp.renderShareLightbox()}
             </amp-lightbox>
             <amp-lightbox id="language-lightbox" layout="nodisplay">
-                ${arp.renderLanguageLightboxes(langPacks)}
+                ${arp.renderLanguageLightboxes()}
             </amp-lightbox>
             ${arp.renderLightboxes()}
             ${arp.renderAnalyticsBlock()}
         </body>
     </html>
    `;
+   var stream = fs.createWriteStream("./test/temp.html");
+   stream.once('open', function(fd) {
+     stream.write(theHTML);
+     stream.end();
+   });
    return theHTML;
 }

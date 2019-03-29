@@ -5,7 +5,7 @@ const decode = require('unescape');
 const normalizeUrl = require('normalize-url');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
-import { getYouTubeID, CAPTURE_REGEXES } from 'src/wiki/article-converter';
+import { getYouTubeID, CAPTURE_REGEXES, AMP_REGEXES_PRE, AMP_BAD_CLASSES, AMP_BAD_TAGS, AMP_REGEXES_POST } from '../../wiki/article-converter';
 
 export const CheckForLinksOrCitationsAMP = (
 	textProcessing: string,
@@ -194,42 +194,44 @@ export const CheckForLinksOrCitationsAMP = (
             const unique_id = crypto.randomBytes(5).toString('hex');
 
             let result = CAPTURE_REGEXES.inline_image_match.exec(text);
+            if (result && result[1] !== undefined && result[1] != ''){
 
-            let workingImage: InlineImage = {
-                src: result ? normalizeUrl(result[1]) : '',
-                alt: result ? result[2] : '',
-                height: result ? result[3] : '1',
-                width: result ? result[4] : '1'
+                let workingImage: InlineImage = {
+                    src: result ? normalizeUrl(result[1]) : '',
+                    alt: result ? result[2] : '',
+                    height: result ? result[3] : '1',
+                    width: result ? result[4] : '1'
+                }
+
+                // Create the amp-img
+                let ampImgTag = $('<amp-img />');
+                $(ampImgTag).attr('width', workingImage.width);
+                $(ampImgTag).attr('height', workingImage.height);
+                $(ampImgTag).attr('layout', 'fixed');
+                $(ampImgTag).attr('alt', workingImage.alt);
+                $(ampImgTag).attr('src', workingImage.src);
+
+                // Create the placeholder / thumbnail image
+                let placeholderTag = $('<amp-img />');
+                $(placeholderTag).attr('layout', 'fill');
+                $(placeholderTag).attr('width', '1');
+                $(placeholderTag).attr('height', '1');
+                $(ampImgTag).attr('layout', 'fixed');
+                $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
+                $(placeholderTag).attr('placeholder', '');
+
+                // Put the placeholder inside the amp-img
+                $(ampImgTag).append(placeholderTag);
+
+                // Replace the image with the amp-img
+                $('img').replaceWith(ampImgTag);
+
+                // Set the new string
+                newString = decode($.html(), 'all');
+
+                // Substitute in the new string
+                newText = text.replace(result ? result[0] : '', newString);
             }
-
-            // Create the amp-img
-            let ampImgTag = $('<amp-img />');
-            $(ampImgTag).attr('width', workingImage.width);
-            $(ampImgTag).attr('height', workingImage.height);
-            $(ampImgTag).attr('layout', 'fixed');
-            $(ampImgTag).attr('alt', workingImage.alt);
-            $(ampImgTag).attr('src', workingImage.src);
-
-            // Create the placeholder / thumbnail image
-            let placeholderTag = $('<amp-img />');
-            $(placeholderTag).attr('layout', 'fill');
-            $(placeholderTag).attr('width', '1');
-            $(placeholderTag).attr('height', '1');
-            $(ampImgTag).attr('layout', 'fixed');
-            $(placeholderTag).attr('src', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=');
-            $(placeholderTag).attr('placeholder', '');
-
-            // Put the placeholder inside the amp-img
-            $(ampImgTag).append(placeholderTag);
-
-            // Replace the image with the amp-img
-            $('img').replaceWith(ampImgTag);
-
-            // Set the new string
-            newString = decode($.html(), 'all');
-
-            // Substitute in the new string
-            newText = text.replace(result ? result[0] : '', newString);
         }
     
 		// Recursive
@@ -297,7 +299,7 @@ export const ConstructAMPImage = (media: Media, sanitizedCaption: string, saniti
     return ``;
 }
 
-export const getSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
+export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     let allSentences: Sentence[] = [];
     passedJSON.page_body.forEach((section, index) => {
         section.paragraphs.forEach((paragraph, index) => {
@@ -352,4 +354,44 @@ export const getSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
         newSeeAlsos.push(seeAlsoTally[key].data);
     });
 	return newSeeAlsos;
+};
+
+export const blobBoxPreSanitize = (passedBlobBox: string): string => {
+    let sanitizedBlobBox = passedBlobBox;
+    // Do some regex replacements first
+    AMP_REGEXES_PRE.forEach(function(element) {
+        sanitizedBlobBox = sanitizedBlobBox.replace(element, '');
+    });
+    // Load the HTML into htmlparser2 beforehand since it is more forgiving
+    const dom = htmlparser2.parseDOM(sanitizedBlobBox, { decodeEntities: true });
+
+    // Load the HTML into cheerio for parsing
+    const $ = cheerio.load(dom);
+
+    // Replace tags <font> with <span>
+    const replacementTags = [['font', 'span']];
+    replacementTags.forEach(function(pair) {
+        $(pair[0]).replaceWith($(`<${pair[1]}>${$(this).html()}</${pair[1]}>`));
+    });
+
+    // Remove bad tags from the HTML
+    AMP_BAD_TAGS.forEach(function(badTag) {
+        $(badTag).remove();
+    });
+
+    // Remove empty <p> tags to make the text look cleaner
+    $('p').each(function() {
+        var $this = $(this);
+        if ($this.html().replace(/\s|&nbsp;/gimu, '').length == 0) {
+            $this.remove();
+        }
+    });
+    // Set the new string
+    sanitizedBlobBox = decode($.html(), 'all');
+
+    // Do some regex replacements again
+    AMP_REGEXES_POST.forEach(function(element) {
+        sanitizedBlobBox = sanitizedBlobBox.replace(element, '');
+    });
+    return sanitizedBlobBox;
 };

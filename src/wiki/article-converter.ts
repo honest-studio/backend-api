@@ -4,6 +4,7 @@ import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
 import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection, ListItem, AmpInfo, TableRow, TableCell } from './article-dto';
 import * as mimePackage from 'mime';
+const normalizeUrl = require('normalize-url');
 const decode = require('unescape');
 var striptags = require('striptags');
 const urlSlug = require('url-slug');
@@ -19,7 +20,7 @@ export const CAPTURE_REGEXES = {
     inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu,
     inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/gimu
 };
-const REPLACEMENTS = [
+export const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
     { regex: /\u{200B}/gimu, replacement: '' },
     { regex: /\n <\/a>\n/gimu, replacement: '</a>' },
@@ -33,7 +34,7 @@ const REPLACEMENTS = [
         replacement: 'https://everipedia-storage.s3.amazonaws.com'
     }
 ];
-const AMP_REGEXES_PRE = [
+export const AMP_REGEXES_PRE = [
     /<html.*<\/head>/gimu,
     /<\/html/gimu,
     /\sstyle=".*?"/gimu,
@@ -58,18 +59,18 @@ const AMP_REGEXES_PRE = [
     /\sunselectable=".*?"/gimu,
     /\starget=".*?"/gimu,
     /\sonclick=".*?"/gimu,
-    /\sonmouseout=".*?"/
+    /\sonmouseout=".*?"/gimu
 ];
-const AMP_REGEXES_POST = [
+export const AMP_REGEXES_POST = [
     /border=".*?"/gimu,
     /pic_id=".*?"/gimu,
     /style=".*?"/gimu,
     /style='.*?'/gimu,
-    /xml:lang=".*?"/,
-    /\sstyle="color:\s#71b8e4;"/,
-    /\sstyle="color:\s#71b8e4;\sfont-face:\sbold;\stext-decoration:\snone;"/
+    /xml:lang=".*?"/gimu,
+    /\sstyle="color:\s#71b8e4;"/gimu,
+    /\sstyle="color:\s#71b8e4;\sfont-face:\sbold;\stext-decoration:\snone;"/gimu
 ];
-const AMP_BAD_TAGS = [
+export const AMP_BAD_TAGS = [
     'audio',
     'head',
     'map',
@@ -92,7 +93,7 @@ const AMP_BAD_TAGS = [
     'code',
     'picture'
 ];
-const AMP_BAD_CLASSES = [
+export const AMP_BAD_CLASSES = [
     'mwe-math-fallback-image-inline',
     'sortkey',
     'mw-graph-img',
@@ -100,7 +101,7 @@ const AMP_BAD_CLASSES = [
     'timeline-wrapper',
     'PopUpMediaTransform'
 ];
-const VALID_VIDEO_EXTENSIONS = [
+export const VALID_VIDEO_EXTENSIONS = [
     '.mp4',
     '.m4v',
     '.flv',
@@ -116,8 +117,8 @@ const VALID_VIDEO_EXTENSIONS = [
     '.mov',
     '.avi'
 ];
-const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
-const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
+export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
+export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 
 // Convert False/True into false/true and None into null
 function pyToJS(inputItem: any) {
@@ -434,7 +435,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 //         } else {
 //             fullImgSrc = $(this).attr('src');
 //             thumbImgSrc =
-//                 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
+//                 'https://epcdn-vz.azureedge.net/static/images/white_dot.png';
 //         }
 
 //         // Create the amp-anim
@@ -480,7 +481,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 //         } else {
 //             fullImgSrc = $(this).attr('src');
 //             thumbImgSrc =
-//                 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
+//                 'https://epcdn-vz.azureedge.net/static/images/white_dot.png';
 //         }
 
 //         // Create the amp-img
@@ -698,7 +699,7 @@ function extractCitations($: CheerioStatic): Citation[] {
                 .text();
 
         if (href) {
-            citation.url = href.trim();
+            citation.url = normalizeUrl(href.trim());
             citation.social_type = socialURLType(citation.url);
         }
 
@@ -1077,7 +1078,7 @@ function parseSection($section: Cheerio): Section {
         );
 
         // Decode the URL
-        if (image.url) image.url = decodeURIComponent(image.url);
+        if (image.url) image.url = normalizeUrl(decodeURIComponent(image.url));
 
         // Attribution URLs
         if (image.url && image.url.includes('wikipedia')) {
@@ -1209,10 +1210,8 @@ function sanitizeText($: CheerioStatic) {
     const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
     $ = cheerio.load(spaced_italics);
 
-    
-
     // Convert images inside wikitables and ul's to markup
-    $('.wikitable img, .blurb-wrap ul img').each(function(eThis) {
+    $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(eThis) {
         // Construct a dictionary
         const src = $(this).attr('src');
         const height = $(this).attr('height');
@@ -1273,7 +1272,6 @@ function sanitizeText($: CheerioStatic) {
             // Convert the div to a <p>
             $(element).replaceWith('<p>' + $(element).html() + '</p>');
         });
-
     return $;
 }
 

@@ -1,11 +1,13 @@
 import { ArticleJson, AMPParseCollection, Sentence, SeeAlso, SeeAlsoCollection } from './article-dto';
 import { Citation, Infobox, Media, Section } from './article-dto';
-import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
+import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize } from '../utils/article-utils';
 import { getYouTubeID, renderParagraph, renderImage } from './article-converter';
 import { LanguagePack } from './wiki.service';
+import { styleNugget } from './amp-style';
+const normalizeUrl = require('normalize-url');
+const CleanCSS = require('clean-css');
 const striptags = require('striptags');
 const urlSlug = require('url-slug');
-const tag = require('html-tag');
 
 
 export class AmpRenderPartial {
@@ -16,12 +18,20 @@ export class AmpRenderPartial {
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
+        let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
         return `
-            <meta charset="utf-8">
-            <meta name="theme-color" content="#FFFFFF">
+            <meta charset="utf-8" />
+            <meta name="theme-color" content="#FFFFFF" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,600&amp;subset=latin-ext" rel="stylesheet">
             <script async src="https://cdn.ampproject.org/v0.js"></script>
+            <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+            <style amp-boilerplate>
+                body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
+            </style>
+            <noscript>
+                <style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style>
+            </noscript>
             ${ this.artJSON.amp_info.load_youtube_js ? 
                 '<script async custom-element="amp-youtube" src="https://cdn.ampproject.org/v0/amp-youtube-0.1.js"></script>' : ''
             }
@@ -38,51 +48,43 @@ export class AmpRenderPartial {
                 '<script async custom-element="amp-video" src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>' : ''
             }
             <meta property="og:type" content="article"/>
-            <meta name="twitter:card" content="summary">
+            <meta name="twitter:card" content="summary" />
             ${ !this.artJSON.metadata.is_indexed ?
-                '<meta name="googlebot" content="noindex, nofollow, noarchive">' : ''
+                '<meta name="googlebot" content="noindex, nofollow, noarchive" />' : ''
             }
             ${ this.artJSON.metadata.page_type == 'Person' ?
                 `<title>${this.artJSON.page_title} | Wiki & Bio | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Bio |">` :
+                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Bio |" />` :
             this.artJSON.metadata.page_type == 'Product' ?
                 `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |">` :
+                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |" />` :
             this.artJSON.metadata.page_type == 'Organization' ?
                 `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |">` :
+                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |" />` :
             this.artJSON.metadata.page_type ?
                 `<title>${this.artJSON.page_title} | Wiki | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki |">` : ''
+                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki |" />` : ''
             }
-
-            <meta property="article:tag" content="${this.artJSON.page_title}">
+            <meta property="article:tag" content="${this.artJSON.page_title}" />
             <meta property="article:published_time" content="${this.artJSON.metadata.creation_timestamp }" />
             <meta property="article:modified_time" content="${this.artJSON.metadata.last_modified }" />
             <meta property="og:image" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" />
             <meta property="og:image" content="${this.artJSON.main_photo.thumb}" />
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta name="og:url" content="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">
-
-            <meta name="twitter:image" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}">
-            <meta name="twitter:image" content="${this.artJSON.main_photo.thumb}">
-            <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}">
+            <meta name="twitter:image" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" />
+            <meta name="twitter:image" content="${this.artJSON.main_photo.thumb}" />
+            <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
             <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}">
-            
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
-            <meta property="article:author" content="https://www.facebook.com/everipedia">
-
-
+            <meta property="article:author" content="https://www.facebook.com/everipedia" />
             <link rel="canonical" href="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}" />
-            ${"// NEED TO PUT THE HREFLANGS HERE"}
-        
-            <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-            <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+            <style amp-custom>${compressedCSS}</style>
         `;
     }
 
@@ -187,14 +189,14 @@ export class AmpRenderPartial {
                     <span>${this.artJSON.page_title}</span>
                 </h1>
                 ${ this.artJSON.metadata.page_type == 'Person' ?
-                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>
-                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} real name, how old is ${this.artJSON.page_title}" ></amp-anim>` : 
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>
+                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} real name, how old is ${this.artJSON.page_title}" ></amp-anim>` : 
                 this.artJSON.metadata.page_type == 'Product' ?
-                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : 
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : 
                 this.artJSON.metadata.page_type == 'Organization' ?
-                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
                 true ? 
-                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : ``
+                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : ``
                 }
                 <div id="title-buttonset">
                     <div class="tlbx-ct-wrapper">
@@ -216,20 +218,20 @@ export class AmpRenderPartial {
                                     </li>` : ``
                                 }
                                 ${ this.artJSON.metadata.page_type == 'Person' ?
-                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} religion, ${this.artJSON.page_title} interview, ${this.artJSON.page_title} life, ${this.artJSON.page_title} website" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wife, ${this.artJSON.page_title} family, ${this.artJSON.page_title} education, ${this.artJSON.page_title} measurements, ${this.artJSON.page_title} email" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} phone, ${this.artJSON.page_title} salary, ${this.artJSON.page_title} address, ${this.artJSON.page_title} history, ${this.artJSON.page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} religion, ${this.artJSON.page_title} interview, ${this.artJSON.page_title} life, ${this.artJSON.page_title} website" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} wife, ${this.artJSON.page_title} family, ${this.artJSON.page_title} education, ${this.artJSON.page_title} measurements, ${this.artJSON.page_title} email" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} phone, ${this.artJSON.page_title} salary, ${this.artJSON.page_title} address, ${this.artJSON.page_title} history, ${this.artJSON.page_title} facts" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
                                 this.artJSON.metadata.page_type == 'Product' ?
-                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} designer, ${this.artJSON.page_title} sales, ${this.artJSON.page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : 
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} designer, ${this.artJSON.page_title} sales, ${this.artJSON.page_title} facts" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : 
                                 this.artJSON.metadata.page_type == 'Organization' ?
-                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} ownership, ${this.artJSON.page_title} email, ${this.artJSON.page_title} address, ${this.artJSON.page_title} phone, ${this.artJSON.page_title} headquarters" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} revenue, ${this.artJSON.page_title} employees, ${this.artJSON.page_title} location, ${this.artJSON.page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} ownership, ${this.artJSON.page_title} email, ${this.artJSON.page_title} address, ${this.artJSON.page_title} phone, ${this.artJSON.page_title} headquarters" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} revenue, ${this.artJSON.page_title} employees, ${this.artJSON.page_title} location, ${this.artJSON.page_title} facts" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>` : 
                                 true ? 
-                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} information, ${this.artJSON.page_title} definition, ${this.artJSON.page_title} timeline, ${this.artJSON.page_title} location" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : ``
+                                    `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} information, ${this.artJSON.page_title} definition, ${this.artJSON.page_title} timeline, ${this.artJSON.page_title} location" ></amp-anim>
+                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} wikipedia, ${this.artJSON.page_title} news, what is ${this.artJSON.page_title}" ></amp-anim>` : ``
                                 }
                             </ul>
                         </div>
@@ -308,7 +310,7 @@ export class AmpRenderPartial {
     renderInfoboxes = (): string => {
         let infoboxes: Infobox[] = this.artJSON.infoboxes;
         if  (!((infoboxes && infoboxes.length > 0) || (this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0))){ return ``; }
-        let blobBoxResult = CheckForLinksOrCitationsAMP(this.artJSON.infobox_html, this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
+        let blobBoxResult = CheckForLinksOrCitationsAMP(blobBoxPreSanitize(this.artJSON.infobox_html), this.artJSON.citations, this.artJSON.metadata.ipfs_hash, []);
         this.allLightBoxes.push(...blobBoxResult.lightboxes);
         let infoboxComboString = infoboxes.map((value, index) => {
             return this.renderOneInfobox(value, index);
@@ -325,18 +327,20 @@ export class AmpRenderPartial {
                         }
                         <span class="icon"><i class="fa fa-chevron-down"></i></span>
                     </h2>
-                    ${ this.artJSON.infobox_html && this.artJSON.infobox_html.length != 0 ? 
-                        `<div id="blobBox_container" class='infbx-ct'>
-                            ${blobBoxResult.text}
-                        </div>` : ``
-                    }
-                    <div class="infbx-ct">
-                    ${ infoboxes.length != 0 ? 
-                        `<ul class="list-unstyled list-spaced list-plural infobox">
-                            ${infoboxComboString}
-                        </ul>` : ``
-                    }
-                    </div>
+                    <div class='amp-wrap'>
+                        ${ this.artJSON.infobox_html && this.artJSON.infobox_html.length != 0 ? 
+                            `<div id="blobBox_container" class='infbx-ct'>
+                                ${blobBoxResult.text}
+                            </div>` : ``
+                        }
+                        <div class="infbx-ct">
+                        ${ infoboxes.length != 0 ? 
+                            `<ul class="list-unstyled list-spaced list-plural infobox">
+                                ${infoboxComboString}
+                            </ul>` : ``
+                        }
+                        </div>
+                    <div>
                 </section>
             </amp-accordion>
         `;
@@ -478,7 +482,7 @@ export class AmpRenderPartial {
                 <section expanded>
                     <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
                         <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="${this.artJSON.page_title} images, pictures, and videos" />
+                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${this.artJSON.page_title} images, pictures, and videos" />
                         </span>
                     </h2>
                     <div class="pic-video-container">
@@ -542,7 +546,7 @@ export class AmpRenderPartial {
                         `Reference Links For This Wiki` : ``
                     }
                     <span class="icon"><i class="fa fa-chevron-down"></i>
-                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
+                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
                     </span>
                 </h2>
                 <div class="l-lst-header" id="link_list_container">
@@ -582,7 +586,7 @@ export class AmpRenderPartial {
             <section expanded>
                 <h2 class="acc-header" >See Also
                     <span class="icon"><i class="fa fa-chevron-down"></i>
-                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="{% trans 'See related encyclopedia articles, biographies, reviews, and historical facts.' %}" />
+                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="{% trans 'See related encyclopedia articles, biographies, reviews, and historical facts.' %}" />
                     </span>
                 </h2>
                 <div>
@@ -870,7 +874,8 @@ export class AmpRenderPartial {
         `
     }
 
-    renderLanguageLightboxes = (langPacks: LanguagePack[]): string => {
+    renderLanguageLightboxes = (): string => {
+        let langPacks: LanguagePack[] = this.artJSON.alt_langs;
         if(langPacks.length == 0) return ``;
         let languageComboString = langPacks.map((value, index) => {
             return this.renderOneLanguage(value);

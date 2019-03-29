@@ -117,8 +117,8 @@ export class WikiController {
         status: 200,
         description: `A JSON with a list of the languages available`
     })
-    async getWikiGroup(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
-        return this.wikiService.getWikiGroup(lang_code, slug);
+    async getWikiGroups(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        return this.wikiService.getWikiGroups(lang_code, slug);
     }
 
     @Post('/')

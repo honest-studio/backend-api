@@ -5,7 +5,7 @@ import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { oldHTMLtoJSON } from './article-converter';
-import { getSeeAlsos } from '../utils/article-utils'
+import { calculateSeeAlsos } from '../utils/article-utils'
 import { ArticleJson, SeeAlso, PhotoExtraData } from './article-dto';
 import { renderAMP } from './amp-template';
 import { renderSchema } from './schema-template';
@@ -89,36 +89,14 @@ export class WikiService {
             wiki = oldHTMLtoJSON(rows[0].html_blob);
             wiki.metadata.pageviews = rows[0].pageviews;
             wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
+            wiki.alt_langs = await this.getWikiGroups(lang_code, slug);
+            wiki.seealsos = await this.getSeeAlsos(wiki);
             if (wiki.metadata.is_wikipedia_import) {
                 wiki.categories = await this.getCategories(lang_code, slug);
             }
             this.mongo.connection().json_wikis.insertOne(wiki);
         }
-        wiki.seealsos = getSeeAlsos(wiki);
-        let seeAlsoWhere = wiki.seealsos.map((value, index) => {
-            // performance is slow when ORing slug_alt for some reason, even though it is indexed
-            return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
-        }).join(" OR ");
-        let seeAlsoRows = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
-                COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
-                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS snippet
-                FROM enterlink_articletable art
-                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-                WHERE ${seeAlsoWhere};`,
-                [],
-                function(err, rows) {
-                    if (err) {
-                        console.log(err);
-                        reject(err);
-                    }
-                    else resolve(rows);
-                }
-            );
-        });
-        wiki.seealsos = seeAlsoRows as SeeAlso[];
+        
         wiki.metadata.pageviews = rows[0].pageviews;
         wiki.metadata.page_lang = lang_code;
         return wiki;
@@ -127,14 +105,13 @@ export class WikiService {
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
         console.log('\x1b[41;1m%s\x1b[0m', "FORCING USE_CACHE TO FALSE. FIX THIS LATER");
         // console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
-        let langPacks = await this.getWikiGroup(lang_code, slug);
         let ampWiki = await this.getWikiBySlug(lang_code, slug, false);
         let tempService = new MediaUploadService(null);
         let photoExtraData: PhotoExtraData = await tempService.getImageData(ampWiki.main_photo.url);
         ampWiki.main_photo.width = photoExtraData.width;
         ampWiki.main_photo.height = photoExtraData.height;
         ampWiki.main_photo.mime = photoExtraData.mime;
-        return renderAMP(ampWiki, langPacks);
+        return renderAMP(ampWiki);
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
@@ -219,7 +196,7 @@ export class WikiService {
         return json_wikis;
     }
 
-    async getWikiGroup(lang_code: string, slug: string): Promise<LanguagePack[]> {
+    async getWikiGroups(lang_code: string, slug: string): Promise<LanguagePack[]> {
         const lang_packs: LanguagePack[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -244,6 +221,34 @@ export class WikiService {
         });
         if (lang_packs.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
         return lang_packs;
+    }
+
+    async getSeeAlsos(inputWiki: ArticleJson): Promise<SeeAlso[]> {
+        let tempSeeAlsos: SeeAlso[] = calculateSeeAlsos(inputWiki);
+        let seeAlsoWhere = tempSeeAlsos.map((value, index) => {
+            // performance is slow when ORing slug_alt for some reason, even though it is indexed
+            return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
+        }).join(" OR ");
+        let seeAlsoRows = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
+                COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS snippet
+                FROM enterlink_articletable art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE ${seeAlsoWhere};`,
+                [],
+                function(err, rows) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    }
+                    else resolve(rows);
+                }
+            );
+        });
+        return seeAlsoRows as SeeAlso[];
     }
 
     async submitWiki(html_body: string): Promise<any> {
@@ -291,7 +296,9 @@ export class WikiService {
         .then(json => json.query.pages)
         .then(pages => Object.values(pages)[0])
         .then(obj => obj.categories)
-        .then(cats => cats.map(cat => cat.title.split(':')[1]));
+        .then(cats => {
+            return cats && cats.length > 0 ? cats.map(cat => cat.title.split(':')[1]) : [];
+        });
     }
 
 }

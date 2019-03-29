@@ -1,3 +1,5 @@
+import { LanguagePack } from "./wiki.service";
+
 // Link to an Everipedia page
 // The interface is listed here for documentation, but the
 // links are actually marked up inline in sentence text with
@@ -173,4 +175,5 @@ export interface ArticleJson {
     categories?: string[];
     type?: string;
     seealsos?: SeeAlso[];
+    alt_langs?: LanguagePack[];
 }
