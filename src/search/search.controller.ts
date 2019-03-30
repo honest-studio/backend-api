@@ -27,6 +27,24 @@ export class SearchController {
         return await this.searchService.searchTitle(query, langs);
     }
 
+    @Get('schema-by-type/:query')
+    @ApiOperation({ title: 'Search for available ' })
+    @ApiImplicitParam({
+        name: 'query',
+        description: 'Search term',
+        required: true,
+        type: 'string'
+    })
+    @ApiImplicitParam({
+        name: 'page_type',
+        description: 'Schema.org type for the page (e.g. Person, Organization, etc)',
+        required: true,
+        type: 'string'
+    })
+    async searchSchemaByType(@Param('query') query, @Query('page_type') page_type): Promise<any> {
+        return await this.searchService.searchSchemaByType(query, page_type);
+    }
+
     @Get('test/:query')
     @ApiOperation({ title: 'Shows injection of client IP into params' })
     @ApiImplicitParam({

@@ -74,4 +74,23 @@ export class SearchService {
             );
         });
     }
+
+    async searchSchemaByType(query: string, page_type: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT sch.mapped_keyword as 'key', sch.schema_keyword as 'schema', sch.schema_argument as 'addl_schematype', sch.addl_schema_default_itemprop as 'addl_schema_itemprop'
+                FROM enterlink_schemaobject AS sch 
+                WHERE sch.schema_for IN ('Thing', ?) 
+                AND sch.exclude_from_dropdown=0 
+                AND sch.mapped_keyword LIKE ?`,
+                [page_type, query + '%'],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+    }
 }
+

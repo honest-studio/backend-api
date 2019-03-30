@@ -266,6 +266,12 @@ describe('Backend API', () => {
         .get('/v2/search/title/Travis?langs=en')
         .expect(200)
   });
+
+  it('Search Schema: Birth and Person', () => {
+    return request(app.getHttpServer())
+        .get('/v2/search/schema-by-type/birth?page_type=Person')
+        .expect(200)
+  });
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())

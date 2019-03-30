@@ -71,8 +71,8 @@ export interface Section {
 export interface Infobox {
     key: string;
     schema: string;
-    addlSchemaItemProp: string;
     addlSchematype: string;
+    addlSchemaItemProp: string;
     values: Sentence[]; // each sentence is an individual value
 }
 
