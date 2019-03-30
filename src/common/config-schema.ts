@@ -152,17 +152,21 @@ const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
 };
 
 /**
- * Build MySQL connection config
+ * Build Google Analytics config
  * @param parsed dotenv parsed output
  */
- //const GetGoogleAnalyticsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
- //    return {
- //        googleAnalyticsConfig: {
- //            googleAnalyticsAppId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_APP_ID],
- //            googleAnalyticsViewId: Number(parsed[ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID]),
- //        }
- //    };
- //};
+ const GetGoogleAnalyticsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+     return {
+         googleAnalyticsConfig: {
+             googleAnalyticsTrackingId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_TRACKING_ID],
+             googleAnalyticsViewId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID],
+             googleApiClientId: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_ID],
+             googleApiClientSecret: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_SECRET],
+             googleApiRefreshToken: parsed[ConfigKeyNames.GOOGLE_API_REFRESH_TOKEN],
+             googleApiRedirectUri: parsed[ConfigKeyNames.GOOGLE_API_REDIRECT_URI]
+         }
+     };
+ };
 
 /**
  * Array of functions that will be applied, in order, to build AppConfigVars
@@ -178,6 +182,7 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetAWSSESConfig,
     GetAzureStorageConfig,
     GetMysqlConfig,
+    GetGoogleAnalyticsConfig,
 ];
 
 /**
@@ -272,9 +277,15 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.AWS_SES_KEY]: Joi.string().required(),
     [ConfigKeyNames.AWS_SES_SECRET]: Joi.string().required(),
     [ConfigKeyNames.AWS_SES_REGION]: Joi.string().required(),
-    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME]: Joi.string().required(),
-    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY]: Joi.string().required(),
-    [ConfigKeyNames.AZURE_STORAGE_CONTAINER]: Joi.string().required()
+    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME]: Joi.string(),
+    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY]: Joi.string(),
+    [ConfigKeyNames.AZURE_STORAGE_CONTAINER]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_ANALYTICS_TRACKING_ID]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_CLIENT_ID]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_CLIENT_SECRET]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_REFRESH_TOKEN]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_REDIRECT_URI]: Joi.string()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {
