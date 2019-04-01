@@ -9,7 +9,6 @@ export type WikiEntity = any;
 export type DiffEntity = any;
 export type JsonWikiEntity = any;
 export type StatEntity = any;
-export type OAuthTokenEntity = any;
 
 export type AppConnectionInstance = {
     client: MongoClient;
@@ -18,7 +17,6 @@ export type AppConnectionInstance = {
     diffs: Collection<DiffEntity>;
     statistics: Collection<StatEntity>;
     json_wikis: Collection<JsonWikiEntity>;
-    oauth_tokens: Collection<OAuthTokenEntity>;
 };
 
 /**
@@ -58,8 +56,7 @@ export class MongoDbService {
                             const diffs = db.collection('diffs');
                             const json_wikis = db.collection('json_wikis');
                             const statistics = db.collection('statistics');
-                            const oauth_tokens = db.collection('oauth_tokens');
-                            resolve({ client, db, actions, diffs, json_wikis, statistics, oauth_tokens });
+                            resolve({ client, db, actions, diffs, json_wikis, statistics });
                         }
                     }
                 );

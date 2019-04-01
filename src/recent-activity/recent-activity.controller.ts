@@ -136,10 +136,4 @@ export class RecentActivityController {
     async getProposals(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getProposals(query);
     }
-
-    @Get('trending')
-    @ApiOperation({ title: 'Trending wikis' })
-    async getTrendingWikis(): Promise<Array<any>> {
-        return await this.recentActivityService.getTrendingWikis();
-    }
 }

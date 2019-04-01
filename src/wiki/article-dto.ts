@@ -97,7 +97,7 @@ export interface Citation {
 }
 
 export interface Table {
-    type: string; // wikitable
+    type: string; // table
     caption: string;
     thead?: TableSection;
     tbody: TableSection;

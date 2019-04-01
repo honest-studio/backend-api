@@ -1467,15 +1467,17 @@ function parseTable($element: Cheerio): Table {
 
     // Setup the head, body, and foot
     const $table_containers = $element.children('thead, tbody, tfoot');
-    const table_sections = ['thead', 'tbody', 'tfoot'];
-    for (let j = 0; j < table_sections.length; j++) {
-        const tsection = table_sections[j];
-        const $tsection = $element.children(tsection);
-        table[tsection] = { rows: [] };
-        if ($tsection.length > 0)
-            table[tsection].attrs = $tsection[0].attribs
-        else
-            table[tsection].attrs = {}
+    for (let j = 0; j < $table_containers.length; j++) {
+        const $table_container = $table_containers.eq(j);
+
+        // Find the tag name (thead, tbody, or tfoot)
+        let theTagName = $table_container[0].tagName.toLowerCase() || null;
+
+        // Push the attributes into the parent object
+        table[theTagName] = {
+            attrs: $table_container[0].attribs,
+            rows: []
+        };
     }
 
     // Add the rows and cells
