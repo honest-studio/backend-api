@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService, ElasticSearchConfig } from '../common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
+import * as cheerio from 'cheerio';
 
 @Injectable()
 export class SearchService {
@@ -59,11 +60,12 @@ export class SearchService {
 
         if (canonical_ids.length == 0) return [];
 
-        return new Promise((resolve, reject) => {
+        const result_rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, art.blurb_snippet,
-                art.photo_url, art.ipfs_hash_current, art.page_lang 
+                SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, 
+                art.blurb_snippet AS text_preview,
+                art.photo_url, art.ipfs_hash_current, art.page_lang AS lang_code
                 FROM enterlink_articletable AS art
                 WHERE art.id IN (?)`,
                 [canonical_ids],
@@ -73,5 +75,16 @@ export class SearchService {
                 }
             );
         });
+        // clean up text previews
+        result_rows.forEach((row) => {
+            if (!row.text_preview) return; // continue
+            const $ = cheerio.load(row.text_preview);
+            row.text_preview = $.root()
+                .text()
+                .replace(/\s+/g, ' ')
+                .trim();
+        });
+
+        return result_rows;
     }
 }
