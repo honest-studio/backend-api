@@ -41,6 +41,10 @@ export class OAuthService {
                     token: token_json.refresh_token,
                     scope: token_json.scope
                 }
+                await this.mongo.connection().oauth_tokens.deleteMany({ 
+                    provider: 'google',
+                    token_type: 'refresh_token',
+                });
                 await this.mongo.connection().oauth_tokens.insertOne(refresh_token);
             }
             if (token_json.access_token) {
@@ -88,6 +92,7 @@ export class OAuthService {
         })
         .then(response => response.json());
 
+        console.log(oauth_response);
         if (oauth_response.access_token) {
             const access_token: OAuthToken = {
                 provider: 'google',

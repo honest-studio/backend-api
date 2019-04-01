@@ -246,7 +246,7 @@ export class WikiService {
         .then(obj => obj.categories)
         
         if (wikipedia_categories)
-            return wikipedia_categories.then(cats => cats.map(cat => cat.title.split(':')[1]));
+            return wikipedia_categories.map(cat => cat.title.split(':')[1]);
         else return [];
     }
 
