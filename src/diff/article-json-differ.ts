@@ -226,6 +226,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             })
             .join('\n');
     }
+    console.log(diff_text);
 
     return diffToSections(diff_text);
 }
@@ -257,10 +258,8 @@ function diffToSections(diff_text): SectionDiff[] {
 function linesToParagraph(lines: string): ParagraphDiff {
     const items = lines
         .split(PARAGRAPH_ITEM_SEPARATOR)
-        //.filter((lines) => lines.trim()) // no blank items
+        .filter((lines) => lines.trim()) // no blank items
         .map((lines, index) => {
-            console.log(lines);
-            console.log(';;;;;;;;;dddd');
             const prefix = lines.substring(0, 10);
             if (prefix == SENTENCE_PREFIX)
                 return {
