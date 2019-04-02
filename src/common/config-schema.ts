@@ -3,6 +3,16 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import { AppConfigVars, ConfigKeyNames, PartialConfigMaker } from './config-types';
 
+const GetServerConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        serverConfig: {
+            serverProtocol: parsed[ConfigKeyNames.SERVER_PROTOCOL],
+            serverHost: parsed[ConfigKeyNames.SERVER_HOST],
+            serverHttpPort: parsed[ConfigKeyNames.SERVER_HTTP_PORT],
+            serverHttpsPort: parsed[ConfigKeyNames.SERVER_HTTPS_PORT]
+        }
+    };
+};
 /**
  * Build SSL config if SSL key path and cert path are provided
  * @param parsed dotenv parsed output
@@ -21,19 +31,6 @@ const GetSslConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Par
 };
 
 /**
- * Build Copyleaks API config
- * @param parsed dotenv parsed output
- */
-const GetCopyLeaksConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
-    return {
-        copyLeaksConfig: {
-            copyLeaksApiKey: parsed[ConfigKeyNames.COPYLEAKS_API_KEY],
-            copyLeaksApiEmail: parsed[ConfigKeyNames.COPYLEAKS_API_EMAIL]
-        }
-    };
-};
-
-/**
  * Build DFuse.io API config
  * @param parsed dotenv parsed output
  */
@@ -43,7 +40,8 @@ const GetDfuseConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
             dfuseApiKey: parsed[ConfigKeyNames.DFUSE_API_KEY],
             dfuseWsEndpoint: parsed[ConfigKeyNames.DFUSE_API_WEBSOCKET_ENDPOINT],
             dfuseRestEndpoint: parsed[ConfigKeyNames.DFUSE_API_REST_ENDPOINT],
-            dfuseOriginUrl: parsed[ConfigKeyNames.DFUSE_API_ORIGIN_URL]
+            dfuseOriginUrl: parsed[ConfigKeyNames.DFUSE_API_ORIGIN_URL],
+            dfuseStartBlock: parsed[ConfigKeyNames.DFUSE_START_BLOCK]
         }
     };
 };
@@ -94,6 +92,50 @@ const GetElasticSearchConfig: PartialConfigMaker = (
 };
 
 /**
+ * Build AWS S3 Bucket connection config
+ * @param parsed dotenv parsed output
+ */
+const GetAWSS3Config: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        awsS3Config: {
+            awsStorageBucketName: parsed[ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME],
+            awsFastCacheBucketName: parsed[ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME],
+            awsAccessKeyID: parsed[ConfigKeyNames.AWS_S3_ACCESS_KEY_ID],
+            awsSecretAccessKey: parsed[ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY]
+        }
+    };
+};
+
+/**
+ * Build AWS SES connection config
+ * @param parsed dotenv parsed output
+ */
+const GetAWSSESConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        awsSESConfig: {
+            awsSESDefaultEmail: parsed[ConfigKeyNames.AWS_SES_DEFAULT_EMAIL],
+            awsSESKey: parsed[ConfigKeyNames.AWS_SES_KEY],
+            awsSESSecret: parsed[ConfigKeyNames.AWS_SES_SECRET],
+            awsSESRegion: parsed[ConfigKeyNames.AWS_SES_REGION]
+        }
+    };
+};
+
+/**
+ * Build Azure Bucket connection config
+ * @param parsed dotenv parsed output
+ */
+const GetAzureStorageConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+    return {
+        azureStorageConfig: {
+            azureStorageAccountName: parsed[ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME],
+            azureStorageAccountKey: parsed[ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY],
+            azureStorageContainer: parsed[ConfigKeyNames.AZURE_STORAGE_CONTAINER]
+        }
+    };
+};
+
+/**
  * Build MySQL connection config
  * @param parsed dotenv parsed output
  */
@@ -110,16 +152,37 @@ const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
 };
 
 /**
+ * Build Google Analytics config
+ * @param parsed dotenv parsed output
+ */
+ const GetGoogleAnalyticsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
+     return {
+         googleAnalyticsConfig: {
+             googleAnalyticsTrackingId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_TRACKING_ID],
+             googleAnalyticsViewId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID],
+             googleApiClientId: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_ID],
+             googleApiClientSecret: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_SECRET],
+             googleApiRefreshToken: parsed[ConfigKeyNames.GOOGLE_API_REFRESH_TOKEN],
+             googleApiRedirectUri: parsed[ConfigKeyNames.GOOGLE_API_REDIRECT_URI]
+         }
+     };
+ };
+
+/**
  * Array of functions that will be applied, in order, to build AppConfigVars
  */
 const ConfigMappingFunctions: PartialConfigMaker[] = [
+    GetServerConfig,
     GetSslConfig,
-    GetCopyLeaksConfig,
     GetDfuseConfig,
     GetMongoConnConfig,
     GetIpfsConfig,
     GetElasticSearchConfig,
-    GetMysqlConfig
+    GetAWSS3Config,
+    GetAWSSESConfig,
+    GetAzureStorageConfig,
+    GetMysqlConfig,
+    GetGoogleAnalyticsConfig,
 ];
 
 /**
@@ -160,10 +223,12 @@ const mapPropertyKeysToConfig = (parsed: dotenv.DotenvParseOutput): AppConfigVar
  * Schema to validate environment vars from .env file
  */
 const envVarsSchema: Joi.ObjectSchema = Joi.object({
+    [ConfigKeyNames.SERVER_HOST]: Joi.string().required(),
+    [ConfigKeyNames.SERVER_PROTOCOL]: Joi.string().required(),
+    [ConfigKeyNames.SERVER_HTTP_PORT]: Joi.string().optional(),
+    [ConfigKeyNames.SERVER_HTTPS_PORT]: Joi.string().optional(),
     [ConfigKeyNames.SSL_KEY_PATH]: Joi.string().optional(),
     [ConfigKeyNames.SSL_CERTIFICATE_PATH]: Joi.string().optional(),
-    [ConfigKeyNames.COPYLEAKS_API_KEY]: Joi.string().required(),
-    [ConfigKeyNames.COPYLEAKS_API_EMAIL]: Joi.string().required(),
     [ConfigKeyNames.MONGODB_URL]: Joi.string().required(),
     [ConfigKeyNames.MONGODB_DATABASE_NAME]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_KEY]: Joi.string().required(),
@@ -176,6 +241,9 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.DFUSE_API_ORIGIN_URL]: Joi.string()
         .uri()
         .required(),
+    [ConfigKeyNames.DFUSE_START_BLOCK]: Joi.number()
+        .min(2)
+        .default(2),
     [ConfigKeyNames.IPFS_DAEMON_HOST]: Joi.string().required(),
     [ConfigKeyNames.IPFS_DAEMON_PORT]: Joi.number()
         .integer()
@@ -200,7 +268,24 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
         .required(),
     [ConfigKeyNames.MYSQL_USERNAME]: Joi.string().required(),
     [ConfigKeyNames.MYSQL_PASSWORD]: Joi.string().required(),
-    [ConfigKeyNames.MYSQL_DATABASE]: Joi.string().required()
+    [ConfigKeyNames.MYSQL_DATABASE]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_STORAGE_BUCKET_NAME]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_FAST_CACHE_BUCKET_NAME]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_ACCESS_KEY_ID]: Joi.string().required(),
+    [ConfigKeyNames.AWS_S3_SECRET_ACCESS_KEY]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_DEFAULT_EMAIL]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_KEY]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_SECRET]: Joi.string().required(),
+    [ConfigKeyNames.AWS_SES_REGION]: Joi.string().required(),
+    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_NAME]: Joi.string(),
+    [ConfigKeyNames.AZURE_STORAGE_ACCOUNT_KEY]: Joi.string(),
+    [ConfigKeyNames.AZURE_STORAGE_CONTAINER]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_ANALYTICS_TRACKING_ID]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_CLIENT_ID]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_CLIENT_SECRET]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_REFRESH_TOKEN]: Joi.string(),
+    [ConfigKeyNames.GOOGLE_API_REDIRECT_URI]: Joi.string()
 });
 
 export const validateAndBuildConfig = (configFilePath: string): AppConfigVars => {

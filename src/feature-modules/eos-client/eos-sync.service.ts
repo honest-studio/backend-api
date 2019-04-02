@@ -1,22 +1,50 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
-import { MongoDbService } from './mongodb-service';
+import { MongoDbService } from '../database/mongodb-service';
 import { DfuseConfig, ConfigService } from '../../common';
+import * as fetch from 'node-fetch';
 import * as WebSocket from 'ws';
+
+export interface DfuseToken {
+    token: string, // JWT
+    expires_at: number
+}   
 
 @Injectable()
 export class EosSyncService {
     private readonly mongoDbService: MongoDbService;
-    private readonly dfuse: WebSocket;
+    private readonly dfuseStartBlock;
     private readonly dfuseConfig: DfuseConfig;
-    private readonly DEFAULT_BLOCK_START: number = 5000000;
     private lastMessageReceived: number;
+    private dfuseJwtToken: string;
+    private dfuse: WebSocket;
+
+    public DFUSE_AUTH_URL = 'https://auth.dfuse.io/v1/auth/issue';
 
     constructor(mongo: MongoDbService, config: ConfigService) {
         this.mongoDbService = mongo;
         this.dfuseConfig = config.get('dfuseConfig');
-        const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${this.dfuseConfig.dfuseApiKey}`;
+    }
+
+    async get_start_block(account: string, default_start_block: number = this.dfuseStartBlock): Promise<number> {
+        return this.mongoDbService
+            .connection()
+            .actions.find({ 'trace.act.account': account })
+            .sort({ block_num: -1 })
+            .limit(1)
+            .toArray()
+            .then((result: Array<any>) => {
+                if (result.length == 0) return default_start_block;
+                const db_block = result[0].block_num;
+                return Math.max(default_start_block, db_block);
+            });
+    }
+
+    async start() {
+        const dfuseToken = await this.obtainDfuseToken();
+
         try {
+            const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${dfuseToken.token}`;
             this.dfuse = new WebSocket(url, {
                 headers: {
                     Origin: this.dfuseConfig.dfuseOriginUrl
@@ -25,22 +53,7 @@ export class EosSyncService {
         } catch (err) {
             console.log('failed to connect to websocket in eos-sync-service ', err);
         }
-    }
 
-    async get_start_block(account: string, default_start_block: number = this.DEFAULT_BLOCK_START): Promise<number> {
-        return this.mongoDbService
-            .connection()
-            .actions.find({ 'data.trace.act.account': account })
-            .sort({ 'data.block_num': -1 })
-            .limit(1)
-            .toArray()
-            .then((result: Array<any>) => {
-                if (result.length == 0) return default_start_block;
-                else return result[0].data.block_num;
-            });
-    }
-
-    async start() {
         this.dfuse.on('open', async () => {
             const article_req = {
                 type: 'get_actions',
@@ -97,7 +110,7 @@ export class EosSyncService {
             }
             this.mongoDbService
                 .connection()
-                .actions.insertOne(msg)
+                .actions.insertOne(msg.data)
                 .then(() => {
                     const block_num = msg.data.block_num;
                     const account = msg.data.trace.act.account;
@@ -112,6 +125,14 @@ export class EosSyncService {
         this.dfuse.on('error', (e) => {
             console.log('Dfuse error in eos-sync-service: ', e);
         });
+    }
+
+    async obtainDfuseToken (): Promise<DfuseToken> {
+        return fetch(this.DFUSE_AUTH_URL, {
+            method: "POST",
+            body: JSON.stringify({ api_key: this.dfuseConfig.dfuseApiKey })
+        })
+        .then(response => response.json())
     }
 
     restartIfFailing() {

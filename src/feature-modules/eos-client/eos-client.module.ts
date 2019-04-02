@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { EosClientService } from './eos-client.service';
+import { EosSyncService } from './eos-sync.service';
 import { CommonModule } from './../../common';
 import { DatabaseModule } from '../database';
 
@@ -8,6 +8,6 @@ import { DatabaseModule } from '../database';
  */
 @Module({
     imports: [CommonModule, DatabaseModule],
-    providers: [EosClientService]
+    providers: [EosSyncService]
 })
 export class EosClientModule {}
