@@ -1,3 +1,5 @@
+import { LanguagePack } from "./wiki.service";
+
 // Link to an Everipedia page
 // The interface is listed here for documentation, but the
 // links are actually marked up inline in sentence text with
@@ -10,10 +12,39 @@ export interface WikiLink {
     text: string; // the link's display text
 }
 
+export interface SeeAlso {
+    lang: string;
+    slug: string;
+    title: string;
+    thumbnail_url: string;
+    snippet: string;
+}
+
+export interface SeeAlsoCountGroup {
+    count: number;
+    data: SeeAlso;
+}
+
+export interface SeeAlsoCollection {
+    [key: string]: SeeAlsoCountGroup;
+}
+
+export interface InlineImage {
+    src: string;
+    alt: string;
+    height: string;
+    width: string;
+}
+
 export interface Sentence {
     type: string; // sentence
     index: number;
     text: string; // contains inline WikiLink markup + some light markdown for formatting
+}
+
+export interface AMPParseCollection {
+    text: string;
+    lightboxes: string[];
 }
 
 export interface ListItem {
@@ -39,8 +70,9 @@ export interface Section {
 
 export interface Infobox {
     key: string;
-    addlSchemaItemProp: string;
+    schema: string;
     addlSchematype: string;
+    addlSchemaItemProp: string;
     values: Sentence[]; // each sentence is an individual value
 }
 
@@ -55,6 +87,7 @@ export interface Media {
     alt?: string;
     height?: number;
     width?: number;
+    category?: string;
 }
 
 export interface Metadata {
@@ -122,6 +155,12 @@ export interface TableCell {
     content: Sentence[];
 }
 
+export interface PhotoExtraData {
+    width: number;
+    height: number;
+    mime: string;
+}
+
 export interface ArticleJson {
     page_title: string;
     main_photo: Media;
@@ -135,4 +174,6 @@ export interface ArticleJson {
 
     categories?: string[];
     type?: string;
+    seealsos?: SeeAlso[];
+    alt_langs?: LanguagePack[];
 }

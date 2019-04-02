@@ -2,18 +2,25 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table } from './article-dto';
+import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, AMPParseCollection, ListItem, AmpInfo, TableRow, TableCell } from './article-dto';
 import * as mimePackage from 'mime';
+const normalizeUrl = require('normalize-url');
 const decode = require('unescape');
+var striptags = require('striptags');
+const urlSlug = require('url-slug');
+const tag = require('html-tag');
+import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '../utils/article-utils';
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
-const CAPTURE_REGEXES = {
+export const CAPTURE_REGEXES = {
     link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
+    link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/gimu,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
-    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu
+    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu,
+    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/gimu
 };
-const REPLACEMENTS = [
+export const REPLACEMENTS = [
     { regex: /\u{00A0}/gimu, replacement: ' ' },
     { regex: /\u{200B}/gimu, replacement: '' },
     { regex: /\n <\/a>\n/gimu, replacement: '</a>' },
@@ -27,7 +34,7 @@ const REPLACEMENTS = [
         replacement: 'https://everipedia-storage.s3.amazonaws.com'
     }
 ];
-const AMP_REGEXES_PRE = [
+export const AMP_REGEXES_PRE = [
     /<html.*<\/head>/gimu,
     /<\/html/gimu,
     /\sstyle=".*?"/gimu,
@@ -52,18 +59,18 @@ const AMP_REGEXES_PRE = [
     /\sunselectable=".*?"/gimu,
     /\starget=".*?"/gimu,
     /\sonclick=".*?"/gimu,
-    /\sonmouseout=".*?"/
+    /\sonmouseout=".*?"/gimu
 ];
-const AMP_REGEXES_POST = [
+export const AMP_REGEXES_POST = [
     /border=".*?"/gimu,
     /pic_id=".*?"/gimu,
     /style=".*?"/gimu,
     /style='.*?'/gimu,
-    /xml:lang=".*?"/,
-    /\sstyle="color:\s#71b8e4;"/,
-    /\sstyle="color:\s#71b8e4;\sfont-face:\sbold;\stext-decoration:\snone;"/
+    /xml:lang=".*?"/gimu,
+    /\sstyle="color:\s#71b8e4;"/gimu,
+    /\sstyle="color:\s#71b8e4;\sfont-face:\sbold;\stext-decoration:\snone;"/gimu
 ];
-const AMP_BAD_TAGS = [
+export const AMP_BAD_TAGS = [
     'audio',
     'head',
     'map',
@@ -86,7 +93,7 @@ const AMP_BAD_TAGS = [
     'code',
     'picture'
 ];
-const AMP_BAD_CLASSES = [
+export const AMP_BAD_CLASSES = [
     'mwe-math-fallback-image-inline',
     'sortkey',
     'mw-graph-img',
@@ -94,7 +101,7 @@ const AMP_BAD_CLASSES = [
     'timeline-wrapper',
     'PopUpMediaTransform'
 ];
-const VALID_VIDEO_EXTENSIONS = [
+export const VALID_VIDEO_EXTENSIONS = [
     '.mp4',
     '.m4v',
     '.flv',
@@ -110,8 +117,8 @@ const VALID_VIDEO_EXTENSIONS = [
     '.mov',
     '.avi'
 ];
-const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
-const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
+export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
+export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 
 // Convert False/True into false/true and None into null
 function pyToJS(inputItem: any) {
@@ -160,17 +167,17 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
         load_video_js: false,
         lightboxes: []
     };
-    if (useAMP) {
-        // Sanitize the blurb and collect the lightboxes
-        let resultDict = ampSanitizer(oldHTML, metadata, 'QmdddTESTTEST_REPLACE_ME', 'en', false);
-        amp_info.lightboxes.push(resultDict.lightBoxes);
+    // if (useAMP) {
+    //     // Sanitize the blurb and collect the lightboxes
+    //     let resultDict = ampSanitizer(oldHTML, metadata, 'QmdddTESTTEST_REPLACE_ME', 'en', false);
+    //     amp_info.lightboxes.push(resultDict.lightBoxes);
 
-        // Load the AMP-sanitized HTML into htmlparser2
-        dom = htmlparser2.parseDOM(resultDict.text, { decodeEntities: true });
+    //     // Load the AMP-sanitized HTML into htmlparser2
+    //     dom = htmlparser2.parseDOM(resultDict.text, { decodeEntities: true });
 
-        // Load the AMP-sanitized HTML into cheerio for parsing
-        $ = cheerio.load(dom);
-    }
+    //     // Load the AMP-sanitized HTML into cheerio for parsing
+    //     $ = cheerio.load(dom);
+    // }
 
     const page_title =
         $('h1.page-title')
@@ -187,12 +194,26 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 
     const page_body = extractPageBody($);
 
-    // Deal with citation + media matches
-    // If a media item matches an existing citation, update the latter
-    //for (let citeObj of citations) {
-    //    if (citeObj.url == medium.url && citeObj.url && medium.url) {
-    //    }
-    //}
+
+    media_gallery.forEach((value, index) => {
+        switch (value.category) {
+            
+            case 'YOUTUBE': {
+                amp_info.load_youtube_js = true;
+                break;
+            }
+            case 'NORMAL_VIDEO': {
+                amp_info.load_video_js = true;
+                break;
+            }
+            case 'AUDIO': {
+                amp_info.load_audio_js = true;
+                break;
+            }
+            default:
+                break;
+        }
+    })
 
     // Return the dictionary
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
@@ -202,384 +223,381 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 // Blue links and citation links need to be converted into buttons that trigger lightboxes, which mimic the hover-over
 // feature on desktop. GIF <img>'s need to be converted to <amp-anim>, <img> to <amp-img>, and <video> to <amp-video>.
 // Also, a regex loop cleans attributes and other bad tags and attributes.
-export function ampSanitizer(
-    inputString: string,
-    pageMetaData: Object,
-    currentIPFS: String,
-    pageLang: String = 'en',
-    bypassRegex: boolean = false
-) {
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
-    console.log('NEED TO PARSE NEW MARKDOWN FORMAT!!!');
+// export function ampSanitizer(
+//     inputString: string,
+//     pageMetaData: Object,
+//     currentIPFS: String,
+//     pageLang: String = 'en',
+//     bypassRegex: boolean = false
+// ) {
 
-    // Set some initial variables
-    let localCopy = inputString;
-    let ampLightBoxes = [];
+//     // Set some initial variables
+//     let localCopy = inputString;
+//     let ampLightBoxes = [];
 
-    // Do some regex replacements first
-    if (!bypassRegex) {
-        AMP_REGEXES_PRE.forEach(function(element) {
-            localCopy = localCopy.replace(element, '');
-        });
-    }
+//     // Do some regex replacements first
+//     if (!bypassRegex) {
+//         AMP_REGEXES_PRE.forEach(function(element) {
+//             localCopy = localCopy.replace(element, '');
+//         });
+//     }
 
-    // Load the HTML into htmlparser2 beforehand since it is more forgiving
-    const dom = htmlparser2.parseDOM(localCopy, { decodeEntities: true });
+//     // Load the HTML into htmlparser2 beforehand since it is more forgiving
+//     const dom = htmlparser2.parseDOM(localCopy, { decodeEntities: true });
 
-    // Load the HTML into cheerio for parsing
-    const $ = cheerio.load(dom);
+//     // Load the HTML into cheerio for parsing
+//     const $ = cheerio.load(dom);
 
-    // Replace tags <font> with <span>
-    const replacementTags = [['font', 'span']];
-    replacementTags.forEach(function(pair) {
-        $(pair[0]).replaceWith($(`<${pair[1]}>${$(this).html()}</${pair[1]}>`));
-    });
+//     // Replace tags <font> with <span>
+//     const replacementTags = [['font', 'span']];
+//     replacementTags.forEach(function(pair) {
+//         $(pair[0]).replaceWith($(`<${pair[1]}>${$(this).html()}</${pair[1]}>`));
+//     });
 
-    // Remove bad tags from the HTML
-    AMP_BAD_TAGS.forEach(function(badTag) {
-        $(badTag).remove();
-    });
+//     // Remove bad tags from the HTML
+//     AMP_BAD_TAGS.forEach(function(badTag) {
+//         $(badTag).remove();
+//     });
 
-    // Remove empty <p> tags to make the text look cleaner
-    $('p').each(function() {
-        var $this = $(this);
-        if ($this.html().replace(/\s|&nbsp;/gimu, '').length == 0) {
-            $this.remove();
-        }
-    });
+//     // Remove empty <p> tags to make the text look cleaner
+//     $('p').each(function() {
+//         var $this = $(this);
+//         if ($this.html().replace(/\s|&nbsp;/gimu, '').length == 0) {
+//             $this.remove();
+//         }
+//     });
 
-    // Remove tags with bad classes from the HTML
-    AMP_BAD_CLASSES.forEach(function(badClass) {
-        $(`.${badClass}`).remove();
-    });
+//     // Remove tags with bad classes from the HTML
+//     AMP_BAD_CLASSES.forEach(function(badClass) {
+//         $(`.${badClass}`).remove();
+//     });
 
-    // Find the hoverblurb links
-    $('a.tooltippable').each(function() {
-        // Generate a random string for the tag ID
-        let unique_id = Math.random()
-            .toString(36)
-            .substring(2);
+//     // Find the hoverblurb links
+//     $('a.tooltippable').each(function() {
+//         // Generate a random string for the tag ID
+//         let unique_id = Math.random()
+//             .toString(36)
+//             .substring(2);
 
-        // Get the slug
-        // MAY NEED TO DEAL WITH ENCODING ISSUES LATER
-        let theSlug = $(this).attr('data-username');
+//         // Get the slug
+//         // MAY NEED TO DEAL WITH ENCODING ISSUES LATER
+//         let theSlug = $(this).attr('data-username');
 
-        // Look for a possible IPFS link
-        let theHref = $(this).attr('href');
-        let hrefDestinationSlug = '';
-        try {
-            // Try to find the IPFS hash if it exists
-            let IPFSHashCombo = theHref.split('wiki/Qm');
-            hrefDestinationSlug = 'Qm' + IPFSHashCombo.slice(1, -1);
-        } catch (e) {
-            console.log(e);
+//         // Look for a possible IPFS link
+//         let theHref = $(this).attr('href');
+//         let hrefDestinationSlug = '';
+//         try {
+//             // Try to find the IPFS hash if it exists
+//             let IPFSHashCombo = theHref.split('wiki/Qm');
+//             hrefDestinationSlug = 'Qm' + IPFSHashCombo.slice(1, -1);
+//         } catch (e) {
+//             console.log(e);
 
-            // Handle the page language in the URL, if present
-            if (theSlug.includes('lang_')) {
-                hrefDestinationSlug = theSlug;
-            } else {
-                hrefDestinationSlug = `lang_${pageLang}/${theSlug}/`;
-            }
-        }
+//             // Handle the page language in the URL, if present
+//             if (theSlug.includes('lang_')) {
+//                 hrefDestinationSlug = theSlug;
+//             } else {
+//                 hrefDestinationSlug = `lang_${pageLang}/${theSlug}/`;
+//             }
+//         }
 
-        // Collect all the interior tags, if any
-        // TODO, may not be necessary
+//         // Collect all the interior tags, if any
+//         // TODO, may not be necessary
 
-        // Get the text of the link
-        let anchorText = $(this)
-            .text()
-            .trim();
+//         // Get the text of the link
+//         let anchorText = $(this)
+//             .text()
+//             .trim();
 
-        // Create the button that will be substituted
-        let openButtonTag = $('<button />');
-        $(openButtonTag).addClass('tooltippable');
-        $(openButtonTag).attr('role', 'button');
-        $(openButtonTag).attr('tabindex', 0);
-        $(openButtonTag).attr('aria-label', theSlug);
-        $(openButtonTag).attr('aria-labelledby', `${theSlug}__${unique_id}`);
-        $(openButtonTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}`);
-        $(openButtonTag).text(anchorText);
+//         // Create the button that will be substituted
+//         let openButtonTag = $('<button />');
+//         $(openButtonTag).addClass('tooltippable');
+//         $(openButtonTag).attr('role', 'button');
+//         $(openButtonTag).attr('tabindex', 0);
+//         $(openButtonTag).attr('aria-label', theSlug);
+//         $(openButtonTag).attr('aria-labelledby', `${theSlug}__${unique_id}`);
+//         $(openButtonTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}`);
+//         $(openButtonTag).text(anchorText);
 
-        // Replace the <a> tag with a button
-        $(this).replaceWith(openButtonTag);
+//         // Replace the <a> tag with a button
+//         $(this).replaceWith(openButtonTag);
 
-        // Construct the amp-lightbox
-        let lightBoxTag = $('<amp-lightbox />');
-        $(lightBoxTag).addClass('amp-hc');
-        $(lightBoxTag).attr('id', `hvrblb-${theSlug}__${unique_id}`);
-        $(lightBoxTag).attr('role', 'button');
-        $(lightBoxTag).attr('tabindex', 0);
-        $(lightBoxTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}.close`);
-        $(lightBoxTag).attr('layout', 'nodisplay');
+//         // Construct the amp-lightbox
+//         let lightBoxTag = $('<amp-lightbox />');
+//         $(lightBoxTag).addClass('amp-hc');
+//         $(lightBoxTag).attr('id', `hvrblb-${theSlug}__${unique_id}`);
+//         $(lightBoxTag).attr('role', 'button');
+//         $(lightBoxTag).attr('tabindex', 0);
+//         $(lightBoxTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}.close`);
+//         $(lightBoxTag).attr('layout', 'nodisplay');
 
-        // Construct the amp-iframe
-        let iframeTag = $('<amp-iframe />');
-        $(iframeTag).addClass('amp-hc');
-        $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
-        $(iframeTag).attr('frameborder', 0);
-        $(iframeTag).attr('scrolling', 'no');
-        $(iframeTag).attr('layout', 'fill');
-        $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${hrefDestinationSlug}/`);
+//         // Construct the amp-iframe
+//         let iframeTag = $('<amp-iframe />');
+//         $(iframeTag).addClass('amp-hc');
+//         $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
+//         $(iframeTag).attr('frameborder', 0);
+//         $(iframeTag).attr('scrolling', 'no');
+//         $(iframeTag).attr('layout', 'fill');
+//         $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${hrefDestinationSlug}/`);
 
-        // Placeholder image (leave this here or it will cause stupid AMP problems)
-        let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr('placeholder', '');
-        $(placeholderTag).attr('layout', 'fill');
-        $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
+//         // Placeholder image (leave this here or it will cause stupid AMP problems)
+//         let placeholderTag = $('<amp-img />');
+//         $(placeholderTag).attr('placeholder', '');
+//         $(placeholderTag).attr('layout', 'fill');
+//         $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
 
-        // Put the placeholder inside the iframe
-        $(iframeTag).append(placeholderTag);
+//         // Put the placeholder inside the iframe
+//         $(iframeTag).append(placeholderTag);
 
-        // Put the iframe inside of the lightbox
-        $(lightBoxTag).append(iframeTag);
+//         // Put the iframe inside of the lightbox
+//         $(lightBoxTag).append(iframeTag);
 
-        // Add the lightboxes to the list, as text and not a jQuery object
-        ampLightBoxes.push($.html(lightBoxTag));
-    });
+//         // Add the lightboxes to the list, as text and not a jQuery object
+//         ampLightBoxes.push($.html(lightBoxTag));
+//     });
 
-    // Find the citation links
-    $('a.tooltippableCarat').each(function() {
-        // Generate a random string for the tag ID
-        let unique_id = Math.random().toString(36);
+//     // Find the citation links
+//     $('a.tooltippableCarat').each(function() {
+//         // Generate a random string for the tag ID
+//         let unique_id = Math.random().toString(36);
 
-        // Encode the URL
-        let linkURLEncoded = '';
-        try {
-            linkURLEncoded = encodeURIComponent($(this).attr('data-username'));
-        } catch (e) {
-            linkURLEncoded = $(this).attr('data-username');
-        }
+//         // Encode the URL
+//         let linkURLEncoded = '';
+//         try {
+//             linkURLEncoded = encodeURIComponent($(this).attr('data-username'));
+//         } catch (e) {
+//             linkURLEncoded = $(this).attr('data-username');
+//         }
 
-        // Get the text of the citation
-        let anchorText = $(this)
-            .text()
-            .trim();
+//         // Get the text of the citation
+//         let anchorText = $(this)
+//             .text()
+//             .trim();
 
-        // Create the button that will be substituted
-        let openButtonTag = $('<button />');
-        $(openButtonTag).addClass('tooltippableCarat');
-        $(openButtonTag).attr('role', 'button');
-        $(openButtonTag).attr('tabindex', 0);
-        $(openButtonTag).attr('aria-label', anchorText);
-        $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
-        $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
-        $(openButtonTag).text(anchorText);
+//         // Create the button that will be substituted
+//         let openButtonTag = $('<button />');
+//         $(openButtonTag).addClass('tooltippableCarat');
+//         $(openButtonTag).attr('role', 'button');
+//         $(openButtonTag).attr('tabindex', 0);
+//         $(openButtonTag).attr('aria-label', anchorText);
+//         $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
+//         $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
+//         $(openButtonTag).text(anchorText);
 
-        // Replace the <a> tag with a button
-        $(this).replaceWith(openButtonTag);
+//         // Replace the <a> tag with a button
+//         $(this).replaceWith(openButtonTag);
 
-        // Construct the amp-lightbox
-        let lightBoxTag = $('<amp-lightbox />');
-        $(lightBoxTag).addClass('amp-hc');
-        $(lightBoxTag).attr('id', `hvrlnk-${unique_id}`);
-        $(lightBoxTag).attr('role', 'button');
-        $(lightBoxTag).attr('tabindex', 0);
-        $(lightBoxTag).attr('on', `tap:hvrlnk-${unique_id}.close`);
-        $(lightBoxTag).attr('layout', 'nodisplay');
+//         // Construct the amp-lightbox
+//         let lightBoxTag = $('<amp-lightbox />');
+//         $(lightBoxTag).addClass('amp-hc');
+//         $(lightBoxTag).attr('id', `hvrlnk-${unique_id}`);
+//         $(lightBoxTag).attr('role', 'button');
+//         $(lightBoxTag).attr('tabindex', 0);
+//         $(lightBoxTag).attr('on', `tap:hvrlnk-${unique_id}.close`);
+//         $(lightBoxTag).attr('layout', 'nodisplay');
 
-        // Construct the amp-iframe
-        let iframeTag = $('<amp-iframe />');
-        $(iframeTag).addClass('amp-hc');
-        $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
-        $(iframeTag).attr('height', '275');
-        $(iframeTag).attr('frameborder', 0);
-        $(iframeTag).attr('scrolling', 'no');
-        $(iframeTag).attr('layout', 'fill');
-        $(iframeTag).attr(
-            'src',
-            `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
-        );
+//         // Construct the amp-iframe
+//         let iframeTag = $('<amp-iframe />');
+//         $(iframeTag).addClass('amp-hc');
+//         $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
+//         $(iframeTag).attr('height', '275');
+//         $(iframeTag).attr('frameborder', 0);
+//         $(iframeTag).attr('scrolling', 'no');
+//         $(iframeTag).attr('layout', 'fill');
+//         $(iframeTag).attr(
+//             'src',
+//             `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
+//         );
 
-        // Placeholder image (leave this here or it will cause stupid AMP problems)
-        let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr('placeholder', '');
-        $(placeholderTag).attr('layout', 'fill');
-        $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
+//         // Placeholder image (leave this here or it will cause stupid AMP problems)
+//         let placeholderTag = $('<amp-img />');
+//         $(placeholderTag).attr('placeholder', '');
+//         $(placeholderTag).attr('layout', 'fill');
+//         $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
 
-        // Put the placeholder inside the iframe
-        $(iframeTag).append(placeholderTag);
+//         // Put the placeholder inside the iframe
+//         $(iframeTag).append(placeholderTag);
 
-        // Put the iframe inside of the lightbox
-        $(lightBoxTag).append(iframeTag);
+//         // Put the iframe inside of the lightbox
+//         $(lightBoxTag).append(iframeTag);
 
-        // Add the lightboxes to the list, as text and not a jQuery object
-        ampLightBoxes.push($.html(lightBoxTag));
-    });
+//         // Add the lightboxes to the list, as text and not a jQuery object
+//         ampLightBoxes.push($.html(lightBoxTag));
+//     });
 
-    // Convert <img> GIFs into <amp-anim>'s
-    $("img[data-mimetype='image/gif']").each(function() {
-        // Get the full and thumbnail URLs
-        let fullImgSrc = '';
-        let thumbImgSrc = '';
-        if ($(this).attr('data-src')) {
-            fullImgSrc = $(this).attr('data-src');
-            thumbImgSrc = $(this).attr('src');
-        } else {
-            fullImgSrc = $(this).attr('src');
-            thumbImgSrc =
-                'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
-        }
+//     // Convert <img> GIFs into <amp-anim>'s
+//     $("img[data-mimetype='image/gif']").each(function() {
+//         // Get the full and thumbnail URLs
+//         let fullImgSrc = '';
+//         let thumbImgSrc = '';
+//         if ($(this).attr('data-src')) {
+//             fullImgSrc = $(this).attr('data-src');
+//             thumbImgSrc = $(this).attr('src');
+//         } else {
+//             fullImgSrc = $(this).attr('src');
+//             thumbImgSrc =
+//                 'https://epcdn-vz.azureedge.net/static/images/white_dot.png';
+//         }
 
-        // Create the amp-anim
-        let ampAnimTag = $('<amp-anim />');
-        $(ampAnimTag).attr('width', 'auto');
-        $(ampAnimTag).attr('height', '275');
-        $(ampAnimTag).attr('layout', 'fixed-height');
-        $(ampAnimTag).attr('data-mimetype', 'image/gif');
-        $(ampAnimTag).attr('src', fullImgSrc);
+//         // Create the amp-anim
+//         let ampAnimTag = $('<amp-anim />');
+//         $(ampAnimTag).attr('width', 'auto');
+//         $(ampAnimTag).attr('height', '275');
+//         $(ampAnimTag).attr('layout', 'fixed-height');
+//         $(ampAnimTag).attr('data-mimetype', 'image/gif');
+//         $(ampAnimTag).attr('src', fullImgSrc);
 
-        // Create the placeholder / thumbnail image
-        let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr('layout', 'fill');
-        $(placeholderTag).attr('width', '1');
-        $(placeholderTag).attr('data-height', '1');
-        $(placeholderTag).attr('src', thumbImgSrc);
-        $(placeholderTag).attr('placeholder', '');
+//         // Create the placeholder / thumbnail image
+//         let placeholderTag = $('<amp-img />');
+//         $(placeholderTag).attr('layout', 'fill');
+//         $(placeholderTag).attr('width', '1');
+//         $(placeholderTag).attr('data-height', '1');
+//         $(placeholderTag).attr('src', thumbImgSrc);
+//         $(placeholderTag).attr('placeholder', '');
 
-        // Put the placeholder inside the amp-anim
-        $(ampAnimTag).append(placeholderTag);
+//         // Put the placeholder inside the amp-anim
+//         $(ampAnimTag).append(placeholderTag);
 
-        // Replace the <img> GIF with <amp-anim>
-        $(this).replaceWith(ampAnimTag);
-    });
+//         // Replace the <img> GIF with <amp-anim>
+//         $(this).replaceWith(ampAnimTag);
+//     });
 
-    // Convert non-GIF <img>'s into <amp-img>'s
-    $("img[data-mimetype!='image/gif']", 'img.caption-video').each(function() {
-        // If the image isn't a video caption, double check that the mimetype is present and it isn't a GIF
-        if (!$(this).hasClass('caption-video')) {
-            let patt = new RegExp(/^image\/(?!gif).*$/);
-            if (!patt.test($(this).attr('data-mimetype'))) {
-                // Skip this element if the regex fails to match
-                return true;
-            }
-        }
+//     // Convert non-GIF <img>'s into <amp-img>'s
+//     $("img[data-mimetype!='image/gif']", 'img.caption-video').each(function() {
+//         // If the image isn't a video caption, double check that the mimetype is present and it isn't a GIF
+//         if (!$(this).hasClass('caption-video')) {
+//             let patt = new RegExp(/^image\/(?!gif).*$/);
+//             if (!patt.test($(this).attr('data-mimetype'))) {
+//                 // Skip this element if the regex fails to match
+//                 return true;
+//             }
+//         }
 
-        // Get the full and thumbnail URLs
-        let fullImgSrc = '';
-        let thumbImgSrc = '';
-        if ($(this).attr('data-src')) {
-            fullImgSrc = $(this).attr('data-src');
-            thumbImgSrc = $(this).attr('src');
-        } else {
-            fullImgSrc = $(this).attr('src');
-            thumbImgSrc =
-                'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
-        }
+//         // Get the full and thumbnail URLs
+//         let fullImgSrc = '';
+//         let thumbImgSrc = '';
+//         if ($(this).attr('data-src')) {
+//             fullImgSrc = $(this).attr('data-src');
+//             thumbImgSrc = $(this).attr('src');
+//         } else {
+//             fullImgSrc = $(this).attr('src');
+//             thumbImgSrc =
+//                 'https://epcdn-vz.azureedge.net/static/images/white_dot.png';
+//         }
 
-        // Create the amp-img
-        let ampImgTag = $('<amp-img />');
-        $(ampImgTag).attr('width', 'auto');
-        $(ampImgTag).attr('height', '275');
-        $(ampImgTag).attr('layout', 'fixed-height');
-        $(ampImgTag).attr('data-mimetype', $(this).attr('data-mimetype'));
-        $(ampImgTag).attr('src', fullImgSrc);
+//         // Create the amp-img
+//         let ampImgTag = $('<amp-img />');
+//         $(ampImgTag).attr('width', 'auto');
+//         $(ampImgTag).attr('height', '275');
+//         $(ampImgTag).attr('layout', 'fixed-height');
+//         $(ampImgTag).attr('data-mimetype', $(this).attr('data-mimetype'));
+//         $(ampImgTag).attr('src', fullImgSrc);
 
-        // Create the placeholder / thumbnail image
-        let placeholderTag = $('<amp-img />');
-        $(placeholderTag).attr('layout', 'fill');
-        $(placeholderTag).attr('width', '1');
-        $(placeholderTag).attr('data-height', '1');
-        $(placeholderTag).attr('src', thumbImgSrc);
-        $(placeholderTag).attr('placeholder', '');
+//         // Create the placeholder / thumbnail image
+//         let placeholderTag = $('<amp-img />');
+//         $(placeholderTag).attr('layout', 'fill');
+//         $(placeholderTag).attr('width', '1');
+//         $(placeholderTag).attr('data-height', '1');
+//         $(placeholderTag).attr('src', thumbImgSrc);
+//         $(placeholderTag).attr('placeholder', '');
 
-        // Put the placeholder inside the amp-img
-        $(ampImgTag).append(placeholderTag);
+//         // Put the placeholder inside the amp-img
+//         $(ampImgTag).append(placeholderTag);
 
-        // Replace the <img> with <amp-img>
-        $(this).replaceWith(ampImgTag);
+//         // Replace the <img> with <amp-img>
+//         $(this).replaceWith(ampImgTag);
 
-        return true; // to silence errors
-    });
+//         return true; // to silence errors
+//     });
 
-    // Convert <video> to <amp-video>
-    $('video').each(function() {
-        // Create the amp-img
-        let ampVideoTag = $('<amp-video />');
-        $(ampVideoTag).attr('width', 'auto');
-        $(ampVideoTag).attr('height', '250');
-        $(ampVideoTag).attr('layout', 'fixed-height');
-        $(ampVideoTag).attr('preload', 'metadata');
-        $(ampVideoTag).attr('data-mimetype', $(this).attr('data-mimetype'));
-        $(ampVideoTag).text(' ');
+//     // Convert <video> to <amp-video>
+//     $('video').each(function() {
+//         // Create the amp-img
+//         let ampVideoTag = $('<amp-video />');
+//         $(ampVideoTag).attr('width', 'auto');
+//         $(ampVideoTag).attr('height', '250');
+//         $(ampVideoTag).attr('layout', 'fixed-height');
+//         $(ampVideoTag).attr('preload', 'metadata');
+//         $(ampVideoTag).attr('data-mimetype', $(this).attr('data-mimetype'));
+//         $(ampVideoTag).text(' ');
 
-        // Create the source tag
-        let sourceTag = $('<source />');
-        $(sourceTag).attr('src', $(this).attr('src') + '#t=0.1');
-        $(sourceTag).attr('type', $(this).attr('data-mimetype'));
+//         // Create the source tag
+//         let sourceTag = $('<source />');
+//         $(sourceTag).attr('src', $(this).attr('src') + '#t=0.1');
+//         $(sourceTag).attr('type', $(this).attr('data-mimetype'));
 
-        // Put the source inside the amp-video
-        $(ampVideoTag).append(sourceTag);
+//         // Put the source inside the amp-video
+//         $(ampVideoTag).append(sourceTag);
 
-        // Replace the <video> with <amp-video>
-        $(this).replaceWith(ampVideoTag);
-    });
+//         // Replace the <video> with <amp-video>
+//         $(this).replaceWith(ampVideoTag);
+//     });
 
-    // Check for remaining images in the HTML and make sure they have heights and widths
-    $('img', 'amp-img').each(function() {
-        let useFixTag = false;
+//     // Check for remaining images in the HTML and make sure they have heights and widths
+//     $('img', 'amp-img').each(function() {
+//         let useFixTag = false;
 
-        // Make sure the image has a valid height
-        if ($(this).attr('height')) {
-            // Percentage signs in heights cause problems
-            if ($(this).attr('height') == '100%') {
-                $(this).attr('height', 275);
-                useFixTag = true;
-            }
-        } else {
-            // Set the height manually
-            $(this).attr('height', 275);
-            useFixTag = true;
-        }
+//         // Make sure the image has a valid height
+//         if ($(this).attr('height')) {
+//             // Percentage signs in heights cause problems
+//             if ($(this).attr('height') == '100%') {
+//                 $(this).attr('height', 275);
+//                 useFixTag = true;
+//             }
+//         } else {
+//             // Set the height manually
+//             $(this).attr('height', 275);
+//             useFixTag = true;
+//         }
 
-        // Make sure the image has a valid width
-        if ($(this).attr('width')) {
-            // Percentage signs in widths cause problems
-            if ($(this).attr('width') == '100%') {
-                $(this).attr('width', 275);
-                useFixTag = true;
-            }
-        } else {
-            // Set the width manually
-            $(this).attr('width', 275);
-            useFixTag = true;
-        }
+//         // Make sure the image has a valid width
+//         if ($(this).attr('width')) {
+//             // Percentage signs in widths cause problems
+//             if ($(this).attr('width') == '100%') {
+//                 $(this).attr('width', 275);
+//                 useFixTag = true;
+//             }
+//         } else {
+//             // Set the width manually
+//             $(this).attr('width', 275);
+//             useFixTag = true;
+//         }
 
-        if (useFixTag) {
-            // Create the placeholder / thumbnail image
-            let ampFixTag = $('<div />');
-            $(ampFixTag).addClass('amp-san-picfix');
-            let theContents = $(this).replaceWith(ampFixTag);
-            $(ampFixTag).append(theContents);
-        }
+//         if (useFixTag) {
+//             // Create the placeholder / thumbnail image
+//             let ampFixTag = $('<div />');
+//             $(ampFixTag).addClass('amp-san-picfix');
+//             let theContents = $(this).replaceWith(ampFixTag);
+//             $(ampFixTag).append(theContents);
+//         }
 
-        // Cleans up remaining images (mainly from wikipedia imports). Will fail for GIF
-        if (this.tagName == 'img') {
-            if (!$(this).attr('placeholder')) {
-                // Create the amp-img
-                let ampImgTag = $('<amp-img />');
-                $(ampImgTag).attr('width', $(this).attr('width'));
-                $(ampImgTag).attr('height', $(this).attr('height'));
-                $(ampImgTag).attr('layout', 'fixed');
-                $(ampImgTag).attr('src', $(this).attr('src'));
-                $(ampImgTag).text(' ');
-            }
-        }
-    });
+//         // Cleans up remaining images (mainly from wikipedia imports). Will fail for GIF
+//         if (this.tagName == 'img') {
+//             if (!$(this).attr('placeholder')) {
+//                 // Create the amp-img
+//                 let ampImgTag = $('<amp-img />');
+//                 $(ampImgTag).attr('width', $(this).attr('width'));
+//                 $(ampImgTag).attr('height', $(this).attr('height'));
+//                 $(ampImgTag).attr('layout', 'fixed');
+//                 $(ampImgTag).attr('src', $(this).attr('src'));
+//                 $(ampImgTag).text(' ');
+//             }
+//         }
+//     });
 
-    // Set the output to a string instead of a jQuery / cheerio object
-    let outputHTML = decode($.html(), 'all');
+//     // Set the output to a string instead of a jQuery / cheerio object
+//     let outputHTML = decode($.html(), 'all');
 
-    // Do some regex replacements again
-    if (!bypassRegex) {
-        AMP_REGEXES_POST.forEach(function(element) {
-            outputHTML = outputHTML.replace(element, '');
-        });
-    }
+//     // Do some regex replacements again
+//     if (!bypassRegex) {
+//         AMP_REGEXES_POST.forEach(function(element) {
+//             outputHTML = outputHTML.replace(element, '');
+//         });
+//     }
 
-    // Return the amp-sanitized text as well as the list of amp-lightboxes
-    return { text: outputHTML, lightBoxes: ampLightBoxes };
-}
+//     // Return the amp-sanitized text as well as the list of amp-lightboxes
+//     return { text: outputHTML, lightBoxes: ampLightBoxes };
+// }
 
 // Turn the HTML blurb into a JSON dict
 export function extractPageBody($: CheerioStatic): Section[] {
@@ -593,7 +611,6 @@ export function extractPageBody($: CheerioStatic): Section[] {
 
     // Split body into sections
     let sections: Section[] = splitIntoSections($body).map(parseSection);
-
     return sections;
 }
 
@@ -683,7 +700,7 @@ function extractCitations($: CheerioStatic): Citation[] {
                 .text();
 
         if (href) {
-            citation.url = href.trim();
+            citation.url = normalizeUrl(href.trim());
             citation.social_type = socialURLType(citation.url);
         }
 
@@ -717,7 +734,7 @@ function extractMediaGallery($: CheerioStatic) {
         media.caption = parseSentences(captionText);
 
         // Fetch the classification (IMAGE, YOUTUBE, VIDEO, etc)
-        media.type = $(this)
+        media.category = media.type = $(this)
             .find('.media-class')
             .eq(0)
             .text()
@@ -755,7 +772,7 @@ function extractMediaGallery($: CheerioStatic) {
         let mediaElement = $(this)
             .find('.media-obj')
             .eq(0);
-        switch (media.type) {
+        switch (media.category) {
             case 'PICTURE':
             case 'GIF': {
                 media.url = mediaElement.attr('src');
@@ -819,6 +836,7 @@ function extractMainPhoto($: CheerioStatic): Media {
     main_photo.url = photoElement.attr('src') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
     main_photo.thumb =
         photoElement.attr('data-thumbnail') || 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+    main_photo.category = linkCategorizer(main_photo.url);
 
     // Find any links to other pages that appear in the caption
     const caption = $('figcaption.main-photo-caption');
@@ -905,7 +923,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
         // Loop through the value rows
         $(this)
-            .find('td.ibox-plural-value')
+            .find('td.ibox-plural-value, .ibox-nonplural-value')
             .each(function(i) {
                 // Try to find the value
                 // Only the text is being grabbed now.
@@ -976,7 +994,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
         // Loop through the value rows (should only be one)
         $(this)
-            .find('.ibox-nonplural-value')
+            .find('.ibox-nonplural-value',)
             .each(function(i) {
                 // Try to find the value
                 let tempValue;
@@ -993,11 +1011,12 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                     index: i,
                     text: tempValue
                 });
-            });
+        });
 
         // Add to the infobox list
         infoboxes.push(infoPackage);
     });
+
 
     return infoboxes;
 }
@@ -1018,6 +1037,7 @@ function parseSection($section: Cheerio): Section {
 
     // Get all images
     const $section_images = $section.find('.blurb-inline-image-container');
+
     $section_images.each((i, section_image_node) => {
         const $image = $section_images.eq(i);
 
@@ -1030,11 +1050,14 @@ function parseSection($section: Cheerio): Section {
             url: theImgNode.attr('src'),
             mime: theImgNode.attr('data-mimetype'),
             thumb: null,
-            caption: null
+            caption: null,
+            category: linkCategorizer(theImgNode.attr('src')) || null
         };
+
 
         // Deal with images in tables
         if (!image.url) {
+            
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
@@ -1043,6 +1066,7 @@ function parseSection($section: Cheerio): Section {
                 image.height = Number(parts[3].substring(1));
                 image.width = Number(parts[4].substring(1));
                 image.type = 'inline_image';
+                image.category = linkCategorizer(image.url);
             }
         }
 
@@ -1055,7 +1079,7 @@ function parseSection($section: Cheerio): Section {
         );
 
         // Decode the URL
-        if (image.url) image.url = decodeURIComponent(image.url);
+        if (image.url) image.url = normalizeUrl(decodeURIComponent(image.url));
 
         // Attribution URLs
         if (image.url && image.url.includes('wikipedia')) {
@@ -1182,18 +1206,19 @@ function sanitizeText($: CheerioStatic) {
     });
 
     // Add whitespace after links, bold, and italics when there's no space and it's followed by a letter
-    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/gimu, (token) => `${token} `);
-    const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
-    const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
-    $ = cheerio.load(spaced_italics);
+    // THE * WORD* SPACING PROBLEM IS HERE
+    // const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/gimu, (token) => `${token} `);
+    // const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
+    // const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
+    // $ = cheerio.load(spaced_italics);
 
-    // Convert images inside wikitables to markup
-    $('.wikitable img').each(function() {
+    // Convert images inside wikitables and ul's to markup
+    $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(eThis) {
         // Construct a dictionary
         const src = $(this).attr('src');
         const height = $(this).attr('height');
         const width = $(this).attr('width');
-        const alt = $(this).attr('alt');
+        const alt = $(this).attr('alt') || '';
 
         // Replace the tag with the string
         const plaintextString = `[[INLINE_IMAGE|${src}|${alt}|h${height}|w${width}]]`;
@@ -1408,7 +1433,7 @@ export function linkCategorizer(inputString: string) {
         return 'GIF';
     } else if (theMIME.includes('image')) {
         return 'PICTURE';
-    } else if (youtubeIdExists(inputString)) {
+    } else if (getYouTubeID(inputString)) {
         return 'YOUTUBE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
         return 'NORMAL_VIDEO';
@@ -1421,7 +1446,7 @@ export function linkCategorizer(inputString: string) {
 
 // Copied with light modifications from NPM package get-youtube-id
 // https://www.npmjs.com/package/get-youtube-id
-function youtubeIdExists(url: string) {
+export function getYouTubeID(url: string) {
     if (!/youtu\.?be/.test(url)) return false;
 
     // Look first for known patterns
@@ -1436,7 +1461,7 @@ function youtubeIdExists(url: string) {
     // If any pattern matches, return the ID
     for (let i = 0; i < patterns.length; ++i) {
         if (patterns[i].test(url)) {
-            return true;
+            return patterns[i].exec(url)[1];
         }
     }
     return false;
@@ -1511,3 +1536,101 @@ function parseTable($element: Cheerio): Table {
 
     return table;
 }
+
+export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    const { tag_type, items } = paragraph;
+    if (items && items.length > 0){} else return returnCollection;
+    if (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4' || tag_type === 'h5' || tag_type === 'h6') {
+        const text: string = (items[0] as Sentence).text;
+        returnCollection.text = `<${tag_type} id=${urlSlug(text).slice(0,15)}>${text}</${tag_type}>`;
+    }
+    else if (tag_type === 'p') {
+        let sanitizedText = (items as Sentence[]).map((sentenceItem: Sentence, sentenceIndex) => {
+            let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
+            returnCollection.lightboxes.push(...result.lightboxes);
+            return result.text;
+        }).join("");
+        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
+    }
+    else if (tag_type === 'ul') {
+        let sanitizedText = (items as ListItem[]).map((liItem: ListItem , listIndex) => {
+            return liItem.sentences.map((sentenceItem: Sentence , sentenceIndex) => {
+                let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
+                returnCollection.lightboxes.push(...result.lightboxes);
+                return tag(liItem.tag_type, {}, result.text);
+            }).join("");
+        }).join("");
+        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
+    }
+    else if (tag_type === 'table') {
+        let sanitizedText = (items as Table[]).map((tableItem: Table , tableIndex) => {
+            // Create the thead if present
+            let sanitizedHeadRows = tableItem.thead ? tableItem.thead.rows.map((row: TableRow , rowIndex) => {
+                let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
+                    let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
+                        let result = CheckForLinksOrCitationsAMP(sentence.text, passedCitations, passedIPFS, []);
+                        returnCollection.lightboxes.push(...result.lightboxes);
+                        return result.text;
+                    }).join("");
+                    return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
+                }).join("") : '';
+                return tag('tr', row.attrs, sanitizedCells);
+            }).join("") : '';
+            let sanitizedHead = tableItem.thead ? tag('thead', tableItem.thead.attrs, sanitizedHeadRows) : '';
+
+            // Create the tbody
+            let sanitizedBodyRows = tableItem.tbody ? tableItem.tbody.rows.map((row: TableRow , rowIndex) => {
+                let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
+                    let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
+                        let result = CheckForLinksOrCitationsAMP(sentence.text, passedCitations, passedIPFS, []);
+                        returnCollection.lightboxes.push(...result.lightboxes);
+                        return result.text;
+                    }).join("");
+                    return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
+                }).join("") : '';
+                return tag('tr', row.attrs, sanitizedCells);
+            }).join("") : '';
+            let sanitizedBody = tableItem.tbody ? tag('tbody', tableItem.tbody.attrs, sanitizedBodyRows) : '';
+
+            // Create the tfoot if present
+            let sanitizedFootRows = tableItem.tfoot ? tableItem.tfoot.rows.map((row: TableRow , rowIndex) => {
+                let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
+                    let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
+                        let result = CheckForLinksOrCitationsAMP(sentence.text, passedCitations, passedIPFS, []);
+                        returnCollection.lightboxes.push(...result.lightboxes);
+                        return result.text;
+                    }).join("");
+                    return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
+                }).join("") : '';
+                return tag('tr', row.attrs, sanitizedCells);
+            }).join("") : '';
+            let sanitizedFoot = tableItem.tfoot ? tag('tfoot', tableItem.tfoot.attrs, sanitizedFootRows) : '';
+
+            // Create the caption if present
+            let sanitizedCaption = tableItem.caption ? [tableItem.caption].map((caption: string , rowIndex) => {
+                let result = CheckForLinksOrCitationsAMP(caption, passedCitations, passedIPFS, []);
+                returnCollection.lightboxes.push(...result.lightboxes);
+                return `<caption>${result.text}</${caption}>`;
+                }).join("") : '';
+            return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join("");
+        });
+        returnCollection.text = tag('table', paragraph.attrs, sanitizedText.join(""));
+    }
+
+    // const sentences: Sentence[] = this.renderSentences(items, tag_type, index);
+    // return <Paragraph key={index}>{sentences}</Paragraph>;
+    return returnCollection
+};
+
+export const renderImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    let sanitizedCaption = image.caption.map((sentenceItem: Sentence, sentenceIndex) => {
+        let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
+        returnCollection.lightboxes.push(...result.lightboxes);
+        return result.text;
+    }).join("");
+    let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
+    returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
+    return returnCollection;
+};

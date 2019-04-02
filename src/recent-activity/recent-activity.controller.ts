@@ -7,7 +7,6 @@ import { JoiValidationPipe } from '../common';
 @ApiUseTags('Recent Activity')
 export class RecentActivityController {
     constructor(private readonly recentActivityService: RecentActivityService) {}
-
     @Get('all')
     @ApiOperation({
         title: 'Recent actions on the Everipedia Network smart contracts',

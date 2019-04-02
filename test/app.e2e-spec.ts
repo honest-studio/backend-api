@@ -158,6 +158,13 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki: Get wiki by slug with unicode', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/slug/lang_ko/베레타_92')
+        .expect(200)
+  });
+
+
   it('Wiki: Get wiki redirect', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/slug/lang_en/Polymaths')
@@ -211,6 +218,30 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki AMP HTML: Travis Moore', () => {
+    return request(app.getHttpServer())
+    .get('/v2/wiki/amp-slug/lang_en/travismoore5036459')
+        .expect(200)
+  });
+
+  it('Wiki AMP HTML in unicode: 베레타 92', () => {
+    return request(app.getHttpServer())
+    .get('/v2/wiki/amp-slug/lang_ko/베레타_92')
+        .expect(200)
+  });
+
+  it('Wiki: Get schema by slug', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/schema-slug/lang_en/travismoore5036459')
+        .expect(200)
+  });
+
+  it('Wiki: Get schema by slug with unicode', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/schema-slug/lang_ko/베레타_92')
+        .expect(200)
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v2/chain/get_info')
@@ -239,6 +270,12 @@ describe('Backend API', () => {
   it('Search: English only', () => {
     return request(app.getHttpServer())
         .get('/v2/search/title/Travis?langs=en')
+        .expect(200)
+  });
+
+  it('Search Schema: Birth and Person', () => {
+    return request(app.getHttpServer())
+        .get('/v2/search/schema-by-type/birth?page_type=Person')
         .expect(200)
   });
   
