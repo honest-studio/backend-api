@@ -92,7 +92,6 @@ export class OAuthService {
         })
         .then(response => response.json());
 
-        console.log(oauth_response);
         if (oauth_response.access_token) {
             const access_token: OAuthToken = {
                 provider: 'google',
