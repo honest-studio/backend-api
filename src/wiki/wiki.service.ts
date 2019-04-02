@@ -287,18 +287,19 @@ export class WikiService {
             );
         });
     }
-
+  
     async getCategories(lang_code: string, slug: string) {
-        return fetch(
+        const wikipedia_categories = await fetch(
             new URL(`https://${lang_code.substring(0, 2)}.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`)
         )
         .then(response => response.json())
         .then(json => json.query.pages)
         .then(pages => Object.values(pages)[0])
         .then(obj => obj.categories)
-        .then(cats => {
-            return cats && cats.length > 0 ? cats.map(cat => cat.title.split(':')[1]) : [];
-        });
+        
+        if (wikipedia_categories)
+            return wikipedia_categories.map(cat => cat.title.split(':')[1]);
+        else return [];
     }
 
 }

@@ -86,6 +86,12 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Trending', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/trending')
+      .expect(200)
+  });
+
   it('Proposal: Basic proposal', () => {
     return request(app.getHttpServer())
         .get('/v2/proposal/1011')

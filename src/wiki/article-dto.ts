@@ -130,7 +130,7 @@ export interface Citation {
 }
 
 export interface Table {
-    type: string; // table
+    type: string; // wikitable
     caption: string;
     thead?: TableSection;
     tbody: TableSection;

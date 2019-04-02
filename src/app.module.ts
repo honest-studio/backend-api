@@ -15,6 +15,7 @@ import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
+import { OAuthController, OAuthService } from './oauth';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 import { GoogleAnalyticsMiddleware, RequestIpMiddleware, JsonRequestMiddleware, CorsMiddleware, MorganMiddleware } from './middleware';
 
@@ -55,7 +56,8 @@ import { GoogleAnalyticsMiddleware, RequestIpMiddleware, JsonRequestMiddleware, 
         MediaUploadController,
         UserController,
         StatController,
-        ContactUsController
+        ContactUsController,
+        OAuthController
     ],
     providers: [
         ProposalService,
@@ -70,7 +72,8 @@ import { GoogleAnalyticsMiddleware, RequestIpMiddleware, JsonRequestMiddleware, 
         MediaUploadService,
         UserService,
         StatService,
-        ContactUsService
+        ContactUsService,
+        OAuthService
     ]
 })
 export class AppModule implements NestModule {

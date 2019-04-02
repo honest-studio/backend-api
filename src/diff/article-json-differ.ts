@@ -180,11 +180,11 @@ function diffMedia(old_media: Media[], new_media: Media[]): MediaDiff[] {
 const SECTION_SEPARATOR = '\n---sb---sb---\n';
 const SECTION_TEXT_IMAGE_SEPARATOR = '\ntititititititi\n';
 const PARAGRAPH_SEPARATOR = '\npppppppppppp\n';
-const PARAGRAPH_ITEM_SEPARATOR = '\n';
+const PARAGRAPH_ITEM_SEPARATOR = '\npip---pip\n';
 const IMAGE_SEPARATOR = '\niiiiiiiiiii\n';
 const LIST_ITEM_PREFIX = 'lilili^^^ ';
 const SENTENCE_PREFIX = 'ssssss^^^ ';
-const TABLE_PREFIX = 'tabtab^^^\n';
+const TABLE_PREFIX = 'tabtab^^^ ';
 const TABLE_ROW_SEPARATOR = '\n';
 const TABLE_SECTION_SEPARATOR = '\n~~~~~~~~~~~~~\n';
 const TABLE_CELL_SEPARATOR = '|';
@@ -213,7 +213,9 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             PARAGRAPH_SEPARATOR,
             TABLE_SECTION_SEPARATOR,
             IMAGE_SEPARATOR,
-            '' // somtimes blank lines get created by combinations of full line separators
+            TABLE_PREFIX,
+            PARAGRAPH_ITEM_SEPARATOR,
+            '' // empty lines shouldn't be diffed either
         ].map((sep) => sep.replace(/\n/g, ''));
 
         diff_text += part.value
@@ -280,8 +282,10 @@ function linesToParagraph(lines: string): ParagraphDiff {
                     ],
                     diff: getLineDiffType(lines)
                 };
-            // if (prefix == TABLE_PREFIX)
-            else return linesToTable(lines);
+            else if (prefix == TABLE_PREFIX)
+                return linesToTable(lines);
+            else 
+                throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
         });
 
     return { index: 0, items, tag_type: 'p', attrs: {} };
@@ -370,7 +374,7 @@ function paragraphToLines(paragraph: Paragraph): string {
             } else if (item.type == 'list_item') {
                 const list_item = item as ListItem;
                 return LIST_ITEM_PREFIX + list_item.sentences.map((s) => s.text).join(' ');
-            } else if (item.type == 'table') {
+            } else if (item.type == 'wikitable') {
                 const table = item as Table;
                 return tableToLines(table);
             } else throw new Error('Unsupported ParagraphItem type');
