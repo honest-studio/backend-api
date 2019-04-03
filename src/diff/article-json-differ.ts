@@ -282,10 +282,8 @@ function linesToParagraph(lines: string): ParagraphDiff {
                     ],
                     diff: getLineDiffType(lines)
                 };
-            else if (prefix == TABLE_PREFIX)
-                return linesToTable(lines);
-            else 
-                throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
+            else if (prefix == TABLE_PREFIX) return linesToTable(lines);
+            else throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
         });
 
     return { index: 0, items, tag_type: 'p', attrs: {} };

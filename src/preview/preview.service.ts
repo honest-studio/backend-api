@@ -122,8 +122,7 @@ export class PreviewService {
         // grab categories for wiki scrapes
         if (preview.page_note && preview.page_note.includes('EN_WIKI_IMPORT'))
             preview.categories = await this.wikiService.getCategories(lang_code, slug);
-        else
-            preview.categories = [];
+        else preview.categories = [];
         delete preview.page_note;
 
         return preview;

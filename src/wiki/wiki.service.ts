@@ -5,8 +5,8 @@ import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { ArticleJson, SeeAlso } from '../utils/article-utils/article-dto';
-import { renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils'
-import { MediaUploadService, PhotoExtraData } from '../media-upload'
+import { renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
+import { MediaUploadService, PhotoExtraData } from '../media-upload';
 const SqlString = require('sqlstring');
 
 export interface LanguagePack {
@@ -80,10 +80,9 @@ export class WikiService {
             'metadata.ipfs_hash': rows[0].ipfs_hash_current
         });
         let wiki: ArticleJson;
-        if (cache_wiki && use_cache){
+        if (cache_wiki && use_cache) {
             wiki = cache_wiki;
-        } 
-        else {
+        } else {
             wiki = oldHTMLtoJSON(rows[0].html_blob);
             wiki.metadata.pageviews = rows[0].pageviews;
             wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
@@ -92,13 +91,11 @@ export class WikiService {
             if (wiki.metadata.is_wikipedia_import) {
                 wiki.categories = await this.getCategories(lang_code, slug);
             }
-            this.mongo.connection().json_wikis.replaceOne(
-                { 'metadata.ipfs_hash': wiki.metadata.ipfs_hash }, 
-                wiki, 
-                { upsert: true }
-            );
+            this.mongo
+                .connection()
+                .json_wikis.replaceOne({ 'metadata.ipfs_hash': wiki.metadata.ipfs_hash }, wiki, { upsert: true });
         }
-        
+
         wiki.metadata.pageviews = rows[0].pageviews;
         wiki.metadata.page_lang = lang_code;
         return wiki;
@@ -227,13 +224,14 @@ export class WikiService {
 
     async getSeeAlsos(inputWiki: ArticleJson): Promise<SeeAlso[]> {
         let tempSeeAlsos: SeeAlso[] = calculateSeeAlsos(inputWiki);
-        if (tempSeeAlsos.length == 0)
-            return [];
+        if (tempSeeAlsos.length == 0) return [];
 
-        let seeAlsoWhere = tempSeeAlsos.map((value, index) => {
-            // performance is slow when ORing slug_alt for some reason, even though it is indexed
-            return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
-        }).join(" OR ");
+        let seeAlsoWhere = tempSeeAlsos
+            .map((value, index) => {
+                // performance is slow when ORing slug_alt for some reason, even though it is indexed
+                return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
+            })
+            .join(' OR ');
         let seeAlsoRows = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -248,8 +246,7 @@ export class WikiService {
                     if (err) {
                         console.log(err);
                         reject(err);
-                    }
-                    else resolve(rows);
+                    } else resolve(rows);
                 }
             );
         });
@@ -292,19 +289,22 @@ export class WikiService {
             );
         });
     }
-  
+
     async getCategories(lang_code: string, slug: string) {
         const wikipedia_categories = await fetch(
-            new URL(`https://${lang_code.substring(0, 2)}.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`)
+            new URL(
+                `https://${lang_code.substring(
+                    0,
+                    2
+                )}.wikipedia.org/w/api.php?action=query&format=json&titles=${slug}&prop=categories&format=json`
+            )
         )
-        .then(response => response.json())
-        .then(json => json.query.pages)
-        .then(pages => Object.values(pages)[0])
-        .then(obj => obj.categories)
-        
-        if (wikipedia_categories)
-            return wikipedia_categories.map(cat => cat.title.split(':')[1]);
+            .then((response) => response.json())
+            .then((json) => json.query.pages)
+            .then((pages) => Object.values(pages)[0])
+            .then((obj) => obj.categories);
+
+        if (wikipedia_categories) return wikipedia_categories.map((cat) => cat.title.split(':')[1]);
         else return [];
     }
-
 }

@@ -37,7 +37,7 @@ export class StatController {
     @ApiOperation({ title: 'All-time site usage' })
     @ApiImplicitQuery({
         name: 'cache',
-        description: `Set to false if you don't want to use the cache`, 
+        description: `Set to false if you don't want to use the cache`,
         required: false
     })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))

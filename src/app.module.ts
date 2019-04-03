@@ -17,7 +17,13 @@ import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
 import { OAuthController, OAuthService } from './oauth';
 import { EosClientModule, DatabaseModule } from './feature-modules';
-import { GoogleAnalyticsMiddleware, RequestIpMiddleware, JsonRequestMiddleware, CorsMiddleware, MorganMiddleware } from './middleware';
+import {
+    GoogleAnalyticsMiddleware,
+    RequestIpMiddleware,
+    JsonRequestMiddleware,
+    CorsMiddleware,
+    MorganMiddleware
+} from './middleware';
 
 @Module({
     imports: [

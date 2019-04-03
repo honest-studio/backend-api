@@ -11,10 +11,8 @@ export class GoogleAnalyticsMiddleware implements NestMiddleware {
         const parts = url.split('?');
         const path = parts[0];
         let query;
-        if (parts[1])
-            query = parts[1];
-        else
-            query = '';
+        if (parts[1]) query = parts[1];
+        else query = '';
         this.client.pageview(path, query).send();
         next();
     }

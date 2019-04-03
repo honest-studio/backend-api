@@ -7,7 +7,11 @@ import * as fetch from 'node-fetch';
 
 @Injectable()
 export class RecentActivityService {
-    constructor(private mongo: MongoDbService, private proposalService: ProposalService, private oauthService: OAuthService) {}
+    constructor(
+        private mongo: MongoDbService,
+        private proposalService: ProposalService,
+        private oauthService: OAuthService
+    ) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
         const docs = this.mongo.connection().actions.find({});
@@ -53,19 +57,19 @@ export class RecentActivityService {
 
         find_query = {
             'trace.act.account': 'eparticlectr',
-            'trace.act.name': 'logpropinfo',
-        }
+            'trace.act.name': 'logpropinfo'
+        };
         if (query.expiring) {
-            find_query['trace.act.data.endtime'] = { $gt: now }
+            find_query['trace.act.data.endtime'] = { $gt: now };
             sort_direction = 1;
         } else {
             sort_direction = -1;
         }
         if (query.completed) {
-            find_query['trace.act.data.endtime'] = { $lt: now }
+            find_query['trace.act.data.endtime'] = { $lt: now };
         }
         if (query.langs) {
-            find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') }
+            find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };
         }
         const proposal_id_docs = await this.mongo
             .connection()
@@ -86,44 +90,39 @@ export class RecentActivityService {
 
     async getTrendingWikis() {
         const access_token = await this.oauthService.getGoogleAnalyticsToken();
-        //const now_date = 
+        //const now_date =
 
         const body = {
-          "reportRequests":
-          [
-            {
-                viewId: '192421339',
-                dateRanges: [{ startDate: "2019-01-01", endDate: "2019-11-30" }],
-                dimensions: [
-                    { name: "ga:pagePath" }
-                ],
-                dimensionFilterClauses: [{
-                    filters: [{
-                        dimensionName: "ga:pagePath",
-                        operator: "PARTIAL",
-                        expressions: ["/v2/wiki/slug/lang_"]
-                    }]
-                }],
-                metrics: [
-                    { expression: "ga:pageviews" },
-                    { expression: "ga:uniquePageviews" },
-                ],
-                orderBys: [
-                    { fieldName: "ga:pageviews", sortOrder: "DESCENDING" }
-                ]
-            }
-          ]
-        }
-        const report = await fetch("https://analyticsreporting.googleapis.com/v4/reports:batchGet", {
-            method: "POST",
+            reportRequests: [
+                {
+                    viewId: '192421339',
+                    dateRanges: [{ startDate: '2019-01-01', endDate: '2019-11-30' }],
+                    dimensions: [{ name: 'ga:pagePath' }],
+                    dimensionFilterClauses: [
+                        {
+                            filters: [
+                                {
+                                    dimensionName: 'ga:pagePath',
+                                    operator: 'PARTIAL',
+                                    expressions: ['/v2/wiki/slug/lang_']
+                                }
+                            ]
+                        }
+                    ],
+                    metrics: [{ expression: 'ga:pageviews' }, { expression: 'ga:uniquePageviews' }],
+                    orderBys: [{ fieldName: 'ga:pageviews', sortOrder: 'DESCENDING' }]
+                }
+            ]
+        };
+        const report = await fetch('https://analyticsreporting.googleapis.com/v4/reports:batchGet', {
+            method: 'POST',
             body: JSON.stringify(body),
             headers: {
                 Authorization: `Bearer ${access_token.token}`
             }
-        })
-        .then(response => response.json());
+        }).then((response) => response.json());
 
-        const trending = report.reports[0].data.rows.map(row => ({
+        const trending = report.reports[0].data.rows.map((row) => ({
             slug: row.dimensions[0].slice(14),
             unique_pageviews_today: row.metrics[0].values[0],
             pageviews_today: row.metrics[0].values[1]

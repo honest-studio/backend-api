@@ -93,7 +93,7 @@ export class UserService {
         };
     }
 
-    async getActivity (account_name: string) {
+    async getActivity(account_name: string) {
         const votes = await this.mongo
             .connection()
             .actions.find({
@@ -112,6 +112,6 @@ export class UserService {
             })
             .toArray();
 
-        return { votes, proposals }
+        return { votes, proposals };
     }
 }

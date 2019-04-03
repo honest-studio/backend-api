@@ -155,18 +155,20 @@ const GetMysqlConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): P
  * Build Google Analytics config
  * @param parsed dotenv parsed output
  */
- const GetGoogleAnalyticsConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
-     return {
-         googleAnalyticsConfig: {
-             googleAnalyticsTrackingId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_TRACKING_ID],
-             googleAnalyticsViewId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID],
-             googleApiClientId: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_ID],
-             googleApiClientSecret: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_SECRET],
-             googleApiRefreshToken: parsed[ConfigKeyNames.GOOGLE_API_REFRESH_TOKEN],
-             googleApiRedirectUri: parsed[ConfigKeyNames.GOOGLE_API_REDIRECT_URI]
-         }
-     };
- };
+const GetGoogleAnalyticsConfig: PartialConfigMaker = (
+    parsed: dotenv.DotenvParseOutput
+): Partial<AppConfigVars> | null => {
+    return {
+        googleAnalyticsConfig: {
+            googleAnalyticsTrackingId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_TRACKING_ID],
+            googleAnalyticsViewId: parsed[ConfigKeyNames.GOOGLE_ANALYTICS_VIEW_ID],
+            googleApiClientId: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_ID],
+            googleApiClientSecret: parsed[ConfigKeyNames.GOOGLE_API_CLIENT_SECRET],
+            googleApiRefreshToken: parsed[ConfigKeyNames.GOOGLE_API_REFRESH_TOKEN],
+            googleApiRedirectUri: parsed[ConfigKeyNames.GOOGLE_API_REDIRECT_URI]
+        }
+    };
+};
 
 /**
  * Array of functions that will be applied, in order, to build AppConfigVars
@@ -182,7 +184,7 @@ const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetAWSSESConfig,
     GetAzureStorageConfig,
     GetMysqlConfig,
-    GetGoogleAnalyticsConfig,
+    GetGoogleAnalyticsConfig
 ];
 
 /**

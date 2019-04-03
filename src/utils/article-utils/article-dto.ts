@@ -1,4 +1,4 @@
-import { LanguagePack } from "../../wiki/wiki.service";
+import { LanguagePack } from '../../wiki/wiki.service';
 
 // Link to an Everipedia page
 // The interface is listed here for documentation, but the

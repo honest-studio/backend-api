@@ -6,9 +6,9 @@ import * as fetch from 'node-fetch';
 import * as WebSocket from 'ws';
 
 export interface DfuseToken {
-    token: string, // JWT
-    expires_at: number
-}   
+    token: string; // JWT
+    expires_at: number;
+}
 
 @Injectable()
 export class EosSyncService {
@@ -127,12 +127,11 @@ export class EosSyncService {
         });
     }
 
-    async obtainDfuseToken (): Promise<DfuseToken> {
+    async obtainDfuseToken(): Promise<DfuseToken> {
         return fetch(this.DFUSE_AUTH_URL, {
-            method: "POST",
+            method: 'POST',
             body: JSON.stringify({ api_key: this.dfuseConfig.dfuseApiKey })
-        })
-        .then(response => response.json())
+        }).then((response) => response.json());
     }
 
     restartIfFailing() {

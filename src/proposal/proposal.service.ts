@@ -83,7 +83,9 @@ export class ProposalService {
         if (options.diff != 'none') {
             const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
             if (options.diff === 'percent') diffs.forEach((diff) => delete diff.diff_wiki);
-            diffs.forEach((diff) => (proposals.find((p) => p.proposal_id == diff.diff_metadata.proposal_id).diff = diff));
+            diffs.forEach(
+                (diff) => (proposals.find((p) => p.proposal_id == diff.diff_metadata.proposal_id).diff = diff)
+            );
         }
 
         return proposals;

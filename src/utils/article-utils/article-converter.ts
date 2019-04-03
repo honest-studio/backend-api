@@ -2,7 +2,22 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import { WikiLink, Sentence, Section, ArticleJson, Media, Citation, Metadata, Infobox, Table, Paragraph, ListItem, AmpInfo, TableRow, TableCell } from './article-dto';
+import {
+    WikiLink,
+    Sentence,
+    Section,
+    ArticleJson,
+    Media,
+    Citation,
+    Metadata,
+    Infobox,
+    Table,
+    Paragraph,
+    ListItem,
+    AmpInfo,
+    TableRow,
+    TableCell
+} from './article-dto';
 import { AMPParseCollection } from './amp-types';
 import * as mimePackage from 'mime';
 
@@ -192,10 +207,8 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 
     const page_body = extractPageBody($);
 
-
     media_gallery.forEach((value, index) => {
         switch (value.category) {
-            
             case 'YOUTUBE': {
                 amp_info.load_youtube_js = true;
                 break;
@@ -211,7 +224,7 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
             default:
                 break;
         }
-    })
+    });
 
     // Return the dictionary
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
@@ -992,7 +1005,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
         // Loop through the value rows (should only be one)
         $(this)
-            .find('.ibox-nonplural-value',)
+            .find('.ibox-nonplural-value')
             .each(function(i) {
                 // Try to find the value
                 let tempValue;
@@ -1009,12 +1022,11 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
                     index: i,
                     text: tempValue
                 });
-        });
+            });
 
         // Add to the infobox list
         infoboxes.push(infoPackage);
     });
-
 
     return infoboxes;
 }
@@ -1052,10 +1064,8 @@ function parseSection($section: Cheerio): Section {
             category: linkCategorizer(theImgNode.attr('src')) || null
         };
 
-
         // Deal with images in tables
         if (!image.url) {
-            
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
@@ -1495,10 +1505,8 @@ function parseTable($element: Cheerio): Table {
         const tsection = table_sections[j];
         const $tsection = $element.children(tsection);
         table[tsection] = { rows: [] };
-        if ($tsection.length > 0)
-            table[tsection].attrs = $tsection[0].attribs
-        else
-            table[tsection].attrs = {}
+        if ($tsection.length > 0) table[tsection].attrs = $tsection[0].attribs;
+        else table[tsection].attrs = {};
     }
 
     // Add the rows and cells
@@ -1534,4 +1542,3 @@ function parseTable($element: Cheerio): Table {
 
     return table;
 }
-

@@ -2,13 +2,14 @@ import { ArticleJson } from './article-dto';
 import { AmpRenderPartial } from './amp-render-partial';
 import { LanguagePack } from '../../wiki/wiki.service';
 const fs = require('fs');
-const crypto = require("crypto");
+const crypto = require('crypto');
 
 export const renderAMP = (inputJSON: ArticleJson): string => {
-    // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS 
+    // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     let arp = new AmpRenderPartial(inputJSON);
-    let BLURB_SNIPPET_PLAINTEXT = '', OVERRIDE_MAIN_THUMB = null;
+    let BLURB_SNIPPET_PLAINTEXT = '',
+        OVERRIDE_MAIN_THUMB = null;
     let CURRENT_IPFS_HASH = '';
     const theHTML = `
     <!DOCTYPE html>
@@ -18,7 +19,9 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
         </head>
         <body>
             ${arp.renderNavBar()}
-            <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}" class="schema">
+            <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${
+                inputJSON.metadata.page_lang
+            }/${inputJSON.metadata.url_slug}" class="schema">
                 ${arp.renderMainPhoto(OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
                 ${arp.renderNameContainer()}
                 ${arp.renderFirstParagraph()}
@@ -29,7 +32,9 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
                 ${arp.renderSeeAlso()}
                 <div class="page-times">
                     <div>Created: <span id="page_create_time">${inputJSON.metadata.creation_timestamp}</span></div>
-                    <div>Last Modified: <span id="page_last_modified_time">${inputJSON.metadata.last_modified}</span></div>
+                    <div>Last Modified: <span id="page_last_modified_time">${
+                        inputJSON.metadata.last_modified
+                    }</span></div>
                     <div>IPFS: <span id="page_last_modified_time">${inputJSON.metadata.ipfs_hash}</span></div>
                 </div>
             </main>
@@ -59,5 +64,5 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
     </html>
    `;
 
-   return theHTML;
-}
+    return theHTML;
+};

@@ -16,9 +16,7 @@ const boolean = require('boolean');
 @Controller('v2/wiki')
 @ApiUseTags('Wikis')
 export class WikiController {
-    constructor(private readonly wikiService: WikiService) {
-    }
-
+    constructor(private readonly wikiService: WikiService) {}
 
     @Get('hash/:ipfs_hash')
     @ApiOperation({ title: 'Get wiki by IPFS hash' })
@@ -63,7 +61,10 @@ export class WikiController {
     }
 
     @Get('schema/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get the schema.org for the page in JSON-LD format https://developers.google.com/search/docs/guides/intro-structured-data' })
+    @ApiOperation({
+        title:
+            'Get the schema.org for the page in JSON-LD format https://developers.google.com/search/docs/guides/intro-structured-data'
+    })
     @ApiImplicitParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code'

@@ -7,10 +7,7 @@ import { ArticleJsonDiff } from './diff-dto';
 
 @Injectable()
 export class DiffService {
-    constructor(
-        private wikiService: WikiService,
-        private mongo: MongoDbService
-    ) {}
+    constructor(private wikiService: WikiService, private mongo: MongoDbService) {}
 
     async getDiffsByProposal(proposal_ids: Array<number>): Promise<any> {
         const ipfs_hashes = [];
@@ -53,9 +50,9 @@ export class DiffService {
         }
         const wikis = await this.wikiService.getWikisByHash(ipfs_hashes);
 
-        const diffs = proposal_hashes.map(prop => {
-            const old_wiki = wikis.find(w => w.metadata.ipfs_hash == prop.old_hash);
-            const new_wiki = wikis.find(w => w.metadata.ipfs_hash == prop.new_hash);
+        const diffs = proposal_hashes.map((prop) => {
+            const old_wiki = wikis.find((w) => w.metadata.ipfs_hash == prop.old_hash);
+            const new_wiki = wikis.find((w) => w.metadata.ipfs_hash == prop.new_hash);
             const diff_wiki = diffArticleJson(old_wiki, new_wiki);
             diff_wiki.diff_metadata.proposal_id = prop.proposal_id;
             diff_wiki.diff_metadata.proposal_id = prop.proposal_id;
