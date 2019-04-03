@@ -1,4 +1,4 @@
-import { LanguagePack } from "./wiki.service";
+import { LanguagePack } from "../../wiki/wiki.service";
 
 // Link to an Everipedia page
 // The interface is listed here for documentation, but the
@@ -40,11 +40,6 @@ export interface Sentence {
     type: string; // sentence
     index: number;
     text: string; // contains inline WikiLink markup + some light markdown for formatting
-}
-
-export interface AMPParseCollection {
-    text: string;
-    lightboxes: string[];
 }
 
 export interface ListItem {
@@ -132,9 +127,9 @@ export interface Citation {
 export interface Table {
     type: string; // wikitable
     caption: string;
-    thead?: TableSection;
+    thead: TableSection;
     tbody: TableSection;
-    tfoot?: TableSection;
+    tfoot: TableSection;
 }
 
 export interface TableSection {
@@ -153,12 +148,6 @@ export interface TableCell {
     attrs: {};
     tag_type: string;
     content: Sentence[];
-}
-
-export interface PhotoExtraData {
-    width: number;
-    height: number;
-    mime: string;
 }
 
 export interface ArticleJson {

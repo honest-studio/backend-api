@@ -1,9 +1,12 @@
-import { ArticleJson } from './article-dto';
-import { CheckForLinksOrCitationsAMP } from '../utils/article-utils';
-import { getYouTubeID, renderParagraph } from './article-converter';
-import { LanguagePack } from './wiki.service';
+import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell } from './article-dto';
+import { AMPParseCollection } from './amp-types';
+import { getYouTubeID } from './article-converter';
+import { LanguagePack } from '../../wiki/wiki.service';
+import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
 const crypto = require("crypto");
-var striptags = require('striptags');
+const striptags = require('striptags');
+const urlSlug = require('url-slug');
+const tag = require('html-tag');
 
 export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -191,3 +194,101 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
     schemaJSON["articleBody"] = pageBodyText;
     return `<script type="application/ld+json">${JSON.stringify(schemaJSON)}</script>`;
 }
+
+export const renderParagraph = (paragraph: Paragraph, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    const { tag_type, items } = paragraph;
+    if (items && items.length > 0){} else return returnCollection;
+    if (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4' || tag_type === 'h5' || tag_type === 'h6') {
+        const text: string = (items[0] as Sentence).text;
+        returnCollection.text = `<${tag_type} id=${urlSlug(text).slice(0,15)}>${text}</${tag_type}>`;
+    }
+    else if (tag_type === 'p') {
+        let sanitizedText = (items as Sentence[]).map((sentenceItem: Sentence, sentenceIndex) => {
+            let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
+            returnCollection.lightboxes.push(...result.lightboxes);
+            return result.text;
+        }).join("");
+        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
+    }
+    else if (tag_type === 'ul') {
+        let sanitizedText = (items as ListItem[]).map((liItem: ListItem , listIndex) => {
+            return liItem.sentences.map((sentenceItem: Sentence , sentenceIndex) => {
+                let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
+                returnCollection.lightboxes.push(...result.lightboxes);
+                return tag(liItem.tag_type, {}, result.text);
+            }).join("");
+        }).join("");
+        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
+    }
+    else if (tag_type === 'table') {
+        let sanitizedText = (items as Table[]).map((tableItem: Table , tableIndex) => {
+            // Create the thead if present
+            let sanitizedHeadRows = tableItem.thead ? tableItem.thead.rows.map((row: TableRow , rowIndex) => {
+                let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
+                    let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
+                        let result = CheckForLinksOrCitationsAMP(sentence.text, passedCitations, passedIPFS, []);
+                        returnCollection.lightboxes.push(...result.lightboxes);
+                        return result.text;
+                    }).join("");
+                    return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
+                }).join("") : '';
+                return tag('tr', row.attrs, sanitizedCells);
+            }).join("") : '';
+            let sanitizedHead = tableItem.thead ? tag('thead', tableItem.thead.attrs, sanitizedHeadRows) : '';
+
+            // Create the tbody
+            let sanitizedBodyRows = tableItem.tbody ? tableItem.tbody.rows.map((row: TableRow , rowIndex) => {
+                let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
+                    let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
+                        let result = CheckForLinksOrCitationsAMP(sentence.text, passedCitations, passedIPFS, []);
+                        returnCollection.lightboxes.push(...result.lightboxes);
+                        return result.text;
+                    }).join("");
+                    return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
+                }).join("") : '';
+                return tag('tr', row.attrs, sanitizedCells);
+            }).join("") : '';
+            let sanitizedBody = tableItem.tbody ? tag('tbody', tableItem.tbody.attrs, sanitizedBodyRows) : '';
+
+            // Create the tfoot if present
+            let sanitizedFootRows = tableItem.tfoot ? tableItem.tfoot.rows.map((row: TableRow , rowIndex) => {
+                let sanitizedCells = row.cells ? row.cells.map((cell: TableCell , cellIndex) => {
+                    let sanitizedCellContents = cell.content.map((sentence: Sentence , sentenceIndex) => {
+                        let result = CheckForLinksOrCitationsAMP(sentence.text, passedCitations, passedIPFS, []);
+                        returnCollection.lightboxes.push(...result.lightboxes);
+                        return result.text;
+                    }).join("");
+                    return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
+                }).join("") : '';
+                return tag('tr', row.attrs, sanitizedCells);
+            }).join("") : '';
+            let sanitizedFoot = tableItem.tfoot ? tag('tfoot', tableItem.tfoot.attrs, sanitizedFootRows) : '';
+
+            // Create the caption if present
+            let sanitizedCaption = tableItem.caption ? [tableItem.caption].map((caption: string , rowIndex) => {
+                let result = CheckForLinksOrCitationsAMP(caption, passedCitations, passedIPFS, []);
+                returnCollection.lightboxes.push(...result.lightboxes);
+                return `<caption>${result.text}</${caption}>`;
+                }).join("") : '';
+            return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join("");
+        });
+        returnCollection.text = tag('table', paragraph.attrs, sanitizedText.join(""));
+    }
+
+    // const sentences: Sentence[] = this.renderSentences(items, tag_type, index);
+    // return <Paragraph key={index}>{sentences}</Paragraph>;
+    return returnCollection
+};
+
+export const renderImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
+    let returnCollection: AMPParseCollection = {text: '', lightboxes: []};
+    let sanitizedCaption = image.caption.map((sentenceItem: Sentence, sentenceIndex) => {
+        let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
+        returnCollection.lightboxes.push(...result.lightboxes);
+        return result.text;
+    }).join("");
+    let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
+    returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
+    return returnCollection;
+};

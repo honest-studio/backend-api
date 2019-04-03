@@ -30,7 +30,7 @@ const zlib = require('zlib');
 const Jimp = require('jimp');
 const { StringDecoder } = require('string_decoder');
 import { AWSS3Service } from '../feature-modules/database';
-import { PhotoExtraData } from 'src/wiki/article-dto';
+import { PhotoExtraData } from './media-upload-dto';
 
 const TEMP_DIR = path.join(__dirname, 'tmp');
 const PHOTO_CONSTANTS = {

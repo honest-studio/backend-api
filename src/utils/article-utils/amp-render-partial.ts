@@ -1,8 +1,8 @@
-import { ArticleJson, AMPParseCollection, Sentence, SeeAlso, SeeAlsoCollection } from './article-dto';
+import { ArticleJson, Sentence, SeeAlso, SeeAlsoCollection } from './article-dto';
+import { AMPParseCollection } from './amp-types';
 import { Citation, Infobox, Media, Section } from './article-dto';
-import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize } from '../utils/article-utils';
-import { getYouTubeID, renderParagraph, renderImage } from './article-converter';
-import { LanguagePack } from './wiki.service';
+import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderParagraph, renderImage } from '.';
+import { LanguagePack } from '../../wiki/wiki.service';
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
 const CleanCSS = require('clean-css');

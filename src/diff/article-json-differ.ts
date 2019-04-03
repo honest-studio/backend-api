@@ -12,7 +12,7 @@ import {
     TableSection,
     Infobox,
     Citation
-} from '../wiki/article-dto';
+} from '../utils/article-utils/article-dto';
 import {
     ArticleJsonDiff,
     CitationDiff,

@@ -4,12 +4,9 @@ const { URL } = require('url');
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
-import { oldHTMLtoJSON } from './article-converter';
-import { calculateSeeAlsos } from '../utils/article-utils'
-import { ArticleJson, SeeAlso, PhotoExtraData } from './article-dto';
-import { renderAMP } from './amp-template';
-import { renderSchema } from './schema-template';
-import { MediaUploadService } from '../media-upload'
+import { ArticleJson, SeeAlso } from '../utils/article-utils/article-dto';
+import { renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils'
+import { MediaUploadService, PhotoExtraData } from '../media-upload'
 const SqlString = require('sqlstring');
 
 export interface LanguagePack {
@@ -115,7 +112,9 @@ export class WikiService {
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
-        return renderSchema(await this.getWikiBySlug(lang_code, slug));
+        const wiki = await this.getWikiBySlug(lang_code, slug);
+        const schema = renderSchema(wiki);
+        return schema;
     }
 
     async getWikisByHash(ipfs_hashes: Array<string>) {
@@ -225,6 +224,9 @@ export class WikiService {
 
     async getSeeAlsos(inputWiki: ArticleJson): Promise<SeeAlso[]> {
         let tempSeeAlsos: SeeAlso[] = calculateSeeAlsos(inputWiki);
+        if (tempSeeAlsos.length == 0)
+            return [];
+
         let seeAlsoWhere = tempSeeAlsos.map((value, index) => {
             // performance is slow when ORing slug_alt for some reason, even though it is indexed
             return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);

@@ -8,7 +8,7 @@ import * as cheerio from 'cheerio';
 export class SearchService {
     constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
 
-    async searchTitle(query: string, langs?: string): Promise<any> {
+    async searchTitle(query: string, langs?: string[]): Promise<any> {
         const searchJSON = {
             query: {
                 bool: {
@@ -45,7 +45,7 @@ export class SearchService {
 
         if (langs) {
             searchJSON.query.bool['must'] = {
-                terms: { lang: JSON.parse(langs) }
+                terms: { lang: langs }
             };
         }
 

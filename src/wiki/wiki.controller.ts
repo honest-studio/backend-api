@@ -62,7 +62,7 @@ export class WikiController {
         return this.wikiService.getWikiBySlug(lang_code, slug, boolean(options.cache));
     }
 
-    @Get('schema-slug/lang_:lang_code/:slug')
+    @Get('schema/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get the schema.org for the page in JSON-LD format https://developers.google.com/search/docs/guides/intro-structured-data' })
     @ApiImplicitParam({
         name: 'lang_code',
@@ -80,7 +80,7 @@ export class WikiController {
         return this.wikiService.getSchemaBySlug(lang_code, slug);
     }
 
-    @Get('amp-slug/lang_:lang_code/:slug')
+    @Get('amp/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get AMP HTML for a given article' })
     @ApiImplicitParam({
         name: 'lang_code',

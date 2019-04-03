@@ -1,11 +1,12 @@
-import { Citation, AMPParseCollection, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection, InlineImage } from '../../wiki/article-dto';
+import { Citation, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection, InlineImage } from './article-dto';
+import { AMPParseCollection } from './amp-types';
 const cheerio = require('cheerio');
 const crypto = require("crypto");
 const decode = require('unescape');
 const normalizeUrl = require('normalize-url');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
-import { getYouTubeID, CAPTURE_REGEXES, AMP_REGEXES_PRE, AMP_BAD_CLASSES, AMP_BAD_TAGS, AMP_REGEXES_POST } from '../../wiki/article-converter';
+import { getYouTubeID, CAPTURE_REGEXES, AMP_REGEXES_PRE, AMP_BAD_CLASSES, AMP_BAD_TAGS, AMP_REGEXES_POST } from './article-converter';
 
 export const CheckForLinksOrCitationsAMP = (
 	textProcessing: string,

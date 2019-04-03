@@ -1,6 +1,6 @@
 import { ArticleJson } from './article-dto';
 import { AmpRenderPartial } from './amp-render-partial';
-import { LanguagePack } from './wiki.service';
+import { LanguagePack } from '../../wiki/wiki.service';
 const fs = require('fs');
 const crypto = require("crypto");
 
@@ -58,10 +58,6 @@ export const renderAMP = (inputJSON: ArticleJson): string => {
         </body>
     </html>
    `;
-   var stream = fs.createWriteStream("./test/temp.html");
-   stream.once('open', function(fd) {
-     stream.write(theHTML);
-     stream.end();
-   });
+
    return theHTML;
 }

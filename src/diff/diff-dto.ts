@@ -9,7 +9,7 @@ import {
     Paragraph,
     TableRow,
     TableSection
-} from '../wiki/article-dto';
+} from '../utils/article-utils/article-dto';
 
 export type DiffType = 'add | delete | none';
 
@@ -33,7 +33,7 @@ export interface ListItemDiff extends ListItem {
 }
 
 export interface TableDiff extends Table {
-    thead?: TableSectionDiff;
+    thead: TableSectionDiff;
     tbody: TableSectionDiff;
     tfoot: TableSectionDiff;
 }

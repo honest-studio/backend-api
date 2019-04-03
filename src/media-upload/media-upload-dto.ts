@@ -1,6 +1,12 @@
 import { IsString, Matches } from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional, ApiConsumes } from '@nestjs/swagger';
 
+export interface PhotoExtraData {
+    width: number;
+    height: number;
+    mime: string;
+}
+
 // Parameters for the media upload
 export class MediaUploadDto {
     @ApiModelProperty({
