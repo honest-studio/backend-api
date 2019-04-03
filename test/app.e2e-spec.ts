@@ -158,11 +158,11 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  //it('Wiki: Get wiki by slug with unicode', () => {
-  //    return request(app.getHttpServer())
-  //        .get('/v2/wiki/slug/lang_ko/베레타_92')
-  //        .expect(200)
-  //});
+  it('Wiki: Get wiki by slug with unicode', () => {
+      return request(app.getHttpServer())
+          .get('/v2/wiki/slug/lang_ko/%EB%B2%A0%EB%A0%88%ED%83%80_92')
+          .expect(200)
+  });
 
 
   it('Wiki: Get wiki redirect', () => {
@@ -218,17 +218,17 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  //it('Wiki AMP HTML: Travis Moore', () => {
-  //  return request(app.getHttpServer())
-  //      .get('/v2/wiki/amp/lang_en/travismoore5036459')
-  //      .expect(200)
-  //});
+  it('Wiki AMP HTML: Travis Moore', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/amp/lang_en/travismoore5036459')
+        .expect(200)
+  });
 
-  //it('Wiki AMP HTML in unicode: 베레타 92', () => {
-  //  return request(app.getHttpServer())
-  //      .get('/v2/wiki/amp/lang_ko/베레타_92')
-  //      .expect(200)
-  //});
+  it('Wiki AMP HTML in unicode: 베레타 92', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/amp/lang_ko/%EB%B2%A0%EB%A0%88%ED%83%80_92')
+        .expect(200)
+  });
 
   it('Wiki: Get schema by slug', () => {
     return request(app.getHttpServer())
@@ -236,11 +236,11 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  //it('Wiki: Get schema by slug with unicode', () => {
-  //  return request(app.getHttpServer())
-  //      .get('/v2/wiki/schema/lang_ko/베레타_92')
-  //      .expect(200)
-  //});
+  it('Wiki: Get schema by slug with unicode', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/schema/lang_ko/%EB%B2%A0%EB%A0%88%ED%83%80_92')
+        .expect(200)
+  });
 
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())

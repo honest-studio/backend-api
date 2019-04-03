@@ -21,7 +21,8 @@ export class WikiService {
         private ipfs: IpfsService,
         private mysql: MysqlService,
         private mongo: MongoDbService,
-        private cacheService: CacheService
+        private cacheService: CacheService,
+        private mediaUploadService: MediaUploadService
     ) {}
 
     async getWikiByHash(ipfs_hash: string): Promise<any> {
@@ -91,7 +92,11 @@ export class WikiService {
             if (wiki.metadata.is_wikipedia_import) {
                 wiki.categories = await this.getCategories(lang_code, slug);
             }
-            this.mongo.connection().json_wikis.insertOne(wiki);
+            this.mongo.connection().json_wikis.replaceOne(
+                { 'metadata.ipfs_hash': wiki.metadata.ipfs_hash }, 
+                wiki, 
+                { upsert: true }
+            );
         }
         
         wiki.metadata.pageviews = rows[0].pageviews;
@@ -100,11 +105,9 @@ export class WikiService {
     }
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
-        console.log('\x1b[41;1m%s\x1b[0m', "FORCING USE_CACHE TO FALSE. FIX THIS LATER");
         // console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
-        let ampWiki = await this.getWikiBySlug(lang_code, slug, false);
-        let tempService = new MediaUploadService(null);
-        let photoExtraData: PhotoExtraData = await tempService.getImageData(ampWiki.main_photo.url);
+        let ampWiki = await this.getWikiBySlug(lang_code, slug);
+        let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo.url);
         ampWiki.main_photo.width = photoExtraData.width;
         ampWiki.main_photo.height = photoExtraData.height;
         ampWiki.main_photo.mime = photoExtraData.mime;
