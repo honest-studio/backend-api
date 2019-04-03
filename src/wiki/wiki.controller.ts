@@ -11,7 +11,7 @@ import { JoiValidationPipe } from '../common';
 import { WikiService } from './wiki.service';
 import { WikiQuerySchema } from './wiki.query-schema';
 import * as rawbody from 'raw-body';
-const boolean = require('boolean');
+import * as boolean from 'boolean';
 
 @Controller('v2/wiki')
 @ApiUseTags('Wikis')

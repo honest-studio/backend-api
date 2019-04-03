@@ -5,9 +5,9 @@ import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderPa
 import { LanguagePack } from '../../wiki/wiki.service';
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
-const CleanCSS = require('clean-css');
-const striptags = require('striptags');
-const urlSlug = require('url-slug');
+import * as CleanCSS from 'clean-css';
+import * as striptags from 'striptags';
+import * as urlSlug from 'url-slug';
 
 export class AmpRenderPartial {
     public artJSON: ArticleJson;

@@ -1,13 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
-const { URL } = require('url');
+import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
 import { ArticleJson, SeeAlso } from '../utils/article-utils/article-dto';
 import { renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
-const SqlString = require('sqlstring');
+import * as SqlString from 'sqlstring';
 
 export interface LanguagePack {
     lang: string;

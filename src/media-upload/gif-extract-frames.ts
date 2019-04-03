@@ -1,16 +1,17 @@
 'use strict';
 // MODIFIED FROM https://github.com/transitive-bullshit/gif-extract-frames
 
-const fs = require('fs');
-const path = require('path');
-const pify = require('pify');
-const pump = require('pump-promise');
-const getPixels = pify(require('get-pixels'));
-const savePixels = require('save-pixels');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as pify from 'pify';
+import * as pump from 'pump-promise';
+import * as gpixels from 'get-pixels';
+import * as savePixels from 'save-pixels';
+const getPixels = pify(gpixels);
 
 const supportedFormats = new Set(['jpg', 'png', 'gif']);
 
-module.exports = async (opts) => {
+export async function extractFrames(opts) {
     const { input_buffer, input_mime, coalesce = true } = opts;
 
     const format = input_mime.replace('image/', '');

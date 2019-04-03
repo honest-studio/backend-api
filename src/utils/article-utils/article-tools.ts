@@ -1,8 +1,8 @@
 import { Citation, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection, InlineImage } from './article-dto';
 import { AMPParseCollection } from './amp-types';
-const cheerio = require('cheerio');
-const crypto = require('crypto');
-const decode = require('unescape');
+import * as cheerio from 'cheerio';
+import * as crypto from 'crypto';
+import * as decode from 'unescape';
 const normalizeUrl = require('normalize-url');
 import * as MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';

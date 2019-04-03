@@ -3,10 +3,10 @@ import { AMPParseCollection } from './amp-types';
 import { getYouTubeID } from './article-converter';
 import { LanguagePack } from '../../wiki/wiki.service';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
-const crypto = require('crypto');
-const striptags = require('striptags');
-const urlSlug = require('url-slug');
-const tag = require('html-tag');
+import * as crypto from 'crypto';
+import * as striptags from 'striptags';
+import * as urlSlug from 'url-slug';
+import * as tag from 'html-tag';
 
 export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
