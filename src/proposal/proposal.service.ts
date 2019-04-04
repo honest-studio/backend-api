@@ -14,7 +14,7 @@ export type Proposal = {
 
 export type ProposalOptions = {
     preview: boolean;
-    diff: 'full' | 'percent' | 'none';
+    diff: 'full' | 'metadata' | 'none';
 };
 
 @Injectable()
@@ -82,10 +82,17 @@ export class ProposalService {
 
         if (options.diff != 'none') {
             const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
-            if (options.diff === 'percent') diffs.forEach((diff) => delete diff.diff_wiki);
-            diffs.forEach(
-                (diff) => (proposals.find((p) => p.proposal_id == diff.diff_metadata.proposal_id).diff = diff)
-            );
+            if (options.diff === 'full')
+                diffs.forEach(diff => {
+                    const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
+                    const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
+                    proposal.diff = diff;
+                });
+            else if (options.diff === 'metadata')
+                diffs.forEach(diff => {
+                    const proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
+                    proposals.find((p) => p.proposal_id == proposal_id).diff = { metadata: diff.metadata };
+                });
         }
 
         return proposals;

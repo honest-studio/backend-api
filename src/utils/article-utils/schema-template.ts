@@ -1,7 +1,6 @@
 import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell } from './article-dto';
-import { AMPParseCollection } from './amp-types';
+import { AMPParseCollection, LanguagePack } from './amp-types';
 import { getYouTubeID } from './article-converter';
-import { LanguagePack } from '../../wiki/wiki.service';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
 import * as crypto from 'crypto';
 import * as striptags from 'striptags';
@@ -12,14 +11,22 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     const BLURB_SNIPPET_PLAINTEXT = '',
         OVERRIDE_MAIN_THUMB = false;
+
+    // Metadata values
+    const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified').value;
+    const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+    const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
+    const url_slug = inputJSON.metadata.find(w => w.key == 'url_slug').value;
+    const page_type = inputJSON.metadata.find(w => w.key == 'page_type').value;
+
     let schemaJSON = {
         '@context': `http://schema.org`,
         '@type': [`Article`],
-        mainEntityOfPage: `https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${
-            inputJSON.metadata.url_slug
+        mainEntityOfPage: `https://everipedia.org/wiki/lang_${page_lang}/${
+            url_slug
         }`,
-        url: `https://everipedia.org/wiki/lang_${inputJSON.metadata.page_lang}/${inputJSON.metadata.url_slug}`,
-        inLanguage: `${inputJSON.metadata.page_lang}`,
+        url: `https://everipedia.org/wiki/lang_${page_lang}/${url_slug}`,
+        inLanguage: `${page_lang}`,
         author: {
             '@type': 'Organization',
             name: 'The Everipedia Community'
@@ -37,13 +44,13 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             }
         },
         copyrightHolder: `Everipedia`,
-        datePublished: `${inputJSON.metadata.creation_timestamp}`,
-        dateModified: `${inputJSON.metadata.last_modified}`,
+        datePublished: `${creation_timestamp}`,
+        dateModified: `${last_modified}`,
         about: {},
         citation: []
     };
     schemaJSON.about['name'] = inputJSON.page_title;
-    switch (inputJSON.metadata.page_type) {
+    switch (page_type) {
         case 'Person':
             schemaJSON['description'] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON['keywords'] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${
@@ -83,21 +90,21 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             schemaJSON.about['@type'] = 'Thing';
     }
     (schemaJSON['image'] = []), (schemaJSON.about['image'] = []);
-    if (inputJSON.main_photo.url) {
+    if (inputJSON.main_photo[0].url) {
         let pushObj = {
             '@type': 'ImageObject',
             url: `${
                 OVERRIDE_MAIN_THUMB
                     ? `${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}`
-                    : inputJSON.main_photo.url
-                    ? `${inputJSON.main_photo.url}?nocache=${RANDOMSTRING}`
+                    : inputJSON.main_photo[0].url
+                    ? `${inputJSON.main_photo[0].url}?nocache=${RANDOMSTRING}`
                     : ``
             }`,
             name: inputJSON.page_title,
             caption: inputJSON.page_title,
-            uploadDate: inputJSON.metadata.last_modified,
-            height: inputJSON.main_photo.height,
-            width: inputJSON.main_photo.width
+            uploadDate: last_modified,
+            height: inputJSON.main_photo[0].height,
+            width: inputJSON.main_photo[0].width
         };
         schemaJSON.about['image'].push(pushObj);
         schemaJSON['image'].push(pushObj);
@@ -107,7 +114,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
             url: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png',
             name: inputJSON.page_title,
             caption: inputJSON.page_title,
-            uploadDate: inputJSON.metadata.last_modified,
+            uploadDate: last_modified,
             height: 1274,
             width: 1201
         };
@@ -120,7 +127,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     inputJSON.citations,
-                    inputJSON.metadata.ipfs_hash,
+                    inputJSON.ipfs_hash,
                     []
                 );
                 return result.text;
@@ -180,7 +187,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
     inputJSON.infoboxes.forEach((infobox, index) => {
         let valuesBlock = [];
         infobox.values.forEach((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.metadata.ipfs_hash, []);
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.ipfs_hash, []);
             valuesBlock.push(striptags(result.text));
         });
 
@@ -201,7 +208,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     inputJSON.citations,
-                    inputJSON.metadata.ipfs_hash,
+                    inputJSON.ipfs_hash,
                     []
                 );
                 return striptags(result.text);
@@ -221,7 +228,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
         .map((section, indexSection) => {
             return section.paragraphs
                 .map((para, indexPara) => {
-                    return renderParagraph(para, inputJSON.citations, inputJSON.metadata.ipfs_hash).text;
+                    return renderParagraph(para, inputJSON.citations, inputJSON.ipfs_hash).text;
                 })
                 .join();
         })

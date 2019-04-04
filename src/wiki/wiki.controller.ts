@@ -10,8 +10,11 @@ import {
 import { JoiValidationPipe } from '../common';
 import { WikiService } from './wiki.service';
 import { WikiQuerySchema } from './wiki.query-schema';
+import { ArticleJson } from '../utils/article-utils/article-dto';
+import { WikiExtraInfo } from '../utils/article-utils/amp-types';
 import * as rawbody from 'raw-body';
 import * as boolean from 'boolean';
+
 
 @Controller('v2/wiki')
 @ApiUseTags('Wikis')
@@ -28,12 +31,11 @@ export class WikiController {
     })
     @ApiResponse({
         status: 200,
-        description: `An HTML wiki or key-value object with hashes as keys to HTML wikis encoded in UTF-8`
+        description: `An JSON wiki or array of JSON wikis`
     })
-    async getWikiByHash(@Param('ipfs_hash') query_hashes): Promise<any> {
+    async getWikisByHash(@Param('ipfs_hash') query_hashes): Promise<ArticleJson[]> {
         const ipfs_hashes = query_hashes.split(',');
-        if (ipfs_hashes.length == 1) return await this.wikiService.getWikiByHash(ipfs_hashes[0]);
-        else return await this.wikiService.getWikisByHash(ipfs_hashes);
+        return this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
     @Get('slug/lang_:lang_code/:slug')
@@ -55,7 +57,7 @@ export class WikiController {
         description: `A JSON for the wiki encoded in UTF-8`
     })
     @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
-    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<any> {
+    async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<ArticleJson> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
         return this.wikiService.getWikiBySlug(lang_code, slug, boolean(options.cache));
     }
@@ -120,6 +122,24 @@ export class WikiController {
     })
     async getWikiGroups(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         return this.wikiService.getWikiGroups(lang_code, slug);
+    }
+
+    @Get('extra/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get extra info for a wiki' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `A JSON with a list of the languages available`
+    })
+    async getWikiExtras(@Param('lang_code') lang_code, @Param('slug') slug): Promise<WikiExtraInfo> {
+        return this.wikiService.getWikiExtras(lang_code, slug);
     }
 
     @Post('/')

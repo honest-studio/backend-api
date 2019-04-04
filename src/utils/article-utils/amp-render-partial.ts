@@ -1,8 +1,6 @@
-import { ArticleJson, Sentence, SeeAlso, SeeAlsoCollection } from './article-dto';
-import { AMPParseCollection } from './amp-types';
-import { Citation, Infobox, Media, Section } from './article-dto';
+import { ArticleJson, Sentence, Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderParagraph, renderImage } from '.';
-import { LanguagePack } from '../../wiki/wiki.service';
+import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './amp-types';
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
 import * as CleanCSS from 'clean-css';
@@ -10,17 +8,15 @@ import * as striptags from 'striptags';
 import * as urlSlug from 'url-slug';
 
 export class AmpRenderPartial {
-    public artJSON: ArticleJson;
     public allLightBoxes: string[] = [];
-    constructor(inputJSN: ArticleJson) {
-        this.artJSON = inputJSN;
-    }
+
+    constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {}
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
         let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
         let comboHreflangs =
-            this.artJSON.alt_langs.length > 0
-                ? this.artJSON.alt_langs
+            this.wikiExtras.alt_langs.length > 0
+                ? this.wikiExtras.alt_langs
                       .map((langPack, index) => {
                           return `<link rel="alternate" href="https://everipedia.org/wiki/lang_${langPack.lang}/${
                               langPack.slug
@@ -28,6 +24,15 @@ export class AmpRenderPartial {
                       })
                       .join('')
                 : '';
+
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+        const is_indexed = this.artJSON.metadata.find(w => w.key == 'is_indexed').value;
+
         return `
             <meta charset="utf-8" />
             <meta name="theme-color" content="#FFFFFF" />
@@ -66,49 +71,49 @@ export class AmpRenderPartial {
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
             ${
-                !this.artJSON.metadata.is_indexed
+                !is_indexed
                     ? '<meta name="googlebot" content="noindex, nofollow, noarchive" />'
                     : ''
             }
             ${
-                this.artJSON.metadata.page_type == 'Person'
+                page_type == 'Person'
                     ? `<title>${this.artJSON.page_title} | Wiki & Bio | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Bio |" />`
-                    : this.artJSON.metadata.page_type == 'Product'
+                    : page_type == 'Product'
                     ? `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |" />`
-                    : this.artJSON.metadata.page_type == 'Organization'
+                    : page_type == 'Organization'
                     ? `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |" />`
-                    : this.artJSON.metadata.page_type
+                    : page_type
                     ? `<title>${this.artJSON.page_title} | Wiki | Everipedia</title>
                 <meta property="og:title" content="${this.artJSON.page_title}"/>
                 <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki |" />`
                     : ''
             }
             <meta property="article:tag" content="${this.artJSON.page_title}" />
-            <meta property="article:published_time" content="${this.artJSON.metadata.creation_timestamp}" />
-            <meta property="article:modified_time" content="${this.artJSON.metadata.last_modified}" />
-            <meta property="og:image" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" />
-            <meta property="og:image" content="${this.artJSON.main_photo.thumb}" />
+            <meta property="article:published_time" content="${creation_timestamp}" />
+            <meta property="article:modified_time" content="${last_modified}" />
+            <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
+            <meta property="og:image" content="${this.artJSON.main_photo[0].thumb}" />
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta name="og:url" content="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${
-            this.artJSON.metadata.url_slug
+            <meta name="og:url" content="https://everipedia.org/wiki/lang_${page_lang}/${
+            url_slug
         }">
-            <meta name="twitter:image" content="${this.artJSON.main_photo.url}?nocache=${RANDOMSTRING}" />
-            <meta name="twitter:image" content="${this.artJSON.main_photo.thumb}" />
+            <meta name="twitter:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
+            <meta name="twitter:image" content="${this.artJSON.main_photo[0].thumb}" />
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
-            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${
-            this.artJSON.metadata.url_slug
+            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${page_lang}/${
+            url_slug
         }">
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia" />
-            <link rel="canonical" href="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${
-            this.artJSON.metadata.url_slug
+            <link rel="canonical" href="https://everipedia.org/wiki/lang_${page_lang}/${
+            url_slug
         }" />
             <style amp-custom>${compressedCSS}</style>
         `;
@@ -144,12 +149,16 @@ export class AmpRenderPartial {
     };
 
     renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        let ampSanitizedPhotoComment = this.artJSON.main_photo.caption
+        
+        // Metadata values
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
+        let ampSanitizedPhotoComment = this.artJSON.main_photo[0].caption
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     this.artJSON.citations,
-                    this.artJSON.metadata.ipfs_hash,
+                    this.artJSON.ipfs_hash,
                     []
                 );
                 this.allLightBoxes.push(...result.lightboxes);
@@ -159,40 +168,40 @@ export class AmpRenderPartial {
 
         return `
             ${
-                this.artJSON.metadata.page_type == 'Person'
+                page_type == 'Person'
                     ? `<abbr itemprop="homeLocation" itemscope itemtype="http://schema.org/Place" >
                     <meta itemprop="name" content="Earth" />
                 </abbr>`
                     : ``
             }
             ${
-                this.artJSON.main_photo.url
+                this.artJSON.main_photo[0].url
                     ? `<figure class="blurb-photo-container" id="toc-top">
                 ${
-                    this.artJSON.main_photo.attribution_url
+                    this.artJSON.main_photo[0].attribution_url
                         ? `<a class="blurb-photo-anchor" href="${
-                              this.artJSON.main_photo.attribution_url
+                              this.artJSON.main_photo[0].attribution_url
                           }" rel="nofollow" target="_blank">`
                         : true
                         ? `<a class="blurb-photo-anchor" href="${
-                              this.artJSON.main_photo.url
+                              this.artJSON.main_photo[0].url
                           }?nocache=${RANDOMSTRING}" rel="nofollow" target="_blank">`
                         : ``
                 }
                     ${
                         OVERRIDE_MAIN_THUMB
                             ? `<amp-anim id="mainphoto" itemprop="image" width='${
-                                  this.artJSON.main_photo.width
+                                  this.artJSON.main_photo[0].width
                               }' height='${
-                                  this.artJSON.main_photo.height
+                                  this.artJSON.main_photo[0].height
                               }' layout='responsive' src="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
-                                    this.artJSON.metadata.page_type == 'Person'
+                                    page_type == 'Person'
                                         ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio`
-                                        : this.artJSON.metadata.page_type == 'Product'
+                                        : page_type == 'Product'
                                         ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review`
-                                        : this.artJSON.metadata.page_type == 'Organization'
+                                        : page_type == 'Organization'
                                         ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review, ${
                                               this.artJSON.page_title
                                           } history`
@@ -205,17 +214,17 @@ export class AmpRenderPartial {
                         </amp-anim>`
                             : true
                             ? `<amp-img id="mainphoto" itemprop="image" width='${
-                                  this.artJSON.main_photo.width
-                              }' height='${this.artJSON.main_photo.height}' layout='responsive' src="${
-                                  this.artJSON.main_photo.url
+                                  this.artJSON.main_photo[0].width
+                              }' height='${this.artJSON.main_photo[0].height}' layout='responsive' src="${
+                                  this.artJSON.main_photo[0].url
                               }?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
-                                    this.artJSON.metadata.page_type == 'Person'
+                                    page_type == 'Person'
                                         ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio`
-                                        : this.artJSON.metadata.page_type == 'Product'
+                                        : page_type == 'Product'
                                         ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review`
-                                        : this.artJSON.metadata.page_type == 'Organization'
+                                        : page_type == 'Organization'
                                         ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review, ${
                                               this.artJSON.page_title
                                           } history`
@@ -225,7 +234,7 @@ export class AmpRenderPartial {
                                 }
                         ">
                             <amp-img placeholder width="250" height="250" layout='responsive' src="${
-                                this.artJSON.main_photo.thumb
+                                this.artJSON.main_photo[0].thumb
                             }?nocache=${RANDOMSTRING}"></amp-img>
                         </amp-img>`
                             : ``
@@ -238,7 +247,7 @@ export class AmpRenderPartial {
             }
 
             ${
-                this.artJSON.main_photo.caption
+                this.artJSON.main_photo[0].caption
                     ? `<figcaption class="mainphoto-caption">${ampSanitizedPhotoComment}</figcaption>`
                     : ``
             }
@@ -246,24 +255,29 @@ export class AmpRenderPartial {
     };
 
     renderNameContainer = (): string => {
+        // Metadata values
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
         return `
             <div class="name-container">
                 <h1>
                     <span>${this.artJSON.page_title}</span>
                 </h1>
                 ${
-                    this.artJSON.metadata.page_type == 'Person'
+                    page_type == 'Person'
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                               this.artJSON.page_title
                           } news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>
                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                         this.artJSON.page_title
                     } real name, how old is ${this.artJSON.page_title}" ></amp-anim>`
-                        : this.artJSON.metadata.page_type == 'Product'
+                        : page_type == 'Product'
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                               this.artJSON.page_title
                           } news, what is ${this.artJSON.page_title}" ></amp-anim>`
-                        : this.artJSON.metadata.page_type == 'Organization'
+                        : page_type == 'Organization'
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                               this.artJSON.page_title
                           } news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>`
@@ -278,35 +292,35 @@ export class AmpRenderPartial {
                         <div class="tlbx-ct">
                             <ul>
                                 <li><a rel='nofollow' href="https://everipedia.org/wiki/lang_${
-                                    this.artJSON.metadata.page_lang
+                                    page_lang
                                 }/${
-            this.artJSON.metadata.url_slug
+            url_slug
         }/edit/" class="icon"><i class="fa fa-pencil"></i></a></li>
                                 <li><button on="tap:share-lightbox" aria-label="Share" class="icon"><i class="fa fa-share-alt"></i></button></li>
                                 <li><a rel='nofollow' href="https://everipedia.org/vote/lang_${
-                                    this.artJSON.metadata.page_lang
-                                }/${this.artJSON.metadata.url_slug}" class="icon"><i class="fa fa-archive"></i></a></li>
+                                    page_lang
+                                }/${url_slug}" class="icon"><i class="fa fa-archive"></i></a></li>
                                 <li class="language-tile">
                                     <button on="tap:language-lightbox" aria-label="Languages" class="icon">
                                         <amp-img id="flag-button" height="35" width="35" alt="Language flag" layout="fixed" class="page-lang-dropdown-flag" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${
-                                            this.artJSON.metadata.page_lang
+                                            page_lang
                                         }.png"></amp-img>
-                                        <span class="flag-lang-plain">${this.artJSON.metadata.page_lang.substring(
+                                        <span class="flag-lang-plain">${page_lang.substring(
                                             0,
                                             2
                                         )}</span>
                                     </button>
                                 </li>
                                 ${
-                                    this.artJSON.metadata.pageviews > 50
+                                    this.wikiExtras.pageviews > 50
                                         ? `<li class="pageviews-tile">
                                         <a rel='nofollow' href="#" class="icon"><i class="fa fa-eye"></i></a>
-                                        <span class="views-nr">${this.artJSON.metadata.pageviews.toLocaleString()}</span>
+                                        <span class="views-nr">${this.wikiExtras.pageviews.toLocaleString()}</span>
                                     </li>`
                                         : ``
                                 }
                                 ${
-                                    this.artJSON.metadata.page_type == 'Person'
+                                    page_type == 'Person'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                                               this.artJSON.page_title
                                           } religion, ${this.artJSON.page_title} interview, ${
@@ -327,7 +341,7 @@ export class AmpRenderPartial {
                                     } wikipedia, ${this.artJSON.page_title} news, who is ${
                                               this.artJSON.page_title
                                           }, where is ${this.artJSON.page_title}" ></amp-anim>`
-                                        : this.artJSON.metadata.page_type == 'Product'
+                                        : page_type == 'Product'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                                               this.artJSON.page_title
                                           } designer, ${this.artJSON.page_title} sales, ${
@@ -338,7 +352,7 @@ export class AmpRenderPartial {
                                     } wikipedia, ${this.artJSON.page_title} news, what is ${
                                               this.artJSON.page_title
                                           }" ></amp-anim>`
-                                        : this.artJSON.metadata.page_type == 'Organization'
+                                        : page_type == 'Organization'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
                                               this.artJSON.page_title
                                           } ownership, ${this.artJSON.page_title} email, ${
@@ -378,13 +392,14 @@ export class AmpRenderPartial {
     };
 
     renderFirstParagraph = (): string => {
+
         let firstSection: Section = this.artJSON.page_body[0];
         let imageBlock = firstSection.images
             .map((image, imageIndex) => {
                 let result: AMPParseCollection = renderImage(
                     image,
                     this.artJSON.citations,
-                    this.artJSON.metadata.ipfs_hash
+                    this.artJSON.ipfs_hash
                 );
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
@@ -395,7 +410,7 @@ export class AmpRenderPartial {
                 let result: AMPParseCollection = renderParagraph(
                     para,
                     this.artJSON.citations,
-                    this.artJSON.metadata.ipfs_hash
+                    this.artJSON.ipfs_hash
                 );
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
@@ -419,7 +434,7 @@ export class AmpRenderPartial {
                         let result: AMPParseCollection = renderImage(
                             image,
                             this.artJSON.citations,
-                            this.artJSON.metadata.ipfs_hash
+                            this.artJSON.ipfs_hash
                         );
                         this.allLightBoxes.push(...result.lightboxes);
                         return result.text;
@@ -430,7 +445,7 @@ export class AmpRenderPartial {
                         let result: AMPParseCollection = renderParagraph(
                             paragraph,
                             this.artJSON.citations,
-                            this.artJSON.metadata.ipfs_hash
+                            this.artJSON.ipfs_hash
                         );
                         this.allLightBoxes.push(...result.lightboxes);
                         return result.text;
@@ -460,7 +475,7 @@ export class AmpRenderPartial {
                         let result = CheckForLinksOrCitationsAMP(
                             value.text,
                             this.artJSON.citations,
-                            this.artJSON.metadata.ipfs_hash,
+                            this.artJSON.ipfs_hash,
                             []
                         );
                         this.allLightBoxes.push(...result.lightboxes);
@@ -477,6 +492,9 @@ export class AmpRenderPartial {
     };
 
     renderInfoboxes = (): string => {
+        // Metadata values
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
         let infoboxes: Infobox[] = this.artJSON.infoboxes;
         if (
             !(
@@ -491,7 +509,7 @@ export class AmpRenderPartial {
             blobBoxResult = CheckForLinksOrCitationsAMP(
                 blobBoxPreSanitize(this.artJSON.infobox_html),
                 this.artJSON.citations,
-                this.artJSON.metadata.ipfs_hash,
+                this.artJSON.ipfs_hash,
                 []
             );
             this.allLightBoxes.push(...blobBoxResult.lightboxes);
@@ -506,7 +524,7 @@ export class AmpRenderPartial {
             <amp-accordion class="infobox-accordion">
                 <section id="infobox_section" class="infobox-main-wrap" expanded>
                     <h2 class="qf-header">
-                        ${this.artJSON.metadata.page_type == 'Person' ? `Quick Biography` : true ? `Quick Facts` : ``}
+                        ${page_type == 'Person' ? `Quick Biography` : true ? `Quick Facts` : ``}
                         <span class="icon"><i class="fa fa-chevron-down"></i></span>
                     </h2>
                     <div class='amp-wrap'>
@@ -533,6 +551,12 @@ export class AmpRenderPartial {
     };
 
     renderOneMedia = (media: Media, index: number): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
         const RANDOMSTRING = Math.random()
             .toString(36)
             .substring(7);
@@ -541,7 +565,7 @@ export class AmpRenderPartial {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     this.artJSON.citations,
-                    this.artJSON.metadata.ipfs_hash,
+                    this.artJSON.ipfs_hash,
                     []
                 );
                 this.allLightBoxes.push(...result.lightboxes);
@@ -698,6 +722,12 @@ export class AmpRenderPartial {
     };
 
     renderMediaGallery = (): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
         let media: Media[] = this.artJSON.media_gallery;
         if (media.length == 0) return ``;
         let mediaComboString = media
@@ -712,7 +742,7 @@ export class AmpRenderPartial {
                     <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
                         <span class="icon"><i class="fa fa-chevron-down"></i>
                             <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                this.artJSON.page_title
+                                this.artJSON.page_title[0].text
                             } images, pictures, and videos" />
                         </span>
                     </h2>
@@ -727,12 +757,18 @@ export class AmpRenderPartial {
     };
 
     renderOneCitation = (citation: Citation, index: number): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
         let sanitizedDescription = citation.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     this.artJSON.citations,
-                    this.artJSON.metadata.ipfs_hash,
+                    this.artJSON.ipfs_hash,
                     []
                 );
                 this.allLightBoxes.push(...result.lightboxes);
@@ -779,6 +815,13 @@ export class AmpRenderPartial {
     };
 
     renderCitations = (): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
         let citations: Citation[] = this.artJSON.citations;
         if (citations.length == 0) return ``;
         let citationComboString = citations
@@ -793,7 +836,7 @@ export class AmpRenderPartial {
             <section expanded>
                 <h2 class="acc-header">
                     ${
-                        this.artJSON.metadata.page_type == 'Person'
+                        page_type == 'Person'
                             ? `Reference Links For This Biography`
                             : true
                             ? `Reference Links For This Wiki`
@@ -821,6 +864,12 @@ export class AmpRenderPartial {
     };
 
     renderOneSeeAlso = (seealso: SeeAlso): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
         return `
             <a class='sa-ancr-wrp' href="/wiki/lang_${seealso.lang}/${seealso.slug}">
                 <amp-img layout="fixed-height" height=80 src="${seealso.thumbnail_url}" alt="${seealso.title} wiki">
@@ -837,7 +886,13 @@ export class AmpRenderPartial {
     };
 
     renderSeeAlso = (): string => {
-        let seeAlsoComboString = this.artJSON.seealsos
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
+        let seeAlsoComboString = this.wikiExtras.see_also
             .map((value, index) => {
                 return this.renderOneSeeAlso(value);
             })
@@ -861,7 +916,12 @@ export class AmpRenderPartial {
     };
 
     renderFooter = (): string => {
-        // let seealsos: SeeAlso[] = calculatedSeeAlsos
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+
         return `
             <div class="footer-wrapper">
                 <amp-anim class='gif-pixel-fix' width=1 height=1 alt="GIF Pixel" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
@@ -919,6 +979,12 @@ export class AmpRenderPartial {
     };
 
     renderTableOfContents = (): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
         let comboString: string = `
             <li class='toc-header-description' data-blurb-id="top_header">
                 <a rel="nofollow" class='toc-header-description' href="#toc-top">
@@ -932,7 +998,7 @@ export class AmpRenderPartial {
                     <a rel="nofollow" class='toc-header-infobox' href="#infoboxHeader">
                         <div class="fixed-items-description">
                             ${
-                                this.artJSON.metadata.page_type == 'Person'
+                                page_type == 'Person'
                                     ? `Quick Biography`
                                     : true
                                     ? `Quick Facts For This Wiki`
@@ -996,6 +1062,11 @@ export class AmpRenderPartial {
     };
 
     renderUserMenu = (): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+
         return `
             <div class="lightbox" tabindex="1" role="menubar">
                 <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
@@ -1043,6 +1114,11 @@ export class AmpRenderPartial {
     };
 
     renderSearchLightbox = (): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+
         return `  
         <div class="lightbox" tabindex="3" role="search">
             <div class="search-lb-ct">
@@ -1063,6 +1139,13 @@ export class AmpRenderPartial {
     };
 
     renderShareLightbox = (): string => {
+        // Metadata values
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
         return `  
             <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
             <nav class="lightbox" tabindex="7" role="widget">
@@ -1072,26 +1155,26 @@ export class AmpRenderPartial {
                         <div class="social-share-block-wrap">
                             <div class="social-share-block">
                                 <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://everipedia.org/wiki/lang_${
-                                    this.artJSON.metadata.page_lang
-                                }/${this.artJSON.metadata.url_slug}"></a>
+                                    page_lang
+                                }/${url_slug}"></a>
                                 <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://everipedia.org/wiki/lang_${
-                                    this.artJSON.metadata.page_lang
-                                }/${this.artJSON.metadata.url_slug}"></a>
+                                    page_lang
+                                }/${url_slug}"></a>
                                 <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://everipedia.org/wiki/lang_${
-                                    this.artJSON.metadata.page_lang
-                                }/${this.artJSON.metadata.url_slug}"></a>
+                                    page_lang
+                                }/${url_slug}"></a>
                                 <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://everipedia.org/wiki/lang_${
-                                    this.artJSON.metadata.page_lang
-                                }/${this.artJSON.metadata.url_slug}"></a>
+                                    page_lang
+                                }/${url_slug}"></a>
                             </div>
                         </div>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-ct-link">
                         <h4>DIRECT LINK</h4>
-                        <a href="https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${
-            this.artJSON.metadata.url_slug
-        }">https://everipedia.org/wiki/lang_${this.artJSON.metadata.page_lang}/${this.artJSON.metadata.url_slug}</a>
+                        <a href="https://everipedia.org/wiki/lang_${page_lang}/${
+            url_slug
+        }">https://everipedia.org/wiki/lang_${page_lang}/${url_slug}</a>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-hshtgs">
@@ -1099,19 +1182,19 @@ export class AmpRenderPartial {
                         <div class="social-share-block-wrap">
                             <ul class="tag-list">
                                 ${
-                                    this.artJSON.metadata.page_type == 'Person'
+                                    page_type == 'Person'
                                         ? `<li>${this.artJSON.page_title} wiki</li>
                                     <li>${this.artJSON.page_title} bio</li>
                                     <li>${this.artJSON.page_title} net worth</li>
                                     <li>${this.artJSON.page_title} age</li>
                                     <li>${this.artJSON.page_title} married</li>`
-                                        : this.artJSON.metadata.page_type == 'Product'
+                                        : page_type == 'Product'
                                         ? `<li>${this.artJSON.page_title} wiki</li>
                                     <li>${this.artJSON.page_title} review</li>
                                     <li>${this.artJSON.page_title} history</li>
                                     <li>${this.artJSON.page_title} sales</li>
                                     <li>${this.artJSON.page_title} facts</li>`
-                                        : this.artJSON.metadata.page_type == 'Organization'
+                                        : page_type == 'Organization'
                                         ? `<li>${this.artJSON.page_title} wiki</li>
                                     <li>${this.artJSON.page_title} review</li>
                                     <li>${this.artJSON.page_title} history</li>
@@ -1138,8 +1221,8 @@ export class AmpRenderPartial {
                             width="216"
                             frameborder="0"
                             src="https://www.everipedia.org/AJAX-REQUEST/AJAX_QR_Code_Iframe/lang_${
-                                this.artJSON.metadata.page_lang
-                            }/${this.artJSON.metadata.url_slug}">
+                                page_lang
+                            }/${url_slug}">
                             <div placeholder></div>
                         </amp-iframe>
                     </div>
@@ -1166,7 +1249,7 @@ export class AmpRenderPartial {
     };
 
     renderLanguageLightboxes = (): string => {
-        let langPacks: LanguagePack[] = this.artJSON.alt_langs;
+        let langPacks: LanguagePack[] = this.wikiExtras.alt_langs;
         if (langPacks.length == 0) return ``;
         let languageComboString = langPacks
             .map((value, index) => {
@@ -1200,7 +1283,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "{{ PAGETITLE }}"
+                        "title": "{{ PAGETITLE }}" // TODO: FIX
                         }
                     }
                     }

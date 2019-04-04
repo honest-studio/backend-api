@@ -1,4 +1,5 @@
-import { Citation, Media, SeeAlso, ArticleJson, Sentence, SeeAlsoCollection, InlineImage } from './article-dto';
+import { Citation, Media, ArticleJson, Sentence } from './article-dto';
+import { SeeAlso, SeeAlsoCollection, InlineImage } from './amp-types';
 import { AMPParseCollection } from './amp-types';
 import * as cheerio from 'cheerio';
 import * as crypto from 'crypto';
@@ -9,11 +10,75 @@ import * as htmlparser2 from 'htmlparser2';
 import {
     getYouTubeID,
     CAPTURE_REGEXES,
-    AMP_REGEXES_PRE,
-    AMP_BAD_CLASSES,
-    AMP_BAD_TAGS,
-    AMP_REGEXES_POST
 } from './article-converter';
+
+export const AMP_REGEXES_PRE = [
+    /<html.*<\/head>/gimu,
+    /<\/html/gimu,
+    /\sstyle=".*?"/gimu,
+    /\sstyle='.*?'/gimu,
+    /\sscope=".*?"/gimu,
+    /\ssummary=".*?"/gimu,
+    /\sitem=".*?"/gimu,
+    /\sitem='.*?'/gimu,
+    /\salign='.*?'/gimu,
+    /\svalign=".*?"/gimu,
+    /\sv=".*?"/gimu,
+    /\srules=".*?"/gimu,
+    /\snowrap=".*?"/gimu,
+    /\stype='.*?'/gimu,
+    /\saria-describedby='.*?'/gimu,
+    /\ssize=".*?"/gimu,
+    /\sface=".*?"/gimu,
+    /\scolor=".*?"/gimu,
+    /\susemap=".*?"/gimu,
+    /<html><head><\/head>/gimu,
+    /<\/html>/gimu,
+    /\sunselectable=".*?"/gimu,
+    /\starget=".*?"/gimu,
+    /\sonclick=".*?"/gimu,
+    /\sonmouseout=".*?"/gimu
+];
+export const AMP_REGEXES_POST = [
+    /border=".*?"/gimu,
+    /pic_id=".*?"/gimu,
+    /style=".*?"/gimu,
+    /style='.*?'/gimu,
+    /xml:lang=".*?"/gimu,
+    /\sstyle="color:\s#71b8e4;"/gimu,
+    /\sstyle="color:\s#71b8e4;\sfont-face:\sbold;\stext-decoration:\snone;"/gimu
+];
+export const AMP_BAD_TAGS = [
+    'audio',
+    'head',
+    'map',
+    'math',
+    'mi',
+    'mo',
+    'mtd',
+    'mrow',
+    'mspace',
+    'mtext',
+    'msub',
+    'msup',
+    'mstyle',
+    'semantics',
+    'usemap',
+    'xml',
+    'worddocument',
+    'mathpr',
+    'mathfont',
+    'code',
+    'picture'
+];
+export const AMP_BAD_CLASSES = [
+    'mwe-math-fallback-image-inline',
+    'sortkey',
+    'mw-graph-img',
+    'oly_at__img',
+    'timeline-wrapper',
+    'PopUpMediaTransform'
+];
 
 export const CheckForLinksOrCitationsAMP = (
     textProcessing: string,
@@ -323,7 +388,7 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
             allSentences.push(...(paragraph.items as Sentence[]));
         });
     });
-    allSentences.push(...(passedJSON.main_photo.caption as Sentence[]));
+    allSentences.push(...(passedJSON.main_photo[0].caption as Sentence[]));
     passedJSON.infoboxes.forEach((infobox, index) => {
         allSentences.push(...(infobox.values as Sentence[]));
     });

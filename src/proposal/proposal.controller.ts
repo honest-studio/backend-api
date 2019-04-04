@@ -21,10 +21,10 @@ export class ProposalController {
         name: 'diff',
         description: `Include diff data in the proposals. Takes one of three values:
             'none': (default) Don't include diff data.
-            'percent': Only the return the percentage difference between the proposal and its parent.
+            'metadata': Only the return the metadata between the proposal and its parent.
             'full': Return the full wiki diff between the proposal and its parent. Warning: this can lead to large responses that lag on low-bandwidth connections. 
 
-            Setting this option to 'percent' or 'full' can add 1-5 seconds to the response time.`,
+            Setting this option to 'metadata' or 'full' can add 1-5 seconds to the response time.`,
         required: false,
         type: Boolean
     })
@@ -42,7 +42,7 @@ export class ProposalController {
                 result: proposal result information,
                 votes: an array of votes cast for a proposal,
                 preview: wiki preview (optional),
-                diff_percent: percentage difference from previous version (optional)
+                diff?: information related to the diff created by the proposal
             }, ... ]`
     })
     @UsePipes(new JoiValidationPipe(ProposalSchema, ['query']))

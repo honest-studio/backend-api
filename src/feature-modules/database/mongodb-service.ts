@@ -89,7 +89,7 @@ export class MongoDbService {
 
         const index2 = this.connection().actions.createIndex({ 'trace.act.name': 1, 'trace.act.account': 1 });
 
-        const index3 = this.connection().json_wikis.createIndex({ 'metadata.ipfs_hash': 1 }, { unique: true });
+        const index3 = this.connection().json_wikis.createIndex({ 'ipfs_hash': 1 }, { unique: true });
 
         return Promise.all([index1, index2, index3]);
     }
