@@ -1,6 +1,6 @@
 import { Citation, Media, ArticleJson, Sentence } from './article-dto';
-import { SeeAlso, SeeAlsoCollection, InlineImage } from './amp-types';
-import { AMPParseCollection } from './amp-types';
+import { SeeAlso, SeeAlsoCollection, InlineImage } from './article-types';
+import { AMPParseCollection } from './article-types';
 import * as cheerio from 'cheerio';
 import * as crypto from 'crypto';
 import * as decode from 'unescape';

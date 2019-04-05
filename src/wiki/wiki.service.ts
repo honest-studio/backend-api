@@ -317,7 +317,6 @@ export class WikiService {
             );
         });
         let pageviews = 0;
-        console.log(pageviews_rows);
         if (pageviews_rows.length > 0)
             pageviews = pageviews_rows[0].pageviews;
         const alt_langs = await this.getWikiGroups(lang_code, slug);

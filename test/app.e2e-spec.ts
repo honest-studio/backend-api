@@ -242,6 +242,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki: Get extra info', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/extra/lang_en/travismoore5036459')
+        .expect(200)
+  });
+
   it('Chain: Get Info', () => {
     return request(app.getHttpServer())
         .get('/v2/chain/get_info')

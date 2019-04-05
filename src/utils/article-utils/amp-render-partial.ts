@@ -1,6 +1,6 @@
 import { ArticleJson, Sentence, Citation, Infobox, Media, Section } from './article-dto';
 import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderParagraph, renderImage } from '.';
-import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './amp-types';
+import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './article-types';
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
 import * as CleanCSS from 'clean-css';

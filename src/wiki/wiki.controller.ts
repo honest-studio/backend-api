@@ -11,7 +11,7 @@ import { JoiValidationPipe } from '../common';
 import { WikiService } from './wiki.service';
 import { WikiQuerySchema } from './wiki.query-schema';
 import { ArticleJson } from '../utils/article-utils/article-dto';
-import { WikiExtraInfo } from '../utils/article-utils/amp-types';
+import { WikiExtraInfo } from '../utils/article-utils/article-types';
 import * as rawbody from 'raw-body';
 import * as boolean from 'boolean';
 

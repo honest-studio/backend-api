@@ -18,7 +18,7 @@ import {
     TableRow,
     TableCell
 } from './article-dto';
-import { AMPParseCollection } from './amp-types';
+import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
 
 const decode = require('unescape');

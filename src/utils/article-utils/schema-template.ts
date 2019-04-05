@@ -1,5 +1,5 @@
 import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell } from './article-dto';
-import { AMPParseCollection, LanguagePack } from './amp-types';
+import { AMPParseCollection, LanguagePack } from './article-types';
 import { getYouTubeID } from './article-converter';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
 import * as crypto from 'crypto';
