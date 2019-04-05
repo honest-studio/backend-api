@@ -58,7 +58,7 @@ describe('Backend API', () => {
 
   it('Recent Activity: Proposals w/ Diff Percent', () => {
     return request(app.getHttpServer())
-      .get('/v2/recent-activity/proposals?diff=percent')
+      .get('/v2/recent-activity/proposals?diff=metadata')
       .expect(200)
   });
 
@@ -76,7 +76,7 @@ describe('Backend API', () => {
 
   it('Recent Activity: Proposals w/ Preview and Diff Percent', () => {
     return request(app.getHttpServer())
-      .get('/v2/recent-activity/proposals?diff=percent&preview=true')
+      .get('/v2/recent-activity/proposals?diff=metadata&preview=true')
       .expect(200)
   });
 
@@ -110,9 +110,9 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Proposal: Multiple proposals w/ diff percent', () => {
+  it('Proposal: Multiple proposals w/ diff metadata', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/682,692,690?diff=percent')
+        .get('/v2/proposal/682,692,690?diff=metadata')
         .expect(200)
   });
 
@@ -239,6 +239,12 @@ describe('Backend API', () => {
   it('Wiki: Get schema by slug with unicode', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/schema/lang_ko/%EB%B2%A0%EB%A0%88%ED%83%80_92')
+        .expect(200)
+  });
+
+  it('Wiki: Get extra info', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/extra/lang_en/travismoore5036459')
         .expect(200)
   });
 

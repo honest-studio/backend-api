@@ -23,10 +23,10 @@ export class HistoryController {
         name: 'diff',
         description: `Include diff data in the proposals. Takes one of three values:
             'none': (default) Don't include diff data.
-            'percent': Only the return the percentage difference between the proposal and its parent.
+            'metadata': Only return metadata about the such as diff_percent, old_hash, new_hash, etc.
             'full': Return the full wiki diff between the proposal and its parent. Warning: this can lead to large responses that lag on low-bandwidth connections. 
 
-            Setting this option to 'percent' or 'full' can add 1-5 seconds to the response time.`,
+            Setting this option to 'metadata' or 'full' can add 1-2 seconds to the response time.`,
         required: false,
         type: Boolean
     })

@@ -3,7 +3,7 @@ import * as Joi from 'joi';
 const ProposalSchema = {
     preview: Joi.boolean().default(false),
     diff: Joi.string()
-        .valid('percent', 'full', 'none')
+        .valid('metadata', 'full', 'none')
         .default('none')
 };
 

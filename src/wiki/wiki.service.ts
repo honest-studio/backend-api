@@ -4,16 +4,9 @@ import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
-import { ArticleJson, SeeAlso } from '../utils/article-utils/article-dto';
-import { renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
+import { ArticleJson, SeeAlso, WikiExtraInfo, LanguagePack , renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import * as SqlString from 'sqlstring';
-
-export interface LanguagePack {
-    lang: string;
-    article_title: string;
-    slug: string;
-}
 
 @Injectable()
 export class WikiService {
@@ -24,11 +17,6 @@ export class WikiService {
         private cacheService: CacheService,
         private mediaUploadService: MediaUploadService
     ) {}
-
-    async getWikiByHash(ipfs_hash: string): Promise<any> {
-        const wikis = await this.getWikisByHash([ipfs_hash]);
-        return wikis[0];
-    }
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
         let rows: Array<any> = await new Promise((resolve, reject) => {
@@ -84,31 +72,34 @@ export class WikiService {
             wiki = cache_wiki;
         } else {
             wiki = oldHTMLtoJSON(rows[0].html_blob);
-            wiki.metadata.pageviews = rows[0].pageviews;
-            wiki.metadata.ipfs_hash = rows[0].ipfs_hash_current;
-            wiki.alt_langs = await this.getWikiGroups(lang_code, slug);
-            wiki.seealsos = await this.getSeeAlsos(wiki);
-            if (wiki.metadata.is_wikipedia_import) {
+            wiki.ipfs_hash = rows[0].ipfs_hash_current;
+
+            // TODO: These should all be in a different API call 
+            //wiki.metadata.pageviews = rows[0].pageviews; 
+            //wiki.alt_langs = await this.getWikiGroups(lang_code, slug);
+            //wiki.seealsos = await this.getSeeAlsos(wiki);
+            const is_wikipedia_import = wiki.metadata.find(w => w.key == 'is_wikipedia_import' ).value;
+            if (is_wikipedia_import) {
                 wiki.categories = await this.getCategories(lang_code, slug);
             }
             this.mongo
                 .connection()
-                .json_wikis.replaceOne({ 'metadata.ipfs_hash': wiki.metadata.ipfs_hash }, wiki, { upsert: true });
+                .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true });
         }
 
-        wiki.metadata.pageviews = rows[0].pageviews;
-        wiki.metadata.page_lang = lang_code;
+        wiki.metadata.push({ key: 'page_lang', value: lang_code });
         return wiki;
     }
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
         // console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
-        let ampWiki = await this.getWikiBySlug(lang_code, slug);
-        let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo.url);
-        ampWiki.main_photo.width = photoExtraData.width;
-        ampWiki.main_photo.height = photoExtraData.height;
-        ampWiki.main_photo.mime = photoExtraData.mime;
-        return renderAMP(ampWiki);
+        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug);
+        let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
+        ampWiki.main_photo[0].width = photoExtraData.width;
+        ampWiki.main_photo[0].height = photoExtraData.height;
+        ampWiki.main_photo[0].mime = photoExtraData.mime;
+        const wikiExtraInfo = await this.getWikiExtras(lang_code, slug);
+        return renderAMP(ampWiki, wikiExtraInfo);
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
@@ -117,24 +108,24 @@ export class WikiService {
         return schema;
     }
 
-    async getWikisByHash(ipfs_hashes: Array<string>) {
+    async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
         const json_wikis = [];
 
         // try to directly fetch cached json wikis
         const cached_json_wikis = await this.mongo
             .connection()
             .json_wikis.find({
-                'metadata.ipfs_hash': { $in: ipfs_hashes }
+                'ipfs_hash': { $in: ipfs_hashes }
             })
             .toArray();
         for (let json_wiki of cached_json_wikis) {
-            const index = ipfs_hashes.findIndex((hash) => hash == json_wiki.metadata.ipfs_hash);
+            const index = ipfs_hashes.findIndex((hash) => hash == json_wiki.ipfs_hash);
             json_wikis.push(json_wiki);
         }
 
         // try to fetch wikis from local IPFS node
         const uncached_json_hashes = ipfs_hashes.filter(
-            (hash) => !json_wikis.find((json) => json.metadata.ipfs_hash == hash)
+            (hash) => !json_wikis.find((json) => json.ipfs_hash == hash)
         );
         for (const i in uncached_json_hashes) {
             const ipfs_hash = uncached_json_hashes[i];
@@ -143,15 +134,15 @@ export class WikiService {
                 const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
                 const wiki = buffer.toString('utf8');
                 const json_wiki = oldHTMLtoJSON(wiki);
-                json_wiki.metadata.ipfs_hash = ipfs_hash;
+                json_wiki.ipfs_hash = ipfs_hash;
                 json_wikis.push(json_wiki);
-            } catch {
+            } catch (e) {
                 continue;
             }
         }
 
         const uncached_html_hashes = ipfs_hashes.filter(
-            (hash) => !json_wikis.find((json) => json.metadata.ipfs_hash == hash)
+            (hash) => !json_wikis.find((json) => json.ipfs_hash == hash)
         );
         if (uncached_html_hashes.length > 0) {
             // fetch remainder from mysql if they exist
@@ -168,18 +159,19 @@ export class WikiService {
             });
             rows.forEach((r) => {
                 const json_wiki = oldHTMLtoJSON(r.html_blob);
-                json_wiki.metadata.ipfs_hash = r.ipfs_hash;
+                json_wiki.ipfs_hash = r.ipfs_hash;
                 json_wikis.push(json_wiki);
             });
 
             // cache uncached json wikis
             const uncached_json_wikis = uncached_json_hashes
-                .map((hash) => json_wikis.find((json) => json.metadata.ipfs_hash == hash))
-                .filter((json) => json); // filter out non-existent wikis
-            try {
-                this.mongo.connection().json_wikis.insertMany(uncached_json_wikis, { ordered: false });
-            } catch (e) {
-                console.log('Failed to cache some wikis:', e);
+                .map((hash) => json_wikis.find((json) => json.ipfs_hash == hash))
+                .filter((json) => json) // filter out non-existent wikis
+
+            uncached_json_wikis.forEach(json => delete json._id);
+            if (uncached_json_wikis.length > 0) {
+                this.mongo.connection().json_wikis.insertMany(uncached_json_wikis, { ordered: false })
+                    .catch(e => console.log('Failed to cache some wikis', e));
             }
 
             // attempt to cache uncached IPFS hashes
@@ -187,7 +179,7 @@ export class WikiService {
 
             // mark wikis that couldn't be found
             for (let hash of ipfs_hashes) {
-                const json = json_wikis.find((json) => json.metadata.ipfs_hash == hash);
+                const json = json_wikis.find((json) => json.ipfs_hash == hash);
                 if (!json) json_wikis.push({ error: `Wiki ${hash} could not be found` });
             }
         }
@@ -307,4 +299,29 @@ export class WikiService {
         if (wikipedia_categories) return wikipedia_categories.map((cat) => cat.title.split(':')[1]);
         else return [];
     }
+
+    async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
+        const wiki = await this.getWikiBySlug(lang_code, slug);
+        const see_also = await this.getSeeAlsos(wiki);
+        const pageviews_rows: any[] = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT pageviews FROM enterlink_articletable
+                WHERE page_lang= ? AND slug = ?
+                `,
+                [lang_code, slug],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        let pageviews = 0;
+        if (pageviews_rows.length > 0)
+            pageviews = pageviews_rows[0].pageviews;
+        const alt_langs = await this.getWikiGroups(lang_code, slug);
+
+        return { alt_langs, see_also, pageviews };
+    }
+
 }

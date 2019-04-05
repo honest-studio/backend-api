@@ -11,49 +11,34 @@ import {
     TableRow,
     TableSection,
     Infobox,
-    Citation
-} from '../utils/article-utils/article-dto';
-import {
-    ArticleJsonDiff,
-    CitationDiff,
-    MetadataDiff,
-    MediaDiff,
-    SectionDiff,
-    TableDiff,
-    TableRowDiff,
-    ParagraphDiff,
-    DiffType,
-    InfoboxDiff,
-    TableSectionDiff
-} from './diff-dto';
+    Citation,
+    DiffType
+} from './article-dto';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
 
 const METADATA_EXCLUDE_FIELDS = ['pageviews'];
 
-export function diffArticleJson(old_wiki: ArticleJson, new_wiki: ArticleJson): ArticleJsonDiff {
+export function diffArticleJson(old_wiki: ArticleJson, new_wiki: ArticleJson): ArticleJson {
     const diff_json = {
         page_title: diffPageTitle(old_wiki.page_title, new_wiki.page_title),
-        main_photo: diffMedia([old_wiki.main_photo], [new_wiki.main_photo]),
+        main_photo: diffMedia(old_wiki.main_photo, new_wiki.main_photo),
         page_body: diffPageBody(old_wiki.page_body, new_wiki.page_body),
         infoboxes: diffInfoboxes(old_wiki.infoboxes, new_wiki.infoboxes),
         citations: diffCitations(old_wiki.citations, new_wiki.citations),
         metadata: diffMetadata(old_wiki.metadata, new_wiki.metadata),
         media_gallery: diffMedia(old_wiki.media_gallery, new_wiki.media_gallery),
         infobox_html: new_wiki.infobox_html,
-        diff_metadata: {
-            old_hash: old_wiki.metadata.ipfs_hash,
-            new_hash: new_wiki.metadata.ipfs_hash
-        }
+        amp_info: new_wiki.amp_info
     };
+    diff_json.metadata.push({ key: 'old_hash', value: old_wiki.ipfs_hash });
+    diff_json.metadata.push({ key: 'new_hash', value: new_wiki.ipfs_hash });
     return diff_json;
 }
 
-function diffMetadata(old_metadata: Metadata, new_metadata: Metadata): MetadataDiff[] {
-    const old_entries = Object.entries(old_metadata);
-    const new_entries = Object.entries(old_metadata);
-    const old_lines = old_entries.map((arr) => `${arr[0]}:${arr[1]}`).join('\n');
-    const new_lines = new_entries.map((arr) => `${arr[0]}:${arr[1]}`).join('\n');
+function diffMetadata(old_metadata: Metadata[], new_metadata: Metadata[]): Metadata[] {
+    const old_lines = old_metadata.map(data => `${data.key}:${data.value}`).join('\n');
+    const new_lines = new_metadata.map(data => `${data.key}:${data.value}`).join('\n');
     const diff = JsDiff.diffLines(old_lines, new_lines);
 
     const metadata_diffs = [];
@@ -63,13 +48,13 @@ function diffMetadata(old_metadata: Metadata, new_metadata: Metadata): MetadataD
         for (let i = 0; i < part.count; i++) {
             let clone;
             if (part.added) {
-                clone = { ...new_entries[new_counter++] };
+                clone = { ...new_metadata[new_counter++] };
                 clone.diff = 'add';
             } else if (part.removed) {
-                clone = { ...old_entries[old_counter++] };
+                clone = { ...old_metadata[old_counter++] };
                 clone.diff = 'delete';
             } else {
-                clone = { ...old_entries[old_counter++] };
+                clone = { ...old_metadata[old_counter++] };
                 clone.diff = 'none';
             }
             metadata_diffs.push(clone);
@@ -79,7 +64,7 @@ function diffMetadata(old_metadata: Metadata, new_metadata: Metadata): MetadataD
     return metadata_diffs;
 }
 
-function diffCitations(old_citations: Citation[], new_citations: Citation[]): CitationDiff[] {
+function diffCitations(old_citations: Citation[], new_citations: Citation[]): Citation[] {
     const old_urls = old_citations.map((c) => c.url).join('\n');
     const new_urls = new_citations.map((c) => c.url).join('\n');
     const diff = JsDiff.diffLines(old_urls, new_urls);
@@ -107,18 +92,44 @@ function diffCitations(old_citations: Citation[], new_citations: Citation[]): Ci
     return citation_diffs;
 }
 
-function diffPageTitle(old_page_title: string, new_page_title: string) {
+function diffPageTitle(old_page_title: Sentence[], new_page_title: Sentence[]) {
     const diffs = [];
-    if (old_page_title && old_page_title == new_page_title) diffs.push({ page_title: old_page_title, diff: 'none' });
-    else if (!old_page_title) diffs.push({ page_title: new_page_title, diff: 'add' });
+    const old_text = old_page_title[0].text;
+    const new_text = new_page_title[0].text;
+    if (old_text && old_text == new_text) {
+        diffs.push({
+            index: 0, 
+            text: old_text, 
+            type: 'sentence',
+            diff: 'none'
+        });
+    }
+    else if (!old_text) {
+        diffs.push({
+            index: 0, 
+            text: new_text, 
+            type: 'sentence',
+            diff: 'add'
+        });
+    }
     else {
-        diffs.push({ page_title: old_page_title, diff: 'delete' });
-        diffs.push({ page_title: new_page_title, diff: 'add' });
+        diffs.push({
+            index: 0, 
+            text: old_text, 
+            type: 'sentence',
+            diff: 'delete'
+        });
+        diffs.push({
+            index: 0, 
+            text: new_text, 
+            type: 'sentence',
+            diff: 'add'
+        });
     }
     return diffs;
 }
 
-function diffMedia(old_media: Media[], new_media: Media[]): MediaDiff[] {
+function diffMedia(old_media: Media[], new_media: Media[]): Media[] {
     const old_lines = old_media
         .map((c) => {
             if (c.caption) return `${c.url}:${hashSentences(c.caption)}`;
@@ -193,7 +204,7 @@ const DIFF_ADD_MARKER = ' d+++d';
 const DIFF_DELETE_MARKER = ' d---d';
 const DIFF_NONE_MARKER = ' d===d';
 
-function diffPageBody(old_page_body: Section[], new_page_body: Section[]): SectionDiff[] {
+function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Section[] {
     const old_lines = old_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
     const new_lines = new_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
 
@@ -230,7 +241,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
     return diffToSections(diff_text);
 }
 
-function diffToSections(diff_text): SectionDiff[] {
+function diffToSections(diff_text): Section[] {
     const sections = [];
 
     const section_texts = diff_text.split(SECTION_SEPARATOR);
@@ -254,7 +265,7 @@ function diffToSections(diff_text): SectionDiff[] {
     return sections;
 }
 
-function linesToParagraph(lines: string): ParagraphDiff {
+function linesToParagraph(lines: string): Paragraph {
     const items = lines
         .split(PARAGRAPH_ITEM_SEPARATOR)
         .filter((lines) => lines.trim()) // no blank items
@@ -289,7 +300,7 @@ function linesToParagraph(lines: string): ParagraphDiff {
     return { index: 0, items, tag_type: 'p', attrs: {} };
 }
 
-function linesToTable(lines: string): TableDiff {
+function linesToTable(lines: string): Table {
     lines = lines.substring(10);
     const table_sections = lines.split(TABLE_SECTION_SEPARATOR);
     const thead = linesToTableSection(table_sections[0]);
@@ -300,13 +311,13 @@ function linesToTable(lines: string): TableDiff {
     return { type: 'table', thead, tbody, tfoot, caption };
 }
 
-function linesToTableSection(lines: string): TableSectionDiff {
+function linesToTableSection(lines: string): TableSection {
     const rows = lines.split(TABLE_ROW_SEPARATOR).map(lineToTableRow);
 
     return { rows, attrs: {} };
 }
 
-function lineToTableRow(line: string): TableRowDiff {
+function lineToTableRow(line: string): TableRow {
     const difftype = getLineDiffType(line);
     line = line.slice(0, -6);
     const cells = line.split(TABLE_CELL_SEPARATOR).map((text, index) => ({
@@ -325,7 +336,7 @@ function lineToTableRow(line: string): TableRowDiff {
     return { index: 0, attrs: {}, cells, diff: difftype };
 }
 
-function lineToImage(line: string): MediaDiff {
+function lineToImage(line: string): Media {
     const url = line.split(IMAGE_URL_CAPTION_SEPARATOR)[0];
     const caption = [
         {
@@ -396,7 +407,7 @@ function tableRowToLine(row: TableRow): string {
     return row.cells.map((cell) => cell.content.map((sentence) => sentence.text).join(' ')).join(TABLE_CELL_SEPARATOR);
 }
 
-function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]): InfoboxDiff[] {
+function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]): Infobox[] {
     const hash = crypto.createHash('sha256');
     const old_hashes = old_infoboxes.map(hashInfobox).join('\n');
     const new_hashes = new_infoboxes.map(hashInfobox).join('\n');

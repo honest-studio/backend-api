@@ -18,7 +18,7 @@ import {
     TableRow,
     TableCell
 } from './article-dto';
-import { AMPParseCollection } from './amp-types';
+import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
 
 const decode = require('unescape');
@@ -46,73 +46,6 @@ export const REPLACEMENTS = [
         regex: /https:\/\/s3.amazonaws.com\/everipedia-storage/gimu,
         replacement: 'https://everipedia-storage.s3.amazonaws.com'
     }
-];
-export const AMP_REGEXES_PRE = [
-    /<html.*<\/head>/gimu,
-    /<\/html/gimu,
-    /\sstyle=".*?"/gimu,
-    /\sstyle='.*?'/gimu,
-    /\sscope=".*?"/gimu,
-    /\ssummary=".*?"/gimu,
-    /\sitem=".*?"/gimu,
-    /\sitem='.*?'/gimu,
-    /\salign='.*?'/gimu,
-    /\svalign=".*?"/gimu,
-    /\sv=".*?"/gimu,
-    /\srules=".*?"/gimu,
-    /\snowrap=".*?"/gimu,
-    /\stype='.*?'/gimu,
-    /\saria-describedby='.*?'/gimu,
-    /\ssize=".*?"/gimu,
-    /\sface=".*?"/gimu,
-    /\scolor=".*?"/gimu,
-    /\susemap=".*?"/gimu,
-    /<html><head><\/head>/gimu,
-    /<\/html>/gimu,
-    /\sunselectable=".*?"/gimu,
-    /\starget=".*?"/gimu,
-    /\sonclick=".*?"/gimu,
-    /\sonmouseout=".*?"/gimu
-];
-export const AMP_REGEXES_POST = [
-    /border=".*?"/gimu,
-    /pic_id=".*?"/gimu,
-    /style=".*?"/gimu,
-    /style='.*?'/gimu,
-    /xml:lang=".*?"/gimu,
-    /\sstyle="color:\s#71b8e4;"/gimu,
-    /\sstyle="color:\s#71b8e4;\sfont-face:\sbold;\stext-decoration:\snone;"/gimu
-];
-export const AMP_BAD_TAGS = [
-    'audio',
-    'head',
-    'map',
-    'math',
-    'mi',
-    'mo',
-    'mtd',
-    'mrow',
-    'mspace',
-    'mtext',
-    'msub',
-    'msup',
-    'mstyle',
-    'semantics',
-    'usemap',
-    'xml',
-    'worddocument',
-    'mathpr',
-    'mathfont',
-    'code',
-    'picture'
-];
-export const AMP_BAD_CLASSES = [
-    'mwe-math-fallback-image-inline',
-    'sortkey',
-    'mw-graph-img',
-    'oly_at__img',
-    'timeline-wrapper',
-    'PopUpMediaTransform'
 ];
 export const VALID_VIDEO_EXTENSIONS = [
     '.mp4',
@@ -149,7 +82,7 @@ function pyToJS(inputItem: any) {
 }
 
 // Convert the old-style HTML into a JSON
-export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): ArticleJson {
+export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     // Replace some problematic unicode characters and other stuff
     REPLACEMENTS.forEach(function(pair) {
         oldHTML = oldHTML.replace(pair.regex, pair.replacement);
@@ -173,29 +106,22 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
 
     // ---------------------------------------------------------
     // AMP
-    // Do a big AMP sanitization beforehand if applicable
     const amp_info = {
         load_youtube_js: false,
         load_audio_js: false,
         load_video_js: false,
         lightboxes: []
     };
-    // if (useAMP) {
-    //     // Sanitize the blurb and collect the lightboxes
-    //     let resultDict = ampSanitizer(oldHTML, metadata, 'QmdddTESTTEST_REPLACE_ME', 'en', false);
-    //     amp_info.lightboxes.push(resultDict.lightBoxes);
 
-    //     // Load the AMP-sanitized HTML into htmlparser2
-    //     dom = htmlparser2.parseDOM(resultDict.text, { decodeEntities: true });
-
-    //     // Load the AMP-sanitized HTML into cheerio for parsing
-    //     $ = cheerio.load(dom);
-    // }
-
-    const page_title =
+    const page_title_text =
         $('h1.page-title')
             .text()
-            .trim() || null;
+            .trim() || '';
+    const page_title = [{
+        index: 0,
+        type: 'sentence',
+        text: page_title_text
+    }];
     const citations = extractCitations($);
     const media_gallery = extractMediaGallery($);
     const main_photo = extractMainPhoto($);
@@ -230,385 +156,6 @@ export function oldHTMLtoJSON(oldHTML: string, useAMP: boolean = false): Article
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }
 
-// AMP sanitize a chunk of HTML and return the cleaned HTML, as well as the hoverblurb and citation lightboxes
-// Blue links and citation links need to be converted into buttons that trigger lightboxes, which mimic the hover-over
-// feature on desktop. GIF <img>'s need to be converted to <amp-anim>, <img> to <amp-img>, and <video> to <amp-video>.
-// Also, a regex loop cleans attributes and other bad tags and attributes.
-// export function ampSanitizer(
-//     inputString: string,
-//     pageMetaData: Object,
-//     currentIPFS: String,
-//     pageLang: String = 'en',
-//     bypassRegex: boolean = false
-// ) {
-
-//     // Set some initial variables
-//     let localCopy = inputString;
-//     let ampLightBoxes = [];
-
-//     // Do some regex replacements first
-//     if (!bypassRegex) {
-//         AMP_REGEXES_PRE.forEach(function(element) {
-//             localCopy = localCopy.replace(element, '');
-//         });
-//     }
-
-//     // Load the HTML into htmlparser2 beforehand since it is more forgiving
-//     const dom = htmlparser2.parseDOM(localCopy, { decodeEntities: true });
-
-//     // Load the HTML into cheerio for parsing
-//     const $ = cheerio.load(dom);
-
-//     // Replace tags <font> with <span>
-//     const replacementTags = [['font', 'span']];
-//     replacementTags.forEach(function(pair) {
-//         $(pair[0]).replaceWith($(`<${pair[1]}>${$(this).html()}</${pair[1]}>`));
-//     });
-
-//     // Remove bad tags from the HTML
-//     AMP_BAD_TAGS.forEach(function(badTag) {
-//         $(badTag).remove();
-//     });
-
-//     // Remove empty <p> tags to make the text look cleaner
-//     $('p').each(function() {
-//         var $this = $(this);
-//         if ($this.html().replace(/\s|&nbsp;/gimu, '').length == 0) {
-//             $this.remove();
-//         }
-//     });
-
-//     // Remove tags with bad classes from the HTML
-//     AMP_BAD_CLASSES.forEach(function(badClass) {
-//         $(`.${badClass}`).remove();
-//     });
-
-//     // Find the hoverblurb links
-//     $('a.tooltippable').each(function() {
-//         // Generate a random string for the tag ID
-//         let unique_id = Math.random()
-//             .toString(36)
-//             .substring(2);
-
-//         // Get the slug
-//         // MAY NEED TO DEAL WITH ENCODING ISSUES LATER
-//         let theSlug = $(this).attr('data-username');
-
-//         // Look for a possible IPFS link
-//         let theHref = $(this).attr('href');
-//         let hrefDestinationSlug = '';
-//         try {
-//             // Try to find the IPFS hash if it exists
-//             let IPFSHashCombo = theHref.split('wiki/Qm');
-//             hrefDestinationSlug = 'Qm' + IPFSHashCombo.slice(1, -1);
-//         } catch (e) {
-//             console.log(e);
-
-//             // Handle the page language in the URL, if present
-//             if (theSlug.includes('lang_')) {
-//                 hrefDestinationSlug = theSlug;
-//             } else {
-//                 hrefDestinationSlug = `lang_${pageLang}/${theSlug}/`;
-//             }
-//         }
-
-//         // Collect all the interior tags, if any
-//         // TODO, may not be necessary
-
-//         // Get the text of the link
-//         let anchorText = $(this)
-//             .text()
-//             .trim();
-
-//         // Create the button that will be substituted
-//         let openButtonTag = $('<button />');
-//         $(openButtonTag).addClass('tooltippable');
-//         $(openButtonTag).attr('role', 'button');
-//         $(openButtonTag).attr('tabindex', 0);
-//         $(openButtonTag).attr('aria-label', theSlug);
-//         $(openButtonTag).attr('aria-labelledby', `${theSlug}__${unique_id}`);
-//         $(openButtonTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}`);
-//         $(openButtonTag).text(anchorText);
-
-//         // Replace the <a> tag with a button
-//         $(this).replaceWith(openButtonTag);
-
-//         // Construct the amp-lightbox
-//         let lightBoxTag = $('<amp-lightbox />');
-//         $(lightBoxTag).addClass('amp-hc');
-//         $(lightBoxTag).attr('id', `hvrblb-${theSlug}__${unique_id}`);
-//         $(lightBoxTag).attr('role', 'button');
-//         $(lightBoxTag).attr('tabindex', 0);
-//         $(lightBoxTag).attr('on', `tap:hvrblb-${theSlug}__${unique_id}.close`);
-//         $(lightBoxTag).attr('layout', 'nodisplay');
-
-//         // Construct the amp-iframe
-//         let iframeTag = $('<amp-iframe />');
-//         $(iframeTag).addClass('amp-hc');
-//         $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
-//         $(iframeTag).attr('frameborder', 0);
-//         $(iframeTag).attr('scrolling', 'no');
-//         $(iframeTag).attr('layout', 'fill');
-//         $(iframeTag).attr('src', `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${hrefDestinationSlug}/`);
-
-//         // Placeholder image (leave this here or it will cause stupid AMP problems)
-//         let placeholderTag = $('<amp-img />');
-//         $(placeholderTag).attr('placeholder', '');
-//         $(placeholderTag).attr('layout', 'fill');
-//         $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
-
-//         // Put the placeholder inside the iframe
-//         $(iframeTag).append(placeholderTag);
-
-//         // Put the iframe inside of the lightbox
-//         $(lightBoxTag).append(iframeTag);
-
-//         // Add the lightboxes to the list, as text and not a jQuery object
-//         ampLightBoxes.push($.html(lightBoxTag));
-//     });
-
-//     // Find the citation links
-//     $('a.tooltippableCarat').each(function() {
-//         // Generate a random string for the tag ID
-//         let unique_id = Math.random().toString(36);
-
-//         // Encode the URL
-//         let linkURLEncoded = '';
-//         try {
-//             linkURLEncoded = encodeURIComponent($(this).attr('data-username'));
-//         } catch (e) {
-//             linkURLEncoded = $(this).attr('data-username');
-//         }
-
-//         // Get the text of the citation
-//         let anchorText = $(this)
-//             .text()
-//             .trim();
-
-//         // Create the button that will be substituted
-//         let openButtonTag = $('<button />');
-//         $(openButtonTag).addClass('tooltippableCarat');
-//         $(openButtonTag).attr('role', 'button');
-//         $(openButtonTag).attr('tabindex', 0);
-//         $(openButtonTag).attr('aria-label', anchorText);
-//         $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
-//         $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
-//         $(openButtonTag).text(anchorText);
-
-//         // Replace the <a> tag with a button
-//         $(this).replaceWith(openButtonTag);
-
-//         // Construct the amp-lightbox
-//         let lightBoxTag = $('<amp-lightbox />');
-//         $(lightBoxTag).addClass('amp-hc');
-//         $(lightBoxTag).attr('id', `hvrlnk-${unique_id}`);
-//         $(lightBoxTag).attr('role', 'button');
-//         $(lightBoxTag).attr('tabindex', 0);
-//         $(lightBoxTag).attr('on', `tap:hvrlnk-${unique_id}.close`);
-//         $(lightBoxTag).attr('layout', 'nodisplay');
-
-//         // Construct the amp-iframe
-//         let iframeTag = $('<amp-iframe />');
-//         $(iframeTag).addClass('amp-hc');
-//         $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
-//         $(iframeTag).attr('height', '275');
-//         $(iframeTag).attr('frameborder', 0);
-//         $(iframeTag).attr('scrolling', 'no');
-//         $(iframeTag).attr('layout', 'fill');
-//         $(iframeTag).attr(
-//             'src',
-//             `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
-//         );
-
-//         // Placeholder image (leave this here or it will cause stupid AMP problems)
-//         let placeholderTag = $('<amp-img />');
-//         $(placeholderTag).attr('placeholder', '');
-//         $(placeholderTag).attr('layout', 'fill');
-//         $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
-
-//         // Put the placeholder inside the iframe
-//         $(iframeTag).append(placeholderTag);
-
-//         // Put the iframe inside of the lightbox
-//         $(lightBoxTag).append(iframeTag);
-
-//         // Add the lightboxes to the list, as text and not a jQuery object
-//         ampLightBoxes.push($.html(lightBoxTag));
-//     });
-
-//     // Convert <img> GIFs into <amp-anim>'s
-//     $("img[data-mimetype='image/gif']").each(function() {
-//         // Get the full and thumbnail URLs
-//         let fullImgSrc = '';
-//         let thumbImgSrc = '';
-//         if ($(this).attr('data-src')) {
-//             fullImgSrc = $(this).attr('data-src');
-//             thumbImgSrc = $(this).attr('src');
-//         } else {
-//             fullImgSrc = $(this).attr('src');
-//             thumbImgSrc =
-//                 'https://epcdn-vz.azureedge.net/static/images/white_dot.png';
-//         }
-
-//         // Create the amp-anim
-//         let ampAnimTag = $('<amp-anim />');
-//         $(ampAnimTag).attr('width', 'auto');
-//         $(ampAnimTag).attr('height', '275');
-//         $(ampAnimTag).attr('layout', 'fixed-height');
-//         $(ampAnimTag).attr('data-mimetype', 'image/gif');
-//         $(ampAnimTag).attr('src', fullImgSrc);
-
-//         // Create the placeholder / thumbnail image
-//         let placeholderTag = $('<amp-img />');
-//         $(placeholderTag).attr('layout', 'fill');
-//         $(placeholderTag).attr('width', '1');
-//         $(placeholderTag).attr('data-height', '1');
-//         $(placeholderTag).attr('src', thumbImgSrc);
-//         $(placeholderTag).attr('placeholder', '');
-
-//         // Put the placeholder inside the amp-anim
-//         $(ampAnimTag).append(placeholderTag);
-
-//         // Replace the <img> GIF with <amp-anim>
-//         $(this).replaceWith(ampAnimTag);
-//     });
-
-//     // Convert non-GIF <img>'s into <amp-img>'s
-//     $("img[data-mimetype!='image/gif']", 'img.caption-video').each(function() {
-//         // If the image isn't a video caption, double check that the mimetype is present and it isn't a GIF
-//         if (!$(this).hasClass('caption-video')) {
-//             let patt = new RegExp(/^image\/(?!gif).*$/);
-//             if (!patt.test($(this).attr('data-mimetype'))) {
-//                 // Skip this element if the regex fails to match
-//                 return true;
-//             }
-//         }
-
-//         // Get the full and thumbnail URLs
-//         let fullImgSrc = '';
-//         let thumbImgSrc = '';
-//         if ($(this).attr('data-src')) {
-//             fullImgSrc = $(this).attr('data-src');
-//             thumbImgSrc = $(this).attr('src');
-//         } else {
-//             fullImgSrc = $(this).attr('src');
-//             thumbImgSrc =
-//                 'https://epcdn-vz.azureedge.net/static/images/white_dot.png';
-//         }
-
-//         // Create the amp-img
-//         let ampImgTag = $('<amp-img />');
-//         $(ampImgTag).attr('width', 'auto');
-//         $(ampImgTag).attr('height', '275');
-//         $(ampImgTag).attr('layout', 'fixed-height');
-//         $(ampImgTag).attr('data-mimetype', $(this).attr('data-mimetype'));
-//         $(ampImgTag).attr('src', fullImgSrc);
-
-//         // Create the placeholder / thumbnail image
-//         let placeholderTag = $('<amp-img />');
-//         $(placeholderTag).attr('layout', 'fill');
-//         $(placeholderTag).attr('width', '1');
-//         $(placeholderTag).attr('data-height', '1');
-//         $(placeholderTag).attr('src', thumbImgSrc);
-//         $(placeholderTag).attr('placeholder', '');
-
-//         // Put the placeholder inside the amp-img
-//         $(ampImgTag).append(placeholderTag);
-
-//         // Replace the <img> with <amp-img>
-//         $(this).replaceWith(ampImgTag);
-
-//         return true; // to silence errors
-//     });
-
-//     // Convert <video> to <amp-video>
-//     $('video').each(function() {
-//         // Create the amp-img
-//         let ampVideoTag = $('<amp-video />');
-//         $(ampVideoTag).attr('width', 'auto');
-//         $(ampVideoTag).attr('height', '250');
-//         $(ampVideoTag).attr('layout', 'fixed-height');
-//         $(ampVideoTag).attr('preload', 'metadata');
-//         $(ampVideoTag).attr('data-mimetype', $(this).attr('data-mimetype'));
-//         $(ampVideoTag).text(' ');
-
-//         // Create the source tag
-//         let sourceTag = $('<source />');
-//         $(sourceTag).attr('src', $(this).attr('src') + '#t=0.1');
-//         $(sourceTag).attr('type', $(this).attr('data-mimetype'));
-
-//         // Put the source inside the amp-video
-//         $(ampVideoTag).append(sourceTag);
-
-//         // Replace the <video> with <amp-video>
-//         $(this).replaceWith(ampVideoTag);
-//     });
-
-//     // Check for remaining images in the HTML and make sure they have heights and widths
-//     $('img', 'amp-img').each(function() {
-//         let useFixTag = false;
-
-//         // Make sure the image has a valid height
-//         if ($(this).attr('height')) {
-//             // Percentage signs in heights cause problems
-//             if ($(this).attr('height') == '100%') {
-//                 $(this).attr('height', 275);
-//                 useFixTag = true;
-//             }
-//         } else {
-//             // Set the height manually
-//             $(this).attr('height', 275);
-//             useFixTag = true;
-//         }
-
-//         // Make sure the image has a valid width
-//         if ($(this).attr('width')) {
-//             // Percentage signs in widths cause problems
-//             if ($(this).attr('width') == '100%') {
-//                 $(this).attr('width', 275);
-//                 useFixTag = true;
-//             }
-//         } else {
-//             // Set the width manually
-//             $(this).attr('width', 275);
-//             useFixTag = true;
-//         }
-
-//         if (useFixTag) {
-//             // Create the placeholder / thumbnail image
-//             let ampFixTag = $('<div />');
-//             $(ampFixTag).addClass('amp-san-picfix');
-//             let theContents = $(this).replaceWith(ampFixTag);
-//             $(ampFixTag).append(theContents);
-//         }
-
-//         // Cleans up remaining images (mainly from wikipedia imports). Will fail for GIF
-//         if (this.tagName == 'img') {
-//             if (!$(this).attr('placeholder')) {
-//                 // Create the amp-img
-//                 let ampImgTag = $('<amp-img />');
-//                 $(ampImgTag).attr('width', $(this).attr('width'));
-//                 $(ampImgTag).attr('height', $(this).attr('height'));
-//                 $(ampImgTag).attr('layout', 'fixed');
-//                 $(ampImgTag).attr('src', $(this).attr('src'));
-//                 $(ampImgTag).text(' ');
-//             }
-//         }
-//     });
-
-//     // Set the output to a string instead of a jQuery / cheerio object
-//     let outputHTML = decode($.html(), 'all');
-
-//     // Do some regex replacements again
-//     if (!bypassRegex) {
-//         AMP_REGEXES_POST.forEach(function(element) {
-//             outputHTML = outputHTML.replace(element, '');
-//         });
-//     }
-
-//     // Return the amp-sanitized text as well as the list of amp-lightboxes
-//     return { text: outputHTML, lightBoxes: ampLightBoxes };
-// }
 
 // Turn the HTML blurb into a JSON dict
 export function extractPageBody($: CheerioStatic): Section[] {
@@ -625,8 +172,8 @@ export function extractPageBody($: CheerioStatic): Section[] {
     return sections;
 }
 
-function extractMetadata($: CheerioStatic): Metadata {
-    const metadata: any = {};
+function extractMetadata($: CheerioStatic): Metadata[] {
+    const metadata = [];
     const ignore_fields = ['pageviews'];
 
     // Loop through the elements and fill the dictionary
@@ -640,7 +187,7 @@ function extractMetadata($: CheerioStatic): Metadata {
                     .text()
                     .trim()
             );
-            metadata[pairKey] = pairValue;
+            metadata.push({ key: pairKey, value: pairValue });
         }
     });
 
@@ -832,7 +379,7 @@ function extractMediaGallery($: CheerioStatic) {
     return gallery;
 }
 
-function extractMainPhoto($: CheerioStatic): Media {
+function extractMainPhoto($: CheerioStatic): Media[] {
     const main_photo: Media = {
         type: 'main_image',
         url: null,
@@ -865,7 +412,7 @@ function extractMainPhoto($: CheerioStatic): Media {
                 .trim()
         ) || null;
 
-    return main_photo;
+    return [main_photo];
 }
 
 function extractInfoboxHtml($: CheerioStatic): string {
