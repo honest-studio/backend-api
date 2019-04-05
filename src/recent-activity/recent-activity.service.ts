@@ -88,9 +88,13 @@ export class RecentActivityService {
         return this.proposalService.getProposals(proposal_ids, proposal_options);
     }
 
-    async getTrendingWikis() {
+    async getTrendingWikis(langs: string[] = []) {
         const access_token = await this.oauthService.getGoogleAnalyticsToken();
-        //const now_date =
+        let match_tokens;
+        if (langs.length > 0)
+            match_tokens = langs.map(lang => `/v2/wiki/slug/lang_${lang}`);
+        else
+            match_tokens = [`/v2/wiki/slug/lang_`];
 
         const body = {
             reportRequests: [
@@ -104,7 +108,7 @@ export class RecentActivityService {
                                 {
                                     dimensionName: 'ga:pagePath',
                                     operator: 'PARTIAL',
-                                    expressions: ['/v2/wiki/slug/lang_']
+                                    expressions: match_tokens
                                 }
                             ]
                         }
@@ -121,6 +125,9 @@ export class RecentActivityService {
                 Authorization: `Bearer ${access_token.token}`
             }
         }).then((response) => response.json());
+
+        if (!report.reports[0].data.rows)
+            return [];
 
         const trending = report.reports[0].data.rows.map((row) => ({
             slug: row.dimensions[0].slice(14),

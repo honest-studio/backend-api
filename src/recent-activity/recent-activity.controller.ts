@@ -138,7 +138,18 @@ export class RecentActivityController {
 
     @Get('trending')
     @ApiOperation({ title: 'Trending wikis' })
-    async getTrendingWikis(): Promise<Array<any>> {
-        return await this.recentActivityService.getTrendingWikis();
+    @ApiImplicitQuery({
+        name: 'langs',
+        description: `Language(s) if you wish to restrict the return output.
+            Default: Return all languages
+            Example: /v2/recent-activity/trending?langs=en,es`,
+        required: false,
+        isArray: true,
+        type: 'string'
+    })
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getTrendingWikis(@Query() query): Promise<Array<any>> {
+        const langs = query.langs.split(',');
+        return await this.recentActivityService.getTrendingWikis(langs);
     }
 }
