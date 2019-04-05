@@ -149,7 +149,8 @@ export class RecentActivityController {
     })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getTrendingWikis(@Query() query): Promise<Array<any>> {
-        const langs = query.langs.split(',');
+        let langs = [];
+        if (query.langs) langs = query.langs.split(',');
         return await this.recentActivityService.getTrendingWikis(langs);
     }
 }

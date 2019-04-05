@@ -92,6 +92,18 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Trending English', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/trending?langs=en')
+      .expect(200)
+  });
+
+  it('Recent Activity: Trending Bad language', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/trending?langs=tree')
+      .expect(200)
+  });
+
   it('Proposal: Basic proposal', () => {
     return request(app.getHttpServer())
         .get('/v2/proposal/1011')
