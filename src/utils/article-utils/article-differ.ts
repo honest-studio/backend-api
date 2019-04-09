@@ -229,13 +229,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             '' // empty lines shouldn't be diffed either
         ].map((sep) => sep.replace(/\n/g, ''));
 
-        // sometimes empty lines get replaced and that trips up the parser
-        // because it relies on newline characters to split text
-        // this is kind of a hacky way to fix the problem but it works for now
-        // it would be great if we could find a more elegant solution
-        if (part.value == '\n')
-            continue;
-
+        diff_text += '\n'; // pad with new lines for safe parsing
         diff_text += part.value
             .split('\n')
             .map((text) => {
@@ -243,6 +237,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
                 else return text + DIFF_MARKER;
             })
             .join('\n');
+        diff_text += '\n'; // pad with new lines for safe parsing
     }
 
     return diffToSections(diff_text);
@@ -273,11 +268,12 @@ function diffToSections(diff_text): Section[] {
 }
 
 function linesToParagraph(lines: string): Paragraph {
+    console.log(lines);
     const items = lines
         .split(PARAGRAPH_ITEM_SEPARATOR)
         .filter((lines) => lines.trim()) // no blank items
         .map((lines, index) => {
-            const prefix = lines.substring(0, 10);
+            const prefix = lines.trim().substring(0, 10);
             if (prefix == SENTENCE_PREFIX)
                 return {
                     index,
