@@ -723,7 +723,7 @@ function sanitizeText($: CheerioStatic) {
 
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
-        const url = decodeURIComponent($(this).attr('data-username'));
+        const url = normalizeUrl(decodeURIComponent($(this).attr('data-username')));
         const plaintextString = `[[CITE|0|${url}]]`;
         $(this).replaceWith(plaintextString);
     });
@@ -1027,6 +1027,8 @@ function markCitations($: CheerioStatic, citations: Citation[]): CheerioStatic {
         const parts = token.split('|');
         const url = parts[2];
         const link_id = citations.findIndex((cite) => cite.url == url);
+        if (link_id == -1)
+            console.log(link_id, url);
         return `CITE|${link_id}|${url}`;
     });
 
