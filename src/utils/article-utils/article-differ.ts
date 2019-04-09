@@ -33,7 +33,36 @@ export function diffArticleJson(old_wiki: ArticleJson, new_wiki: ArticleJson): A
     };
     diff_json.metadata.push({ key: 'old_hash', value: old_wiki.ipfs_hash });
     diff_json.metadata.push({ key: 'new_hash', value: new_wiki.ipfs_hash });
+
+    const { diffed_entities, total_entities } = calcDiffStats(diff_json);
+    const diff_percent = Number((diffed_entities / total_entities).toFixed(2));
+    diff_json.metadata.push({ key: 'diff_changes', value: diffed_entities });
+    diff_json.metadata.push({ key: 'diff_percent', value: diff_percent });
+
     return diff_json;
+}
+
+// recursively loop through an object and determine total and diffed number of entities
+function calcDiffStats(obj) {
+    let diffed_entities = 0;
+    let total_entities = 0;
+    if (!(obj instanceof Object)) {
+        // do nothing
+    }
+    else if (obj.diff) {
+        total_entities += 1;
+        if (obj.diff != 'none')
+            diffed_entities += 1;
+    }
+    else {
+        for (const key in obj) {
+            const stats = calcDiffStats(obj[key])
+            diffed_entities += stats.diffed_entities;
+            total_entities += stats.total_entities;
+        }    
+    }
+
+    return { diffed_entities, total_entities }
 }
 
 function diffMetadata(old_metadata: Metadata[], new_metadata: Metadata[]): Metadata[] {
@@ -268,7 +297,6 @@ function diffToSections(diff_text): Section[] {
 }
 
 function linesToParagraph(lines: string): Paragraph {
-    console.log(lines);
     const items = lines
         .split(PARAGRAPH_ITEM_SEPARATOR)
         .filter((lines) => lines.trim()) // no blank items

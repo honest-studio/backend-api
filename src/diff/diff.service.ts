@@ -55,7 +55,6 @@ export class DiffService {
             const new_wiki = wikis.find((w) => w.ipfs_hash == prop.new_hash);
             const diff_wiki = diffArticleJson(old_wiki, new_wiki);
             diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
-            diff_wiki.metadata.push({ key: 'diff_percent', value: this.calcDiffPercent(diff_wiki) });
             return diff_wiki;
         });
 
@@ -69,12 +68,8 @@ export class DiffService {
         const old_wiki = wikis.find((w) => w.ipfs_hash == old_hash);
         const new_wiki = wikis.find((w) => w.ipfs_hash == new_hash);
         const diff_wiki = await diffArticleJson(old_wiki, new_wiki);
-        diff_wiki.metadata.push({ key: 'diff_percent', value: this.calcDiffPercent(diff_wiki) });
 
         return diff_wiki;
     }
 
-    calcDiffPercent(diff_wiki: ArticleJson): number {
-        return Number(Math.random().toFixed(2));
-    }
 }

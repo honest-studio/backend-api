@@ -723,7 +723,12 @@ function sanitizeText($: CheerioStatic) {
 
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
-        const url = normalizeUrl(decodeURIComponent($(this).attr('data-username')));
+        let url = decodeURIComponent($(this).attr('data-username'));
+        if (url.trim() == "Cite as verified editor")
+            url = "Self-citation:DEPRECATED"
+        else {
+            url = normalizeUrl(url);
+        }
         const plaintextString = `[[CITE|0|${url}]]`;
         $(this).replaceWith(plaintextString);
     });
