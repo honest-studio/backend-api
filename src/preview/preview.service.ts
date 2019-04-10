@@ -97,7 +97,7 @@ export class PreviewService {
             this.mysql.pool().query(
                 `
                 SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note
+                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content
                 FROM enterlink_articletable AS art 
                 WHERE art.slug = ? 
                 AND art.page_lang = ?`,
