@@ -105,7 +105,7 @@ export class EosSyncService {
 
             const msg = JSON.parse(msg_str);
             if (msg.type != 'action_trace') {
-                // console.log(msg);
+                //console.log(msg);
                 return;
             }
             this.mongoDbService

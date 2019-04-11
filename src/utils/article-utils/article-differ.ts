@@ -288,7 +288,8 @@ function diffToSections(diff_text): Section[] {
             .split(SECTION_TEXT_IMAGE_SEPARATOR)[1]
             .split(IMAGE_SEPARATOR)
             .filter((line) => line.trim()) // no blank lines
-            .map(lineToImage);
+            .map(lineToImage)
+            .filter(m => m); // exclude bad images
 
         sections.push({ paragraphs, images });
     }
@@ -368,6 +369,8 @@ function lineToTableRow(line: string): TableRow {
 }
 
 function lineToImage(line: string): Media {
+    if (!line.includes(IMAGE_URL_CAPTION_SEPARATOR))
+        return null;
     const url = line.split(IMAGE_URL_CAPTION_SEPARATOR)[0];
     const caption = [
         {
