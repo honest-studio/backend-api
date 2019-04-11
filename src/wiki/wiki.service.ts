@@ -229,7 +229,7 @@ export class WikiService {
                 `
                 SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
                 COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
-                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS snippet
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview
                 FROM enterlink_articletable art
                 LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
                 WHERE ${seeAlsoWhere};`,
