@@ -273,33 +273,34 @@ export class WikiService {
                 }
             );
         });
-        const page_title = wiki.page_title[0].text;
-        const slug = wiki.metadata.find(m => m.key == "url_slug").value;
-        const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
-        const photo_url = wiki.main_photo[0].url;
-        const photo_thumb_url = wiki.main_photo[0].thumb;
-        const page_type = wiki.metadata.find(m => m.key == "page_type").value;
-        const is_adult_content = wiki.metadata.find(m => m.key == "is_adult_content").value;
-        const page_lang = wiki.metadata.find(m => m.key == "page_lang").value;
-        const article_info = new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                INSERT INTO enterlink_articletable 
-                    (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
-                ON DUPLICATE KEY UPDATE 
-                    ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
-                    page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
-                `,
-                [ipfs_hash, slug, slug, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content, page_lang,
-                 ipfs_hash, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content],
-                function(err, res) {
-                    if (err) reject(err);
-                    else resolve(res);
-                }
-            );
-        });
-        await Promise.all([json_insertion, article_info])
+        //const page_title = wiki.page_title[0].text;
+        //const slug = wiki.metadata.find(m => m.key == "url_slug").value;
+        //const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
+        //const photo_url = wiki.main_photo[0].url;
+        //const photo_thumb_url = wiki.main_photo[0].thumb;
+        //const page_type = wiki.metadata.find(m => m.key == "page_type").value;
+        //const is_adult_content = wiki.metadata.find(m => m.key == "is_adult_content").value;
+        //const page_lang = wiki.metadata.find(m => m.key == "page_lang").value;
+        //const article_info = new Promise((resolve, reject) => {
+        //    this.mysql.pool().query(
+        //        `
+        //        INSERT INTO enterlink_articletable 
+        //            (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
+        //            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
+        //        ON DUPLICATE KEY UPDATE 
+        //            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
+        //            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
+        //        `,
+        //        [ipfs_hash, slug, slug, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content, page_lang,
+        //         ipfs_hash, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content],
+        //        function(err, res) {
+        //            if (err) reject(err);
+        //            else resolve(res);
+        //        }
+        //    );
+        //});
+        //await Promise.all([json_insertion, article_info])
+        await Promise.all([json_insertion])
             .catch(console.error);
 
         return { ipfs_hash };
