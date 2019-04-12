@@ -33,7 +33,36 @@ export function diffArticleJson(old_wiki: ArticleJson, new_wiki: ArticleJson): A
     };
     diff_json.metadata.push({ key: 'old_hash', value: old_wiki.ipfs_hash });
     diff_json.metadata.push({ key: 'new_hash', value: new_wiki.ipfs_hash });
+
+    const { diffed_entities, total_entities } = calcDiffStats(diff_json);
+    const diff_percent = Number((diffed_entities / total_entities).toFixed(2));
+    diff_json.metadata.push({ key: 'diff_changes', value: diffed_entities });
+    diff_json.metadata.push({ key: 'diff_percent', value: diff_percent });
+
     return diff_json;
+}
+
+// recursively loop through an object and determine total and diffed number of entities
+function calcDiffStats(obj) {
+    let diffed_entities = 0;
+    let total_entities = 0;
+    if (!(obj instanceof Object)) {
+        // do nothing
+    }
+    else if (obj.diff) {
+        total_entities += 1;
+        if (obj.diff != 'none')
+            diffed_entities += 1;
+    }
+    else {
+        for (const key in obj) {
+            const stats = calcDiffStats(obj[key])
+            diffed_entities += stats.diffed_entities;
+            total_entities += stats.total_entities;
+        }    
+    }
+
+    return { diffed_entities, total_entities }
 }
 
 function diffMetadata(old_metadata: Metadata[], new_metadata: Metadata[]): Metadata[] {
@@ -229,6 +258,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             '' // empty lines shouldn't be diffed either
         ].map((sep) => sep.replace(/\n/g, ''));
 
+        diff_text += '\n'; // pad with new lines for safe parsing
         diff_text += part.value
             .split('\n')
             .map((text) => {
@@ -236,6 +266,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
                 else return text + DIFF_MARKER;
             })
             .join('\n');
+        diff_text += '\n'; // pad with new lines for safe parsing
     }
 
     return diffToSections(diff_text);
@@ -257,7 +288,8 @@ function diffToSections(diff_text): Section[] {
             .split(SECTION_TEXT_IMAGE_SEPARATOR)[1]
             .split(IMAGE_SEPARATOR)
             .filter((line) => line.trim()) // no blank lines
-            .map(lineToImage);
+            .map(lineToImage)
+            .filter(m => m); // exclude bad images
 
         sections.push({ paragraphs, images });
     }
@@ -270,7 +302,7 @@ function linesToParagraph(lines: string): Paragraph {
         .split(PARAGRAPH_ITEM_SEPARATOR)
         .filter((lines) => lines.trim()) // no blank items
         .map((lines, index) => {
-            const prefix = lines.substring(0, 10);
+            const prefix = lines.trim().substring(0, 10);
             if (prefix == SENTENCE_PREFIX)
                 return {
                     index,
@@ -337,6 +369,8 @@ function lineToTableRow(line: string): TableRow {
 }
 
 function lineToImage(line: string): Media {
+    if (!line.includes(IMAGE_URL_CAPTION_SEPARATOR))
+        return null;
     const url = line.split(IMAGE_URL_CAPTION_SEPARATOR)[0];
     const caption = [
         {

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, Param, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UsePipes } from '@nestjs/common';
 import {
     ApiOperation,
     ApiResponse,
@@ -143,13 +143,15 @@ export class WikiController {
     }
 
     @Post('/')
-    @ApiOperation({ title: 'Submit a wiki to IPFS' })
+    @ApiOperation({ 
+        title: 'Submit a wiki to IPFS',
+        description: `The submitted wiki must be a JSON in ArticleJson format with the ipfs_hash set to null`
+    })
     @ApiResponse({
         status: 200,
-        description: `Success`
+        description: `Returns the ipfs_hash of the submitted wiki`
     })
-    async submitWiki(_, @Req() req): Promise<any> {
-        const raw = await rawbody(req);
-        return this.wikiService.submitWiki(raw.toString());
+    async submitWiki(@Body() wiki): Promise<any> {
+        return this.wikiService.submitWiki(wiki);
     }
 }

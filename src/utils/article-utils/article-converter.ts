@@ -723,7 +723,12 @@ function sanitizeText($: CheerioStatic) {
 
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
-        const url = decodeURIComponent($(this).attr('data-username'));
+        let url = decodeURIComponent($(this).attr('data-username'));
+        if (url.trim() == "Cite as verified editor")
+            url = "Self-citation:DEPRECATED"
+        else {
+            url = normalizeUrl(url);
+        }
         const plaintextString = `[[CITE|0|${url}]]`;
         $(this).replaceWith(plaintextString);
     });
@@ -838,8 +843,6 @@ export function parseSentences(inputString: string): Sentence[] {
     // Create the sentence tokens
     const sentenceTokens = splitSentences(inputString);
 
-    // Each sentence needs to be a dictionary
-    // Need to text replace placeholders for citations and links
     return sentenceTokens.map(function(token, index) {
         // Initialize the return object
         let sentence = { type: 'sentence', index: index, text: token };
@@ -1027,6 +1030,8 @@ function markCitations($: CheerioStatic, citations: Citation[]): CheerioStatic {
         const parts = token.split('|');
         const url = parts[2];
         const link_id = citations.findIndex((cite) => cite.url == url);
+        if (link_id == -1)
+            console.log(link_id, url);
         return `CITE|${link_id}|${url}`;
     });
 

@@ -89,6 +89,8 @@ export interface Media {
     //old_hash: string;
     //new_hash: string;
     //proposal_id: number;
+    //diff_changes: number; # Number of entities changed by the diff
+    //diff_percent: number; # Percentage of document changed by diff
 export interface Metadata {
     key: string;
     value: any;

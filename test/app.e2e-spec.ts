@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { MongoDbService } from '../src/feature-modules/database';
+import * as fs from 'fs';
 
 describe('Backend API', () => {
   let app: INestApplication;
@@ -195,17 +196,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Submit article', () => {
-    return request(app.getHttpServer())
-        .post('/v2/wiki')
-        .set('Content-type', 'text/html')
-        .send(`<!DOCTYPE html><html>Hi I'm a wiki</html>`)
-        .expect(201)
-        .expect({
-            ipfs_hash: "QmY8v3eMGG4tWBjgDgMnYDcbVnWx9ikMgxDurSeKRjLRMB"
-        })
-  });
-
   it('Wiki Json: Manaus', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/slug/lang_en/Manaus')
@@ -258,6 +248,24 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/extra/lang_en/travismoore5036459')
         .expect(200)
+  });
+
+  it('Wiki: Submit wiki', () => {
+    const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
+    console.log(wiki.ipfs_hash);
+    return request(app.getHttpServer())
+        .post('/v2/wiki')
+        .send(wiki)
+        .expect(201)
+  });
+
+  it('Wiki: Failed Wiki Submission: non-null ipfs hash', () => {
+    const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
+    wiki.ipfs_hash = "Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd";
+    return request(app.getHttpServer())
+        .post('/v2/wiki')
+        .send(wiki)
+        .expect(400)
   });
 
   it('Chain: Get Info', () => {
