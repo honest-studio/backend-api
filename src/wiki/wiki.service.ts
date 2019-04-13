@@ -95,7 +95,10 @@ export class WikiService {
                 .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true });
         }
 
-        wiki.metadata.push({ key: 'page_lang', value: lang_code });
+        // some wikis don't have page langs set
+        if (!wiki.metadata.find(w => w.key == "page_lang"))
+            wiki.metadata.push({ key: 'page_lang', value: lang_code });
+
         return wiki;
     }
 
