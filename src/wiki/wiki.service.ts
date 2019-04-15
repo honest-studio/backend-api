@@ -221,7 +221,7 @@ export class WikiService {
                 }
             );
         });
-        if (lang_packs.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (lang_packs.length == 0) throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
         return lang_packs;
     }
 
@@ -350,8 +350,13 @@ export class WikiService {
         const pageviews_rows: any[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT pageviews FROM enterlink_articletable
-                WHERE page_lang= ? AND slug = ?
+                SELECT 
+                    COALESCE (art_redir.pageviews, art.pageviews) AS pageviews, 
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.page_lang, art.page_lang) AS lang
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.page_lang = ? AND art.slug = ?;
                 `,
                 [lang_code, slug],
                 function(err, rows) {
@@ -363,7 +368,14 @@ export class WikiService {
         let pageviews = 0;
         if (pageviews_rows.length > 0)
             pageviews = pageviews_rows[0].pageviews;
-        const alt_langs = await this.getWikiGroups(lang_code, slug);
+
+        let alt_langs;
+        try {
+            alt_langs = await this.getWikiGroups(lang_code, slug);
+        } catch (e) {
+            if (e instanceof NotFoundException) alt_langs = [];
+            else throw e;
+        }
 
         return { alt_langs, see_also, pageviews };
     }
