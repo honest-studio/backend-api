@@ -66,6 +66,9 @@ function calcDiffStats(obj) {
 }
 
 function diffMetadata(old_metadata: Metadata[], new_metadata: Metadata[]): Metadata[] {
+    if (!old_metadata) old_metadata = [];
+    if (!new_metadata) new_metadata = [];
+
     const old_lines = old_metadata.map(data => `${data.key}:${data.value}`).join('\n');
     const new_lines = new_metadata.map(data => `${data.key}:${data.value}`).join('\n');
     const diff = JsDiff.diffLines(old_lines, new_lines);
@@ -94,6 +97,9 @@ function diffMetadata(old_metadata: Metadata[], new_metadata: Metadata[]): Metad
 }
 
 function diffCitations(old_citations: Citation[], new_citations: Citation[]): Citation[] {
+    if (!old_citations) old_citations = [];
+    if (!new_citations) new_citations = [];
+
     const old_urls = old_citations.map((c) => c.url).join('\n');
     const new_urls = new_citations.map((c) => c.url).join('\n');
     const diff = JsDiff.diffLines(old_urls, new_urls);
@@ -123,8 +129,11 @@ function diffCitations(old_citations: Citation[], new_citations: Citation[]): Ci
 
 function diffPageTitle(old_page_title: Sentence[], new_page_title: Sentence[]) {
     const diffs = [];
-    const old_text = old_page_title[0].text;
-    const new_text = new_page_title[0].text;
+    let old_text = "";
+    let new_text = "";
+    if (old_page_title) old_text = old_page_title[0].text;
+    if (new_page_title) new_text = new_page_title[0].text;
+
     if (old_text && old_text == new_text) {
         diffs.push({
             index: 0, 
@@ -159,6 +168,8 @@ function diffPageTitle(old_page_title: Sentence[], new_page_title: Sentence[]) {
 }
 
 function diffMedia(old_media: Media[], new_media: Media[]): Media[] {
+    if (!old_media) old_media = [];
+    if (!new_media) new_media = [];
     const old_lines = old_media
         .map((c) => {
             if (c.caption) return `${c.url}:${hashSentences(c.caption)}`;
@@ -234,6 +245,9 @@ const DIFF_DELETE_MARKER = ' d---d';
 const DIFF_NONE_MARKER = ' d===d';
 
 function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Section[] {
+    if (!old_page_body) old_page_body = [];
+    if (!new_page_body) new_page_body = [];
+
     const old_lines = old_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
     const new_lines = new_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
 
@@ -273,6 +287,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
 }
 
 function diffToSections(diff_text): Section[] {
+    if (diff_text.trim() == "") return [];
     const sections = [];
 
     const section_texts = diff_text.split(SECTION_SEPARATOR);
@@ -443,6 +458,9 @@ function tableRowToLine(row: TableRow): string {
 
 function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]): Infobox[] {
     const hash = crypto.createHash('sha256');
+
+    if (!old_infoboxes) old_infoboxes = [];
+    if (!new_infoboxes) new_infoboxes = [];
     const old_hashes = old_infoboxes.map(hashInfobox).join('\n');
     const new_hashes = new_infoboxes.map(hashInfobox).join('\n');
     const hash_diff = JsDiff.diffLines(old_hashes, new_hashes);

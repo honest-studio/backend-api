@@ -191,7 +191,7 @@ export class WikiService {
             // mark wikis that couldn't be found
             for (let hash of ipfs_hashes) {
                 const json = json_wikis.find((json) => json.ipfs_hash == hash);
-                if (!json) json_wikis.push({ error: `Wiki ${hash} could not be found` });
+                if (!json) json_wikis.push({ ipfs_hash: hash, error: `Wiki ${hash} could not be found` });
             }
         }
 
