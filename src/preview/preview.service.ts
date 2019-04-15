@@ -112,13 +112,16 @@ export class PreviewService {
         if (previews.length == 0)
             throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
 
-        // clean up text previews
         const preview = previews[0];
-        const $ = cheerio.load(preview.text_preview);
-        preview.text_preview = $.root()
-            .text()
-            .replace(/\s+/g, ' ')
-            .trim();
+
+        // clean up text previews
+        if (preview.text_preview)
+            const $ = cheerio.load(preview.text_preview);
+            preview.text_preview = $.root()
+                .text()
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
 
         // grab categories for wiki scrapes
         if (preview.page_note && preview.page_note.includes('EN_WIKI_IMPORT'))
