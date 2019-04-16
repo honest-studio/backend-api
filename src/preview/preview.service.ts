@@ -100,9 +100,9 @@ export class PreviewService {
                     art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
                     art.creation_timestamp, art.lastmod_timestamp 
                 FROM enterlink_articletable AS art 
-                WHERE art.slug = ? 
+                WHERE art.slug = ? OR art.slug_alt = ?
                 AND art.page_lang = ?`,
-                [slug, lang_code],
+                [slug, slug, lang_code],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);
@@ -116,6 +116,9 @@ export class PreviewService {
 
         // clean up text previews
         if (preview.text_preview) {
+            preview.text_preview = preview.text_preview
+                .replace(/<b>/g, ' ')
+                .replace(/<\/b>/g, ' ');
             const $ = cheerio.load(preview.text_preview);
             preview.text_preview = $.root()
                 .text()

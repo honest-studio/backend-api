@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { URL } from 'url';
 import { IpfsService } from '../common';
@@ -260,7 +260,16 @@ export class WikiService {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
         const blob = JSON.stringify(wiki);
-        const submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+        let submission;
+        try {
+            submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+        } catch (err) {
+            if (err.code == 'ECONNREFUSED') {
+                console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                throw new InternalServerErrorException(`Server error: The IPFS node is down`);
+            }
+            else throw err;
+        }
         const ipfs_hash = submission[0].hash;
         const json_insertion = new Promise((resolve, reject) => {
             this.mysql.pool().query(
