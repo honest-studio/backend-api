@@ -101,7 +101,13 @@ export class EosSyncService {
                     console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
                 })
                 .catch((err) => {
-                    console.log('Eos-Sync-Service: Error inserting action ', msg, ' \n Error message on insert: ', err);
+                    if (err.code == 11000) {
+                        console.log(`EOS-SYNC-SERVICE: Ignoring duplicate action. This is expected behavior during server restarts`);
+                    }
+                    else {
+                        console.log('EOS-SYNC-SERVICE: Error inserting action ', msg, ' \n Error message on insert: ', err);
+                        throw err;
+                    }
                 });
         });
 
