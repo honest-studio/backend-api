@@ -1030,8 +1030,6 @@ function markCitations($: CheerioStatic, citations: Citation[]): CheerioStatic {
         const parts = token.split('|');
         const url = parts[2];
         const link_id = citations.findIndex((cite) => cite.url == url);
-        if (link_id == -1)
-            console.log(link_id, url);
         return `CITE|${link_id}|${url}`;
     });
 

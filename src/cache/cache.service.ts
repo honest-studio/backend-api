@@ -44,6 +44,11 @@ export class CacheService {
                     console.log(
                         `CACHE: WARNING: MySQL entry for ${ipfs_hash} does not match generated hash of ${res[0].hash}`
                     );
+            })
+            .catch(err => {
+                if (err.code == 'ECONNREFUSED') console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                else console.error(err);
             });
+
     }
 }

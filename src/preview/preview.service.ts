@@ -100,9 +100,9 @@ export class PreviewService {
                     art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
                     art.creation_timestamp, art.lastmod_timestamp 
                 FROM enterlink_articletable AS art 
-                WHERE art.slug = ? 
+                WHERE art.slug = ? OR art.slug_alt = ?
                 AND art.page_lang = ?`,
-                [slug, lang_code],
+                [slug, slug, lang_code],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);
@@ -112,13 +112,19 @@ export class PreviewService {
         if (previews.length == 0)
             throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
 
-        // clean up text previews
         const preview = previews[0];
-        const $ = cheerio.load(preview.text_preview);
-        preview.text_preview = $.root()
-            .text()
-            .replace(/\s+/g, ' ')
-            .trim();
+
+        // clean up text previews
+        if (preview.text_preview) {
+            preview.text_preview = preview.text_preview
+                .replace(/<b>/g, ' ')
+                .replace(/<\/b>/g, ' ');
+            const $ = cheerio.load(preview.text_preview);
+            preview.text_preview = $.root()
+                .text()
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
 
         // grab categories for wiki scrapes
         if (preview.page_note && preview.page_note.includes('EN_WIKI_IMPORT'))

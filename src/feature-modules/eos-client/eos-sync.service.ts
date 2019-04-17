@@ -26,7 +26,9 @@ export class EosSyncService {
         this.dfuseConfig = config.get('dfuseConfig');
     }
 
-    async get_start_block(account: string, default_start_block: number = this.dfuseStartBlock): Promise<number> {
+    // you can override the start block from the DB with the 
+    // DFUSE_START_BLOCK config parameter
+    async get_start_block(account: string): Promise<number> {
         return this.mongoDbService
             .connection()
             .actions.find({ 'trace.act.account': account })
@@ -34,9 +36,10 @@ export class EosSyncService {
             .limit(1)
             .toArray()
             .then((result: Array<any>) => {
-                if (result.length == 0) return default_start_block;
+                const config_start_block = Number(this.dfuseConfig.dfuseStartBlock);
+                if (result.length == 0) return config_start_block;
                 const db_block = result[0].block_num;
-                return Math.max(default_start_block, db_block);
+                return Math.max(config_start_block, db_block);
             });
     }
 
@@ -73,29 +76,9 @@ export class EosSyncService {
                 },
                 start_block: await this.get_start_block('everipediaiq')
             };
-            const safesend_req = {
-                type: 'get_actions',
-                req_id: 'safesend_req',
-                listen: true,
-                data: {
-                    account: 'iqsafesendiq'
-                },
-                start_block: await this.get_start_block('iqsafesendiq')
-            };
-            const fee_req = {
-                type: 'get_actions',
-                req_id: 'fee_req',
-                listen: true,
-                data: {
-                    account: 'epiqtokenfee'
-                },
-                start_block: await this.get_start_block('epiqtokenfee')
-            };
 
             this.dfuse.send(JSON.stringify(article_req));
             this.dfuse.send(JSON.stringify(token_req));
-            //dfuse.send(JSON.stringify(safesend_req));
-            //dfuse.send(JSON.stringify(fee_req));
         });
         this.dfuse.on('error', (err) => {
             console.log('-- error connecting to dfuse: ', err);

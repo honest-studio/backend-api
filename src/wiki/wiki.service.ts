@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { URL } from 'url';
 import { IpfsService } from '../common';
@@ -191,7 +191,7 @@ export class WikiService {
             // mark wikis that couldn't be found
             for (let hash of ipfs_hashes) {
                 const json = json_wikis.find((json) => json.ipfs_hash == hash);
-                if (!json) json_wikis.push({ error: `Wiki ${hash} could not be found` });
+                if (!json) json_wikis.push({ ipfs_hash: hash, error: `Wiki ${hash} could not be found` });
             }
         }
 
@@ -221,7 +221,7 @@ export class WikiService {
                 }
             );
         });
-        if (lang_packs.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (lang_packs.length == 0) throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
         return lang_packs;
     }
 
@@ -260,7 +260,16 @@ export class WikiService {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
         const blob = JSON.stringify(wiki);
-        const submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+        let submission;
+        try {
+            submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+        } catch (err) {
+            if (err.code == 'ECONNREFUSED') {
+                console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                throw new InternalServerErrorException(`Server error: The IPFS node is down`);
+            }
+            else throw err;
+        }
         const ipfs_hash = submission[0].hash;
         const json_insertion = new Promise((resolve, reject) => {
             this.mysql.pool().query(
@@ -350,8 +359,13 @@ export class WikiService {
         const pageviews_rows: any[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT pageviews FROM enterlink_articletable
-                WHERE page_lang= ? AND slug = ?
+                SELECT 
+                    COALESCE (art_redir.pageviews, art.pageviews) AS pageviews, 
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.page_lang, art.page_lang) AS lang
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.page_lang = ? AND art.slug = ?;
                 `,
                 [lang_code, slug],
                 function(err, rows) {
@@ -363,7 +377,14 @@ export class WikiService {
         let pageviews = 0;
         if (pageviews_rows.length > 0)
             pageviews = pageviews_rows[0].pageviews;
-        const alt_langs = await this.getWikiGroups(lang_code, slug);
+
+        let alt_langs;
+        try {
+            alt_langs = await this.getWikiGroups(lang_code, slug);
+        } catch (e) {
+            if (e instanceof NotFoundException) alt_langs = [];
+            else throw e;
+        }
 
         return { alt_langs, see_also, pageviews };
     }

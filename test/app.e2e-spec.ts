@@ -252,7 +252,6 @@ describe('Backend API', () => {
 
   it('Wiki: Submit wiki', () => {
     const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
-    console.log(wiki.ipfs_hash);
     return request(app.getHttpServer())
         .post('/v2/wiki')
         .send(wiki)
@@ -326,6 +325,12 @@ describe('Backend API', () => {
   it('Diff: Hash diff', () => {
     return request(app.getHttpServer())
         .get('/v2/diff/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
+        .expect(200)
+  });
+
+  it('Diff: Spam hashes', () => {
+    return request(app.getHttpServer())
+        .get('/v2/diff/hash/null/Qmasfdsa')
         .expect(200)
   });
 
