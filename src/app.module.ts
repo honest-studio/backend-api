@@ -9,9 +9,21 @@ import { ChainController, ChainService } from './chain';
 import { DiffController, DiffService } from './diff';
 import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
+import { ContactUsController, ContactUsService } from './contact-us';
 import { CacheController, CacheService } from './cache';
+import { HistoryController, HistoryService } from './history';
+import { MediaUploadController, MediaUploadService } from './media-upload';
+import { UserController, UserService } from './user';
+import { StatController, StatService } from './stat';
+import { OAuthController, OAuthService } from './oauth';
 import { EosClientModule, DatabaseModule } from './feature-modules';
-import { RequestIpMiddleware } from './middleware';
+import {
+    GoogleAnalyticsMiddleware,
+    RequestIpMiddleware,
+    JsonRequestMiddleware,
+    CorsMiddleware,
+    MorganMiddleware
+} from './middleware';
 
 @Module({
     imports: [
@@ -45,7 +57,13 @@ import { RequestIpMiddleware } from './middleware';
         SearchController,
         DiffController,
         PreviewController,
-        CacheController
+        CacheController,
+        HistoryController,
+        MediaUploadController,
+        UserController,
+        StatController,
+        ContactUsController,
+        OAuthController
     ],
     providers: [
         ProposalService,
@@ -55,11 +73,26 @@ import { RequestIpMiddleware } from './middleware';
         SearchService,
         DiffService,
         PreviewService,
-        CacheService
+        CacheService,
+        HistoryService,
+        MediaUploadService,
+        UserService,
+        StatService,
+        ContactUsService,
+        OAuthService
     ]
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        consumer.apply(RequestIpMiddleware).forRoutes('v1/search');
+        //consumer.apply(RequestIpMiddleware).forRoutes('*');
+        consumer.apply(CorsMiddleware).forRoutes('*');
+        consumer.apply(MorganMiddleware).forRoutes('*');
+        consumer.apply(GoogleAnalyticsMiddleware).forRoutes('*');
+
+        // Automatically set the Content-Type headers for the /v2/chain routes
+        // Both eosjs and cleos don't set those headers explicitly, and Nestjs
+        // doesn't read in the body with the @Body function unless that header
+        // is explicitly set
+        consumer.apply(JsonRequestMiddleware).forRoutes('/v2/chain');
     }
 }

@@ -13,7 +13,12 @@ const RecentActivityQuerySchema = {
         .optional()
         .default(10),
     preview: Joi.boolean().default(false),
-    diff_percent: Joi.boolean().default(false)
+    diff: Joi.string()
+        .valid('metadata', 'full', 'none')
+        .default('none'),
+    expiring: Joi.boolean().default(false),
+    completed: Joi.boolean().default(false),
+    langs: Joi.string()
 };
 
 export { RecentActivityQuerySchema };

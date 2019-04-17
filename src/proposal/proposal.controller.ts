@@ -1,86 +1,53 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
-import { ProposalService } from './proposal.service';
-import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
+import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { ProposalService, Proposal } from './proposal.service';
+import { JoiValidationPipe } from '../common';
+import { ProposalSchema } from './proposal.query-schema';
 
-export type ProposeOrArray = (EosAction<Propose> | Array<EosAction<Propose>>)
-
-@Controller('v1/proposal')
+@Controller('v2/proposal')
 @ApiUseTags('Proposals')
 export class ProposalController {
     constructor(private readonly proposalService: ProposalService) {}
 
-    @Get(':proposal_hash')
+    @Get(':proposal_ids')
     @ApiOperation({ title: 'Get details of a proposal' })
     @ApiImplicitParam({
-        name: 'proposal_hash',
-        description: `IPFS hashes of proposals. To get multiple proposals, separate hashes with a comma.
-        Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
-        Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
+        name: 'proposal_ids',
+        description: `IDs of proposals. To get multiple proposals, separate IDs with a comma.
+        Example 1: 55
+        Example 2: 55,92,332`
     })
-    async getProposal(@Param('proposal_hash') query_hashes): Promise<ProposeOrArray> {
-        const proposal_hashes = query_hashes.split(',');
-        if (proposal_hashes.length == 1)
-            return this.proposalService.getProposal(proposal_hashes[0]);
-        else
-            return this.proposalService.getProposals(proposal_hashes);
-    }
+    @ApiImplicitQuery({
+        name: 'diff',
+        description: `Include diff data in the proposals. Takes one of three values:
+            'none': (default) Don't include diff data.
+            'metadata': Only the return the metadata between the proposal and its parent.
+            'full': Return the full wiki diff between the proposal and its parent. Warning: this can lead to large responses that lag on low-bandwidth connections. 
 
-    @Get(':proposal_hash/votes')
-    @ApiOperation({ title: 'Get votes for a proposal' })
-    @ApiImplicitParam({
-        name: 'proposal_hash',
-        description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+            Setting this option to 'metadata' or 'full' can add 1-5 seconds to the response time.`,
+        required: false,
+        type: Boolean
     })
-    async getVotes(@Param('proposal_hash') proposal_hash): Promise<Array<EosAction<Vote>>> {
-        return await this.proposalService.getVotes(proposal_hash);
-    }
-
-    @Get(':proposal_hash/result')
-    @ApiOperation({ title: 'Get result of a proposal' })
-    @ApiResponse({
-        status: 200,
-        description: `
-            proposal_hash:
-            yes_votes:
-            no_votes:
-            approved: -1 => pending edit, 0 => rejected, 1 => approved`
-    })
-    @ApiImplicitParam({
-        name: 'proposal_hash',
-        description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
-    })
-    async getResult(@Param('proposal_hash') proposal_hash): Promise<ProposalResult> {
-        return await this.proposalService.getResult(proposal_hash);
-    }
-
-    @Get(':proposal_hash/plagiarism')
-    @ApiOperation({ title: 'Get plagiarism report for a proposal: Limited Availability' })
-    @ApiImplicitParam({
-        name: 'proposal_hash',
-        description: 'IPFS hash of a proposal - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
-    })
-    async getPlagiarism(@Param('proposal_hash') proposal_hash): Promise<any> {
-        return await this.proposalService.getPlagiarism(proposal_hash);
-    }
-
-    @Get(':proposal_hash/history')
-    @ApiOperation({ title: 'Get edit history for a wiki' })
-    @ApiImplicitParam({
-        name: 'ipfs_hash',
-        description: 'IPFS hash of a wiki - Example: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ'
+    @ApiImplicitQuery({
+        name: 'preview',
+        type: 'boolean',
+        required: false,
+        description: 'returns wiki preview if set true'
     })
     @ApiResponse({
         status: 200,
-        description: `Returns:
-                history: An array of IPFS hashes. The first item in the array is the most recent proposal, 
-                    and each subsequent hash is the parent of the one before it
-                proposals: An object mapping hashes to proposal receipts.
-                results: An object mapping hashes to proposal results.
-                
-            The last hash in the history is usually a blank hash and doesn't have a proposal or result object associated with it. `
+        description: `returns an array of proposal objects: 
+            [{
+                info: proposal information,
+                result: proposal result information,
+                votes: an array of votes cast for a proposal,
+                preview: wiki preview (optional),
+                diff?: information related to the diff created by the proposal
+            }, ... ]`
     })
-    async getHistory(@Param('proposal_hash') proposal_hash): Promise<any> {
-        return this.proposalService.getHistory(proposal_hash);
+    @UsePipes(new JoiValidationPipe(ProposalSchema, ['query']))
+    async getProposals(@Param('proposal_ids') query_ids: string, @Query() options): Promise<Array<Proposal>> {
+        const proposal_ids = query_ids.split(',').map(Number);
+        return this.proposalService.getProposals(proposal_ids, options);
     }
 }

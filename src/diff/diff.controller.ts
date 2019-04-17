@@ -1,35 +1,33 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
 import { DiffService } from './diff.service';
+import { ArticleJson } from '../utils/article-utils/article-dto';
 
-@Controller('v1/diff')
+@Controller('v2/diff')
 @ApiUseTags('Diffs')
 export class DiffController {
     constructor(private readonly diffService: DiffService) {}
 
-    @Get('/proposal/:proposal_hash')
+    @Get('/proposal/:proposal_id')
     @ApiOperation({ title: 'Get diffs for edit proposals' })
     @ApiImplicitParam({
-        name: 'proposal_hash',
+        name: 'proposal_id',
         description: `IPFS hashes of proposals. To get multiple proposals, separate hashes with a comma.
-        Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
-        Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
+        Example 1: 33
+        Example 2: 33,739,203`
     })
     @ApiResponse({
         status: 200,
         description:
             'Returns the diff (or an array of diffs) between a proposal and its parent hash. Insertions in the diff_wiki are marked in the HTMl by &#60;ins&#62; and deletions are marked with &#60;del&#62;. These will typically render as <ins>underlines</ins> and <del>strikethroughs</del> in standard browsers.'
     })
-    async getDiffByProposal(@Param('proposal_hash') query_hashes): Promise<any> {
-        const proposal_hashes: Array<string> = query_hashes.split(',');
-        if (proposal_hashes.length == 1)
-            return await this.diffService.getDiffByProposal(proposal_hashes[0]);
-        else
-            return await this.diffService.getDiffsByProposal(proposal_hashes);
+    async getDiffByProposal(@Param('proposal_id') query_ids): Promise<Array<ArticleJson>> {
+        const proposal_ids: Array<number> = query_ids.split(',').map(Number);
+        return await this.diffService.getDiffsByProposal(proposal_ids);
     }
 
-    @Get('/wiki/:old_hash/:new_hash')
-    @ApiOperation({ title: 'Get diff between 2 wikis' })
+    @Get('/hash/:old_hash/:new_hash')
+    @ApiOperation({ title: 'Get diff between 2 wiki version hashes' })
     @ApiImplicitParam({
         name: 'old_hash',
         description: 'IPFS hash of old wiki'
@@ -38,7 +36,7 @@ export class DiffController {
         name: 'new_hash',
         description: 'IPFS hash of new wiki'
     })
-    async getDiffByWiki(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
-        return await this.diffService.getDiffByWiki(old_hash, new_hash);
+    async getDiffByHash(@Param('old_hash') old_hash, @Param('new_hash') new_hash): Promise<any> {
+        return await this.diffService.getDiffByHash(old_hash, new_hash);
     }
 }

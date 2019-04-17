@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
 import { CacheService } from './cache.service';
 
-@Controller('v1/cache')
+@Controller('v2/cache')
 @ApiUseTags('Cache')
 export class CacheController {
     constructor(private readonly cacheService: CacheService) {}

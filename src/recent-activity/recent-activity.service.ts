@@ -1,96 +1,143 @@
 import { Injectable } from '@nestjs/common';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
-import { IpfsService } from '../common';
+import { MongoDbService } from '../feature-modules/database';
+import { ProposalService, Proposal } from '../proposal';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
-import { WikiService } from '../wiki/wiki.service';
+import { OAuthService } from '../oauth/oauth.service';
 import { PreviewService } from '../preview/preview.service';
-import { DiffService } from '../diff/diff.service';
-import HtmlDiff from 'htmldiff-js';
-import * as cheerio from 'cheerio';
+import * as fetch from 'node-fetch';
 
 @Injectable()
 export class RecentActivityService {
-    constructor(private mongo: MongoDbService, private mysql: MysqlService, private ipfs: IpfsService, private previewService: PreviewService, private diffService: DiffService) {}
+    constructor(
+        private mongo: MongoDbService,
+        private proposalService: ProposalService,
+        private oauthService: OAuthService,
+        private previewService: PreviewService,
+    ) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
-        const docs = this.mongo.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr'
-        });
+        const docs = this.mongo.connection().actions.find({});
         return docs
-            .sort({ 'data.block_num': -1 })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
     }
 
-    async getResults(query): Promise<Array<EosAction<ProposalResult>>> {
-        const results = this.mongo.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'logpropres'
-        });
-        return results
-            .sort({ 'data.block_num': -1 })
+    async getArticleActions(query): Promise<Array<EosAction<any>>> {
+        const results = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr'
+            })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
+
+        return results;
     }
 
-    async getProposals(query): Promise<Array<EosAction<Propose>>> {
-        const docs = this.mongo.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'propose'
-        });
-
-        const proposals = await docs
-            .sort({ 'data.block_num': -1 })
+    async getTokenActions(query): Promise<Array<EosAction<any>>> {
+        const results = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'everipediaiq'
+            })
+            .sort({ block_num: -1 })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
 
-        if (query.preview) {
-            const proposal_hashes = proposals.map(p => p.data.trace.act.data.proposed_article_hash);
-            const previews = await this.previewService.getWikiPreviews(proposal_hashes);
-            for (const i in proposals) {
-                proposals[i].preview = previews[proposal_hashes[i]];
-            }
+        return results;
+    }
+
+    async getProposals(query): Promise<Array<Proposal>> {
+        let find_query;
+        let sort_direction;
+        const now = (Date.now() / 1000) | 0;
+
+        find_query = {
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo'
+        };
+        if (query.expiring) {
+            find_query['trace.act.data.endtime'] = { $gt: now };
+            sort_direction = 1;
+        } else {
+            sort_direction = -1;
         }
-
-        if (query.diff_percent) {
-            const proposal_hashes = proposals.map(p => p.data.trace.act.data.proposed_article_hash);
-            const diffs = await this.diffService.getDiffsByProposal(proposal_hashes);
-            for (const i in proposals) {
-                if (!diffs[i].error)
-                    proposals[i].diff_percent = diffs[i].diff_percent;
-                else
-                    proposals[i].diff_percent = null;
-            }
+        if (query.completed) {
+            find_query['trace.act.data.endtime'] = { $lt: now };
         }
-
-        return proposals;
-    }
-
-    async getVotes(query): Promise<Array<EosAction<Vote>>> {
-        const votes = this.mongo.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'votebyhash'
-        });
-        return votes
-            .sort({ 'data.block_num': -1 })
+        if (query.langs) {
+            find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };
+        }
+        const proposal_id_docs = await this.mongo
+            .connection()
+            .actions.find(find_query, { projection: { 'trace.act.data.proposal_id': 1 } })
+            .sort({ 'trace.act.data.proposal_id': sort_direction })
             .skip(query.offset)
             .limit(query.limit)
             .toArray();
+
+        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id);
+        const proposal_options = {
+            preview: query.preview,
+            diff: query.diff
+        };
+
+        return this.proposalService.getProposals(proposal_ids, proposal_options);
     }
 
-    async getWikis(query): Promise<Array<EosAction<ProposalResult>>> {
-        const results = this.mongo.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'logpropres',
-            'data.trace.act.data.approved': 1
-        });
-        return results
-            .sort({ 'data.block_num': -1 })
-            .skip(query.offset)
-            .limit(query.limit)
-            .toArray();
+    async getTrendingWikis(langs: string[] = []) {
+        const access_token = await this.oauthService.getGoogleAnalyticsToken();
+        let match_tokens;
+        if (langs.length > 0)
+            match_tokens = langs.map(lang => `/v2/wiki/slug/lang_${lang}`);
+        else
+            match_tokens = [`/v2/wiki/slug/lang_`];
+
+        const body = {
+            reportRequests: [
+                {
+                    viewId: '192421339',
+                    dateRanges: [{ startDate: '2019-01-01', endDate: '2019-11-30' }],
+                    dimensions: [{ name: 'ga:pagePath' }],
+                    dimensionFilterClauses: [
+                        {
+                            filters: [
+                                {
+                                    dimensionName: 'ga:pagePath',
+                                    operator: 'PARTIAL',
+                                    expressions: match_tokens
+                                }
+                            ]
+                        }
+                    ],
+                    metrics: [{ expression: 'ga:pageviews' }, { expression: 'ga:uniquePageviews' }],
+                    orderBys: [{ fieldName: 'ga:pageviews', sortOrder: 'DESCENDING' }]
+                }
+            ]
+        };
+        const report = await fetch('https://analyticsreporting.googleapis.com/v4/reports:batchGet', {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                Authorization: `Bearer ${access_token.token}`
+            }
+        }).then((response) => response.json());
+
+        if (!report.reports[0].data.rows)
+            return [];
+
+        const trending = report.reports[0].data.rows.map((row) => ({
+            slug: row.dimensions[0].slice(14).split('/')[1],
+            lang_code: row.dimensions[0].slice(14).split('/')[0].slice(5),
+            pageviews_today: Number(row.metrics[0].values[0]),
+            unique_pageviews_today: Number(row.metrics[0].values[1])
+        }));
+
+        return trending;
     }
 }

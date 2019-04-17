@@ -1,204 +1,100 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { MongoDbService } from '../feature-modules';
-import * as fetch from 'node-fetch';
-import { ConfigService, CopyLeaksConfig, IpfsService } from '../common';
-import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
-import { WikiService } from '../wiki/wiki.service';
-import HtmlDiff from 'htmldiff-js';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import { PreviewService } from '../preview';
+import { DiffService } from '../diff';
+import { MongoDbService, EosAction, Propose, ProposalResult, Vote } from '../feature-modules/database';
+
+export type Proposal = {
+    proposal_id: number;
+    info: EosAction<Propose>;
+    result: EosAction<ProposalResult>;
+    votes: Array<EosAction<Vote>>;
+    preview?: any;
+    diff?: any;
+};
+
+export type ProposalOptions = {
+    preview: boolean;
+    diff: 'full' | 'metadata' | 'none';
+};
 
 @Injectable()
 export class ProposalService {
-    private readonly copyLeaksConfig: CopyLeaksConfig;
-
     constructor(
-        config: ConfigService,
-        private ipfs: IpfsService,
         private mongo: MongoDbService,
-        private wikiService: WikiService
-    ) {
-        this.copyLeaksConfig = config.get('copyLeaksConfig');
-    }
+        private previewService: PreviewService,
+        @Inject(forwardRef(() => DiffService)) private diffService: DiffService
+    ) {}
 
-    async getProposal(proposal_hash: string): Promise<EosAction<Propose>> {
-        const proposal = await this.mongo.connection().actions.findOne({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'propose',
-            'data.trace.act.data.proposed_article_hash': proposal_hash
+    async getProposals(proposal_ids: Array<number>, options: ProposalOptions): Promise<Array<Proposal>> {
+        const proposals: Array<any> = proposal_ids.map((proposal_id) => {
+            return { proposal_id };
         });
-        if (!proposal) throw new NotFoundException('Proposal not found');
-        else return proposal;
-    }
 
-    async getProposals(proposal_hashes: Array<string>): Promise<Array<EosAction<Propose>>> {
-        return this.mongo.connection().actions.find({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'propose',
-            'data.trace.act.data.proposed_article_hash': { $in: proposal_hashes }
-        }).toArray();
-    }
-
-    async getVotes(proposal_hash: string): Promise<Array<EosAction<Vote>>> {
-        return this.mongo
+        const info = await this.mongo
             .connection()
             .actions.find({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'votebyhash',
-                'data.trace.act.data.proposal_hash': proposal_hash
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo',
+                'trace.act.data.proposal_id': { $in: proposal_ids }
             })
             .toArray();
-    }
-    async getResult(proposal_hash: string): Promise<ProposalResult> {
-        const result = await this.mongo.connection().actions.findOne({
-            'data.trace.act.account': 'eparticlectr',
-            'data.trace.act.name': 'logpropres',
-            'data.trace.act.data.proposal': proposal_hash
-        });
+        info.forEach((doc) => (proposals.find((p) => p.proposal_id == doc.trace.act.data.proposal_id).info = doc));
+        proposals
+            .filter((p) => !p.info)
+            .forEach((p) => (p.info = { error: `Proposal ${p.proposal_id} could not be found` }));
 
-        if (result) return result.data.trace.act.data;
+        const votes = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'vote',
+                'trace.act.data.proposal_id': { $in: proposal_ids }
+            })
+            .toArray();
+        proposals.forEach((prop) => (prop.votes = []));
+        votes.forEach((vote) =>
+            proposals.find((p) => p.proposal_id == vote.trace.act.data.proposal_id).votes.push(vote)
+        );
 
-        const proposal = await this.getProposal(proposal_hash);
-        if (proposal.error) throw new NotFoundException('Proposal not found');
+        const results = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropres',
+                'trace.act.data.proposal_id': { $in: proposal_ids }
+            })
+            .toArray();
+        results.forEach(
+            (result) => (proposals.find((p) => p.proposal_id == result.trace.act.data.proposal_id).result = result)
+        );
+        proposals
+            .filter((p) => !p.result)
+            .forEach((p) => (p.result = { error: `Proposal ${p.proposal_id} has not finalized` }));
 
-        const votes = await this.getVotes(proposal_hash);
+        if (options.preview) {
+            const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
+            const previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
+            previews.forEach(
+                (preview) =>
+                    (proposals.find((p) => p.info.trace.act.data.ipfs_hash === preview.ipfs_hash).preview = preview)
+            );
+        }
 
-        const ret = {
-            proposal: proposal_hash,
-            approved: 0,
-            yes_votes: 50,
-            no_votes: 0
-        };
-
-        votes.forEach(function(vote) {
-            if (vote.data.trace.act.data.approve) ret.yes_votes += vote.data.trace.act.data.amount;
-            else ret.no_votes += vote.data.trace.act.data.amount;
-        });
-        if (ret.yes_votes > ret.no_votes) ret.approved = 1;
-
-        const starttime = new Date(proposal.data.trace.block_time).getTime();
-        const now = new Date().getTime();
-        const SIX_HOURS = 6 * 3600 * 1000; // in milliseconds
-        if (now < starttime + SIX_HOURS) ret.approved = -1;
-
-        return ret;
-    }
-
-    async getPlagiarism(proposal_hash: string): Promise<any> {
-        const result = await this.mongo.connection().plagiarism.findOne({
-            proposal_hash: proposal_hash
-        });
-        if (result) return result;
-
-        const proposal = await this.getProposal(proposal_hash);
-        if (proposal.error) return { error: 'Proposal not found' };
-
-        const tokenReqBody = JSON.stringify({
-            Email: this.copyLeaksConfig.copyLeaksApiEmail,
-            ApiKey: this.copyLeaksConfig.copyLeaksApiKey
-        });
-        const token_json = await fetch('https://api.copyleaks.com/v1/account/login-api', {
-            method: 'post',
-            body: tokenReqBody,
-            headers: { 'Content-Type': 'application/json' }
-        }).then((res) => res.json());
-        const access_token = token_json.access_token;
-
-        const createReqBody = await this.wikiService.getWikiByHash(proposal_hash);
-        const create_json = await fetch('https://api.copyleaks.com/v1/businesses/create-by-text', {
-            method: 'post',
-            body: createReqBody,
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${access_token}`
-            }
-        }).then((res) => res.json());
-        const processId = create_json.ProcessId;
-
-        // Check the status every 5s until the process completes
-        await new Promise(function(resolve, reject) {
-            const timer = setInterval(async function() {
-                const status_json = await fetch(`https://api.copyleaks.com/v1/businesses/${processId}/status`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${access_token}`
-                    }
-                }).then((res) => res.json());
-                if (status_json.Status == 'Finished') {
-                    resolve();
-                    clearInterval(timer);
-                }
-            }, 5000);
-        });
-
-        const result_json = await fetch(`https://api.copyleaks.com/v2/businesses/${processId}/result`, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${access_token}`
-            }
-        }).then((res) => res.json());
-
-        const doc = {
-            proposal_hash: proposal_hash,
-            copyleaks: result_json
-        };
-        await new Promise(function(resolve, reject) {
-            this.mongo.connection().then(function(conn) {
-                conn.plagiarism.insertOne(doc, function(err: Error) {
-                    if (err) {
-                        reject();
-                    } else {
-                        console.log(`Saved plagiarism results for ${proposal_hash} to Mongo`);
-                        resolve();
-                    }
-                    conn.client.close();
+        if (options.diff != 'none') {
+            const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
+            if (options.diff === 'full')
+                diffs.forEach(diff => {
+                    const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
+                    const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
+                    proposal.diff = diff;
                 });
-            });
-        });
-
-        return result_json;
-    }
-
-    async getHistory(proposal_hash: string): Promise<any> {
-        const history = [proposal_hash];
-        const proposals = {};
-        const results = {};
-
-        // get parent hashes
-        while (true) {
-            try {
-                const tip_hash = history[history.length - 1];
-                const proposal = await this.getProposal(tip_hash);
-                history.push(proposal.data.trace.act.data.old_article_hash);
-                proposals[tip_hash] = proposal;
-            } catch (e) {
-                if (history.length == 1) throw e;
-                break;
-            }
+            else if (options.diff === 'metadata')
+                diffs.forEach(diff => {
+                    const proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
+                    proposals.find((p) => p.proposal_id == proposal_id).diff = { metadata: diff.metadata };
+                });
         }
 
-        // get child hashes
-        while (true) {
-            const tip_hash = history[0];
-            const proposal = await this.mongo.connection().actions.findOne({
-                'data.trace.act.account': 'eparticlectr',
-                'data.trace.act.name': 'propose',
-                'data.trace.act.data.old_article_hash': tip_hash
-            });
-            if (!proposal) break;
-            const child_hash = proposal.data.trace.act.data.proposed_article_hash;
-            history.unshift(child_hash);
-            proposals[child_hash] = proposal;
-        }
-
-        // get results
-        for (const i in history) {
-            const hash = history[i];
-            try {
-                results[hash] = await this.getResult(hash);
-            } catch (e) {
-                continue;
-            }
-        }
-
-        return { history, proposals, results };
+        return proposals;
     }
 }

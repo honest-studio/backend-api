@@ -8,7 +8,7 @@ import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
 
 @Injectable()
-export class PreviewService  {
+export class PreviewService {
     constructor(
         private wikiService: WikiService,
         private mysql: MysqlService,
@@ -16,19 +16,19 @@ export class PreviewService  {
         private cacheService: CacheService
     ) {}
 
-    async getWikiPreview(ipfs_hash: string): Promise<any> {
-        const previews = await this.getWikiPreviews([ipfs_hash]);
-        return previews[ipfs_hash];
-    }
+    async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<any> {
+        if (ipfs_hashes.length == 0) return [];
 
-    async getWikiPreviews(ipfs_hashes: Array<string>): Promise<any> {
-        const previews = {};
+        const previews = [];
+        for (const i in ipfs_hashes) {
+            previews.push({ ipfs_hash: ipfs_hashes[i] });
+        }
 
         const article_info: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
                 SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    cache.ipfs_hash, art.blurb_snippet AS text_preview
+                    cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews
                 FROM enterlink_articletable AS art 
                 JOIN enterlink_hashcache AS cache
                 ON cache.articletable_id=art.id
@@ -40,25 +40,30 @@ export class PreviewService  {
                 }
             );
         });
-        article_info.map((a) => (previews[a.ipfs_hash] = a));
+        article_info.forEach((a) => {
+            const i = previews.findIndex((p) => p.ipfs_hash === a.ipfs_hash);
+            previews[i] = a;
+        });
 
         // clean up text previews
-        Object.keys(previews).forEach((hash) => {
-            const preview = previews[hash];
+        previews.forEach((preview) => {
+            if (!preview.text_preview) return; // continue
             const $ = cheerio.load(preview.text_preview);
-            preview.text_preview = $.text()
+            preview.text_preview = $.root()
+                .text()
                 .replace(/\s+/g, ' ')
                 .trim();
         });
 
         // try and fill in missing previews with pinned wikis
-        for (const i in ipfs_hashes) {
-            const hash = ipfs_hashes[i];
-            if (previews[hash]) continue;
+        for (const i in previews) {
+            const preview = previews[i];
+            if (preview.title) continue;
+            const ipfs_hash = preview.ipfs_hash;
 
             try {
-                const pinned = await this.ipfs.client().pin.ls(hash);
-                const buffer: Buffer = await this.ipfs.client().cat(hash);
+                const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
+                const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
                 const wiki = buffer.toString('utf8');
 
                 const $ = cheerio.load(wiki);
@@ -74,14 +79,59 @@ export class PreviewService  {
                     .replace(/\s+/g, ' ')
                     .trim();
 
-                previews[hash] = { title, thumbnail, mainimage, text_preview };
+                previews[i] = { ipfs_hash, title, thumbnail, mainimage, text_preview };
             } catch (e) {
                 // try and pin the file so future requests can use it
-                this.cacheService.cacheWiki(hash);
+                this.cacheService.cacheWiki(ipfs_hash);
             }
         }
+
+        // error messages for missing wikis
+        previews.filter((p) => !p.title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
 
         return previews;
     }
 
+    async getPreviewBySlug(lang_code: string, slug: string): Promise<any> {
+        const previews: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
+                    art.creation_timestamp, art.lastmod_timestamp 
+                FROM enterlink_articletable AS art 
+                WHERE art.slug = ? OR art.slug_alt = ?
+                AND art.page_lang = ?`,
+                [slug, slug, lang_code],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        if (previews.length == 0)
+            throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
+
+        const preview = previews[0];
+
+        // clean up text previews
+        if (preview.text_preview) {
+            preview.text_preview = preview.text_preview
+                .replace(/<b>/g, ' ')
+                .replace(/<\/b>/g, ' ');
+            const $ = cheerio.load(preview.text_preview);
+            preview.text_preview = $.root()
+                .text()
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        // grab categories for wiki scrapes
+        if (preview.page_note && preview.page_note.includes('EN_WIKI_IMPORT'))
+            preview.categories = await this.wikiService.getCategories(lang_code, slug);
+        else preview.categories = [];
+        delete preview.page_note;
+
+        return preview;
+    }
 }
