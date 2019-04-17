@@ -36,10 +36,16 @@ export class MediaUploadDto {
         required: true
     })
     @IsString()
-    @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/gimu, {
-        message: 'Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem'
-    })
-    upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
+    upload_type: string;
+    // @ApiModelProperty({
+    //     description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, or GalleryMediaItem)',
+    //     required: true
+    // })
+    // @IsString()
+    // @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/gimu, {
+    //     message: 'Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem'
+    // })
+    // upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
 }
 
 // Mimetype interface

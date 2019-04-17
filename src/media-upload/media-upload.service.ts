@@ -291,6 +291,8 @@ export class MediaUploadService {
                 includeMainPhoto = false;
             }
 
+
+
             // Get a timestamp string from the Unix epoch
             let theTimeString = new Date()
                 .getTime()
@@ -588,7 +590,7 @@ export class MediaUploadService {
 
                     // Update the return dictionary with the main photo URL
                     returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
-                    console.log(returnPack.mainPhotoURL);
+                    
                 }
             } else if (mimePack.mime.includes('video')) {
                 // Because of various shenanigans, you need to write the buffer to /tmp first...
