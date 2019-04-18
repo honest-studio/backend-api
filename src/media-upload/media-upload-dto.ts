@@ -53,3 +53,20 @@ export interface MimePack {
     ext: string;
     mime: string;
 }
+
+// Types of media categories
+export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
+
+/**
+ * Describe a successful response to a media upload
+ */
+export interface MediaUploadResult {
+    mainPhotoURL: string;
+    returnDict: {
+        caption: string;
+        filename: string;
+    };
+    thumbnailPhotoURL: string;
+    mime: string;
+    category: MediaCategoryType;
+}

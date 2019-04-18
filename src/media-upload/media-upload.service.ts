@@ -28,6 +28,8 @@ import * as Jimp from 'jimp';
 import { StringDecoder } from 'string_decoder';
 import { AWSS3Service } from '../feature-modules/database';
 import { PhotoExtraData } from './media-upload-dto';
+import { MediaUploadResult } from "./media-upload-dto";
+
 
 const TEMP_DIR = path.join(__dirname, 'tmp');
 const PHOTO_CONSTANTS = {
@@ -256,7 +258,7 @@ export class MediaUploadService {
         identifier: string,
         uploadType: string,
         fileCaption: string
-    ) {
+    ): Promise<MediaUploadResult> {
         try {
             // Determine the MIME type
             let mimePack: MimePack = fileType(mediaBuffer);
@@ -304,7 +306,13 @@ export class MediaUploadService {
 
             // Initialize the return dictionaries
             let returnMiniDict = { filename: filename, caption: fileCaption };
-            let returnPack = { mainPhotoURL: '', thumbnailPhotoURL: '', returnDict: returnMiniDict };
+            let returnPack: MediaUploadResult = { 
+                mainPhotoURL: '', 
+                thumbnailPhotoURL: '', 
+                returnDict: returnMiniDict,
+                mime: '',
+                category: 'NONE'
+             };
 
             // Determine how to move forward based on the MIME type
             if (mimePack.mime.includes('image')) {
@@ -590,6 +598,8 @@ export class MediaUploadService {
 
                     // Update the return dictionary with the main photo URL
                     returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
+                    returnPack.mime = varPack.mainMIME;
+                    returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
                     
                 }
             } else if (mimePack.mime.includes('video')) {
@@ -669,6 +679,9 @@ export class MediaUploadService {
 
                     // Update the return dictionary with the main photo URL
                     returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
+                    returnPack.mime = mimePack.mime;
+                    returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
+
                 } catch (err) {
                     console.log(err);
 
@@ -705,7 +718,6 @@ export class MediaUploadService {
 
             // Update the return dictionary with the thumbnail URL
             returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
-            console.log(returnPack.thumbnailPhotoURL);
 
             // Return some information about the uploads
             return returnPack;
