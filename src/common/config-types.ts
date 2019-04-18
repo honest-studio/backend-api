@@ -4,20 +4,6 @@ export interface ServerConfig {
     serverProtocol: string;
     serverHost: string;
     serverHttpPort: string;
-    serverHttpsPort: string;
-}
-/**
- * SSL Server configuration
- */
-export interface SslConfig {
-    /**
-     * Path to file containing SSL key
-     */
-    sslKeyPath: string;
-    /**
-     * Path to file containing SSL certificate
-     */
-    sslCertificatePath: string;
 }
 
 /**
@@ -235,10 +221,6 @@ export interface GoogleAnalyticsConfig {
 export interface AppConfigVars {
     serverConfig: ServerConfig;
     /**
-     * SSL config (optional)
-     */
-    sslConfig?: SslConfig;
-    /**
      * Dfuse.IO API config
      */
     dfuseConfig: DfuseConfig;
@@ -283,9 +265,6 @@ export enum ConfigKeyNames {
     SERVER_PROTOCOL = 'SERVER_PROTOCOL',
     SERVER_HOST = 'SERVER_HOST',
     SERVER_HTTP_PORT = 'SERVER_HTTP_PORT',
-    SERVER_HTTPS_PORT = 'SERVER_HTTPS_PORT',
-    SSL_KEY_PATH = 'SSL_KEY_PATH',
-    SSL_CERTIFICATE_PATH = 'SSL_CERTIFICATE_PATH',
     MONGODB_URL = 'MONGODB_URL',
     MONGODB_DATABASE_NAME = 'MONGODB_DATABASE_NAME',
     DFUSE_API_KEY = 'DFUSE_API_KEY',

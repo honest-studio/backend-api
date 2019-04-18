@@ -9,25 +9,8 @@ const GetServerConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): 
             serverProtocol: parsed[ConfigKeyNames.SERVER_PROTOCOL],
             serverHost: parsed[ConfigKeyNames.SERVER_HOST],
             serverHttpPort: parsed[ConfigKeyNames.SERVER_HTTP_PORT],
-            serverHttpsPort: parsed[ConfigKeyNames.SERVER_HTTPS_PORT]
         }
     };
-};
-/**
- * Build SSL config if SSL key path and cert path are provided
- * @param parsed dotenv parsed output
- */
-const GetSslConfig: PartialConfigMaker = (parsed: dotenv.DotenvParseOutput): Partial<AppConfigVars> | null => {
-    if (parsed[ConfigKeyNames.SSL_KEY_PATH] && [ConfigKeyNames.SSL_CERTIFICATE_PATH]) {
-        return {
-            sslConfig: {
-                sslKeyPath: parsed[ConfigKeyNames.SSL_KEY_PATH],
-                sslCertificatePath: parsed[ConfigKeyNames.SSL_CERTIFICATE_PATH]
-            }
-        };
-    } else {
-        return null;
-    }
 };
 
 /**
@@ -175,7 +158,6 @@ const GetGoogleAnalyticsConfig: PartialConfigMaker = (
  */
 const ConfigMappingFunctions: PartialConfigMaker[] = [
     GetServerConfig,
-    GetSslConfig,
     GetDfuseConfig,
     GetMongoConnConfig,
     GetIpfsConfig,
@@ -228,9 +210,6 @@ const envVarsSchema: Joi.ObjectSchema = Joi.object({
     [ConfigKeyNames.SERVER_HOST]: Joi.string().required(),
     [ConfigKeyNames.SERVER_PROTOCOL]: Joi.string().required(),
     [ConfigKeyNames.SERVER_HTTP_PORT]: Joi.string().optional(),
-    [ConfigKeyNames.SERVER_HTTPS_PORT]: Joi.string().optional(),
-    [ConfigKeyNames.SSL_KEY_PATH]: Joi.string().optional(),
-    [ConfigKeyNames.SSL_CERTIFICATE_PATH]: Joi.string().optional(),
     [ConfigKeyNames.MONGODB_URL]: Joi.string().required(),
     [ConfigKeyNames.MONGODB_DATABASE_NAME]: Joi.string().required(),
     [ConfigKeyNames.DFUSE_API_KEY]: Joi.string().required(),
