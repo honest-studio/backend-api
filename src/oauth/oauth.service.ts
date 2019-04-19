@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
-import { ConfigService, GoogleAnalyticsConfig } from '../common';
+import { ConfigService } from '../common';
 import * as fetch from 'node-fetch';
 
 export interface OAuthToken {
@@ -13,16 +13,12 @@ export interface OAuthToken {
 
 @Injectable()
 export class OAuthService {
-    private readonly googleAnalyticsConfig: GoogleAnalyticsConfig;
-
-    constructor(private mongo: MongoDbService, private config: ConfigService) {
-        this.googleAnalyticsConfig = config.get('googleAnalyticsConfig');
-    }
+    constructor(private mongo: MongoDbService, private config: ConfigService) {}
 
     async googleAnalytics(query): Promise<any> {
-        const redirect_uri = encodeURIComponent(this.googleAnalyticsConfig.googleApiRedirectUri);
-        const client_id = this.googleAnalyticsConfig.googleApiClientId;
-        const client_secret = this.googleAnalyticsConfig.googleApiClientSecret;
+        const redirect_uri = encodeURIComponent(this.config.get('GOOGLE_API_REDIRECT_URI'));
+        const client_id = this.config.get('GOOGLE_API_CLIENT_ID');
+        const client_secret = this.config.get('GOOGLE_API_CLIENT_SECRET');
 
         if (query.code) {
             const token_json = fetch(`https://www.googleapis.com/oauth2/v4/token`, {
@@ -69,9 +65,9 @@ export class OAuthService {
     }
 
     async getGoogleAnalyticsToken(): Promise<OAuthToken> {
-        const refresh_token = this.googleAnalyticsConfig.googleApiRefreshToken;
-        const client_id = this.googleAnalyticsConfig.googleApiClientId;
-        const client_secret = this.googleAnalyticsConfig.googleApiClientSecret;
+        const refresh_token = this.config.get('GOOGLE_API_REFRESH_TOKEN');
+        const client_id = this.config.get('GOOGLE_API_CLIENT_ID');
+        const client_secret = this.config.get('GOOGLE_API_CLIENT_SECRET');
 
         const about_now = ((Date.now() / 1000) | 0) + 20;
         const access_token = await this.mongo.connection().oauth_tokens.findOne({

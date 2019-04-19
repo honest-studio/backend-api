@@ -1,7 +1,7 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../database/mongodb-service';
-import { DfuseConfig, ConfigService } from '../../common';
+import { ConfigService } from '../../common';
 import * as fetch from 'node-fetch';
 import * as WebSocket from 'ws';
 
@@ -12,31 +12,25 @@ export interface DfuseToken {
 
 @Injectable()
 export class EosSyncService {
-    private readonly mongoDbService: MongoDbService;
-    private readonly dfuseStartBlock;
-    private readonly dfuseConfig: DfuseConfig;
     private lastMessageReceived: number;
     private dfuseJwtToken: string;
     private dfuse: WebSocket;
 
     public DFUSE_AUTH_URL = 'https://auth.dfuse.io/v1/auth/issue';
 
-    constructor(mongo: MongoDbService, config: ConfigService) {
-        this.mongoDbService = mongo;
-        this.dfuseConfig = config.get('dfuseConfig');
-    }
+    constructor(private mongo: MongoDbService, private config: ConfigService) {}
 
     // you can override the start block from the DB with the 
     // DFUSE_START_BLOCK config parameter
     async get_start_block(account: string): Promise<number> {
-        return this.mongoDbService
+        return this.mongo
             .connection()
             .actions.find({ 'trace.act.account': account })
             .sort({ block_num: -1 })
             .limit(1)
             .toArray()
             .then((result: Array<any>) => {
-                const config_start_block = Number(this.dfuseConfig.dfuseStartBlock);
+                const config_start_block = Number(this.config.get("DFUSE_START_BLOCK"));
                 if (result.length == 0) return config_start_block;
                 const db_block = result[0].block_num;
                 return Math.max(config_start_block, db_block);
@@ -47,10 +41,10 @@ export class EosSyncService {
         const dfuseToken = await this.obtainDfuseToken();
 
         try {
-            const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${dfuseToken.token}`;
+            const url = `${this.config.get("DFUSE_API_WEBSOCKET_ENDPOINT")}?token=${dfuseToken.token}`;
             this.dfuse = new WebSocket(url, {
                 headers: {
-                    Origin: this.dfuseConfig.dfuseOriginUrl
+                    Origin: this.config.get("DFUSE_API_ORIGIN_URL")
                 }
             });
         } catch (err) {
@@ -91,7 +85,7 @@ export class EosSyncService {
                 //console.log(msg);
                 return;
             }
-            this.mongoDbService
+            this.mongo
                 .connection()
                 .actions.insertOne(msg.data)
                 .then(() => {
@@ -119,7 +113,7 @@ export class EosSyncService {
     async obtainDfuseToken(): Promise<DfuseToken> {
         return fetch(this.DFUSE_AUTH_URL, {
             method: 'POST',
-            body: JSON.stringify({ api_key: this.dfuseConfig.dfuseApiKey })
+            body: JSON.stringify({ api_key: this.config.get("DFUSE_API_KEY") })
         }).then((response) => response.json());
     }
 

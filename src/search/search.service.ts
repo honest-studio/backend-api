@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService, ElasticSearchConfig } from '../common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import * as cheerio from 'cheerio';
