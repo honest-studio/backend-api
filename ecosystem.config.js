@@ -17,10 +17,18 @@ module.exports = {
   deploy : {
     production : {
       user : 'beekeeper',
-      host : '40.83.160.202',
+      host : 'api.everipedia.org',
       ref  : 'origin/master',
-      repo : 'git@github.com:EveripediaNetwork/backend-api.git',
+      repo : 'https://github.com/EveripediaNetwork/backend-api.git',
       path : '/home/beekeeper/ep2-backend',
+      'post-deploy' : 'npm install && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
+    },
+    kylin : {
+      user : 'eos',
+      host : 'kylin.libertyblock.io',
+      ref  : 'origin/master',
+      repo : 'https://github.com/EveripediaNetwork/backend-api.git',
+      path : '/home/eos/ep2-backend-kylin',
       'post-deploy' : 'npm install && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
     }
   }
