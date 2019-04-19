@@ -21,7 +21,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:EveripediaNetwork/backend-api.git',
       path : '/home/beekeeper/ep2-backend',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm install && npm run-script build && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
