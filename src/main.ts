@@ -22,13 +22,14 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
 
     // Swagger
-    const serverConfig = app.get(ConfigService).get('serverConfig');
+    const serverHost = app.get(ConfigService).get('SERVER_HOST');
+    const serverHttpPort = app.get(ConfigService).get('SERVER_HTTP_PORT');
     const options = new DocumentBuilder()
         .setTitle('Everipedia API')
         .setDescription('Data access API for the Everipedia dapp on EOS')
         .setVersion('0.1')
         .setSchemes('http')
-        .setHost(`${serverConfig.serverHost}:${serverConfig.serverHttpPort}`)
+        .setHost(`${serverHost}:${serverHttpPort}`)
         .addTag('Proposals')
         .addTag('Wikis')
         .addTag('Recent Activity')
@@ -52,6 +53,6 @@ async function bootstrap() {
     // Start Dfuse sync
     app.get('EosSyncService').sync();
 
-    await app.listen(serverConfig.serverHttpPort);
+    await app.listen(serverHttpPort);
 }
 bootstrap();

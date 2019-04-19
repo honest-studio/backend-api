@@ -1,6 +1,6 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
-import { MongoDbConnectionConfig, ConfigService } from '../../common';
+import { ConfigService } from '../../common';
 
 // placeholder entities for mongodb
 export type ActionEntity = any;
@@ -29,20 +29,17 @@ export type AppConnectionInstance = {
  */
 @Injectable()
 export class MongoDbService {
-    private readonly mongoConfig: MongoDbConnectionConfig;
     private appConnectionInstance: AppConnectionInstance;
 
-    constructor(config: ConfigService) {
-        this.mongoConfig = config.get('mongoConfig');
-    }
+    constructor(private config: ConfigService) {}
 
     async connect(): Promise<AppConnectionInstance> {
         if (this.appConnectionInstance) return this.appConnectionInstance;
-        console.log(`-- in mongoDbservice.connect() -- connecting to ${this.mongoConfig.mongoConnUrl}`);
+        console.log(`-- in mongoDbservice.connect() -- connecting to ${this.config.get("MONGODB_URL")}`);
         try {
             this.appConnectionInstance = await new Promise<AppConnectionInstance>((resolve, reject) => {
                 MongoClient.connect(
-                    this.mongoConfig.mongoConnUrl,
+                    this.config.get("MONGODB_URL"),
                     { poolSize: 10, useNewUrlParser: true },
                     (err: Error, client: MongoClient) => {
                         if (err) {
@@ -53,7 +50,7 @@ export class MongoDbService {
                             console.error('Mongo client unavailable!');
                             reject(new Error('Mongo client unavailable'));
                         } else {
-                            const db = client.db(this.mongoConfig.mongoDbName);
+                            const db = client.db(this.config.get("MONGODB_DATABASE_NAME"));
                             const actions = db.collection('actions');
                             const diffs = db.collection('diffs');
                             const json_wikis = db.collection('json_wikis');

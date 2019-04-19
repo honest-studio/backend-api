@@ -1,26 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { AWSS3Config, ConfigService } from '../../common';
+import { ConfigService } from '../../common';
 import * as AWS from 'aws-sdk';
 
 @Injectable()
 export class AWSS3Service {
-    private readonly _awss3Config: AWSS3Config;
     private _s3;
 
-    constructor(config: ConfigService) {
-        // Fetch the S3 config info
-        this._awss3Config = config.get('awsS3Config');
-
+    constructor(private config: ConfigService) {
         // Initialize the AWS S3 connection
         this._s3 = new AWS.S3({
-            accessKeyId: this._awss3Config.awsAccessKeyID,
-            secretAccessKey: this._awss3Config.awsSecretAccessKey
+            accessKeyId: this.config.get("AWS_S3_ACCESS_KEY_ID"),
+            secretAccessKey: this.config.get("AWS_S3_SECRET_ACCESS_KEY")
         });
     }
 
     // Return the bucket name
-    getBucket() {
-        return this._awss3Config.awsStorageBucketName;
+    getBucket () {
+        return this.config.get("AWS_S3_STORAGE_BUCKET_NAME");
     }
 
     // Return the upload function

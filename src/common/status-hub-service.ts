@@ -1,5 +1,3 @@
-import { AppConfigVars } from './config-types';
-import { validateAndBuildConfig } from './config-schema';
 import { Injectable } from '@nestjs/common';
 import { ServiceName, StatusWithMessage, StatusMap, ServiceStatus } from '../shared';
 import { SetServiceStatus, PrintServiceStatus } from '../utils';

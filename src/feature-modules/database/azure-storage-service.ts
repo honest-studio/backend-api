@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AzureStorageConfig, ConfigService } from '../../common';
+import { ConfigService } from '../../common';
 import { createBlobService } from 'azure-storage';
 
 @Injectable()

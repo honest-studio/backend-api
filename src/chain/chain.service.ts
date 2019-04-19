@@ -1,32 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import * as fetch from 'node-fetch';
-import { ConfigService, DfuseConfig } from '../common';
+import { ConfigService } from '../common';
 
 @Injectable()
 export class ChainService {
-    private readonly dfuseConfig: DfuseConfig;
-
-    constructor(config: ConfigService) {
-        this.dfuseConfig = config.get('dfuseConfig');
-    }
+    constructor(private config: ConfigService) {}
 
     async forward(eos_api_endpoint, body): Promise<any> {
-        return fetch(`${this.dfuseConfig.dfuseRestEndpoint}/v1/chain/${eos_api_endpoint}`, {
+        const dfuseRestEndpoint = this.config.get("DFUSE_API_REST_ENDPOINT");
+        return fetch(`${dfuseRestEndpoint}/v1/chain/${eos_api_endpoint}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer: ${this.dfuseConfig.dfuseApiKey}`
+                Authorization: `Bearer: ${this.config.get("DFUSE_API_KEY")}`
             },
             body: JSON.stringify(body)
         }).then((r) => r.json());
     }
 
     async pushTransaction(transaction): Promise<any> {
-        return fetch(`${this.dfuseConfig.dfuseRestEndpoint}/v1/chain/push_transaction`, {
+        return fetch(`${this.config.get("DFUSE_API_REST_ENDPOINT")}/v1/chain/push_transaction`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer: ${this.dfuseConfig.dfuseApiKey}`,
+                Authorization: `Bearer: ${this.config.get("DFUSE_API_KEY")}`,
                 'X-Eos-Push-Guarantee': 'in-block'
             },
             body: JSON.stringify(transaction)
