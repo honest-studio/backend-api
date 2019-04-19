@@ -357,7 +357,15 @@ describe('Backend API', () => {
         .post('/v2/preview/slugs')
         .send([
             { "lang_code": "en", "slug": "Donald_Trump" },
-            { "lang_code": "en", "slug": "kedar-iyer" }
+            { "lang_code": "en", "slug": "nusrat-jahan-rafi" },
+            { "lang_code": "en", "slug": "kill-bill-the-rapper" },
+            { "lang_code": "en", "slug": "wikipedia" },
+            { "lang_code": "en", "slug": "mvgenvideos" },
+            { "lang_code": "en", "slug": "William_Legate" },
+            { "lang_code": "en", "slug": "Donald_Trump" },
+            { "lang_code": "en", "slug": "cardi-b" },
+            { "lang_code": "ko", "slug": "%EB%B2%A0%EB%A0%88%ED%83%80_92" },
+            { "lang_code": "en", "slug": "kamala-harris" }
         ])
         .expect(201)
   });
