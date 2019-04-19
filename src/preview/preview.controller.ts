@@ -1,5 +1,5 @@
-import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
+import { Controller, Get, Param, Post, Body } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitBody, ApiUseTags } from '@nestjs/swagger';
 import { PreviewService } from './preview.service';
 
 @Controller('v2/preview')
@@ -55,6 +55,34 @@ export class PreviewController {
             }`
     })
     async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
-        return this.previewService.getPreviewBySlug(lang_code, slug);
+        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
+        return previews[0];
+    }
+
+    @Post('slugs')
+    @ApiOperation({ 
+        title: 'Get preview for multiple wikis', 
+        description: `Body format: An array of WikiIdentity objects. Example:
+            [
+                { "lang_code": "en", "slug": "Donald_Trump" },
+                { "lang_code": "en", "slug": "worbli" },
+                { "lang_code": "kr", "slug": "Donald_Trump" },
+                { "lang_code": "es", "slug": "jonah_kabidiman" },
+            ]`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Object or array of objects with the following schema:
+            {
+                title: Article title,
+                mainimage: Main article image,
+                thumbnail: Article main image thumbnail,
+                page_lang: ISO 639 language code,
+                ipfs_hash: Article IPFS hash,
+                text_preview: Snippet of text from the article
+            }`
+    })
+    async getWikiPreviewsBySlug(@Body() wiki_identities): Promise<any> {
+        return this.previewService.getPreviewsBySlug(wiki_identities);
     }
 }

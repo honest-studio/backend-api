@@ -39,3 +39,7 @@ export interface LanguagePack {
     slug: string;
 }
 
+export interface WikiIdentity {
+    lang_code: string;
+    slug: string;
+}

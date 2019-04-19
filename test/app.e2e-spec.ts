@@ -352,6 +352,16 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Preview: Multiple By Slug', () => {
+    return request(app.getHttpServer())
+        .post('/v2/preview/slugs')
+        .send([
+            { "lang_code": "en", "slug": "Donald_Trump" },
+            { "lang_code": "en", "slug": "kedar-iyer" }
+        ])
+        .expect(201)
+  });
+
   it('User: Stakes', () => {
     return request(app.getHttpServer())
         .get('/v2/user/eptestusersa/stakes')

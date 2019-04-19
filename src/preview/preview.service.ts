@@ -6,6 +6,7 @@ import { WikiService } from '../wiki';
 import { CacheService } from '../cache';
 import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
+import { WikiIdentity } from '../utils/article-utils/article-types';
 
 @Injectable()
 export class PreviewService {
@@ -92,46 +93,52 @@ export class PreviewService {
         return previews;
     }
 
-    async getPreviewBySlug(lang_code: string, slug: string): Promise<any> {
+    async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<any> {
+        // strip lang_ prefix in lang_code if it exists
+        wiki_identities.forEach(w => {
+            if (w.lang_code.includes('lang_')) 
+                w.lang_code = w.lang_code.substring(5)
+        });
+
+        const substitutions = wiki_identities
+            .map(w => [w.lang_code, w.slug])
+            .reduce((flat, piece) => flat.concat(piece), []);
+
+        const whereClause = wiki_identities
+            .map(w => `(art.page_lang = ? AND art.slug = ?)`)
+            .join(' OR ');
+        const query = `
+            SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+                art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
+                art.creation_timestamp, art.lastmod_timestamp 
+            FROM enterlink_articletable AS art 
+            WHERE ${whereClause}`;
+
         const previews: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
-                    art.creation_timestamp, art.lastmod_timestamp 
-                FROM enterlink_articletable AS art 
-                WHERE art.slug = ? OR art.slug_alt = ?
-                AND art.page_lang = ?`,
-                [slug, slug, lang_code],
-                function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                }
-            );
+            this.mysql.pool().query(query, substitutions, function(err, rows) {
+                if (err) reject(err);
+                else resolve(rows);
+            });
         });
         if (previews.length == 0)
-            throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
+            throw new NotFoundException({ error: `Could not find wikis` })
 
         const preview = previews[0];
 
         // clean up text previews
-        if (preview.text_preview) {
-            preview.text_preview = preview.text_preview
-                .replace(/<b>/g, ' ')
-                .replace(/<\/b>/g, ' ');
-            const $ = cheerio.load(preview.text_preview);
-            preview.text_preview = $.root()
-                .text()
-                .replace(/\s+/g, ' ')
-                .trim();
+        for (let preview of previews) {
+            if (preview.text_preview) {
+                preview.text_preview = preview.text_preview
+                    .replace(/<b>/g, ' ')
+                    .replace(/<\/b>/g, ' ');
+                const $ = cheerio.load(preview.text_preview);
+                preview.text_preview = $.root()
+                    .text()
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
         }
 
-        // grab categories for wiki scrapes
-        if (preview.page_note && preview.page_note.includes('EN_WIKI_IMPORT'))
-            preview.categories = await this.wikiService.getCategories(lang_code, slug);
-        else preview.categories = [];
-        delete preview.page_note;
-
-        return preview;
+        return previews;
     }
 }
