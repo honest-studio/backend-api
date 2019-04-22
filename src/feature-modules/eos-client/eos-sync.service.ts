@@ -96,7 +96,7 @@ export class EosSyncService {
                 })
                 .catch((err) => {
                     if (err.code == 11000) {
-                        console.log(`EOS-SYNC-SERVICE: Ignoring duplicate action. This is expected behavior during server restarts`);
+                        console.log(`EOS-SYNC-SERVICE: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
                     }
                     else {
                         console.log('EOS-SYNC-SERVICE: Error inserting action ', msg, ' \n Error message on insert: ', err);
