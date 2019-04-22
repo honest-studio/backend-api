@@ -220,6 +220,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Wiki Json: Big Page: Donald Trump', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/slug/lang_en/Donald_Trump')
+        .expect(200)
+  });
+
   it('Wiki AMP HTML: Travis Moore', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/amp/lang_en/travismoore5036459')

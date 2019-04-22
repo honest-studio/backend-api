@@ -19,91 +19,68 @@ export class WikiService {
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
-        let rows: Array<any> = await new Promise((resolve, reject) => {
+        let ipfs_hash_rows: any[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
-                FROM enterlink_articletable AS art 
-                JOIN enterlink_hashcache AS cache 
-                ON art.ipfs_hash_current=cache.ipfs_hash 
-                WHERE art.redirect_page_id is NULL 
-                AND art.is_removed=0 
-                AND (art.slug=? OR art.slug_alt=?) 
-                AND art.page_lang=?;`,
-                [slug, slug, lang_code],
+                SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.slug = ? AND art.page_lang = ?`,
+                [slug, lang_code],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);
                 }
             );
         });
-        if (rows.length == 0) {
-            // check for redirect
-            rows = await new Promise((resolve, reject) => {
-                this.mysql.pool().query(
-                    `
-                    SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
-                    FROM enterlink_articletable AS art 
-                    JOIN enterlink_hashcache AS cache 
-                    ON cache.ipfs_hash=art.ipfs_hash_current 
-                    WHERE art.id = (
-                        SELECT redirect_page_id 
-                        FROM enterlink_articletable AS art 
-                        WHERE (art.slug=? OR art.slug_alt=?)
-                        AND art.page_lang=?
-                    );`,
-                    [slug, slug, lang_code],
-                    function(err, rows) {
-                        if (err) reject(err);
-                        else resolve(rows);
-                    }
-                );
-            });
-        }
-        if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
-        // check if wiki is already in JSON format
+        // Try and grab cached json wiki
+        const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+        if (use_cache) {
+            const cache_wiki = await this.mongo.connection().json_wikis.findOne({
+                'ipfs_hash': ipfs_hash
+            });
+            if (cache_wiki) return cache_wiki;
+        }
+
+        // get wiki from MySQL if there is no cached item
+        let wiki_rows: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT html_blob
+                FROM enterlink_hashcache
+                WHERE ipfs_hash=?;`,
+                [ipfs_hash],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
         let wiki: ArticleJson;
         try {
-            wiki = JSON.parse(rows[0].html_blob);
-            return wiki;
+            // check if wiki is already in JSON format
+            wiki = JSON.parse(wiki_rows[0].html_blob);
         } catch {
-            // continue
+            wiki = oldHTMLtoJSON(wiki_rows[0].html_blob);
+            wiki.ipfs_hash = ipfs_hash;
+
+            // some wikis don't have page langs set
+            if (!wiki.metadata.find(w => w.key == "page_lang"))
+                wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }    
 
-        // check cache for json wiki
-        // else compute the JSON and cache it
-        const cache_wiki = await this.mongo.connection().json_wikis.findOne({
-            'metadata.ipfs_hash': rows[0].ipfs_hash_current
-        });
-        if (cache_wiki && use_cache) {
-            wiki = cache_wiki;
-        } else {
-            wiki = oldHTMLtoJSON(rows[0].html_blob);
-            wiki.ipfs_hash = rows[0].ipfs_hash_current;
-
-            // TODO: These should all be in a different API call 
-            //wiki.metadata.pageviews = rows[0].pageviews; 
-            //wiki.alt_langs = await this.getWikiGroups(lang_code, slug);
-            //wiki.seealsos = await this.getSeeAlsos(wiki);
-            const is_wikipedia_import = wiki.metadata.find(w => w.key == 'is_wikipedia_import' ).value;
-            if (is_wikipedia_import) {
-                wiki.categories = await this.getCategories(lang_code, slug);
-            }
-            this.mongo
-                .connection()
-                .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true });
-        }
-
-        // some wikis don't have page langs set
-        if (!wiki.metadata.find(w => w.key == "page_lang"))
-            wiki.metadata.push({ key: 'page_lang', value: lang_code });
+        // cache wiki - upsert so that use_cache=false updates the cache
+        this.mongo
+            .connection()
+            .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true })
+            .catch(console.log);
 
         return wiki;
     }
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
-        // console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
         let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug);
         let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
         ampWiki.main_photo[0].width = photoExtraData.width;
