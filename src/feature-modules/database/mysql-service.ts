@@ -15,7 +15,7 @@ export class MysqlService {
         if (this.connectionPool) return this.connectionPool;
 
         this.connectionPool = mysql.createPool({
-            connectionLimit: 10,
+            connectionLimit: 2,
             host: this.config.get("MYSQL_HOST"),
             port: this.config.get("MYSQL_PORT"),
             user: this.config.get("MYSQL_USERNAME"),
