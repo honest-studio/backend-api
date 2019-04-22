@@ -1,7 +1,7 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../database/mongodb-service';
-import { DfuseConfig, ConfigService } from '../../common';
+import { ConfigService } from '../../common';
 import * as fetch from 'node-fetch';
 import * as WebSocket from 'ws';
 
@@ -12,31 +12,28 @@ export interface DfuseToken {
 
 @Injectable()
 export class EosSyncService {
-    private readonly mongoDbService: MongoDbService;
-    private readonly dfuseStartBlock;
-    private readonly dfuseConfig: DfuseConfig;
     private lastMessageReceived: number;
     private dfuseJwtToken: string;
     private dfuse: WebSocket;
 
     public DFUSE_AUTH_URL = 'https://auth.dfuse.io/v1/auth/issue';
 
-    constructor(mongo: MongoDbService, config: ConfigService) {
-        this.mongoDbService = mongo;
-        this.dfuseConfig = config.get('dfuseConfig');
-    }
+    constructor(private mongo: MongoDbService, private config: ConfigService) {}
 
-    async get_start_block(account: string, default_start_block: number = this.dfuseStartBlock): Promise<number> {
-        return this.mongoDbService
+    // you can override the start block from the DB with the 
+    // DFUSE_START_BLOCK config parameter
+    async get_start_block(account: string): Promise<number> {
+        return this.mongo
             .connection()
             .actions.find({ 'trace.act.account': account })
             .sort({ block_num: -1 })
             .limit(1)
             .toArray()
             .then((result: Array<any>) => {
-                if (result.length == 0) return default_start_block;
+                const config_start_block = Number(this.config.get("DFUSE_START_BLOCK"));
+                if (result.length == 0) return config_start_block;
                 const db_block = result[0].block_num;
-                return Math.max(default_start_block, db_block);
+                return Math.max(config_start_block, db_block);
             });
     }
 
@@ -44,10 +41,10 @@ export class EosSyncService {
         const dfuseToken = await this.obtainDfuseToken();
 
         try {
-            const url = `${this.dfuseConfig.dfuseWsEndpoint}?token=${dfuseToken.token}`;
+            const url = `${this.config.get("DFUSE_API_WEBSOCKET_ENDPOINT")}?token=${dfuseToken.token}`;
             this.dfuse = new WebSocket(url, {
                 headers: {
-                    Origin: this.dfuseConfig.dfuseOriginUrl
+                    Origin: this.config.get("DFUSE_API_ORIGIN_URL")
                 }
             });
         } catch (err) {
@@ -73,29 +70,9 @@ export class EosSyncService {
                 },
                 start_block: await this.get_start_block('everipediaiq')
             };
-            const safesend_req = {
-                type: 'get_actions',
-                req_id: 'safesend_req',
-                listen: true,
-                data: {
-                    account: 'iqsafesendiq'
-                },
-                start_block: await this.get_start_block('iqsafesendiq')
-            };
-            const fee_req = {
-                type: 'get_actions',
-                req_id: 'fee_req',
-                listen: true,
-                data: {
-                    account: 'epiqtokenfee'
-                },
-                start_block: await this.get_start_block('epiqtokenfee')
-            };
 
             this.dfuse.send(JSON.stringify(article_req));
             this.dfuse.send(JSON.stringify(token_req));
-            //dfuse.send(JSON.stringify(safesend_req));
-            //dfuse.send(JSON.stringify(fee_req));
         });
         this.dfuse.on('error', (err) => {
             console.log('-- error connecting to dfuse: ', err);
@@ -105,10 +82,10 @@ export class EosSyncService {
 
             const msg = JSON.parse(msg_str);
             if (msg.type != 'action_trace') {
-                // console.log(msg);
+                //console.log(msg);
                 return;
             }
-            this.mongoDbService
+            this.mongo
                 .connection()
                 .actions.insertOne(msg.data)
                 .then(() => {
@@ -118,7 +95,13 @@ export class EosSyncService {
                     console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
                 })
                 .catch((err) => {
-                    console.log('Eos-Sync-Service: Error inserting action ', msg, ' \n Error message on insert: ', err);
+                    if (err.code == 11000) {
+                        console.log(`EOS-SYNC-SERVICE: Ignoring duplicate action. This is expected behavior during server restarts`);
+                    }
+                    else {
+                        console.log('EOS-SYNC-SERVICE: Error inserting action ', msg, ' \n Error message on insert: ', err);
+                        throw err;
+                    }
                 });
         });
 
@@ -130,7 +113,7 @@ export class EosSyncService {
     async obtainDfuseToken(): Promise<DfuseToken> {
         return fetch(this.DFUSE_AUTH_URL, {
             method: 'POST',
-            body: JSON.stringify({ api_key: this.dfuseConfig.dfuseApiKey })
+            body: JSON.stringify({ api_key: this.config.get("DFUSE_API_KEY") })
         }).then((response) => response.json());
     }
 

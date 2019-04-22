@@ -8,7 +8,7 @@ echo "Done"
 echo
 
 echo "Installing MongoDB"
-sudo apt install mongodb 
+sudo apt install mongodb -y
 echo "Done"
 echo
 
@@ -18,9 +18,9 @@ echo "Done"
 echo
 
 echo "Installing Webp and HEIC/HEIF stuff"
-sudo apt-get install libpng-dev libtiff-dev libjpeg-dev libheif-dev build-essential libcairo2-dev
-sudo apt-get libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-sudo apt-get install webp
+sudo apt-get install -y libpng-dev libtiff-dev libjpeg-dev libheif-dev build-essential libcairo2-dev
+sudo apt-get install -y libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+sudo apt-get install -y webp
 echo "Done"
 echo
 
@@ -44,3 +44,11 @@ systemctl --user daemon-reload
 echo "Starting IPFS daemon"
 systemctl --user start ipfs
 echo "Done"
+
+# Install NodeJS 11 & NPM
+curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+sudo apt install nodejs -y
+
+# Install NPM packages
+cd ..
+npm install

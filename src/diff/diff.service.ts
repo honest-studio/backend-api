@@ -13,8 +13,19 @@ export class DiffService {
         const ipfs_hashes = [];
         const proposal_hashes = [];
 
+        const diffs = [];
         for (const i in proposal_ids) {
             const proposal_id = proposal_ids[i];
+
+            // check for cached diff
+            const cached_diff = await this.mongo.connection().diffs.findOne({ 
+                metadata: { $elemMatch: { key: 'proposal_id', 'value': proposal_id }}
+            })
+            if (cached_diff) {
+                diffs.push(cached_diff);
+                continue;
+            }
+
             const proposal = await this.mongo.connection().actions.findOne({
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo',
@@ -50,13 +61,16 @@ export class DiffService {
         }
         const wikis = await this.wikiService.getWikisByHash(ipfs_hashes);
 
-        const diffs = proposal_hashes.map((prop) => {
+        proposal_hashes.forEach((prop) => {
             const old_wiki = wikis.find((w) => w.ipfs_hash == prop.old_hash);
             const new_wiki = wikis.find((w) => w.ipfs_hash == prop.new_hash);
             const diff_wiki = diffArticleJson(old_wiki, new_wiki);
             diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
-            diff_wiki.metadata.push({ key: 'diff_percent', value: this.calcDiffPercent(diff_wiki) });
-            return diff_wiki;
+
+            // cache result
+            this.mongo.connection().diffs.insertOne(diff_wiki);
+
+            diffs.push(diff_wiki);
         });
 
         return diffs;
@@ -64,17 +78,21 @@ export class DiffService {
 
     // TODO: add caching
     async getDiffByHash(old_hash: string, new_hash: string): Promise<ArticleJson> {
+        const cached_diff = await this.mongo
+            .connection()
+            .diffs.findOne({
+            })
+
         const wikis = await this.wikiService.getWikisByHash([old_hash, new_hash]);
 
         const old_wiki = wikis.find((w) => w.ipfs_hash == old_hash);
         const new_wiki = wikis.find((w) => w.ipfs_hash == new_hash);
         const diff_wiki = await diffArticleJson(old_wiki, new_wiki);
-        diff_wiki.metadata.push({ key: 'diff_percent', value: this.calcDiffPercent(diff_wiki) });
+
+        // cache result
+        this.mongo.connection().diffs.insertOne(diff_wiki);
 
         return diff_wiki;
     }
 
-    calcDiffPercent(diff_wiki: ArticleJson): number {
-        return Number(Math.random().toFixed(2));
-    }
 }

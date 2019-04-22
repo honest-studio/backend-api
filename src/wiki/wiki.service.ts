@@ -1,10 +1,10 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
-import { ArticleJson, SeeAlso, WikiExtraInfo, LanguagePack , renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
+import { ArticleJson, SeeAlso, Sentence, WikiExtraInfo, LanguagePack , renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import * as SqlString from 'sqlstring';
 
@@ -19,80 +19,68 @@ export class WikiService {
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
-        let rows: Array<any> = await new Promise((resolve, reject) => {
+        let ipfs_hash_rows: any[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
-                FROM enterlink_articletable AS art 
-                JOIN enterlink_hashcache AS cache 
-                ON art.ipfs_hash_current=cache.ipfs_hash 
-                WHERE art.redirect_page_id is NULL 
-                AND art.is_removed=0 
-                AND (art.slug=? OR art.slug_alt=?) 
-                AND art.page_lang=?;`,
-                [slug, slug, lang_code],
+                SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.slug = ? AND art.page_lang = ?`,
+                [slug, lang_code],
                 function(err, rows) {
                     if (err) reject(err);
                     else resolve(rows);
                 }
             );
         });
-        if (rows.length == 0) {
-            // check for redirect
-            rows = await new Promise((resolve, reject) => {
-                this.mysql.pool().query(
-                    `
-                    SELECT cache.html_blob, art.pageviews, art.ipfs_hash_current, art.page_note
-                    FROM enterlink_articletable AS art 
-                    JOIN enterlink_hashcache AS cache 
-                    ON cache.ipfs_hash=art.ipfs_hash_current 
-                    WHERE art.id = (
-                        SELECT redirect_page_id 
-                        FROM enterlink_articletable AS art 
-                        WHERE (art.slug=? OR art.slug_alt=?)
-                        AND art.page_lang=?
-                    );`,
-                    [slug, slug, lang_code],
-                    function(err, rows) {
-                        if (err) reject(err);
-                        else resolve(rows);
-                    }
-                );
-            });
-        }
-        if (rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
-        // check cache for json wiki
-        // else compute the JSON and cache it
-        const cache_wiki = await this.mongo.connection().json_wikis.findOne({
-            'metadata.ipfs_hash': rows[0].ipfs_hash_current
+        // Try and grab cached json wiki
+        const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+        if (use_cache) {
+            const cache_wiki = await this.mongo.connection().json_wikis.findOne({
+                'ipfs_hash': ipfs_hash
+            });
+            if (cache_wiki) return cache_wiki;
+        }
+
+        // get wiki from MySQL if there is no cached item
+        let wiki_rows: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT html_blob
+                FROM enterlink_hashcache
+                WHERE ipfs_hash=?;`,
+                [ipfs_hash],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
         });
         let wiki: ArticleJson;
-        if (cache_wiki && use_cache) {
-            wiki = cache_wiki;
-        } else {
-            wiki = oldHTMLtoJSON(rows[0].html_blob);
-            wiki.ipfs_hash = rows[0].ipfs_hash_current;
+        try {
+            // check if wiki is already in JSON format
+            wiki = JSON.parse(wiki_rows[0].html_blob);
+        } catch {
+            wiki = oldHTMLtoJSON(wiki_rows[0].html_blob);
+            wiki.ipfs_hash = ipfs_hash;
 
-            // TODO: These should all be in a different API call 
-            //wiki.metadata.pageviews = rows[0].pageviews; 
-            //wiki.alt_langs = await this.getWikiGroups(lang_code, slug);
-            //wiki.seealsos = await this.getSeeAlsos(wiki);
-            const is_wikipedia_import = wiki.metadata.find(w => w.key == 'is_wikipedia_import' ).value;
-            if (is_wikipedia_import) {
-                wiki.categories = await this.getCategories(lang_code, slug);
-            }
-            this.mongo
-                .connection()
-                .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true });
-        }
+            // some wikis don't have page langs set
+            if (!wiki.metadata.find(w => w.key == "page_lang"))
+                wiki.metadata.push({ key: 'page_lang', value: lang_code });
+        }    
 
-        wiki.metadata.push({ key: 'page_lang', value: lang_code });
+        // cache wiki - upsert so that use_cache=false updates the cache
+        this.mongo
+            .connection()
+            .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true })
+            .catch(console.log);
+
         return wiki;
     }
 
     async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
-        // console.log('\x1b[41;1m%s\x1b[0m', "MIS-PARSING OF SOME WIKI TABLES OCCURS: /wiki/amp-slug/lang_en/Norway_at_the_2016_Summer_Olympics");
         let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug);
         let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
         ampWiki.main_photo[0].width = photoExtraData.width;
@@ -180,7 +168,7 @@ export class WikiService {
             // mark wikis that couldn't be found
             for (let hash of ipfs_hashes) {
                 const json = json_wikis.find((json) => json.ipfs_hash == hash);
-                if (!json) json_wikis.push({ error: `Wiki ${hash} could not be found` });
+                if (!json) json_wikis.push({ ipfs_hash: hash, error: `Wiki ${hash} could not be found` });
             }
         }
 
@@ -210,7 +198,7 @@ export class WikiService {
                 }
             );
         });
-        if (lang_packs.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (lang_packs.length == 0) throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
         return lang_packs;
     }
 
@@ -229,7 +217,7 @@ export class WikiService {
                 `
                 SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
                 COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
-                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS snippet
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview
                 FROM enterlink_articletable art
                 LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
                 WHERE ${seeAlsoWhere};`,
@@ -245,16 +233,28 @@ export class WikiService {
         return seeAlsoRows as SeeAlso[];
     }
 
-    async submitWiki(html_body: string): Promise<any> {
-        const submission = await this.ipfs.client().add(Buffer.from(html_body, 'utf8'));
+    async submitWiki(wiki: ArticleJson): Promise<any> {
+        if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
+
+        const blob = JSON.stringify(wiki);
+        let submission;
+        try {
+            submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+        } catch (err) {
+            if (err.code == 'ECONNREFUSED') {
+                console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                throw new InternalServerErrorException(`Server error: The IPFS node is down`);
+            }
+            else throw err;
+        }
         const ipfs_hash = submission[0].hash;
-        const insertion = await new Promise((resolve, reject) => {
+        const json_insertion = new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
                 INSERT INTO enterlink_hashcache (ipfs_hash, html_blob, timestamp) 
                 VALUES (?, ?, NOW())
                 `,
-                [ipfs_hash, html_body],
+                [ipfs_hash, blob],
                 function(err, res) {
                     if (err && err.message.includes('ER_DUP_ENTRY')) resolve('Duplicate entry. Continuing');
                     else if (err) reject(err);
@@ -262,6 +262,35 @@ export class WikiService {
                 }
             );
         });
+        const page_title = wiki.page_title[0].text;
+        const slug = wiki.metadata.find(m => m.key == "url_slug").value;
+        const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
+        const photo_url = wiki.main_photo[0].url;
+        const photo_thumb_url = wiki.main_photo[0].thumb;
+        const page_type = wiki.metadata.find(m => m.key == "page_type").value;
+        const is_adult_content = wiki.metadata.find(m => m.key == "is_adult_content").value;
+        const page_lang = wiki.metadata.find(m => m.key == "page_lang").value;
+        const article_info = new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                INSERT INTO enterlink_articletable 
+                    (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
+                ON DUPLICATE KEY UPDATE 
+                    ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
+                    page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
+                `,
+                [ipfs_hash, slug, slug, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content, page_lang,
+                 ipfs_hash, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content],
+                function(err, res) {
+                    if (err) reject(err);
+                    else resolve(res);
+                }
+            );
+        });
+        await Promise.all([json_insertion, article_info])
+            .catch(console.error);
+
         return { ipfs_hash };
     }
 
@@ -306,8 +335,13 @@ export class WikiService {
         const pageviews_rows: any[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT pageviews FROM enterlink_articletable
-                WHERE page_lang= ? AND slug = ?
+                SELECT 
+                    COALESCE (art_redir.pageviews, art.pageviews) AS pageviews, 
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.page_lang, art.page_lang) AS lang
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.page_lang = ? AND art.slug = ?;
                 `,
                 [lang_code, slug],
                 function(err, rows) {
@@ -319,7 +353,14 @@ export class WikiService {
         let pageviews = 0;
         if (pageviews_rows.length > 0)
             pageviews = pageviews_rows[0].pageviews;
-        const alt_langs = await this.getWikiGroups(lang_code, slug);
+
+        let alt_langs;
+        try {
+            alt_langs = await this.getWikiGroups(lang_code, slug);
+        } catch (e) {
+            if (e instanceof NotFoundException) alt_langs = [];
+            else throw e;
+        }
 
         return { alt_langs, see_also, pageviews };
     }

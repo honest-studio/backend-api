@@ -33,14 +33,13 @@ import {
         ElasticsearchModule.registerAsync({
             imports: [CommonModule],
             useFactory: async (config: ConfigService) => {
-                const elasticConfig = config.get('elasticSearchConfig');
-                const username = elasticConfig.elasticSearchUsername;
-                const password = elasticConfig.elasticSearchPassword;
+                const username = config.get("ELASTICSEARCH_USERNAME");
+                const password = config.get("ELASTICSEARCH_PASSWORD");
                 const host = {
-                    protocol: elasticConfig.elasticSearchProtocol,
-                    host: elasticConfig.elasticSearchHost,
-                    port: elasticConfig.elasticSearchPort,
-                    path: elasticConfig.elasticSearchUrlPrefix,
+                    protocol: config.get("ELASTICSEARCH_PROTOCOL"),
+                    host: config.get("ELASTICSEARCH_HOST"),
+                    port: config.get("ELASTICSEARCH_PORT"),
+                    path: config.get("ELASTICSEARCH_URL_PREFIX"),
                     auth: `${username}:${password}`
                 };
                 const apiVersion = '6.5'; // ignored for now

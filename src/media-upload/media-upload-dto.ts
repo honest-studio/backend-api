@@ -36,14 +36,37 @@ export class MediaUploadDto {
         required: true
     })
     @IsString()
-    @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/gimu, {
-        message: 'Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem'
-    })
-    upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
+    upload_type: string;
+    // @ApiModelProperty({
+    //     description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, or GalleryMediaItem)',
+    //     required: true
+    // })
+    // @IsString()
+    // @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/gimu, {
+    //     message: 'Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem'
+    // })
+    // upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
 }
 
 // Mimetype interface
 export interface MimePack {
     ext: string;
     mime: string;
+}
+
+// Types of media categories
+export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
+
+/**
+ * Describe a successful response to a media upload
+ */
+export interface MediaUploadResult {
+    mainPhotoURL: string;
+    returnDict: {
+        caption: string;
+        filename: string;
+    };
+    thumbnailPhotoURL: string;
+    mime: string;
+    category: MediaCategoryType;
 }

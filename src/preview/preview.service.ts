@@ -6,6 +6,7 @@ import { WikiService } from '../wiki';
 import { CacheService } from '../cache';
 import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
+import { WikiIdentity } from '../utils/article-utils/article-types';
 
 @Injectable()
 export class PreviewService {
@@ -115,23 +116,14 @@ export class PreviewService {
 
         console.time("mysql preview query");
         const previews: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note
-                FROM enterlink_articletable AS art 
-                WHERE art.slug = ? 
-                AND art.page_lang = ?`,
-                [slug, lang_code],
-                function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                }
-            );
+            this.mysql.pool().query(query, substitutions, function(err, rows) {
+                if (err) reject(err);
+                else resolve(rows);
+            });
         });
         console.timeEnd("mysql preview query");
         if (previews.length == 0)
-            throw new NotFoundException({ error: `Could not find wiki lang_${lang_code}/${slug}` });
+            throw new NotFoundException({ error: `Could not find wikis` })
 
         // clean up text previews
         console.time("preview text cleanup");

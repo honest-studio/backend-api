@@ -3,6 +3,7 @@ import { MongoDbService } from '../feature-modules/database';
 import { ProposalService, Proposal } from '../proposal';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 import { OAuthService } from '../oauth/oauth.service';
+import { PreviewService } from '../preview/preview.service';
 import * as fetch from 'node-fetch';
 
 @Injectable()
@@ -10,7 +11,8 @@ export class RecentActivityService {
     constructor(
         private mongo: MongoDbService,
         private proposalService: ProposalService,
-        private oauthService: OAuthService
+        private oauthService: OAuthService,
+        private previewService: PreviewService,
     ) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
@@ -130,9 +132,10 @@ export class RecentActivityService {
             return [];
 
         const trending = report.reports[0].data.rows.map((row) => ({
-            slug: row.dimensions[0].slice(14),
-            unique_pageviews_today: row.metrics[0].values[0],
-            pageviews_today: row.metrics[0].values[1]
+            slug: row.dimensions[0].slice(14).split('/')[1],
+            lang_code: row.dimensions[0].slice(14).split('/')[0].slice(5),
+            pageviews_today: Number(row.metrics[0].values[0]),
+            unique_pageviews_today: Number(row.metrics[0].values[1])
         }));
 
         return trending;

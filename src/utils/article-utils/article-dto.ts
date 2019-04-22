@@ -12,6 +12,10 @@ export interface WikiLink {
 
 export type DiffType = 'add' | 'delete' | 'none';
 
+export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
+
+export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
+
 export interface Sentence {
     type: string; // sentence
     index: number;
@@ -62,7 +66,7 @@ export interface Media {
     alt?: string;
     height?: number;
     width?: number;
-    category?: string;
+    category?: MediaCategoryType;
     diff?: DiffType;
 }
 
@@ -85,6 +89,8 @@ export interface Media {
     //old_hash: string;
     //new_hash: string;
     //proposal_id: number;
+    //diff_changes: number; # Number of entities changed by the diff
+    //diff_percent: number; # Percentage of document changed by diff
 export interface Metadata {
     key: string;
     value: any;
@@ -103,7 +109,7 @@ export interface Citation {
     url: string;
     thumb: string;
     description: Sentence[];
-    category: string;
+    category: CitationCategoryType;
     citation_id: number;
     social_type: string;
     attribution: string;

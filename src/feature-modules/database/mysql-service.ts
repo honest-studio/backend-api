@@ -1,15 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { MysqlConfig, ConfigService } from '../../common';
+import { ConfigService } from '../../common';
 import * as mysql from 'mysql';
 import { Pool } from 'mysql';
 
 @Injectable()
 export class MysqlService {
-    private readonly mysqlConfig: MysqlConfig;
     private connectionPool;
 
-    constructor(config: ConfigService) {
-        this.mysqlConfig = config.get('mysqlConfig');
+    constructor(private config: ConfigService) {
         this.connect();
     }
 
@@ -18,11 +16,11 @@ export class MysqlService {
 
         this.connectionPool = mysql.createPool({
             connectionLimit: 10,
-            host: this.mysqlConfig.mysqlHost,
-            port: this.mysqlConfig.mysqlPort,
-            user: this.mysqlConfig.mysqlUsername,
-            password: this.mysqlConfig.mysqlPassword,
-            database: this.mysqlConfig.mysqlDatabase
+            host: this.config.get("MYSQL_HOST"),
+            port: this.config.get("MYSQL_PORT"),
+            user: this.config.get("MYSQL_USERNAME"),
+            password: this.config.get("MYSQL_PASSWORD"),
+            database: this.config.get("MYSQL_DATABASE"),
         });
         return this.connectionPool;
     }

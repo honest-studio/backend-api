@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { MongoDbService } from '../src/feature-modules/database';
+import * as fs from 'fs';
 
 describe('Backend API', () => {
   let app: INestApplication;
@@ -89,6 +90,18 @@ describe('Backend API', () => {
   it('Recent Activity: Trending', () => {
     return request(app.getHttpServer())
       .get('/v2/recent-activity/trending')
+      .expect(200)
+  });
+
+  it('Recent Activity: Trending English', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/trending?langs=en')
+      .expect(200)
+  });
+
+  it('Recent Activity: Trending Bad language', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/trending?langs=tree')
       .expect(200)
   });
 
@@ -183,17 +196,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Submit article', () => {
-    return request(app.getHttpServer())
-        .post('/v2/wiki')
-        .set('Content-type', 'text/html')
-        .send(`<!DOCTYPE html><html>Hi I'm a wiki</html>`)
-        .expect(201)
-        .expect({
-            ipfs_hash: "QmY8v3eMGG4tWBjgDgMnYDcbVnWx9ikMgxDurSeKRjLRMB"
-        })
-  });
-
   it('Wiki Json: Manaus', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/slug/lang_en/Manaus')
@@ -215,6 +217,12 @@ describe('Backend API', () => {
   it('Wiki Json: Real Matrix', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/slug/lang_en/Real_matrix')
+        .expect(200)
+  });
+
+  it('Wiki Json: Big Page: Donald Trump', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/slug/lang_en/Donald_Trump')
         .expect(200)
   });
 
@@ -246,6 +254,23 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/extra/lang_en/travismoore5036459')
         .expect(200)
+  });
+
+  it('Wiki: Submit wiki', () => {
+    const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
+    return request(app.getHttpServer())
+        .post('/v2/wiki')
+        .send(wiki)
+        .expect(201)
+  });
+
+  it('Wiki: Failed Wiki Submission: non-null ipfs hash', () => {
+    const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
+    wiki.ipfs_hash = "Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd";
+    return request(app.getHttpServer())
+        .post('/v2/wiki')
+        .send(wiki)
+        .expect(400)
   });
 
   it('Chain: Get Info', () => {
@@ -309,6 +334,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Diff: Spam hashes', () => {
+    return request(app.getHttpServer())
+        .get('/v2/diff/hash/null/Qmasfdsa')
+        .expect(200)
+  });
+
   it('Preview: By Hash', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')
@@ -325,6 +356,24 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/slug/lang_en/mvgenvideos')
         .expect(200)
+  });
+
+  it('Preview: Multiple By Slug', () => {
+    return request(app.getHttpServer())
+        .post('/v2/preview/slugs')
+        .send([
+            { "lang_code": "en", "slug": "Donald_Trump" },
+            { "lang_code": "en", "slug": "nusrat-jahan-rafi" },
+            { "lang_code": "en", "slug": "kill-bill-the-rapper" },
+            { "lang_code": "en", "slug": "wikipedia" },
+            { "lang_code": "en", "slug": "mvgenvideos" },
+            { "lang_code": "en", "slug": "William_Legate" },
+            { "lang_code": "en", "slug": "Donald_Trump" },
+            { "lang_code": "en", "slug": "cardi-b" },
+            { "lang_code": "ko", "slug": "%EB%B2%A0%EB%A0%88%ED%83%80_92" },
+            { "lang_code": "en", "slug": "kamala-harris" }
+        ])
+        .expect(201)
   });
 
   it('User: Stakes', () => {
