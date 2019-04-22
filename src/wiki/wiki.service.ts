@@ -19,6 +19,7 @@ export class WikiService {
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
+        console.time("wiki by slug mysql 1");
         let ipfs_hash_rows: any[] = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -33,6 +34,7 @@ export class WikiService {
                 }
             );
         });
+        console.timeEnd("wiki by slug mysql 1");
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
         // Try and grab cached json wiki
@@ -45,6 +47,7 @@ export class WikiService {
         }
 
         // get wiki from MySQL if there is no cached item
+        console.time("wiki by slug mysql 2");
         let wiki_rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -58,12 +61,15 @@ export class WikiService {
                 }
             );
         });
+        console.timeEnd("wiki by slug mysql 2");
         let wiki: ArticleJson;
         try {
             // check if wiki is already in JSON format
             wiki = JSON.parse(wiki_rows[0].html_blob);
         } catch {
+            console.time("wiki by slug parse wiki");
             wiki = oldHTMLtoJSON(wiki_rows[0].html_blob);
+            console.timeEnd("wiki by slug parse wiki");
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
