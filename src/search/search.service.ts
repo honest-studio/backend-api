@@ -62,9 +62,9 @@ export class SearchService {
         const result_rows: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
-                SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, 
-                art.blurb_snippet AS text_preview,
-                art.photo_url, art.ipfs_hash_current, art.page_lang AS lang_code
+                SELECT art.page_title AS title, LOWER(art.slug) AS slug, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
+                    art.creation_timestamp, art.lastmod_timestamp 
                 FROM enterlink_articletable AS art
                 WHERE art.id IN (?)`,
                 [canonical_ids],

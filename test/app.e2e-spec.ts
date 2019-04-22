@@ -165,9 +165,9 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get wiki by slug', () => {
+  it('Wiki: Get wiki by slug - no cache', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/William_Legate')
+        .get('/v2/wiki/slug/lang_en/William_Legate?cache=false')
         .expect(200)
   });
 
