@@ -104,6 +104,9 @@ export class StatService {
             );
         total_iq_rewards = Number(total_iq_rewards[0].value.toFixed(3));
 
+        const original_pages_rows: Array<any> = await this.mysql.TryQuery(`SELECT COUNT(*) AS count FROM enterlink_articletable WHERE page_note IS NULL AND is_removed = 0;`)
+        const original_pages = original_pages_rows!=undefined?original_pages_rows.length:0;
+
         // clear old cache and cache new result
         const doc = {
             key: 'site_usage',
@@ -111,7 +114,8 @@ export class StatService {
             total_article_count,
             total_pageviews,
             total_editors,
-            total_iq_rewards
+            total_iq_rewards,
+            original_pages
         };
         this.mongo.connection().statistics.deleteMany({ key: 'site_usage' });
         this.mongo.connection().statistics.insertOne(doc);

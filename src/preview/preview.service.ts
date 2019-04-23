@@ -154,7 +154,6 @@ export class PreviewService {
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews
-        console.time('preview text cleanup');
         for (let preview of previews) {
             if (preview.text_preview) {
                 preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
@@ -165,7 +164,6 @@ export class PreviewService {
                     .trim();
             }
         }
-        console.timeEnd('preview text cleanup');
         // stop post-sql timer
         this.getPrevBySlugPostSqlHisto.observe({ pid: pid }, getDeltaMs(postSqlStart));
         // stop total req timer

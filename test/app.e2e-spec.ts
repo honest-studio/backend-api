@@ -165,9 +165,9 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Wiki: Get wiki by slug', () => {
+  it('Wiki: Get wiki by slug - no cache', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/William_Legate')
+        .get('/v2/wiki/slug/lang_en/William_Legate?cache=false')
         .expect(200)
   });
 
@@ -404,7 +404,7 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/site-usage')
         .expect(200)
-  }, 20000);
+  }, 30000);
 
   it('Stat: Editor Leaderboard', () => {
     return request(app.getHttpServer())
