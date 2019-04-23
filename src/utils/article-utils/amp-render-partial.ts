@@ -77,24 +77,24 @@ export class AmpRenderPartial {
             }
             ${
                 page_type == 'Person'
-                    ? `<title>${this.artJSON.page_title} | Wiki & Bio | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Bio |" />`
+                    ? `<title>${this.artJSON.page_title[0].text} | Wiki & Bio | Everipedia</title>
+                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
+                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki & Bio |" />`
                     : page_type == 'Product'
-                    ? `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |" />`
+                    ? `<title>${this.artJSON.page_title[0].text} | Wiki & Review | Everipedia</title>
+                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
+                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki & Review |" />`
                     : page_type == 'Organization'
-                    ? `<title>${this.artJSON.page_title} | Wiki & Review | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki & Review |" />`
+                    ? `<title>${this.artJSON.page_title[0].text} | Wiki & Review | Everipedia</title>
+                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
+                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki & Review |" />`
                     : page_type
-                    ? `<title>${this.artJSON.page_title} | Wiki | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title} | Wiki |" />`
+                    ? `<title>${this.artJSON.page_title[0].text} | Wiki | Everipedia</title>
+                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
+                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki |" />`
                     : ''
             }
-            <meta property="article:tag" content="${this.artJSON.page_title}" />
+            <meta property="article:tag" content="${this.artJSON.page_title[0].text}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
             <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
@@ -198,15 +198,15 @@ export class AmpRenderPartial {
                             alt="
                                 ${
                                     page_type == 'Person'
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio`
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} bio`
                                         : page_type == 'Product'
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review`
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review`
                                         : page_type == 'Organization'
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review, ${
-                                              this.artJSON.page_title
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review, ${
+                                              this.artJSON.page_title[0].text
                                           } history`
                                         : true
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} history`
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} history`
                                         : ``
                                 }
                         ">
@@ -221,15 +221,15 @@ export class AmpRenderPartial {
                             alt="
                                 ${
                                     page_type == 'Person'
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} bio`
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} bio`
                                         : page_type == 'Product'
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review`
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review`
                                         : page_type == 'Organization'
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} review, ${
-                                              this.artJSON.page_title
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review, ${
+                                              this.artJSON.page_title[0].text
                                           } history`
                                         : true
-                                        ? `${this.artJSON.page_title} wiki, ${this.artJSON.page_title} history`
+                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} history`
                                         : ``
                                 }
                         ">
@@ -259,32 +259,33 @@ export class AmpRenderPartial {
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
         const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const page_title = this.artJSON.page_title[0].text;
 
         return `
             <div class="name-container">
                 <h1>
-                    <span>${this.artJSON.page_title}</span>
+                    <span>${page_title}</span>
                 </h1>
                 ${
                     page_type == 'Person'
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              this.artJSON.page_title
-                          } news, who is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>
+                              page_title
+                          } news, who is ${page_title}, where is ${page_title}" ></amp-anim>
                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        this.artJSON.page_title
-                    } real name, how old is ${this.artJSON.page_title}" ></amp-anim>`
+                        page_title
+                    } real name, how old is ${page_title}" ></amp-anim>`
                         : page_type == 'Product'
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              this.artJSON.page_title
-                          } news, what is ${this.artJSON.page_title}" ></amp-anim>`
+                            page_title
+                        } news, what is ${page_title}" ></amp-anim>`
                         : page_type == 'Organization'
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              this.artJSON.page_title
-                          } news, what is ${this.artJSON.page_title}, where is ${this.artJSON.page_title}" ></amp-anim>`
+                              page_title
+                          } news, what is ${page_title}, where is ${page_title}" ></amp-anim>`
                         : true
                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              this.artJSON.page_title
-                          } news, what is ${this.artJSON.page_title}" ></amp-anim>`
+                              page_title
+                          } news, what is ${page_title}" ></amp-anim>`
                         : ``
                 }
                 <div id="title-buttonset">
@@ -322,64 +323,64 @@ export class AmpRenderPartial {
                                 ${
                                     page_type == 'Person'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              this.artJSON.page_title
-                                          } religion, ${this.artJSON.page_title} interview, ${
-                                              this.artJSON.page_title
-                                          } life, ${this.artJSON.page_title} website" ></amp-anim>
+                                              page_title
+                                          } religion, ${page_title} interview, ${
+                                              page_title
+                                          } life, ${page_title} website" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } wife, ${this.artJSON.page_title} family, ${this.artJSON.page_title} education, ${
-                                              this.artJSON.page_title
-                                          } measurements, ${this.artJSON.page_title} email" ></amp-anim>
+                                        page_title
+                                    } wife, ${page_title} family, ${page_title} education, ${
+                                              page_title
+                                          } measurements, ${page_title} email" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } phone, ${this.artJSON.page_title} salary, ${this.artJSON.page_title} address, ${
-                                              this.artJSON.page_title
-                                          } history, ${this.artJSON.page_title} facts" ></amp-anim>
+                                        page_title
+                                    } phone, ${page_title} salary, ${page_title} address, ${
+                                              page_title
+                                          } history, ${page_title} facts" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } wikipedia, ${this.artJSON.page_title} news, who is ${
-                                              this.artJSON.page_title
-                                          }, where is ${this.artJSON.page_title}" ></amp-anim>`
+                                        page_title
+                                    } wikipedia, ${page_title} news, who is ${
+                                              page_title
+                                          }, where is ${page_title}" ></amp-anim>`
                                         : page_type == 'Product'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              this.artJSON.page_title
-                                          } designer, ${this.artJSON.page_title} sales, ${
-                                              this.artJSON.page_title
+                                              page_title
+                                          } designer, ${page_title} sales, ${
+                                              page_title
                                           } facts" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } wikipedia, ${this.artJSON.page_title} news, what is ${
-                                              this.artJSON.page_title
+                                        page_title
+                                    } wikipedia, ${page_title} news, what is ${
+                                              page_title
                                           }" ></amp-anim>`
                                         : page_type == 'Organization'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              this.artJSON.page_title
-                                          } ownership, ${this.artJSON.page_title} email, ${
-                                              this.artJSON.page_title
-                                          } address, ${this.artJSON.page_title} phone, ${
-                                              this.artJSON.page_title
+                                              page_title
+                                          } ownership, ${page_title} email, ${
+                                              page_title
+                                          } address, ${page_title} phone, ${
+                                              page_title
                                           } headquarters" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } revenue, ${this.artJSON.page_title} employees, ${
-                                              this.artJSON.page_title
-                                          } location, ${this.artJSON.page_title} facts" ></amp-anim>
+                                        page_title
+                                    } revenue, ${page_title} employees, ${
+                                              page_title
+                                          } location, ${page_title} facts" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } wikipedia, ${this.artJSON.page_title} news, what is ${
-                                              this.artJSON.page_title
-                                          }, where is ${this.artJSON.page_title}" ></amp-anim>`
+                                        page_title
+                                    } wikipedia, ${page_title} news, what is ${
+                                              page_title
+                                          }, where is ${page_title}" ></amp-anim>`
                                         : true
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              this.artJSON.page_title
-                                          } information, ${this.artJSON.page_title} definition, ${
-                                              this.artJSON.page_title
-                                          } timeline, ${this.artJSON.page_title} location" ></amp-anim>
+                                              page_title
+                                          } information, ${page_title} definition, ${
+                                              page_title
+                                          } timeline, ${page_title} location" ></amp-anim>
                                     <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        this.artJSON.page_title
-                                    } wikipedia, ${this.artJSON.page_title} news, what is ${
-                                              this.artJSON.page_title
+                                        page_title
+                                    } wikipedia, ${page_title} news, what is ${
+                                              page_title
                                           }" ></amp-anim>`
                                         : ``
                                 }

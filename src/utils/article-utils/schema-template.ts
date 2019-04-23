@@ -256,7 +256,7 @@ export const renderParagraph = (
                 returnCollection.lightboxes.push(...result.lightboxes);
                 return result.text;
             })
-            .join('');
+            .join(' ');
         returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
     } else if (tag_type === 'ul') {
         let sanitizedText = (items as ListItem[])
