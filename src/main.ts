@@ -8,6 +8,7 @@ import { ConfigService } from './common';
 import * as express from 'express';
 import * as cors from 'cors';
 import * as morgan from 'morgan';
+import chalk from 'chalk';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
@@ -53,6 +54,17 @@ async function bootstrap() {
     // Start Dfuse sync
     app.get('EosSyncService').sync();
 
-    await app.listen(serverHttpPort);
+    await app
+        .listen(serverHttpPort)
+        .then(() => {
+            console.info(
+                chalk.cyan('Backend, PID') +
+                    chalk.green(' [') +
+                    chalk.blue(`${process.pid}`) +
+                    chalk.green('] started in mode'),
+                chalk.green('[') + chalk.blue(process.env.NODE_ENV) + chalk.green('] ')
+            );
+        })
+        .catch(console.error);
 }
 bootstrap();
