@@ -404,7 +404,7 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/site-usage')
         .expect(200)
-  }, 20000);
+  }, 30000);
 
   it('Stat: Editor Leaderboard', () => {
     return request(app.getHttpServer())
