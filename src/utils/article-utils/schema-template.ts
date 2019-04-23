@@ -133,7 +133,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
                 return result.text;
             })
             .join('');
-        let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
+        let sanitizedCaptionPlaintext = (striptags as any)(sanitizedCaption);
         switch (media.category) {
             case 'PICTURE':
                 schemaJSON['image'].push({
@@ -188,7 +188,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
         let valuesBlock = [];
         infobox.values.forEach((value, index) => {
             let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.ipfs_hash, []);
-            valuesBlock.push(striptags(result.text));
+            valuesBlock.push((striptags as any)(result.text));
         });
 
         if (infobox.addlSchematype) {
@@ -211,7 +211,7 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
                     inputJSON.ipfs_hash,
                     []
                 );
-                return striptags(result.text);
+                return (striptags as any)(result.text);
             })
             .join('');
 
@@ -389,7 +389,7 @@ export const renderImage = (image: Media, passedCitations: Citation[], passedIPF
             return result.text;
         })
         .join('');
-    let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
+    let sanitizedCaptionPlaintext = (striptags as any)(sanitizedCaption);
     returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
     return returnCollection;
 };

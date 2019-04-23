@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import * as ua from 'universal-analytics';
+import ua from 'universal-analytics';
 
 @Injectable()
 export class GoogleAnalyticsMiddleware implements NestMiddleware {

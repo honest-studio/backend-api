@@ -9,7 +9,7 @@ import {
     logError,
     logStandard,
     logWarning
-} from 'src/utils';
+} from '../../utils';
 import { MessageMappingProperties } from '@nestjs/websockets';
 import { Observable, fromEvent } from 'rxjs';
 import { mergeMap, filter } from 'rxjs/operators';

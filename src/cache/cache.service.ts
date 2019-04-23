@@ -15,14 +15,9 @@ export class CacheService {
             // Hash was not found. Continue onward.
         }
 
-        const rows: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql
-                .pool()
-                .query(`SELECT * FROM enterlink_hashcache WHERE ipfs_hash=?`, [ipfs_hash], function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                });
-        });
+        const rows: Array<any> = await this.mysql.TryQuery(`SELECT * FROM enterlink_hashcache WHERE ipfs_hash=?`, [
+            ipfs_hash
+        ]);
 
         // if it doesn't exist in MySQL, attempt to query it from IPFS
         if (rows.length == 0) {
@@ -45,10 +40,9 @@ export class CacheService {
                         `CACHE: WARNING: MySQL entry for ${ipfs_hash} does not match generated hash of ${res[0].hash}`
                     );
             })
-            .catch(err => {
+            .catch((err) => {
                 if (err.code == 'ECONNREFUSED') console.log(`WARNING: IPFS could not be accessed. Is it running?`);
                 else console.error(err);
             });
-
     }
 }

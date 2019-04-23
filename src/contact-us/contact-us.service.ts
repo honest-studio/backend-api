@@ -54,26 +54,20 @@ export class ContactUsService {
             });
 
         // Add the contact us entry to the database
-        return new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `INSERT INTO ebdb.enterlink_contact (contactdate, contacttext, contactemail, contactname, contactsubject, 
-                    contacttype, contactip, contactuseragent) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
-                [
-                    inputJSON.contactdate,
-                    inputJSON.contacttext,
-                    inputJSON.contactemail,
-                    inputJSON.contactname,
-                    inputJSON.contactsubject,
-                    inputJSON.contacttype,
-                    inputJSON.contactip,
-                    inputJSON.contactuseragent
-                ],
-                function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                }
-            );
-        });
+        return this.mysql.TryQuery(
+            `INSERT INTO ebdb.enterlink_contact (contactdate, contacttext, contactemail, contactname, contactsubject, 
+                contacttype, contactip, contactuseragent) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
+            [
+                inputJSON.contactdate,
+                inputJSON.contacttext,
+                inputJSON.contactemail,
+                inputJSON.contactname,
+                inputJSON.contactsubject,
+                inputJSON.contacttype,
+                inputJSON.contactip,
+                inputJSON.contactuseragent
+            ]
+        )
     }
 }

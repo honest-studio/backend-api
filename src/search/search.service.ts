@@ -59,21 +59,15 @@ export class SearchService {
 
         if (canonical_ids.length == 0) return [];
 
-        const result_rows: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                SELECT art.page_title AS title, LOWER(art.slug) AS slug, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
-                    art.creation_timestamp, art.lastmod_timestamp 
-                FROM enterlink_articletable AS art
-                WHERE art.id IN (?)`,
-                [canonical_ids],
-                function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                }
-            );
-        });
+        const result_rows: Array<any> = await this.mysql.TryQuery(
+            `
+            SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, 
+            art.blurb_snippet AS text_preview,
+            art.photo_url, art.ipfs_hash_current, art.page_lang AS lang_code
+            FROM enterlink_articletable AS art
+            WHERE art.id IN (?)`,
+            [canonical_ids]
+        );
         // clean up text previews
         result_rows.forEach((row) => {
             if (!row.text_preview) return; // continue
@@ -88,20 +82,14 @@ export class SearchService {
     }
 
     async searchSchemaByType(query: string, page_type: string): Promise<any> {
-        return new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                SELECT sch.mapped_keyword as 'key', sch.schema_keyword as 'schema', sch.schema_argument as 'addl_schematype', sch.addl_schema_default_itemprop as 'addl_schema_itemprop'
-                FROM enterlink_schemaobject AS sch 
-                WHERE sch.schema_for IN ('Thing', ?) 
-                AND sch.exclude_from_dropdown=0 
-                AND sch.mapped_keyword LIKE ?`,
-                [page_type, query + '%'],
-                function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                }
-            );
-        });
+        return await this.mysql.TryQuery(
+            `
+            SELECT sch.mapped_keyword as 'key', sch.schema_keyword as 'schema', sch.schema_argument as 'addl_schematype', sch.addl_schema_default_itemprop as 'addl_schema_itemprop'
+            FROM enterlink_schemaobject AS sch 
+            WHERE sch.schema_for IN ('Thing', ?) 
+            AND sch.exclude_from_dropdown=0 
+            AND sch.mapped_keyword LIKE ?`,
+            [page_type, query + '%']
+        );
     }
 }

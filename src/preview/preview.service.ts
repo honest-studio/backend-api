@@ -53,22 +53,16 @@ export class PreviewService {
         const sqlOnlyStart = process.hrtime.bigint();
 
         const sqlOnlyTimer = this.getPrevByHashSqlOnlyHisto.startTimer({ pid: pid });
-        const article_info: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(
-                `
-                SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                    cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews
-                FROM enterlink_articletable AS art 
-                JOIN enterlink_hashcache AS cache
-                ON cache.articletable_id=art.id
-                WHERE cache.ipfs_hash IN (?)`,
-                [ipfs_hashes],
-                function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows);
-                }
-            );
-        });
+        const article_info: Array<any> = await this.mysql.TryQuery(
+            `
+            SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+                cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews
+            FROM enterlink_articletable AS art 
+            JOIN enterlink_hashcache AS cache
+            ON cache.articletable_id=art.id
+            WHERE cache.ipfs_hash IN (?)`,
+            [ipfs_hashes]
+        );
 
         //stop sql only timer
         this.getPrevByHashSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
@@ -152,12 +146,7 @@ export class PreviewService {
         this.getPrevBySlugPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
         const sqlOnlyStart = process.hrtime.bigint();
         console.time('mysql preview query');
-        const previews: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(query, substitutions, function(err, rows) {
-                if (err) reject(err);
-                else resolve(rows);
-            });
-        });
+        const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         // stop sql-only timer
         this.getPrevBySlugSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
         const postSqlStart = process.hrtime.bigint();

@@ -1,4 +1,4 @@
-import { WsClientByIp, EnhancedSocket } from 'src/shared';
+import { WsClientByIp, EnhancedSocket } from '../../shared';
 
 /**
  * If a client is newly-connected, create the mapping to their IP address
