@@ -3,9 +3,9 @@ import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderPa
 import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './article-types';
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
-import * as CleanCSS from 'clean-css';
+import CleanCSS from 'clean-css';
 import striptags from 'striptags';
-import * as urlSlug from 'url-slug';
+import urlSlug from 'url-slug';
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];

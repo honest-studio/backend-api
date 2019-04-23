@@ -1,11 +1,11 @@
 import { Citation, Media, ArticleJson, Sentence } from './article-dto';
 import { SeeAlso, SeeAlsoCollection, InlineImage } from './article-types';
 import { AMPParseCollection } from './article-types';
-import * as cheerio from 'cheerio';
-import * as crypto from 'crypto';
-import * as decode from 'unescape';
+import cheerio from 'cheerio';
+import crypto from 'crypto';
+import decode from 'unescape';
 const normalizeUrl = require('normalize-url');
-import * as MarkdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it';
 import * as htmlparser2 from 'htmlparser2';
 import {
     getYouTubeID,

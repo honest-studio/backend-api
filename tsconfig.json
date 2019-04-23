@@ -19,7 +19,7 @@
         "noImplicitReturns": false,
         "experimentalDecorators": true,
         "target": "es6",
-        "types": ["node"],
+        "types": ["node", "jest"],
         "resolveJsonModule": true,
         "sourceMap": true
     },

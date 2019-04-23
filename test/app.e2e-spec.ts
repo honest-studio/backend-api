@@ -1,9 +1,9 @@
 import { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import * as request from 'supertest';
+import request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { MongoDbService } from '../src/feature-modules/database';
-import * as fs from 'fs';
+import fs from 'fs';
 
 describe('Backend API', () => {
   let app: INestApplication;

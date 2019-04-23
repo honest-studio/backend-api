@@ -2,10 +2,10 @@ import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, Tab
 import { AMPParseCollection, LanguagePack } from './article-types';
 import { getYouTubeID } from './article-converter';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
-import * as crypto from 'crypto';
-import * as striptags from 'striptags';
-import * as urlSlug from 'url-slug';
-import * as tag from 'html-tag';
+import crypto from 'crypto';
+import striptags from 'striptags';
+import urlSlug from 'url-slug';
+import tag from 'html-tag';
 
 export const renderSchema = (inputJSON: ArticleJson): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
