@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import * as fetch from 'node-fetch';
-import { MysqlService, MongoDbService } from '../feature-modules/database';
+import { MongoDbService } from '../feature-modules/database';
 import { WikiService } from '../wiki';
 import { diffArticleJson } from '../utils/article-utils/article-differ';
 import { ArticleJson } from '../utils/article-utils/article-dto';
