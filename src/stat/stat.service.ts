@@ -105,7 +105,7 @@ export class StatService {
         total_iq_rewards = Number(total_iq_rewards[0].value.toFixed(3));
 
         const original_pages_rows: Array<any> = await this.mysql.TryQuery(`SELECT COUNT(*) AS count FROM enterlink_articletable WHERE page_note IS NULL AND is_removed = 0;`)
-        const original_pages = original_pages_rows!=undefined?original_pages_rows.length:0;
+        const original_pages = original_pages_rows!=undefined && original_pages_rows.length>0?original_pages_rows[0].count:0;
 
         // clear old cache and cache new result
         const doc = {
