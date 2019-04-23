@@ -4,7 +4,7 @@ import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './arti
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
 import * as CleanCSS from 'clean-css';
-import * as striptags from 'striptags';
+import striptags from 'striptags';
 import * as urlSlug from 'url-slug';
 
 export class AmpRenderPartial {

@@ -72,21 +72,13 @@ export class StatService {
             }
         }
 
-        const total_article_count: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql.pool().query(`SELECT COUNT(*) AS num_articles FROM enterlink_articletable`, function(err, rows) {
-                if (err) reject(err);
-                else resolve(rows[0].num_articles);
-            });
-        });
+        const total_article_count: Array<any> = await this.mysql.TryQuery(
+            `SELECT COUNT(*) AS num_articles FROM enterlink_articletable`
+        );
 
-        const total_pageviews: Array<any> = await new Promise((resolve, reject) => {
-            this.mysql
-                .pool()
-                .query(`SELECT SUM(pageviews) AS pageviews FROM enterlink_articletable`, function(err, rows) {
-                    if (err) reject(err);
-                    else resolve(rows[0].pageviews);
-                });
-        });
+        const total_pageviews: Array<any> = await this.mysql.TryQuery(
+            `SELECT SUM(pageviews) AS pageviews FROM enterlink_articletable`
+        );
 
         let total_editors: any = await this.mongo
             .connection()

@@ -5,7 +5,7 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import * as WebSocket from 'ws';
 import * as querystring from 'querystring';
 import { ConfigService } from './common';
-import * as express from 'express';
+import express from 'express';
 import * as cors from 'cors';
 import * as morgan from 'morgan';
 import chalk from 'chalk';
