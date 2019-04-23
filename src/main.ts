@@ -21,6 +21,7 @@ async function bootstrap() {
     const expressApp = express();
 
     const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+    app.enableShutdownHooks();
 
     // Swagger
     const serverHost = app.get(ConfigService).get('SERVER_HOST');
