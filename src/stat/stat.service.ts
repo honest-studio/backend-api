@@ -72,13 +72,21 @@ export class StatService {
             }
         }
 
-        const total_article_count: Array<any> = await this.mysql.TryQuery(
-            `SELECT COUNT(*) AS num_articles FROM enterlink_articletable`
-        );
+        const total_article_count: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(`SELECT COUNT(*) AS num_articles FROM enterlink_articletable`, function(err, rows) {
+                if (err) reject(err);
+                else resolve(rows[0].num_articles);
+            });
+        });
 
-        const total_pageviews: Array<any> = await this.mysql.TryQuery(
-            `SELECT SUM(pageviews) AS pageviews FROM enterlink_articletable`
-        );
+        const total_pageviews: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql
+                .pool()
+                .query(`SELECT SUM(pageviews) AS pageviews FROM enterlink_articletable`, function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows[0].pageviews);
+                });
+        });
 
         let total_editors: any = await this.mongo
             .connection()
@@ -104,8 +112,14 @@ export class StatService {
             );
         total_iq_rewards = Number(total_iq_rewards[0].value.toFixed(3));
 
-        const original_pages_rows: Array<any> = await this.mysql.TryQuery(`SELECT COUNT(*) AS count FROM enterlink_articletable WHERE page_note IS NULL AND is_removed = 0;`)
-        const original_pages = original_pages_rows!=undefined && original_pages_rows.length>0?original_pages_rows[0].count:0;
+        const original_pages: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql
+                .pool()
+                .query(`SELECT COUNT(*) AS count FROM enterlink_articletable WHERE page_note IS NULL AND is_removed = 0;`, function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows[0].count);
+                });
+        });
 
         // clear old cache and cache new result
         const doc = {

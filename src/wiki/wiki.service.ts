@@ -4,17 +4,7 @@ import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
 import { CacheService } from '../cache';
-import {
-    ArticleJson,
-    SeeAlso,
-    Sentence,
-    WikiExtraInfo,
-    LanguagePack,
-    renderAMP,
-    renderSchema,
-    calculateSeeAlsos,
-    oldHTMLtoJSON
-} from '../utils/article-utils';
+import { ArticleJson, SeeAlso, Sentence, WikiExtraInfo, LanguagePack , renderAMP, renderSchema, calculateSeeAlsos, oldHTMLtoJSON } from '../utils/article-utils';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import * as SqlString from 'sqlstring';
 
@@ -29,56 +19,68 @@ export class WikiService {
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
-        console.time('wiki by slug mysql 1');
-        let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
-            `
-            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
-            FROM enterlink_articletable AS art
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE art.slug = ? AND art.page_lang = ?`,
-            [slug, lang_code]
-        );
-        console.timeEnd('wiki by slug mysql 1');
+        console.time("wiki by slug mysql 1");
+        let ipfs_hash_rows: any[] = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.slug = ? AND art.page_lang = ?`,
+                [slug, lang_code],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        console.timeEnd("wiki by slug mysql 1");
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
         // Try and grab cached json wiki
         const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
         if (use_cache) {
             const cache_wiki = await this.mongo.connection().json_wikis.findOne({
-                ipfs_hash: ipfs_hash
+                'ipfs_hash': ipfs_hash
             });
             if (cache_wiki) return cache_wiki;
         }
 
         // get wiki from MySQL if there is no cached item
-        console.time('wiki by slug mysql 2');
-        let wiki_rows: Array<any> = await this.mysql.TryQuery(
-            `
-            SELECT html_blob
-            FROM enterlink_hashcache
-            WHERE ipfs_hash=?;`,
-            [ipfs_hash]
-        );
-        console.timeEnd('wiki by slug mysql 2');
+        console.time("wiki by slug mysql 2");
+        let wiki_rows: Array<any> = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT html_blob
+                FROM enterlink_hashcache
+                WHERE ipfs_hash=?;`,
+                [ipfs_hash],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        console.timeEnd("wiki by slug mysql 2");
         let wiki: ArticleJson;
         try {
             // check if wiki is already in JSON format
             wiki = JSON.parse(wiki_rows[0].html_blob);
         } catch {
-            console.time('wiki by slug parse wiki');
+            console.time("wiki by slug parse wiki");
             wiki = oldHTMLtoJSON(wiki_rows[0].html_blob);
-            console.timeEnd('wiki by slug parse wiki');
+            console.timeEnd("wiki by slug parse wiki");
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
-            if (!wiki.metadata.find((w) => w.key == 'page_lang'))
+            if (!wiki.metadata.find(w => w.key == "page_lang"))
                 wiki.metadata.push({ key: 'page_lang', value: lang_code });
-        }
+        }    
 
         // cache wiki - upsert so that use_cache=false updates the cache
         this.mongo
             .connection()
-            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
+            .json_wikis.replaceOne({ 'ipfs_hash': wiki.ipfs_hash }, wiki, { upsert: true })
             .catch(console.log);
 
         return wiki;
@@ -107,7 +109,7 @@ export class WikiService {
         const cached_json_wikis = await this.mongo
             .connection()
             .json_wikis.find({
-                ipfs_hash: { $in: ipfs_hashes }
+                'ipfs_hash': { $in: ipfs_hashes }
             })
             .toArray();
         for (let json_wiki of cached_json_wikis) {
@@ -116,7 +118,9 @@ export class WikiService {
         }
 
         // try to fetch wikis from local IPFS node
-        const uncached_json_hashes = ipfs_hashes.filter((hash) => !json_wikis.find((json) => json.ipfs_hash == hash));
+        const uncached_json_hashes = ipfs_hashes.filter(
+            (hash) => !json_wikis.find((json) => json.ipfs_hash == hash)
+        );
         for (const i in uncached_json_hashes) {
             const ipfs_hash = uncached_json_hashes[i];
             try {
@@ -131,14 +135,22 @@ export class WikiService {
             }
         }
 
-        const uncached_html_hashes = ipfs_hashes.filter((hash) => !json_wikis.find((json) => json.ipfs_hash == hash));
+        const uncached_html_hashes = ipfs_hashes.filter(
+            (hash) => !json_wikis.find((json) => json.ipfs_hash == hash)
+        );
         if (uncached_html_hashes.length > 0) {
             // fetch remainder from mysql if they exist
-            const rows: Array<any> = await this.mysql.TryQuery(
-                `SELECT * FROM enterlink_hashcache WHERE ipfs_hash IN (?)`,
-                [uncached_html_hashes]
-            );
-
+            const rows: Array<any> = await new Promise((resolve, reject) => {
+                this.mysql
+                    .pool()
+                    .query(`SELECT * FROM enterlink_hashcache WHERE ipfs_hash IN (?)`, [uncached_html_hashes], function(
+                        err,
+                        rows
+                    ) {
+                        if (err) reject(err);
+                        else resolve(rows);
+                    });
+            });
             rows.forEach((r) => {
                 const json_wiki = oldHTMLtoJSON(r.html_blob);
                 json_wiki.ipfs_hash = r.ipfs_hash;
@@ -148,14 +160,12 @@ export class WikiService {
             // cache uncached json wikis
             const uncached_json_wikis = uncached_json_hashes
                 .map((hash) => json_wikis.find((json) => json.ipfs_hash == hash))
-                .filter((json) => json); // filter out non-existent wikis
+                .filter((json) => json) // filter out non-existent wikis
 
-            uncached_json_wikis.forEach((json) => delete json._id);
+            uncached_json_wikis.forEach(json => delete json._id);
             if (uncached_json_wikis.length > 0) {
-                this.mongo
-                    .connection()
-                    .json_wikis.insertMany(uncached_json_wikis, { ordered: false })
-                    .catch((e) => console.log('Failed to cache some wikis', e));
+                this.mongo.connection().json_wikis.insertMany(uncached_json_wikis, { ordered: false })
+                    .catch(e => console.log('Failed to cache some wikis', e));
             }
 
             // attempt to cache uncached IPFS hashes
@@ -172,25 +182,29 @@ export class WikiService {
     }
 
     async getWikiGroups(lang_code: string, slug: string): Promise<LanguagePack[]> {
-        const lang_packs: LanguagePack[] = await this.mysql.TryQuery(
-            `
-            SELECT slug as slug, page_title as article_title, page_lang as lang
-            FROM enterlink_articletable
-            WHERE article_group_id = (
-                SELECT article_group_id
+        const lang_packs: LanguagePack[] = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT slug as slug, page_title as article_title, page_lang as lang
                 FROM enterlink_articletable
-                WHERE (slug=? OR slug_alt=?)
-                AND page_lang=?
+                WHERE article_group_id = (
+                    SELECT article_group_id
+                    FROM enterlink_articletable
+                    WHERE (slug=? OR slug_alt=?)
+                    AND page_lang=?
+                    AND redirect_page_id is NULL
+                    AND is_removed=0
+                )
                 AND redirect_page_id is NULL
-                AND is_removed=0
-            )
-            AND redirect_page_id is NULL
-            AND is_removed=0`,
-            [slug, slug, lang_code]
-        );
-
-        if (lang_packs.length == 0)
-            throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
+                AND is_removed=0`,
+                [slug, slug, lang_code],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
+        if (lang_packs.length == 0) throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
         return lang_packs;
     }
 
@@ -204,16 +218,24 @@ export class WikiService {
                 return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
             })
             .join(' OR ');
-        let seeAlsoRows = await this.mysql.TryQuery(
-            `
-            SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
-            COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
-            COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview
-            FROM enterlink_articletable art
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE ${seeAlsoWhere};`,
-            []
-        );
+        let seeAlsoRows = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
+                COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview
+                FROM enterlink_articletable art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE ${seeAlsoWhere};`,
+                [],
+                function(err, rows) {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    } else resolve(rows);
+                }
+            );
+        });
         return seeAlsoRows as SeeAlso[];
     }
 
@@ -228,67 +250,71 @@ export class WikiService {
             if (err.code == 'ECONNREFUSED') {
                 console.log(`WARNING: IPFS could not be accessed. Is it running?`);
                 throw new InternalServerErrorException(`Server error: The IPFS node is down`);
-            } else throw err;
+            }
+            else throw err;
         }
         const ipfs_hash = submission[0].hash;
-        const json_insertion = this.mysql.TryQuery(
-            `
-            INSERT INTO enterlink_hashcache (ipfs_hash, html_blob, timestamp) 
-            VALUES (?, ?, NOW())
-            `,
-            [ipfs_hash, blob]
-        );
+        const json_insertion = new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                INSERT INTO enterlink_hashcache (ipfs_hash, html_blob, timestamp) 
+                VALUES (?, ?, NOW())
+                `,
+                [ipfs_hash, blob],
+                function(err, res) {
+                    if (err && err.message.includes('ER_DUP_ENTRY')) resolve('Duplicate entry. Continuing');
+                    else if (err) reject(err);
+                    else resolve(res);
+                }
+            );
+        });
         const page_title = wiki.page_title[0].text;
-        const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+        const slug = wiki.metadata.find(m => m.key == "url_slug").value;
         const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
         const photo_url = wiki.main_photo[0].url;
         const photo_thumb_url = wiki.main_photo[0].thumb;
-        const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
-        const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
-        const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-        const article_info = this.mysql.TryQuery(
-            `
-            INSERT INTO enterlink_articletable 
-                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
-            ON DUPLICATE KEY UPDATE 
-                ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
-                page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
-            `,
-            [
-                ipfs_hash,
-                slug,
-                slug,
-                page_title,
-                text_preview,
-                photo_url,
-                photo_thumb_url,
-                page_type,
-                is_adult_content,
-                page_lang,
-                ipfs_hash,
-                page_title,
-                text_preview,
-                photo_url,
-                photo_thumb_url,
-                page_type,
-                is_adult_content
-            ]
-        );
-        await Promise.all([json_insertion, article_info]).catch(console.error);
+        const page_type = wiki.metadata.find(m => m.key == "page_type").value;
+        const is_adult_content = wiki.metadata.find(m => m.key == "is_adult_content").value;
+        const page_lang = wiki.metadata.find(m => m.key == "page_lang").value;
+        const article_info = new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                INSERT INTO enterlink_articletable 
+                    (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
+                ON DUPLICATE KEY UPDATE 
+                    ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
+                    page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
+                `,
+                [ipfs_hash, slug, slug, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content, page_lang,
+                 ipfs_hash, page_title, text_preview, photo_url, photo_thumb_url, page_type, is_adult_content],
+                function(err, res) {
+                    if (err) reject(err);
+                    else resolve(res);
+                }
+            );
+        });
+        await Promise.all([json_insertion, article_info])
+            .catch(console.error);
 
         return { ipfs_hash };
     }
 
     async incrementPageviewCount(lang_code: string, slug: string): Promise<boolean> {
-        return this.mysql.TryQuery(
-            `
-            UPDATE enterlink_articletable 
-            SET pageviews = pageviews + 1
-            WHERE page_lang= ? AND slug = ?
-            `,
-            [lang_code, slug]
-        );
+        return new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                UPDATE enterlink_articletable 
+                SET pageviews = pageviews + 1
+                WHERE page_lang= ? AND slug = ?
+                `,
+                [lang_code, slug],
+                function(err, res) {
+                    if (err) reject(err);
+                    else resolve(true);
+                }
+            );
+        });
     }
 
     async getCategories(lang_code: string, slug: string) {
@@ -312,20 +338,27 @@ export class WikiService {
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
         const wiki = await this.getWikiBySlug(lang_code, slug);
         const see_also = await this.getSeeAlsos(wiki);
-        const pageviews_rows: any[] = await this.mysql.TryQuery(
-            `
-        SELECT 
-            COALESCE (art_redir.pageviews, art.pageviews) AS pageviews, 
-            COALESCE(art_redir.slug, art.slug) AS slug,
-            COALESCE(art_redir.page_lang, art.page_lang) AS lang
-        FROM enterlink_articletable AS art
-        LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-        WHERE art.page_lang = ? AND art.slug = ?;
-        `,
-            [lang_code, slug]
-        );
+        const pageviews_rows: any[] = await new Promise((resolve, reject) => {
+            this.mysql.pool().query(
+                `
+                SELECT 
+                    COALESCE (art_redir.pageviews, art.pageviews) AS pageviews, 
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.page_lang, art.page_lang) AS lang
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE art.page_lang = ? AND art.slug = ?;
+                `,
+                [lang_code, slug],
+                function(err, rows) {
+                    if (err) reject(err);
+                    else resolve(rows);
+                }
+            );
+        });
         let pageviews = 0;
-        if (pageviews_rows.length > 0) pageviews = pageviews_rows[0].pageviews;
+        if (pageviews_rows.length > 0)
+            pageviews = pageviews_rows[0].pageviews;
 
         let alt_langs;
         try {
@@ -337,4 +370,5 @@ export class WikiService {
 
         return { alt_langs, see_also, pageviews };
     }
+
 }

@@ -3,7 +3,7 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import pify from 'pify';
+import * as pify from 'pify';
 import * as pump from 'pump-promise';
 import * as gpixels from 'get-pixels';
 import * as savePixels from 'save-pixels';

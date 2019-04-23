@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../database/mongodb-service';
 import { ConfigService } from '../../common';
 import * as fetch from 'node-fetch';
-import WebSocket from 'ws';
+import * as WebSocket from 'ws';
 
 export interface DfuseToken {
     token: string; // JWT

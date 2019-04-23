@@ -1,5 +1,5 @@
 import { register as Register, Counter, Histogram, Summary, collectDefaultMetrics } from 'prom-client';
-import responseTime from 'response-time';
+import * as responseTime from 'response-time';
 
 // adapted from https://community.tibco.com/wiki/monitoring-your-nodejs-apps-prometheus
 

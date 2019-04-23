@@ -19,7 +19,7 @@ import * as imagemin_Svgo from 'imagemin-svgo';
 import * as imagemin_Webp from 'imagemin-webp';
 import * as mimeClass from 'mime';
 import * as path from 'path';
-import sizeOf from 'buffer-image-size';
+import * as sizeOf from 'buffer-image-size';
 import * as toArray from 'stream-to-array';
 import * as stream from 'stream';
 import * as url from 'url';
