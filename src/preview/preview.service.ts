@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { MysqlService, MongoDbService } from '../feature-modules/database';
-import { IpfsService } from '../common';
+import { IpfsService, InjectHistogramMetric, HistogramMetric } from '../common';
 import { ProposalService } from '../proposal';
 import { WikiService } from '../wiki';
 import { CacheService } from '../cache';
@@ -8,23 +8,51 @@ import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
 import { WikiIdentity } from '../utils/article-utils/article-types';
 
+const pid = `PID-${process.pid}`;
+/**
+ * Get the delta in ms between a bigint, and now
+ * @param bi BigInt
+ */
+const getDeltaMs = (bi: bigint): number => {
+    return Number((process.hrtime.bigint() - bi) / BigInt(10e5));
+};
+
 @Injectable()
 export class PreviewService {
     constructor(
         private wikiService: WikiService,
         private mysql: MysqlService,
         private ipfs: IpfsService,
-        private cacheService: CacheService
+        private cacheService: CacheService,
+        // preview by hash:
+        @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,
+        @InjectHistogramMetric('get_prev_by_hash_sql_only')
+        private readonly getPrevByHashSqlOnlyHisto: HistogramMetric,
+        @InjectHistogramMetric('get_prev_by_hash_post_sql') private readonly getPrevByHashPostSqlHisto: HistogramMetric,
+        @InjectHistogramMetric('get_prev_by_hash_total_req')
+        private readonly getPrevByHashTotalReqHisto: HistogramMetric,
+        // preview by slug:
+        @InjectHistogramMetric('get_prev_by_slug_pre_sql') private readonly getPrevBySlugPreSqlHisto: HistogramMetric,
+        @InjectHistogramMetric('get_prev_by_slug_sql_only')
+        private readonly getPrevBySlugSqlOnlyHisto: HistogramMetric,
+        @InjectHistogramMetric('get_prev_by_slug_post_sql') private readonly getPrevBySlugPostSqlHisto: HistogramMetric,
+        @InjectHistogramMetric('get_prev_by_slug_total_req')
+        private readonly getPrevBySlugTotalReqHisto: HistogramMetric
     ) {}
 
     async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<any> {
+        const totalReqStart = process.hrtime.bigint();
         if (ipfs_hashes.length == 0) return [];
 
         const previews = [];
         for (const i in ipfs_hashes) {
             previews.push({ ipfs_hash: ipfs_hashes[i] });
         }
+        // stop pre-sql timer
+        this.getPrevByHashPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
+        const sqlOnlyStart = process.hrtime.bigint();
 
+        const sqlOnlyTimer = this.getPrevByHashSqlOnlyHisto.startTimer({ pid: pid });
         const article_info: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(
                 `
@@ -41,6 +69,10 @@ export class PreviewService {
                 }
             );
         });
+
+        //stop sql only timer
+        this.getPrevByHashSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
+        const postSqlStart = process.hrtime.bigint();
         article_info.forEach((a) => {
             const i = previews.findIndex((p) => p.ipfs_hash === a.ipfs_hash);
             previews[i] = a;
@@ -89,24 +121,26 @@ export class PreviewService {
 
         // error messages for missing wikis
         previews.filter((p) => !p.title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
-
+        // stop post-sql timer
+        this.getPrevByHashPostSqlHisto.observe({ pid: pid }, getDeltaMs(postSqlStart));
+        // stop total request timer
+        this.getPrevByHashTotalReqHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
         return previews;
     }
 
     async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<any> {
+        const totalReqStart = process.hrtime.bigint();
+
         // strip lang_ prefix in lang_code if it exists
-        wiki_identities.forEach(w => {
-            if (w.lang_code.includes('lang_')) 
-                w.lang_code = w.lang_code.substring(5)
+        wiki_identities.forEach((w) => {
+            if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
         });
 
         const substitutions = wiki_identities
-            .map(w => [w.lang_code, w.slug])
+            .map((w) => [w.lang_code, w.slug])
             .reduce((flat, piece) => flat.concat(piece), []);
 
-        const whereClause = wiki_identities
-            .map(w => `(art.page_lang = ? AND art.slug = ?)`)
-            .join(' OR ');
+        const whereClause = wiki_identities.map((w) => `(art.page_lang = ? AND art.slug = ?)`).join(' OR ');
         const query = `
             SELECT art.page_title AS title, LOWER(art.slug) AS slug, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
                 art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
@@ -114,24 +148,27 @@ export class PreviewService {
             FROM enterlink_articletable AS art 
             WHERE ${whereClause}`;
 
-        console.time("mysql preview query");
+        // stop pre-sql timer
+        this.getPrevBySlugPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
+        const sqlOnlyStart = process.hrtime.bigint();
+        console.time('mysql preview query');
         const previews: Array<any> = await new Promise((resolve, reject) => {
             this.mysql.pool().query(query, substitutions, function(err, rows) {
                 if (err) reject(err);
                 else resolve(rows);
             });
         });
-        console.timeEnd("mysql preview query");
-        if (previews.length == 0)
-            throw new NotFoundException({ error: `Could not find wikis` })
+        // stop sql-only timer
+        this.getPrevBySlugSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
+        const postSqlStart = process.hrtime.bigint();
+        console.timeEnd('mysql preview query');
+        if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews
-        console.time("preview text cleanup");
+        console.time('preview text cleanup');
         for (let preview of previews) {
             if (preview.text_preview) {
-                preview.text_preview = preview.text_preview
-                    .replace(/<b>/g, ' ')
-                    .replace(/<\/b>/g, ' ');
+                preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
                 const $ = cheerio.load(preview.text_preview);
                 preview.text_preview = $.root()
                     .text()
@@ -139,7 +176,11 @@ export class PreviewService {
                     .trim();
             }
         }
-        console.timeEnd("preview text cleanup");
+        console.timeEnd('preview text cleanup');
+        // stop post-sql timer
+        this.getPrevBySlugPostSqlHisto.observe({ pid: pid }, getDeltaMs(postSqlStart));
+        // stop total req timer
+        this.getPrevBySlugTotalReqHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
 
         return previews;
     }
