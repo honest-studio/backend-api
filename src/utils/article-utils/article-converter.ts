@@ -27,23 +27,23 @@ const normalizeUrl = require('normalize-url');
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
 export const CAPTURE_REGEXES = {
-    link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/gimu,
-    link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/gimu,
-    cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/gimu,
-    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/gimu,
-    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/gimu
+    link: /(?<=\[\[)LINK\|[^\]]*(?=\]\])/g,
+    link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/g,
+    cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/g,
+    inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/g,
+    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
 };
 export const REPLACEMENTS = [
-    { regex: /\u{00A0}/gimu, replacement: ' ' },
-    { regex: /\u{200B}/gimu, replacement: '' },
-    { regex: /\n <\/a>\n/gimu, replacement: '</a>' },
-    { regex: /<\/a> (,|.|:|'|\))/gimu, replacement: '</a>$1' },
-    { regex: / {1,}/gimu, replacement: ' ' },
-    { regex: /\n\s/gimu, replacement: ' ' },
-    { regex: / , /gimu, replacement: ', ' },
-    { regex: / \./gimu, replacement: '.' },
+    { regex: /\u{00A0}/g, replacement: ' ' },
+    { regex: /\u{200B}/g, replacement: '' },
+    { regex: /\n <\/a>\n/g, replacement: '</a>' },
+    { regex: /<\/a> (,|.|:|'|\))/g, replacement: '</a>$1' },
+    { regex: / {1,}/g, replacement: ' ' },
+    { regex: /\n\s/g, replacement: ' ' },
+    { regex: / , /g, replacement: ', ' },
+    { regex: / \./g, replacement: '.' },
     {
-        regex: /https:\/\/s3.amazonaws.com\/everipedia-storage/gimu,
+        regex: /https:\/\/s3.amazonaws.com\/everipedia-storage/g,
         replacement: 'https://everipedia-storage.s3.amazonaws.com'
     }
 ];
@@ -83,35 +83,44 @@ function pyToJS(inputItem: any) {
 
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
+
+    console.time("replacements");
     // Replace some problematic unicode characters and other stuff
     REPLACEMENTS.forEach(function(pair) {
         oldHTML = oldHTML.replace(pair.regex, pair.replacement);
     });
+    console.timeEnd("replacements");
 
     // Quick trim
     oldHTML = oldHTML.trim();
 
     // Load the HTML into htmlparser2 beforehand since it is more forgiving
+    // Then load the HTML into cheerio for parsing
+    console.time("load dom");
     let dom = htmlparser2.parseDOM(oldHTML, { decodeEntities: true });
-
-    // Load the HTML into cheerio for parsing
     let $ = cheerio.load(dom);
+    console.timeEnd("load dom");
+
+    // Need to extract citations before sanitizing so the citation ID can be marked
+    console.time("citations");
+    const citations = extractCitations($);
+    console.timeEnd("citations");
 
     // Remove useless and empty tags and HTML
     // Convert text formatting to pseudo-markdown
-    // Converts link and citation HTML to clean parseable formats
+    // Converts link HTML to clean parseable formats
+    console.time("sanitize");
     $ = sanitizeText($);
+    console.timeEnd("sanitize");
 
+    // Converts citation HTML to clean parseable formats
+    console.time("sanitize citations");
+    $ = sanitizeCitations($, citations);
+    console.timeEnd("sanitize citations");
+
+    console.time("metadata");
     const metadata = extractMetadata($);
-
-    // ---------------------------------------------------------
-    // AMP
-    const amp_info = {
-        load_youtube_js: false,
-        load_audio_js: false,
-        load_video_js: false,
-        lightboxes: []
-    };
+    console.timeEnd("metadata");
 
     const page_title_text =
         $('h1.page-title')
@@ -122,17 +131,28 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
         type: 'sentence',
         text: page_title_text
     }];
-    const citations = extractCitations($);
+    console.time("media gallery");
     const media_gallery = extractMediaGallery($);
+    console.timeEnd("media gallery");
+    console.time("main photo");
     const main_photo = extractMainPhoto($);
+    console.timeEnd("main photo");
+    console.time("infobox html");
     let infobox_html = extractInfoboxHtml($);
+    console.timeEnd("infobox html");
+    console.time("infoboxes");
     const infoboxes = extractInfoboxes($);
+    console.timeEnd("infoboxes");
 
-    // mark all the citations with the appropriate number in the text
-    $ = markCitations($, citations);
 
-    const page_body = extractPageBody($);
-
+    // amp info
+    console.time("amp info");
+    const amp_info = {
+        load_youtube_js: false,
+        load_audio_js: false,
+        load_video_js: false,
+        lightboxes: []
+    };
     media_gallery.forEach((value, index) => {
         switch (value.category) {
             case 'YOUTUBE': {
@@ -151,8 +171,12 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
                 break;
         }
     });
+    console.timeEnd("amp info");
 
-    // Return the dictionary
+    console.time("page body");
+    const page_body = extractPageBody($);
+    console.timeEnd("page body");
+
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }
 
@@ -196,78 +220,38 @@ function extractMetadata($: CheerioStatic): Metadata[] {
 
 function extractCitations($: CheerioStatic): Citation[] {
     const citations = [];
-    $('li.link-row').each(function(index, element) {
-        let citation: any = {};
+    const $rows = $("li.link-row");
+    const $descriptionTexts = $rows.find("td.link-description");
+    const $timestamps = $rows.find("td.link-timestamp");
+    const $mimes = $rows.find("td.link-mime");
+    const $attributions = $rows.find("td.link-attr");
+    const $thumbs = $rows.find("td.link-thumb");
+    const $hrefs = $rows.find("a.link-url");
+    const $href_wraps = $rows.find("td.link-url-wrap");
 
-        // Fetch the citation number
-        citation.citation_id = citations.length;
+    for (let i=0; i < $rows.length; i++) {
+        const citation: any = {
+            citation_id: i,
+            description: parseSentences($descriptionTexts.eq(i).text().trim()),
+            timestamp: $timestamps.eq(i).text().trim(),
+            mime: $mimes.eq(i).text().trim(),
+            attribution: $attributions.eq(i).text().trim(),
+            thumb: $thumbs.eq(i).attr('src')
+        };
 
-        // Fetch the description
-        let descriptionText = decode(
-            $(element)
-                .find('.link-description')
-                .eq(0)
-                .text()
-                .trim(),
-            'all'
-        );
-
-        // Find any links to other pages that appear in the link description
-        citation.description = parseSentences(descriptionText);
-
-        // Fetch the timestamp
-        citation.timestamp =
-            $(element)
-                .find('.link-timestamp')
-                .eq(0)
-                .text()
-                .trim() || null;
-
-        // Fetch the MIME type
-        citation.mime =
-            pyToJS(
-                $(element)
-                    .find('.link-mime')
-                    .eq(0)
-                    .text()
-                    .trim()
-            ) || null;
-
-        // Fetch the attribution info
-        citation.attribution = pyToJS(
-            $(element)
-                .find('.link-attr')
-                .eq(0)
-                .text()
-                .trim()
-        );
-
-        // Fetch the thumbnail
-        citation.thumb = $(element)
-            .find('.link-thumb')
-            .eq(0)
-            .attr('src');
-
-        // Fetch the URL & social media type
-        let href = $(element)
-            .find('.link-url')
-            .attr('href');
+        let href = $hrefs.eq(i).attr('href');
         if (!href)
-            href = $(element)
-                .find('.link-url-wrap')
-                .text();
-
+            href = $href_wraps.eq(i).text().trim();
         if (href) {
-            citation.url = normalizeUrl(href.trim());
+            citation.url = normalizeUrl(href);
             citation.social_type = socialURLType(citation.url);
         }
 
         // Find the url category
         citation.category = linkCategorizer(citation.url);
-
-        // Add it to the list
+        
         citations.push(citation);
-    });
+    }
 
     return citations;
 }
@@ -582,7 +566,7 @@ function splitIntoSections($body: Cheerio): Cheerio[] {
     const bodyHtml = $body.html();
     if (!bodyHtml) return [];
     return bodyHtml
-        .split(/(?=<h[1-6])/gimu)
+        .split(/(?=<h[1-6])/g)
         .map((htmlSection) => htmlSection.trim())
         .map((htmlSection) => `<div class="section">${htmlSection}</div>`)
         .map((htmlSection) => cheerio.load(htmlSection))
@@ -664,9 +648,9 @@ function parseSection($section: Cheerio): Section {
         if (paragraph.tag_type == 'p' || paragraph.tag_type == 'blockquote')
             paragraph.items = parseSentences($element.text());
         // Headings
-        else if (paragraph.tag_type.match(/h[1-6]/gimu)) paragraph.items = parseSentences($element.text());
+        else if (paragraph.tag_type.match(/h[1-6]/g)) paragraph.items = parseSentences($element.text());
         // Lists
-        else if (paragraph.tag_type.match(/(ul|ol)/gimu)) {
+        else if (paragraph.tag_type.match(/(ul|ol)/g)) {
             // Loop through the li's
             const $list_items = $element.children('li');
             for (let j = 0; j < $list_items.length; j++) {
@@ -697,11 +681,30 @@ function parseSection($section: Cheerio): Section {
     return section;
 }
 
+function sanitizeCitations ($, citations) {
+    // Substitute all the citations into something that is safe for the parser
+    $('a.tooltippableCarat').each(function() {
+        let url = decodeURIComponent($(this).attr('data-username'));
+        if (url.trim() == "Cite as verified editor")
+            url = "Self-citation:DEPRECATED"
+        else {
+            url = normalizeUrl(url);
+        }
+        const link_id = citations.findIndex((cite) => cite.url == url);
+        const plaintextString = `[[CITE|${link_id}|${url}]]`;
+        $(this).replaceWith(plaintextString);
+    });
+    
+    return $;
+}
 // Sanitize a cheerio object and convert some of its HTML to Markdown
 function sanitizeText($: CheerioStatic) {
+    // Remove style sections
+    $('style').remove();
+
     // Substitute all the links into something that is safe for the parser
-    $('a.tooltippable ').each(function() {
-        let old_slug = decodeURIComponent($(this).attr('data-username'));
+    $('a.tooltippable').each(function(i, el) {
+        let old_slug = decodeURIComponent($(el).attr('data-username'));
         if (old_slug.charAt(0) == '/') old_slug = old_slug.substring(1);
         const display_text = $(this)
             .text()
@@ -715,21 +718,9 @@ function sanitizeText($: CheerioStatic) {
             lang_code = 'en';
             slug = old_slug;
         }
-
+        
         // Replace the tag with the string
         const plaintextString = `[[LINK|lang_${lang_code}|${slug}|${display_text}]]`;
-        $(this).replaceWith(plaintextString);
-    });
-
-    // Substitute all the citations into something that is safe for the parser
-    $('a.tooltippableCarat').each(function() {
-        let url = decodeURIComponent($(this).attr('data-username'));
-        if (url.trim() == "Cite as verified editor")
-            url = "Self-citation:DEPRECATED"
-        else {
-            url = normalizeUrl(url);
-        }
-        const plaintextString = `[[CITE|0|${url}]]`;
         $(this).replaceWith(plaintextString);
     });
 
@@ -765,15 +756,15 @@ function sanitizeText($: CheerioStatic) {
         $(this).replaceWith(plaintextString);
     });
 
-    // Add whitespace after links, bold, and italics when there's no space and it's followed by a letter
-    // THE * WORD* SPACING PROBLEM IS HERE
-    // const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/gimu, (token) => `${token} `);
-    // const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
-    // const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/gimu, (token) => `${token} `);
-    // $ = cheerio.load(spaced_italics);
+    //// Add whitespace after links, bold, and italics when there's no space and it's followed by a letter
+    //// THE * WORD* SPACING PROBLEM IS HERE
+    //// const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/g, (token) => `${token} `);
+    //// const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/g, (token) => `${token} `);
+    //// const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/g, (token) => `${token} `);
+    //// $ = cheerio.load(spaced_italics);
 
     // Convert images inside wikitables and ul's to markup
-    $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(eThis) {
+    $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
         // Construct a dictionary
         const src = $(this).attr('src');
         const height = $(this).attr('height');
@@ -805,20 +796,20 @@ function sanitizeText($: CheerioStatic) {
     }
 
     // Fix certain elements
-    $(theBody)
+    theBody
         .children('div.thumb')
         .each(function(index, element) {
             // Find the inline photo, if present
-            let innerInlinePhoto = $(this)
+            let innerInlinePhoto = $(element)
                 .find('.blurb-inline-image-container')
                 .eq(0);
 
             // Replace the div.thumb with the inline image
-            $(this).replaceWith(innerInlinePhoto);
+            $(element).replaceWith(innerInlinePhoto);
         });
 
     // Fix <center> elements
-    $(theBody)
+    theBody
         .children('center')
         .each(function(index, element) {
             // Replace the center with all of its contents
@@ -826,7 +817,7 @@ function sanitizeText($: CheerioStatic) {
         });
 
     // Fix <div> elements
-    $(theBody)
+    theBody
         .children('div')
         .each(function(index, element) {
             // Convert the div to a <p>
@@ -848,7 +839,7 @@ export function parseSentences(inputString: string): Sentence[] {
         let sentence = { type: 'sentence', index: index, text: token };
 
         // Quick regex clean
-        sentence.text = sentence.text.replace(/ {1,}/gimu, ' ');
+        sentence.text = sentence.text.replace(/ {1,}/g, ' ');
 
         // Return the object
         return sentence;
@@ -860,88 +851,88 @@ export function socialURLType(inputURL: string) {
     const SOCIAL_MEDIA_REGEXES = [
         {
             type: 'bandcamp',
-            regex: /bandcamp.com/gimu,
-            exclusions: [/bandcamp.com\/track\/.*/gimu, /bandcamp.com\/album\/.*/gimu, /blog.bandcamp.com\/.*/gimu]
+            regex: /bandcamp.com/,
+            exclusions: [/bandcamp.com\/track\/.*/, /bandcamp.com\/album\/.*/, /blog.bandcamp.com\/.*/]
         },
         {
             type: 'facebook',
-            regex: /facebook.com/gimu,
+            regex: /facebook.com/,
             exclusions: [
-                /facebook.com\/photo.*/gimu,
-                /facebook.com\/.*?\/videos\/vb.*/gimu,
-                /facebook.com\/.*?\/photos/gimu,
-                /facebook.com\/.*?\/timeline\//gimu,
-                /facebook.com\/.*?\/posts/gimu,
-                /facebook.com\/events\/.*?/gimu,
-                /blog.facebook.com\/.*/gimu,
-                /developers.facebook.com\/.*/gimu
+                /facebook.com\/photo.*/,
+                /facebook.com\/.*?\/videos\/vb.*/,
+                /facebook.com\/.*?\/photos/,
+                /facebook.com\/.*?\/timeline\//,
+                /facebook.com\/.*?\/posts/,
+                /facebook.com\/events\/.*?/,
+                /blog.facebook.com\/.*/,
+                /developers.facebook.com\/.*/
             ]
         },
-        { type: 'google', regex: /plus.google.com/gimu, exclusions: [] },
+        { type: 'google', regex: /plus.google.com/, exclusions: [] },
         {
             type: 'instagram',
-            regex: /instagram.com/gimu,
-            exclusions: [/instagram.com\/p\/.*/gimu, /blog.instagram.com\/.*/gimu]
+            regex: /instagram.com/,
+            exclusions: [/instagram.com\/p\/.*/, /blog.instagram.com\/.*/]
         },
-        { type: 'lastfm', regex: /last.fm\/user/gimu, exclusions: [/last.fm\/music\/.*\/.*/gimu] },
+        { type: 'lastfm', regex: /last.fm\/user/, exclusions: [/last.fm\/music\/.*\/.*/] },
         {
             type: 'linkedin',
-            regex: /linkedin.com/gimu,
-            exclusions: [/linkedin.com\/pub\/.*/gimu, /press.linkedin.com\/.*/gimu, /blog.linkedin.com\/.*/gimu]
+            regex: /linkedin.com/,
+            exclusions: [/linkedin.com\/pub\/.*/, /press.linkedin.com\/.*/, /blog.linkedin.com\/.*/]
         },
-        { type: 'medium', regex: /medium.com\/@/gimu, exclusions: [/medium.com\/@.*\/.*/gimu] },
+        { type: 'medium', regex: /medium.com\/@/, exclusions: [/medium.com\/@.*\/.*/] },
         {
             type: 'myspace',
-            regex: /myspace.com/gimu,
-            exclusions: [/myspace.com\/.*\/.*/gimu, /blogs.myspace.com\/.*/gimu]
+            regex: /myspace.com/,
+            exclusions: [/myspace.com\/.*\/.*/, /blogs.myspace.com\/.*/]
         },
         {
             type: 'pinterest',
-            regex: /pinterest.com/gimu,
-            exclusions: [/pinterest.com\/pin\/.*/gimu, /blog.pinterest.com\/.*/gimu]
+            regex: /pinterest.com/,
+            exclusions: [/pinterest.com\/pin\/.*/, /blog.pinterest.com\/.*/]
         },
-        { type: 'quora', regex: /quora.com\/profile/gimu, exclusions: [] },
-        { type: 'reddit', regex: /reddit.com\/user/gimu, exclusions: [] },
-        { type: 'snapchat', regex: /snapchat.com\/add/gimu, exclusions: [] },
-        { type: 'songkick', regex: /songkick.com\/artists/gimu, exclusions: [] },
+        { type: 'quora', regex: /quora.com\/profile/, exclusions: [] },
+        { type: 'reddit', regex: /reddit.com\/user/, exclusions: [] },
+        { type: 'snapchat', regex: /snapchat.com\/add/, exclusions: [] },
+        { type: 'songkick', regex: /songkick.com\/artists/, exclusions: [] },
         {
             type: 'soundcloud',
-            regex: /soundcloud.com/gimu,
+            regex: /soundcloud.com/,
             exclusions: [
-                /soundcloud.com\/.*\/tracks\/.*/gimu,
-                /soundcloud.com\/.*\/sets\/.*/gimu,
-                /soundcloud.com\/.*\/reposts\/.*/gimu
+                /soundcloud.com\/.*\/tracks\/.*/,
+                /soundcloud.com\/.*\/sets\/.*/,
+                /soundcloud.com\/.*\/reposts\/.*/
             ]
         },
-        { type: 'tumblr', regex: /tumblr.com/gimu, exclusions: [/tumblr.com\/post.*/gimu] },
+        { type: 'tumblr', regex: /tumblr.com/, exclusions: [/tumblr.com\/post.*/] },
         {
             type: 'twitter',
-            regex: /twitter.com/gimu,
+            regex: /twitter.com/,
             exclusions: [
-                /twitter.com\/.*?\/status.*?/gimu,
-                /dev.twitter.com\/.*/gimu,
-                /blog.twitter.com\/.*/gimu,
-                /help.twitter.com\/.*/gimu,
-                /support.twitter.com\/.*/gimu
+                /twitter.com\/.*?\/status.*?/,
+                /dev.twitter.com\/.*/,
+                /blog.twitter.com\/.*/,
+                /help.twitter.com\/.*/,
+                /support.twitter.com\/.*/
             ]
         },
-        { type: 'vine', regex: /vine.co/gimu, exclusions: [] },
-        { type: 'vk', regex: /vk.com/gimu, exclusions: [] },
-        { type: 'yelp', regex: /yelp.com\/biz/gimu, exclusions: [] },
+        { type: 'vine', regex: /vine.co/, exclusions: [] },
+        { type: 'vk', regex: /vk.com/, exclusions: [] },
+        { type: 'yelp', regex: /yelp.com\/biz/, exclusions: [] },
         {
             type: 'youtube',
-            regex: /youtube.com/gimu,
+            regex: /youtube.com/,
             exclusions: [
-                /youtube.com\/playlist.*[?]list=.*/gimu,
-                /youtube.com\/v\/.*/gimu,
-                /youtube.com\/channel\/.*?#p.*?/gimu,
-                /youtube.com\/embed\/.*/gimu,
-                /youtube.com\/watch?v=.*/gimu,
-                /youtube.com\/watch.*[?]v=.*/gimu,
-                /youtube.com\/watch.*[?]v=.*/gimu,
-                /youtube.com\/watch?.*?/gimu,
-                /youtube.com\/user\/.*?#p.*?/gimu,
-                /youtube.com\/subscription_center.*/gimu
+                /youtube.com\/playlist.*[?]list=.*/,
+                /youtube.com\/v\/.*/,
+                /youtube.com\/channel\/.*?#p.*?/,
+                /youtube.com\/embed\/.*/,
+                /youtube.com\/watch?v=.*/,
+                /youtube.com\/watch.*[?]v=.*/,
+                /youtube.com\/watch.*[?]v=.*/,
+                /youtube.com\/watch?.*?/,
+                /youtube.com\/user\/.*?#p.*?/,
+                /youtube.com\/subscription_center.*/
             ]
         }
     ];
@@ -957,7 +948,7 @@ export function socialURLType(inputURL: string) {
 // Regex copied from natural NPM package
 // https://www.npmjs.com/package/natural#tokenizers
 function splitSentences(text: string): Array<string> {
-    let splits = text.split(/(?<=[.!?]\s)/gm);
+    let splits = text.split(/(?<=[.!?]\s)/g);
     splits = splits.map((split) => split.trim()).filter(Boolean);
 
     // Don't split on certain tricky words like Mr., Mrs., etc.
@@ -1023,17 +1014,6 @@ export function getYouTubeID(url: string) {
         }
     }
     return false;
-}
-
-function markCitations($: CheerioStatic, citations: Citation[]): CheerioStatic {
-    const cleaned_text = $.html().replace(CAPTURE_REGEXES.cite, (token) => {
-        const parts = token.split('|');
-        const url = parts[2];
-        const link_id = citations.findIndex((cite) => cite.url == url);
-        return `CITE|${link_id}|${url}`;
-    });
-
-    return cheerio.load(cleaned_text);
 }
 
 function parseTable($element: Cheerio): Table {
