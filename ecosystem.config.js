@@ -21,7 +21,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'https://github.com/EveripediaNetwork/backend-api.git',
       path : '/home/beekeeper/ep2-backend',
-      'post-deploy' : 'npm install && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm ci && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
     },
     kylin : {
       user : 'eos',
@@ -29,7 +29,7 @@ module.exports = {
       ref  : 'origin/kylin-2.0',
       repo : 'https://github.com/EveripediaNetwork/backend-api.git',
       path : '/home/eos/ep2-backend-kylin',
-      'post-deploy' : 'npm install && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm ci && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
