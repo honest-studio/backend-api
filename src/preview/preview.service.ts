@@ -110,14 +110,14 @@ export class PreviewService {
                     .text()
                     .trim();
                 const thumbnail = $('.main-photo').attr('data-thumbnail');
-                const mainimage = $('.main-photo').attr('src');
+                const main_photo = $('.main-photo').attr('src');
                 const text_preview: string = $('.blurb-wrap')
                     .text()
                     .substring(0, 200)
                     .replace(/\s+/g, ' ')
                     .trim();
 
-                previews[i] = { ipfs_hash, page_title, thumbnail, mainimage, text_preview };
+                previews[i] = { ipfs_hash, page_title, thumbnail, main_photo, text_preview };
             } catch (e) {
                 // try and pin the file so future requests can use it
                 this.cacheService.cacheWiki(ipfs_hash);
@@ -147,9 +147,19 @@ export class PreviewService {
 
         const whereClause = wiki_identities.map((w) => `(art.page_lang = ? AND art.slug = ?)`).join(' OR ');
         const query = `
-            SELECT art.page_title, LOWER(art.slug) AS slug, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
-                art.creation_timestamp, art.lastmod_timestamp 
+            SELECT 
+                art.page_title, 
+                art.slug,
+                art.photo_url AS main_photo, 
+                art.photo_thumb_url AS thumbnail,
+                art.page_lang AS lang_code,
+                art.ipfs_hash_current AS ipfs_hash, 
+                art.blurb_snippet AS text_preview, 
+                art.pageviews, 
+                art.page_note,
+                art.is_adult_content, 
+                art.creation_timestamp,
+                art.lastmod_timestamp
             FROM enterlink_articletable AS art 
             WHERE ${whereClause}`;
 
