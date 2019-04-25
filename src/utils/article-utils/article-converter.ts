@@ -399,7 +399,7 @@ function extractMainPhoto($: CheerioStatic): Media[] {
     return [main_photo];
 }
 
-function extractInfoboxHtml($: CheerioStatic): string {
+function extractInfoboxHtml($: CheerioStatic): Table {
     const blobbox = $('div.blobbox-wrap');
 
     // no infobox found
@@ -411,8 +411,12 @@ function extractInfoboxHtml($: CheerioStatic): string {
             .trim(),
         'all'
     );
-
-    return html;
+    
+    let parsedBlobBox = parseInfoboxHtmlTable($(blobbox));
+    parsedBlobBox.tbody.rows.forEach((row) => {
+        console.log(row);
+    });
+    return parsedBlobBox;
 }
 
 function extractInfoboxes($: CheerioStatic): Infobox[] {
@@ -670,7 +674,7 @@ function parseSection($section: Cheerio): Section {
             const classes = paragraph.attrs.class;
             if (classes && classes.includes('blurb-inline-image-container')) continue;
 
-            const table = parseTable($element);
+            const table = parseBodyTable($element);
             paragraph.items.push(table);
         }
 
@@ -1016,9 +1020,9 @@ export function getYouTubeID(url: string) {
     return false;
 }
 
-function parseTable($element: Cheerio): Table {
+function parseBodyTable($element: Cheerio): Table {
     const table: any = {
-        type: 'wikitable'
+        type: 'body-table'
     };
 
     // Set the table caption, if present
@@ -1042,7 +1046,8 @@ function parseTable($element: Cheerio): Table {
     // Add the rows and cells
     const $rows = $element.find('tr');
     $rows.each(function(i, row) {
-        const parentTag = row.parentNode.tagName;
+        const parentTag = row.parentNode ? row.parentNode.tagName 
+                        : row.parent ? row.parent.name : null;
         const table_row = {
             index: i,
             attrs: row.attribs,
@@ -1054,7 +1059,7 @@ function parseTable($element: Cheerio): Table {
             table_row.cells.push({
                 index: j,
                 attrs: cell.attribs,
-                tag_type: cell.tagName.toLowerCase(),
+                tag_type: cell.tagName ? cell.tagName.toLowerCase() : cell.name.toLowerCase(),
                 // a lot of useless HTML tags are getting stripped out here when we grab only the text.
                 // it's possible those HTML divs may contain useful content for a few articles.
                 // if that turns out to be the case, this logic needs to be more complex.
@@ -1071,4 +1076,68 @@ function parseTable($element: Cheerio): Table {
     });
 
     return table;
+}
+
+
+function parseInfoboxHtmlTable($element: Cheerio): Table {
+    const $table = $element.children('table');
+
+    const table: Partial<Table> = {
+        type: 'wikitable',
+        attrs: $table.length > 0 ? $table[0].attribs : {},
+    };
+
+    // Set the table caption, if present
+    const $caption = $element.children('caption');
+    table.caption = { 
+        attrs: $caption.length > 0 ? $caption[0].attribs : {}, 
+        sentences: $caption.length > 0 ? parseSentences($caption.html().trim()) : []
+    }
+
+    // Deal with the colgroup
+    // TODO
+
+    // Setup the head, body, and foot
+    const $table_containers = $element.children('thead, tbody, tfoot');
+    const table_sections = ['thead', 'tbody', 'tfoot'];
+    for (let j = 0; j < table_sections.length; j++) {
+        const tsection = table_sections[j];
+        const $tsection = $element.children(tsection);
+        table[tsection] = { rows: [] };
+        if ($tsection.length > 0) table[tsection].attrs = $tsection[0].attribs;
+        else table[tsection].attrs = {};
+    }
+
+    // Add the rows and cells
+    const $rows = $element.find('tr');
+    $rows.each(function(i, row) {
+        const parentTag = row.parent.name;
+        const table_row = {
+            index: i,
+            attrs: row.attribs,
+            cells: []
+        };
+
+        const $cells = $rows.eq(i).find('td, th');
+        $cells.each(function(j, cell) {
+            table_row.cells.push({
+                index: j,
+                attrs: cell.attribs,
+                tag_type: cell.name.toLowerCase(),
+                // a lot of useless HTML tags are getting stripped out here when we grab only the text.
+                // it's possible those HTML divs may contain useful content for a few articles.
+                // if that turns out to be the case, this logic needs to be more complex.
+                content: parseSentences(
+                    $cells
+                        .eq(j)
+                        .text()
+                        .trim()
+                )
+            });
+        });
+
+        table[parentTag].rows.push(table_row);
+    });
+
+    return table as Table;
 }

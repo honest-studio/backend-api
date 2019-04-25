@@ -121,10 +121,16 @@ export interface Citation {
 
 export interface Table {
     type: string; // wikitable
-    caption: string;
+    attrs: {};
+    caption: TableCaption;
     thead: TableSection;
     tbody: TableSection;
     tfoot: TableSection;
+}
+
+export interface TableCaption {
+    attrs: {};
+    sentences: Sentence[];
 }
 
 export interface TableSection {
@@ -149,7 +155,7 @@ export interface TableCell {
 export interface ArticleJson {
     page_title: Sentence[];
     main_photo: Media[];
-    infobox_html: string;
+    infobox_html: Table;
     page_body: Section[];
     infoboxes: Infobox[];
     citations: Citation[];
