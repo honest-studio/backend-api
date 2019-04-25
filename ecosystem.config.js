@@ -29,7 +29,7 @@ module.exports = {
       ref  : 'origin/kylin-2.0',
       repo : 'https://github.com/EveripediaNetwork/backend-api.git',
       path : '/home/eos/ep2-backend-kylin',
-      'post-deploy' : 'npm ci && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm install && git stash && cp ../.env . && npm run-script build && pm2 reload ecosystem.config.js --env production'
     }
   }
 };
