@@ -17,6 +17,7 @@ import {
 } from '../utils/article-utils';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import * as SqlString from 'sqlstring';
+import cheerio from 'cheerio';
 
 @Injectable()
 export class WikiService {
@@ -204,16 +205,38 @@ export class WikiService {
                 return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
             })
             .join(' OR ');
-        let seeAlsoRows = await this.mysql.TryQuery(
+        let seeAlsoRows: any[] = await this.mysql.TryQuery(
             `
-            SELECT COALESCE(art_redir.slug, art.slug) AS slug, COALESCE(art_redir.page_title, art.page_title) AS title, 
-            COALESCE(art_redir.page_lang, art.page_lang) AS lang, COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail_url, 
-            COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview
-            FROM enterlink_articletable art
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+            SELECT 
+                art.page_title, 
+                art.slug,
+                art.photo_url AS main_photo, 
+                art.photo_thumb_url AS thumbnail,
+                art.page_lang AS lang_code,
+                art.ipfs_hash_current AS ipfs_hash, 
+                art.blurb_snippet AS text_preview, 
+                art.pageviews, 
+                art.page_note,
+                art.is_adult_content, 
+                art.creation_timestamp,
+                art.lastmod_timestamp
+            FROM enterlink_articletable AS art 
             WHERE ${seeAlsoWhere};`,
             []
         );
+
+        // clean up text previews
+        for (let preview of seeAlsoRows) {
+            if (preview.text_preview) {
+                preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
+                const $ = cheerio.load(preview.text_preview);
+                preview.text_preview = $.root()
+                    .text()
+                    .replace(/\s+/g, ' ')
+                    .trim();
+            }
+        }
+
         return seeAlsoRows as SeeAlso[];
     }
 
