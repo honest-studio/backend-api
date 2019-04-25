@@ -56,7 +56,7 @@ export class PreviewService {
         const article_info: Array<any> = await this.mysql.TryQuery(
             `
             SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews
+                cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews, art.is_adult_content, art.slug
             FROM enterlink_articletable AS art 
             JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id

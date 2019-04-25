@@ -61,8 +61,8 @@ export class SearchService {
 
         const result_rows: Array<any> = await this.mysql.TryQuery(
             `
-            SELECT art.page_title, art.slug, art.photo_thumb_url, art.pageviews, art.is_adult_content, 
-            art.blurb_snippet AS text_preview,
+            SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+                cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews, art.is_adult_content, art.slug
             art.photo_url, art.ipfs_hash_current, art.page_lang AS lang_code
             FROM enterlink_articletable AS art
             WHERE art.id IN (?)`,
