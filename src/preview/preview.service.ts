@@ -55,8 +55,19 @@ export class PreviewService {
         const sqlOnlyTimer = this.getPrevByHashSqlOnlyHisto.startTimer({ pid: pid });
         const article_info: Array<any> = await this.mysql.TryQuery(
             `
-            SELECT art.page_title AS title, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
-                cache.ipfs_hash, art.blurb_snippet AS text_preview, art.pageviews, art.is_adult_content, art.slug
+            SELECT 
+                art.page_title, 
+                art.slug,
+                art.photo_url AS main_photo, 
+                art.photo_thumb_url AS thumbnail,
+                art.page_lang AS lang_code,
+                art.ipfs_hash_current AS ipfs_hash, 
+                art.blurb_snippet AS text_preview, 
+                art.pageviews, 
+                art.page_note,
+                art.is_adult_content, 
+                art.creation_timestamp,
+                art.lastmod_timestamp
             FROM enterlink_articletable AS art 
             JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id
@@ -85,7 +96,7 @@ export class PreviewService {
         // try and fill in missing previews with pinned wikis
         for (const i in previews) {
             const preview = previews[i];
-            if (preview.title) continue;
+            if (preview.page_title) continue;
             const ipfs_hash = preview.ipfs_hash;
 
             try {
@@ -95,7 +106,7 @@ export class PreviewService {
 
                 const $ = cheerio.load(wiki);
 
-                const title = $('h1.page-title')
+                const page_title = $('h1.page-title')
                     .text()
                     .trim();
                 const thumbnail = $('.main-photo').attr('data-thumbnail');
@@ -106,7 +117,7 @@ export class PreviewService {
                     .replace(/\s+/g, ' ')
                     .trim();
 
-                previews[i] = { ipfs_hash, title, thumbnail, mainimage, text_preview };
+                previews[i] = { ipfs_hash, page_title, thumbnail, mainimage, text_preview };
             } catch (e) {
                 // try and pin the file so future requests can use it
                 this.cacheService.cacheWiki(ipfs_hash);
@@ -114,7 +125,7 @@ export class PreviewService {
         }
 
         // error messages for missing wikis
-        previews.filter((p) => !p.title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
+        previews.filter((p) => !p.page_title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
         // stop post-sql timer
         this.getPrevByHashPostSqlHisto.observe({ pid: pid }, getDeltaMs(postSqlStart));
         // stop total request timer
@@ -136,7 +147,7 @@ export class PreviewService {
 
         const whereClause = wiki_identities.map((w) => `(art.page_lang = ? AND art.slug = ?)`).join(' OR ');
         const query = `
-            SELECT art.page_title AS title, LOWER(art.slug) AS slug, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
+            SELECT art.page_title, LOWER(art.slug) AS slug, art.photo_url AS mainimage, art.photo_thumb_url AS thumbnail, art.page_lang,
                 art.ipfs_hash_current, art.blurb_snippet AS text_preview, art.pageviews, art.page_note, art.is_adult_content,
                 art.creation_timestamp, art.lastmod_timestamp 
             FROM enterlink_articletable AS art 
