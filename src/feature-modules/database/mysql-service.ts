@@ -26,7 +26,7 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
             if (!this.connectionPool) {
                 try {
                     this.connectionPool = mysql.createPool({
-                        connectionLimit: 2,
+                        connectionLimit: this.config.get('MYSQL_POOL_SIZE'),
                         host: this.config.get('MYSQL_HOST'),
                         port: this.config.get('MYSQL_PORT'),
                         user: this.config.get('MYSQL_USERNAME'),

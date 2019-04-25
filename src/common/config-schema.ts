@@ -47,6 +47,7 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     MYSQL_USERNAME: Joi.string().required(),
     MYSQL_PASSWORD: Joi.string().required(),
     MYSQL_DATABASE: Joi.string().required(),
+    MYSQL_POOL_SIZE: Joi.number().min(1).max(100).required(),
     AWS_S3_STORAGE_BUCKET_NAME: Joi.string().required(),
     AWS_S3_FAST_CACHE_BUCKET_NAME: Joi.string().required(),
     AWS_S3_ACCESS_KEY_ID: Joi.string().required(),
