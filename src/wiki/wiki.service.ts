@@ -31,13 +31,15 @@ export class WikiService {
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
         console.time('wiki by slug mysql 1');
+        const mysql_slug = this.mysql.cleanSlugForMysql(slug);
+        console.log(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE art.slug = ? AND art.page_lang = ?`,
-            [slug, lang_code]
+            WHERE (art.slug = ? OR art.slug_alt = ?) AND art.page_lang = ?`,
+            [mysql_slug, mysql_slug, lang_code]
         );
         console.timeEnd('wiki by slug mysql 1');
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
