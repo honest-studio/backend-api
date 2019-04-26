@@ -83,8 +83,6 @@ function pyToJS(inputItem: any) {
 
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
-    fs.writeFileSync('star-wars.html', oldHTML);
-
     console.time("replacements");
     // Replace some problematic unicode characters and other stuff
     REPLACEMENTS.forEach(function(pair) {
