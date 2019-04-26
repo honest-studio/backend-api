@@ -149,11 +149,25 @@ export interface TableRow {
     diff?: DiffType;
 }
 
+export interface TableCellTextItem {
+    type: 'text';
+    content: Sentence[];
+}
+
+export interface TableCellTagItem {
+    type: 'tag';
+    tag_type: string;
+    attrs: {};
+    content: Sentence[];
+}
+
+export type TableCellContentItem = TableCellTextItem | TableCellTagItem;
+
 export interface TableCell {
     index: number;
     attrs: {};
     tag_type: CellType;
-    content: Sentence[];
+    content: TableCellContentItem[];
 }
 
 export interface ArticleJson {
