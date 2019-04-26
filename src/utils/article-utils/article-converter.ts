@@ -21,6 +21,8 @@ import {
 } from './article-dto';
 import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
+import * as inlineElements from 'inline-elements';
+import * as blockElements from 'block-elements';
 
 const decode = require('unescape');
 const normalizeUrl = require('normalize-url');
@@ -1065,6 +1067,7 @@ function tableCellContentsParser($cell: Cheerio) {
                 } as TableCellTextItem);
                 break;
             case 'tag':
+                let tagClass = inlineElements.indexOf(element.name) === -1 ? 'block' : 'inline';
                 let innerText = element.children.map((child) => {
                     // Fix this later
                     return child.type == 'text' ? child.data : ''
@@ -1072,6 +1075,7 @@ function tableCellContentsParser($cell: Cheerio) {
                 cellContents.push({
                     type: 'tag',
                     tag_type: element.name,
+                    tag_class: tagClass,
                     attrs: cleanAttributes(element.attribs),
                     content: parseSentences(innerText)
                 } as TableCellTagItem);
