@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
+import {convert as ReactAttrConvert} from 'react-attr-converter';
 import {
     WikiLink,
     Sentence,
@@ -103,11 +104,14 @@ const parseStyles = (styles: string): {} => {
 }
 
 const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
-    let cleanedAttrs = inputAttrs;
-    if (cleanedAttrs.style){
-        cleanedAttrs.style = parseStyles(cleanedAttrs.style);
+    let cleanedAttrs = {};
+    const keys = Object.keys(inputAttrs);
+    for (const key of keys) {
+        cleanedAttrs[ReactAttrConvert(key)] = inputAttrs[key];
+    }
+    if (cleanedAttrs['style']){
+        cleanedAttrs['style'] = parseStyles(cleanedAttrs['style']);
     } 
-    
     return cleanedAttrs;
 }
 
