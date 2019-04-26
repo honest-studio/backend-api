@@ -16,6 +16,10 @@ export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NOR
 
 export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
 
+export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
+
+export type CellType = 'th' | 'td';
+
 export interface Sentence {
     type: string; // sentence
     index: number;
@@ -148,7 +152,7 @@ export interface TableRow {
 export interface TableCell {
     index: number;
     attrs: {};
-    tag_type: string;
+    tag_type: CellType;
     content: Sentence[];
 }
 

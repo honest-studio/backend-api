@@ -81,6 +81,36 @@ function pyToJS(inputItem: any) {
     }
 }
 
+/**
+ * @function parseStyles
+ * Parses a string of inline styles into a javascript object with casing for react
+ *
+ * @param {string} styles
+ * @returns {Object}
+ */
+const parseStyles = (styles: string): {} => {
+    return styles
+    .split(';')
+    .filter(style => style.split(':')[0] && style.split(':')[1])
+    .map(style => [
+        style.split(':')[0].trim().replace(/-./g, c => c.substr(1).toUpperCase()),
+        style.split(':').slice(1).join(':').trim()
+    ])
+    .reduce((styleObj, style) => ({
+        ...styleObj,
+        [style[0]]: style[1],
+    }), {});
+}
+
+const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+    let cleanedAttrs = inputAttrs;
+    if (cleanedAttrs.style){
+        cleanedAttrs.style = parseStyles(cleanedAttrs.style);
+    } 
+    
+    return cleanedAttrs;
+}
+
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
 
@@ -1021,8 +1051,10 @@ export function getYouTubeID(url: string) {
 }
 
 function parseBodyTable($element: Cheerio): Table {
+    const $table = $element.children('table');
     const table: any = {
-        type: 'body-table'
+        type: 'body-table',
+        attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
     };
 
     // Set the table caption, if present
@@ -1039,7 +1071,7 @@ function parseBodyTable($element: Cheerio): Table {
         const tsection = table_sections[j];
         const $tsection = $element.children(tsection);
         table[tsection] = { rows: [] };
-        if ($tsection.length > 0) table[tsection].attrs = $tsection[0].attribs;
+        if ($tsection.length > 0) table[tsection].attrs = cleanAttributes($tsection[0].attribs);
         else table[tsection].attrs = {};
     }
 
@@ -1050,7 +1082,7 @@ function parseBodyTable($element: Cheerio): Table {
                         : row.parent ? row.parent.name : null;
         const table_row = {
             index: i,
-            attrs: row.attribs,
+            attrs: cleanAttributes(row.attribs),
             cells: []
         };
 
@@ -1058,7 +1090,7 @@ function parseBodyTable($element: Cheerio): Table {
         $cells.each(function(j, cell) {
             table_row.cells.push({
                 index: j,
-                attrs: cell.attribs,
+                attrs: cleanAttributes(cell.attribs),
                 tag_type: cell.tagName ? cell.tagName.toLowerCase() : cell.name.toLowerCase(),
                 // a lot of useless HTML tags are getting stripped out here when we grab only the text.
                 // it's possible those HTML divs may contain useful content for a few articles.
@@ -1084,7 +1116,7 @@ function parseInfoboxHtmlTable($element: Cheerio): Table {
 
     const table: Partial<Table> = {
         type: 'wikitable',
-        attrs: $table.length > 0 ? $table[0].attribs : {},
+        attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
     };
 
     // Set the table caption, if present
@@ -1104,7 +1136,7 @@ function parseInfoboxHtmlTable($element: Cheerio): Table {
         const tsection = table_sections[j];
         const $tsection = $element.children(tsection);
         table[tsection] = { rows: [] };
-        if ($tsection.length > 0) table[tsection].attrs = $tsection[0].attribs;
+        if ($tsection.length > 0) table[tsection].attrs = cleanAttributes($tsection[0].attribs);
         else table[tsection].attrs = {};
     }
 
@@ -1114,7 +1146,7 @@ function parseInfoboxHtmlTable($element: Cheerio): Table {
         const parentTag = row.parent.name;
         const table_row = {
             index: i,
-            attrs: row.attribs,
+            attrs: cleanAttributes(row.attribs),
             cells: []
         };
 
@@ -1122,7 +1154,7 @@ function parseInfoboxHtmlTable($element: Cheerio): Table {
         $cells.each(function(j, cell) {
             table_row.cells.push({
                 index: j,
-                attrs: cell.attribs,
+                attrs: cleanAttributes(cell.attribs),
                 tag_type: cell.name.toLowerCase(),
                 // a lot of useless HTML tags are getting stripped out here when we grab only the text.
                 // it's possible those HTML divs may contain useful content for a few articles.
