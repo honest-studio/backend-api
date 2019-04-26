@@ -157,7 +157,7 @@ export interface TableCellTextItem {
 export interface TableCellTagItem {
     type: 'tag';
     tag_type: string;
-    tag_class: 'inline' | 'block';
+    tag_class: 'inline' | 'block' | 'void';
     attrs: {};
     content: Sentence[];
 }
