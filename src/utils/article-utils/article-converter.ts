@@ -1056,33 +1056,38 @@ export function getYouTubeID(url: string) {
     return false;
 }
 
-function tableCellContentsParser($cell: Cheerio) {
+function tableCellContentsParser($contents: Cheerio) {
     let cellContents: TableCellContentItem[] = [];
-    $cell.contents().each((index, element) => {
+    $contents.each((index, element) => {
+        let theSentences: Sentence[];
         switch (element.type){
             case 'text':
-                cellContents.push({
-                    type: 'text',
-                    content: parseSentences(element.data)
-                } as TableCellTextItem);
+                theSentences = parseSentences(element.data);
+                if (theSentences.length) {
+                    cellContents.push({
+                        type: 'text',
+                        content: theSentences
+                    } as TableCellTextItem);
+                }
                 break;
             case 'tag':
+                let $ELEM = cheerio.load(element);
                 let tagClass = blockElements.indexOf(element.name) !== -1 
                     ? 'block'   
                     : voidElements.indexOf(element.name) !== -1 
                         ? 'void'
                         : 'inline' 
-                let innerText = element.children.map((child) => {
-                    // Fix this later
-                    return child.type == 'text' ? child.data : ''
-                }).join("");
-                cellContents.push({
-                    type: 'tag',
-                    tag_type: element.name,
-                    tag_class: tagClass,
-                    attrs: cleanAttributes(element.attribs),
-                    content: parseSentences(innerText)
-                } as TableCellTagItem);
+                let innerText = $ELEM.root().text()
+                theSentences = parseSentences(innerText);
+                if (theSentences.length) {
+                    cellContents.push({
+                        type: 'tag',
+                        tag_type: element.name,
+                        tag_class: tagClass,
+                        attrs: cleanAttributes(element.attribs),
+                        content: theSentences
+                    } as TableCellTagItem);
+                }
                 break;
         }
     })
@@ -1127,21 +1132,24 @@ function parseBodyTable($element: Cheerio): Table {
 
         const $cells = $rows.eq(i).find('td, th');
         $cells.each(function(j, cell) {
-            table_row.cells.push({
-                index: j,
-                attrs: cleanAttributes(cell.attribs),
-                tag_type: cell.tagName ? cell.tagName.toLowerCase() : cell.name.toLowerCase(),
-                // a lot of useless HTML tags are getting stripped out here when we grab only the text.
-                // it's possible those HTML divs may contain useful content for a few articles.
-                // if that turns out to be the case, this logic needs to be more complex.
-                content: tableCellContentsParser($cells.eq(j)),
-                // content: parseSentences(
-                //     $cells
-                //         .eq(j)
-                //         .text()
-                //         .trim()
-                // )
-            });
+            let theContentsParsed = tableCellContentsParser($cells.eq(j).contents());
+            if (theContentsParsed.length){
+                table_row.cells.push({
+                    index: j,
+                    attrs: cleanAttributes(cell.attribs),
+                    tag_type: cell.name.toLowerCase(),
+                    // a lot of useless HTML tags are getting stripped out here when we grab only the text.
+                    // it's possible those HTML divs may contain useful content for a few articles.
+                    // if that turns out to be the case, this logic needs to be more complex.
+                    content: theContentsParsed,
+                    // content: parseSentences(
+                    //     $cells
+                    //         .eq(j)
+                    //         .text()
+                    //         .trim()
+                    // )
+                });
+            }
         });
 
         table[parentTag].rows.push(table_row);
@@ -1163,7 +1171,8 @@ function parseInfoboxHtmlTable($element: Cheerio): Table {
     const $caption = $element.children('caption');
     table.caption = { 
         attrs: $caption.length > 0 ? $caption[0].attribs : {}, 
-        sentences: $caption.length > 0 ? parseSentences($caption.html().trim()) : []
+        sentences: $caption.length > 0 ? parseSentences($caption.html()) : []
+        // sentences: $caption.length > 0 ? parseSentences($caption.html().trim()) : []
     }
 
     // Deal with the colgroup
@@ -1192,22 +1201,24 @@ function parseInfoboxHtmlTable($element: Cheerio): Table {
 
         const $cells = $rows.eq(i).find('td, th');
         $cells.each(function(j, cell) {
-            
-            table_row.cells.push({
-                index: j,
-                attrs: cleanAttributes(cell.attribs),
-                tag_type: cell.name.toLowerCase(),
-                // a lot of useless HTML tags are getting stripped out here when we grab only the text.
-                // it's possible those HTML divs may contain useful content for a few articles.
-                // if that turns out to be the case, this logic needs to be more complex.
-                content: tableCellContentsParser($cells.eq(j)),
-                // content: parseSentences(
-                //     $cells
-                //         .eq(j)
-                //         .text()
-                //         .trim()
-                // )
-            });
+            let theContentsParsed = tableCellContentsParser($cells.eq(j).contents());
+            if (theContentsParsed.length){
+                table_row.cells.push({
+                    index: j,
+                    attrs: cleanAttributes(cell.attribs),
+                    tag_type: cell.name.toLowerCase(),
+                    // a lot of useless HTML tags are getting stripped out here when we grab only the text.
+                    // it's possible those HTML divs may contain useful content for a few articles.
+                    // if that turns out to be the case, this logic needs to be more complex.
+                    content: theContentsParsed,
+                    // content: parseSentences(
+                    //     $cells
+                    //         .eq(j)
+                    //         .text()
+                    //         .trim()
+                    // )
+                });
+            }
         });
 
         table[parentTag].rows.push(table_row);
