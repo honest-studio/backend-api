@@ -448,7 +448,7 @@ function extractInfoboxHtml($: CheerioStatic): Table {
         'all'
     );
     
-    let parsedBlobBox = parseInfoboxHtmlTable($(blobbox));
+    let parsedBlobBox = parseTable($(blobbox), 'wikitable');
     // parsedBlobBox.tbody.rows.forEach((row) => {
     //     console.log(row);
     // });
@@ -710,7 +710,7 @@ function parseSection($section: Cheerio): Section {
             const classes = paragraph.attrs.class;
             if (classes && classes.includes('blurb-inline-image-container')) continue;
 
-            const table = parseBodyTable($element);
+            const table = parseTable($element, 'body-table');
             paragraph.items.push(table);
         }
 
@@ -1094,76 +1094,11 @@ function tableCellContentsParser($contents: Cheerio) {
     return cellContents;
 }
 
-function parseBodyTable($element: Cheerio): Table {
-    const $table = $element.children('table');
-    const table: any = {
-        type: 'body-table',
-        attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
-    };
-
-    // Set the table caption, if present
-    const $caption = $element.children('caption');
-    if ($caption.length > 0) table.caption = $caption.html().trim();
-
-    // Deal with the colgroup
-    // TODO
-
-    // Setup the head, body, and foot
-    const $table_containers = $element.children('thead, tbody, tfoot');
-    const table_sections = ['thead', 'tbody', 'tfoot'];
-    for (let j = 0; j < table_sections.length; j++) {
-        const tsection = table_sections[j];
-        const $tsection = $element.children(tsection);
-        table[tsection] = { rows: [] };
-        if ($tsection.length > 0) table[tsection].attrs = cleanAttributes($tsection[0].attribs);
-        else table[tsection].attrs = {};
-    }
-
-    // Add the rows and cells
-    const $rows = $element.find('tr');
-    $rows.each(function(i, row) {
-        const parentTag = row.parentNode ? row.parentNode.tagName 
-                        : row.parent ? row.parent.name : null;
-        const table_row = {
-            index: i,
-            attrs: cleanAttributes(row.attribs),
-            cells: []
-        };
-
-        const $cells = $rows.eq(i).find('td, th');
-        $cells.each(function(j, cell) {
-            let theContentsParsed = tableCellContentsParser($cells.eq(j).contents());
-            if (theContentsParsed.length){
-                table_row.cells.push({
-                    index: j,
-                    attrs: cleanAttributes(cell.attribs),
-                    tag_type: cell.name.toLowerCase(),
-                    // a lot of useless HTML tags are getting stripped out here when we grab only the text.
-                    // it's possible those HTML divs may contain useful content for a few articles.
-                    // if that turns out to be the case, this logic needs to be more complex.
-                    content: theContentsParsed,
-                    // content: parseSentences(
-                    //     $cells
-                    //         .eq(j)
-                    //         .text()
-                    //         .trim()
-                    // )
-                });
-            }
-        });
-
-        table[parentTag].rows.push(table_row);
-    });
-
-    return table;
-}
-
-
-function parseInfoboxHtmlTable($element: Cheerio): Table {
+function parseTable($element: Cheerio, tableType: string): Table {
     const $table = $element.children('table');
 
     const table: Partial<Table> = {
-        type: 'wikitable',
+        type: tableType,
         attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
     };
 
