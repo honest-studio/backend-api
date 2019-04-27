@@ -159,7 +159,7 @@ export interface TableCellTagItem {
     tag_type: string;
     tag_class: 'inline' | 'block' | 'void';
     attrs: {};
-    content: Sentence[];
+    content: TableCellContentItem[]; // allow for recursion
 }
 
 export type TableCellContentItem = TableCellTextItem | TableCellTagItem;
