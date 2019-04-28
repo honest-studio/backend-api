@@ -121,7 +121,6 @@ const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]:
 
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
-
     console.time("replacements");
     // Replace some problematic unicode characters and other stuff
     REPLACEMENTS.forEach(function(pair) {
@@ -225,9 +224,12 @@ export function extractPageBody($: CheerioStatic): Section[] {
     // First 2 are wikipedia divs
     // Default is everipedia body
     let $body;
-    if ($('.mw-parser-output').length > 0) $body = $($('.mw-parser-output')[0]);
-    else if ($('.mw-content-ltr').length > 0) $body = $($('.mw-content-ltr')[0]);
-    else $body = $('.blurb-wrap');
+    if ($('.mw-parser-output').length > 0) $body = $('.mw-parser-output').eq(0);
+    // Sometimes copy-pasting creates a duplicate of the mw-content-ltr class (see lang_en/star_wars)
+    // for now prepending the div selector prevents these duplicates from being selected
+    // additional guards may be necessary in the future
+    else if ($('div.mw-content-ltr').length > 0) $body = $('.mw-content-ltr').eq(0);
+    else $body = $('.blurb-wrap').eq(0);
 
     // Split body into sections
     let sections: Section[] = splitIntoSections($body).map(parseSection);

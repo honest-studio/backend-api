@@ -142,7 +142,7 @@ export class PreviewService {
         });
 
         const substitutions = wiki_identities
-            .map((w) => [w.lang_code, w.slug])
+            .map((w) => [w.lang_code, this.mysql.cleanSlugForMysql(w.slug)])
             .reduce((flat, piece) => flat.concat(piece), []);
 
         const whereClause = wiki_identities.map((w) => `(art.page_lang = ? AND art.slug = ?)`).join(' OR ');

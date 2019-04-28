@@ -122,6 +122,24 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
         });
     };
 
+    // Our DB has very specific legacy encoding schemes for slugs
+    // This function takes care of that
+    public cleanSlugForMysql(slug: string) {
+        const replacements = [
+    //        { find: /,/g, replace: "%2C" },
+            { find: /'/g, replace: "%27" },
+            { find: /\(/g, replace: "%28" },
+            { find: /\)/g, replace: "%29" },
+    //        { find: /–/g, replace: "%E2%80%93" },
+        ]
+        for (let set of replacements) {
+            slug = slug.replace(set.find, set.replace);
+        }
+        slug = encodeURIComponent(slug);
+        slug = slug.replace(/%25/g, '%');
+        return slug;
+    }
+
     private tryTerminate = () => {
         if (!this.isTerminating) {
             this.isTerminating = true;
@@ -140,19 +158,13 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
      * Try to shut down the connection gracefully when the app exits
      * @param signal Signal event (SIGINT/SIGTERM)
      */
-    onApplicationShutdown(signal: string) {
+    async onApplicationShutdown(signal: string) {
         console.info(
             chalk.cyan(`${signal} - shutting down, PID`) +
                 chalk.yellow(' [') +
                 chalk.red(`${process.pid}`) +
                 chalk.yellow('] ')
         );
-        this.tryTerminate();
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.info('Exiting');
-                resolve();
-            }, 2500);
-        });
+        return this.tryTerminate();
     }
 }
