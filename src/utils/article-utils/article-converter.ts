@@ -3,6 +3,8 @@ import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
 import {convert as ReactAttrConvert} from 'react-attr-converter';
+import * as  util from 'util';
+import * as JSONCycleCustom from './json-cycle-custom';
 import {
     WikiLink,
     Sentence,
@@ -1056,6 +1058,9 @@ export function getYouTubeID(url: string) {
     return false;
 }
 
+var circularObj = {} as any;
+circularObj.circularRef = circularObj;
+circularObj.list = [ circularObj, circularObj ];
 
 function tableCellContentsParser($contents: CheerioElement[], cellContents: TableCellContentItem[] = []) {
     $contents.forEach((element, index) => {
@@ -1070,27 +1075,22 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
                 }
                 break;
             case 'tag':
-                console.log("----------------------");
-                console.log(element);
-                console.log("----------------------");
-                if (element.children.length && (element.prev || element.next)) {
-                    let tagClass = blockElements.indexOf(element.name) !== -1 
-                    ? 'block'   
-                    : voidElements.indexOf(element.name) !== -1 
-                        ? 'void'
-                        : 'inline' ;
 
-                    let newElement = {
-                        type: 'tag',
-                        tag_type: element.name,
-                        tag_class: tagClass,
-                        attrs: cleanAttributes(element.attribs),
-                        content: tableCellContentsParser(element.children, cellContents)
-                    } as TableCellTagItem;
-                    console.log(newElement);
-                    cellContents.push(newElement);
+                let tagClass = blockElements.indexOf(element.name) !== -1 
+                ? 'block'   
+                : voidElements.indexOf(element.name) !== -1 
+                    ? 'void'
+                    : 'inline' ;
 
-                }
+                let newElement = {
+                    type: 'tag',
+                    tag_type: element.name,
+                    tag_class: tagClass,
+                    attrs: cleanAttributes(element.attribs),
+                    content: tableCellContentsParser(element.children, cellContents)
+                } as TableCellTagItem;
+                // console.log(newElement);
+                cellContents.push(newElement);
                 break;
         }
     })
@@ -1158,9 +1158,11 @@ function parseTable($element: Cheerio, tableType: string): Table {
                 });
             }
         });
-
         table[parentTag].rows.push(table_row);
     });
-
-    return table as Table;
+    let decycledTable = JSONCycleCustom.decycle(table, []) as any;
+    console.log("--------------------------")
+    console.log(util.inspect(decycledTable, false, null, true));
+    console.log("--------------------------")
+    return decycledTable as Table;
 }
