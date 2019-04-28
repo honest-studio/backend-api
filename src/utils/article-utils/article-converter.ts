@@ -1057,8 +1057,8 @@ export function getYouTubeID(url: string) {
 }
 
 
-function tableCellContentsParser($contents: Cheerio, cellContents: TableCellContentItem[] = []) {
-    $contents.each((index, element) => {
+function tableCellContentsParser($contents: CheerioElement[], cellContents: TableCellContentItem[] = []) {
+    $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':
                 let theSentences: Sentence[] = parseSentences(element.data);
@@ -1070,21 +1070,25 @@ function tableCellContentsParser($contents: Cheerio, cellContents: TableCellCont
                 }
                 break;
             case 'tag':
-                let $ELEM = cheerio.load(element);
-                let $ELEMROOT = $ELEM.root();
-                if ($ELEMROOT.contents().length && $ELEMROOT.toArray()[0].type != 'root') {
+                console.log("----------------------");
+                console.log(element);
+                console.log("----------------------");
+                if (element.children.length && (element.prev || element.next)) {
                     let tagClass = blockElements.indexOf(element.name) !== -1 
                     ? 'block'   
                     : voidElements.indexOf(element.name) !== -1 
                         ? 'void'
                         : 'inline' ;
-                    cellContents.push({
+
+                    let newElement = {
                         type: 'tag',
                         tag_type: element.name,
                         tag_class: tagClass,
                         attrs: cleanAttributes(element.attribs),
-                        content: tableCellContentsParser($ELEMROOT.contents(), cellContents)
-                    } as TableCellTagItem);
+                        content: tableCellContentsParser(element.children, cellContents)
+                    } as TableCellTagItem;
+                    console.log(newElement);
+                    cellContents.push(newElement);
 
                 }
                 break;
@@ -1135,7 +1139,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
 
         const $cells = $rows.eq(i).find('td, th');
         $cells.each(function(j, cell) {
-            let theContentsParsed = tableCellContentsParser($cells.eq(j).contents(), []);
+            let theContentsParsed = tableCellContentsParser($cells.eq(j).contents().toArray(), []);
             if (theContentsParsed.length){
                 table_row.cells.push({
                     index: j,
