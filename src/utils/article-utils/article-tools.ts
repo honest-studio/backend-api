@@ -273,7 +273,7 @@ export const CheckForLinksOrCitationsAMP = (
             if (result && result[1] !== undefined && result[1] != '') {
                 let workingImage: InlineImage = {
                     src: result ? normalizeUrl(result[1]) : '',
-                    srcset: result ? result[2] : '',
+                    srcSet: result ? result[2] : '',
                     alt: result ? result[3] : '',
                     height: result ? result[4] : '1',
                     width: result ? result[5] : '1'
