@@ -162,7 +162,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
         quickHTML = quickHTML.replace(pair.regex, pair.replacement);
     });
 
-    console.log(quickHTML);
+    // console.log(quickHTML);
 
     dom = htmlparser2.parseDOM(quickHTML, { decodeEntities: true });
     $ = cheerio.load(dom);
