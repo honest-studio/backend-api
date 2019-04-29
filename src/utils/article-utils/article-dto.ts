@@ -124,7 +124,7 @@ export interface Citation {
 }
 
 export interface Table {
-    type: string; // wikitable
+    type: 'wikitable' | 'body-table';
     attrs: {};
     caption: TableCaption;
     thead: TableSection;

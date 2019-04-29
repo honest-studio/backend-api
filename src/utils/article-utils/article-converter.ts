@@ -42,10 +42,11 @@ export const REPLACEMENTS = [
     { regex: /\u{00A0}/g, replacement: ' ' },
     { regex: /\u{200B}/g, replacement: '' },
     { regex: /\n <\/a>\n/g, replacement: '</a>' },
-    { regex: /<\/a> (,|.|:|'|\))/g, replacement: '</a>$1' },
+    { regex: /<\/a> (,|.|:|;|'|\))/g, replacement: '</a>$1' },
     { regex: / {1,}/g, replacement: ' ' },
     { regex: /\n\s/g, replacement: ' ' },
     { regex: / , /g, replacement: ', ' },
+    { regex: / ; /g, replacement: '; ' },
     { regex: / \./g, replacement: '.' },
     {
         regex: /https:\/\/s3.amazonaws.com\/everipedia-storage/g,
@@ -154,6 +155,17 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     console.time("sanitize citations");
     $ = sanitizeCitations($, citations);
     console.timeEnd("sanitize citations");
+
+    let quickHTML = $.html();
+    // Replace some problematic unicode characters and other stuff
+    REPLACEMENTS.forEach(function(pair) {
+        quickHTML = quickHTML.replace(pair.regex, pair.replacement);
+    });
+
+    console.log(quickHTML);
+
+    dom = htmlparser2.parseDOM(quickHTML, { decodeEntities: true });
+    $ = cheerio.load(dom);
 
     console.time("metadata");
     const metadata = extractMetadata($);
@@ -746,6 +758,18 @@ function sanitizeText($: CheerioStatic) {
     // Remove style sections
     $('style').remove();
 
+    // Remove bad tags
+    const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
+    badTagSelectors.forEach((selector) => $(selector).remove());
+
+    // Unwrap certain tags
+    const unwrapTags = ['small'];
+    unwrapTags.forEach((selector) => {
+        $(selector).each(function(index, element) {
+            $(this).replaceWith($(element).contents());
+        });
+    })
+
     // Substitute all the links into something that is safe for the parser
     $('a.tooltippable').each(function(i, el) {
         let old_slug = decodeURIComponent($(el).attr('data-username'));
@@ -820,10 +844,6 @@ function sanitizeText($: CheerioStatic) {
         $(this).replaceWith(plaintextString);
     });
 
-    // Remove bad tags
-    const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
-    badTagSelectors.forEach((selector) => $(selector).remove());
-
     // Replace thumbcaption divs with their text
     $('.thumbcaption').each(function(index, element) {
         $(this).replaceWith($(this).html());
@@ -859,7 +879,7 @@ function sanitizeText($: CheerioStatic) {
             // Replace the center with all of its contents
             $(this).replaceWith($(element).contents());
         });
-
+    
     // Fix <div> elements
     theBody
         .children('div')
@@ -867,6 +887,8 @@ function sanitizeText($: CheerioStatic) {
             // Convert the div to a <p>
             $(element).replaceWith('<p>' + $(element).html() + '</p>');
         });
+
+    // console.log($('table').html())
 
     return $;
 }
@@ -884,6 +906,13 @@ export function parseSentences(inputString: string): Sentence[] {
 
         // Quick regex clean
         sentence.text = sentence.text.replace(/ {1,}/g, ' ');
+
+        // Make sure that all sentences start with a space, unless the index is 0
+        if (index > 0){
+            if (sentence.text.charAt(0) != " "){
+                sentence.text = " " + sentence.text;
+            }
+        }
 
         // Return the object
         return sentence;
@@ -1103,7 +1132,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
     const $table = $element.children('table');
 
     const table: Partial<Table> = {
-        type: tableType,
+        type: tableType as any,
         attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
     };
 
@@ -1147,24 +1176,17 @@ function parseTable($element: Cheerio, tableType: string): Table {
                     index: j,
                     attrs: cleanAttributes(cell.attribs),
                     tag_type: cell.name.toLowerCase(),
-                    // a lot of useless HTML tags are getting stripped out here when we grab only the text.
-                    // it's possible those HTML divs may contain useful content for a few articles.
-                    // if that turns out to be the case, this logic needs to be more complex.
                     content: theContentsParsed,
-                    // content: parseSentences(
-                    //     $cells
-                    //         .eq(j)
-                    //         .text()
-                    //         .trim()
-                    // )
                 });
             }
         });
         table[parentTag].rows.push(table_row);
     });
+
+    // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
-    console.log("--------------------------")
-    console.log(util.inspect(decycledTable, false, null, true));
-    console.log("--------------------------")
+    // console.log("--------------------------")
+    // console.log(util.inspect(decycledTable, false, null, true));
+    // console.log("--------------------------")
     return decycledTable as Table;
 }
