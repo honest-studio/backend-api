@@ -1139,7 +1139,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
     };
 
     // Set the table caption, if present
-    const $caption = $element.children('caption');
+    const $caption = $table.children('caption');
     table.caption = { 
         attrs: $caption.length > 0 ? $caption[0].attribs : {}, 
         sentences: $caption.length > 0 ? parseSentences($caption.html()) : []
@@ -1149,44 +1149,46 @@ function parseTable($element: Cheerio, tableType: string): Table {
     // Deal with the colgroup
     // TODO
 
-    // Setup the head, body, and foot
-    const $table_containers = $element.children('thead, tbody, tfoot');
+    // Parse the thead, tbody, and tfoot
     const table_sections = ['thead', 'tbody', 'tfoot'];
-    for (let j = 0; j < table_sections.length; j++) {
-        const tsection = table_sections[j];
-        const $tsection = $element.children(tsection);
-        table[tsection] = { rows: [] };
-        if ($tsection.length > 0) table[tsection].attrs = cleanAttributes($tsection[0].attribs);
-        else table[tsection].attrs = {};
-    }
-
-    // Add the rows and cells
-    const $rows = $element.find('tr');
-    $rows.each(function(i, row) {
-        const parentTag = row.parent.name;
-        const table_row = {
-            index: i,
-            tag_type: 'tr',
-            tag_class: 'block',
-            attrs: cleanAttributes(row.attribs),
-            cells: []
+    table_sections.forEach((sectionName) => {
+        table[sectionName] = { 
+            rows: [],
+            attrs: {}
         };
-
-        const $cells = $rows.eq(i).find('td, th');
-        $cells.each(function(j, cell) {
-            let theContentsParsed = tableCellContentsParser($cells.eq(j).contents().toArray(), []);
-            if (theContentsParsed.length){
-                table_row.cells.push({
-                    index: j,
-                    attrs: cleanAttributes(cell.attribs),
-                    tag_type: cell.name.toLowerCase(),
+        let $tsection = $table.children(sectionName);
+        $tsection.each((idx, sectElem) => {
+            let $TSECT = cheerio.load(sectElem);
+            let rowsArr = [];
+            $TSECT(`${sectionName} > tr`).each((rowIdx, rowElem) => {
+                let $TROW = cheerio.load(rowElem);
+                let cellsArr = [];
+                $TROW(`tr > th, tr > td`).each((cellIdx, cellElem) => {
+                    let theContentsParsed = tableCellContentsParser(cellElem.children, []);
+                    if (theContentsParsed.length){
+                        cellsArr.push({
+                            index: cellIdx,
+                            attrs: cleanAttributes(cellElem.attribs),
+                            tag_type: cellElem.name,
+                            tag_class: 'block',
+                            content: theContentsParsed,
+                        });
+                    }
+                })
+                rowsArr.push({
+                    index: rowIdx,
+                    tag_type: 'tr',
                     tag_class: 'block',
-                    content: theContentsParsed,
-                });
-            }
-        });
-        table[parentTag].rows.push(table_row);
-    });
+                    attrs: cleanAttributes(rowElem.attribs),
+                    cells: cellsArr
+                })
+            })
+            table[sectionName] = { 
+                rows: rowsArr,
+                attrs: sectElem.attribs
+            };
+        })
+    })
 
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
