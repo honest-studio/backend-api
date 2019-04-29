@@ -4,7 +4,8 @@
        "attrs":{  
           "className":"infobox vcard",
           "style":{  
-             "width":"22em"
+             "width":"315px",
+             "borderSpacing":"2px"
           }
        },
        "caption":{  
@@ -27,15 +28,8 @@
           "rows":[  
              {  
                 "index":0,
-                "attrs":{  
- 
-                },
-                "cells":[  
- 
-                ]
-             },
-             {  
-                "index":1,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -43,57 +37,37 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "className":"ep-blobbox-tbl-hdr",
+                         "colSpan":"2",
+                         "style":{  
+                            "textAlign":"center",
+                            "fontSize":"110%",
+                            "fontWeight":"bold",
+                            "backgroundColor":"rgb(245, 245, 245) !important",
+                            "nothing":"#B0C4DE",
+                            "verticalAlign":"middle"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
-                         {  
-                            "type":"text",
-                            "content":[  
-                               {  
-                                  "type":"sentence",
-                                  "index":0,
-                                  "text":"Country/Region"
-                               }
-                            ]
-                         }
-                      ]
-                   },
-                   {  
-                      "index":1,
-                      "attrs":{  
- 
-                      },
-                      "tag_type":"td",
-                      "content":[  
-                         {  
-                            "type":"text",
-                            "content":[  
-                               {  
-                                  "type":"sentence",
-                                  "index":0,
-                                  "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Flag_of_Albania.svg/21px-Flag_of_Albania.svg.png||h15|w21]]"
-                               }
-                            ]
-                         },
                          {  
                             "type":"tag",
                             "tag_type":"span",
                             "tag_class":"inline",
                             "attrs":{  
-                               "className":"flagicon"
+                               "className":"fn org"
                             },
                             "content":[  
- 
-                            ]
-                         },
-                         {  
-                            "type":"text",
-                            "content":[  
                                {  
-                                  "type":"sentence",
-                                  "index":0,
-                                  "text":"[[LINK|lang_en|Albania|Albania]]"
+                                  "type":"text",
+                                  "content":[  
+                                     {  
+                                        "type":"sentence",
+                                        "index":0,
+                                        "text":"Beretta 92"
+                                     }
+                                  ]
                                }
                             ]
                          }
@@ -102,7 +76,20 @@
                 ]
              },
              {  
+                "index":1,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+ 
+                ]
+             },
+             {  
                 "index":2,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -110,9 +97,13 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -120,7 +111,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"[[LINK|lang_en|List_of_IOC_country_codes|Code]]"
+                                  "text":"Type"
                                }
                             ]
                          }
@@ -132,6 +123,7 @@
  
                       },
                       "tag_type":"td",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -139,7 +131,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"ALB"
+                                  "text":"[[LINK|lang_en|Semi-automatic_pistol|Semi-automatic pistol]]"
                                }
                             ]
                          }
@@ -149,6 +141,8 @@
              },
              {  
                 "index":3,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -156,9 +150,13 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -166,7 +164,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Created"
+                                  "text":"Place of origin"
                                }
                             ]
                          }
@@ -178,6 +176,7 @@
  
                       },
                       "tag_type":"td",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -185,7 +184,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"1958"
+                                  "text":"Italy"
                                }
                             ]
                          }
@@ -195,6 +194,8 @@
              },
              {  
                 "index":4,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -202,9 +203,18 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "className":"ep-blobbox-tbl-hdr",
+                         "colSpan":"2",
+                         "style":{  
+                            "textAlign":"center",
+                            "backgroundColor":"rgb(245, 245, 245) !important",
+                            "nothing":"#B0C4DE",
+                            "verticalAlign":"middle",
+                            "fontSize":"110%"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -212,26 +222,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Recognized"
-                               }
-                            ]
-                         }
-                      ]
-                   },
-                   {  
-                      "index":1,
-                      "attrs":{  
- 
-                      },
-                      "tag_type":"td",
-                      "content":[  
-                         {  
-                            "type":"text",
-                            "content":[  
-                               {  
-                                  "type":"sentence",
-                                  "index":0,
-                                  "text":"1959"
+                                  "text":"Service history"
                                }
                             ]
                          }
@@ -241,6 +232,8 @@
              },
              {  
                 "index":5,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -248,9 +241,13 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -258,28 +255,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Continental"
-                               }
-                            ]
-                         },
-                         {  
-                            "type":"tag",
-                            "tag_type":"br",
-                            "tag_class":"void",
-                            "attrs":{  
- 
-                            },
-                            "content":[  
- 
-                            ]
-                         },
-                         {  
-                            "type":"text",
-                            "content":[  
-                               {  
-                                  "type":"sentence",
-                                  "index":0,
-                                  "text":"Association"
+                                  "text":"In service"
                                }
                             ]
                          }
@@ -291,6 +267,7 @@
  
                       },
                       "tag_type":"td",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -298,7 +275,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"[[LINK|lang_en|European_Olympic_Committees|EOC]]"
+                                  "text":"1975—present"
                                }
                             ]
                          }
@@ -308,16 +285,22 @@
              },
              {  
                 "index":6,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
-                   "className":"adr"
+ 
                 },
                 "cells":[  
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -325,7 +308,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Headquarters"
+                                  "text":"Used by"
                                }
                             ]
                          }
@@ -334,9 +317,10 @@
                    {  
                       "index":1,
                       "attrs":{  
-                         "className":"locality"
+ 
                       },
                       "tag_type":"td",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -344,7 +328,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"[[LINK|lang_en|Tirane|Tirane]], [[LINK|lang_en|Albania|Albania]]"
+                                  "text":"See *[[LINK|lang_en|Beretta_92#Users|Users]]*"
                                }
                             ]
                          }
@@ -354,6 +338,8 @@
              },
              {  
                 "index":7,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -361,9 +347,18 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "className":"ep-blobbox-tbl-hdr",
+                         "colSpan":"2",
+                         "style":{  
+                            "textAlign":"center",
+                            "backgroundColor":"rgb(245, 245, 245) !important",
+                            "nothing":"#B0C4DE",
+                            "verticalAlign":"middle",
+                            "fontSize":"110%"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -371,26 +366,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"President"
-                               }
-                            ]
-                         }
-                      ]
-                   },
-                   {  
-                      "index":1,
-                      "attrs":{  
-                         "className":"agent"
-                      },
-                      "tag_type":"td",
-                      "content":[  
-                         {  
-                            "type":"text",
-                            "content":[  
-                               {  
-                                  "type":"sentence",
-                                  "index":0,
-                                  "text":"Viron Bezhani"
+                                  "text":"Production history"
                                }
                             ]
                          }
@@ -400,6 +376,8 @@
              },
              {  
                 "index":8,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -407,9 +385,13 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -417,7 +399,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Secretary General"
+                                  "text":"Manufacturer"
                                }
                             ]
                          }
@@ -426,9 +408,10 @@
                    {  
                       "index":1,
                       "attrs":{  
-                         "className":"agent"
+ 
                       },
                       "tag_type":"td",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -436,7 +419,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Stavri Bello"
+                                  "text":"[[LINK|lang_en|Beretta|Fabbrica d'Armi Pietro Beretta]]"
                                }
                             ]
                          }
@@ -446,6 +429,8 @@
              },
              {  
                 "index":9,
+                "tag_type":"tr",
+                "tag_class":"block",
                 "attrs":{  
  
                 },
@@ -453,9 +438,13 @@
                    {  
                       "index":0,
                       "attrs":{  
-                         "scope":"row"
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
                       },
                       "tag_type":"th",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -463,7 +452,7 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"Website"
+                                  "text":"Produced"
                                }
                             ]
                          }
@@ -475,6 +464,7 @@
  
                       },
                       "tag_type":"td",
+                      "tag_class":"block",
                       "content":[  
                          {  
                             "type":"text",
@@ -482,21 +472,850 @@
                                {  
                                   "type":"sentence",
                                   "index":0,
-                                  "text":"www.nocalbania.org.al"
+                                  "text":"1976—present"
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":10,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"Variants"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"See *[[LINK|lang_en|Beretta_92#Variants|Variants]]*"
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":11,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "className":"ep-blobbox-tbl-hdr",
+                         "colSpan":"2",
+                         "style":{  
+                            "textAlign":"center",
+                            "backgroundColor":"rgb(245, 245, 245) !important",
+                            "nothing":"#B0C4DE",
+                            "verticalAlign":"middle",
+                            "fontSize":"110%"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"Specifications"
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":12,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"Weight"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"tag",
+                            "tag_type":"ul",
+                            "tag_class":"block",
+                            "attrs":{  
+ 
+                            },
+                            "content":[  
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"950 grams (34 oz) *(92)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"970 grams (34 oz) *(92S/SB/F/G)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"920 grams (32 oz) *(92D)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"900 grams (32 oz) *(Compact/Vertec)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":13,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"Length"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"tag",
+                            "tag_type":"ul",
+                            "tag_class":"block",
+                            "attrs":{  
+ 
+                            },
+                            "content":[  
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"217 millimetres (8.5 in)"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"211 millimetres (8.3 in) *(Vertec)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"197 millimetres (7.8 in) *(Compact/Centurion)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":14,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"[[LINK|lang_en|Gun_barrel|Barrel]] length"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"tag",
+                            "tag_type":"ul",
+                            "tag_class":"block",
+                            "attrs":{  
+ 
+                            },
+                            "content":[  
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"125 millimetres (4.9 in)"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"119 millimetres (4.7 in) *(Vertec/Elites/Border Marshal/Combo)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"109 millimetres (4.3 in) *(Compact/Centurion)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":15,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"[[LINK|lang_en|Cartridge_(firearms)|Cartridge]]"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"tag",
+                            "tag_type":"ul",
+                            "tag_class":"block",
+                            "attrs":{  
+ 
+                            },
+                            "content":[  
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"[[LINK|lang_en|9%C3%9719mm_Parabellum|9×19mm Parabellum]] *(92 series)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"[[LINK|lang_en|.40_S%26W|.40 S&W]] *(96 series)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"[[LINK|lang_en|9%C3%9721mm|9×21mm IMI]] *(98 series)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"[[LINK|lang_en|7.65mm_Luger|7.65mm Luger]] *(98 series)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":16,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"[[LINK|lang_en|Muzzle_velocity|Muzzle velocity]]"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"381 m/s (1,250 ft/s)"
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":17,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"Effective firing range"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"50 m (160 ft)"
+                               }
+                            ]
+                         }
+                      ]
+                   }
+                ]
+             },
+             {  
+                "index":18,
+                "tag_type":"tr",
+                "tag_class":"block",
+                "attrs":{  
+ 
+                },
+                "cells":[  
+                   {  
+                      "index":0,
+                      "attrs":{  
+                         "scope":"row",
+                         "style":{  
+                            "paddingRight":"1em"
+                         }
+                      },
+                      "tag_type":"th",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"text",
+                            "content":[  
+                               {  
+                                  "type":"sentence",
+                                  "index":0,
+                                  "text":"Feed system"
+                               }
+                            ]
+                         }
+                      ]
+                   },
+                   {  
+                      "index":1,
+                      "attrs":{  
+ 
+                      },
+                      "tag_type":"td",
+                      "tag_class":"block",
+                      "content":[  
+                         {  
+                            "type":"tag",
+                            "tag_type":"p",
+                            "tag_class":"block",
+                            "attrs":{  
+ 
+                            },
+                            "content":[  
+                               {  
+                                  "type":"text",
+                                  "content":[  
+                                     {  
+                                        "type":"sentence",
+                                        "index":0,
+                                        "text":"Detachable box [[LINK|lang_en|Magazine_(firearms)|magazine]] :"
+                                     }
+                                  ]
                                }
                             ]
                          },
                          {  
                             "type":"tag",
-                            "tag_type":"a",
-                            "tag_class":"inline",
+                            "tag_type":"ul",
+                            "tag_class":"block",
                             "attrs":{  
-                               "className":"external text",
-                               "href":"http://www.nocalbania.org.al/",
-                               "rel":"nofollow"
+ 
                             },
                             "content":[  
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
  
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"10, 15, 17, 18, 20, 30, 32 rounds *(92, 98 series)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"10, 11, 12, 13, 15 rounds *(96 series)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"10, 13 rounds *(Compact L)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               },
+                               {  
+                                  "type":"tag",
+                                  "tag_type":"li",
+                                  "tag_class":"block",
+                                  "attrs":{  
+ 
+                                  },
+                                  "content":[  
+                                     {  
+                                        "type":"text",
+                                        "content":[  
+                                           {  
+                                              "type":"sentence",
+                                              "index":0,
+                                              "text":"8 rounds *(Compact Type M)*"
+                                           }
+                                        ]
+                                     }
+                                  ]
+                               }
                             ]
                          }
                       ]
@@ -521,7 +1340,7 @@
        {  
           "index":0,
           "type":"sentence",
-          "text":"Albanian National Olympic Committee"
+          "text":"Beretta 92"
        }
     ],
     "page_body":[  
@@ -537,17 +1356,12 @@
                    {  
                       "type":"sentence",
                       "index":0,
-                      "text":"The **National Olympic Committee of Albania** *( [[LINK|lang_en|Albanian_language|Albanian]] : Komiteti Olimpik Kombëtar Shqipëtar - KOKSH)* is a non-profit organisation and the legal authority of Albania's participation in the [[LINK|lang_en|Olympic_Games|Olympic Games]]."
+                      "text":"The **Beretta 92** (also **Beretta 96** and **Beretta 98** ) is a series of [[LINK|lang_en|Semi-automatic_pistol|semi-automatic pistols]] designed and manufactured by [[LINK|lang_en|Beretta|Beretta]] of Italy."
                    },
                    {  
                       "type":"sentence",
                       "index":1,
-                      "text":" As a member of the [[LINK|lang_en|International_Olympic_Committee|International Olympic Committee]] (IOC), it is responsible for the development and management of all olympic related activities in the country."
-                   },
-                   {  
-                      "type":"sentence",
-                      "index":2,
-                      "text":" KOKSH delegates its authority to 35 member sports federations present in Albania."
+                      "text":" The model 92 was designed in 1972 and production of many variants in different calibers continues today."
                    }
                 ]
              },
@@ -558,11 +1372,25 @@
  
                 },
                 "items":[  
- 
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The [[LINK|lang_en|United_States_Armed_Forces|United States' military]] replaced the [[LINK|lang_en|M1911A1|M1911A1]] [[LINK|lang_en|.45_ACP|.45 ACP]] pistol in 1985 with the Beretta 92FS, designated as the [[LINK|lang_en|Beretta_M9|M9]]"
+                   }
                 ]
              },
              {  
                 "index":2,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":3,
                 "tag_type":"p",
                 "attrs":{  
  
@@ -602,7 +1430,32 @@
                    {  
                       "type":"sentence",
                       "index":0,
-                      "text":"The National Olympic Committee of Albania (KOKSH) was founded in 1958 and a year later gained recognition by the [[LINK|lang_en|International_Olympic_Committee|International Olympic Committee]]."
+                      "text":"The Beretta 92 pistol evolved from earlier Beretta designs, most notably the [[LINK|lang_en|Beretta_M1923|M1923]] and [[LINK|lang_en|Beretta_M1951|M1951]]."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" From the M1923 comes the open [[LINK|lang_en|Pistol_Slide|slide]] design, while the alloy [[LINK|lang_en|Receiver_(firearms)|frame]] and locking block [[LINK|lang_en|Gun_barrel|barrel]], originally from [[LINK|lang_en|Walther_P38|Walther P38]], were first used in the M1951."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":2,
+                      "text":" The grip angle and the front sight integrated with the slide were also common to earlier Beretta pistols."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":3,
+                      "text":" What were perhaps the Model 92's two most important advanced design features had first appeared on its immediate predecessor, the 1974.380 caliber [[LINK|lang_en|Beretta_Cheetah|Model 84]]."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":4,
+                      "text":" These improvements both involved the magazine, which featured direct feed; that is, there was no feed ramp between the magazine and the chamber (a Beretta innovation in pistols)."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":5,
+                      "text":" In addition, the magazine was a \"double-stacked\" design, a feature originally introduced in 1935 on the [[LINK|lang_en|Browning_Hi-Power|Browning Hi-Power]]."
                    }
                 ]
              },
@@ -616,31 +1469,12 @@
                    {  
                       "type":"sentence",
                       "index":0,
-                      "text":"From the year of its foundation until 1989 the committee was known by the name *\"The General Council Committee of Sportspersons of Albania\"* and included in its core all the sports federations in the country."
-                   }
-                ]
-             },
-             {  
-                "index":3,
-                "tag_type":"p",
-                "attrs":{  
- 
-                },
-                "items":[  
-                   {  
-                      "type":"sentence",
-                      "index":0,
-                      "text":"With the change of the political system in Albania, in 1990, the committee was restructured as an independent entity, separate from the newly formed Ministry of Culture, Youth and Sports."
+                      "text":"Carlo Beretta, Giuseppe Mazzetti and Vittorio Valle, all experienced [[LINK|lang_en|Firearms|firearms]] designers, contributed to the final design in 1975."
                    },
                    {  
                       "type":"sentence",
                       "index":1,
-                      "text":" Four years later, in 1994, by government decrees No.20 and No.401, it was sanctioned as a non-state [[LINK|lang_en|Non-profit_organisation|non-profit organisation]] whose functions were based on the [[LINK|lang_en|Olympic_Charter|Olympic Charter]]."
-                   },
-                   {  
-                      "type":"sentence",
-                      "index":2,
-                      "text":" [[CITE|3|http://www.arsimi.gov.al/files/userfiles/konsultimpublik/RELACION_per_Projekt_ligjin_per_sportin_27.02.2017.docx]] [[CITE|4|http://www.panorama.com.al/sport/veshtrim-historik-85-vjetori-i-krijimit-te-federates-sportive-dhe-evoluimi-i-saj-ne-vite]]"
+                      "text":" [[CITE|49|http://berettaweb.com/92%20Successo/Beretta%2092%20a%20global%20success%201a.htm]]"
                    }
                 ]
              }
@@ -653,20 +1487,199 @@
           "paragraphs":[  
              {  
                 "index":0,
-                "tag_type":"h2",
+                "tag_type":"h3",
                 "attrs":{  
-                   "id":"member-organizations-of-koksh"
+                   "id":"evolution"
                 },
                 "items":[  
                    {  
                       "type":"sentence",
                       "index":0,
-                      "text":"Member Organizations of KOKSH"
+                      "text":"Evolution"
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h4",
+                "attrs":{  
+                   "id":"92"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"92"
                    }
                 ]
              },
              {  
                 "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Production began in May 1976, and ended in February 1983."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" Approximately 7,000 units were of the first \"step slide\" design and 45,000 were of the second \"straight slide\" type."
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h4",
+                "attrs":{  
+                   "id":"92s"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"92S"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"In order to meet requirements of some law enforcement agencies, Beretta modified the Beretta 92 by adding a slide-mounted combined safety and decocking lever, replacing the frame mounted manual thumb safety."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" This resulted in the **92S** which was adopted by several Italian law enforcement and military units."
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h4",
+                "attrs":{  
+                   "id":"92sb-92s-1"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"92SB (92S-1)"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The 92SB, initially called **92S-1**, was specifically designed for the [[LINK|lang_en|United_States_Air_Force|USAF]] trials (which it won), the model name officially adopted was the **92SB**."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" Features added include a [[LINK|lang_en|Firing_pin_block|firing pin block]] (thus the addition of the \"B\" to the name), ambidextrous safety levers, [[LINK|lang_en|Iron_sights#Contrast_enhancements|3-dot sights]], and relocated the magazine release catch from the bottom of the grip to the lower bottom of the trigger guard."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":2,
+                      "text":" The later relocation of the magazine release button means preceding models (92 & 92S) cannot necessarily use later magazines, unless they have notches in both areas."
+                   }
+                ]
+             },
+             {  
+                "index":2,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"A compact version with a shortened barrel and slide and 13-round magazine capacity known as the **92SB Compact** was manufactured from 1981 to 1991."
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h4",
+                "attrs":{  
+                   "id":"92f-92sb-f"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"92F (92SB-F)"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Beretta modified the model 92SB slightly to create the 92SB-F (the \"F\" added to denote entry of the model in U.S."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" Government federal testing) by making the following changes:"
+                   }
+                ]
+             },
+             {  
+                "index":2,
                 "tag_type":"ul",
                 "attrs":{  
  
@@ -679,7 +1692,7 @@
                          {  
                             "type":"sentence",
                             "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Air_Sports_Federation|Albanian Air Sports Federation]]"
+                            "text":"Design of all the parts to make them 100% interchangeable to simplify maintenance for large government organizations."
                          }
                       ],
                       "tag_type":"li"
@@ -691,7 +1704,7 @@
                          {  
                             "type":"sentence",
                             "index":0,
-                            "text":"Albanian Archery Association"
+                            "text":"Squared off the front of the trigger guard so that one could use finger support for easier aiming."
                          }
                       ],
                       "tag_type":"li"
@@ -703,7 +1716,7 @@
                          {  
                             "type":"sentence",
                             "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Athletics_Federation|Albanian Athletics Federation]]"
+                            "text":"Recurved the forward base of the grip to aid aiming."
                          }
                       ],
                       "tag_type":"li"
@@ -715,7 +1728,7 @@
                          {  
                             "type":"sentence",
                             "index":0,
-                            "text":"Albanian Badminton Association"
+                            "text":"[[LINK|lang_en|Hard_chromed|Hard chromed]] the bore to protect it from corrosion and to reduce wear."
                          }
                       ],
                       "tag_type":"li"
@@ -727,262 +1740,103 @@
                          {  
                             "type":"sentence",
                             "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Basketball_Association|Albanian Basketball Association]]"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":5,
-                      "sentences":[  
+                            "text":"New surface coating on the slide called *Bruniton*, which allegedly provides better corrosion resistance than the previous plain [[LINK|lang_en|Bluing_(steel)|blued]] finish."
+                         },
                          {  
                             "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Billiards Association"
+                            "index":1,
+                            "text":" [[CITE|61|https://books.google.com/books?id=Y8rHD-YYqEYC&pg=PA12]] : 16"
                          }
                       ],
                       "tag_type":"li"
+                   }
+                ]
+             },
+             {  
+                "index":4,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The French military adopted a modified version of the 92F with a decocking-only lever as the **PAMAS G1**."
                    },
                    {  
-                      "type":"list_item",
-                      "index":6,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Bridge Association"
-                         }
-                      ],
-                      "tag_type":"li"
+                      "type":"sentence",
+                      "index":1,
+                      "text":" These pistols have [[LINK|lang_en|Tellurium|Tellurium]] in the [[LINK|lang_en|Pistol_slide|slide]], making the steel brittle and as such only have a service life of approximately 6,000 rounds."
                    },
                    {  
-                      "type":"list_item",
-                      "index":7,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Boxing Association"
-                         }
-                      ],
-                      "tag_type":"li"
+                      "type":"sentence",
+                      "index":2,
+                      "text":" [[LINK|lang_en|https://www.arrse.co.ukPAMAS_G1_pistol|[1]]]"
+                   }
+                ]
+             }
+          ],
+          "images":[  
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/b/b5/Beretta_92FS_(right).jpg",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"A Beretta 92FS Inox with the slide retracted, showing the exposed ejection port and barrel mechanism."
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:Beretta_92FS_(right).jpg"
+             }
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h4",
+                "attrs":{  
+                   "id":"92fs"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"92FS"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The FS has an enlarged hammer pin that fits into a groove on the underside of the slide."
                    },
                    {  
-                      "type":"list_item",
-                      "index":8,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Chess Association"
-                         }
-                      ],
-                      "tag_type":"li"
+                      "type":"sentence",
+                      "index":1,
+                      "text":" The main purpose is to stop the slide from flying off the frame to the rear if it cracks."
                    },
                    {  
-                      "type":"list_item",
-                      "index":9,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Cycling_Federation|Albanian Cycling Federation]]"
-                         }
-                      ],
-                      "tag_type":"li"
+                      "type":"sentence",
+                      "index":2,
+                      "text":" This was in response to reported defective slides during U.S."
                    },
                    {  
-                      "type":"list_item",
-                      "index":10,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Fencing Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":11,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Football_Association|Albanian Football Association]]"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":12,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Gymnastics Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":13,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Golf Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":14,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Handball Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":15,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Judo Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":16,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Mixed_Martial_Arts_Federation|Albanian Mixed Martial Arts Federation]]"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":17,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Sailing Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":18,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Shooting Federation"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":19,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Ski Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":20,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Swimming_Federation|Albanian Swimming Federation]]"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":21,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Table Tennis Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":22,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Tennis Association"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":23,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Volleyball_Federation|Albanian Volleyball Federation]]"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":24,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"[[LINK|lang_en|Albanian_Weightlifting_Federation|Albanian Weightlifting Federation]]"
-                         }
-                      ],
-                      "tag_type":"li"
-                   },
-                   {  
-                      "type":"list_item",
-                      "index":25,
-                      "sentences":[  
-                         {  
-                            "type":"sentence",
-                            "index":0,
-                            "text":"Albanian Wrestling Association"
-                         }
-                      ],
-                      "tag_type":"li"
+                      "type":"sentence",
+                      "index":3,
+                      "text":" Military testing."
                    }
                 ]
              }
@@ -997,13 +1851,13 @@
                 "index":0,
                 "tag_type":"h2",
                 "attrs":{  
-                   "id":"social-media"
+                   "id":"design"
                 },
                 "items":[  
                    {  
                       "type":"sentence",
                       "index":0,
-                      "text":"Social media"
+                      "text":"Design"
                    }
                 ]
              },
@@ -1017,23 +1871,1761 @@
                    {  
                       "type":"sentence",
                       "index":0,
-                      "text":"The KOKSH is present on [[LINK|lang_en|Social_media|social media]], with the Press Office of the Committee running an official [[LINK|lang_en|Facebook|Facebook]] [[CITE|5|https://facebook.com/olimpikshqiptar]] page, as well as [[LINK|lang_en|Twitter|Twitter]] [[CITE|6|https://twitter.com/nocalbania]] and [[LINK|lang_en|Instagram|Instagram]] [[CITE|7|https://instagram.com/olympicalbania]] accounts."
+                      "text":"The Beretta 92's open slide design ensures smooth feeding and ejection of ammunition and allows easy clearing of obstructions."
                    },
                    {  
                       "type":"sentence",
                       "index":1,
-                      "text":" The KOKSH is also present on [[LINK|lang_en|YouTube|YouTube]] with its own channel."
+                      "text":" The hard-chromed barrel bore reduces barrel wear and protects it from corrosion."
                    },
                    {  
                       "type":"sentence",
                       "index":2,
-                      "text":" [[CITE|1|https://youtube.com/NOCalbania]]"
+                      "text":" The falling locking block design provides good accuracy and operability with suppressors due to the in-line travel of the barrel."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":3,
+                      "text":" This is in contrast to the complex travel of [[LINK|lang_en|John_Browning|Browning]] designed barrels."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":4,
+                      "text":" The magazine release button is reversible with simple field tools."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":5,
+                      "text":" Reversing the magazine release makes left-handed operation much easier."
+                   }
+                ]
+             },
+             {  
+                "index":2,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Increasingly, it has become popular to reduce handgun weight and cost as well as increase corrosion resistance by using polymers."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" Starting around the year 2000, Beretta began replacing some parts with polymer and polymer coated metal."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":2,
+                      "text":" Polymer parts include the recoil spring guide rod which is now also fluted, magazine floor plate, magazine follower and the mainspring cap/lanyard loop."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":3,
+                      "text":" Polymer coated metal parts include the left side safety lever, trigger, and magazine release button."
                    }
                 ]
              }
           ],
           "images":[  
  
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h3",
+                "attrs":{  
+                   "id":"magazines"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Magazines"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"To keep in line with the introduction of laws in some locations restricting magazines that hold more than 10 rounds, Beretta now manufactures magazines that hold fewer than the factory standard 15 rounds."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" These magazines have heavier crimping (deeper indentations in the side) to reduce the available space while still keeping the same external dimensions and ensuring that these magazines can be used on existing firearms."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":2,
+                      "text":" Beretta also produces 15 round \"Sand Resistant\" magazines to resolve issues encountered with contractor made magazines, and 17 round magazines included with the A1 models."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":3,
+                      "text":" Both magazines function in earlier 92 series and M9 model pistols."
+                   }
+                ]
+             },
+             {  
+                "index":2,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Italian magazine manufacturer Mec-Gar now produces magazines in blue and nickel finishes with an 18-round capacity, which fit flush in the magazine well on the 92 series."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" Mec-Gar also produces an extended 20-round blued magazine that protrudes below the frame by 3 ⁄ 4 inch (19 mm)."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":2,
+                      "text":" These magazines provide users in unrestricted states with a larger capacity magazine."
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h2",
+                "attrs":{  
+                   "id":"variants"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Variants"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The Beretta 92 is available in many configurations and models:"
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h3",
+                "attrs":{  
+                   "id":"trigger-systems"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Trigger systems"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":2,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h3",
+                "attrs":{  
+                   "id":"models"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Models"
+                   }
+                ]
+             },
+             {  
+                "index":2,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":3,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":4,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":5,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":6,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":7,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":8,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":9,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":10,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":11,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":12,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":13,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":14,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":15,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":17,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":18,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":19,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":20,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":21,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":22,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":23,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":24,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":25,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":26,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":27,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             }
+          ],
+          "images":[  
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/0/09/Beretta_92FS_left.jpg",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"A Beretta 92FS Inox stainless steel pistol."
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:Beretta_92FS_left.jpg"
+             },
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/d/df/DCB-Shooting_MAS_G1S.jpg",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The French-made PAMAS G1 variant."
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:DCB-Shooting_MAS_G1S.jpg"
+             }
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h3",
+                "attrs":{  
+                   "id":"93r-machine-pistol"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"93R machine pistol"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The Beretta 93R is a significantly redesigned 92 to provide the option of firing in three-round bursts."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" It also has a longer ported barrel, heavier slide, fitting for a shoulder stock, a folding forward grip, and an extended magazine."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":2,
+                      "text":" Unlike other Berettas in the 90 series it is single-action only, does not have a decocker, and very few are around today."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":3,
+                      "text":" [[CITE|61|https://books.google.com/books?id=Y8rHD-YYqEYC&pg=PA12]] : 12–13"
+                   }
+                ]
+             }
+          ],
+          "images":[  
+ 
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h2",
+                "attrs":{  
+                   "id":"copies"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Copies"
+                   }
+                ]
+             },
+             {  
+                "index":2,
+                "tag_type":"p",
+                "attrs":{  
+ 
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"The Beretta 92 was designed for sports and law enforcement use and, due to its reliability, was accepted by military users in South America and other countries all over the world."
+                   }
+                ]
+             },
+             {  
+                "index":3,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":4,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":5,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":6,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":7,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":8,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":9,
+                "tag_type":"dl",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             }
+          ],
+          "images":[  
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/c/c4/Beretta_92_Compact_L_PDRM.jpg",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Beretta 92 Compact L owned by the Royal Malaysia Police."
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:Beretta_92_Compact_L_PDRM.jpg"
+             }
+          ]
+       },
+       {  
+          "paragraphs":[  
+             {  
+                "index":0,
+                "tag_type":"h2",
+                "attrs":{  
+                   "id":"users"
+                },
+                "items":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Users"
+                   }
+                ]
+             },
+             {  
+                "index":1,
+                "tag_type":"table",
+                "attrs":{  
+                   "class":"wikitable",
+                   "style":"font-size: 95%;"
+                },
+                "items":[  
+                   {  
+                      "type":"body-table",
+                      "attrs":{  
+ 
+                      },
+                      "caption":{  
+                         "attrs":{  
+ 
+                         },
+                         "sentences":[  
+ 
+                         ]
+                      },
+                      "thead":{  
+                         "rows":[  
+ 
+                         ],
+                         "attrs":{  
+ 
+                         }
+                      },
+                      "tbody":{  
+                         "rows":[  
+                            {  
+                               "index":0,
+                               "tag_type":"tr",
+                               "tag_class":"block",
+                               "attrs":{  
+ 
+                               },
+                               "cells":[  
+                                  {  
+                                     "index":0,
+                                     "attrs":{  
+ 
+                                     },
+                                     "tag_type":"th",
+                                     "tag_class":"block",
+                                     "content":[  
+                                        {  
+                                           "type":"text",
+                                           "content":[  
+                                              {  
+                                                 "type":"sentence",
+                                                 "index":0,
+                                                 "text":"User"
+                                              }
+                                           ]
+                                        }
+                                     ]
+                                  },
+                                  {  
+                                     "index":1,
+                                     "attrs":{  
+ 
+                                     },
+                                     "tag_type":"th",
+                                     "tag_class":"block",
+                                     "content":[  
+                                        {  
+                                           "type":"text",
+                                           "content":[  
+                                              {  
+                                                 "type":"sentence",
+                                                 "index":0,
+                                                 "text":"Organization"
+                                              }
+                                           ]
+                                        }
+                                     ]
+                                  },
+                                  {  
+                                     "index":2,
+                                     "attrs":{  
+ 
+                                     },
+                                     "tag_type":"th",
+                                     "tag_class":"block",
+                                     "content":[  
+                                        {  
+                                           "type":"text",
+                                           "content":[  
+                                              {  
+                                                 "type":"sentence",
+                                                 "index":0,
+                                                 "text":"Model"
+                                              }
+                                           ]
+                                        }
+                                     ]
+                                  },
+                                  {  
+                                     "index":3,
+                                     "attrs":{  
+ 
+                                     },
+                                     "tag_type":"th",
+                                     "tag_class":"block",
+                                     "content":[  
+                                        {  
+                                           "type":"text",
+                                           "content":[  
+                                              {  
+                                                 "type":"sentence",
+                                                 "index":0,
+                                                 "text":"Quantity"
+                                              }
+                                           ]
+                                        }
+                                     ]
+                                  },
+                                  {  
+                                     "index":4,
+                                     "attrs":{  
+ 
+                                     },
+                                     "tag_type":"th",
+                                     "tag_class":"block",
+                                     "content":[  
+                                        {  
+                                           "type":"text",
+                                           "content":[  
+                                              {  
+                                                 "type":"sentence",
+                                                 "index":0,
+                                                 "text":"Date"
+                                              }
+                                           ]
+                                        }
+                                     ]
+                                  },
+                                  {  
+                                     "index":5,
+                                     "attrs":{  
+ 
+                                     },
+                                     "tag_type":"th",
+                                     "tag_class":"block",
+                                     "content":[  
+                                        {  
+                                           "type":"text",
+                                           "content":[  
+                                              {  
+                                                 "type":"sentence",
+                                                 "index":0,
+                                                 "text":"Reference"
+                                              }
+                                           ]
+                                        }
+                                     ]
+                                  }
+                               ]
+                            },
+                            {  
+                               "index":1,
+                               "tag_type":"tr",
+                               "tag_class":"block",
+                               "attrs":{  
+ 
+                               },
+                               "cells":[  
+ 
+                               ]
+                            }
+                         ],
+                         "attrs":{  
+ 
+                         }
+                      },
+                      "tfoot":{  
+                         "rows":[  
+ 
+                         ],
+                         "attrs":{  
+ 
+                         }
+                      }
+                   }
+                ]
+             },
+             {  
+                "index":4,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-19"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":5,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":7,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":8,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":9,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":10,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":11,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":12,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-21"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":13,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":14,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":15,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":16,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":17,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":18,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":19,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":20,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":21,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-girsan_17-1"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":22,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":23,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":24,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":25,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-23"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":26,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-25"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":27,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":28,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-girsan_17-2"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":29,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":30,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-26"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":31,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":32,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-idnvojnik_27-0"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":33,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":34,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":35,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":36,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":37,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":38,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-Unofficial_30-0"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":39,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-RAIDS_31-0"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":40,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-ARMAS_32-0"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":41,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":42,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":43,
+                "tag_type":"br",
+                "attrs":{  
+ 
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":44,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-girsan_17-3"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":45,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-34"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":46,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":47,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":48,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":49,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":50,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":51,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":52,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-36"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":53,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":54,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":55,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-37"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":56,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":57,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-38"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":58,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":59,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-39"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":60,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":61,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-40"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":62,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":63,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-41"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":64,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":65,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":66,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":67,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-42"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":68,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":69,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":70,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-girsan_17-4"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":71,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":72,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":73,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":74,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-girsan_17-5"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":75,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-girsan_17-6"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":76,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":77,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-43"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":78,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":79,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-44"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":80,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-45"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":81,
+                "tag_type":"sup",
+                "attrs":{  
+                   "class":"reference",
+                   "id":"cite_ref-46"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":82,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             },
+             {  
+                "index":83,
+                "tag_type":"span",
+                "attrs":{  
+                   "class":"flagicon"
+                },
+                "items":[  
+ 
+                ]
+             }
+          ],
+          "images":[  
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/4/44/Elite1A.jpg",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"92G Elite IA"
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:Elite1A.jpg"
+             },
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/3/39/Wilson_beret.JPG",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Beretta/Wilson 92G Brigadier Combat, a cooperative effort of Wilson Combat and Beretta."
+                   },
+                   {  
+                      "type":"sentence",
+                      "index":1,
+                      "text":" It features heavy Brigadier Slide, stainless match barrel, single function ambi-decock and a refined action."
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:Wilson_beret.JPG"
+             },
+             {  
+                "type":"section_image",
+                "url":"https://upload.wikimedia.org/wikipedia/commons/d/d0/Yavuz_16_Compact_002.jpg",
+                "mime":"image/png",
+                "thumb":null,
+                "caption":[  
+                   {  
+                      "type":"sentence",
+                      "index":0,
+                      "text":"Turkish Beretta 92 copy, the Yavuz 16 Compact."
+                   }
+                ],
+                "category":"PICTURE",
+                "attribution_url":"https://en.wikipedia.org/wiki/File:Yavuz_16_Compact_002.jpg"
+             }
           ]
        },
        {  
@@ -1066,7 +3658,31 @@
                          {  
                             "type":"sentence",
                             "index":0,
-                            "text":"[[LINK|lang_en|Albania_at_the_Olympics|Albania at the Olympics]]"
+                            "text":"[[LINK|lang_en|Beretta_93R|Beretta 93R]]"
+                         }
+                      ],
+                      "tag_type":"li"
+                   },
+                   {  
+                      "type":"list_item",
+                      "index":1,
+                      "sentences":[  
+                         {  
+                            "type":"sentence",
+                            "index":0,
+                            "text":"[[LINK|lang_en|Taurus_PT92|Taurus PT92]]"
+                         }
+                      ],
+                      "tag_type":"li"
+                   },
+                   {  
+                      "type":"list_item",
+                      "index":2,
+                      "sentences":[  
+                         {  
+                            "type":"sentence",
+                            "index":0,
+                            "text":"[[LINK|lang_en|List_of_Beretta_92_models|List of Beretta 92 models]]"
                          }
                       ],
                       "tag_type":"li"
@@ -1082,8 +3698,8 @@
     "main_photo":[  
        {  
           "type":"main_image",
-          "url":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/696925045577.PNG",
-          "thumb":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/696925045577_100x100.PNG",
+          "url":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/6969506106.PNG",
+          "thumb":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/6969506106_100x100.PNG",
           "caption":[  
  
           ],
@@ -1121,10 +3737,10 @@
                 "text":" Images/media credited individually (click the icon for details)."
              }
           ],
-          "timestamp":"07/15/2016 05:42:19 PM UTC",
+          "timestamp":"07/04/2016 05:03:37 AM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"https://en.wikipedia.org/wiki/Albanian_National_Olympic_Committee",
+          "url":"https://en.wikipedia.org/wiki/Beretta%2092",
           "social_type":null,
           "category":"NONE"
        },
@@ -1134,14 +3750,14 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Albanian Olympic on YouTube"
+                "text":"\"Situation Shooting Course Series 3/2010\""
              }
           ],
-          "timestamp":"12/12/2017 07:18:52 AM UTC",
+          "timestamp":"11/30/2017 11:23:05 PM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"https://youtube.com/NOCalbania",
-          "social_type":"youtube",
+          "url":"https://web.archive.org/web/20140714151200/http://219.95.62.14/etraining/takwim/calendar.php?com=calendar&id=88&task=detail",
+          "social_type":null,
           "category":"NONE"
        },
        {  
@@ -1150,13 +3766,13 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Official website"
+                "text":"Shooter's Bible: The World's Bestselling Firearms Reference"
              }
           ],
-          "timestamp":"12/12/2017 07:18:42 AM UTC",
+          "timestamp":"07/04/2016 05:03:43 AM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"http://www.nocalbania.org.al",
+          "url":"http://books.google.com/books?id=EJPoBAAAQBAJ&pg=PT1228",
           "social_type":null,
           "category":"NONE"
        },
@@ -1166,13 +3782,13 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Relacion për projektligjin për Sportin"
+                "text":"\"Kopassus & Kopaska – Specijalne Postrojbe Republike Indonezije\""
              }
           ],
-          "timestamp":"12/12/2017 07:18:44 AM UTC",
+          "timestamp":"07/04/2016 05:03:56 AM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"http://www.arsimi.gov.al/files/userfiles/konsultimpublik/RELACION_per_Projekt_ligjin_per_sportin_27.02.2017.docx",
+          "url":"http://hrvatski-vojnik.hr/hrvatski-vojnik/1612007/ind.asp",
           "social_type":null,
           "category":"NONE"
        },
@@ -1182,13 +3798,13 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Vështrim historik: 85-vjetori i krijimit të Federatës Sportive dhe evoluimi i saj në vite"
+                "text":"\"92A1\""
              }
           ],
-          "timestamp":"12/12/2017 07:18:45 AM UTC",
+          "timestamp":"11/30/2017 11:22:57 PM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"http://www.panorama.com.al/sport/veshtrim-historik-85-vjetori-i-krijimit-te-federates-sportive-dhe-evoluimi-i-saj-ne-vite",
+          "url":"https://web.archive.org/web/20100906064516/http://www.berettausa.com/products/model-92a1/default.aspx",
           "social_type":null,
           "category":"NONE"
        },
@@ -1198,14 +3814,14 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Albanian Olympic on Facebook"
+                "text":"\":: Revista Militar ::-Revistas - As Indústrias Militares e As Armas de Fogo\""
              }
           ],
-          "timestamp":"12/12/2017 07:18:47 AM UTC",
+          "timestamp":"11/30/2017 11:23:05 PM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"https://facebook.com/olimpikshqiptar",
-          "social_type":"facebook",
+          "url":"https://web.archive.org/web/20120327041640/http://www.revistamilitar.pt/modules/articles/article.php?id=528",
+          "social_type":null,
           "category":"NONE"
        },
        {  
@@ -1214,14 +3830,14 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Albanian Olympic on Twitter"
+                "text":"\"Unofficial Pistols Page, Equipment\""
              }
           ],
-          "timestamp":"12/12/2017 07:18:48 AM UTC",
+          "timestamp":"07/04/2016 05:03:57 AM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"https://twitter.com/nocalbania",
-          "social_type":"twitter",
+          "url":"http://usp.lu/armement-pistolets-fr.php",
+          "social_type":null,
           "category":"NONE"
        },
        {  
@@ -1230,19 +3846,1141 @@
              {  
                 "type":"sentence",
                 "index":0,
-                "text":"Albanian Olympic on Instagram"
+                "text":"\"L'Unite d'Intervention de la Police Luxembourgeoise\""
              }
           ],
-          "timestamp":"12/12/2017 07:18:50 AM UTC",
+          "timestamp":"07/04/2016 05:03:57 AM UTC",
           "mime":"None",
           "attribution":"rel='nofollow'",
-          "url":"https://instagram.com/olympicalbania",
-          "social_type":"instagram",
+          "url":"http://usp.lu/media/raids.pdf",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":8,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta Web – M9A1\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:58 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://berettaweb.com/armi/M9A1/Beretta%20M9A1.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":9,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"http://wilsoncombat.com/new/handgun-beretta-brigadier-tactical.asp#.VUccACw5Ds0"
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:43 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://wilsoncombat.com/new/handgun-beretta-brigadier-tactical.asp#.VUccACw5Ds0",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":10,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"UPS Unidad Especial de la Policia Luxembourguesa\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:57 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://usp.lu/media/armas.pdf",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":11,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta M9A3 Review - A First Look at Beretta's New M9 Pistol\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:58 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://luckygunner.com/lounge/beretta-m9a3-first-look",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":12,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Internet Archive Wayback Machine\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:06 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20111005063842/http://recruiting.mdsp.org/training.asp",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":13,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta Announces Limited Edition 92 Centennial Pistol\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:44 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://americanrifleman.org/articles/2015/5/28/beretta-announces-limited-edition-92-centennial-pistol",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":14,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Situation Shooting Course Series 3/2010\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:58 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://219.95.62.14/etraining/takwim/calendar.php?com=calendar&id=88&task=detail",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":15,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta Celebrates Pistol Milestone with 92 Centennial\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:44 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://gundigest.com/gun-collecting-firearm-collecting/beretta-celebrates-pistol-milestone-92-centennial",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":16,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"REGARD MC - Girsan\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:59 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20150424062408/http://www.girsan.com.tr/tr/regard-m-c/siyah",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":17,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"REGARD MC - Girsan\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:45 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://www.girsan.com.tr/tr/regard-m-c/siyah",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":18,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Modern Firearms\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:45 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://world.guns.ru/handguns/hg/tr/yavuz-16-e.html",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":19,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"References\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:45 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://www.girsan.com.tr/en/references",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":20,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Pakistan's SSG\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:59 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://specwarnet.net/world/pakistan_ssg.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":21,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Link on guns.com"
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:46 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://guns.com/2013/02/05/helwan-920",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":22,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Philippines police officers warned not to pawn new pistols\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:59 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://gulfnews.com/news/asia/philippines/philippines-police-officers-warned-not-to-pawn-new-pistols-1.1205723",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":23,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Special Operations.Com\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:47 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://specialoperations.com/Foreign/Albania/Default.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":24,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\":: Revista Militar ::-Revistas - As Indústrias Militares e As Armas de Fogo\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:00 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://revistamilitar.pt/modules/articles/article.php?id=528",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":25,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Special Operations.Com\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:00 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20130822074459/http://www.specialoperations.com/Foreign/Albania/Default.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":26,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"ROK navy UDT/SEAL - Page 7\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:01 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://militaryphotos.net/forums/showthread.php?69422-ROK-navy-UDT-SEAL%2Fpage7=",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":27,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Нпсфхе: Опнйспнпнб Х Якеднбюрекеи Бннпсфюр Мнбшлх Охярнкерюлх\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:01 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://lenta.ru/news/2009/02/09/pistol",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":28,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Polavtomatska pištola 9mm\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:02 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://slovenskavojska.si/oborozitev-in-oprema/lahka-pehotna-in-podporna-oborozitev/polavtomatska-pistola-9mm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":29,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Military & police handgun cartridges of South Africa."
+             },
+             {  
+                "type":"sentence",
+                "index":1,
+                "text":" - Free Online Library\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:02 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://thefreelibrary.com/Military+%26+police+handgun+cartridges+of+South+Africa-a0221093742",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":30,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta 92F\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:03 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://bermudaregiment.bm/index.php?Itemid=223&catid=48%3Aweaponscat&id=170%3Abaretta-92f&option=com_content&view=article",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":31,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Internet Archive Wayback Machine\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:03 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/20111005063842/http://recruiting.mdsp.org/training.asp",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":32,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"the original"
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:03 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://recruiting.mdsp.org/training.asp",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":33,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Maryland State Police to Carry Beretta’s Px4 Storm\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:04 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://tactical-life.com/online/news/maryland-state-police-to-carry-beretta%E2%80%99s-px4-storm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":34,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Pistolet automatique PAMAS G1\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:02 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20100619130640/http://www.defense.gouv.fr/terre/decouverte/materiels/armement_individuel_et_collectif/pistolet_automatique_pamas_g1",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":35,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"LAPD Equipment\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:05 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://lapdonline.org/lapd_equipment",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":36,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"PAMAS G1\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:03 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://gendarmes.net/default_zone/fr/html/page336.html",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":37,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta 92 at the Internet Movie Firearms Database"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://imfdb.org/wiki/Beretta_92_pistol_series",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":38,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Official Beretta 92 page"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://beretta.com/en-us/beretta-92-series",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":39,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Diagram of beretta 92"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20160209112148/http://illuminazi.x10.mx/index.php/topic%2C50.0.html",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":40,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Kopassus & Kopaska – Specijalne Postrojbe Republike Indonezije\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:03 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20100822145526/http://www.hrvatski-vojnik.hr/hrvatski-vojnik/1612007/ind.asp",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":41,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Vector-graphic of model 92FS"
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "mime":"image/svg+xml",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125133.svg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":42,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Details on the Beretta 92"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://berettaweb.com/92%20Successo/92/Beretta%2092%201a.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":43,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta 92 Semi-automatic Pistol\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:52 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://bdmilitary.com/index.php?Itemid=95&id=301&option=com_content&view=article",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":44,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"A short story of the 92 and its derivatives"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://webcitation.org/query?date=2009-10-25+11%3A50%3A03&url=http%3A%2F%2Fwww.geocities.com%2FYosemite%2F6078%2F92story.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":45,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"A Beretta 92FS Inox with the slide retracted, showing the exposed ejection port and barrel mechanism."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125136.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":46,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Free videos of Beretta 92/96 disassembly"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://beretta92fs.com",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":47,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Detail of a Beretta 92FS ejection port and barrel."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125142.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":48,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"How To Make The 92FS 9mm Shoot, Performance Shooter, October 1997"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://gun-tests.com/performance/oct97shootbetter.html",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":49,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Beretta Web - 92FS 15 years of evolution and success\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:39 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://berettaweb.com/92%20Successo/Beretta%2092%20a%20global%20success%201a.htm",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":50,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta 92F exploded-view parts diagram from American Rifleman"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:55 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://americanrifleman.org/Webcontent/pdf/2009-5/2009521115540-evberetta92f.pdf",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":51,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"The French-made PAMAS G1 variant."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125146.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":52,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"92G Elite IA"
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125149.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":53,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"A Beretta 92FS Inox stainless steel pistol."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125152.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":54,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Wilson / Beretta 92 G Brigadier Tactical fired at NRA slow fire cadence traditional one handed hold by an experienced bullseye shooter."
+             },
+             {  
+                "type":"sentence",
+                "index":1,
+                "text":" Distance is 25 yards"
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125155.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":55,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Unofficial Pistols Page, Equipment\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:04 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20110722161231/http://www.usp.lu/armement-pistolets-fr.php",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":56,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Pistolet automatique PAMAS G1\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:54 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://www.defense.gouv.fr/terre/decouverte/materiels/armement_individuel_et_collectif/pistolet_automatique_pamas_g1",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":57,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta Model 92 Brigadier Wilson Combat."
+             },
+             {  
+                "type":"sentence",
+                "index":1,
+                "text":" A cooperative effort of Wilson Combat and Beretta."
+             },
+             {  
+                "type":"sentence",
+                "index":2,
+                "text":" Features heavy Brigadier Slide, stainless match barrel, single function ambi-decock and a refined action."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125161.JPG",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":58,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"L'Unite d'Intervention de la Police Luxembourgeoise\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:04 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20110722160041/http://www.usp.lu/media/raids.pdf",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":59,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Turkish Beretta 92 copy, the Yavuz 16 Compact."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125167.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":60,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta 92 Compact L owned by the Royal Malaysia Police."
+             }
+          ],
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "mime":"image/jpeg",
+          "attribution":"rel='nofollow'",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125170.jpg",
+          "social_type":null,
+          "category":"PICTURE"
+       },
+       {  
+          "citation_id":61,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"The Beretta M9 Pistol"
+             }
+          ],
+          "timestamp":"11/30/2017 11:22:56 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://books.google.com/books?id=Y8rHD-YYqEYC&pg=PA12",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":62,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta 92FS/M9 Handbook"
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:41 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://books.google.com/books?id=FcG7BgAAQBAJ&pg=PT10",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":63,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"UPS Unidad Especial de la Policia Luxembourguesa\""
+             }
+          ],
+          "timestamp":"11/30/2017 11:23:04 PM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"https://web.archive.org/web/20110722161849/http://www.usp.lu/media/armas.pdf",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":64,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"92A1\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:42 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://berettausa.com/products/model-92a1/default.aspx",
+          "social_type":null,
+          "category":"NONE"
+       },
+       {  
+          "citation_id":65,
+          "description":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"\"Mizoram Police to Get Latest Weapons\""
+             }
+          ],
+          "timestamp":"07/04/2016 05:03:55 AM UTC",
+          "mime":"None",
+          "attribution":"rel='nofollow'",
+          "url":"http://sinlung.com/2010/09/mizoram-police-to-get-latest-weapons.html",
+          "social_type":null,
           "category":"NONE"
        }
     ],
     "media_gallery":[  
- 
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Vector-graphic of model 92FS"
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/svg+xml",
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Beretta92FS_vector.svg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125133.svg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125133_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"A Beretta 92FS Inox with the slide retracted, showing the exposed ejection port and barrel mechanism."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Beretta_92FS_%28right%29.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125136.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125136_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Detail of a Beretta 92FS ejection port and barrel."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Retract_Slide_of_Beretta_92FS.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125142.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125142_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"The French-made PAMAS G1 variant."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:07 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:DCB-Shooting_MAS_G1S.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125146.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125146_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"92G Elite IA"
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Elite1A.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125149.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125149_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"A Beretta 92FS Inox stainless steel pistol."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Beretta_92FS_left.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125152.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125152_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Wilson / Beretta 92 G Brigadier Tactical fired at NRA slow fire cadence traditional one handed hold by an experienced bullseye shooter."
+             },
+             {  
+                "type":"sentence",
+                "index":1,
+                "text":" Distance is 25 yards"
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Wiki25wilson_92.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125155.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125155_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta Model 92 Brigadier Wilson Combat."
+             },
+             {  
+                "type":"sentence",
+                "index":1,
+                "text":" A cooperative effort of Wilson Combat and Beretta."
+             },
+             {  
+                "type":"sentence",
+                "index":2,
+                "text":" Features heavy Brigadier Slide, stainless match barrel, single function ambi-decock and a refined action."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Wilson_beret.JPG",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125161.JPG",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125161_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Turkish Beretta 92 copy, the Yavuz 16 Compact."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Yavuz_16_Compact_002.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125167.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125167_250x250.png"
+       },
+       {  
+          "caption":[  
+             {  
+                "type":"sentence",
+                "index":0,
+                "text":"Beretta 92 Compact L owned by the Royal Malaysia Police."
+             }
+          ],
+          "type":"PICTURE",
+          "category":"PICTURE",
+          "mime":"image/jpeg",
+          "timestamp":"07/04/2016 05:04:08 AM UTC",
+          "attribution_url":"https://commons.wikimedia.org/wiki/File:Beretta_92_Compact_L_PDRM.jpg",
+          "url":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125170.jpg",
+          "thumb":"https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/1057731/4125170_250x250.png"
+       }
     ],
     "infoboxes":[  
  
@@ -1262,19 +5000,19 @@
        },
        {  
           "key":"creation_timestamp",
-          "value":"07/15/2016 05:41:54 PM UTC"
+          "value":"07/04/2016 05:03:36 AM UTC"
        },
        {  
           "key":"last_modified",
-          "value":"12/12/2017 07:18:55 AM UTC"
+          "value":"11/30/2017 11:23:11 PM UTC"
        },
        {  
           "key":"url_slug",
-          "value":"Albanian_National_Olympic_Committee"
+          "value":"Beretta_92"
        },
        {  
           "key":"url_slug_alternate",
-          "value":"Albanian_National_Olympic_Committee"
+          "value":"Beretta_92"
        },
        {  
           "key":"sub_page_type",
@@ -1309,5 +5047,5 @@
  
        ]
     },
-    "ipfs_hash":"QmQtony5R8mCK6QasisCYjPq7hJKPRCGreumJxziCRkvzE"
+    "ipfs_hash":"QmcBfe7JqDpm5qqC6msuXh7uDDJtTuzw9hWVvLCyjy6bmv"
  }
