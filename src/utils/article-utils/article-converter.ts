@@ -1160,10 +1160,11 @@ function parseTable($element: Cheerio, tableType: string): Table {
         $tsection.each((idx, sectElem) => {
             let $TSECT = cheerio.load(sectElem);
             let rowsArr = [];
-            $TSECT(`${sectionName} > tr`).each((rowIdx, rowElem) => {
+            // $TSECT(`${sectionName} > tr`).each((rowIdx, rowElem) => {
+            $TSECT(sectElem).children('tr').each((rowIdx, rowElem) => {
                 let $TROW = cheerio.load(rowElem);
                 let cellsArr = [];
-                $TROW(`tr > th, tr > td`).each((cellIdx, cellElem) => {
+                $TROW(rowElem).children('th, td').each((cellIdx, cellElem) => {
                     let theContentsParsed = tableCellContentsParser(cellElem.children, []);
                     if (theContentsParsed.length){
                         cellsArr.push({
@@ -1192,8 +1193,8 @@ function parseTable($element: Cheerio, tableType: string): Table {
 
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
-    console.log("--------------------------")
-    console.log(util.inspect(decycledTable, false, null, true));
-    console.log("--------------------------")
+    // console.log("--------------------------")
+    // console.log(util.inspect(decycledTable, false, null, true));
+    // console.log("--------------------------")
     return decycledTable as Table;
 }
