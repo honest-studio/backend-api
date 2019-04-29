@@ -1106,22 +1106,24 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
                 }
                 break;
             case 'tag':
-
-                let tagClass = blockElements.indexOf(element.name) !== -1 
-                ? 'block'   
-                : voidElements.indexOf(element.name) !== -1 
-                    ? 'void'
-                    : 'inline' ;
-
-                let newElement = {
-                    type: 'tag',
-                    tag_type: element.name,
-                    tag_class: tagClass,
-                    attrs: cleanAttributes(element.attribs),
-                    content: tableCellContentsParser(element.children, cellContents)
-                } as TableCellTagItem;
-                // console.log(newElement);
-                cellContents.push(newElement);
+                if (element.children.length) {
+                    let tagClass = blockElements.indexOf(element.name) !== -1 
+                    ? 'block'   
+                    : voidElements.indexOf(element.name) !== -1 
+                        ? 'void'
+                        : 'inline' ;
+    
+                    // console.log(element)
+                    let newElement = {
+                        type: 'tag',
+                        tag_type: element.name,
+                        tag_class: tagClass,
+                        attrs: cleanAttributes(element.attribs),
+                        content: tableCellContentsParser(element.children)
+                    } as TableCellTagItem;
+                    // console.log(newElement);
+                    cellContents.push(newElement);
+                }
                 break;
         }
     })
@@ -1164,6 +1166,8 @@ function parseTable($element: Cheerio, tableType: string): Table {
         const parentTag = row.parent.name;
         const table_row = {
             index: i,
+            tag_type: 'tr',
+            tag_class: 'block',
             attrs: cleanAttributes(row.attribs),
             cells: []
         };
@@ -1176,6 +1180,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
                     index: j,
                     attrs: cleanAttributes(cell.attribs),
                     tag_type: cell.name.toLowerCase(),
+                    tag_class: 'block',
                     content: theContentsParsed,
                 });
             }
@@ -1185,8 +1190,8 @@ function parseTable($element: Cheerio, tableType: string): Table {
 
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
-    // console.log("--------------------------")
-    // console.log(util.inspect(decycledTable, false, null, true));
-    // console.log("--------------------------")
+    console.log("--------------------------")
+    console.log(util.inspect(decycledTable, false, null, true));
+    console.log("--------------------------")
     return decycledTable as Table;
 }
