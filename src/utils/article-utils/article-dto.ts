@@ -72,6 +72,7 @@ export interface Media {
     width?: number;
     category?: MediaCategoryType;
     diff?: DiffType;
+    srcset?: string;
 }
 
 // Valid Metadata keys

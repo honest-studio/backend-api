@@ -22,6 +22,7 @@ export interface SeeAlsoCollection {
 
 export interface InlineImage {
     src: string;
+    srcset: string;
     alt: string;
     height: string;
     width: string;

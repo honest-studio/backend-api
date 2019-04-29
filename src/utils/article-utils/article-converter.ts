@@ -36,7 +36,7 @@ export const CAPTURE_REGEXES = {
     link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/g,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/g,
     inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/g,
-    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
+    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
 };
 export const REPLACEMENTS = [
     { regex: /\u{00A0}/g, replacement: ' ' },
@@ -657,9 +657,10 @@ function parseSection($section: Cheerio): Section {
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
                 image.url = normalizeUrl(parts[1]);
-                image.alt = parts[2];
-                image.height = Number(parts[3].substring(1));
-                image.width = Number(parts[4].substring(1));
+                image.srcset = parts[2];
+                image.alt = parts[3];
+                image.height = Number(parts[4].substring(1));
+                image.width = Number(parts[5].substring(1));
                 image.type = 'inline_image';
                 image.category = linkCategorizer(image.url);
             }
@@ -835,12 +836,14 @@ function sanitizeText($: CheerioStatic) {
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
         // Construct a dictionary
         const src = normalizeUrl($(this).attr('src'));
+        const srcset = $(this).attr('srcset') || '';
         const height = $(this).attr('height');
         const width = $(this).attr('width');
         const alt = $(this).attr('alt') || '';
 
+
         // Replace the tag with the string
-        const plaintextString = `[[INLINE_IMAGE|${src}|${alt}|h${height}|w${width}]]`;
+        const plaintextString = `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
         $(this).replaceWith(plaintextString);
     });
 
