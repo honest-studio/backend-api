@@ -1189,7 +1189,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
             })
             table[sectionName] = { 
                 rows: rowsArr,
-                attrs: sectElem.attribs
+                attrs: cleanAttributes(sectElem.attribs) 
             };
         })
     })
