@@ -71,7 +71,7 @@
                                           {  
                                              "type":"sentence",
                                              "index":0,
-                                             "text":"**글래스고**"
+                                             "text":"**에든버러**"
                                           }
                                        ]
                                     }
@@ -120,7 +120,7 @@
                                     {  
                                        "type":"sentence",
                                        "index":0,
-                                       "text":"Glasga, Glaschu"
+                                       "text":"Edinburgh"
                                     }
                                  ]
                               }
@@ -202,8 +202,8 @@
                                                    "tag_class":"inline",
                                                    "attrs":{  
                                                       "className":"tooltippable wikilink",
-                                                      "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Glasgow_Coat_of_Arms.png",
-                                                      "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Glasgow_Coat_of_Arms.png/",
+                                                      "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Arms_of_the_City_of_Manchester.svg",
+                                                      "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Arms_of_the_City_of_Manchester.svg/",
                                                       "rel":"nofollow"
                                                    },
                                                    "content":[  
@@ -213,7 +213,7 @@
                                                             {  
                                                                "type":"sentence",
                                                                "index":0,
-                                                               "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Glasgow_Coat_of_Arms.png/110px-Glasgow_Coat_of_Arms.png|//upload.wikimedia.org/wikipedia/commons/thumb/4/46/Glasgow_Coat_of_Arms.png/165px-Glasgow_Coat_of_Arms.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/46/Glasgow_Coat_of_Arms.png/220px-Glasgow_Coat_of_Arms.png 2x|Glasgow Coat of Arms.png|h150|w110]]"
+                                                               "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Arms_of_the_City_of_Manchester.svg/110px-Arms_of_the_City_of_Manchester.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Arms_of_the_City_of_Manchester.svg/165px-Arms_of_the_City_of_Manchester.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Arms_of_the_City_of_Manchester.svg/220px-Arms_of_the_City_of_Manchester.svg.png 2x|Arms of the City of Manchester.svg|h99|w110]]"
                                                             }
                                                          ]
                                                       }
@@ -329,7 +329,7 @@
                                           "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Scotland_location_map.svg",
                                           "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Scotland_location_map.svg/",
                                           "rel":"nofollow",
-                                          "title":"글래스고 (스코틀랜드)"
+                                          "title":"에든버러 (스코틀랜드)"
                                        },
                                        "content":[  
                                           {  
@@ -338,7 +338,7 @@
                                                 {  
                                                    "type":"sentence",
                                                    "index":0,
-                                                   "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/300px-Scotland_location_map.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/450px-Scotland_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/600px-Scotland_location_map.svg.png 2x|글래스고 (스코틀랜드)|h394|w300]]"
+                                                   "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/300px-Scotland_location_map.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/450px-Scotland_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/600px-Scotland_location_map.svg.png 2x|에든버러 (스코틀랜드)|h394|w300]]"
                                                 }
                                              ]
                                           }
@@ -352,8 +352,8 @@
                                           "style":{  
                                              "position":"absolute",
                                              "zIndex":"2",
-                                             "top":"79.1%",
-                                             "left":"54.1%",
+                                             "top":"77.6%",
+                                             "left":"66.8%",
                                              "height":"0",
                                              "width":"0",
                                              "margin":"0",
@@ -422,7 +422,7 @@
                                                             {  
                                                                "type":"sentence",
                                                                "index":0,
-                                                               "text":"글래스고"
+                                                               "text":"에든버러"
                                                             }
                                                          ]
                                                       }
@@ -458,7 +458,7 @@
                                              "tag_class":"inline",
                                              "attrs":{  
                                                 "className":"external text",
-                                                "href":"//tools.wmflabs.org/geohack/geohack.php?language=ko&pagename=%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0&params=55_51_28.8_N_04_15_32.4_W_",
+                                                "href":"//tools.wmflabs.org/geohack/geohack.php?language=ko&pagename=%EC%97%90%EB%93%A0%EB%B2%84%EB%9F%AC&params=55_57_11_N_03_11_20_W_",
                                                 "rel":"nofollow"
                                              },
                                              "content":[  
@@ -493,7 +493,7 @@
                                                                         {  
                                                                            "type":"sentence",
                                                                            "index":0,
-                                                                           "text":"북위 55° 51′ 28.8″"
+                                                                           "text":"북위 55° 57′ 11″"
                                                                         }
                                                                      ]
                                                                   }
@@ -513,7 +513,7 @@
                                                                         {  
                                                                            "type":"sentence",
                                                                            "index":0,
-                                                                           "text":"서경 04° 15′ 32.4″"
+                                                                           "text":"서경 03° 11′ 20″"
                                                                         }
                                                                      ]
                                                                   }
@@ -566,7 +566,7 @@
                                                                   {  
                                                                      "type":"sentence",
                                                                      "index":0,
-                                                                     "text":"북위 55.858000° 서경 4.259000°"
+                                                                     "text":"북위 55.95306° 서경 3.18889°"
                                                                   }
                                                                ]
                                                             }
@@ -606,7 +606,7 @@
                                                                         {  
                                                                            "type":"sentence",
                                                                            "index":0,
-                                                                           "text":"55.858000; -4.259000"
+                                                                           "text":"55.95306; -3.18889"
                                                                         }
                                                                      ]
                                                                   }
@@ -662,7 +662,7 @@
                                                          "tag_class":"inline",
                                                          "attrs":{  
                                                             "className":"external text",
-                                                            "href":"//tools.wmflabs.org/geohack/geohack.php?language=ko&pagename=%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0&params=55_51_28.8_N_04_15_32.4_W_",
+                                                            "href":"//tools.wmflabs.org/geohack/geohack.php?language=ko&pagename=%EC%97%90%EB%93%A0%EB%B2%84%EB%9F%AC&params=55_57_11_N_03_11_20_W_",
                                                             "rel":"nofollow"
                                                          },
                                                          "content":[  
@@ -697,7 +697,7 @@
                                                                                     {  
                                                                                        "type":"sentence",
                                                                                        "index":0,
-                                                                                       "text":"북위 55° 51′ 28.8″"
+                                                                                       "text":"북위 55° 57′ 11″"
                                                                                     }
                                                                                  ]
                                                                               }
@@ -717,7 +717,7 @@
                                                                                     {  
                                                                                        "type":"sentence",
                                                                                        "index":0,
-                                                                                       "text":"서경 04° 15′ 32.4″"
+                                                                                       "text":"서경 03° 11′ 20″"
                                                                                     }
                                                                                  ]
                                                                               }
@@ -770,7 +770,7 @@
                                                                               {  
                                                                                  "type":"sentence",
                                                                                  "index":0,
-                                                                                 "text":"북위 55.858000° 서경 4.259000°"
+                                                                                 "text":"북위 55.95306° 서경 3.18889°"
                                                                               }
                                                                            ]
                                                                         }
@@ -810,7 +810,7 @@
                                                                                     {  
                                                                                        "type":"sentence",
                                                                                        "index":0,
-                                                                                       "text":"55.858000; -4.259000"
+                                                                                       "text":"55.95306; -3.18889"
                                                                                     }
                                                                                  ]
                                                                               }
@@ -919,39 +919,6 @@
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"tag",
-                           "tag_type":"span",
-                           "tag_class":"inline",
-                           "attrs":{  
-                              "className":"flagicon"
-                           },
-                           "content":[  
-                              {  
-                                 "type":"tag",
-                                 "tag_type":"a",
-                                 "tag_class":"inline",
-                                 "attrs":{  
-                                    "className":"tooltippable wikilink",
-                                    "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Flag_of_the_United_Kingdom.svg",
-                                    "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Flag_of_the_United_Kingdom.svg/",
-                                    "rel":"nofollow"
-                                 },
-                                 "content":[  
-                                    {  
-                                       "type":"text",
-                                       "content":[  
-                                          {  
-                                             "type":"sentence",
-                                             "index":0,
-                                             "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/22px-Flag_of_the_United_Kingdom.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/33px-Flag_of_the_United_Kingdom.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/44px-Flag_of_the_United_Kingdom.svg.png 2x|영국의 기|h11|w22]]"
-                                          }
-                                       ]
-                                    }
-                                 ]
-                              }
-                           ]
-                        },
-                        {  
                            "type":"text",
                            "content":[  
                               {  
@@ -1032,68 +999,6 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
-               },
-               "cells":[  
-                  {  
-                     "index":0,
-                     "attrs":{  
-                        "style":{  
-                           "textAlign":"left"
-                        }
-                     },
-                     "tag_type":"th",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"tag",
-                           "tag_type":"span",
-                           "tag_class":"inline",
-                           "attrs":{  
-                              "className":"nowrap"
-                           },
-                           "content":[  
-                              {  
-                                 "type":"text",
-                                 "content":[  
-                                    {  
-                                       "type":"sentence",
-                                       "index":0,
-                                       "text":"지역어"
-                                    }
-                                 ]
-                              }
-                           ]
-                        }
-                     ]
-                  },
-                  {  
-                     "index":1,
-                     "attrs":{  
-
-                     },
-                     "tag_type":"td",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"text",
-                           "content":[  
-                              {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|영어|영어]], [[LINK|lang_ko|스코트어|스코트어]], [[LINK|lang_ko|스코틀랜드_게일어|스코틀랜드 게일어]]"
-                              }
-                           ]
-                        }
-                     ]
-                  }
-               ]
-            },
-            {  
-               "index":9,
-               "tag_type":"tr",
-               "tag_class":"block",
-               "attrs":{  
                   "className":"mergedrow"
                },
                "cells":[  
@@ -1124,7 +1029,7 @@
                ]
             },
             {  
-               "index":10,
+               "index":9,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1177,7 +1082,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"6세기"
+                                 "text":"[[LINK|lang_ko|1125년|1125년]]"
                               }
                            ]
                         }
@@ -1186,7 +1091,7 @@
                ]
             },
             {  
-               "index":11,
+               "index":10,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1220,7 +1125,7 @@
                ]
             },
             {  
-               "index":12,
+               "index":11,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1273,7 +1178,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"603,080 명"
+                                 "text":"541,300 명 (2016년)"
                               }
                            ]
                         }
@@ -1282,7 +1187,7 @@
                ]
             },
             {  
-               "index":13,
+               "index":12,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1335,7 +1240,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"4,23 명/km"
+                                 "text":"1,209 명/km"
                               }
                            ]
                         },
@@ -1364,7 +1269,7 @@
                ]
             },
             {  
-               "index":14,
+               "index":13,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1417,7 +1322,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"990,900 명"
+                                 "text":"2,794,000 명"
                               }
                            ]
                         }
@@ -1426,7 +1331,7 @@
                ]
             },
             {  
-               "index":15,
+               "index":14,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1460,7 +1365,7 @@
                ]
             },
             {  
-               "index":16,
+               "index":15,
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
@@ -1513,7 +1418,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"174.7 km"
+                                 "text":"447.76 km"
                               }
                            ]
                         },
@@ -1534,6 +1439,68 @@
                                        "text":"2"
                                     }
                                  ]
+                              }
+                           ]
+                        }
+                     ]
+                  }
+               ]
+            },
+            {  
+               "index":16,
+               "tag_type":"tr",
+               "tag_class":"block",
+               "attrs":{  
+
+               },
+               "cells":[  
+                  {  
+                     "index":0,
+                     "attrs":{  
+                        "style":{  
+                           "textAlign":"left"
+                        }
+                     },
+                     "tag_type":"th",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"[[LINK|lang_ko|최고_고도순_나라_목록|해발]]"
+                                    }
+                                 ]
+                              }
+                           ]
+                        }
+                     ]
+                  },
+                  {  
+                     "index":1,
+                     "attrs":{  
+
+                     },
+                     "tag_type":"td",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"text",
+                           "content":[  
+                              {  
+                                 "type":"sentence",
+                                 "index":0,
+                                 "text":"38 m"
                               }
                            ]
                         }
@@ -1629,7 +1596,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"UTC±0"
+                                 "text":"[[LINK|lang_ko|그리니치_평균시|그리니치 평균시]](UTC+0) [[LINK|lang_ko|영국_일광_절약_시간대|영국 일광 절약 시간대]](UTC+1)"
                               }
                            ]
                         }
@@ -1691,7 +1658,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"G1-G80"
+                                 "text":"M, WA"
                               }
                            ]
                         }
@@ -1753,7 +1720,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"0141"
+                                 "text":"0161"
                               }
                            ]
                         }
@@ -1801,8 +1768,8 @@
                                  "tag_type":"a",
                                  "tag_class":"inline",
                                  "attrs":{  
-                                    "className":"external free",
-                                    "href":"https://peoplemakeglascow.com/",
+                                    "className":"external text",
+                                    "href":"https://www.edinburgh.gov.uk/",
                                     "rel":"nofollow"
                                  },
                                  "content":[  
@@ -1812,7 +1779,7 @@
                                           {  
                                              "type":"sentence",
                                              "index":0,
-                                             "text":"https://peoplemakeglascow.com/"
+                                             "text":"www.edinburgh.gov.uk/"
                                           }
                                        ]
                                     }
@@ -1842,7 +1809,7 @@
       {  
          "index":0,
          "type":"sentence",
-         "text":"글래스고"
+         "text":"에든버러"
       }
    ],
    "page_body":[  
@@ -1868,17 +1835,17 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"**글래스고** ([[LINK|lang_ko|영어|영어]]: Glasgow, [[LINK|lang_ko|스코틀랜드_게일어|스코틀랜드 게일어]]: Glaschu, [[LINK|lang_ko|스코트어|스코트어]]: Glesca )는 [[LINK|lang_ko|스코틀랜드|스코틀랜드]]최대의 항구 도시로 면적은 175.5km 2, 인구는 600,060명(2016년 기준), 인구 밀도는 3,298명/km 2 이다."
+                     "text":"**에든버러** ([[LINK|lang_ko|영어|영어]]: Edinburgh /ˈɛdɪnˌbrə/, [[LINK|lang_ko|스코틀랜드_게일어|스코틀랜드 게일어]]: Dùn Èideann /tuːn ˈeːtʃən/, [[LINK|lang_ko|스코트어|스코트어]]: Edinburgh )는 [[LINK|lang_ko|스코틀랜드|스코틀랜드]]의 수도이며, [[LINK|lang_ko|글래스고|글래스고]]다음으로 큰 도시다."
                   },
                   {  
                      "type":"sentence",
                      "index":1,
-                     "text":" [[LINK|lang_ko|영국|영국]]본토 내에서 [[LINK|lang_ko|런던|런던]]과 [[LINK|lang_ko|버밍엄|버밍엄]], [[LINK|lang_ko|리즈|리즈]]에 이어 네 번째로 큰 도시이다."
+                     "text":" 1437년 스코틀랜드의 수도가 되었으며, 이후 스코틀랜드의 문화, 정치, 교육, 관광의 중심지 역할을 하고 있다."
                   },
                   {  
                      "type":"sentence",
                      "index":2,
-                     "text":" 이 도시 출신 사람들을 글래스위전(Glaswegians)이라 부른다."
+                     "text":" 18세기 스코틀랜드를 유럽의 상업, 지식, 산업, 문학, 교육의 중심지로 만든 [[LINK|lang_ko|스코틀랜드_계몽주의|스코틀랜드 계몽주의]]가 시작된 곳으로 역사적 의미를 갖고 있으며, 영어권에서 여섯 번째로 오래되고, 스코틀랜드에서 네 번째로 세워진 [[LINK|lang_ko|에든버러_대학교|에든버러 대학교]]가 시내 중심에 위치해 있다."
                   }
                ]
             },
@@ -1892,12 +1859,262 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"글래스고는 19세기 말에서 20세기 초에 인구가 1백만 명 이상 되는 도시로 성장해 1960년대까지 100만 명 이상이 거주했으나, 이후 감소해서 596,550명(2013년)이 되었다."
+                     "text":"주요 산업은 금융업과 관광업이며, 금융업은 [[LINK|lang_ko|영국|영국]]내에서 두 번째, [[LINK|lang_ko|유럽|유럽]]에서 여섯 번째로 큰 규모이다."
                   },
                   {  
                      "type":"sentence",
                      "index":1,
-                     "text":" [[LINK|lang_ko|영국|영국]]에서 [[LINK|lang_ko|런던|런던]]과 [[LINK|lang_ko|에든버러|에든버러]]다음으로 3번째로 관광객이 많은 도시로, 연간 300만 명의 관광객이 이 도시를 찾는다."
+                     "text":" [[CITE|5|http://open2.net/blogs/money/index.php/2008/10/29/hbos-the-demise-of-two-giants?blog=5]] [[CITE|0|http://web.archive.org/web/*/http://www.sundayherald.com/news/heraldnews/display.var.2507202.0.inquiry_into_scots_banks_collapse_moves_a_step_closer.php]] 영국 5대 은행 중 로이드 그룹(2008년 로이드에 편입된 뱅크오브스코틀랜드 포함)과 로열뱅크오브스코틀랜드(RBS) 그룹의 본사가 위치해 있다."
+                  }
+               ]
+            },
+            {  
+               "index":3,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"에든버러는 [[LINK|lang_ko|영국|영국]]에서 [[LINK|lang_ko|런던|런던]]에 다음으로 많은 관광객을 유치하며, 해마다 1300만 명이 찾는 관광도시이다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 특히 해마다 열리는 에든버러 축제가 유명한데, 각각의 축제들이 집중되는 8월 초부터 4주간은 시에 머무는 사람이 평소 거주자의 최소 2배 이상 늘어난다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 이러한 축제 중 [[LINK|lang_ko|에든버러_프린지_페스티벌|에든버러 프린지 페스티벌]](세계에서 가장 큰 행위예술 페스티벌), [[LINK|lang_ko|에든버러_국제_페스티벌|에든버러 국제 페스티벌]], [[LINK|lang_ko|에든버러_밀리터리_타투|에든버러 밀리터리 타투]], [[LINK|lang_ko|에든버러_국제_영화제|에든버러 국제 영화제]]가 가장 이름나 있다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"어원"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"어원"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"table",
+               "attrs":{  
+                  "className":"blurb-inline-image-container"
+               },
+               "items":[  
+                  {  
+                     "type":"body-table",
+                     "attrs":{  
+                        "className":"blurb-inline-image-container"
+                     },
+                     "caption":{  
+                        "attrs":{  
+                           "className":"blurbimage-caption"
+                        },
+                        "sentences":[  
+                           {  
+                              "type":"sentence",
+                              "index":0,
+                              "text":"1300&#xB144;&#xACBD; &#xC601;&#xAD6D;&#xC5D0;&#xC11C; &#xC81C;&#xC791;&#xB41C; TO &#xC9C0;&#xB3C4;&#xC5D0; &#xADF8;&#xB824;&#xC9C4; &#xC601;&#xAD6D;, &#xC5D0;&#xB4E0;&#xBC84;&#xB7EC;&#xAC00; &#xD45C;&#xC2DC;&#xB418;&#xC5B4; &#xC788;&#xB2E4;."
+                           }
+                        ]
+                     },
+                     "thead":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tbody":{  
+                        "rows":[  
+                           {  
+                              "index":0,
+                              "tag_type":"tr",
+                              "tag_class":"block",
+                              "attrs":{  
+
+                              },
+                              "cells":[  
+                                 {  
+                                    "index":0,
+                                    "attrs":{  
+
+                                    },
+                                    "tag_type":"td",
+                                    "tag_class":"block",
+                                    "content":[  
+                                       {  
+                                          "type":"tag",
+                                          "tag_type":"a",
+                                          "tag_class":"inline",
+                                          "attrs":{  
+                                             "className":"tooltippableImage",
+                                             "href":"https://upload.wikimedia.org/wikipedia/commons/1/1b/Hereford_Mappa_Mundi_detail_Britain.jpg",
+                                             "rel":"nofollow"
+                                          },
+                                          "content":[  
+
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tfoot":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     }
+                  }
+               ]
+            },
+            {  
+               "index":2,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"에든버러는 로마 제국 시기 [[LINK|lang_ko|브리튼_섬|브리튼 섬]]의 북동부에 살았던 브리소닉 족의 일파인 고도딘 족이 구릉위에 세운 요새의 이름 딘 에이든( [[LINK|lang_ko|브리소닉어|브리소닉어]]*Din Eidyn*, Fort of Eidyn, 에이딘 요새)에서 유래되었다고 알려져 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" [[LINK|lang_ko|로마_제국|로마 제국]]이 기원 후 1세기 경 브리튼 섬을 지배할 당시 로마의 기록에서 이 지역에 살고 있던 보타니 족, 브리소닉족 등의 이름을 살필 수 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 4세기경 작성된 시 *Y 고도딘* 에는 \"에이든의 높은 장벽\"을 노래하는 구절이 나온다."
+                  }
+               ]
+            },
+            {  
+               "index":3,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"브리소닉의 딘 에이든은 [[LINK|lang_ko|앵글_족|앵글 족]]의 일파인 베르니시아에게 전파되어 에딘-버르(Edin-burh, Edwin's fort, 에드윈 요새)로 불렸으며, 이 후 [[LINK|lang_ko|고대_영어|고대 영어]]에 삽입되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 7세기경 노텀브리아왕국의 에드윈 국왕과 비슷한 발음으로 인해 에딘-버르가 그로부터 비롯되었다는 속설이 발생하였으나 에든버러는 그보다 더 오래전부터 존재하였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 버르(burh)는 [[LINK|lang_ko|게르만어족|게르만어족]]에서 성이나 요새를 가리키는 접미사로 쓰이며 [[LINK|lang_ko|독일어|독일어]]의 부르크(burg)와 같은 의미를 지닌다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" 예를 들면 [[LINK|lang_ko|함부르크|함부르크]]와 같은 지명이 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":4,
+                     "text":" 브리소닉어의 딘(Din), [[LINK|lang_ko|라틴어|라틴어]]의 파르쿠스(parucus), [[LINK|lang_ko|그리스어|그리스어]]의 피르고스(πύργος, pyrgos)도 같은 의미를 지닌 어미이다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+            {  
+               "type":"section_image",
+               "url":"https://upload.wikimedia.org/wikipedia/commons/1/1b/Hereford_Mappa_Mundi_detail_Britain.jpg",
+               "mime":"image/png",
+               "thumb":null,
+               "caption":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"1300년경 영국에서 제작된 TO 지도에 그려진 영국, 에든버러가 표시되어 있다."
+                  }
+               ],
+               "category":"PICTURE",
+               "attribution_url":"https://en.wikipedia.org/wiki/File:Hereford_Mappa_Mundi_detail_Britain.jpg"
+            }
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h3",
+               "attrs":{  
+                  "id":"별칭"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"별칭"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"에든버러를 부르던 다른 이름 중에 널리 알려진 것은 올드 리키( *Auld Reekie*, 묵은 연기 [[CITE|1|http://firstfoot.com/php/glossary/phpglossar_0.8/index.php?letter=a]] )가 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 에든버러는 오래전부터 석탄과 나무로 난방을 했는데 이 때문에 도시 전역이 굴뚝에서 나온 연기로 자욱했었기 때문에 이런 별칭이 붙였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 이 외에도 엠브라(Embra) 또는 엠브로(Embro) 등으로 불리기도 한다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" [[CITE|2|http://www.edinburghgunners.org.uk/articles/697]]"
                   }
                ]
             }
@@ -1924,116 +2141,26 @@
             },
             {  
                "index":1,
-               "tag_type":"p",
-               "attrs":{  
-
-               },
-               "items":[  
-                  {  
-                     "type":"sentence",
-                     "index":0,
-                     "text":"[[LINK|lang_ko|고대|고대]]부터 [[LINK|lang_ko|클라이드_강_(스코틀랜드)|클라이드 강]]유역에 마을이 형성되었다."
-                  },
-                  {  
-                     "type":"sentence",
-                     "index":1,
-                     "text":" [[LINK|lang_ko|로마_제국|로마 제국]]시대에는 [[LINK|lang_ko|켈트인|켈트인]], [[LINK|lang_ko|픽트인|픽트인]]이 거주했으며 [[LINK|lang_ko|브리타니아|브리타니아]]와 [[LINK|lang_ko|칼레도니아|칼레도니아]]사이에 요새가 건립되었다."
-                  }
-               ]
-            },
-            {  
-               "index":2,
-               "tag_type":"p",
-               "attrs":{  
-
-               },
-               "items":[  
-                  {  
-                     "type":"sentence",
-                     "index":0,
-                     "text":"[[LINK|lang_ko|12세기|12세기]]에는 글래스고 대성당이 건립되었으며 [[LINK|lang_ko|1451년|1451년]]에는 [[LINK|lang_ko|글래스고_대학교|글래스고 대학교]]가 설립되었다."
-                  },
-                  {  
-                     "type":"sentence",
-                     "index":1,
-                     "text":" [[LINK|lang_ko|16세기|16세기]]에는 클라이드 강을 통한 무역이 전개되었는데 [[LINK|lang_ko|아메리카|아메리카]]대륙에서 생산된 [[LINK|lang_ko|담배|담배]], [[LINK|lang_ko|카리브_해|카리브 해]]에서 생산된 [[LINK|lang_ko|사탕|사탕]]등 여러 물품이 이 곳을 통해 영국에 전해졌다."
-                  }
-               ]
-            },
-            {  
-               "index":3,
-               "tag_type":"p",
-               "attrs":{  
-
-               },
-               "items":[  
-                  {  
-                     "type":"sentence",
-                     "index":0,
-                     "text":"[[LINK|lang_ko|산업_혁명|산업 혁명]]시대에는 [[LINK|lang_ko|랭커셔주|랭커셔주]]에서 채굴된 [[LINK|lang_ko|석탄|석탄]], [[LINK|lang_ko|철광석|철광석]]을 통해 공업화가 전개되었는데 글래스고는 면직물 산업, 해운업, 조선업의 중심지로 여겨졌다."
-                  }
-               ]
-            }
-         ],
-         "images":[  
-
-         ]
-      },
-      {  
-         "paragraphs":[  
-            {  
-               "index":0,
-               "tag_type":"h2",
-               "attrs":{  
-                  "id":"지리-및-기후"
-               },
-               "items":[  
-                  {  
-                     "type":"sentence",
-                     "index":0,
-                     "text":"지리 및 기후"
-                  }
-               ]
-            },
-            {  
-               "index":1,
-               "tag_type":"p",
-               "attrs":{  
-
-               },
-               "items":[  
-                  {  
-                     "type":"sentence",
-                     "index":0,
-                     "text":"글래스고는 중서부 스코틀랜드의 [[LINK|lang_ko|클라이드_강_(스코틀랜드)|클라이드 강]]유역에 위치해 있다."
-                  }
-               ]
-            },
-            {  
-               "index":2,
                "tag_type":"table",
                "attrs":{  
-                  "className":"ep-table wikitable collapsible",
-                  "style":{  
-                     "width":"90%",
-                     "textAlign":"center",
-                     "fontSize":"90%",
-                     "lineHeight":"1.1em",
-                     "margin":"auto"
-                  }
+                  "className":"blurb-inline-image-container"
                },
                "items":[  
                   {  
                      "type":"body-table",
                      "attrs":{  
-
+                        "className":"blurb-inline-image-container"
                      },
                      "caption":{  
                         "attrs":{  
-
+                           "className":"blurbimage-caption"
                         },
                         "sentences":[  
-
+                           {  
+                              "type":"sentence",
+                              "index":0,
+                              "text":"&#xC5D0;&#xB4E0;&#xBC84;&#xB7EC; &#xC131;"
+                           }
                         ]
                      },
                      "thead":{  
@@ -2046,61 +2173,39 @@
                      },
                      "tbody":{  
                         "rows":[  
+                           {  
+                              "index":0,
+                              "tag_type":"tr",
+                              "tag_class":"block",
+                              "attrs":{  
 
-                        ],
-                        "attrs":{  
+                              },
+                              "cells":[  
+                                 {  
+                                    "index":0,
+                                    "attrs":{  
 
-                        }
-                     },
-                     "tfoot":{  
-                        "rows":[  
+                                    },
+                                    "tag_type":"td",
+                                    "tag_class":"block",
+                                    "content":[  
+                                       {  
+                                          "type":"tag",
+                                          "tag_type":"a",
+                                          "tag_class":"inline",
+                                          "attrs":{  
+                                             "className":"tooltippableImage",
+                                             "href":"https://upload.wikimedia.org/wikipedia/commons/8/8a/Edinburgh_Castle_princes.jpg",
+                                             "rel":"nofollow"
+                                          },
+                                          "content":[  
 
-                        ],
-                        "attrs":{  
-
-                        }
-                     }
-                  }
-               ]
-            },
-            {  
-               "index":3,
-               "tag_type":"table",
-               "attrs":{  
-                  "className":"ep-table wikitable collapsible collapsed",
-                  "style":{  
-                     "width":"90%",
-                     "textAlign":"center",
-                     "fontSize":"90%",
-                     "lineHeight":"1.1em",
-                     "margin":"auto"
-                  }
-               },
-               "items":[  
-                  {  
-                     "type":"body-table",
-                     "attrs":{  
-
-                     },
-                     "caption":{  
-                        "attrs":{  
-
-                        },
-                        "sentences":[  
-
-                        ]
-                     },
-                     "thead":{  
-                        "rows":[  
-
-                        ],
-                        "attrs":{  
-
-                        }
-                     },
-                     "tbody":{  
-                        "rows":[  
-
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
                         ],
                         "attrs":{  
 
@@ -2119,22 +2224,36 @@
             }
          ],
          "images":[  
-
+            {  
+               "type":"section_image",
+               "url":"https://upload.wikimedia.org/wikipedia/commons/8/8a/Edinburgh_Castle_princes.jpg",
+               "mime":"image/png",
+               "thumb":null,
+               "caption":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"에든버러 성"
+                  }
+               ],
+               "category":"PICTURE",
+               "attribution_url":"https://en.wikipedia.org/wiki/File:Edinburgh_Castle_princes.jpg"
+            }
          ]
       },
       {  
          "paragraphs":[  
             {  
                "index":0,
-               "tag_type":"h2",
+               "tag_type":"h3",
                "attrs":{  
-                  "id":"스포츠"
+                  "id":"중세"
                },
                "items":[  
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"스포츠"
+                     "text":"중세"
                   }
                ]
             },
@@ -2148,12 +2267,494 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"글래스고는 [[LINK|lang_ko|스코틀랜드_프리미어리그|스코틀랜드 프리미어리그]]의 축구팀인 [[LINK|lang_ko|셀틱_FC|셀틱 FC]]와 [[LINK|lang_ko|레인저스_FC|레인저스 FC]]의 연고지이며, 축구 경기장 [[LINK|lang_ko|셀틱_파크|셀틱 파크]]와 [[LINK|lang_ko|아이브록스_스타디움|아이브록스 스타디움]]이 위치하고 있다."
+                     "text":"에든버러는 고대로부터 군사 요충지로 요새를 중심으로 한 발전이 이루어졌다."
                   },
                   {  
                      "type":"sentence",
                      "index":1,
-                     "text":" 셀틱과 글래스고 간의 더비 경기는 [[LINK|lang_ko|올드_펌|올드 펌]]이라고 부른다."
+                     "text":" 7세기경 잉글랜드가 도시 인근을 점령하고 에이든-버르( Eiden-burh )에 요새를 구축했다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 10세기에 이르러 스코틀랜드는 도시를 탈환하여 11세기에 에든버러 성을 축조하였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" 12세기 경 번성하기 시작한 에든버러는 1128년 스코틀랜드의 데이비드 1세가 도시에 [[LINK|lang_ko|홀리루드_궁|홀리루드 궁]]을 건축한 이래 스코틀랜드의 수도가 되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":4,
+                     "text":" 16세기 초 도시 인구는 1만2천 명정도였는데, 16세기 중반에는 1만5천 명으로 늘었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":5,
+                     "text":" 1513년부터 1560년까지 도시의 남쪽에 잉글랜드를 방어하기 위한 성벽을 축조하였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":6,
+                     "text":" 1547년 잉글랜드의 침공과 약탈이 있었으며, 1571년 [[LINK|lang_ko|잉글랜드_내전|잉글랜드 내전]]기간 동안 다시 한 번 공성전을 벌였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":7,
+                     "text":" 1585년에서 1645년까지 여러 차례 [[LINK|lang_ko|흑사병|흑사병]]이 번져 많은 희생자가 발생하였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":8,
+                     "text":" 1583년 에든버러 대학교가 설립되었다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h3",
+               "attrs":{  
+                  "id":"근대"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"근대"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"1707년 [[LINK|lang_ko|1707년_연합법|1707년 연합법]]에 의해 스코틀랜드와 잉글랜드가 상호 합의 하에 합병되어 [[LINK|lang_ko|그레이트브리튼_왕국|그레이트브리튼 왕국]]이 되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 이에 따라 스코틀랜드 의회는 해산되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 1801년 도시의 인구가 10만 명을 넘어섰으며 1851년에는 17만명이 되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" 1805년에는 신도시 구역이 건설되었고 [[LINK|lang_ko|아일랜드_대기근|아일랜드 대기근]]이후 많은 [[LINK|lang_ko|아일랜드|아일랜드인]]의 이주가 이어졌다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":4,
+                     "text":" 1842년 철도가 에든버러에 연결되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":5,
+                     "text":" 에든버러의 거리에 처음 전기 가로등이 설치된 때는 1895년이었다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h3",
+               "attrs":{  
+                  "id":"현대"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"현대"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"20세기에 들어 에든버러는 금융 산업의 발전이 두드러졌다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 도시의 명물인 꽃시계는 1903년 세워졌으며 1913년에는 동물원이 문을 열었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 1930년대 의회의 교외 이전을 시작하여 1945년 완공하였다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" 1999년에는 [[LINK|lang_ko|스코틀랜드_의회|스코틀랜드 의회]]가 해산된 지 292년 만에 다시 구성되었고, 최근에 새로운 의회 건물이 완공되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":4,
+                     "text":" [[CITE|3|http://localhistories.org/edinburgh.html]]"
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"기후"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"기후"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"다른 [[LINK|lang_ko|스코틀랜드|스코틀랜드]]지역과 같이, 애든버러는 [[LINK|lang_ko|해양성_기후|해양성 기후]]가 나타나 고위도 지역이지만 기온은 온화하다.겨울은 보통 온화하고 드물게 영하로 기온이 내려간다.여름의 기온은 온난하고 낮 최고 기온은 22 °C를 넘는 경우가 거의 없다.1975년 8월 4일에 턴하우스 공항에서 기온이 31.4 °C를 넘어 최고 기온을 기록했다.2010년 11월에 고버뱅크에서 -14.6 °C로 최저 기온을 기록했다.바다와 가까이 있어 바다가 에든버러의 기온이 큰 폭으로 변하는 것을 완화시켜 준다.해안과 산 사이에 있다는 지리적 특성 때문에 바람이 많이 분다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" [[LINK|lang_ko|글래스고|글래스고]]와 같이 서쪽에 있는 도시가 아니지만 남서쪽의 [[LINK|lang_ko|북대서양|북대서양]]으로부터 불어오는 [[LINK|lang_ko|편서풍|편서풍]]의 영향을 받는다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 에든버러에서 부는 [[LINK|lang_ko|편서풍|편서풍]]은 따뜻하고 불안정한 기류이며 이로 인해 [[LINK|lang_ko|강우|강우]]가 생기기도 한다.일 년 중 비는 상당히 고르게 내린다.동쪽에서 불어오는 바람은 차고 건조하며 차가운 바다 [[LINK|lang_ko|안개|안개]]를 동반한다.유럽의 폭풍으로 알려진 대서양의 [[LINK|lang_ko|저기압|저기압]]은 10월과 5월 사이에 영향을 미친다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"지역"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"지역"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"div",
+               "attrs":{  
+                  "className":"center"
+               },
+               "items":[  
+
+               ]
+            }
+         ],
+         "images":[  
+            {  
+               "type":"section_image",
+               "url":"https://upload.wikimedia.org/wikipedia/commons/0/0f/Edinburgh-panoramic.jpg",
+               "mime":"image/png",
+               "thumb":null,
+               "caption":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"칼튼힐의 넬슨 모뉴먼트(기념건물)에서 찍은 에든버러 구시가와 남부 지역의 전경을 담은 파노라마"
+                  }
+               ],
+               "category":"PICTURE",
+               "attribution_url":"https://en.wikipedia.org/wiki/File:Edinburgh-panoramic.jpg"
+            }
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h3",
+               "attrs":{  
+                  "id":"중심가"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"중심가"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"에든버러의 전통적인 중심지는 프린시스 스트리트 가든을 중심으로 남북으로 나뉜다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 남쪽에는 [[LINK|lang_ko|에든버러_성|에든버러 성]]과 로열마일을 중심으로 구시가지가 자리 잡고 있고, 북쪽에는 프린시스 스트리트와 신시가지가 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 프린스 스트리트 가든은 1816년 에든버러 북쪽의 노르 로치에 위치한 [[LINK|lang_ko|습지|습지]]위에 세워졌다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" 에든버러 성의 바로 서쪽으로 금융 지구가 맞닿고, 에든버러 인터내셔널 컨퍼런스 센터과 같은 주요 건물이 금융지구 내에 있다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h3",
+               "attrs":{  
+                  "id":"구시가지"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"구시가지"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"table",
+               "attrs":{  
+                  "className":"blurb-inline-image-container"
+               },
+               "items":[  
+                  {  
+                     "type":"body-table",
+                     "attrs":{  
+                        "className":"blurb-inline-image-container"
+                     },
+                     "caption":{  
+                        "attrs":{  
+                           "className":"blurbimage-caption"
+                        },
+                        "sentences":[  
+                           {  
+                              "type":"sentence",
+                              "index":0,
+                              "text":"&#xC131; &#xAE38;&#xB808;&#xC2A4; &#xC131;&#xB2F9;."
+                           }
+                        ]
+                     },
+                     "thead":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tbody":{  
+                        "rows":[  
+                           {  
+                              "index":0,
+                              "tag_type":"tr",
+                              "tag_class":"block",
+                              "attrs":{  
+
+                              },
+                              "cells":[  
+                                 {  
+                                    "index":0,
+                                    "attrs":{  
+
+                                    },
+                                    "tag_type":"td",
+                                    "tag_class":"block",
+                                    "content":[  
+                                       {  
+                                          "type":"tag",
+                                          "tag_type":"a",
+                                          "tag_class":"inline",
+                                          "attrs":{  
+                                             "className":"tooltippableImage",
+                                             "href":"https://upload.wikimedia.org/wikipedia/commons/2/2f/St._Giles%27_Cathedral_front.jpg",
+                                             "rel":"nofollow"
+                                          },
+                                          "content":[  
+
+                                          ]
+                                       }
+                                    ]
+                                 }
+                              ]
+                           }
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tfoot":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     }
+                  }
+               ]
+            },
+            {  
+               "index":2,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"에든버러의 구시가지는 [[LINK|lang_ko|중세|중세]]시대에 형성된 이후 개발을 거듭하여 현재의 모습이 되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 구시가지는 에든버러 성과 홀리루드 궁전을 잇는 로얄마일을 중심으로 클로즈(Close)라 불리는 좁은 골목길 뒤편에 위피한 여러 시장, 성 자일스 교회와 같은 중세 유적이 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 또한 구시가지에는 스코틀랜드 국립 박물관이 위치해 있다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+            {  
+               "type":"section_image",
+               "url":"https://upload.wikimedia.org/wikipedia/commons/2/2f/St._Giles'_Cathedral_front.jpg",
+               "mime":"image/png",
+               "thumb":null,
+               "caption":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"성 길레스 성당."
+                  }
+               ],
+               "category":"PICTURE",
+               "attribution_url":"https://en.wikipedia.org/wiki/File:St._Giles'_Cathedral_front.jpg"
+            }
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h3",
+               "attrs":{  
+                  "id":"신시가지"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"신시가지"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"신시가지는 1800년대에 구시가지의 인구를 분산시킬 목적으로 건설되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 1766년 [[LINK|lang_ko|계몽주의|계몽주의]]적 합리성을 바탕으로 제임스 크레이그(당시 22세)에 의해 설계되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":2,
+                     "text":" 신시가지는 조지 스트리트를 중심으로 펼쳐지며, 남쪽의 구시가지와 연결되어있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":3,
+                     "text":" 신시가지에는 스코틀랜드 자치정부 총리의 관저인 부트 하우스가 있다."
                   }
                ]
             }
@@ -2192,7 +2793,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|독일|]] [[LINK|lang_ko|독일|독일]][[LINK|lang_ko|뉘른베르크|뉘른베르크]](1985년)"
+                           "text":"[[LINK|lang_ko|독일|]] [[LINK|lang_ko|독일|독일]][[LINK|lang_ko|뮌헨|뮌헨]](1954년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2204,7 +2805,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|러시아|]] [[LINK|lang_ko|러시아|러시아]][[LINK|lang_ko|로스토프나도누|로스토프나도누]](1986년)"
+                           "text":"[[LINK|lang_ko|프랑스|]] [[LINK|lang_ko|프랑스|프랑스]][[LINK|lang_ko|니스_(프랑스)|니스]](1958년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2216,7 +2817,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|중화인민공화국|]] [[LINK|lang_ko|중화인민공화국|중국]][[LINK|lang_ko|다롄_시|다롄 시]](1997년)"
+                           "text":"[[LINK|lang_ko|이탈리아|]] [[LINK|lang_ko|이탈리아|이탈리아]][[LINK|lang_ko|피렌체|피렌체]](1964년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2228,7 +2829,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|쿠바|]] [[LINK|lang_ko|쿠바|쿠바]][[LINK|lang_ko|아바나|아바나]](2002년)"
+                           "text":"[[LINK|lang_ko|뉴질랜드|]] [[LINK|lang_ko|뉴질랜드|뉴질랜드]][[LINK|lang_ko|더니든|더니든]](1974년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2240,7 +2841,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|이탈리아|]] [[LINK|lang_ko|이탈리아|이탈리아]][[LINK|lang_ko|토리노|토리노]](2003년)"
+                           "text":"[[LINK|lang_ko|캐나다|]] [[LINK|lang_ko|캐나다|캐나다]][[LINK|lang_ko|밴쿠버|밴쿠버]](1977년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2252,7 +2853,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|파키스탄|]] [[LINK|lang_ko|파키스탄|파키스탄]][[LINK|lang_ko|라호르|라호르]](2006년)"
+                           "text":"[[LINK|lang_ko|미국|]] [[LINK|lang_ko|미국|미국]][[LINK|lang_ko|샌디에이고|샌디에이고]](1977년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2264,7 +2865,7 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|프랑스|]] [[LINK|lang_ko|프랑스|프랑스]][[LINK|lang_ko|마르세유|마르세유]](2006년)"
+                           "text":"[[LINK|lang_ko|스페인|]] [[LINK|lang_ko|스페인|스페인]][[LINK|lang_ko|세고비아|세고비아]](1985년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2276,7 +2877,55 @@
                         {  
                            "type":"sentence",
                            "index":0,
-                           "text":"[[LINK|lang_ko|팔레스타인_자치_정부|]] [[LINK|lang_ko|팔레스타인_자치_정부|팔레스타인 자치 정부]][[LINK|lang_ko|베들레헴|베들레헴]](2007년)"
+                           "text":"[[LINK|lang_ko|중화인민공화국|]] [[LINK|lang_ko|중화인민공화국|중국]][[LINK|lang_ko|시안_시|시안 시]](1985년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":8,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|우크라이나|]] [[LINK|lang_ko|우크라이나|우크라이나]][[LINK|lang_ko|키예프|키예프]](1989년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":9,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|덴마크|]] [[LINK|lang_ko|덴마크|덴마크]][[LINK|lang_ko|올보르|올보르]](1991년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":10,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|일본|]] [[LINK|lang_ko|일본|일본]][[LINK|lang_ko|교토부|교토부]](1994년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":11,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|폴란드|]] [[LINK|lang_ko|폴란드|폴란드]][[LINK|lang_ko|크라쿠프|크라쿠프]](1995년)"
                         }
                      ],
                      "tag_type":"li"
@@ -2312,8 +2961,8 @@
    "main_photo":[  
       {  
          "type":"main_image",
-         "url":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/85137__39439.png",
-         "thumb":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/85137__39439_100x100.png",
+         "url":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/109949__40848.png",
+         "thumb":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/109949__40848_100x100.png",
          "caption":[  
 
          ],
@@ -2328,13 +2977,13 @@
             {  
                "type":"sentence",
                "index":0,
-               "text":"The original version of this page is from Wikipedia, you can edit the page right here on Everipedia."
+               "text":"과거 내용 찾기"
             }
          ],
-         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "timestamp":"11/02/2018 06:40:42 AM UTC",
          "mime":"None",
          "attribution":"",
-         "url":"https://ko.wikipedia.org/wiki/%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0",
+         "url":"http://web.archive.org/web/*/http://www.sundayherald.com/news/heraldnews/display.var.2507202.0.inquiry_into_scots_banks_collapse_moves_a_step_closer.php",
          "social_type":null,
          "category":"NONE"
       },
@@ -2344,13 +2993,13 @@
             {  
                "type":"sentence",
                "index":0,
-               "text":"“Paisley 1981–2010 averages”"
+               "text":"스코틀랜드어 사전"
             }
          ],
-         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "timestamp":"11/02/2018 06:40:43 AM UTC",
          "mime":"None",
-         "attribution":"",
-         "url":"http://www.metoffice.gov.uk/climate/uk/averages/19812010/sites/paisley.html",
+         "attribution":"rel='nofollow'",
+         "url":"http://firstfoot.com/php/glossary/phpglossar_0.8/index.php?letter=a",
          "social_type":null,
          "category":"NONE"
       },
@@ -2360,29 +3009,25 @@
             {  
                "type":"sentence",
                "index":0,
-               "text":"Met Office"
+               "text":"Embra Give Cardiff The Blues"
             }
          ],
-         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "timestamp":"11/02/2018 06:40:43 AM UTC",
          "mime":"None",
-         "attribution":"rel='nofollow'",
-         "url":"http://w/index.php?action=edit&redlink=1&title=Met_Office",
+         "attribution":"",
+         "url":"http://www.edinburghgunners.org.uk/articles/697",
          "social_type":null,
          "category":"NONE"
       },
       {  
          "citation_id":3,
          "description":[  
-            {  
-               "type":"sentence",
-               "index":0,
-               "text":"“KNMI: Climate Extremes 1959-”"
-            }
+
          ],
-         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "timestamp":"11/02/2018 06:40:44 AM UTC",
          "mime":"None",
-         "attribution":"rel='nofollow'",
-         "url":"http://eca.knmi.nl/utils/mapserver/anomaly.php?CMD=QUERY_POINT&CMD=QUERY_POINT&MapSize=560%2C420&imageheight=420&imagewidth=560&indexcat=**&indexid=TNn&maxx=590952.38095239&maxy=-3665714.2857143&minx=-1142380.952381&miny=-4965714.2857143&seasonid=7&year=1995#bottom",
+         "attribution":"",
+         "url":"http://localhistories.org/edinburgh.html",
          "social_type":null,
          "category":"NONE"
       },
@@ -2392,13 +3037,13 @@
             {  
                "type":"sentence",
                "index":0,
-               "text":"KNMI"
+               "text":"The original version of this page is from Wikipedia, you can edit the page right here on Everipedia."
             }
          ],
-         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "timestamp":"11/02/2018 06:40:40 AM UTC",
          "mime":"None",
-         "attribution":"rel='nofollow'",
-         "url":"http://w/index.php?action=edit&redlink=1&title=Royal_Netherlands_Meteorological_Institute",
+         "attribution":"",
+         "url":"https://ko.wikipedia.org/wiki/%EC%97%90%EB%93%A0%EB%B2%84%EB%9F%AC",
          "social_type":null,
          "category":"NONE"
       },
@@ -2408,13 +3053,29 @@
             {  
                "type":"sentence",
                "index":0,
-               "text":"“Averages for Abbotsinch”"
+               "text":"“HBOS – the demise of two giants”"
             }
          ],
-         "timestamp":"11/02/2018 06:17:16 AM UTC",
+         "timestamp":"11/02/2018 06:40:41 AM UTC",
          "mime":"None",
-         "attribution":"",
-         "url":"http://www.metoffice.gov.uk/public/weather/climate/glasgow-bishopton#?tab=climateTables",
+         "attribution":"rel='nofollow'",
+         "url":"http://open2.net/blogs/money/index.php/2008/10/29/hbos-the-demise-of-two-giants?blog=5",
+         "social_type":null,
+         "category":"NONE"
+      },
+      {  
+         "citation_id":6,
+         "description":[  
+            {  
+               "type":"sentence",
+               "index":0,
+               "text":"“Inquiry Into Scots Banks Collapse Moves A Step Closer (from Sunday Herald)”"
+            }
+         ],
+         "timestamp":"11/02/2018 06:40:41 AM UTC",
+         "mime":"None",
+         "attribution":"rel='nofollow'",
+         "url":"http://sundayherald.com/news/heraldnews/display.var.2507202.0.inquiry_into_scots_banks_collapse_moves_a_step_closer.php",
          "social_type":null,
          "category":"NONE"
       }
@@ -2440,19 +3101,19 @@
       },
       {  
          "key":"creation_timestamp",
-         "value":"11/02/2018 06:17:14 AM UTC"
+         "value":"11/02/2018 06:40:38 AM UTC"
       },
       {  
          "key":"last_modified",
-         "value":"11/02/2018 06:17:23 AM UTC"
+         "value":"11/02/2018 06:40:52 AM UTC"
       },
       {  
          "key":"url_slug",
-         "value":"글래스고"
+         "value":"에든버러"
       },
       {  
          "key":"url_slug_alternate",
-         "value":"%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0"
+         "value":"%EC%97%90%EB%93%A0%EB%B2%84%EB%9F%AC"
       },
       {  
          "key":"sub_page_type",
@@ -2487,5 +3148,5 @@
 
       ]
    },
-   "ipfs_hash":"QmYiaceBfmpypEMTvANmdpop7osW1Pou48Thvf6FJ6FpHH"
+   "ipfs_hash":"QmXbfGFUdth3yLY3AvLXdyCvRJTWoiswmQyHNdyHbpmpyH"
 }

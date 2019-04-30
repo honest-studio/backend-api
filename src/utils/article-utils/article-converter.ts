@@ -724,7 +724,7 @@ function parseSection($section: Cheerio): Section {
         // Tables
         else if (paragraph.tag_type == 'table') {
             // ignore images
-            const classes = paragraph.attrs.class;
+            const classes = paragraph.attrs.className;
             if (classes && classes.includes('blurb-inline-image-container')) continue;
 
             const table = parseTable($element, 'body-table');
@@ -1174,10 +1174,6 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     // Deal with the colgroup
     // TODO
 
-    if (tableType == 'body-table'){
-        console.log($table.html())
-    }
-
     // Parse the thead, tbody, and tfoot
     const table_sections = ['thead', 'tbody', 'tfoot'];
     table_sections.forEach((sectionName) => {
@@ -1220,10 +1216,10 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     })
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
-    if (table.type == 'body-table') {
-        console.log("--------------------------")
-        console.log(util.inspect(decycledTable, false, null, true));
-        console.log("--------------------------")
-    }
+    // if (table.type == 'body-table') {
+    //     console.log("--------------------------")
+    //     console.log(util.inspect(decycledTable, false, null, true));
+    //     console.log("--------------------------")
+    // }
     return decycledTable as Table;
 }
