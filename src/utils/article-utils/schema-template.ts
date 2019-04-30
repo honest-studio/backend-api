@@ -1,4 +1,4 @@
-import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell } from './article-dto';
+import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell, TableCellContentItem } from './article-dto';
 import { AMPParseCollection, LanguagePack } from './article-types';
 import { getYouTubeID } from './article-converter';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
@@ -281,15 +281,16 @@ export const renderParagraph = (
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
                                         let sanitizedCellContents = cell.content
-                                            .map((sentence: Sentence, sentenceIndex) => {
-                                                let result = CheckForLinksOrCitationsAMP(
-                                                    sentence.text,
-                                                    passedCitations,
-                                                    passedIPFS,
-                                                    []
-                                                );
-                                                returnCollection.lightboxes.push(...result.lightboxes);
-                                                return result.text;
+                                            .map((item: TableCellContentItem, idx) => {
+                                                return "";
+                                                // let result = CheckForLinksOrCitationsAMP(
+                                                //     sentence.text,
+                                                //     passedCitations,
+                                                //     passedIPFS,
+                                                //     []
+                                                // );
+                                                // returnCollection.lightboxes.push(...result.lightboxes);
+                                                // return result.text;
                                             })
                                             .join('');
                                         return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
@@ -310,15 +311,16 @@ export const renderParagraph = (
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
                                         let sanitizedCellContents = cell.content
-                                            .map((sentence: Sentence, sentenceIndex) => {
-                                                let result = CheckForLinksOrCitationsAMP(
-                                                    sentence.text,
-                                                    passedCitations,
-                                                    passedIPFS,
-                                                    []
-                                                );
-                                                returnCollection.lightboxes.push(...result.lightboxes);
-                                                return result.text;
+                                            .map((item: TableCellContentItem, idx) => {
+                                                return "";
+                                                // let result = CheckForLinksOrCitationsAMP(
+                                                //     sentence.text,
+                                                //     passedCitations,
+                                                //     passedIPFS,
+                                                //     []
+                                                // );
+                                                // returnCollection.lightboxes.push(...result.lightboxes);
+                                                // return result.text;
                                             })
                                             .join('');
                                         return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
@@ -339,15 +341,16 @@ export const renderParagraph = (
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
                                         let sanitizedCellContents = cell.content
-                                            .map((sentence: Sentence, sentenceIndex) => {
-                                                let result = CheckForLinksOrCitationsAMP(
-                                                    sentence.text,
-                                                    passedCitations,
-                                                    passedIPFS,
-                                                    []
-                                                );
-                                                returnCollection.lightboxes.push(...result.lightboxes);
-                                                return result.text;
+                                            .map((item: TableCellContentItem, idx) => {
+                                                return "";
+                                                // let result = CheckForLinksOrCitationsAMP(
+                                                //     sentence.text,
+                                                //     passedCitations,
+                                                //     passedIPFS,
+                                                //     []
+                                                // );
+                                                // returnCollection.lightboxes.push(...result.lightboxes);
+                                                // return result.text;
                                             })
                                             .join('');
                                         return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
@@ -361,15 +364,16 @@ export const renderParagraph = (
             let sanitizedFoot = tableItem.tfoot ? tag('tfoot', tableItem.tfoot.attrs, sanitizedFootRows) : '';
 
             // Create the caption if present
-            let sanitizedCaption = tableItem.caption
-                ? [tableItem.caption]
-                      .map((caption: string, rowIndex) => {
-                          let result = CheckForLinksOrCitationsAMP(caption, passedCitations, passedIPFS, []);
-                          returnCollection.lightboxes.push(...result.lightboxes);
-                          return `<caption>${result.text}</${caption}>`;
-                      })
-                      .join('')
-                : '';
+            // let sanitizedCaption = tableItem.caption
+            //     ? [tableItem.caption]
+            //           .map((caption: string, rowIndex) => {
+            //               let result = CheckForLinksOrCitationsAMP(caption, passedCitations, passedIPFS, []);
+            //               returnCollection.lightboxes.push(...result.lightboxes);
+            //               return `<caption>${result.text}</${caption}>`;
+            //           })
+            //           .join('')
+            //     : '';
+            let sanitizedCaption = "";
             return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join('');
         });
         returnCollection.text = tag('table', paragraph.attrs, sanitizedText.join(''));
