@@ -688,6 +688,7 @@ function parseSection($section: Cheerio): Section {
         return true;
     });
 
+    // TODO: Travis: handle <dl> tags
     // Get paragraphs in section
     const $children = $section.children();
     for (let i = 0; i < $children.length; i++) {
