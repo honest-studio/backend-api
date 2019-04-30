@@ -1,0 +1,943 @@
+{
+    "infobox_html": {
+      "type": "wikitable",
+      "thead": {
+        "rows": [],
+        "attrs": {}
+      },
+      "tbody": {
+        "rows": [
+          {
+            "index": 0,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "class": "fn",
+                  "colspan": "4",
+                  "style": "text-align:center;font-size:125%;font-weight:bold"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Harry Cordner"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "class": "ep-blobbox-tbl-hdr",
+                  "colspan": "4",
+                  "style": "text-align:center;background-color:rgb(245, 245, 245) !important; nothing:#003399; color: #ffffff; line-height: 1.5em"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Personal information"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Full name"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Henry Cordner"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 3,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Date of birth"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "( 1885-06-17 ) 17 June 1885"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 4,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Place of birth"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "[[LINK|lang_en|Bendigo,_Victoria|Bendigo, Victoria]]"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 5,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Date of death"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "14 November 1943 ( 1943-11-14 ) (aged 58)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 6,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Place of death"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "[[LINK|lang_en|Hobart|Hobart]]"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 7,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Original team(s)"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "class": "role",
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "[[LINK|lang_en|Melbourne_Grammar_School|Melbourne Grammar]]"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 8,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "class": "ep-blobbox-tbl-hdr",
+                  "colspan": "4",
+                  "style": "text-align:center;background-color:rgb(245, 245, 245) !important; nothing:#003399; color: #ffffff; line-height: 1.5em"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Club information"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 9,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Current club"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "class": "org",
+                  "colspan": "3",
+                  "style": "vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Retired"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 10,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "class": "ep-blobbox-tbl-hdr",
+                  "colspan": "4",
+                  "style": "text-align:center;background-color:rgb(245, 245, 245) !important; nothing:#003399; color: #ffffff; line-height: 1.5em"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Playing career 1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 11,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "**Years**"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "**Club**"
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "**Games (Goals)**"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 12,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "1903–05"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "[[LINK|lang_en|Melbourne_Football_Club|Melbourne]]"
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "11 (16)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 13,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "1908–09"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "[[LINK|lang_en|Melbourne_University_Football_Club|University]]"
+                  }
+                ]
+              },
+              {
+                "index": 2,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "29 (7)"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 14,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "scope": "row",
+                  "style": "white-space: nowrap; vertical-align: baseline; text-align: left"
+                },
+                "tag_type": "th",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "**Total**"
+                  }
+                ]
+              },
+              {
+                "index": 1,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": []
+              },
+              {
+                "index": 2,
+                "attrs": {
+                  "style": "white-space: nowrap; vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "**40 (23)**"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 15,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "colspan": "4",
+                  "style": "text-align:center;vertical-align: baseline"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "1 Playing statistics correct to the end of 1909."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "index": 16,
+            "attrs": {},
+            "cells": [
+              {
+                "index": 0,
+                "attrs": {
+                  "colspan": "4",
+                  "style": "text-align:center;text-align: right; font-size: smaller"
+                },
+                "tag_type": "td",
+                "content": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "Sources: AFL Tables, AustralianFootball.com"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "attrs": {}
+      },
+      "tfoot": {
+        "rows": [],
+        "attrs": {}
+      }
+    },
+    "page_title": [
+      {
+        "index": 0,
+        "type": "sentence",
+        "text": "Harry Cordner"
+      }
+    ],
+    "page_body": [
+      {
+        "paragraphs": [
+          {
+            "index": 0,
+            "tag_type": "p",
+            "attrs": {},
+            "items": []
+          },
+          {
+            "index": 1,
+            "tag_type": "p",
+            "attrs": {},
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "**Henry \"Harry\" Cordner** (17 June 1885 – 14 November 1943) was an [[LINK|lang_en|Australian_rules|Australian rules]]footballer who played with [[LINK|lang_en|Melbourne_Football_Club|Melbourne]]and [[LINK|lang_en|Melbourne_University_Football_Club|University]]in the [[LINK|lang_en|Australian_Football_League|Victorian Football League]](VFL)."
+              }
+            ]
+          }
+        ],
+        "images": []
+      },
+      {
+        "paragraphs": [
+          {
+            "index": 0,
+            "tag_type": "h2",
+            "attrs": {
+              "id": "education"
+            },
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "Education"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "tag_type": "p",
+            "attrs": {},
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "He graduated M.B., Ch.B."
+              },
+              {
+                "type": "sentence",
+                "index": 1,
+                "text": "from the [[LINK|lang_en|University_of_Melbourne|University of Melbourne]]in 1909."
+              }
+            ]
+          }
+        ],
+        "images": []
+      },
+      {
+        "paragraphs": [
+          {
+            "index": 0,
+            "tag_type": "h2",
+            "attrs": {
+              "id": "football"
+            },
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "Football"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "tag_type": "p",
+            "attrs": {},
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "Harry's brother [[LINK|lang_en|Edward_Cordner|Ted Cordner]], and his cousins [[LINK|lang_en|Alan_Cordner|Alan Cordner]]and [[LINK|lang_en|Laurence_Cordner|\"Larry\" Cordner]], also played senior VFL football."
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "tag_type": "p",
+            "attrs": {},
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "Harry is the uncle of the [[LINK|lang_en|Don_Cordner|Don Cordner]], [[LINK|lang_en|Dennis_Cordner|Dennis Cordner]], [[LINK|lang_en|Ted_Cordner|Ted Cordner]]and [[LINK|lang_en|John_Cordner_(sportsman)|John Cordner]]who all played for Melbourne in the 1940s."
+              }
+            ]
+          }
+        ],
+        "images": []
+      },
+      {
+        "paragraphs": [
+          {
+            "index": 0,
+            "tag_type": "h2",
+            "attrs": {
+              "id": "soldier"
+            },
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "Soldier"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "tag_type": "p",
+            "attrs": {},
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "Overseas at the time that war broke out, Dr. Henry Cordner was commissioned as a lieutenant in the [[LINK|lang_en|Royal_Army_Medical_Corps|Royal Army Medical Corps]], on 16 August 1914, [[CITE|2|http://london-gazette.co.uk/issues/28881/pages/6798/page.pdf]] promoted to captain on 16 August 1916, [[CITE|3|http://london-gazette.co.uk/issues/29287/pages/8874/page.pdf]] and served in France."
+              }
+            ]
+          }
+        ],
+        "images": []
+      },
+      {
+        "paragraphs": [
+          {
+            "index": 0,
+            "tag_type": "h2",
+            "attrs": {
+              "id": "see-also"
+            },
+            "items": [
+              {
+                "type": "sentence",
+                "index": 0,
+                "text": "See also"
+              }
+            ]
+          },
+          {
+            "index": 1,
+            "tag_type": "ul",
+            "attrs": {},
+            "items": [
+              {
+                "type": "list_item",
+                "index": 0,
+                "sentences": [
+                  {
+                    "type": "sentence",
+                    "index": 0,
+                    "text": "[[LINK|lang_en|List_of_Australian_rules_football_families|List of Australian rules football families]]"
+                  }
+                ],
+                "tag_type": "li"
+              }
+            ]
+          },
+          {
+            "index": 2,
+            "tag_type": "noscript",
+            "attrs": {},
+            "items": []
+          },
+          {
+            "index": 3,
+            "tag_type": "p",
+            "attrs": {},
+            "items": []
+          }
+        ],
+        "images": []
+      }
+    ],
+    "main_photo": [
+      {
+        "type": "main_image",
+        "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
+        "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
+        "caption": [],
+        "attribution_url": null,
+        "category": "PICTURE"
+      }
+    ],
+    "citations": [
+      {
+        "citation_id": 0,
+        "description": [
+          {
+            "type": "sentence",
+            "index": 0,
+            "text": "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia."
+          },
+          {
+            "type": "sentence",
+            "index": 1,
+            "text": "Text is available under the Creative Commons Attribution-ShareAlike License."
+          },
+          {
+            "type": "sentence",
+            "index": 2,
+            "text": "Additional terms may apply."
+          },
+          {
+            "type": "sentence",
+            "index": 3,
+            "text": "See everipedia.org/everipedia-termsfor further details."
+          },
+          {
+            "type": "sentence",
+            "index": 4,
+            "text": "Images/media credited individually (click the icon for details)."
+          }
+        ],
+        "timestamp": "07/16/2016 08:35:18 AM UTC",
+        "mime": "None",
+        "attribution": "rel='nofollow'",
+        "url": "https://en.wikipedia.org/wiki/Harry_Cordner",
+        "social_type": null,
+        "category": "NONE"
+      },
+      {
+        "citation_id": 1,
+        "description": [
+          {
+            "type": "sentence",
+            "index": 0,
+            "text": "Harry Cordner's statistics from AFL Tables"
+          }
+        ],
+        "timestamp": "12/01/2017 09:13:55 PM UTC",
+        "mime": "None",
+        "attribution": "rel='nofollow'",
+        "url": "http://afltables.com/afl/stats/players/H/Harry_Cordner.html",
+        "social_type": null,
+        "category": "NONE"
+      },
+      {
+        "citation_id": 2,
+        "description": [
+          {
+            "type": "sentence",
+            "index": 0,
+            "text": "The London Gazette, 28 August 1914, p.6798."
+          }
+        ],
+        "timestamp": "07/16/2016 08:35:18 AM UTC",
+        "mime": "None",
+        "attribution": "rel='nofollow'",
+        "url": "http://london-gazette.co.uk/issues/28881/pages/6798/page.pdf",
+        "social_type": null,
+        "category": "NONE"
+      },
+      {
+        "citation_id": 3,
+        "description": [
+          {
+            "type": "sentence",
+            "index": 0,
+            "text": "The London Gazette, 7 September 1915, p.8874."
+          }
+        ],
+        "timestamp": "07/16/2016 08:35:18 AM UTC",
+        "mime": "None",
+        "attribution": "rel='nofollow'",
+        "url": "http://london-gazette.co.uk/issues/29287/pages/8874/page.pdf",
+        "social_type": null,
+        "category": "NONE"
+      }
+    ],
+    "media_gallery": [],
+    "infoboxes": [],
+    "metadata": [
+      {
+        "key": "page_type",
+        "value": null
+      },
+      {
+        "key": "is_removed",
+        "value": false
+      },
+      {
+        "key": "is_adult_content",
+        "value": false
+      },
+      {
+        "key": "creation_timestamp",
+        "value": "07/16/2016 08:34:53 AM UTC"
+      },
+      {
+        "key": "last_modified",
+        "value": "12/01/2017 09:13:56 PM UTC"
+      },
+      {
+        "key": "url_slug",
+        "value": "Harry_Cordner"
+      },
+      {
+        "key": "url_slug_alternate",
+        "value": "Harry_Cordner"
+      },
+      {
+        "key": "sub_page_type",
+        "value": null
+      },
+      {
+        "key": "is_wikipedia_import",
+        "value": true
+      },
+      {
+        "key": "is_indexed",
+        "value": true
+      },
+      {
+        "key": "bing_index_override",
+        "value": true
+      },
+      {
+        "key": "is_locked",
+        "value": false
+      },
+      {
+        "key": "page_lang",
+        "value": "en"
+      }
+    ],
+    "amp_info": {
+      "load_youtube_js": false,
+      "load_audio_js": false,
+      "load_video_js": false,
+      "lightboxes": []
+    },
+    "ipfs_hash": "QmVvWnUbH54ZYMVVjoC2wwrYBMBSxUAUWkN1SZ69zNTUgS"
+  }

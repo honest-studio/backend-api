@@ -16,6 +16,10 @@ export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NOR
 
 export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
 
+export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
+
+export type CellType = 'th' | 'td';
+
 export interface Sentence {
     type: string; // sentence
     index: number;
@@ -68,6 +72,7 @@ export interface Media {
     width?: number;
     category?: MediaCategoryType;
     diff?: DiffType;
+    srcSet?: string;
 }
 
 // Valid Metadata keys
@@ -120,11 +125,17 @@ export interface Citation {
 }
 
 export interface Table {
-    type: string; // wikitable
-    caption: string;
+    type: 'wikitable' | 'body-table';
+    attrs: {};
+    caption: TableCaption;
     thead: TableSection;
     tbody: TableSection;
     tfoot: TableSection;
+}
+
+export interface TableCaption {
+    attrs: {};
+    sentences: Sentence[];
 }
 
 export interface TableSection {
@@ -139,17 +150,32 @@ export interface TableRow {
     diff?: DiffType;
 }
 
+export interface TableCellTextItem {
+    type: 'text';
+    content: Sentence[];
+}
+
+export interface TableCellTagItem {
+    type: 'tag';
+    tag_type: string;
+    tag_class: 'inline' | 'block' | 'void';
+    attrs: {};
+    content: TableCellContentItem[]; // allow for recursion
+}
+
+export type TableCellContentItem = TableCellTextItem | TableCellTagItem;
+
 export interface TableCell {
     index: number;
     attrs: {};
-    tag_type: string;
-    content: Sentence[];
+    tag_type: CellType;
+    content: TableCellContentItem[];
 }
 
 export interface ArticleJson {
     page_title: Sentence[];
     main_photo: Media[];
-    infobox_html: string;
+    infobox_html: Table;
     page_body: Section[];
     infoboxes: Infobox[];
     citations: Citation[];

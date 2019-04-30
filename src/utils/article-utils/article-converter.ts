@@ -2,6 +2,9 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
+import {convert as ReactAttrConvert} from 'react-attr-converter';
+import * as  util from 'util';
+import * as JSONCycleCustom from './json-cycle-custom';
 import {
     WikiLink,
     Sentence,
@@ -13,13 +16,15 @@ import {
     Infobox,
     Table,
     Paragraph,
-    ListItem,
-    AmpInfo,
-    TableRow,
+    TableCellTextItem,
+    TableCellTagItem,
+    TableCellContentItem,
     TableCell
 } from './article-dto';
 import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
+const blockElements = require('block-elements');
+const voidElements = require('html-void-elements');
 
 const decode = require('unescape');
 const normalizeUrl = require('normalize-url');
@@ -31,16 +36,17 @@ export const CAPTURE_REGEXES = {
     link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/g,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/g,
     inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/g,
-    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
+    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
 };
 export const REPLACEMENTS = [
     { regex: /\u{00A0}/g, replacement: ' ' },
     { regex: /\u{200B}/g, replacement: '' },
     { regex: /\n <\/a>\n/g, replacement: '</a>' },
-    { regex: /<\/a> (,|.|:|'|\))/g, replacement: '</a>$1' },
+    { regex: /<\/a> (,|.|:|;|'|\))/g, replacement: '</a>$1' },
     { regex: / {1,}/g, replacement: ' ' },
     { regex: /\n\s/g, replacement: ' ' },
     { regex: / , /g, replacement: ', ' },
+    { regex: / ; /g, replacement: '; ' },
     { regex: / \./g, replacement: '.' },
     {
         regex: /https:\/\/s3.amazonaws.com\/everipedia-storage/g,
@@ -81,6 +87,39 @@ function pyToJS(inputItem: any) {
     }
 }
 
+/**
+ * @function parseStyles
+ * Parses a string of inline styles into a javascript object with casing for react
+ *
+ * @param {string} styles
+ * @returns {Object}
+ */
+const parseStyles = (styles: string): {} => {
+    return styles
+    .split(';')
+    .filter(style => style.split(':')[0] && style.split(':')[1])
+    .map(style => [
+        style.split(':')[0].trim().replace(/-./g, c => c.substr(1).toUpperCase()),
+        style.split(':').slice(1).join(':').trim()
+    ])
+    .reduce((styleObj, style) => ({
+        ...styleObj,
+        [style[0]]: style[1],
+    }), {});
+}
+
+const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+    let cleanedAttrs = {};
+    const keys = Object.keys(inputAttrs);
+    for (const key of keys) {
+        if (inputAttrs[key] && inputAttrs[key] != '') cleanedAttrs[ReactAttrConvert(key)] = inputAttrs[key];
+    }
+    if (cleanedAttrs['style']){
+        cleanedAttrs['style'] = parseStyles(cleanedAttrs['style']);
+    } 
+    return cleanedAttrs;
+}
+
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     console.time("replacements");
@@ -116,6 +155,17 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     console.time("sanitize citations");
     $ = sanitizeCitations($, citations);
     console.timeEnd("sanitize citations");
+
+    let quickHTML = $.html();
+    // Replace some problematic unicode characters and other stuff
+    REPLACEMENTS.forEach(function(pair) {
+        quickHTML = quickHTML.replace(pair.regex, pair.replacement);
+    });
+
+    // console.log(quickHTML);
+
+    dom = htmlparser2.parseDOM(quickHTML, { decodeEntities: true });
+    $ = cheerio.load(dom);
 
     console.time("metadata");
     const metadata = extractMetadata($);
@@ -401,7 +451,7 @@ function extractMainPhoto($: CheerioStatic): Media[] {
     return [main_photo];
 }
 
-function extractInfoboxHtml($: CheerioStatic): string {
+function extractInfoboxHtml($: CheerioStatic): Table {
     const blobbox = $('div.blobbox-wrap');
 
     // no infobox found
@@ -413,8 +463,12 @@ function extractInfoboxHtml($: CheerioStatic): string {
             .trim(),
         'all'
     );
-
-    return html;
+    
+    let parsedBlobBox = parseTable($(blobbox), 'wikitable');
+    // parsedBlobBox.tbody.rows.forEach((row) => {
+    //     console.log(row);
+    // });
+    return parsedBlobBox;
 }
 
 function extractInfoboxes($: CheerioStatic): Infobox[] {
@@ -602,10 +656,11 @@ function parseSection($section: Cheerio): Section {
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
-                image.url = parts[1];
-                image.alt = parts[2];
-                image.height = Number(parts[3].substring(1));
-                image.width = Number(parts[4].substring(1));
+                image.url = normalizeUrl(parts[1]);
+                image.srcSet = parts[2];
+                image.alt = parts[3];
+                image.height = Number(parts[4].substring(1));
+                image.width = Number(parts[5].substring(1));
                 image.type = 'inline_image';
                 image.category = linkCategorizer(image.url);
             }
@@ -642,7 +697,7 @@ function parseSection($section: Cheerio): Section {
         const paragraph: any = {
             index: i,
             tag_type: element.tagName.toLowerCase() || null,
-            attrs: element.attribs,
+            attrs: cleanAttributes(element.attribs),
             items: []
         };
 
@@ -669,10 +724,10 @@ function parseSection($section: Cheerio): Section {
         // Tables
         else if (paragraph.tag_type == 'table') {
             // ignore images
-            const classes = paragraph.attrs.class;
+            const classes = paragraph.attrs.className;
             if (classes && classes.includes('blurb-inline-image-container')) continue;
 
-            const table = parseTable($element);
+            const table = parseTable($element, 'body-table');
             paragraph.items.push(table);
         }
 
@@ -704,6 +759,18 @@ function sanitizeText($: CheerioStatic) {
     // Remove style sections
     $('style').remove();
 
+    // Remove bad tags
+    const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
+    badTagSelectors.forEach((selector) => $(selector).remove());
+
+    // Unwrap certain tags
+    const unwrapTags = ['small'];
+    unwrapTags.forEach((selector) => {
+        $(selector).each(function(index, element) {
+            $(this).replaceWith($(element).contents());
+        });
+    })
+
     // Substitute all the links into something that is safe for the parser
     $('a.tooltippable').each(function(i, el) {
         let old_slug = decodeURIComponent($(el).attr('data-username'));
@@ -721,9 +788,19 @@ function sanitizeText($: CheerioStatic) {
             slug = old_slug;
         }
         
-        // Replace the tag with the string
-        const plaintextString = `[[LINK|lang_${lang_code}|${slug}|${display_text}]]`;
-        $(this).replaceWith(plaintextString);
+        // If the <a> is wrapping an <img>, do not replace with the Markdown
+        let innerTags = $(el).find('img');
+        if (innerTags && innerTags.length){
+            // Do nothing
+            return;
+        }
+        else {
+            // Replace the tag with the string
+            const plaintextString = `[[LINK|lang_${lang_code}|${slug}|${display_text}]]`;
+            $(this).replaceWith(plaintextString);
+        }
+
+
     });
 
     // Convert <strong> and <b> tags to **text** (Markdown)
@@ -768,19 +845,18 @@ function sanitizeText($: CheerioStatic) {
     // Convert images inside wikitables and ul's to markup
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
         // Construct a dictionary
-        const src = $(this).attr('src');
+        const src = normalizeUrl($(this).attr('src'));
+        const srcSet = $(this).attr('srcset') || '';
         const height = $(this).attr('height');
         const width = $(this).attr('width');
         const alt = $(this).attr('alt') || '';
 
+
         // Replace the tag with the string
-        const plaintextString = `[[INLINE_IMAGE|${src}|${alt}|h${height}|w${width}]]`;
+        const plaintextString = `[[INLINE_IMAGE|${src}|${srcSet}|${alt}|h${height}|w${width}]]`;
+
         $(this).replaceWith(plaintextString);
     });
-
-    // Remove bad tags
-    const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
-    badTagSelectors.forEach((selector) => $(selector).remove());
 
     // Replace thumbcaption divs with their text
     $('.thumbcaption').each(function(index, element) {
@@ -817,7 +893,7 @@ function sanitizeText($: CheerioStatic) {
             // Replace the center with all of its contents
             $(this).replaceWith($(element).contents());
         });
-
+    
     // Fix <div> elements
     theBody
         .children('div')
@@ -825,6 +901,8 @@ function sanitizeText($: CheerioStatic) {
             // Convert the div to a <p>
             $(element).replaceWith('<p>' + $(element).html() + '</p>');
         });
+
+    // console.log($('table').html())
 
     return $;
 }
@@ -842,6 +920,13 @@ export function parseSentences(inputString: string): Sentence[] {
 
         // Quick regex clean
         sentence.text = sentence.text.replace(/ {1,}/g, ' ');
+
+        // Make sure that all sentences start with a space, unless the index is 0
+        if (index > 0){
+            if (sentence.text.charAt(0) != " "){
+                sentence.text = " " + sentence.text;
+            }
+        }
 
         // Return the object
         return sentence;
@@ -1018,59 +1103,123 @@ export function getYouTubeID(url: string) {
     return false;
 }
 
-function parseTable($element: Cheerio): Table {
-    const table: any = {
-        type: 'wikitable'
+var circularObj = {} as any;
+circularObj.circularRef = circularObj;
+circularObj.list = [ circularObj, circularObj ];
+
+function tableCellContentsParser($contents: CheerioElement[], cellContents: TableCellContentItem[] = []) {
+    $contents.forEach((element, index) => {
+        switch (element.type){
+            case 'text':
+                let theSentences: Sentence[] = parseSentences(element.data);
+                if (theSentences.length) {
+                    cellContents.push({
+                        type: 'text',
+                        content: theSentences
+                    } as TableCellTextItem);
+                }
+                break;
+            case 'tag':
+                if (element.children.length) {
+
+                    let tagClass = blockElements.indexOf(element.name) !== -1 
+                    ? 'block'   
+                    : voidElements.indexOf(element.name) !== -1 
+                        ? 'void'
+                        : 'inline' ;
+    
+                    // console.log(element)
+                    let newElement = {
+                        type: 'tag',
+                        tag_type: element.name,
+                        tag_class: tagClass,
+                        attrs: cleanAttributes(element.attribs),
+                        content: tableCellContentsParser(element.children)
+                    } as TableCellTagItem;
+                    // console.log(newElement);
+                    cellContents.push(newElement);
+                }
+                break;
+        }
+    })
+    return cellContents;
+}
+
+function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
+    let $table;
+    switch (tableType){
+        case 'body-table': {
+            $table = $element;
+            break;
+        }
+        case 'wikitable': {
+            $table = $element.children('table');
+            break
+        }
+    }
+
+    const table: Partial<Table> = {
+        type: tableType as any,
+        attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
     };
 
     // Set the table caption, if present
-    const $caption = $element.children('caption');
-    if ($caption.length > 0) table.caption = $caption.html().trim();
+    const $caption = $table.children('caption');
+    table.caption = { 
+        attrs: $caption.length > 0 ? cleanAttributes($caption[0].attribs) : {}, 
+        sentences: $caption.length > 0 ? parseSentences($caption.html()) : []
+        // sentences: $caption.length > 0 ? parseSentences($caption.html().trim()) : []
+    }
 
     // Deal with the colgroup
     // TODO
 
-    // Setup the head, body, and foot
-    const $table_containers = $element.children('thead, tbody, tfoot');
+    // Parse the thead, tbody, and tfoot
     const table_sections = ['thead', 'tbody', 'tfoot'];
-    for (let j = 0; j < table_sections.length; j++) {
-        const tsection = table_sections[j];
-        const $tsection = $element.children(tsection);
-        table[tsection] = { rows: [] };
-        if ($tsection.length > 0) table[tsection].attrs = $tsection[0].attribs;
-        else table[tsection].attrs = {};
-    }
-
-    // Add the rows and cells
-    const $rows = $element.find('tr');
-    $rows.each(function(i, row) {
-        const parentTag = row.parentNode.tagName;
-        const table_row = {
-            index: i,
-            attrs: row.attribs,
-            cells: []
+    table_sections.forEach((sectionName) => {
+        table[sectionName] = { 
+            rows: [],
+            attrs: {}
         };
-
-        const $cells = $rows.eq(i).find('td, th');
-        $cells.each(function(j, cell) {
-            table_row.cells.push({
-                index: j,
-                attrs: cell.attribs,
-                tag_type: cell.tagName.toLowerCase(),
-                // a lot of useless HTML tags are getting stripped out here when we grab only the text.
-                // it's possible those HTML divs may contain useful content for a few articles.
-                // if that turns out to be the case, this logic needs to be more complex.
-                content: parseSentences(
-                    $cells
-                        .eq(j)
-                        .text()
-                        .trim()
-                )
-            });
-        });
-
-        table[parentTag].rows.push(table_row);
-    });
-
-    return table;
+        let $tsection = $table.children(sectionName);
+        $tsection.each((idx, sectElem) => {
+            let $TSECT = cheerio.load(sectElem);
+            let rowsArr = [];
+            $TSECT(sectElem).children('tr').each((rowIdx, rowElem) => {
+                let $TROW = cheerio.load(rowElem);
+                let cellsArr = [];
+                $TROW(rowElem).children('th, td').each((cellIdx, cellElem) => {
+                    let theContentsParsed = tableCellContentsParser(cellElem.children, []);
+                    if (theContentsParsed.length){
+                        cellsArr.push({
+                            index: cellIdx,
+                            attrs: cleanAttributes(cellElem.attribs),
+                            tag_type: cellElem.name,
+                            tag_class: 'block',
+                            content: theContentsParsed,
+                        });
+                    }
+                })
+                rowsArr.push({
+                    index: rowIdx,
+                    tag_type: 'tr',
+                    tag_class: 'block',
+                    attrs: cleanAttributes(rowElem.attribs),
+                    cells: cellsArr
+                })
+            })
+            table[sectionName] = { 
+                rows: rowsArr,
+                attrs: cleanAttributes(sectElem.attribs) 
+            };
+        })
+    })
+    // Prevent MongoDB from complaining about Circular references in JSON
+    let decycledTable = JSONCycleCustom.decycle(table, []) as any;
+    // if (table.type == 'body-table') {
+    //     console.log("--------------------------")
+    //     console.log(util.inspect(decycledTable, false, null, true));
+    //     console.log("--------------------------")
+    // }
+    return decycledTable as Table;
 }

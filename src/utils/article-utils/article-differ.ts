@@ -10,9 +10,11 @@ import {
     Table,
     TableRow,
     TableSection,
+    TableCaption,
     Infobox,
     Citation,
-    DiffType
+    DiffType,
+    TableCellContentItem
 } from './article-dto';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
@@ -353,9 +355,9 @@ function linesToTable(lines: string): Table {
     const thead = linesToTableSection(table_sections[0]);
     const tbody = linesToTableSection(table_sections[1]);
     const tfoot = linesToTableSection(table_sections[2]);
-    const caption = table_sections[3];
+    const caption: TableCaption = {attrs: {}, sentences: []} // table_sections[3];
 
-    return { type: 'table', thead, tbody, tfoot, caption };
+    return { type: 'body-table', attrs: {}, thead, tbody, tfoot, caption };
 }
 
 function linesToTableSection(lines: string): TableSection {
@@ -380,7 +382,8 @@ function lineToTableRow(line: string): TableRow {
         tag_type: 'td'
     }));
 
-    return { index: 0, attrs: {}, cells, diff: difftype };
+    return { index: 0, attrs: {}, cells: [], diff: difftype };
+    // return { index: 0, attrs: {}, cells, diff: difftype };
 }
 
 function lineToImage(line: string): Media {
@@ -452,8 +455,24 @@ function tableToLines(table: Table): string {
     TABLE_SECTION_SEPARATOR + caption_line;
 }
 
+function tableRowContentToText(contents: TableCellContentItem[], concattedText: string = ""): string {
+    contents.forEach((item, index) => {
+        switch (item.type){
+            case 'text':
+                concattedText = concattedText.concat(...item.content.map((sent) => sent.text).join())
+                break;
+            case 'tag':
+                if (item.content.length) {
+                    concattedText = tableRowContentToText(item.content, "");
+                }
+                break;
+        }
+    })
+    return concattedText;
+}
+
 function tableRowToLine(row: TableRow): string {
-    return row.cells.map((cell) => cell.content.map((sentence) => sentence.text).join(' ')).join(TABLE_CELL_SEPARATOR);
+    return row.cells.map((cell) => tableRowContentToText(cell.content, "")).join(TABLE_CELL_SEPARATOR);
 }
 
 function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]): Infobox[] {

@@ -500,15 +500,15 @@ export class AmpRenderPartial {
         if (
             !(
                 (infoboxes && infoboxes.length > 0) ||
-                (this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0)
+                (this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length > 0)
             )
         ) {
             return ``;
         }
         let blobBoxResult;
-        if (this.artJSON.infobox_html && this.artJSON.infobox_html.length > 0) {
+        if (this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length > 0) {
             blobBoxResult = CheckForLinksOrCitationsAMP(
-                blobBoxPreSanitize(this.artJSON.infobox_html),
+                "", //blobBoxPreSanitize(this.artJSON.infobox_html),
                 this.artJSON.citations,
                 this.artJSON.ipfs_hash,
                 []
@@ -530,7 +530,7 @@ export class AmpRenderPartial {
                     </h2>
                     <div class='amp-wrap'>
                         ${
-                            this.artJSON.infobox_html && this.artJSON.infobox_html.length != 0
+                            this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length != 0
                                 ? `<div id="blobBox_container" class='infbx-ct'>
                                 ${blobBoxResult.text}
                             </div>`
