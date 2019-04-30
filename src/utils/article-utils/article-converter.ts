@@ -19,7 +19,9 @@ import {
     NestedTextItem,
     NestedTagItem,
     NestedContentItem,
-    TableCell
+    TableCell,
+    DescList,
+    DescListItem
 } from './article-dto';
 import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
@@ -723,7 +725,8 @@ function parseSection($section: Cheerio): Section {
 
         // Description List
         else if (paragraph.tag_type == 'dl') {
-            console.log(paragraph)
+            const DescList = parseDescriptionList($element);
+            paragraph.items.push(DescList);
         }
 
         // Tables
@@ -1112,7 +1115,7 @@ var circularObj = {} as any;
 circularObj.circularRef = circularObj;
 circularObj.list = [ circularObj, circularObj ];
 
-function tableCellContentsParser($contents: CheerioElement[], cellContents: NestedContentItem[] = []) {
+function nestedContentParser($contents: CheerioElement[], cellContents: NestedContentItem[] = []) {
     $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':
@@ -1139,7 +1142,7 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Nest
                         tag_type: element.name,
                         tag_class: tagClass,
                         attrs: cleanAttributes(element.attribs),
-                        content: tableCellContentsParser(element.children)
+                        content: nestedContentParser(element.children)
                     } as NestedTagItem;
                     // console.log(newElement);
                     cellContents.push(newElement);
@@ -1148,6 +1151,38 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Nest
         }
     })
     return cellContents;
+}
+
+function parseDescriptionList($dlist: Cheerio): DescList {
+    const dlist: DescList = {
+        type: 'dl',
+        attrs: $dlist.length > 0 ? cleanAttributes($dlist[0].attribs) : {},
+        items: []
+    };
+
+    // Parse the dt and dd tags
+    let $dtags = $dlist.children('dt, dd');
+    let dtagArr = [];
+    $dtags.each((idx, dElem) => {
+        let theContentsParsed = nestedContentParser(dElem.children, []);
+        if (theContentsParsed.length){
+            dtagArr.push({
+                index: idx,
+                attrs: cleanAttributes(dElem.attribs),
+                tag_type: dElem.name,
+                content: theContentsParsed,
+            });
+        }
+    });
+
+    if (dtagArr.length) dlist.items = dtagArr;
+
+    // Prevent MongoDB from complaining about Circular references in JSON
+    let decycledDescList = JSONCycleCustom.decycle(dlist, []) as any;
+    // console.log("--------------------------")
+    // console.log(util.inspect(decycledDescList, false, null, true));
+    // console.log("--------------------------")
+    return decycledDescList as DescList;
 }
 
 function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
@@ -1194,7 +1229,7 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
                 let $TROW = cheerio.load(rowElem);
                 let cellsArr = [];
                 $TROW(rowElem).children('th, td').each((cellIdx, cellElem) => {
-                    let theContentsParsed = tableCellContentsParser(cellElem.children, []);
+                    let theContentsParsed = nestedContentParser(cellElem.children, []);
                     if (theContentsParsed.length){
                         cellsArr.push({
                             index: cellIdx,

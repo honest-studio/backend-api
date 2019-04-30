@@ -142,18 +142,14 @@ export interface Citation {
 export interface DescList {
     type: 'dl';
     attrs: {};
+    items: DescListItem[];
 }
 
-export type DescListItem = DescListTerm | DescListDescription;
-
-export interface DescListTerm {
+export interface DescListItem {
     index: number;
-    type: 'dt';
+    tag_type: 'dt' | 'dd';
     attrs: {};
-}
-export interface DescListDescription {
-    type: 'dd';
-    attrs: {};
+    content: NestedContentItem[];
 }
 
 export interface Table {
