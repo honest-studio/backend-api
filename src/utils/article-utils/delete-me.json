@@ -2,13 +2,9 @@
    "infobox_html":{  
       "type":"wikitable",
       "attrs":{  
-         "cellSpacing":"3",
-         "className":"infobox geography vcard",
+         "className":"infobox",
          "style":{  
-            "borderSpacing":"3px",
-            "width":"300px",
-            "fontSize":"85%",
-            "lineHeight":"1.4em"
+            "width":"24em"
          }
       },
       "caption":{  
@@ -34,7 +30,7 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
+                  "className":"mergedrow"
                },
                "cells":[  
                   {  
@@ -43,22 +39,43 @@
                         "colSpan":"2",
                         "style":{  
                            "textAlign":"center",
-                           "fontSize":"1.25em",
-                           "fontWeight":"bold",
-                           "lineHeight":"1.3em",
-                           "whiteSpace":"nowrap"
+                           "background":"white",
+                           "width":"100%",
+                           "height":"30px",
+                           "verticalAlign":"middle",
+                           "borderTop":"0.4em solid #CDDEFF"
                         }
                      },
-                     "tag_type":"th",
+                     "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"big",
+                           "tag_class":"inline",
+                           "attrs":{  
+
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"그레이트브리튼 왕국"
+                                 "type":"tag",
+                                 "tag_type":"big",
+                                 "tag_class":"inline",
+                                 "attrs":{  
+
+                                 },
+                                 "content":[  
+                                    {  
+                                       "type":"text",
+                                       "content":[  
+                                          {  
+                                             "type":"sentence",
+                                             "index":0,
+                                             "text":"**글래스고**"
+                                          }
+                                       ]
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -71,7 +88,7 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
+                  "className":"mergedrow"
                },
                "cells":[  
                   {  
@@ -80,9 +97,10 @@
                         "colSpan":"2",
                         "style":{  
                            "textAlign":"center",
-                           "backgroundColor":"#e3e3e3",
-                           "fontWeight":"bold",
-                           "fontSize":"1.2em"
+                           "background":"white",
+                           "height":"30px",
+                           "verticalAlign":"middle",
+                           "borderBottom":"0.4em solid #CDDEFF"
                         }
                      },
                      "tag_type":"td",
@@ -90,10 +108,10 @@
                      "content":[  
                         {  
                            "type":"tag",
-                           "tag_type":"span",
+                           "tag_type":"big",
                            "tag_class":"inline",
                            "attrs":{  
-                              "lang":"en"
+
                            },
                            "content":[  
                               {  
@@ -102,7 +120,7 @@
                                     {  
                                        "type":"sentence",
                                        "index":0,
-                                       "text":"Kingdom of Great Britain"
+                                       "text":"Glasga, Glaschu"
                                     }
                                  ]
                               }
@@ -120,13 +138,21 @@
 
                },
                "cells":[  
+
+               ]
+            },
+            {  
+               "index":3,
+               "tag_type":"tr",
+               "tag_class":"block",
+               "attrs":{  
+
+               },
+               "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "colSpan":"2",
-                        "style":{  
-                           "textAlign":"center"
-                        }
+                        "colSpan":"2"
                      },
                      "tag_type":"td",
                      "tag_class":"block",
@@ -137,11 +163,10 @@
                            "tag_class":"block",
                            "attrs":{  
                               "style":{  
-                                 "textAlign":"center",
-                                 "margin":"0 auto",
-                                 "background":"transparent"
-                              },
-                              "width":"100%"
+                                 "width":"100%",
+                                 "background":"none",
+                                 "textAlign":"center"
+                              }
                            },
                            "content":[  
                               {  
@@ -167,183 +192,32 @@
                                              "attrs":{  
                                                 "style":{  
                                                    "border":"0",
-                                                   "verticalAlign":"middle",
-                                                   "fontSize":"30%",
-                                                   "lineHeight":"30%"
-                                                },
-                                                "width":"50px"
-                                             },
-                                             "content":[  
-                                                {  
-                                                   "type":"text",
-                                                   "content":[  
-                                                      {  
-                                                         "type":"sentence",
-                                                         "index":0,
-                                                         "text":"[[LINK|lang_ko|스코틀랜드_왕국|←]][[LINK|lang_ko|스코틀랜드_왕국|]] [[LINK|lang_ko|잉글랜드_왕국|←]][[LINK|lang_ko|잉글랜드_왕국|]]"
-                                                      }
-                                                   ]
-                                                }
-                                             ]
-                                          },
-                                          {  
-                                             "type":"tag",
-                                             "tag_type":"td",
-                                             "tag_class":"inline",
-                                             "attrs":{  
-                                                "style":{  
-                                                   "verticalAlign":"middle",
-                                                   "textAlign":"center",
-                                                   "fontSize":"100%",
-                                                   "border":"0"
+                                                   "verticalAlign":"middle"
                                                 }
                                              },
                                              "content":[  
                                                 {  
-                                                   "type":"text",
+                                                   "type":"tag",
+                                                   "tag_type":"a",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "className":"tooltippable wikilink",
+                                                      "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Glasgow_Coat_of_Arms.png",
+                                                      "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Glasgow_Coat_of_Arms.png/",
+                                                      "rel":"nofollow"
+                                                   },
                                                    "content":[  
                                                       {  
-                                                         "type":"sentence",
-                                                         "index":0,
-                                                         "text":"**1707년** – **1801년**"
+                                                         "type":"text",
+                                                         "content":[  
+                                                            {  
+                                                               "type":"sentence",
+                                                               "index":0,
+                                                               "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Glasgow_Coat_of_Arms.png/110px-Glasgow_Coat_of_Arms.png|//upload.wikimedia.org/wikipedia/commons/thumb/4/46/Glasgow_Coat_of_Arms.png/165px-Glasgow_Coat_of_Arms.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/46/Glasgow_Coat_of_Arms.png/220px-Glasgow_Coat_of_Arms.png 2x|Glasgow Coat of Arms.png|h150|w110]]"
+                                                            }
+                                                         ]
                                                       }
                                                    ]
-                                                }
-                                             ]
-                                          },
-                                          {  
-                                             "type":"tag",
-                                             "tag_type":"td",
-                                             "tag_class":"inline",
-                                             "attrs":{  
-                                                "style":{  
-                                                   "border":"0",
-                                                   "verticalAlign":"middle",
-                                                   "textAlign":"right",
-                                                   "lineHeight":"30%",
-                                                   "fontSize":"30%"
-                                                },
-                                                "width":"50px"
-                                             },
-                                             "content":[  
-                                                {  
-                                                   "type":"text",
-                                                   "content":[  
-                                                      {  
-                                                         "type":"sentence",
-                                                         "index":0,
-                                                         "text":"[[LINK|lang_ko|그레이트_브리튼_아일랜드_연합_왕국|]][[LINK|lang_ko|그레이트_브리튼_아일랜드_연합_왕국|→]]"
-                                                      }
-                                                   ]
-                                                }
-                                             ]
-                                          }
-                                       ]
-                                    }
-                                 ]
-                              }
-                           ]
-                        }
-                     ]
-                  }
-               ]
-            },
-            {  
-               "index":3,
-               "tag_type":"tr",
-               "tag_class":"block",
-               "attrs":{  
-
-               },
-               "cells":[  
-                  {  
-                     "index":0,
-                     "attrs":{  
-                        "colSpan":"2",
-                        "style":{  
-                           "textAlign":"center"
-                        }
-                     },
-                     "tag_type":"td",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"tag",
-                           "tag_type":"div",
-                           "tag_class":"block",
-                           "attrs":{  
-                              "style":{  
-                                 "display":"table",
-                                 "width":"100%"
-                              }
-                           },
-                           "content":[  
-                              {  
-                                 "type":"tag",
-                                 "tag_type":"div",
-                                 "tag_class":"block",
-                                 "attrs":{  
-                                    "style":{  
-                                       "display":"table-cell",
-                                       "width":"58%",
-                                       "verticalAlign":"middle",
-                                       "paddingLeft":"5px"
-                                    }
-                                 },
-                                 "content":[  
-                                    {  
-                                       "type":"tag",
-                                       "tag_type":"div",
-                                       "tag_class":"block",
-                                       "attrs":{  
-                                          "style":{  
-                                             "fontSize":"90%"
-                                          }
-                                       },
-                                       "content":[  
-                                          {  
-                                             "type":"text",
-                                             "content":[  
-                                                {  
-                                                   "type":"sentence",
-                                                   "index":0,
-                                                   "text":"[[LINK|lang_ko|영국의_국기|국기]]"
-                                                }
-                                             ]
-                                          }
-                                       ]
-                                    }
-                                 ]
-                              },
-                              {  
-                                 "type":"tag",
-                                 "tag_type":"div",
-                                 "tag_class":"block",
-                                 "attrs":{  
-                                    "style":{  
-                                       "display":"table-cell",
-                                       "verticalAlign":"middle",
-                                       "padding":"0px 5px"
-                                    }
-                                 },
-                                 "content":[  
-                                    {  
-                                       "type":"tag",
-                                       "tag_type":"div",
-                                       "tag_class":"block",
-                                       "attrs":{  
-                                          "style":{  
-                                             "paddingBottom":"3px"
-                                          }
-                                       },
-                                       "content":[  
-                                          {  
-                                             "type":"text",
-                                             "content":[  
-                                                {  
-                                                   "type":"sentence",
-                                                   "index":0,
-                                                   "text":"[[LINK|lang_ko|파일:Coat_of_Arms_of_Great_Britain_(1714-1801).svg|]]"
                                                 }
                                              ]
                                           }
@@ -351,21 +225,41 @@
                                     },
                                     {  
                                        "type":"tag",
-                                       "tag_type":"div",
-                                       "tag_class":"block",
+                                       "tag_type":"tr",
+                                       "tag_class":"inline",
                                        "attrs":{  
-                                          "style":{  
-                                             "fontSize":"90%"
-                                          }
+
                                        },
                                        "content":[  
                                           {  
-                                             "type":"text",
+                                             "type":"tag",
+                                             "tag_type":"td",
+                                             "tag_class":"inline",
+                                             "attrs":{  
+                                                "style":{  
+                                                   "border":"0"
+                                                }
+                                             },
                                              "content":[  
                                                 {  
-                                                   "type":"sentence",
-                                                   "index":0,
-                                                   "text":"[[LINK|lang_ko|영국의_왕실_문장|왕실 문장]]"
+                                                   "type":"tag",
+                                                   "tag_type":"span",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "className":"nowrap"
+                                                   },
+                                                   "content":[  
+                                                      {  
+                                                         "type":"text",
+                                                         "content":[  
+                                                            {  
+                                                               "type":"sentence",
+                                                               "index":0,
+                                                               "text":"휘장"
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
                                                 }
                                              ]
                                           }
@@ -390,84 +284,551 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
+                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"center"
                         }
-                     },
-                     "tag_type":"th",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"text",
-                           "content":[  
-                              {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"표어"
-                              }
-                           ]
-                        }
-                     ]
-                  },
-                  {  
-                     "index":1,
-                     "attrs":{  
-
                      },
                      "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
                         {  
                            "type":"tag",
-                           "tag_type":"span",
-                           "tag_class":"inline",
+                           "tag_type":"div",
+                           "tag_class":"block",
                            "attrs":{  
                               "style":{  
-                                 "fontSize":"smaller"
+                                 "width":"302px",
+                                 "margin":"3px auto",
+                                 "padding":"3px",
+                                 "float":"none",
+                                 "clear":"both",
+                                 "background":"#F9F9F9"
                               }
                            },
                            "content":[  
                               {  
-                                 "type":"text",
+                                 "type":"tag",
+                                 "tag_type":"div",
+                                 "tag_class":"block",
+                                 "attrs":{  
+                                    "className":"geonugget",
+                                    "style":{  
+                                       "position":"relative",
+                                       "padding":"0px",
+                                       "width":"300px"
+                                    }
+                                 },
                                  "content":[  
                                     {  
-                                       "type":"sentence",
-                                       "index":0,
-                                       "text":"[[LINK|lang_ko|프랑스어|프랑스어]]:"
+                                       "type":"tag",
+                                       "tag_type":"a",
+                                       "tag_class":"inline",
+                                       "attrs":{  
+                                          "className":"tooltippable wikilink",
+                                          "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Scotland_location_map.svg",
+                                          "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Scotland_location_map.svg/",
+                                          "rel":"nofollow",
+                                          "title":"글래스고 (스코틀랜드)"
+                                       },
+                                       "content":[  
+                                          {  
+                                             "type":"text",
+                                             "content":[  
+                                                {  
+                                                   "type":"sentence",
+                                                   "index":0,
+                                                   "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/300px-Scotland_location_map.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/450px-Scotland_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/67/Scotland_location_map.svg/600px-Scotland_location_map.svg.png 2x|글래스고 (스코틀랜드)|h394|w300]]"
+                                                }
+                                             ]
+                                          }
+                                       ]
+                                    },
+                                    {  
+                                       "type":"tag",
+                                       "tag_type":"div",
+                                       "tag_class":"block",
+                                       "attrs":{  
+                                          "style":{  
+                                             "position":"absolute",
+                                             "zIndex":"2",
+                                             "top":"79.1%",
+                                             "left":"54.1%",
+                                             "height":"0",
+                                             "width":"0",
+                                             "margin":"0",
+                                             "padding":"0"
+                                          }
+                                       },
+                                       "content":[  
+                                          {  
+                                             "type":"tag",
+                                             "tag_type":"div",
+                                             "tag_class":"block",
+                                             "attrs":{  
+                                                "style":{  
+                                                   "position":"relative",
+                                                   "textAlign":"center",
+                                                   "left":"-3px",
+                                                   "top":"-3px",
+                                                   "width":"6px",
+                                                   "fontSize":"6px",
+                                                   "lineHeight":"0"
+                                                }
+                                             },
+                                             "content":[  
+                                                {  
+                                                   "type":"text",
+                                                   "content":[  
+                                                      {  
+                                                         "type":"sentence",
+                                                         "index":0,
+                                                         "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x||h6|w6]]"
+                                                      }
+                                                   ]
+                                                }
+                                             ]
+                                          },
+                                          {  
+                                             "type":"tag",
+                                             "tag_type":"div",
+                                             "tag_class":"block",
+                                             "attrs":{  
+                                                "style":{  
+                                                   "fontSize":"9pt",
+                                                   "lineHeight":"120%",
+                                                   "position":"relative",
+                                                   "top":"-1.5em",
+                                                   "width":"6em",
+                                                   "left":"0.5em",
+                                                   "textAlign":"left"
+                                                }
+                                             },
+                                             "content":[  
+                                                {  
+                                                   "type":"tag",
+                                                   "tag_type":"span",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "style":{  
+                                                         "padding":"1px",
+                                                         "whiteSpace":"nowrap"
+                                                      }
+                                                   },
+                                                   "content":[  
+                                                      {  
+                                                         "type":"text",
+                                                         "content":[  
+                                                            {  
+                                                               "type":"sentence",
+                                                               "index":0,
+                                                               "text":"글래스고"
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                }
+                                             ]
+                                          }
+                                       ]
                                     }
                                  ]
-                              }
-                           ]
-                        },
-                        {  
-                           "type":"tag",
-                           "tag_type":"span",
-                           "tag_class":"inline",
-                           "attrs":{  
-                              "lang":"fr"
-                           },
-                           "content":[  
+                              },
                               {  
-                                 "type":"text",
+                                 "type":"tag",
+                                 "tag_type":"div",
+                                 "tag_class":"block",
+                                 "attrs":{  
+                                    "style":{  
+                                       "fontSize":"9pt"
+                                    }
+                                 },
                                  "content":[  
                                     {  
-                                       "type":"sentence",
-                                       "index":0,
-                                       "text":"*Dieu et mon droit*"
+                                       "type":"tag",
+                                       "tag_type":"span",
+                                       "tag_class":"inline",
+                                       "attrs":{  
+                                          "className":"plainlinks nourlexpansion"
+                                       },
+                                       "content":[  
+                                          {  
+                                             "type":"tag",
+                                             "tag_type":"a",
+                                             "tag_class":"inline",
+                                             "attrs":{  
+                                                "className":"external text",
+                                                "href":"//tools.wmflabs.org/geohack/geohack.php?language=ko&pagename=%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0&params=55_51_28.8_N_04_15_32.4_W_",
+                                                "rel":"nofollow"
+                                             },
+                                             "content":[  
+                                                {  
+                                                   "type":"tag",
+                                                   "tag_type":"span",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "className":"geo-default"
+                                                   },
+                                                   "content":[  
+                                                      {  
+                                                         "type":"tag",
+                                                         "tag_type":"span",
+                                                         "tag_class":"inline",
+                                                         "attrs":{  
+                                                            "className":"geo-dms",
+                                                            "title":"이 위치에 대한 지도와 항공사진 및 기타 정보를 보여줍니다"
+                                                         },
+                                                         "content":[  
+                                                            {  
+                                                               "type":"tag",
+                                                               "tag_type":"span",
+                                                               "tag_class":"inline",
+                                                               "attrs":{  
+                                                                  "className":"latitude"
+                                                               },
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"text",
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"sentence",
+                                                                           "index":0,
+                                                                           "text":"북위 55° 51′ 28.8″"
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               ]
+                                                            },
+                                                            {  
+                                                               "type":"tag",
+                                                               "tag_type":"span",
+                                                               "tag_class":"inline",
+                                                               "attrs":{  
+                                                                  "className":"longitude"
+                                                               },
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"text",
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"sentence",
+                                                                           "index":0,
+                                                                           "text":"서경 04° 15′ 32.4″"
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               ]
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                },
+                                                {  
+                                                   "type":"tag",
+                                                   "tag_type":"span",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "className":"geo-multi-punct"
+                                                   },
+                                                   "content":[  
+                                                      {  
+                                                         "type":"text",
+                                                         "content":[  
+                                                            {  
+                                                               "type":"sentence",
+                                                               "index":0,
+                                                               "text":"/"
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                },
+                                                {  
+                                                   "type":"tag",
+                                                   "tag_type":"span",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "className":"geo-nondefault"
+                                                   },
+                                                   "content":[  
+                                                      {  
+                                                         "type":"tag",
+                                                         "tag_type":"span",
+                                                         "tag_class":"inline",
+                                                         "attrs":{  
+                                                            "className":"geo-dec",
+                                                            "title":"이 위치에 대한 지도와 항공사진 및 기타 정보를 보여줍니다"
+                                                         },
+                                                         "content":[  
+                                                            {  
+                                                               "type":"text",
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"sentence",
+                                                                     "index":0,
+                                                                     "text":"북위 55.858000° 서경 4.259000°"
+                                                                  }
+                                                               ]
+                                                            }
+                                                         ]
+                                                      },
+                                                      {  
+                                                         "type":"tag",
+                                                         "tag_type":"span",
+                                                         "tag_class":"inline",
+                                                         "attrs":{  
+                                                            "style":{  
+                                                               "display":"none"
+                                                            }
+                                                         },
+                                                         "content":[  
+                                                            {  
+                                                               "type":"text",
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"sentence",
+                                                                     "index":0,
+                                                                     "text":"/"
+                                                                  }
+                                                               ]
+                                                            },
+                                                            {  
+                                                               "type":"tag",
+                                                               "tag_type":"span",
+                                                               "tag_class":"inline",
+                                                               "attrs":{  
+                                                                  "className":"geo"
+                                                               },
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"text",
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"sentence",
+                                                                           "index":0,
+                                                                           "text":"55.858000; -4.259000"
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               ]
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                }
+                                             ]
+                                          }
+                                       ]
+                                    },
+                                    {  
+                                       "type":"tag",
+                                       "tag_type":"span",
+                                       "tag_class":"inline",
+                                       "attrs":{  
+                                          "style":{  
+                                             "fontSize":"small"
+                                          }
+                                       },
+                                       "content":[  
+                                          {  
+                                             "type":"tag",
+                                             "tag_type":"span",
+                                             "tag_class":"inline",
+                                             "attrs":{  
+                                                "id":"coordinates"
+                                             },
+                                             "content":[  
+                                                {  
+                                                   "type":"text",
+                                                   "content":[  
+                                                      {  
+                                                         "type":"sentence",
+                                                         "index":0,
+                                                         "text":"[[LINK|lang_ko|지리_좌표계|좌표]]:"
+                                                      }
+                                                   ]
+                                                },
+                                                {  
+                                                   "type":"tag",
+                                                   "tag_type":"span",
+                                                   "tag_class":"inline",
+                                                   "attrs":{  
+                                                      "className":"plainlinks nourlexpansion"
+                                                   },
+                                                   "content":[  
+                                                      {  
+                                                         "type":"tag",
+                                                         "tag_type":"a",
+                                                         "tag_class":"inline",
+                                                         "attrs":{  
+                                                            "className":"external text",
+                                                            "href":"//tools.wmflabs.org/geohack/geohack.php?language=ko&pagename=%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0&params=55_51_28.8_N_04_15_32.4_W_",
+                                                            "rel":"nofollow"
+                                                         },
+                                                         "content":[  
+                                                            {  
+                                                               "type":"tag",
+                                                               "tag_type":"span",
+                                                               "tag_class":"inline",
+                                                               "attrs":{  
+                                                                  "className":"geo-default"
+                                                               },
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"tag",
+                                                                     "tag_type":"span",
+                                                                     "tag_class":"inline",
+                                                                     "attrs":{  
+                                                                        "className":"geo-dms",
+                                                                        "title":"이 위치에 대한 지도와 항공사진 및 기타 정보를 보여줍니다"
+                                                                     },
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"tag",
+                                                                           "tag_type":"span",
+                                                                           "tag_class":"inline",
+                                                                           "attrs":{  
+                                                                              "className":"latitude"
+                                                                           },
+                                                                           "content":[  
+                                                                              {  
+                                                                                 "type":"text",
+                                                                                 "content":[  
+                                                                                    {  
+                                                                                       "type":"sentence",
+                                                                                       "index":0,
+                                                                                       "text":"북위 55° 51′ 28.8″"
+                                                                                    }
+                                                                                 ]
+                                                                              }
+                                                                           ]
+                                                                        },
+                                                                        {  
+                                                                           "type":"tag",
+                                                                           "tag_type":"span",
+                                                                           "tag_class":"inline",
+                                                                           "attrs":{  
+                                                                              "className":"longitude"
+                                                                           },
+                                                                           "content":[  
+                                                                              {  
+                                                                                 "type":"text",
+                                                                                 "content":[  
+                                                                                    {  
+                                                                                       "type":"sentence",
+                                                                                       "index":0,
+                                                                                       "text":"서경 04° 15′ 32.4″"
+                                                                                    }
+                                                                                 ]
+                                                                              }
+                                                                           ]
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               ]
+                                                            },
+                                                            {  
+                                                               "type":"tag",
+                                                               "tag_type":"span",
+                                                               "tag_class":"inline",
+                                                               "attrs":{  
+                                                                  "className":"geo-multi-punct"
+                                                               },
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"text",
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"sentence",
+                                                                           "index":0,
+                                                                           "text":"/"
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               ]
+                                                            },
+                                                            {  
+                                                               "type":"tag",
+                                                               "tag_type":"span",
+                                                               "tag_class":"inline",
+                                                               "attrs":{  
+                                                                  "className":"geo-nondefault"
+                                                               },
+                                                               "content":[  
+                                                                  {  
+                                                                     "type":"tag",
+                                                                     "tag_type":"span",
+                                                                     "tag_class":"inline",
+                                                                     "attrs":{  
+                                                                        "className":"geo-dec",
+                                                                        "title":"이 위치에 대한 지도와 항공사진 및 기타 정보를 보여줍니다"
+                                                                     },
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"text",
+                                                                           "content":[  
+                                                                              {  
+                                                                                 "type":"sentence",
+                                                                                 "index":0,
+                                                                                 "text":"북위 55.858000° 서경 4.259000°"
+                                                                              }
+                                                                           ]
+                                                                        }
+                                                                     ]
+                                                                  },
+                                                                  {  
+                                                                     "type":"tag",
+                                                                     "tag_type":"span",
+                                                                     "tag_class":"inline",
+                                                                     "attrs":{  
+                                                                        "style":{  
+                                                                           "display":"none"
+                                                                        }
+                                                                     },
+                                                                     "content":[  
+                                                                        {  
+                                                                           "type":"text",
+                                                                           "content":[  
+                                                                              {  
+                                                                                 "type":"sentence",
+                                                                                 "index":0,
+                                                                                 "text":"/"
+                                                                              }
+                                                                           ]
+                                                                        },
+                                                                        {  
+                                                                           "type":"tag",
+                                                                           "tag_type":"span",
+                                                                           "tag_class":"inline",
+                                                                           "attrs":{  
+                                                                              "className":"geo"
+                                                                           },
+                                                                           "content":[  
+                                                                              {  
+                                                                                 "type":"text",
+                                                                                 "content":[  
+                                                                                    {  
+                                                                                       "type":"sentence",
+                                                                                       "index":0,
+                                                                                       "text":"55.858000; -4.259000"
+                                                                                    }
+                                                                                 ]
+                                                                              }
+                                                                           ]
+                                                                        }
+                                                                     ]
+                                                                  }
+                                                               ]
+                                                            }
+                                                         ]
+                                                      }
+                                                   ]
+                                                }
+                                             ]
+                                          }
+                                       ]
                                     }
                                  ]
-                              }
-                           ]
-                        },
-                        {  
-                           "type":"text",
-                           "content":[  
-                              {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"“신과 나의 권리”"
                               }
                            ]
                         }
@@ -480,37 +841,17 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
+                  "className":"mergedrow"
                },
                "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
+                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"center",
+                           "background":"#CDDEFF"
                         }
-                     },
-                     "tag_type":"th",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"text",
-                           "content":[  
-                              {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|국가_(노래)|국가]]"
-                              }
-                           ]
-                        }
-                     ]
-                  },
-                  {  
-                     "index":1,
-                     "attrs":{  
-
                      },
                      "tag_type":"td",
                      "tag_class":"block",
@@ -521,7 +862,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|영국의_국가|\"God save the Queen\"]]"
+                                 "text":"**행정**"
                               }
                            ]
                         }
@@ -540,21 +881,83 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"center"
+                           "textAlign":"left"
                         }
+                     },
+                     "tag_type":"th",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"[[LINK|lang_ko|국가_목록|나라]]"
+                                    }
+                                 ]
+                              }
+                           ]
+                        }
+                     ]
+                  },
+                  {  
+                     "index":1,
+                     "attrs":{  
+
                      },
                      "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"flagicon"
+                           },
+                           "content":[  
+                              {  
+                                 "type":"tag",
+                                 "tag_type":"a",
+                                 "tag_class":"inline",
+                                 "attrs":{  
+                                    "className":"tooltippable wikilink",
+                                    "data-username":"lang_ko/%ED%8C%8C%EC%9D%BC:Flag_of_the_United_Kingdom.svg",
+                                    "href":"/wiki/lang_ko/%ED%8C%8C%EC%9D%BC:Flag_of_the_United_Kingdom.svg/",
+                                    "rel":"nofollow"
+                                 },
+                                 "content":[  
+                                    {  
+                                       "type":"text",
+                                       "content":[  
+                                          {  
+                                             "type":"sentence",
+                                             "index":0,
+                                             "text":"[[INLINE_IMAGE|http://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/22px-Flag_of_the_United_Kingdom.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/33px-Flag_of_the_United_Kingdom.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Flag_of_the_United_Kingdom.svg/44px-Flag_of_the_United_Kingdom.svg.png 2x|영국의 기|h11|w22]]"
+                                          }
+                                       ]
+                                    }
+                                 ]
+                              }
+                           ]
+                        },
                         {  
                            "type":"text",
                            "content":[  
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|파일:Europe-Great_Britain.svg|]]"
+                                 "text":"[[LINK|lang_ko|영국|영국]]"
                               }
                            ]
                         }
@@ -573,22 +976,30 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|수도|수도]]"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"지역"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -608,7 +1019,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|런던|런던]]"
+                                 "text":"[[LINK|lang_ko|스코틀랜드|스코틀랜드]]"
                               }
                            ]
                         }
@@ -627,16 +1038,41 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "className":"ep-blobbox-tbl-hdr",
-                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"center",
-                           "backgroundColor":"rgb(245, 245, 245) !important",
-                           "nothing":"#e9e5e5",
-                           "lineHeight":"1.2em"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"지역어"
+                                    }
+                                 ]
+                              }
+                           ]
+                        }
+                     ]
+                  },
+                  {  
+                     "index":1,
+                     "attrs":{  
+
+                     },
+                     "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
                         {  
@@ -645,7 +1081,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|정치|정치]]"
+                                 "text":"[[LINK|lang_ko|영어|영어]], [[LINK|lang_ko|스코트어|스코트어]], [[LINK|lang_ko|스코틀랜드_게일어|스코틀랜드 게일어]]"
                               }
                            ]
                         }
@@ -658,37 +1094,17 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
+                  "className":"mergedrow"
                },
                "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
+                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"center",
+                           "background":"#CDDEFF"
                         }
-                     },
-                     "tag_type":"th",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"text",
-                           "content":[  
-                              {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|공용어_목록|공용어]]"
-                              }
-                           ]
-                        }
-                     ]
-                  },
-                  {  
-                     "index":1,
-                     "attrs":{  
-
                      },
                      "tag_type":"td",
                      "tag_class":"block",
@@ -699,7 +1115,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|영어|영어]], [[LINK|lang_ko|콘월어|콘월어]], [[LINK|lang_ko|스코트어|스코트어]], [[LINK|lang_ko|스코틀랜드_게일어|스코틀랜드 게일어]], [[LINK|lang_ko|노른어|노른어]], [[LINK|lang_ko|웨일스어|웨일스어]]"
+                                 "text":"**역사**"
                               }
                            ]
                         }
@@ -712,28 +1128,36 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-                  "className":"mergedrow"
+
                },
                "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|정부_형태|정부 형태]]"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"설립"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -753,7 +1177,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|의원_내각제|의원 내각제]][[LINK|lang_ko|단일_국가|단일 국가]] [[LINK|lang_ko|입헌군주제|입헌군주제]]"
+                                 "text":"6세기"
                               }
                            ]
                         }
@@ -772,31 +1196,11 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
+                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"center",
+                           "background":"#CDDEFF"
                         }
-                     },
-                     "tag_type":"th",
-                     "tag_class":"block",
-                     "content":[  
-                        {  
-                           "type":"text",
-                           "content":[  
-                              {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"**군주** 1707년 ~ 1714년 1760년 ~ 1801년 **수상** 1721년 ~ 1742년 1783년 ~ 1801년"
-                              }
-                           ]
-                        }
-                     ]
-                  },
-                  {  
-                     "index":1,
-                     "attrs":{  
-
                      },
                      "tag_type":"td",
                      "tag_class":"block",
@@ -807,7 +1211,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|앤_(영국)|앤 여왕]](초대) [[LINK|lang_ko|조지_3세|조지 3세]](말대) [[LINK|lang_ko|로버트_월폴|로버트 월폴]] [[LINK|lang_ko|윌리엄_피트_(1759년)|소 피트]]"
+                                 "text":"**[[LINK|lang_ko|인구순_도시_목록|인구]]**"
                               }
                            ]
                         }
@@ -820,28 +1224,36 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-                  "className":"mergedrow"
+
                },
                "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"입법"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"인구"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -861,7 +1273,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"그레이트브리튼 의회"
+                                 "text":"603,080 명"
                               }
                            ]
                         }
@@ -880,16 +1292,41 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "className":"ep-blobbox-tbl-hdr",
-                        "colSpan":"2",
                         "style":{  
-                           "textAlign":"center",
-                           "backgroundColor":"rgb(245, 245, 245) !important",
-                           "nothing":"#e9e5e5",
-                           "lineHeight":"1.2em"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"[[LINK|lang_ko|인구밀도|인구밀도]]"
+                                    }
+                                 ]
+                              }
+                           ]
+                        }
+                     ]
+                  },
+                  {  
+                     "index":1,
+                     "attrs":{  
+
+                     },
+                     "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
                         {  
@@ -898,7 +1335,27 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|지리|지리]]"
+                                 "text":"4,23 명/km"
+                              }
+                           ]
+                        },
+                        {  
+                           "type":"tag",
+                           "tag_type":"sup",
+                           "tag_class":"inline",
+                           "attrs":{  
+
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"2"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -917,22 +1374,30 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|1801년|1801년]]어림 면적"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"광역인구"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -952,7 +1417,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"230,977 [[LINK|lang_ko|제곱킬로미터|km2]]"
+                                 "text":"990,900 명"
                               }
                            ]
                         }
@@ -965,22 +1430,19 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
+                  "className":"mergedrow"
                },
                "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "className":"ep-blobbox-tbl-hdr",
                         "colSpan":"2",
                         "style":{  
                            "textAlign":"center",
-                           "backgroundColor":"rgb(245, 245, 245) !important",
-                           "nothing":"#e9e5e5",
-                           "lineHeight":"1.2em"
+                           "background":"#CDDEFF"
                         }
                      },
-                     "tag_type":"th",
+                     "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
                         {  
@@ -989,7 +1451,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|인구순_나라_목록|인구]]"
+                                 "text":"**[[LINK|lang_ko|지리|지리]]**"
                               }
                            ]
                         }
@@ -1008,22 +1470,30 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|1801년|1801년]]어림"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"[[LINK|lang_ko|넓이|면적]]"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -1043,7 +1513,27 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"16,345,646명"
+                                 "text":"174.7 km"
+                              }
+                           ]
+                        },
+                        {  
+                           "type":"tag",
+                           "tag_type":"sup",
+                           "tag_class":"inline",
+                           "attrs":{  
+
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"2"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -1056,22 +1546,19 @@
                "tag_type":"tr",
                "tag_class":"block",
                "attrs":{  
-
+                  "className":"mergedrow"
                },
                "cells":[  
                   {  
                      "index":0,
                      "attrs":{  
-                        "className":"ep-blobbox-tbl-hdr",
                         "colSpan":"2",
                         "style":{  
                            "textAlign":"center",
-                           "backgroundColor":"rgb(245, 245, 245) !important",
-                           "nothing":"#e9e5e5",
-                           "lineHeight":"1.2em"
+                           "background":"#CDDEFF"
                         }
                      },
-                     "tag_type":"th",
+                     "tag_type":"td",
                      "tag_class":"block",
                      "content":[  
                         {  
@@ -1080,7 +1567,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"기타"
+                                 "text":"**기타**"
                               }
                            ]
                         }
@@ -1099,22 +1586,30 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|국교|국교]]"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"[[LINK|lang_ko|시간대|시간대]]"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -1134,7 +1629,7 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|성공회|성공회]], [[LINK|lang_ko|장로교|장로교]], [[LINK|lang_ko|가톨릭|가톨릭]]"
+                                 "text":"UTC±0"
                               }
                            ]
                         }
@@ -1153,22 +1648,30 @@
                   {  
                      "index":0,
                      "attrs":{  
-                        "scope":"row",
                         "style":{  
-                           "textAlign":"left",
-                           "width":"150px"
+                           "textAlign":"left"
                         }
                      },
                      "tag_type":"th",
                      "tag_class":"block",
                      "content":[  
                         {  
-                           "type":"text",
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
                            "content":[  
                               {  
-                                 "type":"sentence",
-                                 "index":0,
-                                 "text":"[[LINK|lang_ko|통화|통화]]"
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"[[LINK|lang_ko|우편번호|우편번호]]"
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -1188,7 +1691,132 @@
                               {  
                                  "type":"sentence",
                                  "index":0,
-                                 "text":"[[LINK|lang_ko|영국_파운드|영국 파운드]]"
+                                 "text":"G1-G80"
+                              }
+                           ]
+                        }
+                     ]
+                  }
+               ]
+            },
+            {  
+               "index":20,
+               "tag_type":"tr",
+               "tag_class":"block",
+               "attrs":{  
+
+               },
+               "cells":[  
+                  {  
+                     "index":0,
+                     "attrs":{  
+                        "style":{  
+                           "textAlign":"left"
+                        }
+                     },
+                     "tag_type":"th",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"span",
+                           "tag_class":"inline",
+                           "attrs":{  
+                              "className":"nowrap"
+                           },
+                           "content":[  
+                              {  
+                                 "type":"text",
+                                 "content":[  
+                                    {  
+                                       "type":"sentence",
+                                       "index":0,
+                                       "text":"지역번호"
+                                    }
+                                 ]
+                              }
+                           ]
+                        }
+                     ]
+                  },
+                  {  
+                     "index":1,
+                     "attrs":{  
+
+                     },
+                     "tag_type":"td",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"text",
+                           "content":[  
+                              {  
+                                 "type":"sentence",
+                                 "index":0,
+                                 "text":"0141"
+                              }
+                           ]
+                        }
+                     ]
+                  }
+               ]
+            },
+            {  
+               "index":21,
+               "tag_type":"tr",
+               "tag_class":"block",
+               "attrs":{  
+
+               },
+               "cells":[  
+                  {  
+                     "index":0,
+                     "attrs":{  
+                        "colSpan":"2"
+                     },
+                     "tag_type":"td",
+                     "tag_class":"block",
+                     "content":[  
+                        {  
+                           "type":"tag",
+                           "tag_type":"div",
+                           "tag_class":"block",
+                           "attrs":{  
+                              "className":"geography vcard",
+                              "style":{  
+                                 "background":"white",
+                                 "position":"relative",
+                                 "width":"100%",
+                                 "height":"5px",
+                                 "display":"table",
+                                 "borderTop":"0.3em solid #CDDEFF",
+                                 "margin":"2px",
+                                 "verticalAlign":"middle",
+                                 "textAlign":"center"
+                              }
+                           },
+                           "content":[  
+                              {  
+                                 "type":"tag",
+                                 "tag_type":"a",
+                                 "tag_class":"inline",
+                                 "attrs":{  
+                                    "className":"external free",
+                                    "href":"https://peoplemakeglascow.com/",
+                                    "rel":"nofollow"
+                                 },
+                                 "content":[  
+                                    {  
+                                       "type":"text",
+                                       "content":[  
+                                          {  
+                                             "type":"sentence",
+                                             "index":0,
+                                             "text":"https://peoplemakeglascow.com/"
+                                          }
+                                       ]
+                                    }
+                                 ]
                               }
                            ]
                         }
@@ -1214,7 +1842,7 @@
       {  
          "index":0,
          "type":"sentence",
-         "text":"그레이트브리튼 왕국"
+         "text":"글래스고"
       }
    ],
    "page_body":[  
@@ -1240,22 +1868,17 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"**그레이트브리튼 왕국** (Kingdom of Great Britain )은 [[LINK|lang_ko|1707년|1707년]]에 [[LINK|lang_ko|잉글랜드_왕국|잉글랜드 왕국]]과 [[LINK|lang_ko|스코틀랜드_왕국|스코틀랜드 왕국]]이 합방하여 성립한 왕국이다."
+                     "text":"**글래스고** ([[LINK|lang_ko|영어|영어]]: Glasgow, [[LINK|lang_ko|스코틀랜드_게일어|스코틀랜드 게일어]]: Glaschu, [[LINK|lang_ko|스코트어|스코트어]]: Glesca )는 [[LINK|lang_ko|스코틀랜드|스코틀랜드]]최대의 항구 도시로 면적은 175.5km 2, 인구는 600,060명(2016년 기준), 인구 밀도는 3,298명/km 2 이다."
                   },
                   {  
                      "type":"sentence",
                      "index":1,
-                     "text":" [[LINK|lang_ko|그레이트브리튼_섬|그레이트브리튼 섬]]전체를 지배한 첫 왕국이었다."
+                     "text":" [[LINK|lang_ko|영국|영국]]본토 내에서 [[LINK|lang_ko|런던|런던]]과 [[LINK|lang_ko|버밍엄|버밍엄]], [[LINK|lang_ko|리즈|리즈]]에 이어 네 번째로 큰 도시이다."
                   },
                   {  
                      "type":"sentence",
                      "index":2,
-                     "text":" 다른 시기의 영국과 구분하지 않을 때에는 이 나라도 그냥 **영국** (英國)이라고 부른다."
-                  },
-                  {  
-                     "type":"sentence",
-                     "index":3,
-                     "text":" **그레이트브리튼 연합왕국** (United Kingdom of Great Britain )이라고도 한다."
+                     "text":" 이 도시 출신 사람들을 글래스위전(Glaswegians)이라 부른다."
                   }
                ]
             },
@@ -1269,17 +1892,71 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"[[LINK|lang_ko|1603년|1603년]]에 [[LINK|lang_ko|잉글랜드의_제임스_1세|제임스 1세]]가 [[LINK|lang_ko|잉글랜드|잉글랜드]]와 [[LINK|lang_ko|스코틀랜드|스코틀랜드]]의 왕을 겸하는 [[LINK|lang_ko|동군연합|동군연합]]이 되었다."
+                     "text":"글래스고는 19세기 말에서 20세기 초에 인구가 1백만 명 이상 되는 도시로 성장해 1960년대까지 100만 명 이상이 거주했으나, 이후 감소해서 596,550명(2013년)이 되었다."
                   },
                   {  
                      "type":"sentence",
                      "index":1,
-                     "text":" [[LINK|lang_ko|1706년|1706년]][[LINK|lang_ko|7월_22일|7월 22일]]잉글랜드와 스코틀랜드 간에 연합조약(Treaty of Union)이 체결되었고, [[LINK|lang_ko|1707년_연합법|연합법]]에 의해 [[LINK|lang_ko|1707년|1707년]][[LINK|lang_ko|5월_1일|5월 1일]]을 기해 양국이 하나의 국가가 되었으며, 이에 따라 의회도 통일되었다."
+                     "text":" [[LINK|lang_ko|영국|영국]]에서 [[LINK|lang_ko|런던|런던]]과 [[LINK|lang_ko|에든버러|에든버러]]다음으로 3번째로 관광객이 많은 도시로, 연간 300만 명의 관광객이 이 도시를 찾는다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"역사"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"역사"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"[[LINK|lang_ko|고대|고대]]부터 [[LINK|lang_ko|클라이드_강_(스코틀랜드)|클라이드 강]]유역에 마을이 형성되었다."
                   },
                   {  
                      "type":"sentence",
-                     "index":2,
-                     "text":" 한편, 그레이트브리튼 왕국은 1714년 [[LINK|lang_ko|조지_1세|조지 1세]]의 즉위와 함께 [[LINK|lang_ko|하노버_왕국|하노버 왕국]]과 동군연합을 이루었다."
+                     "index":1,
+                     "text":" [[LINK|lang_ko|로마_제국|로마 제국]]시대에는 [[LINK|lang_ko|켈트인|켈트인]], [[LINK|lang_ko|픽트인|픽트인]]이 거주했으며 [[LINK|lang_ko|브리타니아|브리타니아]]와 [[LINK|lang_ko|칼레도니아|칼레도니아]]사이에 요새가 건립되었다."
+                  }
+               ]
+            },
+            {  
+               "index":2,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"[[LINK|lang_ko|12세기|12세기]]에는 글래스고 대성당이 건립되었으며 [[LINK|lang_ko|1451년|1451년]]에는 [[LINK|lang_ko|글래스고_대학교|글래스고 대학교]]가 설립되었다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" [[LINK|lang_ko|16세기|16세기]]에는 클라이드 강을 통한 무역이 전개되었는데 [[LINK|lang_ko|아메리카|아메리카]]대륙에서 생산된 [[LINK|lang_ko|담배|담배]], [[LINK|lang_ko|카리브_해|카리브 해]]에서 생산된 [[LINK|lang_ko|사탕|사탕]]등 여러 물품이 이 곳을 통해 영국에 전해졌다."
                   }
                ]
             },
@@ -1293,12 +1970,33 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"그레이트브리튼 왕국이 존재하던 기간 중에 [[LINK|lang_ko|아메리카_합중국|아메리카 합중국]]이 독립하였다."
+                     "text":"[[LINK|lang_ko|산업_혁명|산업 혁명]]시대에는 [[LINK|lang_ko|랭커셔주|랭커셔주]]에서 채굴된 [[LINK|lang_ko|석탄|석탄]], [[LINK|lang_ko|철광석|철광석]]을 통해 공업화가 전개되었는데 글래스고는 면직물 산업, 해운업, 조선업의 중심지로 여겨졌다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"지리-및-기후"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"지리 및 기후"
                   }
                ]
             },
             {  
-               "index":4,
+               "index":1,
                "tag_type":"p",
                "attrs":{  
 
@@ -1307,12 +2005,286 @@
                   {  
                      "type":"sentence",
                      "index":0,
-                     "text":"[[LINK|lang_ko|1801년|1801년]][[LINK|lang_ko|1월_1일|1월 1일]]부로 [[LINK|lang_ko|아일랜드_왕국|아일랜드 왕국]]과 합병하여 명칭을 [[LINK|lang_ko|그레이트브리튼_아일랜드_연합_왕국|그레이트브리튼 아일랜드 연합 왕국]]이라고 개칭했다."
+                     "text":"글래스고는 중서부 스코틀랜드의 [[LINK|lang_ko|클라이드_강_(스코틀랜드)|클라이드 강]]유역에 위치해 있다."
                   }
                ]
             },
             {  
-               "index":5,
+               "index":2,
+               "tag_type":"table",
+               "attrs":{  
+                  "className":"ep-table wikitable collapsible",
+                  "style":{  
+                     "width":"90%",
+                     "textAlign":"center",
+                     "fontSize":"90%",
+                     "lineHeight":"1.1em",
+                     "margin":"auto"
+                  }
+               },
+               "items":[  
+                  {  
+                     "type":"body-table",
+                     "attrs":{  
+
+                     },
+                     "caption":{  
+                        "attrs":{  
+
+                        },
+                        "sentences":[  
+
+                        ]
+                     },
+                     "thead":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tbody":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tfoot":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     }
+                  }
+               ]
+            },
+            {  
+               "index":3,
+               "tag_type":"table",
+               "attrs":{  
+                  "className":"ep-table wikitable collapsible collapsed",
+                  "style":{  
+                     "width":"90%",
+                     "textAlign":"center",
+                     "fontSize":"90%",
+                     "lineHeight":"1.1em",
+                     "margin":"auto"
+                  }
+               },
+               "items":[  
+                  {  
+                     "type":"body-table",
+                     "attrs":{  
+
+                     },
+                     "caption":{  
+                        "attrs":{  
+
+                        },
+                        "sentences":[  
+
+                        ]
+                     },
+                     "thead":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tbody":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     },
+                     "tfoot":{  
+                        "rows":[  
+
+                        ],
+                        "attrs":{  
+
+                        }
+                     }
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"스포츠"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"스포츠"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"p",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"글래스고는 [[LINK|lang_ko|스코틀랜드_프리미어리그|스코틀랜드 프리미어리그]]의 축구팀인 [[LINK|lang_ko|셀틱_FC|셀틱 FC]]와 [[LINK|lang_ko|레인저스_FC|레인저스 FC]]의 연고지이며, 축구 경기장 [[LINK|lang_ko|셀틱_파크|셀틱 파크]]와 [[LINK|lang_ko|아이브록스_스타디움|아이브록스 스타디움]]이 위치하고 있다."
+                  },
+                  {  
+                     "type":"sentence",
+                     "index":1,
+                     "text":" 셀틱과 글래스고 간의 더비 경기는 [[LINK|lang_ko|올드_펌|올드 펌]]이라고 부른다."
+                  }
+               ]
+            }
+         ],
+         "images":[  
+
+         ]
+      },
+      {  
+         "paragraphs":[  
+            {  
+               "index":0,
+               "tag_type":"h2",
+               "attrs":{  
+                  "id":"자매-도시"
+               },
+               "items":[  
+                  {  
+                     "type":"sentence",
+                     "index":0,
+                     "text":"자매 도시"
+                  }
+               ]
+            },
+            {  
+               "index":1,
+               "tag_type":"ul",
+               "attrs":{  
+
+               },
+               "items":[  
+                  {  
+                     "type":"list_item",
+                     "index":0,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|독일|]] [[LINK|lang_ko|독일|독일]][[LINK|lang_ko|뉘른베르크|뉘른베르크]](1985년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":1,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|러시아|]] [[LINK|lang_ko|러시아|러시아]][[LINK|lang_ko|로스토프나도누|로스토프나도누]](1986년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":2,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|중화인민공화국|]] [[LINK|lang_ko|중화인민공화국|중국]][[LINK|lang_ko|다롄_시|다롄 시]](1997년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":3,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|쿠바|]] [[LINK|lang_ko|쿠바|쿠바]][[LINK|lang_ko|아바나|아바나]](2002년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":4,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|이탈리아|]] [[LINK|lang_ko|이탈리아|이탈리아]][[LINK|lang_ko|토리노|토리노]](2003년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":5,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|파키스탄|]] [[LINK|lang_ko|파키스탄|파키스탄]][[LINK|lang_ko|라호르|라호르]](2006년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":6,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|프랑스|]] [[LINK|lang_ko|프랑스|프랑스]][[LINK|lang_ko|마르세유|마르세유]](2006년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  },
+                  {  
+                     "type":"list_item",
+                     "index":7,
+                     "sentences":[  
+                        {  
+                           "type":"sentence",
+                           "index":0,
+                           "text":"[[LINK|lang_ko|팔레스타인_자치_정부|]] [[LINK|lang_ko|팔레스타인_자치_정부|팔레스타인 자치 정부]][[LINK|lang_ko|베들레헴|베들레헴]](2007년)"
+                        }
+                     ],
+                     "tag_type":"li"
+                  }
+               ]
+            },
+            {  
+               "index":2,
                "tag_type":"noscript",
                "attrs":{  
 
@@ -1322,7 +2294,7 @@
                ]
             },
             {  
-               "index":6,
+               "index":3,
                "tag_type":"p",
                "attrs":{  
 
@@ -1340,8 +2312,8 @@
    "main_photo":[  
       {  
          "type":"main_image",
-         "url":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/17201__35688.png",
-         "thumb":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/17201__35688_100x100.png",
+         "url":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/85137__39439.png",
+         "thumb":"https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/85137__39439_100x100.png",
          "caption":[  
 
          ],
@@ -1359,10 +2331,90 @@
                "text":"The original version of this page is from Wikipedia, you can edit the page right here on Everipedia."
             }
          ],
-         "timestamp":"11/02/2018 05:14:48 AM UTC",
+         "timestamp":"11/02/2018 06:17:15 AM UTC",
          "mime":"None",
          "attribution":"",
-         "url":"https://ko.wikipedia.org/wiki/%EA%B7%B8%EB%A0%88%EC%9D%B4%ED%8A%B8%EB%B8%8C%EB%A6%AC%ED%8A%BC_%EC%99%95%EA%B5%AD",
+         "url":"https://ko.wikipedia.org/wiki/%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0",
+         "social_type":null,
+         "category":"NONE"
+      },
+      {  
+         "citation_id":1,
+         "description":[  
+            {  
+               "type":"sentence",
+               "index":0,
+               "text":"“Paisley 1981–2010 averages”"
+            }
+         ],
+         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "mime":"None",
+         "attribution":"",
+         "url":"http://www.metoffice.gov.uk/climate/uk/averages/19812010/sites/paisley.html",
+         "social_type":null,
+         "category":"NONE"
+      },
+      {  
+         "citation_id":2,
+         "description":[  
+            {  
+               "type":"sentence",
+               "index":0,
+               "text":"Met Office"
+            }
+         ],
+         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "mime":"None",
+         "attribution":"rel='nofollow'",
+         "url":"http://w/index.php?action=edit&redlink=1&title=Met_Office",
+         "social_type":null,
+         "category":"NONE"
+      },
+      {  
+         "citation_id":3,
+         "description":[  
+            {  
+               "type":"sentence",
+               "index":0,
+               "text":"“KNMI: Climate Extremes 1959-”"
+            }
+         ],
+         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "mime":"None",
+         "attribution":"rel='nofollow'",
+         "url":"http://eca.knmi.nl/utils/mapserver/anomaly.php?CMD=QUERY_POINT&CMD=QUERY_POINT&MapSize=560%2C420&imageheight=420&imagewidth=560&indexcat=**&indexid=TNn&maxx=590952.38095239&maxy=-3665714.2857143&minx=-1142380.952381&miny=-4965714.2857143&seasonid=7&year=1995#bottom",
+         "social_type":null,
+         "category":"NONE"
+      },
+      {  
+         "citation_id":4,
+         "description":[  
+            {  
+               "type":"sentence",
+               "index":0,
+               "text":"KNMI"
+            }
+         ],
+         "timestamp":"11/02/2018 06:17:15 AM UTC",
+         "mime":"None",
+         "attribution":"rel='nofollow'",
+         "url":"http://w/index.php?action=edit&redlink=1&title=Royal_Netherlands_Meteorological_Institute",
+         "social_type":null,
+         "category":"NONE"
+      },
+      {  
+         "citation_id":5,
+         "description":[  
+            {  
+               "type":"sentence",
+               "index":0,
+               "text":"“Averages for Abbotsinch”"
+            }
+         ],
+         "timestamp":"11/02/2018 06:17:16 AM UTC",
+         "mime":"None",
+         "attribution":"",
+         "url":"http://www.metoffice.gov.uk/public/weather/climate/glasgow-bishopton#?tab=climateTables",
          "social_type":null,
          "category":"NONE"
       }
@@ -1376,7 +2428,7 @@
    "metadata":[  
       {  
          "key":"page_type",
-         "value":"Place"
+         "value":null
       },
       {  
          "key":"is_removed",
@@ -1388,19 +2440,19 @@
       },
       {  
          "key":"creation_timestamp",
-         "value":"11/02/2018 05:14:47 AM UTC"
+         "value":"11/02/2018 06:17:14 AM UTC"
       },
       {  
          "key":"last_modified",
-         "value":"11/02/2018 05:14:50 AM UTC"
+         "value":"11/02/2018 06:17:23 AM UTC"
       },
       {  
          "key":"url_slug",
-         "value":"그레이트브리튼_왕국"
+         "value":"글래스고"
       },
       {  
          "key":"url_slug_alternate",
-         "value":"%EA%B7%B8%EB%A0%88%EC%9D%B4%ED%8A%B8%EB%B8%8C%EB%A6%AC%ED%8A%BC_%EC%99%95%EA%B5%AD"
+         "value":"%EA%B8%80%EB%9E%98%EC%8A%A4%EA%B3%A0"
       },
       {  
          "key":"sub_page_type",
@@ -1435,5 +2487,5 @@
 
       ]
    },
-   "ipfs_hash":"QmQSjSfjZyjMYvMixJ2roHUkdfY8atc1RUFdiF4qsdh4D2"
+   "ipfs_hash":"QmYiaceBfmpypEMTvANmdpop7osW1Pou48Thvf6FJ6FpHH"
 }

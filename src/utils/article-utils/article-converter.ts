@@ -1145,8 +1145,19 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
     return cellContents;
 }
 
-function parseTable($element: Cheerio, tableType: string): Table {
-    const $table = $element.children('table');
+function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
+    let $table;
+    switch (tableType){
+        case 'body-table': {
+            $table = $element;
+            break;
+        }
+        case 'wikitable': {
+            $table = $element.children('table');
+            break
+        }
+    }
+
     const table: Partial<Table> = {
         type: tableType as any,
         attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
@@ -1163,6 +1174,10 @@ function parseTable($element: Cheerio, tableType: string): Table {
     // Deal with the colgroup
     // TODO
 
+    if (tableType == 'body-table'){
+        console.log($table.html())
+    }
+
     // Parse the thead, tbody, and tfoot
     const table_sections = ['thead', 'tbody', 'tfoot'];
     table_sections.forEach((sectionName) => {
@@ -1174,12 +1189,10 @@ function parseTable($element: Cheerio, tableType: string): Table {
         $tsection.each((idx, sectElem) => {
             let $TSECT = cheerio.load(sectElem);
             let rowsArr = [];
-            // $TSECT(`${sectionName} > tr`).each((rowIdx, rowElem) => {
             $TSECT(sectElem).children('tr').each((rowIdx, rowElem) => {
                 let $TROW = cheerio.load(rowElem);
                 let cellsArr = [];
                 $TROW(rowElem).children('th, td').each((cellIdx, cellElem) => {
-                    
                     let theContentsParsed = tableCellContentsParser(cellElem.children, []);
                     if (theContentsParsed.length){
                         cellsArr.push({
@@ -1205,11 +1218,12 @@ function parseTable($element: Cheerio, tableType: string): Table {
             };
         })
     })
-
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
-    // console.log("--------------------------")
-    // console.log(util.inspect(decycledTable, false, null, true));
-    // console.log("--------------------------")
+    if (table.type == 'body-table') {
+        console.log("--------------------------")
+        console.log(util.inspect(decycledTable, false, null, true));
+        console.log("--------------------------")
+    }
     return decycledTable as Table;
 }
