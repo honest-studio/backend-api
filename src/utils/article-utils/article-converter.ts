@@ -112,11 +112,12 @@ const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]:
     let cleanedAttrs = {};
     const keys = Object.keys(inputAttrs);
     for (const key of keys) {
-        cleanedAttrs[ReactAttrConvert(key)] = inputAttrs[key];
+        if (inputAttrs[key] && inputAttrs[key] != '') cleanedAttrs[ReactAttrConvert(key)] = inputAttrs[key];
     }
     if (cleanedAttrs['style']){
         cleanedAttrs['style'] = parseStyles(cleanedAttrs['style']);
     } 
+    console.log(cleanedAttrs)
     return cleanedAttrs;
 }
 
@@ -697,7 +698,7 @@ function parseSection($section: Cheerio): Section {
         const paragraph: any = {
             index: i,
             tag_type: element.tagName.toLowerCase() || null,
-            attrs: element.attribs,
+            attrs: cleanAttributes(element.attribs),
             items: []
         };
 
@@ -1144,7 +1145,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
     // Set the table caption, if present
     const $caption = $table.children('caption');
     table.caption = { 
-        attrs: $caption.length > 0 ? $caption[0].attribs : {}, 
+        attrs: $caption.length > 0 ? cleanAttributes($caption[0].attribs) : {}, 
         sentences: $caption.length > 0 ? parseSentences($caption.html()) : []
         // sentences: $caption.length > 0 ? parseSentences($caption.html().trim()) : []
     }
