@@ -14,7 +14,7 @@ import {
     Infobox,
     Citation,
     DiffType,
-    TableCellContentItem
+    NestedContentItem
 } from './article-dto';
 import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
@@ -455,7 +455,7 @@ function tableToLines(table: Table): string {
     TABLE_SECTION_SEPARATOR + caption_line;
 }
 
-function tableRowContentToText(contents: TableCellContentItem[], concattedText: string = ""): string {
+function tableRowContentToText(contents: NestedContentItem[], concattedText: string = ""): string {
     contents.forEach((item, index) => {
         switch (item.type){
             case 'text':

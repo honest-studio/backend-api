@@ -27,6 +27,21 @@ export interface Sentence {
     diff?: DiffType;
 }
 
+export type NestedContentItem = NestedTextItem | NestedTagItem;
+
+export interface NestedTextItem {
+    type: 'text';
+    content: Sentence[];
+}
+
+export interface NestedTagItem {
+    type: 'tag';
+    tag_type: string;
+    tag_class: 'inline' | 'block' | 'void';
+    attrs: {};
+    content: NestedContentItem[]; // allow for recursion
+}
+
 export interface ListItem {
     type: string; // list_item
     index: number;
@@ -35,7 +50,7 @@ export interface ListItem {
     diff?: DiffType;
 }
 
-export type ParagraphItem = Sentence | ListItem | Table;
+export type ParagraphItem = Sentence | ListItem | Table | DescList;
 
 export interface Paragraph {
     index: number;
@@ -124,6 +139,23 @@ export interface Citation {
     diff?: DiffType;
 }
 
+export interface DescList {
+    type: 'dl';
+    attrs: {};
+}
+
+export type DescListItem = DescListTerm | DescListDescription;
+
+export interface DescListTerm {
+    index: number;
+    type: 'dt';
+    attrs: {};
+}
+export interface DescListDescription {
+    type: 'dd';
+    attrs: {};
+}
+
 export interface Table {
     type: 'wikitable' | 'body-table';
     attrs: {};
@@ -150,26 +182,13 @@ export interface TableRow {
     diff?: DiffType;
 }
 
-export interface TableCellTextItem {
-    type: 'text';
-    content: Sentence[];
-}
 
-export interface TableCellTagItem {
-    type: 'tag';
-    tag_type: string;
-    tag_class: 'inline' | 'block' | 'void';
-    attrs: {};
-    content: TableCellContentItem[]; // allow for recursion
-}
-
-export type TableCellContentItem = TableCellTextItem | TableCellTagItem;
 
 export interface TableCell {
     index: number;
     attrs: {};
     tag_type: CellType;
-    content: TableCellContentItem[];
+    content: NestedContentItem[];
 }
 
 export interface ArticleJson {

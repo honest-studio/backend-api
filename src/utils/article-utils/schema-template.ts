@@ -1,4 +1,4 @@
-import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell, TableCellContentItem } from './article-dto';
+import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell, NestedContentItem } from './article-dto';
 import { AMPParseCollection, LanguagePack } from './article-types';
 import { getYouTubeID } from './article-converter';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
@@ -281,7 +281,7 @@ export const renderParagraph = (
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
                                         let sanitizedCellContents = cell.content
-                                            .map((item: TableCellContentItem, idx) => {
+                                            .map((item: NestedContentItem, idx) => {
                                                 return "";
                                                 // let result = CheckForLinksOrCitationsAMP(
                                                 //     sentence.text,
@@ -311,7 +311,7 @@ export const renderParagraph = (
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
                                         let sanitizedCellContents = cell.content
-                                            .map((item: TableCellContentItem, idx) => {
+                                            .map((item: NestedContentItem, idx) => {
                                                 return "";
                                                 // let result = CheckForLinksOrCitationsAMP(
                                                 //     sentence.text,
@@ -341,7 +341,7 @@ export const renderParagraph = (
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
                                         let sanitizedCellContents = cell.content
-                                            .map((item: TableCellContentItem, idx) => {
+                                            .map((item: NestedContentItem, idx) => {
                                                 return "";
                                                 // let result = CheckForLinksOrCitationsAMP(
                                                 //     sentence.text,

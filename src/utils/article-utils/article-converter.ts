@@ -16,9 +16,9 @@ import {
     Infobox,
     Table,
     Paragraph,
-    TableCellTextItem,
-    TableCellTagItem,
-    TableCellContentItem,
+    NestedTextItem,
+    NestedTagItem,
+    NestedContentItem,
     TableCell
 } from './article-dto';
 import { AMPParseCollection } from './article-types';
@@ -688,7 +688,6 @@ function parseSection($section: Cheerio): Section {
         return true;
     });
 
-    // TODO: Travis: handle <dl> tags
     // Get paragraphs in section
     const $children = $section.children();
     for (let i = 0; i < $children.length; i++) {
@@ -720,6 +719,11 @@ function parseSection($section: Cheerio): Section {
                     tag_type: 'li'
                 });
             }
+        }
+
+        // Description List
+        else if (paragraph.tag_type == 'dl') {
+            console.log(paragraph)
         }
 
         // Tables
@@ -1108,7 +1112,7 @@ var circularObj = {} as any;
 circularObj.circularRef = circularObj;
 circularObj.list = [ circularObj, circularObj ];
 
-function tableCellContentsParser($contents: CheerioElement[], cellContents: TableCellContentItem[] = []) {
+function tableCellContentsParser($contents: CheerioElement[], cellContents: NestedContentItem[] = []) {
     $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':
@@ -1117,7 +1121,7 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
                     cellContents.push({
                         type: 'text',
                         content: theSentences
-                    } as TableCellTextItem);
+                    } as NestedTextItem);
                 }
                 break;
             case 'tag':
@@ -1136,7 +1140,7 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
                         tag_class: tagClass,
                         attrs: cleanAttributes(element.attribs),
                         content: tableCellContentsParser(element.children)
-                    } as TableCellTagItem;
+                    } as NestedTagItem;
                     // console.log(newElement);
                     cellContents.push(newElement);
                 }
