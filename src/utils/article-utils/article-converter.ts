@@ -117,7 +117,6 @@ const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]:
     if (cleanedAttrs['style']){
         cleanedAttrs['style'] = parseStyles(cleanedAttrs['style']);
     } 
-    console.log(cleanedAttrs)
     return cleanedAttrs;
 }
 
@@ -789,9 +788,19 @@ function sanitizeText($: CheerioStatic) {
             slug = old_slug;
         }
         
-        // Replace the tag with the string
-        const plaintextString = `[[LINK|lang_${lang_code}|${slug}|${display_text}]]`;
-        $(this).replaceWith(plaintextString);
+        // If the <a> is wrapping an <img>, do not replace with the Markdown
+        let innerTags = $(el).find('img');
+        if (innerTags && innerTags.length){
+            // Do nothing
+            return;
+        }
+        else {
+            // Replace the tag with the string
+            const plaintextString = `[[LINK|lang_${lang_code}|${slug}|${display_text}]]`;
+            $(this).replaceWith(plaintextString);
+        }
+
+
     });
 
     // Convert <strong> and <b> tags to **text** (Markdown)
@@ -845,6 +854,7 @@ function sanitizeText($: CheerioStatic) {
 
         // Replace the tag with the string
         const plaintextString = `[[INLINE_IMAGE|${src}|${srcSet}|${alt}|h${height}|w${width}]]`;
+
         $(this).replaceWith(plaintextString);
     });
 
@@ -1111,6 +1121,7 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
                 break;
             case 'tag':
                 if (element.children.length) {
+
                     let tagClass = blockElements.indexOf(element.name) !== -1 
                     ? 'block'   
                     : voidElements.indexOf(element.name) !== -1 
@@ -1136,7 +1147,6 @@ function tableCellContentsParser($contents: CheerioElement[], cellContents: Tabl
 
 function parseTable($element: Cheerio, tableType: string): Table {
     const $table = $element.children('table');
-
     const table: Partial<Table> = {
         type: tableType as any,
         attrs: $table.length > 0 ? cleanAttributes($table[0].attribs) : {},
@@ -1169,6 +1179,7 @@ function parseTable($element: Cheerio, tableType: string): Table {
                 let $TROW = cheerio.load(rowElem);
                 let cellsArr = [];
                 $TROW(rowElem).children('th, td').each((cellIdx, cellElem) => {
+                    
                     let theContentsParsed = tableCellContentsParser(cellElem.children, []);
                     if (theContentsParsed.length){
                         cellsArr.push({
