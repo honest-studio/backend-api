@@ -1153,25 +1153,26 @@ function nestedContentParser($contents: CheerioElement[], nestedContents: Nested
                 }
                 break;
             case 'tag':
+                let newElement: NestedTagItem;
+                let tagClass = blockElements.indexOf(element.name) !== -1 
+                ? 'block'   
+                : voidElements.indexOf(element.name) !== -1 
+                    ? 'void'
+                    : 'inline' ;
+                let parsedChildrenContent: NestedContentItem[] = [];
+
+                // Account for non-void tags
                 if (element.children.length) {
-                    let newElement: NestedTagItem;
-                    let tagClass = blockElements.indexOf(element.name) !== -1 
-                    ? 'block'   
-                    : voidElements.indexOf(element.name) !== -1 
-                        ? 'void'
-                        : 'inline' ;
-
-                    newElement = {
-                        type: 'tag',
-                        tag_type: element.name,
-                        tag_class: tagClass,
-                        attrs: cleanAttributes(element.attribs),
-                        content: nestedContentParser(element.children, [])
-                    } as NestedTagItem;
-
-                    nestedContents.push(newElement);
-
+                    parsedChildrenContent = nestedContentParser(element.children, [])
                 }
+                newElement = {
+                    type: 'tag',
+                    tag_type: element.name,
+                    tag_class: tagClass,
+                    attrs: cleanAttributes(element.attribs),
+                    content: parsedChildrenContent
+                } as NestedTagItem;
+                nestedContents.push(newElement);
                 break;
         }
     })
