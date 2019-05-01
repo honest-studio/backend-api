@@ -943,6 +943,7 @@ function sanitizeText($: CheerioStatic) {
 // Convert the plaintext strings for links and citations to the Markdown format
 export function parseSentences(inputString: string): Sentence[] {
     if (!inputString) return [];
+    if (inputString == " ") return [{ type: 'sentence', index: 0, text: ' ' }];
 
     // Create the sentence tokens
     const sentenceTokens = splitSentences(inputString);
@@ -964,6 +965,7 @@ export function parseSentences(inputString: string): Sentence[] {
         // Return the object
         return sentence;
     });
+
 }
 
 // See if a given URL is a social media URL. If so, return the type
@@ -1145,6 +1147,9 @@ function nestedContentParser($contents: CheerioElement[], nestedContents: Nested
         switch (element.type){
             case 'text':
                 let theSentences: Sentence[] = parseSentences(element.data);
+                console.log("-----------------------------")
+                console.log(element.data);
+                console.log(theSentences);
                 if (theSentences.length) {
                     nestedContents.push({
                         type: 'text',
@@ -1256,15 +1261,13 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
                 let cellsArr = [];
                 $TROW(rowElem).children('th, td').each((cellIdx, cellElem) => {
                     let theContentsParsed = nestedContentParser(cellElem.children, []);
-                    if (theContentsParsed.length){
-                        cellsArr.push({
-                            index: cellIdx,
-                            attrs: cleanAttributes(cellElem.attribs),
-                            tag_type: cellElem.name,
-                            tag_class: 'block',
-                            content: theContentsParsed,
-                        });
-                    }
+                    cellsArr.push({
+                        index: cellIdx,
+                        attrs: cleanAttributes(cellElem.attribs),
+                        tag_type: cellElem.name,
+                        tag_class: 'block',
+                        content: theContentsParsed,
+                    });
                 })
                 rowsArr.push({
                     index: rowIdx,
