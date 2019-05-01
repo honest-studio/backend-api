@@ -55,6 +55,28 @@ export const REPLACEMENTS = [
         replacement: 'https://everipedia-storage.s3.amazonaws.com'
     }
 ];
+
+export const NON_AMP_BAD_TAGS = [
+    'head',
+    'map',
+    'math',
+    'mi',
+    'mo',
+    'mtd',
+    'mrow',
+    'mspace',
+    'mtext',
+    'msub',
+    'msup',
+    'mstyle',
+    'semantics',
+    'usemap',
+    'xml',
+    'worddocument',
+    'mathpr',
+    'mathfont',
+];
+
 export const VALID_VIDEO_EXTENSIONS = [
     '.mp4',
     '.m4v',
@@ -771,6 +793,9 @@ function sanitizeText($: CheerioStatic) {
     const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
     badTagSelectors.forEach((selector) => $(selector).remove());
 
+    // Remove more bad tags
+    $(NON_AMP_BAD_TAGS.join(", ")).remove()
+
     // Unwrap certain tags
     const unwrapTags = ['small'];
     unwrapTags.forEach((selector) => {
@@ -1115,13 +1140,13 @@ var circularObj = {} as any;
 circularObj.circularRef = circularObj;
 circularObj.list = [ circularObj, circularObj ];
 
-function nestedContentParser($contents: CheerioElement[], cellContents: NestedContentItem[] = []) {
+function nestedContentParser($contents: CheerioElement[], nestedContents: NestedContentItem[] = []) {
     $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':
                 let theSentences: Sentence[] = parseSentences(element.data);
                 if (theSentences.length) {
-                    cellContents.push({
+                    nestedContents.push({
                         type: 'text',
                         content: theSentences
                     } as NestedTextItem);
@@ -1129,28 +1154,28 @@ function nestedContentParser($contents: CheerioElement[], cellContents: NestedCo
                 break;
             case 'tag':
                 if (element.children.length) {
-
+                    let newElement: NestedTagItem;
                     let tagClass = blockElements.indexOf(element.name) !== -1 
                     ? 'block'   
                     : voidElements.indexOf(element.name) !== -1 
                         ? 'void'
                         : 'inline' ;
-    
-                    // console.log(element)
-                    let newElement = {
+
+                    newElement = {
                         type: 'tag',
                         tag_type: element.name,
                         tag_class: tagClass,
                         attrs: cleanAttributes(element.attribs),
-                        content: nestedContentParser(element.children)
+                        content: nestedContentParser(element.children, [])
                     } as NestedTagItem;
-                    // console.log(newElement);
-                    cellContents.push(newElement);
+
+                    nestedContents.push(newElement);
+
                 }
                 break;
         }
     })
-    return cellContents;
+    return nestedContents;
 }
 
 function parseDescriptionList($dlist: Cheerio): DescList {
@@ -1179,9 +1204,9 @@ function parseDescriptionList($dlist: Cheerio): DescList {
 
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledDescList = JSONCycleCustom.decycle(dlist, []) as any;
-    // console.log("--------------------------")
-    // console.log(util.inspect(decycledDescList, false, null, true));
-    // console.log("--------------------------")
+    console.log("--------------------------")
+    console.log(util.inspect(decycledDescList, false, null, true));
+    console.log("--------------------------")
     return decycledDescList as DescList;
 }
 
