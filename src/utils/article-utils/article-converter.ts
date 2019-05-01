@@ -1205,9 +1205,9 @@ function parseDescriptionList($dlist: Cheerio): DescList {
 
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledDescList = JSONCycleCustom.decycle(dlist, []) as any;
-    console.log("--------------------------")
-    console.log(util.inspect(decycledDescList, false, null, true));
-    console.log("--------------------------")
+    // console.log("--------------------------")
+    // console.log(util.inspect(decycledDescList, false, null, true));
+    // console.log("--------------------------")
     return decycledDescList as DescList;
 }
 
