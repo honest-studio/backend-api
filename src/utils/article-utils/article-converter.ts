@@ -1147,9 +1147,6 @@ function nestedContentParser($contents: CheerioElement[], nestedContents: Nested
         switch (element.type){
             case 'text':
                 let theSentences: Sentence[] = parseSentences(element.data);
-                console.log("-----------------------------")
-                console.log(element.data);
-                console.log(theSentences);
                 if (theSentences.length) {
                     nestedContents.push({
                         type: 'text',
