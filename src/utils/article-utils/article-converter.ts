@@ -25,11 +25,52 @@ import {
 } from './article-dto';
 import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
-const blockElements = require('block-elements');
 const voidElements = require('html-void-elements');
 
 const decode = require('unescape');
 const normalizeUrl = require('normalize-url');
+
+export const BLOCK_ELEMENTS = [
+    "address",
+    "article",
+    "aside",
+    "blockquote",
+    "canvas",
+    "dd",
+    "div",
+    "dl",
+    "dt",
+    "fieldset",
+    "figcaption",
+    "figure",
+    "footer",
+    "form",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "header",
+    "hgroup",
+    "hr",
+    "li",
+    "main",
+    "nav",
+    "noscript",
+    "ol",
+    "output",
+    "p",
+    "pre",
+    "section",
+    "table",
+    "td",
+    "tfoot",
+    "th",
+    "tr",
+    "ul",
+    "video"
+  ];
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
@@ -1156,7 +1197,7 @@ function nestedContentParser($contents: CheerioElement[], nestedContents: Nested
                 break;
             case 'tag':
                 let newElement: NestedTagItem;
-                let tagClass = blockElements.indexOf(element.name) !== -1 
+                let tagClass = BLOCK_ELEMENTS.indexOf(element.name) !== -1 
                 ? 'block'   
                 : voidElements.indexOf(element.name) !== -1 
                     ? 'void'
