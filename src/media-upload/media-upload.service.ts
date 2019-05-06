@@ -375,7 +375,7 @@ export class MediaUploadService {
                                     .scaleToFit(mainWidth, mainHeight)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Set the BMP thumbnail as a JPEG
@@ -387,7 +387,7 @@ export class MediaUploadService {
                                     .quality(85)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
                         break;
                     }
@@ -407,7 +407,7 @@ export class MediaUploadService {
                                     .scaleToFit(mainWidth, mainHeight)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Set the TIFF thumbnail as a JPEG
@@ -419,7 +419,7 @@ export class MediaUploadService {
                                     .quality(85)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
                         break;
                     }
@@ -442,7 +442,7 @@ export class MediaUploadService {
                                     .quality(85)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
                         break;
                     }
@@ -481,7 +481,7 @@ export class MediaUploadService {
                                     .quality(85)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Resize the PNG and convert to AMP JPEG due to AMP (1200px width minimum)
@@ -492,7 +492,7 @@ export class MediaUploadService {
                                     .scaleToFit(mainWidth, mainHeight)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
                         break;
                     }
@@ -524,7 +524,7 @@ export class MediaUploadService {
                                     .scaleToFit(mainWidth, mainHeight)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Resize the JPEG for its thumbnail
@@ -536,7 +536,7 @@ export class MediaUploadService {
                                     .quality(85)
                                     .getBufferAsync('image/jpeg')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
                         break;
                     }
@@ -550,7 +550,7 @@ export class MediaUploadService {
                         // Resize the PNG due to AMP (1200px width minimum)
                         bufferPack.mainBuf = await Jimp.read(mediaBuffer)
                             .then((image) => image.scaleToFit(mainWidth, mainHeight).getBufferAsync('image/png'))
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Resize the PNG for its thumbnail
@@ -561,7 +561,7 @@ export class MediaUploadService {
                                     .quality(85)
                                     .getBufferAsync('image/png')
                             )
-                            .then((buffer) => this.compressImage(buffer))
+                            .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
                         break;
                     }
@@ -572,6 +572,7 @@ export class MediaUploadService {
 
                 // Create and upload the main file
                 if (includeMainPhoto) {
+                    
                     // gzip the main file
                     bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
                         level: zlib.constants.Z_BEST_COMPRESSION
@@ -636,7 +637,7 @@ export class MediaUploadService {
                                 .quality(85)
                                 .getBufferAsync('image/jpeg')
                         )
-                        .then((buffer) => this.compressImage(buffer))
+                        .then((buffer) => buffer as any)
                         .catch((err) => {
                             console.log(err);
                             throw 'File upload failed';
