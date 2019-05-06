@@ -99,7 +99,7 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
                         try {
                             let qres = conn.query(queryObj, (sqlErrs, results, fields) => {
                                 if (sqlErrs) {
-                                    conn.end();
+                                    conn.release();
                                     reject(sqlErrs);
                                 } else {
                                     conn.release();
@@ -109,7 +109,7 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
 
                             // console.log('qres: ', qres);
                         } catch (derp) {
-                            conn.end();
+                            conn.release();
                             reject(derp);
                         }
                     })
