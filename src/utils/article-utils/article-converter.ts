@@ -546,7 +546,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
             key: null,
             schema: null,
             addlSchematype: null,
-            addlSchemaItemprop: null,
+            addlSchemaItemProp: null,
             values: []
         };
 
@@ -576,7 +576,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
         );
 
         // Get the sub-schema key
-        infoPackage.addlSchemaItemprop = pyToJS(
+        infoPackage.addlSchemaItemProp = pyToJS(
             $(this)
                 .find('.ibox-addl_schema_itemprop')
                 .eq(0)
@@ -617,7 +617,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
             key: null,
             schema: null,
             addlSchematype: null,
-            addlSchemaItemprop: null,
+            addlSchemaItemProp: null,
             values: []
         };
 
@@ -647,7 +647,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
         );
 
         // Get the sub-schema key
-        infoPackage.addlSchemaItemprop = pyToJS(
+        infoPackage.addlSchemaItemProp = pyToJS(
             $(this)
                 .find('.ibox-addl_schema_itemprop')
                 .eq(0)
