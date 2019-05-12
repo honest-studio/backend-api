@@ -150,6 +150,7 @@ export interface DescList {
 export interface DescListItem {
     index: number;
     tag_type: 'dt' | 'dd';
+    tag_class: TagClass;
     attrs: {};
     content: NestedContentItem[];
 }
