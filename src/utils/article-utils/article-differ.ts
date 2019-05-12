@@ -382,7 +382,7 @@ function lineToTableRow(line: string): TableRow {
         tag_type: 'td'
     }));
 
-    return { index: 0, attrs: {}, cells: [], diff: difftype };
+    return { index: 0, attrs: {}, cells: [], tag_type: 'tr', tag_class: 'block', diff: difftype };
     // return { index: 0, attrs: {}, cells, diff: difftype };
 }
 
