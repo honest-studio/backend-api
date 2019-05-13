@@ -147,10 +147,16 @@ export class RecentActivityController {
         isArray: true,
         type: 'string'
     })
+    @ApiImplicitQuery({
+        name: 'limit',
+        description: 'Number of records to return. Min=1, Max=100, Default=10',
+        required: false,
+        type: Number
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getTrendingWikis(@Query() query): Promise<Array<any>> {
         let langs = [];
         if (query.langs) langs = query.langs.split(',');
-        return await this.recentActivityService.getTrendingWikis(langs);
+        return await this.recentActivityService.getTrendingWikis(langs, query.limit);
     }
 }
