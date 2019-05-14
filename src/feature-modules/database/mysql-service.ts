@@ -103,6 +103,7 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
                                     reject(sqlErrs);
                                 } else {
                                     conn.release();
+                                    if (sqlErrs) reject (sqlErrs);
                                     resolve(results as T);
                                 }
                             });
