@@ -61,3 +61,11 @@ To do so, comment out the following line in `src/main.ts`:
 app.get('EosSyncService').sync();
 ```
 
+## Troubleshooting
+
+Here's some useful troubleshooting commands for the production server. 
+All of these require SSH access. 
+
+* Restart IPFS: `systemctl --user restart ipfs`
+* Restart Backend API server: `systemctl --user restart ep2-backend`
+* Update .env: It is located at ~/ep2-backend/.env

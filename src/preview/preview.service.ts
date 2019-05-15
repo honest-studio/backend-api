@@ -166,12 +166,10 @@ export class PreviewService {
         // stop pre-sql timer
         this.getPrevBySlugPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
         const sqlOnlyStart = process.hrtime.bigint();
-        console.time('mysql preview query');
         const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         // stop sql-only timer
         this.getPrevBySlugSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
         const postSqlStart = process.hrtime.bigint();
-        console.timeEnd('mysql preview query');
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews

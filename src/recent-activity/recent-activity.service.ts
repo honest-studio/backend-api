@@ -90,7 +90,7 @@ export class RecentActivityService {
         return this.proposalService.getProposals(proposal_ids, proposal_options);
     }
 
-    async getTrendingWikis(langs: string[] = []) {
+    async getTrendingWikis(langs: string[] = [], limit: number = 10) {
         const access_token = await this.oauthService.getGoogleAnalyticsToken();
         let match_tokens;
         if (langs.length > 0)
@@ -131,7 +131,9 @@ export class RecentActivityService {
         if (!report.reports[0].data.rows)
             return [];
 
-        const trending = report.reports[0].data.rows.map((row) => ({
+        const trending = report.reports[0].data.rows
+        .slice(0, limit)
+        .map((row) => ({
             slug: row.dimensions[0].slice(14).split('/')[1],
             lang_code: row.dimensions[0].slice(14).split('/')[0].slice(5),
             pageviews_today: Number(row.metrics[0].values[0]),

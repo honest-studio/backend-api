@@ -187,39 +187,29 @@ const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]:
 
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
-    console.time("replacements");
     // Replace some problematic unicode characters and other stuff
     REPLACEMENTS.forEach(function(pair) {
         oldHTML = oldHTML.replace(pair.regex, pair.replacement);
     });
-    console.timeEnd("replacements");
 
     // Quick trim
     oldHTML = oldHTML.trim();
 
     // Load the HTML into htmlparser2 beforehand since it is more forgiving
     // Then load the HTML into cheerio for parsing
-    console.time("load dom");
     let dom = htmlparser2.parseDOM(oldHTML, { decodeEntities: true });
     let $ = cheerio.load(dom);
-    console.timeEnd("load dom");
 
     // Need to extract citations before sanitizing so the citation ID can be marked
-    console.time("citations");
     const citations = extractCitations($);
-    console.timeEnd("citations");
 
     // Remove useless and empty tags and HTML
     // Convert text formatting to pseudo-markdown
     // Converts link HTML to clean parseable formats
-    console.time("sanitize");
     $ = sanitizeText($);
-    console.timeEnd("sanitize");
 
     // Converts citation HTML to clean parseable formats
-    console.time("sanitize citations");
     $ = sanitizeCitations($, citations);
-    console.timeEnd("sanitize citations");
 
     let quickHTML = $.html();
     // Replace some problematic unicode characters and other stuff
@@ -232,9 +222,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     dom = htmlparser2.parseDOM(quickHTML, { decodeEntities: true });
     $ = cheerio.load(dom);
 
-    console.time("metadata");
     const metadata = extractMetadata($);
-    console.timeEnd("metadata");
 
     const page_title_text =
         $('h1.page-title')
@@ -245,22 +233,13 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
         type: 'sentence',
         text: page_title_text
     }];
-    console.time("media gallery");
     const media_gallery = extractMediaGallery($);
-    console.timeEnd("media gallery");
-    console.time("main photo");
     const main_photo = extractMainPhoto($);
-    console.timeEnd("main photo");
-    console.time("infobox html");
     let infobox_html = extractInfoboxHtml($);
-    console.timeEnd("infobox html");
-    console.time("infoboxes");
     const infoboxes = extractInfoboxes($);
-    console.timeEnd("infoboxes");
 
 
     // amp info
-    console.time("amp info");
     const amp_info = {
         load_youtube_js: false,
         load_audio_js: false,
@@ -285,11 +264,8 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
                 break;
         }
     });
-    console.timeEnd("amp info");
 
-    console.time("page body");
     const page_body = extractPageBody($);
-    console.timeEnd("page body");
 
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }

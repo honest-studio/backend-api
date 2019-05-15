@@ -258,10 +258,19 @@ describe('Backend API', () => {
 
   it('Wiki: Submit wiki', () => {
     const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
+    wiki.metadata.find(m => m.key == "last_modified").value = (new Date).toISOString();
     return request(app.getHttpServer())
         .post('/v2/wiki')
         .send(wiki)
         .expect(201)
+  });
+
+  it('Wiki: Failed Wiki Submission: Duplicate wiki', () => {
+    const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
+    return request(app.getHttpServer())
+        .post('/v2/wiki')
+        .send(wiki)
+        .expect(400)
   });
 
   it('Wiki: Failed Wiki Submission: non-null ipfs hash', () => {

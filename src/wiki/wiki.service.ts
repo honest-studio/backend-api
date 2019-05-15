@@ -30,9 +30,7 @@ export class WikiService {
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
-        console.time('wiki by slug mysql 1');
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
-        console.log(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
@@ -41,7 +39,6 @@ export class WikiService {
             WHERE (art.slug = ? OR art.slug_alt = ?) AND art.page_lang = ?`,
             [mysql_slug, mysql_slug, lang_code]
         );
-        console.timeEnd('wiki by slug mysql 1');
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
         // Try and grab cached json wiki
@@ -54,7 +51,6 @@ export class WikiService {
         }
 
         // get wiki from MySQL if there is no cached item
-        console.time('wiki by slug mysql 2');
         let wiki_rows: Array<any> = await this.mysql.TryQuery(
             `
             SELECT html_blob
@@ -62,15 +58,12 @@ export class WikiService {
             WHERE ipfs_hash=?;`,
             [ipfs_hash]
         );
-        console.timeEnd('wiki by slug mysql 2');
         let wiki: ArticleJson;
         try {
             // check if wiki is already in JSON format
             wiki = JSON.parse(wiki_rows[0].html_blob);
         } catch {
-            console.time('wiki by slug parse wiki');
             wiki = oldHTMLtoJSON(wiki_rows[0].html_blob);
-            console.timeEnd('wiki by slug parse wiki');
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
@@ -256,13 +249,6 @@ export class WikiService {
             } else throw err;
         }
         const ipfs_hash = submission[0].hash;
-        const json_insertion = this.mysql.TryQuery(
-            `
-            INSERT INTO enterlink_hashcache (ipfs_hash, html_blob, timestamp) 
-            VALUES (?, ?, NOW())
-            `,
-            [ipfs_hash, blob]
-        );
         const page_title = wiki.page_title[0].text;
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
         const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
@@ -271,7 +257,7 @@ export class WikiService {
         const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
         const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
         const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-        const article_info = this.mysql.TryQuery(
+        const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
                 (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
@@ -300,7 +286,23 @@ export class WikiService {
                 is_adult_content
             ]
         );
-        await Promise.all([json_insertion, article_info]).catch(console.error);
+
+        try {
+            const json_insertion = await this.mysql.TryQuery(
+                `
+                INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
+                    (SELECT id, ipfs_hash_current, ?, NOW() 
+                        FROM enterlink_articletable
+                        WHERE page_lang = ? AND slug = ?
+                    )
+                `,
+                [blob, page_lang, slug]
+            );
+        } catch (e) {
+            if (e.message.includes("ER_DUP_ENTRY"))
+                throw new BadRequestException("Duplicate submission. IPFS hash already exists");
+            else throw e;
+        }
 
         return { ipfs_hash };
     }
