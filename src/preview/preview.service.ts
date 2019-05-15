@@ -175,6 +175,7 @@ export class PreviewService {
         // clean up text previews
         for (let preview of previews) {
             if (preview.text_preview) {
+                // WILL EVENTUALLY NEED TO STRIP MARKS AND OTHER [[ ]] STUFF HERE!!! SEE THE CODE IN THE FRONT-END
                 preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
                 const $ = cheerio.load(preview.text_preview);
                 preview.text_preview = $.root()

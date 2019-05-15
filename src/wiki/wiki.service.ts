@@ -2,7 +2,8 @@ import { Injectable, NotFoundException, BadRequestException, InternalServerError
 import * as fetch from 'node-fetch';
 import { URL } from 'url';
 import { IpfsService } from '../common';
-import { MysqlService, MongoDbService } from '../feature-modules/database';
+import { MysqlService, MongoDbService, } from '../feature-modules/database';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { CacheService } from '../cache';
 import {
     ArticleJson,
@@ -15,6 +16,7 @@ import {
     calculateSeeAlsos,
     oldHTMLtoJSON
 } from '../utils/article-utils';
+import { updateElasticsearch } from '../utils/elasticsearch-tools';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import * as SqlString from 'sqlstring';
 import cheerio from 'cheerio';
@@ -26,7 +28,8 @@ export class WikiService {
         private mysql: MysqlService,
         private mongo: MongoDbService,
         private cacheService: CacheService,
-        private mediaUploadService: MediaUploadService
+        private mediaUploadService: MediaUploadService,
+        private elasticSearch: ElasticsearchService,
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
@@ -70,6 +73,8 @@ export class WikiService {
             if (!wiki.metadata.find((w) => w.key == 'page_lang'))
                 wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
+
+        console.log(wiki)
 
         // cache wiki - upsert so that use_cache=false updates the cache
         this.mongo
@@ -260,8 +265,8 @@ export class WikiService {
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
-                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
+                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_removed_from_index, bing_index_override, has_pending_edits)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 0, 0, 0)
             ON DUPLICATE KEY UPDATE 
                 ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
                 page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
@@ -287,16 +292,36 @@ export class WikiService {
             ]
         );
 
+        // Get the article object
+        let articleResultPacket = await this.mysql.TryQuery(
+            `
+            SELECT 
+                id,
+                ipfs_hash_current,
+                ?,
+                page_title
+            FROM enterlink_articletable AS art 
+            WHERE page_lang = ? AND slug = ?
+            `,
+            [blob, page_lang, slug]
+        );
+        
+        // Update Elasticsearch
+        updateElasticsearch(
+            articleResultPacket[0].id, 
+            articleResultPacket[0].page_title, 
+            page_lang,
+            'PAGE_UPDATED_OR_CREATED' , 
+            this.elasticSearch
+        )
+
         try {
             const json_insertion = await this.mysql.TryQuery(
                 `
                 INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
-                    (SELECT id, ipfs_hash_current, ?, NOW() 
-                        FROM enterlink_articletable
-                        WHERE page_lang = ? AND slug = ?
-                    )
+                VALUES (?, ?, ?, NOW())
                 `,
-                [blob, page_lang, slug]
+                [articleResultPacket[0].id, articleResultPacket[0].ipfs_hash_current, articleResultPacket[0].blob, page_lang]
             );
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY"))
