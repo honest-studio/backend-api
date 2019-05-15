@@ -9,7 +9,7 @@ export class SearchService {
 
     async searchTitle(query: string, langs?: string[]): Promise<any> {
         const searchJSON = {
-            size: 250,
+            // size: 25000,
             query: {
                 bool: {
                     should: [

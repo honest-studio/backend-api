@@ -74,7 +74,6 @@ export class WikiService {
                 wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
 
-        console.log(wiki)
 
         // cache wiki - upsert so that use_cache=false updates the cache
         this.mongo
@@ -243,7 +242,7 @@ export class WikiService {
     async submitWiki(wiki: ArticleJson): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-        const blob = JSON.stringify(wiki);
+        let blob = JSON.stringify(wiki);
         let submission;
         try {
             submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
@@ -254,6 +253,11 @@ export class WikiService {
             } else throw err;
         }
         const ipfs_hash = submission[0].hash;
+
+        let wikiCopy: ArticleJson = wiki;
+        wikiCopy.ipfs_hash = ipfs_hash;
+        let stringifiedWikiCopy = JSON.stringify(wikiCopy);
+        
         const page_title = wiki.page_title[0].text;
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
         const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
@@ -290,20 +294,18 @@ export class WikiService {
                 page_type,
                 is_adult_content
             ]
-        );
+        )
 
         // Get the article object
         let articleResultPacket = await this.mysql.TryQuery(
             `
             SELECT 
                 id,
-                ipfs_hash_current,
-                ?,
                 page_title
             FROM enterlink_articletable AS art 
             WHERE page_lang = ? AND slug = ?
             `,
-            [blob, page_lang, slug]
+            [page_lang, slug]
         );
         
         // Update Elasticsearch
@@ -321,7 +323,7 @@ export class WikiService {
                 INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
                 VALUES (?, ?, ?, NOW())
                 `,
-                [articleResultPacket[0].id, articleResultPacket[0].ipfs_hash_current, articleResultPacket[0].blob, page_lang]
+                [articleResultPacket[0].id, ipfs_hash, stringifiedWikiCopy, page_lang]
             );
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY"))
