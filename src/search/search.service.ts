@@ -56,10 +56,11 @@ export class SearchService {
                 body: searchJSON
             })
             .toPromise();
-        const canonical_ids = searchResult[0].hits.hits.map((h) => h._source.canonical_id);
-
+        const canonical_ids: number[] = searchResult[0].hits.hits.map((h) => {
+            return h._source.canonical_id;
+        });
         if (canonical_ids.length == 0) return [];
-
+        
         const result_rows: Array<any> = await this.mysql.TryQuery(
             `
             SELECT 
@@ -76,9 +77,12 @@ export class SearchService {
                 art.creation_timestamp,
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art
-            WHERE art.id IN (?)`,
-            [canonical_ids]
+            WHERE art.id IN (?) 
+            ORDER BY FIELD(art.id, ?)`,
+            [canonical_ids, canonical_ids]
         );
+
+
         // clean up text previews
         result_rows.forEach((row) => {
             if (!row.text_preview) return; // continue
