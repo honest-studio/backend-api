@@ -29,7 +29,8 @@ import { StringDecoder } from 'string_decoder';
 import { AWSS3Service } from '../feature-modules/database';
 import { PhotoExtraData } from './media-upload-dto';
 import { MediaUploadResult } from "./media-upload-dto";
-
+const slugify = require('slugify');
+slugify.extend({'%': '_u_'});
 
 const TEMP_DIR = path.join(__dirname, 'tmp');
 const PHOTO_CONSTANTS = {
@@ -579,7 +580,7 @@ export class MediaUploadService {
                     });
 
                     // Set the AWS S3 bucket key
-                    let theMainKey = `${uploadType}/${lang}/${slug}/${filename}.${varPack.suffix}`;
+                    let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
 
                     // Specify S3 upload options
                     let uploadParamsMain = {
@@ -648,7 +649,7 @@ export class MediaUploadService {
 
                     // Upload the video as a stream
                     // Set the AWS S3 bucket key
-                    let theMainKey = `${uploadType}/${lang}/${slug}/${filename}.${varPack.suffix}`;
+                    let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
 
                     fs.readFile(tempPath, function(err, data) {
                         if (err) {
@@ -699,7 +700,7 @@ export class MediaUploadService {
             bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
 
             // Set the AWS S3 bucket key
-            let theThumbKey = `${uploadType}/${lang}/${slug}/${filename}__thumb.${varPack.thumbSuffix}`;
+            let theThumbKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}__thumb.${varPack.thumbSuffix}`;
 
             // Specify S3 upload options
             let uploadParamsThumb = {
