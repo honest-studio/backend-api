@@ -753,10 +753,12 @@ function parseSection($section: Cheerio): Section {
             const $list_items = $element.children('li');
             for (let j = 0; j < $list_items.length; j++) {
                 const $list_item = $list_items.eq(j);
+                 // All <li> sentences should be joined anyways, otherwise they will produce erroneous bullet points
+                let comboSentence = { type: 'sentence', index: 0, text: parseSentences($list_item.text()).map((sent) => sent.text).join("") };
                 paragraph.items.push({
                     type: 'list_item',
                     index: j,
-                    sentences: parseSentences($list_item.text()),
+                    sentences: [comboSentence],
                     tag_type: 'li'
                 });
             }
@@ -1087,7 +1089,7 @@ export function socialURLType(inputURL: string) {
 // Regex copied from natural NPM package
 // https://www.npmjs.com/package/natural#tokenizers
 function splitSentences(text: string): Array<string> {
-    let splits = text.split(/(?<=[.!?]\s)/g);
+    let splits = text.split(/(?<=[.!?]\s)/gm);
     splits = splits.map((split) => split.trim()).filter(Boolean);
 
     // Don't split on certain tricky words like Mr., Mrs., etc.
