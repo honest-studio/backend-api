@@ -96,7 +96,7 @@ export class WikiService {
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
         const wiki = await this.getWikiBySlug(lang_code, slug);
-        const schema = renderSchema(wiki);
+        const schema = renderSchema(wiki, 'html');
         return schema;
     }
 
@@ -366,6 +366,7 @@ export class WikiService {
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
         const wiki = await this.getWikiBySlug(lang_code, slug);
         const see_also = await this.getSeeAlsos(wiki);
+        const schema = renderSchema(wiki, 'JSON');
         const pageviews_rows: any[] = await this.mysql.TryQuery(
             `
         SELECT 
@@ -389,6 +390,6 @@ export class WikiService {
             else throw e;
         }
 
-        return { alt_langs, see_also, pageviews };
+        return { alt_langs, see_also, pageviews, schema };
     }
 }
