@@ -32,6 +32,7 @@ export interface WikiExtraInfo {
     pageviews: number;
     see_also: SeeAlso[];
     alt_langs: LanguagePack[];
+    schema: {[key: string]: any};
 }
 
 export interface LanguagePack {

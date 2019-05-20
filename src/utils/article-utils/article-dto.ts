@@ -18,7 +18,9 @@ export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL
 
 export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
 
-export type CellType = 'th' | 'td';
+export type TableCellType = 'th' | 'td';
+
+export type TagClass = 'inline' | 'block' | 'void';
 
 export interface Sentence {
     type: string; // sentence
@@ -37,7 +39,7 @@ export interface NestedTextItem {
 export interface NestedTagItem {
     type: 'tag';
     tag_type: string;
-    tag_class: 'inline' | 'block' | 'void';
+    tag_class: TagClass;
     attrs: {};
     content: NestedContentItem[]; // allow for recursion
 }
@@ -148,6 +150,7 @@ export interface DescList {
 export interface DescListItem {
     index: number;
     tag_type: 'dt' | 'dd';
+    tag_class: TagClass;
     attrs: {};
     content: NestedContentItem[];
 }
@@ -174,6 +177,8 @@ export interface TableSection {
 export interface TableRow {
     index: number;
     attrs: {};
+    tag_type: "tr";
+    tag_class: TagClass;
     cells: TableCell[];
     diff?: DiffType;
 }
@@ -183,7 +188,8 @@ export interface TableRow {
 export interface TableCell {
     index: number;
     attrs: {};
-    tag_type: CellType;
+    tag_type: TableCellType;
+    tag_class: TagClass;
     content: NestedContentItem[];
 }
 

@@ -2,7 +2,8 @@ import { Injectable, NotFoundException, BadRequestException, InternalServerError
 import * as fetch from 'node-fetch';
 import { URL } from 'url';
 import { IpfsService } from '../common';
-import { MysqlService, MongoDbService } from '../feature-modules/database';
+import { MysqlService, MongoDbService, } from '../feature-modules/database';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { CacheService } from '../cache';
 import {
     ArticleJson,
@@ -15,6 +16,7 @@ import {
     calculateSeeAlsos,
     oldHTMLtoJSON
 } from '../utils/article-utils';
+import { updateElasticsearch } from '../utils/elasticsearch-tools';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import * as SqlString from 'sqlstring';
 import cheerio from 'cheerio';
@@ -26,7 +28,8 @@ export class WikiService {
         private mysql: MysqlService,
         private mongo: MongoDbService,
         private cacheService: CacheService,
-        private mediaUploadService: MediaUploadService
+        private mediaUploadService: MediaUploadService,
+        private elasticSearch: ElasticsearchService,
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
@@ -36,8 +39,8 @@ export class WikiService {
             SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE (art.slug = ? OR art.slug_alt = ?) AND art.page_lang = ?`,
-            [mysql_slug, mysql_slug, lang_code]
+            WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
+            [slug, mysql_slug, mysql_slug, slug, lang_code]
         );
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
 
@@ -71,6 +74,7 @@ export class WikiService {
                 wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
 
+
         // cache wiki - upsert so that use_cache=false updates the cache
         this.mongo
             .connection()
@@ -92,7 +96,7 @@ export class WikiService {
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
         const wiki = await this.getWikiBySlug(lang_code, slug);
-        const schema = renderSchema(wiki);
+        const schema = renderSchema(wiki, 'html');
         return schema;
     }
 
@@ -238,7 +242,7 @@ export class WikiService {
     async submitWiki(wiki: ArticleJson): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-        const blob = JSON.stringify(wiki);
+        let blob = JSON.stringify(wiki);
         let submission;
         try {
             submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
@@ -249,6 +253,11 @@ export class WikiService {
             } else throw err;
         }
         const ipfs_hash = submission[0].hash;
+
+        let wikiCopy: ArticleJson = wiki;
+        wikiCopy.ipfs_hash = ipfs_hash;
+        let stringifiedWikiCopy = JSON.stringify(wikiCopy);
+        
         const page_title = wiki.page_title[0].text;
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
         const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
@@ -260,8 +269,8 @@ export class WikiService {
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
-                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1)
+                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_removed_from_index, bing_index_override, has_pending_edits)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 0, 0, 0)
             ON DUPLICATE KEY UPDATE 
                 ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
                 page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
@@ -285,18 +294,36 @@ export class WikiService {
                 page_type,
                 is_adult_content
             ]
+        )
+
+        // Get the article object
+        let articleResultPacket = await this.mysql.TryQuery(
+            `
+            SELECT 
+                id,
+                page_title
+            FROM enterlink_articletable AS art 
+            WHERE page_lang = ? AND slug = ?
+            `,
+            [page_lang, slug]
         );
+        
+        // Update Elasticsearch
+        updateElasticsearch(
+            articleResultPacket[0].id, 
+            articleResultPacket[0].page_title, 
+            page_lang,
+            'PAGE_UPDATED_OR_CREATED' , 
+            this.elasticSearch
+        )
 
         try {
             const json_insertion = await this.mysql.TryQuery(
                 `
                 INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
-                    (SELECT id, ipfs_hash_current, ?, NOW() 
-                        FROM enterlink_articletable
-                        WHERE page_lang = ? AND slug = ?
-                    )
+                VALUES (?, ?, ?, NOW())
                 `,
-                [blob, page_lang, slug]
+                [articleResultPacket[0].id, ipfs_hash, stringifiedWikiCopy, page_lang]
             );
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY"))
@@ -339,6 +366,7 @@ export class WikiService {
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
         const wiki = await this.getWikiBySlug(lang_code, slug);
         const see_also = await this.getSeeAlsos(wiki);
+        const schema = renderSchema(wiki, 'JSON');
         const pageviews_rows: any[] = await this.mysql.TryQuery(
             `
         SELECT 
@@ -362,6 +390,6 @@ export class WikiService {
             else throw e;
         }
 
-        return { alt_langs, see_also, pageviews };
+        return { alt_langs, see_also, pageviews, schema };
     }
 }

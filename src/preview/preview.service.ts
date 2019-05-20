@@ -7,7 +7,7 @@ import { CacheService } from '../cache';
 import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
 import { WikiIdentity } from '../utils/article-utils/article-types';
-
+import * as SqlString from 'sqlstring';
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now
@@ -141,11 +141,17 @@ export class PreviewService {
             if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
         });
 
-        const substitutions = wiki_identities
-            .map((w) => [w.lang_code, this.mysql.cleanSlugForMysql(w.slug)])
-            .reduce((flat, piece) => flat.concat(piece), []);
+        // const substitutions = wiki_identities
+        //     .map((w) => [w.lang_code, w.slug])
+        //     .reduce((flat, piece) => flat.concat(piece), []);
 
-        const whereClause = wiki_identities.map((w) => `(art.page_lang = ? AND art.slug = ?)`).join(' OR ');
+        const whereClause = wiki_identities.map((w) => { 
+            let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
+            return SqlString.format('(art.page_lang = ? AND ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)))',
+                        [w.lang_code, w.slug, cleanedSlug, cleanedSlug, w.slug]
+            );
+        }).join(' OR ');
+        
         const query = `
             SELECT 
                 art.page_title, 
@@ -166,7 +172,8 @@ export class PreviewService {
         // stop pre-sql timer
         this.getPrevBySlugPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
         const sqlOnlyStart = process.hrtime.bigint();
-        const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
+        // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
+        const previews: Array<any> = await this.mysql.TryQuery(query);
         // stop sql-only timer
         this.getPrevBySlugSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
         const postSqlStart = process.hrtime.bigint();
@@ -175,6 +182,7 @@ export class PreviewService {
         // clean up text previews
         for (let preview of previews) {
             if (preview.text_preview) {
+                // WILL EVENTUALLY NEED TO STRIP MARKS AND OTHER [[ ]] STUFF HERE!!! SEE THE CODE IN THE FRONT-END
                 preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
                 const $ = cheerio.load(preview.text_preview);
                 preview.text_preview = $.root()

@@ -177,6 +177,11 @@ describe('Backend API', () => {
           .expect(200)
   });
 
+  it('Wiki: Get wiki by slug with unicode, method 2', () => {
+    return request(app.getHttpServer())
+        .get('/v2/wiki/slug/lang_en/aqşin-qurbanlı')
+        .expect(200)
+});
 
   it('Wiki: Get wiki redirect', () => {
     return request(app.getHttpServer())

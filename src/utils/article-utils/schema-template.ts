@@ -7,7 +7,7 @@ import striptags from 'striptags';
 import urlSlug from 'url-slug';
 import tag from 'html-tag';
 
-export const renderSchema = (inputJSON: ArticleJson): any => {
+export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     const BLURB_SNIPPET_PLAINTEXT = '',
         OVERRIDE_MAIN_THUMB = false;
@@ -234,7 +234,13 @@ export const renderSchema = (inputJSON: ArticleJson): any => {
         })
         .join();
     schemaJSON['articleBody'] = pageBodyText;
-    return `<script type="application/ld+json">${JSON.stringify(schemaJSON)}</script>`;
+    switch (returnType) {
+        case 'JSON':
+            return schemaJSON;
+        case 'html':
+            return `<script type="application/ld+json">${JSON.stringify(schemaJSON)}</script>`;
+    }
+    
 };
 
 export const renderParagraph = (
