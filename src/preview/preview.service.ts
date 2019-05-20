@@ -147,10 +147,12 @@ export class PreviewService {
 
         const whereClause = wiki_identities.map((w) => { 
             let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
-            return SqlString.format('(art.page_lang = ? AND ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)))',
-                        [w.lang_code, w.slug, cleanedSlug, cleanedSlug, w.slug]
+            return SqlString.format(
+                '(art.page_lang = ? AND (art.slug = ? OR art.slug = ?))',
+                [w.lang_code, w.slug, cleanedSlug]
             );
         }).join(' OR ');
+        console.log(whereClause);
         
         const query = `
             SELECT 
