@@ -92,7 +92,7 @@ export class EosSyncService {
                     const block_num = msg.data.block_num;
                     const account = msg.data.trace.act.account;
                     const name = msg.data.trace.act.name;
-                    // console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
+                    console.log(`EOS-SYNC-SERVICE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
                 })
                 .catch((err) => {
                     if (err.code == 11000) {
