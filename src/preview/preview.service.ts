@@ -41,18 +41,12 @@ export class PreviewService {
     ) {}
 
     async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<any> {
-        const totalReqStart = process.hrtime.bigint();
         if (ipfs_hashes.length == 0) return [];
 
         const previews = [];
         for (const i in ipfs_hashes) {
             previews.push({ ipfs_hash: ipfs_hashes[i] });
         }
-        // stop pre-sql timer
-        this.getPrevByHashPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
-        const sqlOnlyStart = process.hrtime.bigint();
-
-        const sqlOnlyTimer = this.getPrevByHashSqlOnlyHisto.startTimer({ pid: pid });
         const article_info: Array<any> = await this.mysql.TryQuery(
             `
             SELECT 
@@ -124,18 +118,19 @@ export class PreviewService {
             }
         }
 
+        // Replace default thumbnail with null
+        for (let preview of previews) {
+            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
+                preview.thumbnail = null;
+        }
+
         // error messages for missing wikis
         previews.filter((p) => !p.page_title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
-        // stop post-sql timer
-        this.getPrevByHashPostSqlHisto.observe({ pid: pid }, getDeltaMs(postSqlStart));
-        // stop total request timer
-        this.getPrevByHashTotalReqHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
+
         return previews;
     }
 
     async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<any> {
-        const totalReqStart = process.hrtime.bigint();
-
         // strip lang_ prefix in lang_code if it exists
         wiki_identities.forEach((w) => {
             if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
@@ -170,16 +165,9 @@ export class PreviewService {
             FROM enterlink_articletable AS art 
             WHERE ${whereClause}`;
 
-        // stop pre-sql timer
-        this.getPrevBySlugPreSqlHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
-        const sqlOnlyStart = process.hrtime.bigint();
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         const previews: Array<any> = await this.mysql.TryQuery(query);
-        // stop sql-only timer
-        this.getPrevBySlugSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
-        const postSqlStart = process.hrtime.bigint();
 
-        // Let's trying failing with an empty array instead of throwing errors and see how it goes
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews
@@ -194,10 +182,12 @@ export class PreviewService {
                     .trim();
             }
         }
-        // stop post-sql timer
-        this.getPrevBySlugPostSqlHisto.observe({ pid: pid }, getDeltaMs(postSqlStart));
-        // stop total req timer
-        this.getPrevBySlugTotalReqHisto.observe({ pid: pid }, getDeltaMs(totalReqStart));
+
+        // Replace default thumbnail with null
+        for (let preview of previews) {
+            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
+                preview.thumbnail = null;
+        }
 
         return previews;
     }
