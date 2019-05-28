@@ -133,6 +133,6 @@ export class EosSyncService {
 
     sync() {
         this.start();
-        setInterval(this.restartIfFailing, 15 * 1000); // every 15 seconds
+        setInterval(() => this.restartIfFailing.apply(this), 15 * 1000); // every 15 seconds
     }
 }
