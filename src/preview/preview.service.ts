@@ -69,9 +69,6 @@ export class PreviewService {
             [ipfs_hashes]
         );
 
-        //stop sql only timer
-        this.getPrevByHashSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
-        const postSqlStart = process.hrtime.bigint();
         article_info.forEach((a) => {
             const i = previews.findIndex((p) => p.ipfs_hash === a.ipfs_hash);
             previews[i] = a;
