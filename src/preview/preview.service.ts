@@ -152,7 +152,6 @@ export class PreviewService {
                 [w.lang_code, w.slug, cleanedSlug]
             );
         }).join(' OR ');
-        console.log(whereClause);
         
         const query = `
             SELECT 

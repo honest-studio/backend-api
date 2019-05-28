@@ -72,12 +72,22 @@ export class ProposalService {
             .forEach((p) => (p.result = { error: `Proposal ${p.proposal_id} has not finalized` }));
 
         if (options.preview) {
-            const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
-            const previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
-            previews.forEach(
-                (preview) =>
-                    (proposals.find((p) => p.info.trace.act.data.ipfs_hash === preview.ipfs_hash).preview = preview)
-            );
+            const packs = proposals
+                .filter((p) => !p.info.error)
+                .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
+            const previews = await this.previewService.getPreviewsBySlug(packs);
+            previews.forEach((preview) => {
+                proposals.forEach(p => {
+                    if (p.info.trace.act.data.slug === preview.slug)
+                        p.preview = preview;
+                })
+            });
+
+            // mark unfound previews
+            proposals.forEach(p => {
+                if (!p.preview) 
+                    p.preview = { error: `Could not find preview for ${p.info.trace.act.data.lang_code}/${p.info.trace.act.data.slug}` }
+            });
         }
 
         if (options.diff != 'none') {
