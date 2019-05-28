@@ -178,7 +178,9 @@ export class PreviewService {
         // stop sql-only timer
         this.getPrevBySlugSqlOnlyHisto.observe({ pid: pid }, getDeltaMs(sqlOnlyStart));
         const postSqlStart = process.hrtime.bigint();
-        if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
+
+        // Let's trying failing with an empty array instead of throwing errors and see how it goes
+        //if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews
         for (let preview of previews) {
