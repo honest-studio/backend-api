@@ -180,7 +180,7 @@ export class PreviewService {
         const postSqlStart = process.hrtime.bigint();
 
         // Let's trying failing with an empty array instead of throwing errors and see how it goes
-        //if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
+        if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews
         for (let preview of previews) {

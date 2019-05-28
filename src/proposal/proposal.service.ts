@@ -75,7 +75,14 @@ export class ProposalService {
             const packs = proposals
                 .filter((p) => !p.info.error)
                 .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
-            const previews = await this.previewService.getPreviewsBySlug(packs);
+            let previews;
+            try {
+                previews = await this.previewService.getPreviewsBySlug(packs);
+            } catch (e) {
+                if (e.message.error == "Could not find wikis") previews = [];
+                else throw e;
+            }
+
             previews.forEach((preview) => {
                 proposals.forEach(p => {
                     if (p.info.trace.act.data.slug === preview.slug)
