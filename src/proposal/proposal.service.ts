@@ -71,16 +71,35 @@ export class ProposalService {
             .filter((p) => !p.result)
             .forEach((p) => (p.result = { error: `Proposal ${p.proposal_id} has not finalized` }));
 
-        if (options && options.preview) {
-            const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
-            const previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
-            previews.forEach(
-                (preview) =>
-                    (proposals.find((p) => p.info.trace.act.data.ipfs_hash === preview.ipfs_hash).preview = preview)
-            );
+        if (options.preview) {
+            const packs = proposals
+                .filter((p) => !p.info.error)
+                .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
+            let previews;
+            try {
+                previews = await this.previewService.getPreviewsBySlug(packs);
+            } catch (e) {
+                if (e.message.error == "Could not find wikis") previews = [];
+                else throw e;
+            }
+
+            previews.forEach((preview) => {
+                proposals.forEach(p => {
+                    if (p.info.trace.act.data.slug === preview.slug)
+                        p.preview = preview;
+                })
+            });
+
+            // mark unfound previews
+            proposals.forEach(p => {
+                if (p.info.error)
+                    p.preview = { error: `Non-existent proposal` };
+                else if (!p.preview) 
+                    p.preview = { error: `Could not find preview for ${p.info.trace.act.data.lang_code}/${p.info.trace.act.data.slug}` };
+            });
         }
 
-        if (options && options.diff != 'none') {
+        if (options.diff != 'none') {
             const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
             if (options.diff === 'full')
                 diffs.forEach(diff => {
@@ -97,86 +116,4 @@ export class ProposalService {
 
         return proposals;
     }
-
-    async getProposalsByIPFS(proposal_hashes: Array<String>, options: ProposalOptions): Promise<Array<Proposal>> {
-        const proposals: Array<any> = proposal_hashes.map((ipfs_hash) => {
-            return { ipfs_hash };
-        });
-
-        const proposalIDs = [];
-
-        const info = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.ipfs_hash': { $in: proposal_hashes }
-            })
-            .toArray();
-        info.forEach((doc) => {
-            proposalIDs.push(doc.trace.act.data.proposal_id);
-            return (proposals.find((p) => p.ipfs_hash == doc.trace.act.data.ipfs_hash).info = doc)
-        });
-        proposals
-            .filter((p) => !p.info)
-            .forEach((p) => (p.info = { error: `Proposal ${p.ipfs_hash} could not be found` }));
-
-        const votes = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'vote',
-                'trace.act.data.ipfs_hash': { $in: proposal_hashes }
-            })
-            .toArray();
-        proposals.forEach((prop) => (prop.votes = []));
-        votes.forEach((vote) =>
-            proposals.find((p) => p.ipfs_hash == vote.trace.act.data.ipfs_hash).votes.push(vote)
-        );
-
-        const results = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropres',
-                'trace.act.data.ipfs_hash': { $in: proposal_hashes }
-            })
-            .toArray();
-        results.forEach(
-            (result) => (proposals.find((p) => p.ipfs_hash == result.trace.act.data.ipfs_hash).result = result)
-        );
-        proposals
-            .filter((p) => !p.result)
-            .forEach((p) => (p.result = { error: `Proposal ${p.ipfs_hash} has not finalized` }));
-
-        if (options && options.preview) {
-            const ipfs_hashes = proposals.filter((p) => !p.info.error).map((p) => p.info.trace.act.data.ipfs_hash);
-            const previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
-            previews.forEach(
-                (preview) =>
-                    (proposals.find((p) => p.info.trace.act.data.ipfs_hash === preview.ipfs_hash).preview = preview)
-            );
-        }
-
-        if (options && options.diff != 'none') {
-            const diffs = await this.diffService.getDiffsByProposal(proposalIDs);
-            if (options.diff === 'full')
-                diffs.forEach(diff => {
-                    const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
-                    const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
-                    proposal.diff = diff;
-                });
-            else if (options.diff === 'metadata')
-                diffs.forEach(diff => {
-                    const proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
-                    proposals.find((p) => p.proposal_id == proposal_id).diff = { metadata: diff.metadata };
-                });
-        }
-
-        return proposals;
-    }
-
-
-
-
 }

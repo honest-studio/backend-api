@@ -179,7 +179,7 @@ describe('Backend API', () => {
 
   it('Wiki: Get wiki by slug with unicode, method 2', () => {
     return request(app.getHttpServer())
-        .get('/v2/wiki/slug/lang_en/aqşin-qurbanlı')
+        .get('/v2/wiki/slug/lang_en/aq%C5%9Fin-qurbanl%C4%B1')
         .expect(200)
 });
 
@@ -268,14 +268,6 @@ describe('Backend API', () => {
         .post('/v2/wiki')
         .send(wiki)
         .expect(201)
-  });
-
-  it('Wiki: Failed Wiki Submission: Duplicate wiki', () => {
-    const wiki = JSON.parse(fs.readFileSync('test/kedar-iyer-wiki.json', 'utf8'));
-    return request(app.getHttpServer())
-        .post('/v2/wiki')
-        .send(wiki)
-        .expect(400)
   });
 
   it('Wiki: Failed Wiki Submission: non-null ipfs hash', () => {

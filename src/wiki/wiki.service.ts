@@ -269,7 +269,16 @@ export class WikiService {
             async () => {
                 console.log(colors.yellow(`Waiting for ${ipfs_hash} to hit the mainnet... Iteration ${timesRun} of ${LOOP_LIMIT}`));
                 timesRun += 1;
-                trxID = (await this.proposalService.getProposalsByIPFS([ipfs_hash], null))[0].info.trx_id;
+                const twoMinutesAgo = (Date.now() / 1000 | 0) - 60*2;
+                const submitted_proposal = await this.mongo
+                    .connection()
+                    .actions.findOne({
+                        'trace.act.account': 'eparticlectr',
+                        'trace.act.name': 'logpropinfo',
+                        'trace.act.data.ipfs_hash': ipfs_hash,
+                        'trace.act.data.starttime': { $gt: twoMinutesAgo }
+                    })
+                if (submitted_proposal) trxID = submitted_proposal.trx_id;
                 if(trxID){
                     console.log(colors.green(`Transaction found! (${trxID})`));
                     let wikiCopy: ArticleJson = wiki;
