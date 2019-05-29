@@ -13,8 +13,8 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
     let CURRENT_IPFS_HASH = '';
 
     // Metadata values
-    const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified').value;
-    const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+    const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified') ? inputJSON.metadata.find(w => w.key == 'last_modified').value : '';
+    const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : "";
     const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
     const url_slug = inputJSON.metadata.find(w => w.key == 'url_slug').value;
 
@@ -26,9 +26,12 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
         </head>
         <body>
             ${arp.renderNavBar()}
-            <main id="mainEntityId" itemscope itemtype="http://schema.org/Article" itemid="https://everipedia.org/wiki/lang_${
-                page_lang
-            }/${url_slug}" class="schema">
+            <amp-sidebar id='sidebar' layout="nodisplay" side="left">
+                <ul class="heading-collection">
+                    ${arp.renderTableOfContents()}
+                </ul>
+            </amp-sidebar>
+            <main id="mainEntityId">
                 ${arp.renderMainPhoto(OVERRIDE_MAIN_THUMB, RANDOMSTRING)}
                 ${arp.renderNameContainer()}
                 ${arp.renderFirstParagraph()}
@@ -36,7 +39,6 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                 ${arp.renderPageBody()}
                 ${arp.renderMediaGallery()}
                 ${arp.renderCitations()}
-                ${arp.renderSeeAlso()}
                 <div class="page-times">
                     <div>Created: <span id="page_create_time">${creation_timestamp}</span></div>
                     <div>Last Modified: <span id="page_last_modified_time">${
@@ -44,15 +46,11 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                     }</span></div>
                     <div>IPFS: <span id="page_last_modified_time">${inputJSON.ipfs_hash}</span></div>
                 </div>
+                ${arp.renderSchemaHTML()}
             </main>
             <footer class="footer everi_footer">
                 ${arp.renderFooter()}
             </footer>
-            <amp-sidebar id='sidebar' layout="nodisplay" side="left">
-                <ul class="heading-collection">
-                    ${arp.renderTableOfContents()}
-                </ul>
-            </amp-sidebar>
             <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
                 ${arp.renderUserMenu()}
             </amp-lightbox> 

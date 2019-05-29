@@ -185,6 +185,7 @@ const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]:
     return cleanedAttrs;
 }
 
+
 // Convert the old-style HTML into a JSON
 export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     // Replace some problematic unicode characters and other stuff
@@ -304,7 +305,9 @@ function extractMetadata($: CheerioStatic): Metadata[] {
                     .text()
                     .trim()
             );
-            metadata.push({ key: pairKey, value: pairValue });
+            let thePair = { key: pairKey, value: pairValue };
+            // console.log(thePair);
+            metadata.push(thePair);
         }
     });
 
@@ -716,7 +719,12 @@ function parseSection($section: Cheerio): Section {
         );
 
         // Decode the URL
-        if (image.url) image.url = normalizeUrl(decodeURIComponent(image.url));
+        if (image.url) {
+            image.url = normalizeUrl(decodeURIComponent(image.url));
+
+            try { image.url = normalizeUrl(decodeURIComponent(image.url)); }
+            catch(err) { image.url = decodeURIComponent(image.url); }
+        }
 
         // Attribution URLs
         if (image.url && image.url.includes('wikipedia')) {
@@ -790,7 +798,9 @@ function parseSection($section: Cheerio): Section {
 function sanitizeCitations ($, citations) {
     // Substitute all the citations into something that is safe for the parser
     $('a.tooltippableCarat').each(function() {
-        let url = decodeURIComponent($(this).attr('data-username'));
+        let url;
+        try { url = decodeURIComponent($(this).attr('data-username')); }
+        catch(err) { url = $(this).attr('data-username'); }
         if (url.trim() == "Cite as verified editor")
             url = "Self-citation:DEPRECATED"
         else {
@@ -825,7 +835,9 @@ function sanitizeText($: CheerioStatic) {
 
     // Substitute all the links into something that is safe for the parser
     $('a.tooltippable').each(function(i, el) {
-        let old_slug = decodeURIComponent($(el).attr('data-username'));
+        let old_slug;
+        try { old_slug = decodeURIComponent($(el).attr('data-username')); }
+        catch(err) { old_slug = $(el).attr('data-username'); }
         if (old_slug.charAt(0) == '/') old_slug = old_slug.substring(1);
         const display_text = $(this)
             .text()

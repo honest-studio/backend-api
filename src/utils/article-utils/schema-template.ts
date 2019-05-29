@@ -1,11 +1,10 @@
-import { ArticleJson, Citation, Paragraph, Media, Sentence, ListItem, Table, TableRow, TableCell, NestedContentItem } from './article-dto';
-import { AMPParseCollection, LanguagePack } from './article-types';
+import { ArticleJson } from './article-dto';
 import { getYouTubeID } from './article-converter';
+import { renderAMPParagraph } from './article-tools';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
 import crypto from 'crypto';
 import striptags from 'striptags';
-import urlSlug from 'url-slug';
-import tag from 'html-tag';
+
 
 export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -13,11 +12,12 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         OVERRIDE_MAIN_THUMB = false;
 
     // Metadata values
-    const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified').value;
-    const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+    const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified') ? inputJSON.metadata.find(w => w.key == 'last_modified').value : '';
+    const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
     const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
     const url_slug = inputJSON.metadata.find(w => w.key == 'url_slug').value;
     const page_type = inputJSON.metadata.find(w => w.key == 'page_type').value;
+    const page_title = inputJSON.page_title[0].text;
 
     let schemaJSON = {
         '@context': `http://schema.org`,
@@ -49,45 +49,44 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         about: {},
         citation: []
     };
-    schemaJSON.about['name'] = inputJSON.page_title;
+    schemaJSON.about['name'] = page_title;
+    schemaJSON.about['@type'] = page_type;
+    
     switch (page_type) {
         case 'Person':
-            schemaJSON['description'] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-            schemaJSON['keywords'] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${
-                inputJSON.page_title
-            } bio, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, who is ${
-                inputJSON.page_title
-            }, where is ${inputJSON.page_title}`;
-            schemaJSON['headline'] = `${inputJSON.page_title}'s biography and wiki on Everipedia`;
-            schemaJSON.about['@type'] = 'Person';
+            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
+                page_title
+            } bio, ${page_title} encyclopedia, ${page_title} news, who is ${
+                page_title
+            }, where is ${page_title}`;
+            schemaJSON['headline'] = `${page_title}'s biography and wiki on Everipedia`;
+            
             break;
         case 'Product':
-            schemaJSON['description'] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-            schemaJSON['keywords'] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${
-                inputJSON.page_title
-            } encyclopedia, ${inputJSON.page_title} review, ${inputJSON.page_title} news, what is ${
-                inputJSON.page_title
+            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
+                page_title
+            } encyclopedia, ${page_title} review, ${page_title} news, what is ${
+                page_title
             }`;
-            schemaJSON['headline'] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
-            schemaJSON.about['@type'] = 'Product';
+            schemaJSON['headline'] = `${page_title}'s wiki & review on Everipedia`;
             break;
         case 'Organization':
-            schemaJSON['description'] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-            schemaJSON['keywords'] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${
-                inputJSON.page_title
-            } history, ${inputJSON.page_title} encyclopedia, ${inputJSON.page_title} news, what is ${
-                inputJSON.page_title
-            }, where is ${inputJSON.page_title}`;
-            schemaJSON['headline'] = `${inputJSON.page_title}'s wiki & review on Everipedia`;
-            schemaJSON.about['@type'] = 'Organization';
+            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
+                page_title
+            } history, ${page_title} encyclopedia, ${page_title} news, what is ${
+                page_title
+            }, where is ${page_title}`;
+            schemaJSON['headline'] = `${page_title}'s wiki & review on Everipedia`;
             break;
         default:
-            schemaJSON['description'] = `${inputJSON.page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
-            schemaJSON['keywords'] = `${inputJSON.page_title}, ${inputJSON.page_title} wiki, ${
-                inputJSON.page_title
-            } encyclopedia, ${inputJSON.page_title} news, what is ${inputJSON.page_title}`;
-            schemaJSON['headline'] = `${inputJSON.page_title}'s wiki on Everipedia`;
-            schemaJSON.about['@type'] = 'Thing';
+            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
+                page_title
+            } encyclopedia, ${page_title} news, what is ${page_title}`;
+            schemaJSON['headline'] = `${page_title}'s wiki on Everipedia`;
     }
     (schemaJSON['image'] = []), (schemaJSON.about['image'] = []);
     if (inputJSON.main_photo[0].url) {
@@ -100,8 +99,8 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                     ? `${inputJSON.main_photo[0].url}?nocache=${RANDOMSTRING}`
                     : ``
             }`,
-            name: inputJSON.page_title,
-            caption: inputJSON.page_title,
+            name: page_title,
+            caption: page_title,
             uploadDate: last_modified,
             height: inputJSON.main_photo[0].height,
             width: inputJSON.main_photo[0].width
@@ -112,8 +111,8 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         let pushObj = {
             '@type': 'ImageObject',
             url: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png',
-            name: inputJSON.page_title,
-            caption: inputJSON.page_title,
+            name: page_title,
+            caption: page_title,
             uploadDate: last_modified,
             height: 1274,
             width: 1201
@@ -128,7 +127,8 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                     value.text,
                     inputJSON.citations,
                     inputJSON.ipfs_hash,
-                    []
+                    [],
+                    true
                 );
                 return result.text;
             })
@@ -139,7 +139,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                 schemaJSON['image'].push({
                     '@type': 'ImageObject',
                     url: media.url,
-                    name: `${inputJSON.page_title} Image #${index}`,
+                    name: `${page_title} Image #${index}`,
                     caption: sanitizedCaptionPlaintext,
                     uploadDate: media.timestamp,
                     height: 300,
@@ -150,7 +150,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                 schemaJSON['image'].push({
                     '@type': 'ImageObject',
                     url: media.url,
-                    name: `${inputJSON.page_title} GIF Image #${index}`,
+                    name: `${page_title} GIF Image #${index}`,
                     caption: sanitizedCaptionPlaintext,
                     uploadDate: media.timestamp,
                     height: 300,
@@ -161,7 +161,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                 schemaJSON['image'].push({
                     '@type': 'ImageObject',
                     url: media.url,
-                    name: `${inputJSON.page_title} YouTube Video #${index}`,
+                    name: `${page_title} YouTube Video #${index}`,
                     thumbnailUrl: `https://i.ytimg.com/vi/${getYouTubeID(media.url)}/default.jpg`,
                     caption: sanitizedCaptionPlaintext,
                     uploadDate: media.timestamp,
@@ -173,7 +173,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                 schemaJSON['image'].push({
                     '@type': 'ImageObject',
                     url: media.url,
-                    name: `${inputJSON.page_title} Video #${index}`,
+                    name: `${page_title} Video #${index}`,
                     thumbnailUrl: `${media.url}?nocache=${RANDOMSTRING}`,
                     caption: sanitizedCaptionPlaintext,
                     uploadDate: media.timestamp,
@@ -187,13 +187,16 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
     inputJSON.infoboxes.forEach((infobox, index) => {
         let valuesBlock = [];
         infobox.values.forEach((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.ipfs_hash, []);
+            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.ipfs_hash, [], true);
             valuesBlock.push((striptags as any)(result.text));
         });
 
-        if (infobox.addlSchematype) {
+        if (infobox.addlSchematype && infobox.addlSchemaItemProp != 'None') {
             schemaJSON.about[infobox.schema] = { '@type': infobox.addlSchematype };
-            if (infobox.addlSchemaItemProp) {
+            if (infobox.addlSchemaItemProp == 'NOTHING') {
+                schemaJSON.about[infobox.schema] = valuesBlock;
+            }
+            else if (infobox.addlSchemaItemProp) {
                 schemaJSON.about[infobox.schema][infobox.addlSchemaItemProp] = valuesBlock;
             } else {
                 schemaJSON.about[infobox.schema]['name'] = valuesBlock;
@@ -209,7 +212,8 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                     value.text,
                     inputJSON.citations,
                     inputJSON.ipfs_hash,
-                    []
+                    [],
+                    true
                 );
                 return (striptags as any)(result.text);
             })
@@ -228,12 +232,12 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         .map((section, indexSection) => {
             return section.paragraphs
                 .map((para, indexPara) => {
-                    return renderParagraph(para, inputJSON.citations, inputJSON.ipfs_hash).text;
+                    return (striptags as any)(renderAMPParagraph(para, inputJSON.citations, inputJSON.ipfs_hash, true).text);
                 })
-                .join();
+                .join('');
         })
-        .join();
-    schemaJSON['articleBody'] = pageBodyText;
+        .join('');
+    schemaJSON['articleBody'] = pageBodyText.replace(/\s+/igum, ' ').trim();
     switch (returnType) {
         case 'JSON':
             return schemaJSON;
@@ -241,165 +245,4 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             return `<script type="application/ld+json">${JSON.stringify(schemaJSON)}</script>`;
     }
     
-};
-
-export const renderParagraph = (
-    paragraph: Paragraph,
-    passedCitations: Citation[],
-    passedIPFS: string
-): AMPParseCollection => {
-    let returnCollection: AMPParseCollection = { text: '', lightboxes: [] };
-    const { tag_type, items } = paragraph;
-    if (items && items.length > 0) {
-    } else return returnCollection;
-    if (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4' || tag_type === 'h5' || tag_type === 'h6') {
-        const text: string = (items[0] as Sentence).text;
-        returnCollection.text = `<${tag_type} id=${urlSlug(text).slice(0, 15)}>${text}</${tag_type}>`;
-    } else if (tag_type === 'p') {
-        let sanitizedText = (items as Sentence[])
-            .map((sentenceItem: Sentence, sentenceIndex) => {
-                let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
-                returnCollection.lightboxes.push(...result.lightboxes);
-                return result.text;
-            })
-            .join(' ');
-        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
-    } else if (tag_type === 'ul') {
-        let sanitizedText = (items as ListItem[])
-            .map((liItem: ListItem, listIndex) => {
-                return liItem.sentences
-                    .map((sentenceItem: Sentence, sentenceIndex) => {
-                        let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
-                        returnCollection.lightboxes.push(...result.lightboxes);
-                        return tag(liItem.tag_type, {}, result.text);
-                    })
-                    .join('');
-            })
-            .join('');
-        returnCollection.text = tag(tag_type, paragraph.attrs, sanitizedText);
-    } else if (tag_type === 'table') {
-        let sanitizedText = (items as Table[]).map((tableItem: Table, tableIndex) => {
-            // Create the thead if present
-            let sanitizedHeadRows = tableItem.thead
-                ? tableItem.thead.rows
-                      .map((row: TableRow, rowIndex) => {
-                          let sanitizedCells = row.cells
-                              ? row.cells
-                                    .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = cell.content
-                                            .map((item: NestedContentItem, idx) => {
-                                                return "";
-                                                // let result = CheckForLinksOrCitationsAMP(
-                                                //     sentence.text,
-                                                //     passedCitations,
-                                                //     passedIPFS,
-                                                //     []
-                                                // );
-                                                // returnCollection.lightboxes.push(...result.lightboxes);
-                                                // return result.text;
-                                            })
-                                            .join('');
-                                        return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
-                                    })
-                                    .join('')
-                              : '';
-                          return tag('tr', row.attrs, sanitizedCells);
-                      })
-                      .join('')
-                : '';
-            let sanitizedHead = tableItem.thead ? tag('thead', tableItem.thead.attrs, sanitizedHeadRows) : '';
-
-            // Create the tbody
-            let sanitizedBodyRows = tableItem.tbody
-                ? tableItem.tbody.rows
-                      .map((row: TableRow, rowIndex) => {
-                          let sanitizedCells = row.cells
-                              ? row.cells
-                                    .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = cell.content
-                                            .map((item: NestedContentItem, idx) => {
-                                                return "";
-                                                // let result = CheckForLinksOrCitationsAMP(
-                                                //     sentence.text,
-                                                //     passedCitations,
-                                                //     passedIPFS,
-                                                //     []
-                                                // );
-                                                // returnCollection.lightboxes.push(...result.lightboxes);
-                                                // return result.text;
-                                            })
-                                            .join('');
-                                        return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
-                                    })
-                                    .join('')
-                              : '';
-                          return tag('tr', row.attrs, sanitizedCells);
-                      })
-                      .join('')
-                : '';
-            let sanitizedBody = tableItem.tbody ? tag('tbody', tableItem.tbody.attrs, sanitizedBodyRows) : '';
-
-            // Create the tfoot if present
-            let sanitizedFootRows = tableItem.tfoot
-                ? tableItem.tfoot.rows
-                      .map((row: TableRow, rowIndex) => {
-                          let sanitizedCells = row.cells
-                              ? row.cells
-                                    .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = cell.content
-                                            .map((item: NestedContentItem, idx) => {
-                                                return "";
-                                                // let result = CheckForLinksOrCitationsAMP(
-                                                //     sentence.text,
-                                                //     passedCitations,
-                                                //     passedIPFS,
-                                                //     []
-                                                // );
-                                                // returnCollection.lightboxes.push(...result.lightboxes);
-                                                // return result.text;
-                                            })
-                                            .join('');
-                                        return tag(cell.tag_type, cell.attrs, sanitizedCellContents);
-                                    })
-                                    .join('')
-                              : '';
-                          return tag('tr', row.attrs, sanitizedCells);
-                      })
-                      .join('')
-                : '';
-            let sanitizedFoot = tableItem.tfoot ? tag('tfoot', tableItem.tfoot.attrs, sanitizedFootRows) : '';
-
-            // Create the caption if present
-            // let sanitizedCaption = tableItem.caption
-            //     ? [tableItem.caption]
-            //           .map((caption: string, rowIndex) => {
-            //               let result = CheckForLinksOrCitationsAMP(caption, passedCitations, passedIPFS, []);
-            //               returnCollection.lightboxes.push(...result.lightboxes);
-            //               return `<caption>${result.text}</${caption}>`;
-            //           })
-            //           .join('')
-            //     : '';
-            let sanitizedCaption = "";
-            return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join('');
-        });
-        returnCollection.text = tag('table', paragraph.attrs, sanitizedText.join(''));
-    }
-
-    // const sentences: Sentence[] = this.renderSentences(items, tag_type, index);
-    // return <Paragraph key={index}>{sentences}</Paragraph>;
-    return returnCollection;
-};
-
-export const renderImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
-    let returnCollection: AMPParseCollection = { text: '', lightboxes: [] };
-    let sanitizedCaption = image.caption
-        .map((sentenceItem: Sentence, sentenceIndex) => {
-            let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, []);
-            returnCollection.lightboxes.push(...result.lightboxes);
-            return result.text;
-        })
-        .join('');
-    let sanitizedCaptionPlaintext = (striptags as any)(sanitizedCaption);
-    returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
-    return returnCollection;
 };

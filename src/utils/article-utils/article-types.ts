@@ -41,6 +41,12 @@ export interface LanguagePack {
     slug: string;
 }
 
+export interface SitemapPack {
+    id: number;
+    lang: string;
+    slug: string;
+}
+
 export interface WikiIdentity {
     lang_code: string;
     slug: string;
