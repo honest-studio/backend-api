@@ -102,7 +102,8 @@ export class StatService {
                     out: { inline: 1 }
                 }
             );
-        total_iq_rewards = Number(total_iq_rewards[0].value.toFixed(3));
+        if (total_iq_rewards.length > 0) total_iq_rewards = Number(total_iq_rewards[0].value.toFixed(3));
+        else total_iq_rewards = 0;
 
         const original_pages_rows: Array<any> = await this.mysql.TryQuery(
             `SELECT COUNT(*) AS count FROM enterlink_articletable WHERE page_note IS NULL AND is_removed = 0`,
