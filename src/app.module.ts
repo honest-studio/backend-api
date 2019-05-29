@@ -5,6 +5,7 @@ import { WikiController, WikiService } from './wiki';
 import { CommonModule, ConfigService, MetricsModule, MetricType } from './common';
 import { RecentActivityController } from './recent-activity/recent-activity.controller';
 import { RecentActivityService } from './recent-activity/recent-activity.service';
+import { SitemapController, SitemapService } from './sitemap';
 import { ChainController, ChainService } from './chain';
 import { DiffController, DiffService } from './diff';
 import { PreviewController, PreviewService } from './preview';
@@ -131,7 +132,7 @@ const histogramLabelBuckets = ['pid']
                     path: config.get('ELASTICSEARCH_URL_PREFIX'),
                     auth: `${username}:${password}`
                 };
-                const apiVersion = '6.5'; // ignored for now
+                const apiVersion = '7.x'; // ignored for now
                 return { host, apiVersion };
             },
             inject: [ConfigService]
@@ -151,7 +152,8 @@ const histogramLabelBuckets = ['pid']
         UserController,
         StatController,
         ContactUsController,
-        OAuthController
+        OAuthController,
+        SitemapController
     ],
     providers: [
         ProposalService,
@@ -167,7 +169,8 @@ const histogramLabelBuckets = ['pid']
         UserService,
         StatService,
         ContactUsService,
-        OAuthService
+        OAuthService,
+        SitemapService
     ]
 })
 export class AppModule implements NestModule {

@@ -1,5 +1,5 @@
-import { ArticleJson, Sentence, Citation, Infobox, Media, Section } from './article-dto';
-import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderParagraph, renderImage } from '.';
+import { ArticleJson, Sentence, Citation, Infobox, Media, Section, Paragraph } from './article-dto';
+import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderAMPParagraph, renderAMPImage } from '.';
 import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './article-types';
 import { styleNugget } from './amp-style';
 const normalizeUrl = require('normalize-url');
@@ -26,12 +26,12 @@ export class AmpRenderPartial {
                 : '';
 
         // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
+        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified') ? this.artJSON.metadata.find(w => w.key == 'last_modified').value : '';
+        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp') ? this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
         const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
-        const is_indexed = this.artJSON.metadata.find(w => w.key == 'is_indexed').value;
+        const is_indexed = !(this.artJSON.metadata.find(w => w.key == 'is_indexed').value); // UNTIL THE is_removed_from_index issue in MySQL is fixed
 
         return `
             <meta charset="utf-8" />
@@ -70,11 +70,7 @@ export class AmpRenderPartial {
             }
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
-            ${
-                !is_indexed
-                    ? '<meta name="googlebot" content="noindex, nofollow, noarchive" />'
-                    : ''
-            }
+            ${is_indexed ? '' : '<meta name="googlebot" content="noindex, nofollow, noarchive" />'}
             ${
                 page_type == 'Person'
                     ? `<title>${this.artJSON.page_title[0].text} | Wiki & Bio | Everipedia</title>
@@ -159,7 +155,8 @@ export class AmpRenderPartial {
                     value.text,
                     this.artJSON.citations,
                     this.artJSON.ipfs_hash,
-                    []
+                    [],
+                    false
                 );
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
@@ -167,13 +164,6 @@ export class AmpRenderPartial {
             .join('');
 
         return `
-            ${
-                page_type == 'Person'
-                    ? `<abbr itemprop="homeLocation" itemscope itemtype="http://schema.org/Place" >
-                    <meta itemprop="name" content="Earth" />
-                </abbr>`
-                    : ``
-            }
             ${
                 this.artJSON.main_photo[0].url
                     ? `<figure class="blurb-photo-container" id="toc-top">
@@ -397,7 +387,7 @@ export class AmpRenderPartial {
         let firstSection: Section = this.artJSON.page_body[0];
         let imageBlock = firstSection.images
             .map((image, imageIndex) => {
-                let result: AMPParseCollection = renderImage(
+                let result: AMPParseCollection = renderAMPImage(
                     image,
                     this.artJSON.citations,
                     this.artJSON.ipfs_hash
@@ -408,10 +398,11 @@ export class AmpRenderPartial {
             .join('');
         let paraBlock = firstSection.paragraphs
             .map((para, index) => {
-                let result: AMPParseCollection = renderParagraph(
+                let result: AMPParseCollection = renderAMPParagraph(
                     para,
                     this.artJSON.citations,
-                    this.artJSON.ipfs_hash
+                    this.artJSON.ipfs_hash,
+                    false
                 );
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
@@ -432,7 +423,7 @@ export class AmpRenderPartial {
             .map((section, sectionIndex) => {
                 let imageBlock = section.images
                     .map((image, imageIndex) => {
-                        let result: AMPParseCollection = renderImage(
+                        let result: AMPParseCollection = renderAMPImage(
                             image,
                             this.artJSON.citations,
                             this.artJSON.ipfs_hash
@@ -443,10 +434,11 @@ export class AmpRenderPartial {
                     .join('');
                 let paraBlock = section.paragraphs
                     .map((paragraph, paraIndex) => {
-                        let result: AMPParseCollection = renderParagraph(
+                        let result: AMPParseCollection = renderAMPParagraph(
                             paragraph,
                             this.artJSON.citations,
-                            this.artJSON.ipfs_hash
+                            this.artJSON.ipfs_hash,
+                            false
                         );
                         this.allLightBoxes.push(...result.lightboxes);
                         return result.text;
@@ -477,7 +469,8 @@ export class AmpRenderPartial {
                             value.text,
                             this.artJSON.citations,
                             this.artJSON.ipfs_hash,
-                            []
+                            [],
+                            false
                         );
                         this.allLightBoxes.push(...result.lightboxes);
                         // return result.text;
@@ -507,11 +500,19 @@ export class AmpRenderPartial {
         }
         let blobBoxResult;
         if (this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length > 0) {
-            blobBoxResult = CheckForLinksOrCitationsAMP(
-                "", //blobBoxPreSanitize(this.artJSON.infobox_html),
+            // NEED TO CALL blobBoxPreSanitize() OR SIMILAR ? Wikipedia imports should not be indexed anyways...
+            let infoboxHTMLParagraph: Paragraph = {
+                index: 0,
+                items: [this.artJSON.infobox_html],
+                tag_type: 'table',
+                attrs: this.artJSON.infobox_html.attrs
+            }
+
+            blobBoxResult = renderAMPParagraph(
+                infoboxHTMLParagraph,
                 this.artJSON.citations,
                 this.artJSON.ipfs_hash,
-                []
+                false
             );
             this.allLightBoxes.push(...blobBoxResult.lightboxes);
         }
@@ -552,22 +553,17 @@ export class AmpRenderPartial {
     };
 
     renderOneMedia = (media: Media, index: number): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-
-        const RANDOMSTRING = Math.random()
-            .toString(36)
-            .substring(7);
+        // const RANDOMSTRING = Math.random()
+        //     .toString(36)
+        //     .substring(7);
         let sanitizedCaption = media.caption
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     this.artJSON.citations,
                     this.artJSON.ipfs_hash,
-                    []
+                    [],
+                    false
                 );
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
@@ -723,12 +719,6 @@ export class AmpRenderPartial {
     };
 
     renderMediaGallery = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-
         let media: Media[] = this.artJSON.media_gallery;
         if (media.length == 0) return ``;
         let mediaComboString = media
@@ -758,19 +748,14 @@ export class AmpRenderPartial {
     };
 
     renderOneCitation = (citation: Citation, index: number): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-
         let sanitizedDescription = citation.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
                     this.artJSON.citations,
                     this.artJSON.ipfs_hash,
-                    []
+                    [],
+                    false
                 );
                 this.allLightBoxes.push(...result.lightboxes);
                 return result.text;
@@ -816,11 +801,6 @@ export class AmpRenderPartial {
     };
 
     renderCitations = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
         let citations: Citation[] = this.artJSON.citations;
@@ -865,12 +845,6 @@ export class AmpRenderPartial {
     };
 
     renderOneSeeAlso = (seealso: SeeAlso): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-
         return `
             <a class='sa-ancr-wrp' href="/wiki/lang_${seealso.lang}/${seealso.slug}">
                 <amp-img layout="fixed-height" height=80 src="${seealso.thumbnail_url}" alt="${seealso.title} wiki">
@@ -887,12 +861,6 @@ export class AmpRenderPartial {
     };
 
     renderSeeAlso = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-
         let seeAlsoComboString = this.wikiExtras.see_also
             .map((value, index) => {
                 return this.renderOneSeeAlso(value);
@@ -917,12 +885,6 @@ export class AmpRenderPartial {
     };
 
     renderFooter = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-
         return `
             <div class="footer-wrapper">
                 <amp-anim class='gif-pixel-fix' width=1 height=1 alt="GIF Pixel" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
@@ -980,10 +942,6 @@ export class AmpRenderPartial {
     };
 
     renderTableOfContents = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
         let comboString: string = `
@@ -1052,22 +1010,17 @@ export class AmpRenderPartial {
                 </a>
             </li>
         `;
-        comboString += `
-            <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
-                <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
-                    <div class="fixed-items-description">See Also</div>
-                </a>
-            </li>
-        `;
+        // comboString += `
+        //     <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
+        //         <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
+        //             <div class="fixed-items-description">See Also</div>
+        //         </a>
+        //     </li>
+        // `;
         return comboString;
     };
 
     renderUserMenu = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-
         return `
             <div class="lightbox" tabindex="1" role="menubar">
                 <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
@@ -1115,11 +1068,6 @@ export class AmpRenderPartial {
     };
 
     renderSearchLightbox = (): string => {
-        // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
-        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-
         return `  
         <div class="lightbox" tabindex="3" role="search">
             <div class="search-lb-ct">
@@ -1141,8 +1089,6 @@ export class AmpRenderPartial {
 
     renderShareLightbox = (): string => {
         // Metadata values
-        const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified').value;
-        const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value;
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
         const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
@@ -1308,8 +1254,11 @@ export class AmpRenderPartial {
         return this.allLightBoxes.join('');
     };
 
-    renderSchemaJSON = (): string => {
-        // Perhaps you should do this while you are looping through the other functions
-        return `SCHEMA JSON`;
+    renderSchemaHTML = (): string => {
+        return `
+            <script type="application/ld+json">
+                ${JSON.stringify(this.wikiExtras && this.wikiExtras.schema)}
+            </script>
+        `;
     };
 }

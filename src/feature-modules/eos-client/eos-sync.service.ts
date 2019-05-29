@@ -94,7 +94,7 @@ export class EosSyncService {
                     const block_num = msg.data.block_num;
                     const account = msg.data.trace.act.account;
                     const name = msg.data.trace.act.name;
-                    console.log(`EOS-SYNC-SERVICE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
+                    //console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
                 })
                 .catch((err) => {
                     if (err.code == 11000) {
@@ -133,6 +133,6 @@ export class EosSyncService {
 
     sync() {
         this.start();
-        setInterval(() => this.restartIfFailing.apply(this), 15 * 1000); // every 15 seconds
+        setInterval(this.restartIfFailing, 15 * 1000); // every 15 seconds
     }
 }

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException, Inject, forwardRef } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { URL } from 'url';
 import { IpfsService } from '../common';
@@ -18,8 +18,12 @@ import {
 } from '../utils/article-utils';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
+import { ProposalService } from '../proposal';
 import * as SqlString from 'sqlstring';
 import cheerio from 'cheerio';
+import * as BooleanTools from 'boolean';
+import { setIntervalAsync, clearIntervalAsync } from 'set-interval-async/dynamic';
+var colors = require('colors');
 
 @Injectable()
 export class WikiService {
@@ -29,10 +33,11 @@ export class WikiService {
         private mongo: MongoDbService,
         private cacheService: CacheService,
         private mediaUploadService: MediaUploadService,
+        @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
     ) {}
 
-    async getWikiBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<ArticleJson> {
+    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
@@ -46,7 +51,7 @@ export class WikiService {
 
         // Try and grab cached json wiki
         const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
-        if (use_cache) {
+        if (BooleanTools.default(cache)) {
             const cache_wiki = await this.mongo.connection().json_wikis.findOne({
                 ipfs_hash: ipfs_hash
             });
@@ -75,7 +80,7 @@ export class WikiService {
         }
 
 
-        // cache wiki - upsert so that use_cache=false updates the cache
+        // cache wiki - upsert so that cache=false updates the cache
         this.mongo
             .connection()
             .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
@@ -84,8 +89,8 @@ export class WikiService {
         return wiki;
     }
 
-    async getAMPBySlug(lang_code: string, slug: string, use_cache: boolean = true): Promise<string> {
-        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug);
+    async getAMPBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<string> {
+        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug, BooleanTools.default(cache));
         let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
         ampWiki.main_photo[0].width = photoExtraData.width;
         ampWiki.main_photo[0].height = photoExtraData.height;
@@ -254,83 +259,112 @@ export class WikiService {
         }
         const ipfs_hash = submission[0].hash;
 
-        let wikiCopy: ArticleJson = wiki;
-        wikiCopy.ipfs_hash = ipfs_hash;
-        let stringifiedWikiCopy = JSON.stringify(wikiCopy);
-        
-        const page_title = wiki.page_title[0].text;
-        const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
-        const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
-        const photo_url = wiki.main_photo[0].url;
-        const photo_thumb_url = wiki.main_photo[0].thumb;
-        const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
-        const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
-        const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-        const article_insertion = await this.mysql.TryQuery(
-            `
-            INSERT INTO enterlink_articletable 
-                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_removed_from_index, bing_index_override, has_pending_edits)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 0, 0, 0)
-            ON DUPLICATE KEY UPDATE 
-                ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
-                page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
-            `,
-            [
-                ipfs_hash,
-                slug,
-                slug,
-                page_title,
-                text_preview,
-                photo_url,
-                photo_thumb_url,
-                page_type,
-                is_adult_content,
-                page_lang,
-                ipfs_hash,
-                page_title,
-                text_preview,
-                photo_url,
-                photo_thumb_url,
-                page_type,
-                is_adult_content
-            ]
-        )
 
-        // Get the article object
-        let articleResultPacket = await this.mysql.TryQuery(
-            `
-            SELECT 
-                id,
-                page_title
-            FROM enterlink_articletable AS art 
-            WHERE page_lang = ? AND slug = ?
-            `,
-            [page_lang, slug]
-        );
-        
-        // Update Elasticsearch
-        updateElasticsearch(
-            articleResultPacket[0].id, 
-            articleResultPacket[0].page_title, 
-            page_lang,
-            'PAGE_UPDATED_OR_CREATED' , 
-            this.elasticSearch
-        )
+        // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
+        // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
+        let timesRun = 0, trxID = "";
+        let LOOP_LIMIT = 25;
+        let INTERVAL_MSEC = 5000;
+        let interval = setIntervalAsync(
+            async () => {
+                console.log(colors.yellow(`Waiting for ${ipfs_hash} to hit the mainnet... Iteration ${timesRun} of ${LOOP_LIMIT}`));
+                timesRun += 1;
+                trxID = (await this.proposalService.getProposalsByIPFS([ipfs_hash], null))[0].info.trx_id;
+                if(trxID){
+                    console.log(colors.green(`Transaction found! (${trxID})`));
+                    let wikiCopy: ArticleJson = wiki;
+                    wikiCopy.ipfs_hash = ipfs_hash;
+                    let stringifiedWikiCopy = JSON.stringify(wikiCopy);
+                    
+                    const page_title = wiki.page_title[0].text;
+                    const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+                    const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
+                    const photo_url = wiki.main_photo[0].url;
+                    const photo_thumb_url = wiki.main_photo[0].thumb;
+                    const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
+                    const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
+                    const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+                    const article_insertion = await this.mysql.TryQuery(
+                        `
+                        INSERT INTO enterlink_articletable 
+                            (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_removed_from_index, bing_index_override, has_pending_edits)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 0, 0, 0)
+                        ON DUPLICATE KEY UPDATE 
+                            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
+                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
+                        `,
+                        [
+                            ipfs_hash,
+                            slug,
+                            slug,
+                            page_title,
+                            text_preview,
+                            photo_url,
+                            photo_thumb_url,
+                            page_type,
+                            is_adult_content,
+                            page_lang,
+                            ipfs_hash,
+                            page_title,
+                            text_preview,
+                            photo_url,
+                            photo_thumb_url,
+                            page_type,
+                            is_adult_content
+                        ]
+                    )
+            
+                    // Get the article object
+                    let articleResultPacket = await this.mysql.TryQuery(
+                        `
+                        SELECT 
+                            id,
+                            page_title
+                        FROM enterlink_articletable AS art 
+                        WHERE page_lang = ? AND slug = ?
+                        `,
+                        [page_lang, slug]
+                    );
+                    
+                    // Update Elasticsearch
+                    updateElasticsearch(
+                        articleResultPacket[0].id, 
+                        articleResultPacket[0].page_title, 
+                        page_lang,
+                        'PAGE_UPDATED_OR_CREATED' , 
+                        this.elasticSearch
+                    )
+            
+                    try {
+                        const json_insertion = await this.mysql.TryQuery(
+                            `
+                            INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
+                            VALUES (?, ?, ?, NOW())
+                            `,
+                            [articleResultPacket[0].id, ipfs_hash, stringifiedWikiCopy, page_lang]
+                        );
+                    } catch (e) {
+                        if (e.message.includes("ER_DUP_ENTRY")){
+                            clearIntervalAsync(interval);
+                            console.log(colors.green('Duplicate submission. IPFS hash already exists'));
+                            return;
+                            throw new BadRequestException("Duplicate submission. IPFS hash already exists");
+                        }
 
-        try {
-            const json_insertion = await this.mysql.TryQuery(
-                `
-                INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
-                VALUES (?, ?, ?, NOW())
-                `,
-                [articleResultPacket[0].id, ipfs_hash, stringifiedWikiCopy, page_lang]
-            );
-        } catch (e) {
-            if (e.message.includes("ER_DUP_ENTRY"))
-                throw new BadRequestException("Duplicate submission. IPFS hash already exists");
-            else throw e;
-        }
-
+                        else throw e;
+                    }
+                    console.log(colors.green('========================================'));
+                    console.log(colors.green(`MySQL cache updated. Terminating loop...`));
+                    console.log(colors.green('========================================'));
+                    clearIntervalAsync(interval);
+                    return;
+                }
+                if(timesRun > LOOP_LIMIT || trxID){
+                    clearIntervalAsync(interval);
+                }
+            },
+            INTERVAL_MSEC
+          )
         return { ipfs_hash };
     }
 

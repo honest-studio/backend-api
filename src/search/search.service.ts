@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import * as cheerio from 'cheerio';
+import * as util from 'util';
 
 @Injectable()
 export class SearchService {
@@ -10,6 +11,7 @@ export class SearchService {
     async searchTitle(query: string, langs?: string[]): Promise<any> {
         const searchJSON = {
             // size: 25000,
+            min_score: 1.0001, // Make sure non-matches do not show up
             query: {
                 bool: {
                     should: [
@@ -56,11 +58,12 @@ export class SearchService {
                 body: searchJSON
             })
             .toPromise();
+
         const canonical_ids: number[] = searchResult[0].hits.hits.map((h) => {
             return h._source.canonical_id;
         });
         if (canonical_ids.length == 0) return [];
-        
+
         const result_rows: Array<any> = await this.mysql.TryQuery(
             `
             SELECT 
