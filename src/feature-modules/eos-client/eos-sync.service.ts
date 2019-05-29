@@ -72,9 +72,7 @@ export class EosSyncService {
             };
 
             this.dfuse.send(JSON.stringify(article_req));
-            // there's too many IQ transfers happening
-            // so we'll turn this off for now
-            //this.dfuse.send(JSON.stringify(token_req));
+            this.dfuse.send(JSON.stringify(token_req));
         });
         this.dfuse.on('error', (err) => {
             console.log('-- error connecting to dfuse: ', err);
