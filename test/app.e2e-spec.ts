@@ -113,31 +113,31 @@ describe('Backend API', () => {
 
   it('Proposal: Multiple proposals', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/682,692,690')
+        .get('/v2/proposal/182,192,190')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ preview', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/682,692,690?preview=true')
+        .get('/v2/proposal/182,192,190?preview=true')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ diff metadata', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/682,692,690?diff=metadata')
+        .get('/v2/proposal/182,192,190?diff=metadata')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ full diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/682,692,690?diff=full')
+        .get('/v2/proposal/182,192,190?diff=full')
         .expect(200)
   });
 
   it('Proposal: Multiple proposals w/ preview and full diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/proposal/682,692,690?diff=full&preview=true')
+        .get('/v2/proposal/182,192,190?diff=full&preview=true')
         .expect(200)
   });
 
@@ -318,13 +318,13 @@ describe('Backend API', () => {
   
   it('Diff: Proposal diff', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/690')
+        .get('/v2/diff/proposal/190')
         .expect(200)
   });
 
   it('Diff: Proposal diffs', () => {
     return request(app.getHttpServer())
-        .get('/v2/diff/proposal/682,692,690')
+        .get('/v2/diff/proposal/182,192,190')
         .expect(200)
   });
 
