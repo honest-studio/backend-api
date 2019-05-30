@@ -64,13 +64,17 @@ export class DiffService {
         proposal_hashes.forEach((prop) => {
             const old_wiki = wikis.find((w) => w.ipfs_hash == prop.old_hash);
             const new_wiki = wikis.find((w) => w.ipfs_hash == prop.new_hash);
-            const diff_wiki = diffArticleJson(old_wiki, new_wiki);
-            diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
+            try {
+                const diff_wiki = diffArticleJson(old_wiki, new_wiki);
+                diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
 
-            // cache result
-            this.mongo.connection().diffs.insertOne(diff_wiki);
+                // cache result
+                this.mongo.connection().diffs.insertOne(diff_wiki);
 
-            diffs.push(diff_wiki);
+                diffs.push(diff_wiki);
+            } catch (e) {
+                diffs.push({ error: "Error while diffing proposal " + proposal_id });
+            }
         });
 
         return diffs;
