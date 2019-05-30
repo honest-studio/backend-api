@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
+import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as cheerio from 'cheerio';
 import * as util from 'util';
 
@@ -89,11 +90,7 @@ export class SearchService {
         // clean up text previews
         result_rows.forEach((row) => {
             if (!row.text_preview) return; // continue
-            const $ = cheerio.load(row.text_preview);
-            row.text_preview = $.root()
-                .text()
-                .replace(/\s+/g, ' ')
-                .trim();
+            row.text_preview = SanitizeTextPreview(row.text_preview);
         });
 
         return result_rows;

@@ -4,6 +4,7 @@ import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService, } from '../feature-modules/database';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { CacheService } from '../cache';
 import {
     ArticleJson,
@@ -232,12 +233,7 @@ export class WikiService {
         // clean up text previews
         for (let preview of seeAlsoRows) {
             if (preview.text_preview) {
-                preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
-                const $ = cheerio.load(preview.text_preview);
-                preview.text_preview = $.root()
-                    .text()
-                    .replace(/\s+/g, ' ')
-                    .trim();
+                preview.text_preview = SanitizeTextPreview(preview.text_preview);
             }
         }
 

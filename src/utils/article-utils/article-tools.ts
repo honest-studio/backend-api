@@ -1112,3 +1112,13 @@ export const renderAMPImage = (image: Media, passedCitations: Citation[], passed
     returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
     return returnCollection;
 };
+
+
+export function SanitizeTextPreview(inputText: string): string {
+    if (!inputText) return '';
+    let sanitizedText = inputText.replace(/\s+/g, ' ').trim();
+    sanitizedText = CheckForLinksOrCitationsAMP(sanitizedText, [], "", [], true).text;
+    const $ = cheerio.load(sanitizedText);
+    sanitizedText = $.root().text();
+    return sanitizedText;
+}
