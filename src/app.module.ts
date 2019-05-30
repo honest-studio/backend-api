@@ -132,7 +132,7 @@ const histogramLabelBuckets = ['pid']
                     path: config.get('ELASTICSEARCH_URL_PREFIX'),
                     auth: `${username}:${password}`
                 };
-                const apiVersion = '7.x'; // ignored for now
+                const apiVersion = '7.1'; // ignored for now
                 return { host, apiVersion };
             },
             inject: [ConfigService]

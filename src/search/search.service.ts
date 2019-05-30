@@ -24,14 +24,15 @@ export class SearchService {
                                 boost: 4
                             }
                         },
-                        {
-                            multi_match: {
-                                query: query,
-                                fields: ['page_title.keyword'],
-                                type: 'phrase_prefix',
-                                boost: 2
-                            }
-                        },
+                        // Elasticsearch 7.0+ does not allow this
+                        // {
+                        //     multi_match: {
+                        //         query: query,
+                        //         fields: ['page_title.keyword'],
+                        //         type: 'phrase_prefix',
+                        //         boost: 2
+                        //     }
+                        // },
                         {
                             multi_match: {
                                 query: query,
