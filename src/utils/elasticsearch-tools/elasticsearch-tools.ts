@@ -27,7 +27,7 @@ export const updateElasticsearch = async (
         id: artID,
         body:  jsonRequest
     }
-    let result;
+    
     switch (action) {
         case 'PAGE_UPDATED_OR_CREATED':
             return elSearchSvc.index(paramPack).toPromise();

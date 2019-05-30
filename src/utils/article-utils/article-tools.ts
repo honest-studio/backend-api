@@ -520,6 +520,8 @@ export const AMP_BAD_CLASSES = [
 
 // Convert React attributes back into HTML ones
 const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+    if (!inputAttrs) return {};
+    if (!(Object.keys(inputAttrs).length === 0 && inputAttrs.constructor === Object)) return {};
     let reversedAttrs = {};
     const keys = Object.keys(inputAttrs);
     for (const key of keys) {
@@ -1110,3 +1112,13 @@ export const renderAMPImage = (image: Media, passedCitations: Citation[], passed
     returnCollection.text = ConstructAMPImage(image, sanitizedCaption, sanitizedCaptionPlaintext);
     return returnCollection;
 };
+
+
+export function SanitizeTextPreview(inputText: string): string {
+    if (!inputText) return '';
+    let sanitizedText = inputText.replace(/\s+/g, ' ').trim();
+    sanitizedText = CheckForLinksOrCitationsAMP(sanitizedText, [], "", [], true).text;
+    const $ = cheerio.load(sanitizedText);
+    sanitizedText = $.root().text();
+    return sanitizedText;
+}

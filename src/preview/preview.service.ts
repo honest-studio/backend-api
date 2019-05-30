@@ -7,6 +7,7 @@ import { CacheService } from '../cache';
 import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
 import { WikiIdentity } from '../utils/article-utils/article-types';
+import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as SqlString from 'sqlstring';
 const pid = `PID-${process.pid}`;
 /**
@@ -77,11 +78,7 @@ export class PreviewService {
         // clean up text previews
         previews.forEach((preview) => {
             if (!preview.text_preview) return; // continue
-            const $ = cheerio.load(preview.text_preview);
-            preview.text_preview = $.root()
-                .text()
-                .replace(/\s+/g, ' ')
-                .trim();
+            preview.text_preview = SanitizeTextPreview(preview.text_preview);
         });
 
         // try and fill in missing previews with pinned wikis
@@ -102,12 +99,7 @@ export class PreviewService {
                     .trim();
                 const thumbnail = $('.main-photo').attr('data-thumbnail');
                 const main_photo = $('.main-photo').attr('src');
-                const text_preview: string = $('.blurb-wrap')
-                    .text()
-                    .substring(0, 200)
-                    .replace(/\s+/g, ' ')
-                    .trim();
-
+                const text_preview: string = SanitizeTextPreview($('.blurb-wrap').text().substring(0, 200));
                 previews[i] = { ipfs_hash, page_title, thumbnail, main_photo, text_preview };
             } catch (e) {
                 // try and pin the file so future requests can use it
@@ -172,13 +164,7 @@ export class PreviewService {
         // clean up text previews
         for (let preview of previews) {
             if (preview.text_preview) {
-                // WILL EVENTUALLY NEED TO STRIP MARKS AND OTHER [[ ]] STUFF HERE!!! SEE THE CODE IN THE FRONT-END
-                preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
-                const $ = cheerio.load(preview.text_preview);
-                preview.text_preview = $.root()
-                    .text()
-                    .replace(/\s+/g, ' ')
-                    .trim();
+                preview.text_preview = SanitizeTextPreview(preview.text_preview);
             }
         }
 

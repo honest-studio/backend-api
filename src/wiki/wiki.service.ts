@@ -4,6 +4,7 @@ import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService, } from '../feature-modules/database';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
+import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { CacheService } from '../cache';
 import {
     ArticleJson,
@@ -47,7 +48,7 @@ export class WikiService {
             WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
             [slug, mysql_slug, mysql_slug, slug, lang_code]
         );
-        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
         // Try and grab cached json wiki
         const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
@@ -195,7 +196,7 @@ export class WikiService {
         );
 
         if (lang_packs.length == 0)
-            throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
+            throw new NotFoundException(`Group for wiki /lang_${lang_code}/${slug} could not be found`);
         return lang_packs;
     }
 
@@ -232,12 +233,7 @@ export class WikiService {
         // clean up text previews
         for (let preview of seeAlsoRows) {
             if (preview.text_preview) {
-                preview.text_preview = preview.text_preview.replace(/<b>/g, ' ').replace(/<\/b>/g, ' ');
-                const $ = cheerio.load(preview.text_preview);
-                preview.text_preview = $.root()
-                    .text()
-                    .replace(/\s+/g, ' ')
-                    .trim();
+                preview.text_preview = SanitizeTextPreview(preview.text_preview);
             }
         }
 
@@ -336,7 +332,7 @@ export class WikiService {
                     );
                     
                     // Update Elasticsearch
-                    updateElasticsearch(
+                    let elasticResult = await updateElasticsearch(
                         articleResultPacket[0].id, 
                         articleResultPacket[0].page_title, 
                         page_lang,
@@ -344,6 +340,8 @@ export class WikiService {
                         this.elasticSearch
                     )
             
+                    console.log(elasticResult)
+
                     try {
                         const json_insertion = await this.mysql.TryQuery(
                             `
@@ -365,6 +363,13 @@ export class WikiService {
                     console.log(colors.green('========================================'));
                     console.log(colors.green(`MySQL cache updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
+
+                    // update the MongoDB cache
+                    this.mongo
+                        .connection()
+                        .json_wikis.replaceOne({ ipfs_hash: ipfs_hash }, wikiCopy, { upsert: true })
+                        .catch(console.log);
+
                     clearIntervalAsync(interval);
                     return;
                 }

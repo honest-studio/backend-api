@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
+import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as cheerio from 'cheerio';
 import * as util from 'util';
 
@@ -23,14 +24,15 @@ export class SearchService {
                                 boost: 4
                             }
                         },
-                        {
-                            multi_match: {
-                                query: query,
-                                fields: ['page_title.keyword'],
-                                type: 'phrase_prefix',
-                                boost: 2
-                            }
-                        },
+                        // Elasticsearch 7.0+ does not allow this
+                        // {
+                        //     multi_match: {
+                        //         query: query,
+                        //         fields: ['page_title.keyword'],
+                        //         type: 'phrase_prefix',
+                        //         boost: 2
+                        //     }
+                        // },
                         {
                             multi_match: {
                                 query: query,
@@ -89,11 +91,7 @@ export class SearchService {
         // clean up text previews
         result_rows.forEach((row) => {
             if (!row.text_preview) return; // continue
-            const $ = cheerio.load(row.text_preview);
-            row.text_preview = $.root()
-                .text()
-                .replace(/\s+/g, ' ')
-                .trim();
+            row.text_preview = SanitizeTextPreview(row.text_preview);
         });
 
         return result_rows;
