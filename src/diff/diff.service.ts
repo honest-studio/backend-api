@@ -75,7 +75,7 @@ export class DiffService {
             } catch (e) {
                 diffs.push({ 
                     error: "Error while diffing proposal " + prop.proposal_id,
-                    metadata: { key: "proposal_id", value: prop.proposal_id }
+                    metadata: [{ key: "proposal_id", value: prop.proposal_id }]
                 })
             }
         });
