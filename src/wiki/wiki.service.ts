@@ -47,7 +47,7 @@ export class WikiService {
             WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
             [slug, mysql_slug, mysql_slug, slug, lang_code]
         );
-        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /${lang_code}/${slug} could not be found`);
+        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
         // Try and grab cached json wiki
         const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
@@ -195,7 +195,7 @@ export class WikiService {
         );
 
         if (lang_packs.length == 0)
-            throw new NotFoundException(`Group for wiki /${lang_code}/${slug} could not be found`);
+            throw new NotFoundException(`Group for wiki /lang_${lang_code}/${slug} could not be found`);
         return lang_packs;
     }
 
@@ -365,6 +365,13 @@ export class WikiService {
                     console.log(colors.green('========================================'));
                     console.log(colors.green(`MySQL cache updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
+
+                    // update the MongoDB cache
+                    this.mongo
+                        .connection()
+                        .json_wikis.replaceOne({ ipfs_hash: ipfs_hash }, wikiCopy, { upsert: true })
+                        .catch(console.log);
+
                     clearIntervalAsync(interval);
                     return;
                 }

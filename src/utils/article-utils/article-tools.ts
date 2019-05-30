@@ -520,6 +520,8 @@ export const AMP_BAD_CLASSES = [
 
 // Convert React attributes back into HTML ones
 const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+    if (!inputAttrs) return {};
+    if (!(Object.keys(inputAttrs).length === 0 && inputAttrs.constructor === Object)) return {};
     let reversedAttrs = {};
     const keys = Object.keys(inputAttrs);
     for (const key of keys) {
