@@ -447,4 +447,10 @@ describe('Backend API', () => {
         .expect(201)
   });
 
+  it('Sitemap: Recent', () => {
+    return request(app.getHttpServer())
+        .get('/v2/sitemap/recent/en')
+        .expect(200)
+  });
+
 });
