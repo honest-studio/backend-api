@@ -73,7 +73,7 @@ export class DiffService {
 
                 diffs.push(diff_wiki);
             } catch (e) {
-                diffs.push({ error: "Error while diffing proposal " + proposal_id });
+                diffs.push({ error: "Error while diffing proposal " + prop.proposal_id });
             }
         });
 
