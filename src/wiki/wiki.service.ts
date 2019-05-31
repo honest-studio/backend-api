@@ -232,6 +232,7 @@ export class WikiService {
 
         // clean up text previews
         for (let preview of seeAlsoRows) {
+            preview.page_title = SanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = SanitizeTextPreview(preview.text_preview);
             }
