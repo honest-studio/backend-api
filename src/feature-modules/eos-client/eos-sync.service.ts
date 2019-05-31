@@ -82,7 +82,8 @@ export class EosSyncService {
 
             const msg = JSON.parse(msg_str);
             if (msg.type != 'action_trace') {
-                console.log(msg);
+                if (this.config.get("DFUSE_ACTION_LOGGING"))
+                    console.log(msg);
                 return;
             }
             this.mongo
@@ -92,11 +93,13 @@ export class EosSyncService {
                     const block_num = msg.data.block_num;
                     const account = msg.data.trace.act.account;
                     const name = msg.data.trace.act.name;
-                    //console.log(`DFUSE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
+                    if (this.config.get("DFUSE_ACTION_LOGGING"))
+                        console.log(`EOS-SYNC-SERVICE: Saved ${account}:${name} @ block ${block_num} to Mongo`);
                 })
                 .catch((err) => {
                     if (err.code == 11000) {
-                        console.log(`EOS-SYNC-SERVICE: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
+                        if (this.config.get("DFUSE_ACTION_LOGGING"))
+                            console.log(`EOS-SYNC-SERVICE: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
                     }
                     else {
                         console.log('EOS-SYNC-SERVICE: Error inserting action ', msg, ' \n Error message on insert: ', err);
@@ -106,7 +109,7 @@ export class EosSyncService {
         });
 
         this.dfuse.on('error', (e) => {
-            console.log('Dfuse error in eos-sync-service: ', e);
+            console.log('EOS-SYNC-SERVICE: Dfuse error: ', e);
         });
     }
 

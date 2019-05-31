@@ -22,6 +22,8 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     DFUSE_START_BLOCK: Joi.number()
         .min(2)
         .default(2),
+    DFUSE_ACTION_LOGGING: Joi.boolean()
+        .default(false),
     IPFS_DAEMON_HOST: Joi.string().required(),
     IPFS_DAEMON_PORT: Joi.number()
         .integer()
