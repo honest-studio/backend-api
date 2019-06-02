@@ -284,7 +284,12 @@ export class WikiService {
                     
                     const page_title = wiki.page_title[0].text;
                     const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
-                    const text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
+                    let text_preview;
+                    try {
+                        text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
+                    } catch (e) {
+                        text_preview = "";
+                    }
                     const photo_url = wiki.main_photo[0].url;
                     const photo_thumb_url = wiki.main_photo[0].thumb;
                     const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
