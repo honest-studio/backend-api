@@ -87,9 +87,9 @@ export class SearchService {
             [canonical_ids, canonical_ids]
         );
 
-
         // clean up text previews
         result_rows.forEach((row) => {
+            row.page_title = SanitizeTextPreview(row.page_title);
             if (!row.text_preview) return; // continue
             row.text_preview = SanitizeTextPreview(row.text_preview);
         });

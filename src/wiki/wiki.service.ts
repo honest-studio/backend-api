@@ -232,6 +232,7 @@ export class WikiService {
 
         // clean up text previews
         for (let preview of seeAlsoRows) {
+            preview.page_title = SanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = SanitizeTextPreview(preview.text_preview);
             }
@@ -369,9 +370,8 @@ export class WikiService {
                     console.log(colors.green(`MySQL cache updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
 
-                    // KEDAR: commenting out to see if this is needed
                     // update the MongoDB cache
-                    //this.mongo
+                    // this.mongo
                     //    .connection()
                     //    .json_wikis.replaceOne({ ipfs_hash: ipfs_hash }, wikiCopy, { upsert: true })
                     //    .catch(console.log);

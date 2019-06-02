@@ -77,6 +77,7 @@ export class PreviewService {
 
         // clean up text previews
         previews.forEach((preview) => {
+            preview.page_title = SanitizeTextPreview(preview.page_title);
             if (!preview.text_preview) return; // continue
             preview.text_preview = SanitizeTextPreview(preview.text_preview);
         });
@@ -163,6 +164,7 @@ export class PreviewService {
 
         // clean up text previews
         for (let preview of previews) {
+            preview.page_title = SanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = SanitizeTextPreview(preview.text_preview);
             }
