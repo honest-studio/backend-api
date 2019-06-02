@@ -78,7 +78,7 @@ export class EosSyncService {
             console.log('-- error connecting to dfuse: ', err);
         });
         this.dfuse.on('message', (msg_str: string) => {
-            this.lastMessageReceived = new Date().getTime();
+            this.lastMessageReceived = Date.now();
 
             const msg = JSON.parse(msg_str);
             if (msg.type != 'action_trace') {
@@ -121,7 +121,7 @@ export class EosSyncService {
     }
 
     restartIfFailing() {
-        const now = new Date().getTime();
+        const now = Date.now();
         const THIRTY_SECONDS = 30 * 1000; // in milliseconds
         if (now > this.lastMessageReceived + THIRTY_SECONDS) {
             this.lastMessageReceived = now;
@@ -134,6 +134,6 @@ export class EosSyncService {
 
     sync() {
         this.start();
-        setInterval(this.restartIfFailing, 15 * 1000); // every 15 seconds
+        setInterval(() => this.restartIfFailing.apply(this), 15 * 1000); // every 15 seconds
     }
 }
