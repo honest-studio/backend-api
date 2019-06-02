@@ -365,12 +365,11 @@ export class WikiService {
                     console.log(colors.green(`MySQL cache updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
 
-                    // KEDAR: commenting out to see if this is needed
                     // update the MongoDB cache
-                    //this.mongo
-                    //    .connection()
-                    //    .json_wikis.replaceOne({ ipfs_hash: ipfs_hash }, wikiCopy, { upsert: true })
-                    //    .catch(console.log);
+                    this.mongo
+                       .connection()
+                       .json_wikis.replaceOne({ ipfs_hash: ipfs_hash }, wikiCopy, { upsert: true })
+                       .catch(console.log);
 
                     clearIntervalAsync(interval);
                     return;
