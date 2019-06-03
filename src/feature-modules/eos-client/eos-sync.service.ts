@@ -18,7 +18,9 @@ export class EosSyncService {
 
     public DFUSE_AUTH_URL = 'https://auth.dfuse.io/v1/auth/issue';
 
-    constructor(private mongo: MongoDbService, private config: ConfigService) {}
+    constructor(private mongo: MongoDbService, private config: ConfigService) {
+        this.lastMessageReceived = Date.now();
+    }
 
     // you can override the start block from the DB with the 
     // DFUSE_START_BLOCK config parameter
@@ -127,7 +129,7 @@ export class EosSyncService {
             this.lastMessageReceived = now;
             console.log('No messages received in 30s. Restarting dfuse');
 
-            this.dfuse.close();
+            if (this.dfuse) this.dfuse.close();
             this.start();
         }
     }
