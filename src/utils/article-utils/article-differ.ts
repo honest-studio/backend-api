@@ -233,7 +233,7 @@ function diffMedia(old_media: Media[], new_media: Media[]): Media[] {
 const SECTION_SEPARATOR = '\n---sb---sb---\n';
 const SECTION_TEXT_IMAGE_SEPARATOR = '\ntititititititi\n';
 const PARAGRAPH_SEPARATOR = '\npppppppppppp\n';
-const PARAGRAPH_ITEM_SEPARATOR = '\npip---pip\n';
+const PARAGRAPH_ITEM_SEPARATOR = '\n';
 const IMAGE_SEPARATOR = '\niiiiiiiiiii\n';
 const LIST_ITEM_PREFIX = 'lilili^^^ ';
 const SENTENCE_PREFIX = 'ssssss^^^ ';
@@ -284,6 +284,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             .join('\n');
         diff_text += '\n'; // pad with new lines for safe parsing
     }
+    console.log(diff_text);
 
     return diffToSections(diff_text);
 }
