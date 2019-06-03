@@ -764,7 +764,7 @@ function parseSection($section: Cheerio): Section {
                  // All <li> sentences should be joined anyways, otherwise they will produce erroneous bullet points
                 let comboSentence = { type: 'sentence', index: 0, text: parseSentences($list_item.text()).map((sent) => sent.text).join("") };
                 paragraph.items.push({
-                    type: 'list_item',
+                    type: 'list-item',
                     index: j,
                     sentences: [comboSentence],
                     tag_type: 'li'

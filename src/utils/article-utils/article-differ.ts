@@ -432,7 +432,7 @@ function paragraphToLines(paragraph: Paragraph): string {
             if (item.type == 'sentence') {
                 const sentence = item as Sentence;
                 return SENTENCE_PREFIX + sentence.text;
-            } else if (item.type == 'list_item') {
+            } else if (item.type == 'list-item' || item.type == 'list_item') {
                 const list_item = item as ListItem;
                 return LIST_ITEM_PREFIX + list_item.sentences.map((s) => s.text).join(' ');
             } else if (item.type == 'wikitable') {
