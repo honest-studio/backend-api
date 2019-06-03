@@ -8,3 +8,6 @@ dist
 build
 *.swp
 package-lock.json
+kylin.env
+mainnet.env
+synconly.env
