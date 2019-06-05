@@ -1129,14 +1129,14 @@ export function linkCategorizer(inputString: string) {
     let theExtension = mimePackage.getExtension(theMIME);
 
     // Test for different categories
-    if (theMIME == '' || theMIME == null) {
+    if (getYouTubeID(inputString)) {
+        return 'YOUTUBE';
+    } else if (theMIME == '' || theMIME == null) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
     } else if (theMIME.includes('image')) {
         return 'PICTURE';
-    } else if (getYouTubeID(inputString)) {
-        return 'YOUTUBE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
         return 'NORMAL_VIDEO';
     } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension)) {
