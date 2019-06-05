@@ -4,7 +4,7 @@ import { URL } from 'url';
 import { IpfsService } from '../common';
 import { MysqlService, MongoDbService, } from '../feature-modules/database';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
-import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { CacheService } from '../cache';
 import {
     ArticleJson,
@@ -15,7 +15,8 @@ import {
     renderAMP,
     renderSchema,
     calculateSeeAlsos,
-    oldHTMLtoJSON
+    oldHTMLtoJSON,
+    mergeMediaIntoCitations
 } from '../utils/article-utils';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
@@ -72,13 +73,14 @@ export class WikiService {
             // check if wiki is already in JSON format
             // return it immediately if it is
             wiki = JSON.parse(wiki_rows[0].html_blob);
-            return wiki;
+            
+            return mergeMediaIntoCitations(wiki);
         } catch {
             // if the wiki is not in JSON format, try and return the cache first
-            if (cache_wiki) return cache_wiki;
+            if (cache_wiki) return mergeMediaIntoCitations(cache_wiki);
 
             // if the cache isn't available either, generate and return it
-            wiki = oldHTMLtoJSON(wiki_rows[0].html_blob);
+            wiki = mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob));
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
@@ -124,7 +126,7 @@ export class WikiService {
             .toArray();
         for (let json_wiki of cached_json_wikis) {
             const index = ipfs_hashes.findIndex((hash) => hash == json_wiki.ipfs_hash);
-            json_wikis.push(json_wiki);
+            json_wikis.push(mergeMediaIntoCitations(json_wiki));
         }
 
         // KEDAR: 
@@ -163,7 +165,7 @@ export class WikiService {
                     json_wiki = oldHTMLtoJSON(r.html_blob);
                     json_wiki.ipfs_hash = r.ipfs_hash;
                 }
-                json_wikis.push(json_wiki);
+                json_wikis.push(mergeMediaIntoCitations(json_wiki));
             });
 
             // cache uncached json wikis
@@ -247,9 +249,9 @@ export class WikiService {
 
         // clean up text previews
         for (let preview of seeAlsoRows) {
-            preview.page_title = SanitizeTextPreview(preview.page_title);
+            preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
-                preview.text_preview = SanitizeTextPreview(preview.text_preview);
+                preview.text_preview = sanitizeTextPreview(preview.text_preview);
             }
         }
 
@@ -259,7 +261,7 @@ export class WikiService {
     async submitWiki(wiki: ArticleJson): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-        let blob = JSON.stringify(wiki);
+        let blob = JSON.stringify(mergeMediaIntoCitations(wiki));
         let submission;
         try {
             submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));

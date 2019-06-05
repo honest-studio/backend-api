@@ -1,6 +1,6 @@
 import { ArticleJson } from './article-dto';
 import { getYouTubeID } from './article-converter';
-import { renderAMPParagraph, SanitizeTextPreview } from './article-tools';
+import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
 import crypto from 'crypto';
 import striptags from 'striptags';
@@ -237,7 +237,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                 .join('');
         })
         .join('');
-    schemaJSON['articleBody'] = SanitizeTextPreview(pageBodyText);
+    schemaJSON['articleBody'] = sanitizeTextPreview(pageBodyText);
     switch (returnType) {
         case 'JSON':
             return schemaJSON;

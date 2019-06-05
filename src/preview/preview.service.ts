@@ -7,7 +7,7 @@ import { CacheService } from '../cache';
 import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
 import { WikiIdentity } from '../utils/article-utils/article-types';
-import { SanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as SqlString from 'sqlstring';
 const pid = `PID-${process.pid}`;
 /**
@@ -77,9 +77,9 @@ export class PreviewService {
 
         // clean up text previews
         previews.forEach((preview) => {
-            preview.page_title = SanitizeTextPreview(preview.page_title);
+            preview.page_title = sanitizeTextPreview(preview.page_title);
             if (!preview.text_preview) return; // continue
-            preview.text_preview = SanitizeTextPreview(preview.text_preview);
+            preview.text_preview = sanitizeTextPreview(preview.text_preview);
         });
 
         // try and fill in missing previews with pinned wikis
@@ -100,7 +100,7 @@ export class PreviewService {
                     .trim();
                 const thumbnail = $('.main-photo').attr('data-thumbnail');
                 const main_photo = $('.main-photo').attr('src');
-                const text_preview: string = SanitizeTextPreview($('.blurb-wrap').text().substring(0, 200));
+                const text_preview: string = sanitizeTextPreview($('.blurb-wrap').text().substring(0, 200));
                 previews[i] = { ipfs_hash, page_title, thumbnail, main_photo, text_preview };
             } catch (e) {
                 // try and pin the file so future requests can use it
@@ -164,9 +164,9 @@ export class PreviewService {
 
         // clean up text previews
         for (let preview of previews) {
-            preview.page_title = SanitizeTextPreview(preview.page_title);
+            preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
-                preview.text_preview = SanitizeTextPreview(preview.text_preview);
+                preview.text_preview = sanitizeTextPreview(preview.text_preview);
             }
         }
 

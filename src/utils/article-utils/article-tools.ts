@@ -13,6 +13,8 @@ import * as htmlparser2 from 'htmlparser2';
 import {
     getYouTubeID,
     CAPTURE_REGEXES,
+    linkCategorizer,
+    socialURLType
 } from './article-converter';
 
 // From react-attr-converter
@@ -1114,7 +1116,7 @@ export const renderAMPImage = (image: Media, passedCitations: Citation[], passed
 };
 
 
-export function SanitizeTextPreview(inputText: string): string {
+export function sanitizeTextPreview(inputText: string): string {
     if (!inputText) return '';
     let sanitizedText = inputText.replace(/\s+/g, ' ').trim();
     sanitizedText = CheckForLinksOrCitationsAMP(sanitizedText, [], "", [], true).text;
@@ -1122,3 +1124,50 @@ export function SanitizeTextPreview(inputText: string): string {
     sanitizedText = $.root().text();
     return sanitizedText;
 }
+
+export function convertMediaToCitation(inputMedia: Media, idToUse: number): Citation {
+    let newCitation: Citation = {
+        url: inputMedia.url,
+        thumb: inputMedia.thumb,
+        description: inputMedia.caption,
+        category: inputMedia.category ? inputMedia.category : linkCategorizer(inputMedia.url),
+        citation_id: idToUse,
+        social_type: socialURLType(inputMedia.url),
+        attribution: inputMedia.attribution_url || null,
+        timestamp: inputMedia.timestamp || new Date(),
+        mime: inputMedia.mime || null,
+        media_props: {
+            type: inputMedia.type
+        },
+        in_blurb: false,
+    }
+
+    if (inputMedia.diff) newCitation.diff = inputMedia.diff;
+    if (inputMedia.height) newCitation.media_props.height = inputMedia.height;
+    if (inputMedia.width) newCitation.media_props.width = inputMedia.width;
+    if (inputMedia.srcSet) newCitation.media_props.srcSet = inputMedia.srcSet;
+
+    return newCitation;
+}
+
+export function getFirstAvailableCitationIndex(citations: Citation[]): number {
+    let highestID = 0;
+    citations.forEach((ctn) => {
+        if (ctn.citation_id >= highestID) highestID = ctn.citation_id + 1;
+    })
+    return highestID;
+}
+
+export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
+    // Eventually the media_gallery will be merged into citations. Dupe them for now
+    // Interestingly, if an article does not have a main photo, you could set it as one of the gallery images...
+    let modifiedWiki = inputWiki;
+    let startingCitationIndex = getFirstAvailableCitationIndex(modifiedWiki.citations);
+    modifiedWiki.media_gallery.forEach((media, index) => {
+        console.log("MERGING A MEDIA");
+        modifiedWiki.citations.push(convertMediaToCitation(media, startingCitationIndex + index));
+    });
+    modifiedWiki.media_gallery = [];
+    return modifiedWiki;
+}
+
