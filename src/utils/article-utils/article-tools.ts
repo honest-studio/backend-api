@@ -1151,7 +1151,7 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number): Cita
 }
 
 export function getFirstAvailableCitationIndex(citations: Citation[]): number {
-    let highestID = 0;
+    let highestID = 1;
     citations.forEach((ctn) => {
         if (ctn.citation_id >= highestID) highestID = ctn.citation_id + 1;
     })
@@ -1164,7 +1164,6 @@ export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
     let modifiedWiki = inputWiki;
     let startingCitationIndex = getFirstAvailableCitationIndex(modifiedWiki.citations);
     modifiedWiki.media_gallery.forEach((media, index) => {
-        console.log("MERGING A MEDIA");
         modifiedWiki.citations.push(convertMediaToCitation(media, startingCitationIndex + index));
     });
     modifiedWiki.media_gallery = [];

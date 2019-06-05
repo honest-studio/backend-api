@@ -327,7 +327,7 @@ function extractCitations($: CheerioStatic): Citation[] {
 
     for (let i=0; i < $rows.length; i++) {
         const citation: any = {
-            citation_id: i,
+            citation_id: i + 1,
             description: parseSentences($descriptionTexts.eq(i).text().trim()),
             timestamp: $timestamps.eq(i).text().trim(),
             mime: $mimes.eq(i).text().trim(),
