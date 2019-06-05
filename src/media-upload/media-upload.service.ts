@@ -6,7 +6,6 @@ import { DWebp } from 'cwebp';
 import { extractFrames } from './gif-extract-frames';
 import * as extractVideoPreview from 'ffmpeg-extract-frame';
 import * as fetch from 'node-fetch';
-import { fetchFavicon } from '@meltwater/fetch-favicon';
 const fileType = require('file-type');
 import * as fs from 'fs';
 const getYouTubeID = require('get-youtube-id');
@@ -29,6 +28,7 @@ import { StringDecoder } from 'string_decoder';
 import { AWSS3Service } from '../feature-modules/database';
 import { PhotoExtraData } from './media-upload-dto';
 import { MediaUploadResult } from "./media-upload-dto";
+import { fetchUrl } from './fetch-favicon';
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
 
@@ -99,16 +99,8 @@ export class MediaUploadService {
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
-    getFavicon(inputURL: string) {
-        try {
-            // Fetch the favicon
-            let result = fetchFavicon(inputURL);
-
-            // Return the favicon URL
-            return result ? result : null;
-        } catch (e) {
-            return null;
-        }
+    getFavicon(inputURL: string): Promise<any> {
+        return fetchUrl(inputURL);
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
