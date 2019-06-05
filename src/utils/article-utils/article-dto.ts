@@ -16,6 +16,8 @@ export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NOR
 
 export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
 
+export type MediaType = 'section_image' | 'main_photo' | 'inline_image' | 'normal';
+
 export type TableCellType = 'th' | 'td';
 
 export type TagClass = 'inline' | 'block' | 'void';
@@ -75,7 +77,7 @@ export interface Infobox {
 }
 
 export interface Media {
-    type: string; // section_image, main_photo, inline_image, normal
+    type: MediaType;
     url: string;
     caption: Sentence[]; 
     thumb?: string;
@@ -91,7 +93,7 @@ export interface Media {
 }
 
 export interface MediaProps {
-    type: string; // section_image, main_photo, inline_image, normal
+    type: MediaType;
     height?: number;
     width?: number;
     srcSet?: string;

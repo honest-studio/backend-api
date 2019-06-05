@@ -461,7 +461,7 @@ function extractMediaGallery($: CheerioStatic) {
 
 function extractMainPhoto($: CheerioStatic): Media[] {
     const main_photo: Media = {
-        type: 'main_image',
+        type: 'main_photo',
         url: null,
         thumb: null,
         caption: null,

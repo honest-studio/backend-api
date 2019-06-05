@@ -783,7 +783,7 @@
     ],
     "main_photo": [
       {
-        "type": "main_image",
+        "type": "main_photo",
         "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
         "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
         "caption": [],
