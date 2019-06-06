@@ -72,12 +72,15 @@ export class ProposalService {
             .forEach((p) => (p.result = { error: `Proposal ${p.proposal_id} has not finalized` }));
 
         if (options.preview) {
-            const packs = proposals
+            //const packs = proposals
+            //    .filter((p) => !p.info.error)
+            //    .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
+            const ipfs_hashes = proposals
                 .filter((p) => !p.info.error)
-                .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
+                .map((p) => (p.info.trace.act.data.ipfs_hash));
             let previews;
             try {
-                previews = await this.previewService.getPreviewsBySlug(packs);
+                previews = await this.previewService.getPreviewsByHash(ipfs_hashes);
             } catch (e) {
                 if (e.message.error == "Could not find wikis") previews = [];
                 else throw e;
