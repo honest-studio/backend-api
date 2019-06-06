@@ -115,7 +115,7 @@ export class WikiService {
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
-        const json_wikis = [];
+        let json_wikis = [];
 
         // try to directly fetch cached json wikis
         const cached_json_wikis = await this.mongo
@@ -126,7 +126,7 @@ export class WikiService {
             .toArray();
         for (let json_wiki of cached_json_wikis) {
             const index = ipfs_hashes.findIndex((hash) => hash == json_wiki.ipfs_hash);
-            json_wikis.push(mergeMediaIntoCitations(json_wiki));
+            json_wikis.push(json_wiki);
         }
 
         // KEDAR: 
@@ -165,7 +165,7 @@ export class WikiService {
                     json_wiki = oldHTMLtoJSON(r.html_blob);
                     json_wiki.ipfs_hash = r.ipfs_hash;
                 }
-                json_wikis.push(mergeMediaIntoCitations(json_wiki));
+                json_wikis.push(json_wiki);
             });
 
             // cache uncached json wikis
@@ -190,6 +190,10 @@ export class WikiService {
                 if (!json) json_wikis.push({ ipfs_hash: hash, error: `Wiki ${hash} could not be found` });
             }
         }
+
+        json_wikis = json_wikis.map((innerWiki) => {
+            return mergeMediaIntoCitations(innerWiki);
+        })
 
         return json_wikis;
     }
