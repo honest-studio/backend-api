@@ -2,6 +2,7 @@
 const axios = require('axios');
 const parse5 = require('parse5');
 const url = require('url');
+const checkLinks = require('check-links')
 
 export interface FaviconReturnPack {
     url: string;
@@ -14,15 +15,34 @@ export function fetchUrl(siteUrl) {
         .then(response => {
             const html = response.data;
             const faviconUrl = crawlHTMLForFaviconUrl(html);
-            resolve(resolveFaviconUrl(siteUrl, faviconUrl));
+            let resultURL = resolveFaviconUrl(siteUrl, faviconUrl);
+            return checkLinks([resultURL], {
+                timeout: 1000,
+                retry: 0
+            })
         })
-        .catch(reject);
+        .then(linkStatus => {
+            let favURL = Object.keys(linkStatus)[0];
+            let linkCheckResult: any = linkStatus[favURL];
+            switch(linkCheckResult.status){
+                case 'alive':
+                    return resolve(favURL);
+                case 'dead':
+                    return reject("")
+                case 'invalid':
+                    return reject("")
+                default:
+                    return reject("")
+            }
+        })
+        .catch(rej => {
+            resolve("")
+        });
     });
 }
 
 function resolveFaviconUrl(siteUrl, faviconUrl) {
     const parsedSiteUrl = url.parse(siteUrl);
-    console.log(siteUrl)
     if (faviconUrl !== null) {
         const parsedFaviconUrl = url.parse(faviconUrl);
         console.log(parsedFaviconUrl)
@@ -39,7 +59,7 @@ function resolveFaviconUrl(siteUrl, faviconUrl) {
             return `${parsedSiteUrl.protocol}/${parsedFaviconUrl.path}`;
         }
     }
-    return `${parsedSiteUrl.protocol}//${parsedSiteUrl.host}/favicon.ico`;
+    return "";
 }
 
 function crawlHTMLForFaviconUrl(html): string {

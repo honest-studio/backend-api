@@ -36,6 +36,7 @@
     "buffer-image-size": "^0.6.4",
     "canvas": "^2.5.0",
     "chalk": "^2.4.2",
+    "check-links": "^1.1.7",
     "cheerio": "^1.0.0-rc.2",
     "class-transformer": "^0.2.3",
     "class-validator": "^0.9.1",
