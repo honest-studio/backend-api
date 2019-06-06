@@ -1162,7 +1162,7 @@ export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
     // Eventually the media_gallery will be merged into citations. Dupe them for now
     // Interestingly, if an article does not have a main photo, you could set it as one of the gallery images...
     let modifiedWiki = inputWiki;
-    if (modifiedWiki.media_gallery.length) {
+    if (modifiedWiki && modifiedWiki.media_gallery && modifiedWiki.media_gallery.length) {
         let startingCitationIndex = getFirstAvailableCitationIndex(modifiedWiki.citations);
         modifiedWiki.media_gallery.forEach((media, index) => {
             modifiedWiki.citations.push(convertMediaToCitation(media, startingCitationIndex + index));
