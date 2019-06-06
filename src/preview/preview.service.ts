@@ -136,7 +136,7 @@ export class PreviewService {
             let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
             return SqlString.format(
                 '(art.page_lang = ? AND (art.slug = ? OR art.slug = ?))',
-                [w.lang_code, w.slug, cleanedSlug]
+                [w.lang_code, cleanedSlug, cleanedSlug]
             );
         }).join(' OR ');
         
