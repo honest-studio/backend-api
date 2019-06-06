@@ -14,9 +14,9 @@ export type DiffType = 'add' | 'delete' | 'none';
 
 export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
 
-export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
-
 export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
+
+export type MediaType = 'section_image' | 'main_photo' | 'inline_image' | 'normal';
 
 export type TableCellType = 'th' | 'td';
 
@@ -77,7 +77,7 @@ export interface Infobox {
 }
 
 export interface Media {
-    type: string; // section_image, main_photo, inline_image
+    type: MediaType;
     url: string;
     caption: Sentence[]; 
     thumb?: string;
@@ -87,8 +87,15 @@ export interface Media {
     alt?: string;
     height?: number;
     width?: number;
-    category?: MediaCategoryType;
+    category?: CitationCategoryType;
     diff?: DiffType;
+    srcSet?: string;
+}
+
+export interface MediaProps {
+    type: MediaType;
+    height?: number;
+    width?: number;
     srcSet?: string;
 }
 
@@ -137,6 +144,7 @@ export interface Citation {
     attribution: string;
     timestamp: Date;
     mime: string;
+    media_props?: MediaProps;
     in_blurb?: boolean;
     diff?: DiffType;
 }

@@ -1,5 +1,6 @@
 import { IsString, Matches } from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional, ApiConsumes } from '@nestjs/swagger';
+import { CitationCategoryType } from '../utils/article-utils/article-dto';
 
 export interface PhotoExtraData {
     width: number;
@@ -54,8 +55,6 @@ export interface MimePack {
     mime: string;
 }
 
-// Types of media categories
-export type MediaCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO';
 
 /**
  * Describe a successful response to a media upload
@@ -68,5 +67,6 @@ export interface MediaUploadResult {
     };
     thumbnailPhotoURL: string;
     mime: string;
-    category: MediaCategoryType;
+    category: CitationCategoryType;
 }
+

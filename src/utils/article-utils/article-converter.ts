@@ -327,7 +327,7 @@ function extractCitations($: CheerioStatic): Citation[] {
 
     for (let i=0; i < $rows.length; i++) {
         const citation: any = {
-            citation_id: i,
+            citation_id: i + 1,
             description: parseSentences($descriptionTexts.eq(i).text().trim()),
             timestamp: $timestamps.eq(i).text().trim(),
             mime: $mimes.eq(i).text().trim(),
@@ -461,7 +461,7 @@ function extractMediaGallery($: CheerioStatic) {
 
 function extractMainPhoto($: CheerioStatic): Media[] {
     const main_photo: Media = {
-        type: 'main_image',
+        type: 'main_photo',
         url: null,
         thumb: null,
         caption: null,
@@ -1129,14 +1129,14 @@ export function linkCategorizer(inputString: string) {
     let theExtension = mimePackage.getExtension(theMIME);
 
     // Test for different categories
-    if (theMIME == '' || theMIME == null) {
+    if (getYouTubeID(inputString)) {
+        return 'YOUTUBE';
+    } else if (theMIME == '' || theMIME == null) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
     } else if (theMIME.includes('image')) {
         return 'PICTURE';
-    } else if (getYouTubeID(inputString)) {
-        return 'YOUTUBE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
         return 'NORMAL_VIDEO';
     } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension)) {

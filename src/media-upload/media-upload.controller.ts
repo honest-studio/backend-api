@@ -32,6 +32,16 @@ const path = require('path');
 export class MediaUploadController {
     constructor(private readonly MediaUploadService: MediaUploadService) {}
 
+    @Get('get-favicon/:encoded_url')
+    @ApiOperation({ title: 'Get a favicon for a url' })
+    @ApiImplicitParam({
+        name: 'encoded_url',
+        description: 'An encoded URL of the target site'
+    })
+    async getWikiHistory(@Param('encoded_url') encoded_url: string): Promise<any> {
+        return this.MediaUploadService.getFavicon(encoded_url);
+    }
+
     @Post('/')
     @ApiOperation({ title: 'Upload media' })
     @ApiResponse({
