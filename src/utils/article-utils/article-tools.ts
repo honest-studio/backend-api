@@ -1169,7 +1169,7 @@ export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
         });
         modifiedWiki.media_gallery = [];
     }
-    console.log(modifiedWiki.citations)
+    // console.log(modifiedWiki.citations)
     return modifiedWiki;
 }
 
