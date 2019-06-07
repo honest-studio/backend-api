@@ -557,6 +557,9 @@ export const CheckForLinksOrCitationsAMP = (
     let md = new MarkdownIt({ html: true });
     text = md.renderInline(text);
 
+    // catch edge case where spaces are in **bold ** text
+    text = text.replace(/\*\*[^\*]+\*\*/gu, (match) => match.slice(2, -2));
+
     // if (text.indexOf('<div')) text = textProcessing.innerHtml;
     const check = text.indexOf('[[');
     if (check >= 0) {
@@ -1120,6 +1123,11 @@ export function sanitizeTextPreview(inputText: string): string {
     if (!inputText) return '';
     let sanitizedText = inputText.replace(/\s+/g, ' ').trim();
     sanitizedText = CheckForLinksOrCitationsAMP(sanitizedText, [], "", [], true).text;
+    sanitizedText = sanitizedText.replace(/\s+/g, ' ').trim();
+
+    // remove citation references from preview
+    sanitizedText = sanitizedText.replace(/\[\d+\]/g, '');
+
     const $ = cheerio.load(sanitizedText);
     sanitizedText = $.root().text();
     return sanitizedText;
