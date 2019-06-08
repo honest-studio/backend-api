@@ -305,6 +305,7 @@ export class WikiService {
                     
                     const page_title = wiki.page_title[0].text;
                     const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+                    const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
                     let text_preview;
                     try {
                         text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
@@ -327,8 +328,8 @@ export class WikiService {
                         `,
                         [
                             ipfs_hash,
-                            slug,
-                            slug,
+                            cleanedSlug,
+                            cleanedSlug,
                             page_title,
                             text_preview,
                             photo_url,
@@ -355,7 +356,7 @@ export class WikiService {
                         FROM enterlink_articletable AS art 
                         WHERE page_lang = ? AND slug = ?
                         `,
-                        [page_lang, slug]
+                        [page_lang, cleanedSlug]
                     );
                     
                     // Update Elasticsearch

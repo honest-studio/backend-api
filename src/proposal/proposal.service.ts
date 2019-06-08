@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { PreviewService } from '../preview';
 import { DiffService } from '../diff';
-import { MongoDbService, EosAction, Propose, ProposalResult, Vote } from '../feature-modules/database';
+import { MongoDbService, MysqlService, EosAction, Propose, ProposalResult, Vote } from '../feature-modules/database';
 
 export type Proposal = {
     proposal_id: number;
@@ -21,6 +21,7 @@ export type ProposalOptions = {
 export class ProposalService {
     constructor(
         private mongo: MongoDbService,
+        private mysql: MysqlService,
         private previewService: PreviewService,
         @Inject(forwardRef(() => DiffService)) private diffService: DiffService
     ) {}
@@ -88,7 +89,7 @@ export class ProposalService {
 
             previews.forEach((preview) => {
                 proposals.forEach(p => {
-                    if (p.info.trace.act.data.slug === preview.slug)
+                    if (this.mysql.cleanSlugForMysql(p.info.trace.act.data.slug) === preview.slug)
                         p.preview = preview;
                 })
             });
