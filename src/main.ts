@@ -13,6 +13,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
 import { isIpfsRunning } from './utils';
+import * as bodyParser from 'body-parser';
 
 async function bootstrap() {
     // Check IPFS daemon status (if enabled)
@@ -21,6 +22,9 @@ async function bootstrap() {
     const expressApp = express();
 
     const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
+    app.use(bodyParser.json({limit: '25mb'}));
+    app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
+    app.enableCors();
     app.enableShutdownHooks();
 
     // Swagger
