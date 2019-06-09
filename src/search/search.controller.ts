@@ -1,7 +1,7 @@
-import { Controller, Get, Param, Req, Query } from '@nestjs/common';
+import { Controller, Get, Param, Req, Query, Post, Body } from '@nestjs/common';
 import { Request } from 'express';
-import { ApiOperation, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { SearchService } from './search.service';
+import { ApiOperation, ApiImplicitParam, ApiUseTags, ApiImplicitQuery, ApiResponse } from '@nestjs/swagger';
+import { SearchService, SearchQueryPack } from './search.service';
 import { AddRemoteIp } from '../utils/request-tools';
 
 @Controller('v2/search')
@@ -9,24 +9,16 @@ import { AddRemoteIp } from '../utils/request-tools';
 export class SearchController {
     constructor(private readonly searchService: SearchService) {}
 
-    @Get('title/:query')
-    @ApiOperation({ title: 'Search the Everipedia database by article title' })
-    @ApiImplicitParam({
-        name: 'query',
-        description: 'Search term',
-        required: true,
-        type: 'string'
+    @Post('title')
+    @ApiOperation({ 
+        title: `Search the Everipedia database by article title`
     })
-    @ApiImplicitQuery({
-        name: 'langs',
-        description: 'Language(s). Example: /v2/search/title/travis%20moore?langs=en,es',
-        required: false,
-        isArray: true,
-        type: 'string'
+    @ApiResponse({
+        status: 200,
+        description: `Returns search results`
     })
-    async searchTitle(@Param('query') query, @Query('langs') langs): Promise<any> {
-        if (langs) langs = langs.split(',');
-        return await this.searchService.searchTitle(query, langs);
+    async submitWiki(@Body() pack: SearchQueryPack): Promise<any> {
+        return this.searchService.searchTitle(pack);
     }
 
     @Get('schema-by-type/:query')

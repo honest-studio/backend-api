@@ -294,20 +294,32 @@ describe('Backend API', () => {
 
   it('Search: Title', () => {
     return request(app.getHttpServer())
-        .get('/v2/search/title/Travis%20Moore')
-        .expect(200)
+        .post('/v2/search/title/')
+        .send({
+          query: "Travis Moore",
+        })
+        .expect(201)
   });
 
   it('Search: No Results', () => {
     return request(app.getHttpServer())
-        .get('/v2/search/title/Coloossed')
-        .expect(200)
+        .post('/v2/search/title/')
+        .send({
+          query: "Coloossed",
+        })
+        .set('Accept', 'application/json')
+        .expect(201)
   });
 
   it('Search: English only', () => {
     return request(app.getHttpServer())
-        .get('/v2/search/title/Travis?langs=en')
-        .expect(200)
+        .post('/v2/search/title/')
+        .send({
+          query: "Travis",
+          langs: ['en']
+        })
+        .set('Accept', 'application/json')
+        .expect(201)
   });
 
   it('Search Schema: Birth and Person', () => {
