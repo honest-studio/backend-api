@@ -53,13 +53,20 @@ export class SearchService {
             };
         }
 
-        const searchResult = await this.client
-            .search({
-                index: 'articletable_main5',
-                type: 'ep_template_v1',
-                body: searchJSON
-            })
-            .toPromise();
+        let searchResult;
+        try {
+            searchResult = await this.client
+                .search({
+                    index: 'articletable_main5',
+                    type: 'ep_template_v1',
+                    body: searchJSON
+                })
+                .toPromise();
+        } catch (e) {
+            if (e.message == "[null_pointer_exception] null")
+                return [];
+            else throw e;
+        }
 
         const canonical_ids: number[] = searchResult[0].hits.hits.map((h) => {
             return h._source.canonical_id;
