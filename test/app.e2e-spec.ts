@@ -294,19 +294,31 @@ describe('Backend API', () => {
 
   it('Search: Title', () => {
     return request(app.getHttpServer())
-        .get('/v2/search/title/Travis%20Moore')
+        .post('/v2/search/title/')
+        .send({
+          query: "Travis Moore",
+        })
         .expect(200)
   });
 
   it('Search: No Results', () => {
     return request(app.getHttpServer())
-        .get('/v2/search/title/Coloossed')
+        .post('/v2/search/title/')
+        .send({
+          query: "Coloossed",
+        })
+        .set('Accept', 'application/json')
         .expect(200)
   });
 
   it('Search: English only', () => {
     return request(app.getHttpServer())
-        .get('/v2/search/title/Travis?langs=en')
+        .post('/v2/search/title/')
+        .send({
+          query: "Travis",
+          langs: ['en']
+        })
+        .set('Accept', 'application/json')
         .expect(200)
   });
 

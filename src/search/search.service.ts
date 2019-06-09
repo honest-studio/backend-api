@@ -5,11 +5,17 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as cheerio from 'cheerio';
 import * as util from 'util';
 
+export interface SearchQueryPack {
+    query: string,
+    langs?: string[];
+}
+
 @Injectable()
 export class SearchService {
     constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
 
-    async searchTitle(query: string, langs?: string[]): Promise<any> {
+    async searchTitle(pack: SearchQueryPack): Promise<any> {
+        const { query, langs } = pack;
         const searchJSON = {
             // size: 25000,
             min_score: 1.0001, // Make sure non-matches do not show up
