@@ -298,7 +298,7 @@ describe('Backend API', () => {
         .send({
           query: "Travis Moore",
         })
-        .expect(200)
+        .expect(201)
   });
 
   it('Search: No Results', () => {
@@ -308,7 +308,7 @@ describe('Backend API', () => {
           query: "Coloossed",
         })
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(201)
   });
 
   it('Search: English only', () => {
@@ -319,7 +319,7 @@ describe('Backend API', () => {
           langs: ['en']
         })
         .set('Accept', 'application/json')
-        .expect(200)
+        .expect(201)
   });
 
   it('Search Schema: Birth and Person', () => {
