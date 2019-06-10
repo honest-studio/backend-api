@@ -80,6 +80,13 @@ export class StatService {
             `SELECT SUM(pageviews) AS pageviews FROM enterlink_articletable`
         );
 
+        let total_edits: any = await this.mongo
+            .connection()
+            .actions.count({ $or: [
+                { 'trace.act.name': 'propose' },
+                { 'trace.act.name': 'propose2' }
+            ]});
+
         let total_editors: any = await this.mongo
             .connection()
             .actions.aggregate([
@@ -121,7 +128,8 @@ export class StatService {
             total_pageviews,
             total_editors,
             total_iq_rewards,
-            original_pages
+            original_pages,
+            total_edits
         };
         this.mongo.connection().statistics.deleteMany({ key: 'site_usage' });
         this.mongo.connection().statistics.insertOne(doc);
