@@ -2,6 +2,7 @@ import { ArticleJson } from './article-dto';
 import { getYouTubeID } from './article-converter';
 import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
 import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
+import { Sentence } from '../../utils/article-utils';
 import crypto from 'crypto';
 import striptags from 'striptags';
 
@@ -187,7 +188,10 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
     inputJSON.infoboxes.forEach((infobox, index) => {
         let valuesBlock = [];
         infobox.values.forEach((value, index) => {
-            let result = CheckForLinksOrCitationsAMP(value.text, inputJSON.citations, inputJSON.ipfs_hash, [], true);
+            let comboText = value.sentences.reduce((acc, iter: Sentence) => {
+                return `${acc}${iter.text ? iter.text + " " : ''}`;
+            }, '');
+            let result = CheckForLinksOrCitationsAMP(comboText, inputJSON.citations, inputJSON.ipfs_hash, [], true);
             valuesBlock.push((striptags as any)(result.text));
         });
 

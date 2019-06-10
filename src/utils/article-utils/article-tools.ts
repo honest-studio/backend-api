@@ -873,7 +873,11 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     });
     allSentences.push(...(passedJSON.main_photo[0].caption as Sentence[]));
     passedJSON.infoboxes.forEach((infobox, index) => {
-        allSentences.push(...(infobox.values as Sentence[]));
+        infobox.values.forEach(val => {
+            val.sentences.forEach(sent => {
+                allSentences.push(sent);
+            })
+        })
     });
     passedJSON.media_gallery.forEach((media, index) => {
         allSentences.push(...(media.caption as Sentence[]));

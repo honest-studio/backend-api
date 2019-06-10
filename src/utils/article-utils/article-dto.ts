@@ -66,7 +66,12 @@ export interface Section {
     images: Media[];
 }
 
-export type InfoboxValue = Sentence;
+export type InfoboxValue = {
+    index: number;
+    sentences: Sentence[];
+    diff?: DiffType;
+}
+
 export interface Infobox {
     key: string;
     schema: string;

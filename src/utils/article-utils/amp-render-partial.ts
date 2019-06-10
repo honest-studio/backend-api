@@ -465,18 +465,23 @@ export class AmpRenderPartial {
                 </div>
                 ${infobox.values
                     .map((value, index) => {
-                        let result = CheckForLinksOrCitationsAMP(
-                            value.text,
-                            this.artJSON.citations,
-                            this.artJSON.ipfs_hash,
-                            [],
-                            false
-                        );
-                        this.allLightBoxes.push(...result.lightboxes);
+                        let comboText = ''
+                        value.sentences.forEach(sent => {
+                            let parsePack = CheckForLinksOrCitationsAMP(
+                                sent.text,
+                                this.artJSON.citations,
+                                this.artJSON.ipfs_hash,
+                                [],
+                                false
+                            )
+                            comboText += (parsePack.text ? parsePack.text + " " : " ");
+                            this.allLightBoxes.push(...parsePack.lightboxes);
+                        })
+                        
                         // return result.text;
                         return `
                         <div class="info-an">
-                            ${result.text}
+                            ${comboText}
                         </div>
                     `;
                     })
