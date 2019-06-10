@@ -196,8 +196,6 @@ export interface TableRow {
     diff?: DiffType;
 }
 
-
-
 export interface TableCell {
     index: number;
     attrs: {};

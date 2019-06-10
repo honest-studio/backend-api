@@ -14,6 +14,7 @@ import {
     Citation,
     Metadata,
     Infobox,
+    InfoboxValue,
     Table,
     Paragraph,
     NestedTextItem,
@@ -521,7 +522,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
     // Loop through the plural non-Wikipedia elements first and fill the dictionary
     $('table.ibox-item-plural').each(function() {
         // Initialize a blank object dictionary
-        let infoPackage = {
+        let infoPackage: Infobox = {
             key: null,
             schema: null,
             addlSchematype: null,
@@ -579,10 +580,13 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
                 // Add the value to the rows
                 infoPackage.values.push({
-                    type: 'sentence',
                     index: i,
-                    text: rowText
-                });
+                    sentences: [{
+                        type: 'sentence',
+                        index: 0,
+                        text: rowText
+                    }]
+                } as InfoboxValue);
             });
 
         // Add to the infobox list
@@ -592,7 +596,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
     // Loop through the nonplural elements and fill the dictionary
     $('table.ibox-item-nonplural').each(function() {
         // Initialize a blank object dictionary
-        let infoPackage = {
+        let infoPackage: Infobox = {
             key: null,
             schema: null,
             addlSchematype: null,
@@ -649,10 +653,13 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
                 // Add the value to the rows
                 infoPackage.values.push({
-                    type: 'sentence',
                     index: i,
-                    text: tempValue
-                });
+                    sentences: [{
+                        type: 'sentence',
+                        index: 0,
+                        text: tempValue
+                    }]
+                } as InfoboxValue);
             });
 
         // Add to the infobox list
