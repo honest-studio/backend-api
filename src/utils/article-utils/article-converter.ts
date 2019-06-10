@@ -1132,33 +1132,26 @@ export function socialURLType(inputURL: string) {
 // }
 
 function splitSentences(text: string): Array<string> {
-    // let splits = text.split(/[.!?](?=\s)/gm);
-
+    // Get the splits
     let splits = tokenizer.sentences(text, { "preserve_whitespace" : true });
-    console.log(splits)
-    
-    // re-insert missing characters
-    let cursor = 0;
-    splits.forEach((innerSplit, idx) => {
-        cursor += innerSplit.length;
-        splits[idx] = innerSplit + text.charAt(cursor);
-        cursor += 1;
-    })
-    
-    // no empty sentences
-    splits = splits.filter(split => split.length).filter(Boolean);
-    // splits = splits.map((split) => split.trim()).filter(Boolean);
 
-    // Don't split on certain tricky words like Mr., Mrs., etc.
-    // Don't split inside a LINK, CITE, or INLINE IMAGE
+    // No empty sentences
+    splits = splits.filter(split => split.length).filter(Boolean);
+
+    // Cleanup
     for (let i = 0; i < splits.length; i++) {
-        // const lastWord = splits[i].split(' ').pop();
-        if (splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm) && i + 1 < splits.length) {
-            splits[i] = `${splits[i]} ${splits[i + 1]}`;
-            splits.splice(i + 1, 1);
-            i--; // re-check this sentence in case there's multiple bad splits
-        }
+        splits[i] = splits[i].replace("[[[[", "[[");
     }
+
+    // Don't split inside a LINK, CITE, or INLINE IMAGE
+    // for (let i = 0; i < splits.length; i++) {
+    //     // const lastWord = splits[i].split(' ').pop();
+    //     if (splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm) && i + 1 < splits.length) {
+    //         splits[i] = `${splits[i]} ${splits[i + 1]}`;
+    //         splits.splice(i + 1, 1);
+    //         i--; // re-check this sentence in case there's multiple bad splits
+    //     }
+    // }
 
     return splits;
 }
