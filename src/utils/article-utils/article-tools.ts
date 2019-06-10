@@ -1210,7 +1210,6 @@ export function infoboxDtoPatcher(inputWiki: ArticleJson): ArticleJson {
         })
         // Check for the old style values
     }
-    // console.log(modifiedWiki.citations)
     return modifiedWiki;
 }
 
