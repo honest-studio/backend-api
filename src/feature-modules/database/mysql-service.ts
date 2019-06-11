@@ -108,7 +108,6 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
                                 }
                             });
 
-                            // console.log('qres: ', qres);
                         } catch (derp) {
                             conn.release();
                             reject(derp);
