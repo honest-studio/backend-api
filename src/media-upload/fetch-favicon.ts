@@ -17,7 +17,7 @@ export function fetchUrl(siteUrl) {
             const faviconUrl = crawlHTMLForFaviconUrl(html);
             let resultURL = resolveFaviconUrl(siteUrl, faviconUrl);
             return checkLinks([resultURL], {
-                timeout: 1000,
+                timeout: 1500,
                 retry: 0
             })
         })
@@ -36,6 +36,7 @@ export function fetchUrl(siteUrl) {
             }
         })
         .catch(rej => {
+            console.log(rej)
             resolve("")
         });
     });
@@ -45,7 +46,8 @@ function resolveFaviconUrl(siteUrl, faviconUrl) {
     const parsedSiteUrl = url.parse(siteUrl);
     if (faviconUrl !== null) {
         const parsedFaviconUrl = url.parse(faviconUrl);
-        console.log(parsedFaviconUrl)
+        // console.log(parsedSiteUrl)
+        // console.log(parsedFaviconUrl)
         if (parsedFaviconUrl.protocol && parsedFaviconUrl.host) {
             return faviconUrl;
         }
@@ -56,7 +58,7 @@ function resolveFaviconUrl(siteUrl, faviconUrl) {
         else if (parsedFaviconUrl.path.startsWith("/")){
             // Guess the protocol from the host
             // Add an extra slash
-            return `${parsedSiteUrl.protocol}/${parsedFaviconUrl.path}`;
+            return `${parsedSiteUrl.protocol}//${parsedSiteUrl.host}/${parsedFaviconUrl.path}`;
         }
     }
     return "";
