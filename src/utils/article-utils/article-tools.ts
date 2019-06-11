@@ -1194,7 +1194,6 @@ export function infoboxDtoPatcher(inputWiki: ArticleJson): ArticleJson {
             return {...ibox, values: ibox.values.map((val, valIdx) => {
                 // Check for Sentence instead of InfoboxValue
                 if(val.hasOwnProperty('type')){
-                    console.log("CONVERTING")
                     // Convert to InfoboxValue
                     return {
                         index: valIdx,
