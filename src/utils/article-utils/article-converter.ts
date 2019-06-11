@@ -482,7 +482,7 @@ function extractMainPhoto($: CheerioStatic): Media[] {
     const caption = $('figcaption.main-photo-caption');
     if (caption.length == 0) main_photo.caption = null;
     else {
-        const captionText = decode(caption.html().trim(), 'all');
+        const captionText = decode(caption.text().trim(), 'all');
         main_photo.caption = parseSentences(captionText);
     }
 
