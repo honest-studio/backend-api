@@ -266,7 +266,7 @@ export class WikiService {
     async submitWiki(wiki: ArticleJson): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-        let blob = JSON.stringify(infoboxDtoPatcher(mergeMediaIntoCitations(wiki)));
+        let blob = JSON.stringify(wiki);
         let submission;
         try {
             submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
