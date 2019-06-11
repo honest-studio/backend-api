@@ -42,7 +42,6 @@ export class WikiService {
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
-        console.log(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash

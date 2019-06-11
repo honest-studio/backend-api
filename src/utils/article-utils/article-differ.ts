@@ -510,9 +510,9 @@ function diffInfoboxes(old_infoboxes: Infobox[], new_infoboxes: Infobox[]): Info
 function hashInfobox(infobox: Infobox): string {
     const hash = crypto.createHash('sha256');
     hash.update(infobox.key);
-    console.warn("KEDAR, please update the next line to reflect the Infobox and InfoboxValue DTO change. ")
-    // OLD
-    // hash.update(Buffer.from(hashSentences(infobox.values), 'hex'));
+
+    // Looks good for now. Leaving this here until confirmed
+    //console.warn("KEDAR, please update the next line to reflect the Infobox and InfoboxValue DTO change. ")
 
     // NEW, and possibly wrong
     let collectedSentences = infobox.values.reduce(function(pV, cV, cI){
