@@ -1,4 +1,5 @@
-import { Citation, Media, ArticleJson, Sentence, Paragraph, ListItem, Table, TableCaption, TableRow, TableCell, NestedContentItem } from './article-dto';
+import { Citation, Media, ArticleJson, Sentence, Paragraph, ListItem, Table, TableCaption, TableRow, TableCell, NestedContentItem,
+         Infobox, InfoboxValue } from './article-dto';
 import { SeeAlso, SeeAlsoCollection, InlineImage } from './article-types';
 import { AMPParseCollection, LanguagePack } from './article-types';
 import cheerio from 'cheerio';
@@ -873,7 +874,11 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     });
     allSentences.push(...(passedJSON.main_photo[0].caption as Sentence[]));
     passedJSON.infoboxes.forEach((infobox, index) => {
-        allSentences.push(...(infobox.values as Sentence[]));
+        infobox.values.forEach(val => {
+            val.sentences.forEach(sent => {
+                allSentences.push(sent);
+            })
+        })
     });
     passedJSON.media_gallery.forEach((media, index) => {
         allSentences.push(...(media.caption as Sentence[]));
@@ -1178,6 +1183,32 @@ export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
         modifiedWiki.media_gallery = [];
     }
     // console.log(modifiedWiki.citations)
+    return modifiedWiki;
+}
+
+export function infoboxDtoPatcher(inputWiki: ArticleJson): ArticleJson {
+    // Convert values: Sentences[] to values: InfoboxValue[]
+    let modifiedWiki = inputWiki;
+    if (modifiedWiki && modifiedWiki.infoboxes && modifiedWiki.infoboxes.length) {
+        modifiedWiki.infoboxes = modifiedWiki.infoboxes.map(ibox => {
+            return {...ibox, values: ibox.values.map((val, valIdx) => {
+                // Check for Sentence instead of InfoboxValue
+                if(val.hasOwnProperty('type')){
+                    // Convert to InfoboxValue
+                    return {
+                        index: valIdx,
+                        sentences: [{
+                            type: 'sentence',
+                            index: 0,
+                            text: (val as any).text
+                        }]
+                    }
+                }
+                else return val;
+            })}
+        })
+        // Check for the old style values
+    }
     return modifiedWiki;
 }
 

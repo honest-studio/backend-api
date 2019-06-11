@@ -16,7 +16,8 @@ import {
     renderSchema,
     calculateSeeAlsos,
     oldHTMLtoJSON,
-    mergeMediaIntoCitations
+    mergeMediaIntoCitations,
+    infoboxDtoPatcher
 } from '../utils/article-utils';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
@@ -75,13 +76,13 @@ export class WikiService {
             // return it immediately if it is
             wiki = JSON.parse(wiki_rows[0].html_blob);
             
-            return mergeMediaIntoCitations(wiki);
+            return infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
         } catch {
             // if the wiki is not in JSON format, try and return the cache first
-            if (cache_wiki) return mergeMediaIntoCitations(cache_wiki);
+            if (cache_wiki) return infoboxDtoPatcher(mergeMediaIntoCitations(cache_wiki));
 
             // if the cache isn't available either, generate and return it
-            wiki = mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob));
+            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
@@ -193,7 +194,7 @@ export class WikiService {
         }
 
         json_wikis = json_wikis.map((innerWiki) => {
-            return mergeMediaIntoCitations(innerWiki);
+            return infoboxDtoPatcher(mergeMediaIntoCitations(innerWiki));
         })
 
         return json_wikis;
@@ -266,7 +267,7 @@ export class WikiService {
     async submitWiki(wiki: ArticleJson): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-        let blob = JSON.stringify(mergeMediaIntoCitations(wiki));
+        let blob = JSON.stringify(infoboxDtoPatcher(mergeMediaIntoCitations(wiki)));
         let submission;
         try {
             submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
