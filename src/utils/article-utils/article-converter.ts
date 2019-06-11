@@ -220,8 +220,6 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
         quickHTML = quickHTML.replace(pair.regex, pair.replacement);
     });
 
-    // console.log(quickHTML);
-
     dom = htmlparser2.parseDOM(quickHTML, { decodeEntities: true });
     $ = cheerio.load(dom);
 
@@ -308,7 +306,6 @@ function extractMetadata($: CheerioStatic): Metadata[] {
                     .trim()
             );
             let thePair = { key: pairKey, value: pairValue };
-            // console.log(thePair);
             metadata.push(thePair);
         }
     });
@@ -511,9 +508,6 @@ function extractInfoboxHtml($: CheerioStatic): Table {
     );
     
     let parsedBlobBox = parseTable($(blobbox), 'wikitable');
-    // parsedBlobBox.tbody.rows.forEach((row) => {
-    //     console.log(row);
-    // });
     return parsedBlobBox;
 }
 
@@ -974,8 +968,6 @@ function sanitizeText($: CheerioStatic) {
             $(element).replaceWith('<p>' + $(element).html() + '</p>');
         });
 
-    // console.log($('table').html())
-
     return $;
 }
 
@@ -1271,9 +1263,6 @@ function parseDescriptionList($dlist: Cheerio): DescList {
 
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledDescList = JSONCycleCustom.decycle(dlist, []) as any;
-    // console.log("--------------------------")
-    // console.log(util.inspect(decycledDescList, false, null, true));
-    // console.log("--------------------------")
     return decycledDescList as DescList;
 }
 
@@ -1346,10 +1335,5 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     })
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
-    // if (table.type == 'body-table') {
-    //     console.log("--------------------------")
-    //     console.log(util.inspect(decycledTable, false, null, true));
-    //     console.log("--------------------------")
-    // }
     return decycledTable as Table;
 }

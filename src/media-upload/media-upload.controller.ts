@@ -21,7 +21,7 @@ import {
     ApiUseTags,
     ApiImplicitQuery
 } from '@nestjs/swagger';
-import { MediaUploadService } from './media-upload.service';
+import { MediaUploadService, FaviconPack } from './media-upload.service';
 import { MediaUploadDto } from './media-upload-dto';
 import * as rawbody from 'raw-body';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -32,14 +32,10 @@ const path = require('path');
 export class MediaUploadController {
     constructor(private readonly MediaUploadService: MediaUploadService) {}
 
-    @Get('get-favicon/:encoded_url')
+    @Post('get-favicon')
     @ApiOperation({ title: 'Get a favicon for a url' })
-    @ApiImplicitParam({
-        name: 'encoded_url',
-        description: 'An encoded URL of the target site'
-    })
-    async getWikiHistory(@Param('encoded_url') encoded_url: string): Promise<any> {
-        return this.MediaUploadService.getFavicon(encoded_url);
+    async getFaviconCtrl(@Body() pack: FaviconPack): Promise<any> {
+        return this.MediaUploadService.getFavicon(pack);
     }
 
     @Post('/')

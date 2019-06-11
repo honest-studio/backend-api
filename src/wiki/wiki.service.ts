@@ -369,7 +369,6 @@ export class WikiService {
                         this.elasticSearch
                     )
             
-                    console.log(elasticResult)
 
                     try {
                         const json_insertion = await this.mysql.TryQuery(

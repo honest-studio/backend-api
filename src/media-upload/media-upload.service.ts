@@ -51,6 +51,11 @@ const PHOTO_CONSTANTS = {
         return this.CROPPED_WIDTH / this.DISPLAY_WIDTH;
     }
 };
+
+export interface FaviconPack {
+    url: string
+}
+
 const UNIVERSAL_HEADERS = {
     'user-agent':
         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/71.0.3578.98 Chrome/71.0.3578.98 Safari/537.36',
@@ -99,8 +104,8 @@ export class MediaUploadService {
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
-    getFavicon(inputURL: string): Promise<any> {
-        return fetchUrl(inputURL);
+    getFavicon(inputPack: FaviconPack): Promise<any> {
+        return fetchUrl(inputPack.url);
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
