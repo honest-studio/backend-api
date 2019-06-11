@@ -5,6 +5,7 @@ import * as htmlparser2 from 'htmlparser2';
 import {convert as ReactAttrConvert} from 'react-attr-converter';
 import * as  util from 'util';
 import * as JSONCycleCustom from './json-cycle-custom';
+import * as tokenizer from 'sbd';
 import {
     WikiLink,
     Sentence,
@@ -14,6 +15,7 @@ import {
     Citation,
     Metadata,
     Infobox,
+    InfoboxValue,
     Table,
     Paragraph,
     NestedTextItem,
@@ -521,7 +523,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
     // Loop through the plural non-Wikipedia elements first and fill the dictionary
     $('table.ibox-item-plural').each(function() {
         // Initialize a blank object dictionary
-        let infoPackage = {
+        let infoPackage: Infobox = {
             key: null,
             schema: null,
             addlSchematype: null,
@@ -579,10 +581,13 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
                 // Add the value to the rows
                 infoPackage.values.push({
-                    type: 'sentence',
                     index: i,
-                    text: rowText
-                });
+                    sentences: [{
+                        type: 'sentence',
+                        index: 0,
+                        text: rowText
+                    }]
+                } as InfoboxValue);
             });
 
         // Add to the infobox list
@@ -592,7 +597,7 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
     // Loop through the nonplural elements and fill the dictionary
     $('table.ibox-item-nonplural').each(function() {
         // Initialize a blank object dictionary
-        let infoPackage = {
+        let infoPackage: Infobox = {
             key: null,
             schema: null,
             addlSchematype: null,
@@ -649,10 +654,13 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 
                 // Add the value to the rows
                 infoPackage.values.push({
-                    type: 'sentence',
                     index: i,
-                    text: tempValue
-                });
+                    sentences: [{
+                        type: 'sentence',
+                        index: 0,
+                        text: tempValue
+                    }]
+                } as InfoboxValue);
             });
 
         // Add to the infobox list
@@ -1100,25 +1108,50 @@ export function socialURLType(inputURL: string) {
 
 // Regex copied from natural NPM package
 // https://www.npmjs.com/package/natural#tokenizers
-function splitSentences(text: string): Array<string> {
-    let splits = text.split(/(?<=[.!?]\s)/gm);
-    splits = splits.map((split) => split.trim()).filter(Boolean);
+// function splitSentences(text: string): Array<string> {
+//     let splits = text.split(/(?<=[.!?]\s)/gm);
+//     splits = splits.map((split) => split.trim()).filter(Boolean);
 
-    // Don't split on certain tricky words like Mr., Mrs., etc.
-    // Don't split inside a LINK, CITE, or INLINE IMAGE
+//     // Don't split on certain tricky words like Mr., Mrs., etc.
+//     // Don't split inside a LINK, CITE, or INLINE IMAGE
+//     for (let i = 0; i < splits.length; i++) {
+//         const lastWord = splits[i].split(' ').pop();
+//         const split = SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord);
+//         if (
+//             (SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord) ||
+//                 splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm)) &&
+//             i + 1 < splits.length
+//         ) {
+//             splits[i] = `${splits[i]} ${splits[i + 1]}`;
+//             splits.splice(i + 1, 1);
+//             i--; // re-check this sentence in case there's multiple bad splits
+//         }
+//     }
+
+//     return splits;
+// }
+
+function splitSentences(text: string): Array<string> {
+    // Get the splits
+    let splits = tokenizer.sentences(text, { "preserve_whitespace" : true });
+
+    // No empty sentences
+    splits = splits.filter(split => split.length).filter(Boolean);
+
+    // Cleanup
     for (let i = 0; i < splits.length; i++) {
-        const lastWord = splits[i].split(' ').pop();
-        const split = SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord);
-        if (
-            (SPLIT_SENTENCE_EXCEPTIONS.includes(lastWord) ||
-                splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm)) &&
-            i + 1 < splits.length
-        ) {
-            splits[i] = `${splits[i]} ${splits[i + 1]}`;
-            splits.splice(i + 1, 1);
-            i--; // re-check this sentence in case there's multiple bad splits
-        }
+        splits[i] = splits[i].replace("[[[[", "[[");
     }
+
+    // Don't split inside a LINK, CITE, or INLINE IMAGE
+    // for (let i = 0; i < splits.length; i++) {
+    //     // const lastWord = splits[i].split(' ').pop();
+    //     if (splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm) && i + 1 < splits.length) {
+    //         splits[i] = `${splits[i]} ${splits[i + 1]}`;
+    //         splits.splice(i + 1, 1);
+    //         i--; // re-check this sentence in case there's multiple bad splits
+    //     }
+    // }
 
     return splits;
 }
