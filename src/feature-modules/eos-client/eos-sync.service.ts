@@ -39,6 +39,35 @@ export class EosSyncService {
             });
     }
 
+    async catchup () {
+        const dfuse_catchup_url = this.config.get("DFUSE_CATCHUP_URL");
+        console.log(dfuse_catchup_url);
+        if (!dfuse_catchup_url)
+            return;
+
+
+        const article_startblock = await this.get_start_block('eparticlectr');
+        const token_startblock = await this.get_start_block('everipediaiq');
+        const article_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/eparticlectr?since=${article_startblock}`;
+        const token_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/everipediaiq?since=${token_startblock}`;
+
+        console.log(`EOS-SYNC-SERVICE: Catching up on eparticlectr actions since block ${article_startblock}...`);
+        const article_actions = await fetch(article_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
+            .then(response => response.json())
+        if (article_actions.length > 0) {
+            const insertion = await this.mongo.connection().actions.insertMany(article_actions, { ordered: false });
+            console.log(`EOS-SYNC-SERVICE: Synced ${insertion.insertedCount} eparticlectr actions`);
+        }
+
+        console.log(`EOS-SYNC-SERVICE: Catching up on everipediaiq actions since block ${token_startblock}...`);
+        const token_actions = await fetch(token_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
+            .then(response => response.json())
+        if (token_actions.length > 0) {
+            const insertion = await this.mongo.connection().actions.insertMany(token_actions, { ordered: false });
+            console.log(`EOS-SYNC-SERVICE: Synced ${insertion.insertedCount} everipediaiq actions`);
+        }
+    }
+
     async start() {
         const dfuseToken = await this.obtainDfuseToken();
 
@@ -120,7 +149,7 @@ export class EosSyncService {
             method: 'POST',
             body: JSON.stringify({ api_key: this.config.get("DFUSE_API_KEY") })
         }).then((response) => response.json());
-    }
+   }
 
     restartIfFailing() {
         const now = Date.now();
@@ -134,7 +163,8 @@ export class EosSyncService {
         }
     }
 
-    sync() {
+    async sync() {
+        await this.catchup();
         this.start();
         setInterval(() => this.restartIfFailing.apply(this), 15 * 1000); // every 15 seconds
     }

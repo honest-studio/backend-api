@@ -24,6 +24,8 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
         .default(2),
     DFUSE_ACTION_LOGGING: Joi.boolean()
         .default(false),
+    DFUSE_CATCHUP_URL: Joi.string()
+        .uri(),
     IPFS_DAEMON_HOST: Joi.string().required(),
     IPFS_DAEMON_PORT: Joi.number()
         .integer()
