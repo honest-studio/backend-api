@@ -14,6 +14,7 @@ import {
     Infobox,
     Citation,
     DiffType,
+    DescList,
     NestedContentItem
 } from './article-dto';
 import * as JsDiff from 'diff';
@@ -315,8 +316,13 @@ function diffToSections(diff_text): Section[] {
 }
 
 function linesToParagraph(lines: string): Paragraph {
-    const items = lines
-        .split(PARAGRAPH_ITEM_SEPARATOR)
+    let split_lines;
+    if (lines.trim().substring(0, 10) == TABLE_PREFIX)
+        split_lines = [lines];
+    else
+        split_lines = lines.split(PARAGRAPH_ITEM_SEPARATOR);
+
+    const items = split_lines
         .filter((lines) => lines.trim()) // no blank items
         .map((lines, index) => {
             const prefix = lines.trim().substring(0, 10);
@@ -435,14 +441,35 @@ function paragraphToLines(paragraph: Paragraph): string {
             } else if (item.type == 'list-item' || item.type == 'list_item') {
                 const list_item = item as ListItem;
                 return LIST_ITEM_PREFIX + list_item.sentences.map((s) => s.text).join(' ');
-            } else if (item.type == 'wikitable') {
+            } else if (item.type == 'wikitable' || item.type == 'body-table') {
                 const table = item as Table;
                 return tableToLines(table);
-            } else throw new Error('Unsupported ParagraphItem type');
+            } else if (item.type == 'dl') {
+                const dl = item as DescList;
+                return dlToLines(dl);
+            } else throw new Error(`Unsupported ParagraphItem type ${item.type}`);
         })
         .join(PARAGRAPH_ITEM_SEPARATOR);
 
     return lines;
+}
+
+function dlToLines(dl: DescList) {
+    let lines = "";
+    for (let item of dl.items) {
+        lines += dlItemToLines(item);
+    }
+    return lines;
+}
+
+function dlItemToLines (item) {
+    if (item.content.length == 0) return "";
+    if (item.type == 'text') 
+        return item.content
+            .map(s => SENTENCE_PREFIX + s.text)
+            .join(PARAGRAPH_ITEM_SEPARATOR);
+    else
+        return item.content.map(dlItemToLines).join(PARAGRAPH_ITEM_SEPARATOR);
 }
 
 function tableToLines(table: Table): string {
