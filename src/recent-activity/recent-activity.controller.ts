@@ -148,6 +148,12 @@ export class RecentActivityController {
         type: 'string'
     })
     @ApiImplicitQuery({
+        name: 'range',
+        description: `The date span across which to check. today | all. Default = today`,
+        required: false,
+        type: Number
+    })
+    @ApiImplicitQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
@@ -157,6 +163,6 @@ export class RecentActivityController {
     async getTrendingWikis(@Query() query): Promise<Array<any>> {
         let langs = [];
         if (query.langs) langs = query.langs.split(',');
-        return await this.recentActivityService.getTrendingWikis(langs, query.limit);
+        return await this.recentActivityService.getTrendingWikis(langs, query.range, query.limit);
     }
 }

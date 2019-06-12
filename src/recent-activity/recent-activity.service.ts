@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MongoDbService } from '../feature-modules/database';
+import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { ProposalService, Proposal } from '../proposal';
 import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
 import { OAuthService } from '../oauth/oauth.service';
@@ -11,6 +11,7 @@ export class RecentActivityService {
     constructor(
         private mongo: MongoDbService,
         private proposalService: ProposalService,
+        private mysql: MysqlService,
         private oauthService: OAuthService,
         private previewService: PreviewService,
     ) {}
@@ -90,56 +91,75 @@ export class RecentActivityService {
         return this.proposalService.getProposals(proposal_ids, proposal_options);
     }
 
-    async getTrendingWikis(langs: string[] = [], limit: number = 10) {
-        const access_token = await this.oauthService.getGoogleAnalyticsToken();
-        let match_tokens;
-        if (langs.length > 0)
-            match_tokens = langs.map(lang => `/v2/wiki/slug/lang_${lang}`);
-        else
-            match_tokens = [`/v2/wiki/slug/lang_`];
+    async getTrendingWikis(langs: string[] = [], range: string = 'today', limit: number = 10) {
+        if (range == 'today') {
+            const access_token = await this.oauthService.getGoogleAnalyticsToken();
+            let match_tokens;
+            if (langs.length > 0)
+                match_tokens = langs.map(lang => `/v2/wiki/slug/lang_${lang}`);
+            else
+                match_tokens = [`/v2/wiki/slug/lang_`];
 
-        const body = {
-            reportRequests: [
-                {
-                    viewId: '192421339',
-                    dateRanges: [{ startDate: '2019-01-01', endDate: '2019-11-30' }],
-                    dimensions: [{ name: 'ga:pagePath' }],
-                    dimensionFilterClauses: [
-                        {
-                            filters: [
-                                {
-                                    dimensionName: 'ga:pagePath',
-                                    operator: 'PARTIAL',
-                                    expressions: match_tokens
-                                }
-                            ]
-                        }
-                    ],
-                    metrics: [{ expression: 'ga:pageviews' }, { expression: 'ga:uniquePageviews' }],
-                    orderBys: [{ fieldName: 'ga:pageviews', sortOrder: 'DESCENDING' }]
+            const body = {
+                reportRequests: [
+                    {
+                        viewId: '192421339',
+                        dateRanges: [{ startDate: '2019-01-01', endDate: '2019-11-30' }],
+                        dimensions: [{ name: 'ga:pagePath' }],
+                        dimensionFilterClauses: [
+                            {
+                                filters: [
+                                    {
+                                        dimensionName: 'ga:pagePath',
+                                        operator: 'PARTIAL',
+                                        expressions: match_tokens
+                                    }
+                                ]
+                            }
+                        ],
+                        metrics: [{ expression: 'ga:pageviews' }, { expression: 'ga:uniquePageviews' }],
+                        orderBys: [{ fieldName: 'ga:pageviews', sortOrder: 'DESCENDING' }]
+                    }
+                ]
+            };
+            const report = await fetch('https://analyticsreporting.googleapis.com/v4/reports:batchGet', {
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers: {
+                    Authorization: `Bearer ${access_token.token}`
                 }
-            ]
-        };
-        const report = await fetch('https://analyticsreporting.googleapis.com/v4/reports:batchGet', {
-            method: 'POST',
-            body: JSON.stringify(body),
-            headers: {
-                Authorization: `Bearer ${access_token.token}`
-            }
-        }).then((response) => response.json());
+            }).then((response) => response.json());
 
-        if (!report.reports[0].data.rows)
-            return [];
+            if (!report.reports[0].data.rows)
+                return [];
 
-        const trending = report.reports[0].data.rows
-        .slice(0, limit)
-        .map((row) => ({
-            slug: row.dimensions[0].slice(14).split('/')[1],
-            lang_code: row.dimensions[0].slice(14).split('/')[0].slice(5),
-            pageviews_today: Number(row.metrics[0].values[0]),
-            unique_pageviews_today: Number(row.metrics[0].values[1])
-        }));
+            const trending = report.reports[0].data.rows
+            .slice(0, limit)
+            .map((row) => ({
+                slug: row.dimensions[0].slice(14).split('/')[1],
+                lang_code: row.dimensions[0].slice(14).split('/')[0].slice(5),
+                pageviews_today: Number(row.metrics[0].values[0]),
+                unique_pageviews_today: Number(row.metrics[0].values[1])
+            }));
 
-        return trending;
+            return trending;
+        }
+        else if (range == 'all') {
+            const top_pages: Array<any> = await this.mysql.TryQuery(
+                `
+                SELECT 
+                    art.slug,
+                    art.page_lang AS lang_code,
+                    art.ipfs_hash_current AS ipfs_hash, 
+                    art.pageviews AS pageviews
+                FROM enterlink_articletable AS art 
+                ORDER BY pageviews DESC
+                LIMIT ?`,
+                [limit]
+            );
+
+            return top_pages;
+        }
+
     }
 }

@@ -93,6 +93,12 @@ describe('Backend API', () => {
       .expect(200)
   });
 
+  it('Recent Activity: Trending All Time', () => {
+    return request(app.getHttpServer())
+      .get('/v2/recent-activity/trending?range=all')
+      .expect(200)
+  });
+
   it('Recent Activity: Trending English', () => {
     return request(app.getHttpServer())
       .get('/v2/recent-activity/trending?langs=en')

@@ -18,7 +18,10 @@ const RecentActivityQuerySchema = {
         .default('none'),
     expiring: Joi.boolean().default(false),
     completed: Joi.boolean().default(false),
-    langs: Joi.string()
+    langs: Joi.string(),
+    range: Joi.string()
+        .valid('today', 'all')
+        .default('today')
 };
 
 export { RecentActivityQuerySchema };
