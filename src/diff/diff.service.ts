@@ -70,7 +70,7 @@ export class DiffService {
                 diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
 
                 // cache result
-                this.mongo.connection().diffs.insertOne(diff_wiki);
+                //this.mongo.connection().diffs.insertOne(diff_wiki);
 
                 diffs.push(diff_wiki);
             } catch (e) {
