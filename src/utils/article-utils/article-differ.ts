@@ -285,7 +285,6 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             .join('\n');
         diff_text += '\n'; // pad with new lines for safe parsing
     }
-    console.log(diff_text);
 
     return diffToSections(diff_text);
 }
