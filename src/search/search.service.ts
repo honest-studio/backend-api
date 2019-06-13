@@ -17,7 +17,7 @@ export class SearchService {
     async searchTitle(pack: SearchQueryPack): Promise<any> {
         const { query, langs } = pack;
         const searchJSON = {
-            // size: 25000,
+            size: 150,
             min_score: 1.0001, // Make sure non-matches do not show up
             query: {
                 bool: {
