@@ -103,6 +103,7 @@ export class StatService {
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
+                        'block_num': { $gt: 15000000 },
                         'trace.act.account': 'everipediaiq',
                         'trace.act.name': 'issue'
                     },
