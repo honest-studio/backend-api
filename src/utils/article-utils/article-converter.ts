@@ -960,9 +960,9 @@ function sanitizeText($: CheerioStatic) {
 
     // Add whitespace after links, bold, and italics unless there is a special character or a space after it already
     // THE * WORD* SPACING PROBLEM IS HERE
-    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[^.(),:'";\s\-])/g, (token) => `${token} `);
-    // const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[^.(),:'";\s\-])/g, (token) => `${token} `);
-    // const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[^.(),:'";\s\-])/g, (token) => `${token} `);
+    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[^.(),:'"“”‘’;\s\-])/g, (token) => `${token} `);
+    // const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[^.(),:'"“”‘’;\s\-])/g, (token) => `${token} `);
+    // const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[^.(),:'"“”‘’;\s\-])/g, (token) => `${token} `);
     $ = cheerio.load(spaced_links);
 
     return $;
@@ -985,29 +985,34 @@ export function parseSentences(inputString: string): Sentence[] {
         // Quick regex clean
         sentence.text = sentence.text
                         .replace(/ {1,}/g, ' ') // excess spaces
-                        .replace(/(\)|\])\[\[/g, '$1 [[') // lack of space before a LINK / CITE / INLINE_IMAGE
-                        .replace(/\]\](\(|\[)/g, ']] $1') // lack of space after a LINK / CITE / INLINE_IMAGE
-                        .replace(/(\*|\]\])\s(\)|\'|\"|\-)/g, '$1$2') // remove space between a mark or inline and certain things
-                        .replace(/(\(|\'|\"|\-)\s(\*|\[\[)/g, '$1$2') // remove space between a mark or inline and certain things
+                        .replace(/(\)|\]|\,)\[\[/g, '$1 [[') // lack of space before a LINK / CITE / INLINE_IMAGE in certain cases
+                        .replace(/\]\](\(|\[)/g, ']] $1') // lack of space after a LINK / CITE / INLINE_IMAGE in certain cases
+                        .replace(/(\*|\]\])\s(\)|\'|\"|\“|\”|\‘|\’|\-)/g, '$1$2') // remove space between a mark or inline and certain things
+                        .replace(/(\(|\'|\"|\“|\”|\‘|\’|\-)\s(\*|\[\[)/g, '$1$2') // remove space between a mark or inline and certain things
 
-        // Make sure that all sentences start with a space, unless the index is 0
-        if(index == 0){
-            // Remove the space if already present
-            if (sentence.text.charAt(0) == " ") sentence.text = sentence.text.slice(1);
 
-            // If there is only one sentence, trim it too
-            if (sentenceTokens.length == 1) sentence.text = sentence.text.trim();
-        }
-        else if (index > 0){
-            let previousSentenceString = sentenceTokens[index - 1];
-            if (sentence.text.charAt(0) != " " &&
-                previousSentenceString.length &&
-                previousSentenceString.charAt(previousSentenceString.length - 1) != " "
+        // Make sure that no sentences start with a space, unless the index is 0
+        if (sentence.text.charAt(0) == " ") sentence.text = sentence.text.slice(1);
+
+        // If there is only one sentence, trim it
+        if (index == 0 && sentenceTokens.length == 1) sentence.text = sentence.text.trim();
+
+        if (sentenceTokens.length > 2 && index < sentenceTokens.length - 1){
+            // FIX THIS TO MAKE SURE THAT SENTENCES DO NOT START WITH SPACES, and INSTEAD END WITH THEM
+            // WILL NEED TO LOOK AHEAD AT THE NEXT SENTENCE
+            let nextSentenceString = sentenceTokens[index + 1];
+            if (nextSentenceString && 
+                nextSentenceString.charAt(0) == " " &&
+                sentence.text.charAt(sentence.text.length - 1) != " "
             ){
-                sentence.text = " " + sentence.text;
+                sentence.text = sentence.text + " ";
             }
         }
 
+        // If it is the last sentence, trim it
+        if (index == sentenceTokens.length - 1) sentence.text = sentence.text.trim();
+
+        // console.log(sentence)
 
         // Return the object
         returnTokens.push(sentence);
