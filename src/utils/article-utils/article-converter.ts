@@ -25,6 +25,7 @@ import {
     DescList,
     DescListItem
 } from './article-dto';
+var colors = require('colors');
 import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
 const voidElements = require('html-void-elements');
@@ -741,6 +742,7 @@ function parseSection($section: Cheerio): Section {
 
     // Get paragraphs in section
     const $children = $section.children();
+
     for (let i = 0; i < $children.length; i++) {
         const $element = $children.eq(i);
         const element = $children[i];
@@ -753,10 +755,12 @@ function parseSection($section: Cheerio): Section {
         };
 
         // Process the tag types accordingly
-        if (paragraph.tag_type == 'p' || paragraph.tag_type == 'blockquote')
-            paragraph.items = parseSentences($element.text());
+        if (paragraph.tag_type == 'p' || paragraph.tag_type == 'blockquote'){
+            paragraph.items = parseSentences($element.text().trim());
+        }
+
         // Headings
-        else if (paragraph.tag_type.match(/h[1-6]/g)) paragraph.items = parseSentences($element.text());
+        else if (paragraph.tag_type.match(/h[1-6]/g)) paragraph.items = parseSentences($element.text().trim());
         // Lists
         else if (paragraph.tag_type.match(/(ul|ol)/g)) {
             // Loop through the li's
@@ -841,9 +845,7 @@ function sanitizeText($: CheerioStatic) {
         try { old_slug = decodeURIComponent($(el).attr('data-username')); }
         catch(err) { old_slug = $(el).attr('data-username'); }
         if (old_slug.charAt(0) == '/') old_slug = old_slug.substring(1);
-        const display_text = $(this)
-            .text()
-            .trim();
+        const display_text = $(this).text().trim();
 
         let lang_code, slug;
         if (old_slug.includes('lang_')) {
@@ -873,10 +875,7 @@ function sanitizeText($: CheerioStatic) {
     $('strong, b').each(function() {
         // Get the string
         let theString = '';
-        theString =
-            $(this)
-                .text()
-                .trim() || '';
+        theString = $(this).text().trim() || '';
 
         // Create the string
         let plaintextString = `**${theString}**`;
@@ -885,14 +884,12 @@ function sanitizeText($: CheerioStatic) {
         $(this).replaceWith(plaintextString);
     });
 
+    
     // Convert <em> and <i> tags to *text* (Markdown)
     $('em, i').each(function() {
         // Get the string
         let theString = '';
-        theString =
-            $(this)
-                .text()
-                .trim() || '';
+        theString = $(this).text().trim() || '';
 
         // Create the string
         let plaintextString = `*${theString}*`;
@@ -900,13 +897,6 @@ function sanitizeText($: CheerioStatic) {
         // Replace the tag with the string
         $(this).replaceWith(plaintextString);
     });
-
-    //// Add whitespace after links, bold, and italics when there's no space and it's followed by a letter
-    //// THE * WORD* SPACING PROBLEM IS HERE
-    //// const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[a-zA-Z])/g, (token) => `${token} `);
-    //// const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[a-zA-Z])/g, (token) => `${token} `);
-    //// const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[a-zA-Z])/g, (token) => `${token} `);
-    //// $ = cheerio.load(spaced_italics);
 
     // Convert images inside wikitables and ul's to markup
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
@@ -968,6 +958,13 @@ function sanitizeText($: CheerioStatic) {
             $(element).replaceWith('<p>' + $(element).html() + '</p>');
         });
 
+    // Add whitespace after links, bold, and italics unless there is a special character or a space after it already
+    // THE * WORD* SPACING PROBLEM IS HERE
+    const spaced_links = $.html().replace(/\[\[LINK\|[^\]]*\]\](?=[^.(),:'"“”‘’;\s\-])/g, (token) => `${token} `);
+    // const spaced_bold = spaced_links.replace(/\*\*[^\*]+\*\*(?=[^.(),:'"“”‘’;\s\-])/g, (token) => `${token} `);
+    // const spaced_italics = spaced_bold.replace(/\*[^\*]+\*(?=[^.(),:'"“”‘’;\s\-])/g, (token) => `${token} `);
+    $ = cheerio.load(spaced_links);
+
     return $;
 }
 
@@ -979,24 +976,51 @@ export function parseSentences(inputString: string): Sentence[] {
     // Create the sentence tokens
     const sentenceTokens = splitSentences(inputString);
 
-    return sentenceTokens.map(function(token, index) {
+    const returnTokens: Sentence[] = [];
+
+    sentenceTokens.forEach(function(token, index) {
         // Initialize the return object
         let sentence = { type: 'sentence', index: index, text: token };
 
         // Quick regex clean
-        sentence.text = sentence.text.replace(/ {1,}/g, ' ');
+        sentence.text = sentence.text
+                        .replace(/ {1,}/g, ' ') // excess spaces
+                        .replace(/(\)|\]|\,)\[\[/g, '$1 [[') // lack of space before a LINK / CITE / INLINE_IMAGE in certain cases
+                        .replace(/\]\](\(|\[)/g, ']] $1') // lack of space after a LINK / CITE / INLINE_IMAGE in certain cases
+                        .replace(/(\*|\]\])\s(\)|\'|\"|\“|\”|\‘|\’|\-)/g, '$1$2') // remove space between a mark or inline and certain things
+                        .replace(/(\(|\'|\"|\“|\”|\‘|\’|\-)\s(\*|\[\[)/g, '$1$2') // remove space between a mark or inline and certain things
 
-        // Make sure that all sentences start with a space, unless the index is 0
-        if (index > 0){
-            if (sentence.text.charAt(0) != " "){
-                sentence.text = " " + sentence.text;
+
+        // Make sure that no sentences start with a space, unless the index is 0
+        if (sentence.text.charAt(0) == " ") sentence.text = sentence.text.slice(1);
+
+        // If there is only one sentence, trim it
+        if (index == 0 && sentenceTokens.length == 1) sentence.text = sentence.text.trim();
+
+        if (sentenceTokens.length > 2 && index < sentenceTokens.length - 1){
+            // FIX THIS TO MAKE SURE THAT SENTENCES DO NOT START WITH SPACES, and INSTEAD END WITH THEM
+            // WILL NEED TO LOOK AHEAD AT THE NEXT SENTENCE
+            let nextSentenceString = sentenceTokens[index + 1];
+            if (nextSentenceString && 
+                nextSentenceString.charAt(0) == " " &&
+                sentence.text.charAt(sentence.text.length - 1) != " "
+            ){
+                sentence.text = sentence.text + " ";
             }
         }
 
+        // If it is the last sentence, trim it
+        if (index == sentenceTokens.length - 1) sentence.text = sentence.text.trim();
+
+        // console.log(sentence)
+
         // Return the object
-        return sentence;
+        returnTokens.push(sentence);
     });
 
+    // console.log(returnTokens)
+
+    return returnTokens;
 }
 
 // See if a given URL is a social media URL. If so, return the type

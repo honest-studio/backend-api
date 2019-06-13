@@ -224,7 +224,8 @@ export class MediaUploadService {
     }
 
     // Get a png buffer from the first frame of a GIF. Will be used as the GIF's thumbnail.
-    async getPNGFrameFromGIF(gifBuffer: Buffer) {
+    async getPNGFrameFromGIF(gifBuffer: Buffer): Promise<any[]> {
+
         try {
             // Get the PNG stream first
             const pngStream = await extractFrames({
@@ -321,7 +322,7 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/svg+xml';
                         varPack.thumbSuffix = 'svg';
                         varPack.thumbMIME = 'image/svg+xml';
-                        bufferPack.mainBuf = await this.compressImage(mediaBuffer);
+                        bufferPack.mainBuf = mediaBuffer;
                         bufferPack.thumbBuf = bufferPack.mainBuf;
                         break;
                     }
@@ -427,21 +428,31 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/gif';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = 'image/jpeg';
-                        bufferPack.mainBuf = await this.compressImage(mediaBuffer);
+                        bufferPack.mainBuf = mediaBuffer;
 
                         // Get a PNG frame from the GIF, resize, then compress it to a JPEG
                         // Must resize to fit 1201x1201 to help with AMP
-                        bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer)
-                            .then((pngFrame) => Jimp.read(pngFrame))
-                            .then((image) =>
-                                image
-                                    .background(0xffffffff)
-                                    .scaleToFit(mainWidth, mainHeight)
-                                    .quality(85)
-                                    .getBufferAsync('image/jpeg')
-                            )
-                            .then((buffer) => buffer as any)
-                            .catch((err) => console.log(err));
+                        // FIX THIS LATER
+                        bufferPack.thumbBuf = bufferPack.mainBuf;
+                        // await this.getPNGFrameFromGIF(mediaBuffer)
+                            // .then((pngFrame) => {
+                            //     console.log(pngFrame);
+                            //     return pngFrame;
+                            //     // return Jimp.read(pngFrame)
+                            // })
+                            // .then((image) => { 
+                                
+                            //     return image
+                            //     .background(0xffffffff)
+                            //     .scaleToFit(mainWidth, mainHeight)
+                            //     .quality(85)
+                            //     .getBufferAsync('image/jpeg');
+                            // })
+                            // .then((buffer) => buffer as any)
+                            // .catch((err) => {
+                            //     console.log("ERROR BEE")
+                            //     console.log(err)
+                            // });
                         break;
                     }
                     // Process WEBPs
@@ -570,7 +581,6 @@ export class MediaUploadService {
 
                 // Create and upload the main file
                 if (includeMainPhoto) {
-                    
                     // gzip the main file
                     bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
                         level: zlib.constants.Z_BEST_COMPRESSION
@@ -578,7 +588,7 @@ export class MediaUploadService {
 
                     // Set the AWS S3 bucket key
                     let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
-
+                    
                     // Specify S3 upload options
                     let uploadParamsMain = {
                         Bucket: this.awsS3Service.getBucket(),

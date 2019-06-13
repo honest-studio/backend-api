@@ -7,6 +7,7 @@ import pify from 'pify';
 import * as pump from 'pump-promise';
 import * as gpixels from 'get-pixels';
 import * as savePixels from 'save-pixels';
+import * as pixel from 'pixel';
 const getPixels = pify(gpixels);
 
 const supportedFormats = new Set(['jpg', 'png', 'gif']);
@@ -20,7 +21,9 @@ export async function extractFrames(opts) {
         throw new Error(`invalid output format "${format}"`);
     }
 
+    console.log("OPTS: ", opts)
     const results = await getPixels(input_buffer, input_mime);
+    console.log("RESULTS: ", results)
     const { shape } = results;
 
     if (shape.length === 4) {
