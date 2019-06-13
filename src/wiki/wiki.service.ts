@@ -309,7 +309,10 @@ export class WikiService {
                     const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
                     let text_preview;
                     try {
-                        text_preview = (wiki.page_body[0].paragraphs[0].items[0] as Sentence).text;
+                        const first_para = wiki.page_body[0].paragraphs[0];
+                        text_preview = (first_para.items[0] as Sentence).text;
+                        if (first_para.items.length > 1)
+                            text_preview += (first_para.items[1] as Sentence).text;
                     } catch (e) {
                         text_preview = "";
                     }
