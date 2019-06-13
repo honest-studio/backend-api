@@ -114,7 +114,12 @@ export class StatService {
         else total_iq_rewards = 0;
 
         const original_pages_rows: Array<any> = await this.mysql.TryQuery(
-            `SELECT COUNT(*) AS count FROM enterlink_articletable WHERE page_note IS NULL AND is_removed = 0`,
+            `SELECT COUNT(*) AS count 
+            FROM enterlink_articletable 
+            WHERE 
+                page_note IS NULL AND
+                redirect_page_id IS NULL AND
+                is_removed = 0`,
             [],
             20000
         )
