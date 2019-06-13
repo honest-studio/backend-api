@@ -285,6 +285,7 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
             .join('\n');
         diff_text += '\n'; // pad with new lines for safe parsing
     }
+    console.log(diff_text);
 
     return diffToSections(diff_text);
 }
@@ -437,7 +438,7 @@ function paragraphToLines(paragraph: Paragraph): string {
         .map((item) => {
             if (item.type == 'sentence') {
                 const sentence = item as Sentence;
-                return SENTENCE_PREFIX + sentence.text;
+                return sentenceToLines(sentence);
             } else if (item.type == 'list-item' || item.type == 'list_item') {
                 const list_item = item as ListItem;
                 return LIST_ITEM_PREFIX + list_item.sentences.map((s) => s.text).join(' ');
@@ -452,6 +453,41 @@ function paragraphToLines(paragraph: Paragraph): string {
         .join(PARAGRAPH_ITEM_SEPARATOR);
 
     return lines;
+}
+
+function sentenceToLines(sentence: Sentence) {
+    let text = sentence.text;
+
+    // replace all spaces within [[special|tags]] 
+    text = text.replace(
+        /\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*\]\]/g,
+        (match) => match.replace(/\s/g, '~~~')
+    );
+
+    // replace all spaces within **special tags**
+    text = text.replace(
+        /\*\*?[^\*]*\*?\*/g,
+        (match) => match.replace(/\s/g, '~~~')
+    );
+
+    // split into words
+    const blocks = text.split(' ');
+
+    // re-include spaces in [[special]] **tags**
+    for (let i in blocks) {
+        blocks[i] = blocks[i].replace(
+            /\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*\]\]/g,
+            (match) => match.replace(/~~~/g, ' ')
+        );
+        blocks[i] = blocks[i].replace(
+            /\*\*?[^\*]*\*?\*/g,
+            (match) => match.replace(/~~~/g, ' ')
+        );
+    }
+
+    // Split sentences into words
+    return blocks.map(line => SENTENCE_PREFIX + line)
+        .join(PARAGRAPH_ITEM_SEPARATOR)
 }
 
 function dlToLines(dl: DescList) {
