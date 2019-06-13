@@ -100,11 +100,15 @@ export class RecentActivityService {
             else
                 match_tokens = [`/v2/wiki/slug/lang_`];
 
+            const now = new Date();
+            const yesterday = new Date(Date.now() - 24*3600*1000);
+            const startDate = yesterday.toISOString().split('T')[0];
+            const endDate = now.toISOString().split('T')[0];
             const body = {
                 reportRequests: [
                     {
                         viewId: '192421339',
-                        dateRanges: [{ startDate: '2019-01-01', endDate: '2019-11-30' }],
+                        dateRanges: [{ startDate, endDate }],
                         dimensions: [{ name: 'ga:pagePath' }],
                         dimensionFilterClauses: [
                             {
