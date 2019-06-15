@@ -69,6 +69,7 @@ export class StatService {
                 delete cache._id;
                 const cache_age = Date.now() - cache.timestamp.getTime();
                 if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
+                else await this.mongo.connection().statistics.remove({ key: 'site_usage' });
             }
         }
 
