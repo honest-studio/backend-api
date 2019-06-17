@@ -12,10 +12,24 @@ export interface LeaderboardOptions {
 export class StatService {
     constructor(private mongo: MongoDbService, private mysql: MysqlService) {}
 
+    private readonly EDITOR_LEADERBOARD_CACHE_EXPIRE_MS = 10 * 60 * 1000; // 10 minutes
     private readonly SITE_USAGE_CACHE_EXPIRE_MS = 30 * 60 * 1000; // 30 minutes
     private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
+        // pull from cache if available
+        if (options.cache) {
+            const cache = await this.mongo.connection().statistics.findOne({ 
+                key: 'editor_leaderboard',
+                period: options.period
+            });
+            if (cache) {
+                delete cache._id;
+                const cache_age = Date.now() - cache.timestamp.getTime();
+                if (cache_age < this.EDITOR_LEADERBOARD_CACHE_EXPIRE_MS) return cache.editor_rewards.slice(0, options.limit);
+            }
+        }
+
         let starttime;
         if (options.since) {
             starttime = options.since * 1000;
@@ -42,9 +56,12 @@ export class StatService {
                     out: { inline: 1 }
                 }
             );
+
+        // Get the first 100 rows so you can cache them all
+        // Then slice off whatever number you need when you return it
         editor_rewards = editor_rewards
             .sort((a, b) => b.value - a.value)
-            .slice(0, options.limit)
+            .slice(0, 100)
             .map((doc) => ({ user: doc._id, cumulative_iq_rewards: Number(doc.value.toFixed(3)) }));
         let edits = await this.mongo
             .connection()
@@ -71,7 +88,17 @@ export class StatService {
             else editor_rewards[i].edits = 0;
         }
 
-        return editor_rewards;
+        // clear old cache and cache new result
+        const doc = {
+            key: 'editor_leaderboard',
+            period: options.period,
+            timestamp: new Date(),
+            editor_rewards
+        };
+        this.mongo.connection().statistics.deleteMany({ key: 'editor_leaderboard', period: options.period });
+        this.mongo.connection().statistics.insertOne(doc);
+
+        return editor_rewards.slice(0, options.limit);
     }
 
     async siteUsage(use_cache: boolean = true): Promise<any> {
@@ -82,7 +109,6 @@ export class StatService {
                 delete cache._id;
                 const cache_age = Date.now() - cache.timestamp.getTime();
                 if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
-                else await this.mongo.connection().statistics.remove({ key: 'site_usage' });
             }
         }
 
