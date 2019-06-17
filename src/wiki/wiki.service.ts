@@ -96,6 +96,8 @@ export class WikiService {
             .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
             .catch(console.log);
 
+        this.incrementPageviewCount(lang_code, mysql_slug);
+
         return wiki;
     }
 
