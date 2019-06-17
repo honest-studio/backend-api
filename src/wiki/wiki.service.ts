@@ -278,6 +278,31 @@ export class WikiService {
         }
         const ipfs_hash = submission[0].hash;
 
+        // Save submission immediately so we don't lose data
+        const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+        const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+        const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+        let wikiCopy: ArticleJson = wiki;
+        wikiCopy.ipfs_hash = ipfs_hash;
+        let stringifiedWikiCopy = JSON.stringify(wikiCopy);
+        try {
+            const json_insertion = await this.mysql.TryQuery(
+                `
+                INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
+                VALUES (
+                    (SELECT id FROM enterlink_articletable where slug = ? AND page_lang = ?), 
+                    ?, ?, NOW())
+                `,
+                [cleanedSlug, page_lang, ipfs_hash, stringifiedWikiCopy]
+            );
+        } catch (e) {
+            if (e.message.includes("ER_DUP_ENTRY")){
+                console.log(colors.green('Duplicate submission. IPFS hash already exists'));
+                throw new BadRequestException("Duplicate submission. IPFS hash already exists");
+            }
+            else throw e;
+        }
+
 
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
@@ -300,9 +325,6 @@ export class WikiService {
                 if (submitted_proposal) trxID = submitted_proposal.trx_id;
                 if(trxID){
                     console.log(colors.green(`Transaction found! (${trxID})`));
-                    let wikiCopy: ArticleJson = wiki;
-                    wikiCopy.ipfs_hash = ipfs_hash;
-                    let stringifiedWikiCopy = JSON.stringify(wikiCopy);
                     
                     const page_title = wiki.page_title[0].text;
                     const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
@@ -373,33 +395,9 @@ export class WikiService {
                     )
             
 
-                    try {
-                        const json_insertion = await this.mysql.TryQuery(
-                            `
-                            INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
-                            VALUES (?, ?, ?, NOW())
-                            `,
-                            [articleResultPacket[0].id, ipfs_hash, stringifiedWikiCopy, page_lang]
-                        );
-                    } catch (e) {
-                        if (e.message.includes("ER_DUP_ENTRY")){
-                            clearIntervalAsync(interval);
-                            console.log(colors.green('Duplicate submission. IPFS hash already exists'));
-                            return;
-                            throw new BadRequestException("Duplicate submission. IPFS hash already exists");
-                        }
-
-                        else throw e;
-                    }
                     console.log(colors.green('========================================'));
-                    console.log(colors.green(`MySQL cache updated. Terminating loop...`));
+                    console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
-
-                    // update the MongoDB cache
-                    // this.mongo
-                    //    .connection()
-                    //    .json_wikis.replaceOne({ ipfs_hash: ipfs_hash }, wikiCopy, { upsert: true })
-                    //    .catch(console.log);
 
                     clearIntervalAsync(interval);
                     return;
