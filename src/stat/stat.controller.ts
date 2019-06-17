@@ -28,6 +28,11 @@ export class StatController {
         description: `Set to false if you don't want to use the cache`,
         required: false
     })
+    @ApiImplicitQuery({
+        name: 'limit',
+        description: `Number of rows to return. Default: 10`,
+        required: false
+    })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
     async editorLeaderboard(@Query() query): Promise<any> {
         return await this.statService.editorLeaderboard(query);

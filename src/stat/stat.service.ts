@@ -5,6 +5,7 @@ export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
     since: number; // UNIX timestamp. overrides period
     cache: boolean;
+    limit: number;
 }
 
 @Injectable()
@@ -34,6 +35,7 @@ export class StatService {
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
+                        'block_num': { $gt: 15000000 },
                         'trace.act.account': 'everipediaiq',
                         'trace.act.name': 'issue'
                     },
@@ -42,21 +44,32 @@ export class StatService {
             );
         editor_rewards = editor_rewards
             .sort((a, b) => b.value - a.value)
+            .slice(0, options.limit)
             .map((doc) => ({ user: doc._id, cumulative_iq_rewards: Number(doc.value.toFixed(3)) }));
-        const edits = await this.mongo
+        let edits = await this.mongo
             .connection()
             .actions.mapReduce(
-                `function () { emit( this.trace.act.data.to, new Date(this.block_time) > ${starttime} ? 1:0) }`,
+                `function () { emit( this.trace.act.data.proposer, new Date(this.block_time) > ${starttime} ? 1:0) }`,
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
-                        'trace.act.account': 'everipediaiq',
-                        'trace.act.name': 'issue'
+                        'trace.act.account': 'eparticlectr',
+                        '$or': [
+                            { 'trace.act.name': 'propose' },
+                            { 'trace.act.name': 'propose2' }
+                        ]
                     },
                     out: { inline: 1 }
                 }
             );
-        edits.forEach((edit) => (editor_rewards.find((reward) => reward.user == edit._id).edits = edit.value));
+        edits = edits.filter(e => e.value > 0);
+
+        // assign number of edits to editor
+        for (let i in editor_rewards) {
+            const edits_row = edits.find(row => row._id == editor_rewards[i].user);
+            if (edits_row) editor_rewards[i].edits = edits_row.value;
+            else editor_rewards[i].edits = 0;
+        }
 
         return editor_rewards;
     }
