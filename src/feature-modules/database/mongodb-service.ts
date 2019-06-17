@@ -88,6 +88,8 @@ export class MongoDbService {
 
         const index3 = this.connection().json_wikis.createIndex({ 'ipfs_hash': 1 }, { unique: true });
 
-        return Promise.all([index1, index2, index3]);
+        const index4 = this.connection().actions.createIndex({ 'block_num': 1 });
+
+        return Promise.all([index1, index2, index3, index4]);
     }
 }

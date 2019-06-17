@@ -436,9 +436,9 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Stat: Editor Leaderboard - Today', () => {
+  it('Stat: Editor Leaderboard - All Time', () => {
     return request(app.getHttpServer())
-        .get('/v2/stat/editor-leaderboard?period=today')
+        .get('/v2/stat/editor-leaderboard?period=all-time')
         .expect(200)
   });
 

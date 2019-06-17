@@ -14,6 +14,7 @@ export class UserService {
         const stakes = await this.mongo
             .connection()
             .actions.find({
+                'block_num': { $gt: 59902500 },
                 'trace.act.account': 'everipediaiq',
                 'trace.act.name': 'transfer',
                 'trace.act.data.to': 'eparticlectr',
@@ -25,6 +26,7 @@ export class UserService {
         const refunds = await this.mongo
             .connection()
             .actions.find({
+                'block_num': { $gt: 59902500 },
                 'trace.act.account': 'everipediaiq',
                 'trace.act.name': 'transfer',
                 'trace.act.data.from': 'eparticlectr',
