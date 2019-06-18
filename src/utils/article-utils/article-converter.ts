@@ -337,9 +337,9 @@ function extractCitations($: CheerioStatic): Citation[] {
 
         let href = $hrefs.eq(i).attr('href');
         if (!href)
-            href = $href_wraps.eq(i).text().trim();
+            href = $href_wraps.eq(i).text().trim().replace(" ", "");
         if (href) {
-            citation.url = normalizeUrl(href);
+            citation.url = normalizeUrl(href.trim().replace(" ", ""));
             citation.social_type = socialURLType(citation.url);
         }
 
@@ -703,7 +703,7 @@ function parseSection($section: Cheerio): Section {
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
-                image.url = normalizeUrl(parts[1]);
+                image.url = normalizeUrl(parts[1].replace(" ", ""));
                 image.srcSet = parts[2];
                 image.alt = parts[3];
                 image.height = Number(parts[4].substring(1));
@@ -723,7 +723,7 @@ function parseSection($section: Cheerio): Section {
 
         // Decode the URL
         if (image.url) {
-            image.url = normalizeUrl(decodeURIComponent(image.url));
+            image.url = normalizeUrl(decodeURIComponent(image.url.replace(" ", "")));
 
             try { image.url = normalizeUrl(decodeURIComponent(image.url)); }
             catch(err) { image.url = decodeURIComponent(image.url); }
@@ -810,7 +810,7 @@ function sanitizeCitations ($, citations) {
         if (url.trim() == "Cite as verified editor")
             url = "Self-citation:DEPRECATED"
         else {
-            url = normalizeUrl(url);
+            url = normalizeUrl(url.replace(" ", ""));
         }
         const link_id = citations.findIndex((cite) => cite.url == url);
         const plaintextString = `[[CITE|${link_id}|${url}]]`;
@@ -901,7 +901,7 @@ function sanitizeText($: CheerioStatic) {
     // Convert images inside wikitables and ul's to markup
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
         // Construct a dictionary
-        const src = normalizeUrl($(this).attr('src'));
+        const src = normalizeUrl($(this).attr('src').replace(" ", ""));
         const srcSet = $(this).attr('srcset') || '';
         const height = $(this).attr('height');
         const width = $(this).attr('width');
@@ -991,7 +991,7 @@ export function parseSentences(inputString: string): Sentence[] {
                         .replace(/(\(|\'|\"|\“|\”|\‘|\’|\-)\s(\*|\[\[)/g, '$1$2') // remove space between a mark or inline and certain things
 
 
-        // Make sure that no sentences start with a space, unless the index is 0
+        // Make sure that no sentences start with a space
         if (sentence.text.charAt(0) == " ") sentence.text = sentence.text.slice(1);
 
         // If there is only one sentence, trim it
@@ -1160,14 +1160,14 @@ function splitSentences(text: string): Array<string> {
     }
 
     // Don't split inside a LINK, CITE, or INLINE IMAGE
-    // for (let i = 0; i < splits.length; i++) {
-    //     // const lastWord = splits[i].split(' ').pop();
-    //     if (splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm) && i + 1 < splits.length) {
-    //         splits[i] = `${splits[i]} ${splits[i + 1]}`;
-    //         splits.splice(i + 1, 1);
-    //         i--; // re-check this sentence in case there's multiple bad splits
-    //     }
-    // }
+    for (let i = 0; i < splits.length; i++) {
+        // const lastWord = splits[i].split(' ').pop();
+        if (splits[i].match(/\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*[!?.]$/gm) && i + 1 < splits.length) {
+            splits[i] = `${splits[i]} ${splits[i + 1]}`;
+            splits.splice(i + 1, 1);
+            i--; // re-check this sentence in case there's multiple bad splits
+        }
+    }
 
     return splits;
 }

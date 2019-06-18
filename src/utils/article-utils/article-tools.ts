@@ -751,7 +751,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let result = CAPTURE_REGEXES.inline_image_match.exec(text);
                 if (result && result[1] !== undefined && result[1] != '') {
                     let workingImage: InlineImage = {
-                        src: result ? normalizeUrl(result[1]) : '',
+                        src: result ? normalizeUrl(result[1].replace(" ", "")) : '',
                         srcSet: result ? result[2] : '',
                         alt: result ? result[3] : '',
                         height: result ? result[4] : '1',
@@ -872,14 +872,15 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
             allSentences.push(...(paragraph.items as Sentence[]));
         });
     });
-    allSentences.push(...(passedJSON.main_photo[0].caption as Sentence[]));
-    passedJSON.infoboxes.forEach((infobox, index) => {
-        infobox.values.forEach(val => {
-            val.sentences.forEach(sent => {
-                allSentences.push(sent);
-            })
-        })
-    });
+    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
+    allSentences.push(...theCaptionSentences);
+    // passedJSON.infoboxes.forEach((infobox, index) => {
+    //     infobox.values.forEach(val => {
+    //         val.sentences.forEach(sent => {
+    //             allSentences.push(sent);
+    //         })
+    //     })
+    // });
     passedJSON.media_gallery.forEach((media, index) => {
         allSentences.push(...(media.caption as Sentence[]));
     });
