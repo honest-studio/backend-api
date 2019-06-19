@@ -1,5 +1,5 @@
-import { IsString, Matches } from 'class-validator';
-import { ApiModelProperty, ApiModelPropertyOptional, ApiConsumes } from '@nestjs/swagger';
+import { ApiModelProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 import { CitationCategoryType } from '../utils/article-utils/article-dto';
 
 export interface PhotoExtraData {

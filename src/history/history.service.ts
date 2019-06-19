@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
-import { MongoDbService } from '../feature-modules/database';
-import { ProposalService, Proposal, ProposalOptions } from '../proposal';
+import { Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
+import { MongoDbService } from '../feature-modules/database';
+import { Proposal, ProposalOptions, ProposalService } from '../proposal';
 
 @Injectable()
 export class HistoryService {

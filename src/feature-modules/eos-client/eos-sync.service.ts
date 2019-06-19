@@ -1,9 +1,8 @@
-import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
-import { MongoDbService } from '../database/mongodb-service';
-import { ConfigService } from '../../common';
 import * as fetch from 'node-fetch';
 import WebSocket from 'ws';
+import { ConfigService } from '../../common';
+import { MongoDbService } from '../database/mongodb-service';
 
 export interface DfuseToken {
     token: string; // JWT

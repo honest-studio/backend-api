@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '../../common';
-import * as mysql from 'mysql';
+import { Injectable, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 import chalk from 'chalk';
-import { OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
+import * as mysql from 'mysql';
 import { Pool, PoolConnection } from 'mysql';
-import { any } from 'joi';
+import { ConfigService } from '../../common';
 
 @Injectable()
 export class MysqlService implements OnApplicationShutdown, OnModuleInit {

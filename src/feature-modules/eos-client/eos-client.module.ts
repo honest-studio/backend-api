@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { EosSyncService } from './eos-sync.service';
-import { CommonModule } from './../../common';
 import { DatabaseModule } from '../database';
+import { CommonModule } from './../../common';
+import { EosSyncService } from './eos-sync.service';
 
 /**
  * Module containing EOS subscription logic via Dfuse
