@@ -1,19 +1,11 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import * as WebSocket from 'ws';
-import * as querystring from 'querystring';
-import { ConfigService } from './common';
-import express from 'express';
-import * as cors from 'cors';
-import * as morgan from 'morgan';
-import chalk from 'chalk';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-import { HttpExceptionFilter } from './shared/filters/http-exception.filter';
-import { isIpfsRunning } from './utils';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
+import chalk from 'chalk';
+import express from 'express';
+import { AppModule } from './app.module';
+import { ConfigService } from './common';
 
 async function bootstrap() {
     // Check IPFS daemon status (if enabled)
