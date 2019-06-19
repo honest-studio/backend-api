@@ -1,6 +1,6 @@
-import { OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { StatusHubService } from './status-hub-service';
+import { OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { ServiceName } from '../shared';
+import { StatusHubService } from './status-hub-service';
 
 /**
  * Abstract base class for providers

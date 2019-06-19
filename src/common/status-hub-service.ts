@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { ServiceName, StatusWithMessage, StatusMap, ServiceStatus } from '../shared';
-import { SetServiceStatus, PrintServiceStatus } from '../utils';
 import { BehaviorSubject } from 'rxjs';
+import { ServiceName, ServiceStatus, StatusMap, StatusWithMessage } from '../shared';
+import { PrintServiceStatus, SetServiceStatus } from '../utils';
 
 /**
  * Use for tracking the status of registered services

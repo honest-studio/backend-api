@@ -1,17 +1,7 @@
-import { DEFAULT_PROM_REGISTRY } from './prom.constants';
-import {
-    Counter,
-    CounterConfiguration,
-    GaugeConfiguration,
-    Gauge,
-    HistogramConfiguration,
-    Histogram,
-    SummaryConfiguration,
-    Summary,
-    Registry
-} from 'prom-client';
 import { Provider } from '@nestjs/common';
+import { Counter, CounterConfiguration, Gauge, GaugeConfiguration, Histogram, HistogramConfiguration, Registry, Summary, SummaryConfiguration } from 'prom-client';
 import { getMetricToken, getRegistryName } from './prom-utils';
+import { DEFAULT_PROM_REGISTRY } from './prom.constants';
 
 export function createPromCounterProvider(
     configuration: CounterConfiguration,

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ConfigService } from '../common';
-import { MysqlService, AWSSESService } from '../feature-modules/database';
+import { AWSSESService, MysqlService } from '../feature-modules/database';
 
 @Injectable()
 export class ContactUsService {

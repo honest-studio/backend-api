@@ -1,6 +1,6 @@
-import { Injectable, NestMiddleware, OnModuleInit } from '@nestjs/common';
-import { Counter } from 'prom-client';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request } from 'express';
+import { Counter } from 'prom-client';
 import { InjectCounterMetric } from './prom-decorators';
 
 @Injectable()

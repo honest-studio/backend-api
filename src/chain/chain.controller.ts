@@ -1,4 +1,4 @@
-import { Controller, Body, Post, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { ChainService } from './chain.service';
 
