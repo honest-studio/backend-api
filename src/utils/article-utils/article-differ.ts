@@ -1,24 +1,6 @@
-import {
-    ArticleJson,
-    Metadata,
-    Paragraph,
-    Section,
-    Media,
-    Sentence,
-    ParagraphItem,
-    ListItem,
-    Table,
-    TableRow,
-    TableSection,
-    TableCaption,
-    Infobox,
-    Citation,
-    DiffType,
-    DescList,
-    NestedContentItem
-} from './article-dto';
-import * as JsDiff from 'diff';
 import * as crypto from 'crypto';
+import * as JsDiff from 'diff';
+import { ArticleJson, Citation, DescList, DiffType, Infobox, ListItem, Media, Metadata, NestedContentItem, Paragraph, Section, Sentence, Table, TableCaption, TableRow, TableSection } from './article-dto';
 
 const METADATA_EXCLUDE_FIELDS = ['pageviews'];
 

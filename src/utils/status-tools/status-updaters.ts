@@ -1,5 +1,5 @@
-import { ServiceStatus, ServiceName, StatusMap, StatusWithMessage } from '../../shared';
 import chalk from 'chalk';
+import { ServiceName, ServiceStatus, StatusMap } from '../../shared';
 
 /**
  * Update a service status map. Return true if the status code has been changed, else false

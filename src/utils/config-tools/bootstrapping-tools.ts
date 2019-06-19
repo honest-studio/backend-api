@@ -1,6 +1,5 @@
-import { logWarning, logStandard, logError } from '../logging-tools';
+import { logError, logStandard, logWarning } from '../logging-tools';
 const ps = require('ps-node');
-import { readFileSync, existsSync } from 'fs';
 
 /**
  * Check whether IPFS is currently running by looking at process list names

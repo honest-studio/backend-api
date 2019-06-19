@@ -1,11 +1,11 @@
-import { ArticleJson, Sentence, Citation, Infobox, Media, Section, Paragraph } from './article-dto';
-import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderAMPParagraph, renderAMPImage } from '.';
-import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './article-types';
-import { styleNugget } from './amp-style';
-
 import CleanCSS from 'clean-css';
 import striptags from 'striptags';
 import urlSlug from 'url-slug';
+import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
+import { styleNugget } from './amp-style';
+import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from './article-dto';
+import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from './article-types';
+
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];

@@ -1,10 +1,10 @@
-import { ArticleJson } from './article-dto';
-import { getYouTubeID } from './article-converter';
-import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
-import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
-import { Sentence } from '../../utils/article-utils';
 import crypto from 'crypto';
 import striptags from 'striptags';
+import { CheckForLinksOrCitationsAMP } from '.';
+import { Sentence } from '../../utils/article-utils';
+import { getYouTubeID } from './article-converter';
+import { ArticleJson } from './article-dto';
+import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
 
 
 export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'): any => {

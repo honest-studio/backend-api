@@ -1,5 +1,4 @@
 import { ElasticsearchService } from '@nestjs/elasticsearch';
-import { ArticleJson } from '../article-utils/article-dto';
 
 const ELASTICSEARCH_INDEX_NAME = 'articletable_main5';
 const ELASTICSEARCH_DOCUMENT_TYPE = 'ep_template_v1';

@@ -1,35 +1,14 @@
-import * as path from 'path';
-import * as fs from 'fs';
 import * as cheerio from 'cheerio';
 import * as htmlparser2 from 'htmlparser2';
-import {convert as ReactAttrConvert} from 'react-attr-converter';
-import * as  util from 'util';
-import * as JSONCycleCustom from './json-cycle-custom';
-import * as tokenizer from 'sbd';
-import {
-    WikiLink,
-    Sentence,
-    Section,
-    ArticleJson,
-    Media,
-    Citation,
-    Metadata,
-    Infobox,
-    InfoboxValue,
-    Table,
-    Paragraph,
-    NestedTextItem,
-    NestedTagItem,
-    NestedContentItem,
-    TableCell,
-    DescList,
-    DescListItem
-} from './article-dto';
-var colors = require('colors');
-import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
-const voidElements = require('html-void-elements');
+import * as path from 'path';
+import { convert as ReactAttrConvert } from 'react-attr-converter';
+import * as tokenizer from 'sbd';
+import { ArticleJson, Citation, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from './article-dto';
 import { urlCleaner } from './article-tools';
+import * as JSONCycleCustom from './json-cycle-custom';
+var colors = require('colors');
+const voidElements = require('html-void-elements');
 const decode = require('unescape');
 
 export const BLOCK_ELEMENTS = [
