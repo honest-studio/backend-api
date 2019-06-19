@@ -2,8 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
-import * as cheerio from 'cheerio';
-import * as util from 'util';
 
 export interface SearchQueryPack {
     query: string,
