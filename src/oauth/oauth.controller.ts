@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { OAuthService } from './oauth.service';
 
 @Controller('v2/oauth')
