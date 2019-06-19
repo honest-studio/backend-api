@@ -1,4 +1,6 @@
 export * from './article-tools';
+export * from './article-tools-constants';
+export * from './schema-template';
 export * from './article-dto';
 export * from './article-converter';
 export * from './amp-render-partial';

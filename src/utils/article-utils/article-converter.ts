@@ -29,9 +29,8 @@ var colors = require('colors');
 import { AMPParseCollection } from './article-types';
 import * as mimePackage from 'mime';
 const voidElements = require('html-void-elements');
-
+import { urlCleaner } from './article-tools';
 const decode = require('unescape');
-const normalizeUrl = require('normalize-url');
 
 export const BLOCK_ELEMENTS = [
     "address",
@@ -339,7 +338,7 @@ function extractCitations($: CheerioStatic): Citation[] {
         if (!href)
             href = $href_wraps.eq(i).text().trim().replace(" ", "");
         if (href) {
-            citation.url = normalizeUrl(href.trim().replace(" ", ""));
+            citation.url = urlCleaner(href);
             citation.social_type = socialURLType(citation.url);
         }
 
@@ -703,7 +702,7 @@ function parseSection($section: Cheerio): Section {
             const inline_image_token = $image.html().match(CAPTURE_REGEXES.inline_image);
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
-                image.url = normalizeUrl(parts[1].replace(" ", ""));
+                image.url = urlCleaner(parts[1]);
                 image.srcSet = parts[2];
                 image.alt = parts[3];
                 image.height = Number(parts[4].substring(1));
@@ -723,9 +722,9 @@ function parseSection($section: Cheerio): Section {
 
         // Decode the URL
         if (image.url) {
-            image.url = normalizeUrl(decodeURIComponent(image.url.replace(" ", "")));
+            image.url = urlCleaner(decodeURIComponent(image.url));
 
-            try { image.url = normalizeUrl(decodeURIComponent(image.url)); }
+            try { image.url = urlCleaner(decodeURIComponent(image.url)); }
             catch(err) { image.url = decodeURIComponent(image.url); }
         }
 
@@ -810,7 +809,7 @@ function sanitizeCitations ($, citations) {
         if (url.trim() == "Cite as verified editor")
             url = "Self-citation:DEPRECATED"
         else {
-            url = normalizeUrl(url.replace(" ", ""));
+            url = urlCleaner(url);
         }
         const link_id = citations.findIndex((cite) => cite.url == url);
         const plaintextString = `[[CITE|${link_id}|${url}]]`;
@@ -901,7 +900,7 @@ function sanitizeText($: CheerioStatic) {
     // Convert images inside wikitables and ul's to markup
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
         // Construct a dictionary
-        const src = normalizeUrl($(this).attr('src').replace(" ", ""));
+        const src = urlCleaner($(this).attr('src'));
         const srcSet = $(this).attr('srcset') || '';
         const height = $(this).attr('height');
         const width = $(this).attr('width');

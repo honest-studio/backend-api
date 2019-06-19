@@ -2,7 +2,7 @@ import { ArticleJson, Sentence, Citation, Infobox, Media, Section, Paragraph } f
 import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderAMPParagraph, renderAMPImage } from '.';
 import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './article-types';
 import { styleNugget } from './amp-style';
-const normalizeUrl = require('normalize-url');
+
 import CleanCSS from 'clean-css';
 import striptags from 'striptags';
 import urlSlug from 'url-slug';
