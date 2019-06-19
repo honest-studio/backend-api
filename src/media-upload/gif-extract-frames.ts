@@ -1,13 +1,9 @@
 'use strict';
 // MODIFIED FROM https://github.com/transitive-bullshit/gif-extract-frames
 
-import * as fs from 'fs';
-import * as path from 'path';
-import pify from 'pify';
-import * as pump from 'pump-promise';
 import * as gpixels from 'get-pixels';
+import pify from 'pify';
 import * as savePixels from 'save-pixels';
-import * as pixel from 'pixel';
 const getPixels = pify(gpixels);
 
 const supportedFormats = new Set(['jpg', 'png', 'gif']);

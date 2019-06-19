@@ -8,3 +8,4 @@ const HistoryWikiSchema = {
 };
 
 export { HistoryWikiSchema };
+

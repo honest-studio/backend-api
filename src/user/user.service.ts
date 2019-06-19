@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
 
 export interface UserServiceOptions {

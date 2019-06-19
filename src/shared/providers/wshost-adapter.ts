@@ -1,18 +1,11 @@
-import * as WebSocket from 'ws';
-import { WebSocketAdapter, Injectable } from '@nestjs/common';
-import { EnhancedServer, EnhancedSocket, WsClientByIp } from '../contracts';
-import { IncomingMessage } from 'http';
-import {
-    ClientInitialConnect,
-    ClientReconnected,
-    KillClientConnectionById,
-    logError,
-    logStandard,
-    logWarning
-} from '../../utils';
+import { Injectable, WebSocketAdapter } from '@nestjs/common';
 import { MessageMappingProperties } from '@nestjs/websockets';
-import { Observable, fromEvent } from 'rxjs';
-import { mergeMap, filter } from 'rxjs/operators';
+import { IncomingMessage } from 'http';
+import { fromEvent, Observable } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
+import * as WebSocket from 'ws';
+import { ClientInitialConnect, ClientReconnected, KillClientConnectionById, logError, logStandard, logWarning } from '../../utils';
+import { EnhancedServer, EnhancedSocket, WsClientByIp } from '../contracts';
 
 /**
  * WebSocket server

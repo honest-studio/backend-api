@@ -1,11 +1,11 @@
-import { ArticleJson, Sentence, Citation, Infobox, Media, Section, Paragraph } from './article-dto';
-import { CheckForLinksOrCitationsAMP, blobBoxPreSanitize, getYouTubeID, renderAMPParagraph, renderAMPImage } from '.';
-import { LanguagePack, WikiExtraInfo, AMPParseCollection, SeeAlso } from './article-types';
-import { styleNugget } from './amp-style';
-const normalizeUrl = require('normalize-url');
 import CleanCSS from 'clean-css';
 import striptags from 'striptags';
 import urlSlug from 'url-slug';
+import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
+import { styleNugget } from './amp-style';
+import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from './article-dto';
+import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from './article-types';
+
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];
@@ -771,7 +771,7 @@ export class AmpRenderPartial {
             <li>
                 ${
                     citation.thumb && citation.thumb != 'None'
-                        ? `<a class='avatar-wrap' ${citation.attribution} href="${
+                        ? `<a class='avatar-wrap' ${citation.attribution ? citation.attribution : ""} href="${
                               citation.url
                           }" title="Preview Thumbnail">
                         <amp-img alt='Thumbnail' class="link-image" width=50 height=50 layout="fixed" src="${
@@ -788,11 +788,11 @@ export class AmpRenderPartial {
                         ${
                             citation.social_type && citation.social_type != 'None'
                                 ? `<span itemprop="sameAs"><a href="${citation.url}" class="link-box-url" ${
-                                      citation.attribution
+                                        citation.attribution ? citation.attribution : ""
                                   } target="_blank">${citation.url}</a></span>`
                                 : true
                                 ? `<a href="${citation.url}" class="link-box-url" ${
-                                      citation.attribution
+                                        citation.attribution ? citation.attribution : ""
                                   } target="_blank">${citation.url}</a>`
                                 : ``
                         }

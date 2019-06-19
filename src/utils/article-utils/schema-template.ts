@@ -1,10 +1,10 @@
-import { ArticleJson } from './article-dto';
-import { getYouTubeID } from './article-converter';
-import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
-import { CheckForLinksOrCitationsAMP, ConstructAMPImage } from '.';
-import { Sentence } from '../../utils/article-utils';
 import crypto from 'crypto';
 import striptags from 'striptags';
+import { CheckForLinksOrCitationsAMP } from '.';
+import { Sentence } from '../../utils/article-utils';
+import { getYouTubeID } from './article-converter';
+import { ArticleJson } from './article-dto';
+import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
 
 
 export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'): any => {
@@ -16,7 +16,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
     const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified') ? inputJSON.metadata.find(w => w.key == 'last_modified').value : '';
     const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
     const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
-    const url_slug = inputJSON.metadata.find(w => w.key == 'url_slug').value;
+    const url_slug = inputJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
     const page_type = inputJSON.metadata.find(w => w.key == 'page_type').value;
     const page_title = inputJSON.page_title[0].text;
 

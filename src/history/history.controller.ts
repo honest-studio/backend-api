@@ -1,8 +1,8 @@
-import { Controller, Get, Param, Query, UsePipes, BadRequestException } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
-import { HistoryService } from './history.service';
-import { HistoryWikiSchema } from './history.query-schema';
+import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
+import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
+import { HistoryWikiSchema } from './history.query-schema';
+import { HistoryService } from './history.service';
 
 @Controller('v2/history')
 @ApiUseTags('History')

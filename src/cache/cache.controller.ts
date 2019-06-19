@@ -1,5 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags } from '@nestjs/swagger';
+import { ApiImplicitParam, ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { CacheService } from './cache.service';
 
 @Controller('v2/cache')

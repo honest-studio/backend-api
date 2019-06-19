@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
 import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Request, Response } from 'express';
 import ua from 'universal-analytics';
 
 @Injectable()

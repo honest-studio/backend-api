@@ -1,11 +1,11 @@
-import { Global, DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Global, Module } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
-import { PromModuleOptions } from './prom-options.interface'
-import { DEFAULT_PROM_REGISTRY, PROM_REGISTRY_NAME, DEFAULT_PROM_OPTIONS } from './prom.constants';
-
 import * as client from 'prom-client';
-import { Registry, collectDefaultMetrics, DefaultMetricsCollectorConfiguration } from 'prom-client';
+import { collectDefaultMetrics, DefaultMetricsCollectorConfiguration, Registry } from 'prom-client';
+import { PromModuleOptions } from './prom-options.interface';
 import { getRegistryName } from './prom-utils';
+import { DEFAULT_PROM_OPTIONS, DEFAULT_PROM_REGISTRY, PROM_REGISTRY_NAME } from './prom.constants';
+
 
 @Global()
 @Module({})

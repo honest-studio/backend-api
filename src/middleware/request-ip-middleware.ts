@@ -1,6 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { getClientIp } from 'request-ip';
+import { NextFunction, Request, Response } from 'express';
 import { ResolveIpFromRequest } from '../utils/request-tools';
 
 /**

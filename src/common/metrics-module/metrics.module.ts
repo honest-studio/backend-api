@@ -1,17 +1,10 @@
-import { Module, DynamicModule, NestModule, MiddlewareConsumer, Inject, RequestMethod } from '@nestjs/common';
-import { PromCoreModule } from './prom-core.module';
-import { MetricTypeConfigurationInterface, MetricType } from './metric.type';
-import { PromModuleOptions } from './prom-options.interface'
-import {
-    createPromCounterProvider,
-    createPromGaugeProvider,
-    createPromHistogramProvider,
-    createPromSummaryProvider
-} from './prom.providers';
+import { DynamicModule, Module } from '@nestjs/common';
 import * as client from 'prom-client';
+import { MetricType, MetricTypeConfigurationInterface } from './metric.type';
 import { MetricsController } from './metrics.controller';
-import { InboundMiddleware } from './inbound.middleware';
-import { DEFAULT_PROM_OPTIONS } from './prom.constants';
+import { PromCoreModule } from './prom-core.module';
+import { PromModuleOptions } from './prom-options.interface';
+import { createPromCounterProvider, createPromGaugeProvider, createPromHistogramProvider, createPromSummaryProvider } from './prom.providers';
 
 @Module({})
 export class MetricsModule {

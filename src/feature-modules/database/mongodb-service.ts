@@ -1,5 +1,5 @@
-import { MongoClient, Db, Collection } from 'mongodb';
 import { Injectable } from '@nestjs/common';
+import { Collection, Db, MongoClient } from 'mongodb';
 import { ConfigService } from '../../common';
 
 // placeholder entities for mongodb

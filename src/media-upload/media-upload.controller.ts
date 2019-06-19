@@ -1,30 +1,8 @@
-import {
-    Controller,
-    Body,
-    Get,
-    Param,
-    Post,
-    Query,
-    Req,
-    UseInterceptors,
-    UploadedFile,
-    ValidationPipe,
-    UsePipes
-} from '@nestjs/common';
-import {
-    ApiConsumes,
-    ApiOperation,
-    ApiResponse,
-    ApiImplicitParam,
-    ApiImplicitBody,
-    ApiImplicitFile,
-    ApiUseTags,
-    ApiImplicitQuery
-} from '@nestjs/swagger';
-import { MediaUploadService, FaviconPack } from './media-upload.service';
-import { MediaUploadDto } from './media-upload-dto';
-import * as rawbody from 'raw-body';
+import { Body, Controller, Post, UploadedFile, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiImplicitFile, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { MediaUploadDto } from './media-upload-dto';
+import { FaviconPack, MediaUploadService } from './media-upload.service';
 const path = require('path');
 
 @Controller('v2/media-upload')
