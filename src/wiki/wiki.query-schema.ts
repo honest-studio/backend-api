@@ -5,3 +5,4 @@ const WikiQuerySchema = {
 };
 
 export { WikiQuerySchema };
+

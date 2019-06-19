@@ -1,31 +1,18 @@
-import { Injectable, NotFoundException, BadRequestException, InternalServerErrorException, Inject, forwardRef } from '@nestjs/common';
-import * as fetch from 'node-fetch';
-import { URL } from 'url';
-import { IpfsService } from '../common';
-import { MysqlService, MongoDbService, } from '../feature-modules/database';
+import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
-import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import * as BooleanTools from 'boolean';
+import * as fetch from 'node-fetch';
+import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async/dynamic';
+import * as SqlString from 'sqlstring';
+import { URL } from 'url';
 import { CacheService } from '../cache';
-import {
-    ArticleJson,
-    SeeAlso,
-    Sentence,
-    WikiExtraInfo,
-    LanguagePack,
-    renderAMP,
-    renderSchema,
-    calculateSeeAlsos,
-    oldHTMLtoJSON,
-    mergeMediaIntoCitations,
-    infoboxDtoPatcher
-} from '../utils/article-utils';
-import { updateElasticsearch } from '../utils/elasticsearch-tools';
+import { IpfsService } from '../common';
+import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
-import * as SqlString from 'sqlstring';
-import cheerio from 'cheerio';
-import * as BooleanTools from 'boolean';
-import { setIntervalAsync, clearIntervalAsync } from 'set-interval-async/dynamic';
+import { ArticleJson, calculateSeeAlsos, infoboxDtoPatcher, LanguagePack, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema, SeeAlso, Sentence, WikiExtraInfo } from '../utils/article-utils';
+import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { updateElasticsearch } from '../utils/elasticsearch-tools';
 var colors = require('colors');
 
 @Injectable()
