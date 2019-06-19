@@ -25,3 +25,4 @@ const RecentActivityQuerySchema = {
 };
 
 export { RecentActivityQuerySchema };
+

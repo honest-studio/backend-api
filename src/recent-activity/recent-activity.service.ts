@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import * as fetch from 'node-fetch';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
-import { ProposalService, Proposal } from '../proposal';
-import { EosAction, Propose, Vote, ProposalResult } from '../feature-modules/database/mongodb-schema';
+import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { OAuthService } from '../oauth/oauth.service';
 import { PreviewService } from '../preview/preview.service';
-import * as fetch from 'node-fetch';
+import { Proposal, ProposalService } from '../proposal';
 
 @Injectable()
 export class RecentActivityService {
