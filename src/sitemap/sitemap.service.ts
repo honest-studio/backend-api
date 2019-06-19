@@ -1,11 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Response } from 'express';
-import { SitemapPack } from '../utils/article-utils/';
-import { MongoDbService } from '../feature-modules/database';
-import { MysqlService } from '../feature-modules/database';
 import * as fs from 'fs';
-import * as sm from 'sitemap';
 import * as path from 'path';
+import * as sm from 'sitemap';
+import { MongoDbService, MysqlService } from '../feature-modules/database';
+import { SitemapPack } from '../utils/article-utils/';
 var colors = require('colors');
 
 const SITEMAP_ROOT_DIR = path.join(__dirname, '..', '..', 'public', 'sitemaps');

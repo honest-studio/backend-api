@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { MongoDbService } from '../feature-modules/database';
-import { ConfigService } from '../common';
 import * as fetch from 'node-fetch';
+import { ConfigService } from '../common';
+import { MongoDbService } from '../feature-modules/database';
 
 export interface OAuthToken {
     provider: string; // google, facebook, etc.

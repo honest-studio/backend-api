@@ -1,8 +1,6 @@
-import { Controller, Get, Param, Query, UsePipes, Res } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitQuery, ApiUseTags, ApiProduces } from '@nestjs/swagger';
+import { Controller, Get, Param, Query, Res } from '@nestjs/common';
+import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiProduces, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { SitemapService } from './sitemap.service';
-import { SitemapQuerySchema } from './sitemap.query-schema';
-import { JoiValidationPipe } from '../common';
 
 @Controller('v2/sitemap')
 @ApiUseTags('Sitemap')

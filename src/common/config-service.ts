@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as dotenv from 'dotenv';
-import { envVarsSchema } from './config-schema';
-import * as Joi from 'joi';
 import * as fs from 'fs';
+import * as Joi from 'joi';
+import { envVarsSchema } from './config-schema';
 
 /**
  * Construct and build app config to be shared across modules

@@ -1,2 +1,3 @@
-export * from './eos-client';
 export * from './database';
+export * from './eos-client';
+

@@ -11,3 +11,4 @@ const SitemapQuerySchema = {
 };
 
 export { SitemapQuerySchema };
+

@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UsePipes } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { ContactUsService } from './contact-us.service';
-import { ContactUSSchema } from './contact-us.query-schema';
 import { JoiValidationPipe } from '../common';
+import { ContactUSSchema } from './contact-us.query-schema';
+import { ContactUsService } from './contact-us.service';
 
 @Controller('v2/contact-us')
 @ApiUseTags('Contact Us')

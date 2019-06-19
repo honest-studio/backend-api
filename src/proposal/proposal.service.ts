@@ -1,7 +1,7 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
-import { PreviewService } from '../preview';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
-import { MongoDbService, MysqlService, EosAction, Propose, ProposalResult, Vote } from '../feature-modules/database';
+import { EosAction, MongoDbService, MysqlService, ProposalResult, Propose, Vote } from '../feature-modules/database';
+import { PreviewService } from '../preview';
 
 export type Proposal = {
     proposal_id: number;

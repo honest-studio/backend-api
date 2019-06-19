@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { UserService } from './user.service';
-import { UserQuerySchema } from './user.query-schema';
+import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
+import { UserQuerySchema } from './user.query-schema';
+import { UserService } from './user.service';
 
 @Controller('v2/user')
 @ApiUseTags('User')

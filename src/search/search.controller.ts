@@ -1,8 +1,6 @@
-import { Controller, Get, Param, Req, Query, Post, Body } from '@nestjs/common';
-import { Request } from 'express';
-import { ApiOperation, ApiImplicitParam, ApiUseTags, ApiImplicitQuery, ApiResponse } from '@nestjs/swagger';
-import { SearchService, SearchQueryPack } from './search.service';
-import { AddRemoteIp } from '../utils/request-tools';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { SearchQueryPack, SearchService } from './search.service';
 
 @Controller('v2/search')
 @ApiUseTags('Search')

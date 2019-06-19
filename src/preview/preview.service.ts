@@ -1,14 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { MysqlService, MongoDbService } from '../feature-modules/database';
-import { IpfsService, InjectHistogramMetric, HistogramMetric } from '../common';
-import { ProposalService } from '../proposal';
-import { WikiService } from '../wiki';
-import { CacheService } from '../cache';
-import HtmlDiff from 'htmldiff-js';
 import * as cheerio from 'cheerio';
-import { WikiIdentity } from '../utils/article-utils/article-types';
-import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as SqlString from 'sqlstring';
+import { CacheService } from '../cache';
+import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
+import { MysqlService } from '../feature-modules/database';
+import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { WikiIdentity } from '../utils/article-utils/article-types';
+import { WikiService } from '../wiki';
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now

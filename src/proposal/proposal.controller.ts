@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
-import { ProposalService, Proposal } from './proposal.service';
+import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { ProposalSchema } from './proposal.query-schema';
+import { Proposal, ProposalService } from './proposal.service';
 
 @Controller('v2/proposal')
 @ApiUseTags('Proposals')

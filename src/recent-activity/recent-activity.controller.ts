@@ -1,6 +1,6 @@
-import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiImplicitParam, ApiImplicitQuery, ApiUseTags } from '@nestjs/swagger';
-import { RecentActivityService, RecentActivityQuerySchema } from '.';
+import { Controller, Get, Query, UsePipes } from '@nestjs/common';
+import { ApiImplicitQuery, ApiOperation, ApiUseTags } from '@nestjs/swagger';
+import { RecentActivityQuerySchema, RecentActivityService } from '.';
 import { JoiValidationPipe } from '../common';
 
 @Controller('v2/recent-activity')
