@@ -623,10 +623,11 @@ export function sanitizeTextPreview(inputText: string): string {
     sanitizedText = sanitizedText.replace(/\s+/g, ' ').trim();
 
     // remove citation references from preview
-    sanitizedText = sanitizedText.replace(/\[\d+\]/g, '');
+    sanitizedText = sanitizedText.replace(/\[(\d+|u)\]/g, '');
 
     const $ = cheerio.load(sanitizedText);
     sanitizedText = $.root().text();
+    sanitizedText = sanitizedText.replace(/\s+/g, ' ').trim();
     return sanitizedText;
 }
 
