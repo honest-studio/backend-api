@@ -178,6 +178,10 @@ export class EosSyncService {
     }
 
     async sync() {
+        if (!this.config.get("DFUSE_SYNC")) {
+            console.warn("EOS-SYNC-SERVICE: [WARN] Dfuse sync is turned off");
+            return;
+        }
         await this.catchup();
         this.start();
         setInterval(() => this.restartIfFailing.apply(this), 15 * 1000); // every 15 seconds
