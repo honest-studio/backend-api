@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
-    "deploy:prod": "ssh beekeeper@beta67.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && systemctl --user restart ep2-backend'"
+    "deploy:prod": "ssh beekeeper@api.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && systemctl --user restart ep2-backend'"
   },
   "dependencies": {
     "@nestjs/common": "^6.3.1",
