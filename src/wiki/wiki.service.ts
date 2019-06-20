@@ -331,6 +331,7 @@ export class WikiService {
                     const photo_thumb_url = wiki.main_photo[0].thumb;
                     const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
                     const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
+                    const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
                     const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
                     const article_insertion = await this.mysql.TryQuery(
                         `
@@ -339,7 +340,7 @@ export class WikiService {
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
                         ON DUPLICATE KEY UPDATE 
                             ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
-                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
+                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?
                         `,
                         [
                             ipfs_hash,
@@ -358,7 +359,8 @@ export class WikiService {
                             photo_url,
                             photo_thumb_url,
                             page_type,
-                            is_adult_content
+                            is_adult_content,
+                            is_indexed
                         ]
                     )
             
