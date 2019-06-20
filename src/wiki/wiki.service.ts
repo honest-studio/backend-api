@@ -31,13 +31,16 @@ export class WikiService {
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
-            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
+            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
             [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code]
         );
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
+
+        // Account for the boolean flipping issue being in old articles
+        const overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
 
         // Try and grab cached json wiki
         const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
@@ -61,6 +64,10 @@ export class WikiService {
             // check if wiki is already in JSON format
             // return it immediately if it is
             wiki = JSON.parse(wiki_rows[0].html_blob);
+            wiki.metadata = wiki.metadata.map((obj) => {
+                if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
+                else return obj;
+            });
             
             return infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
         } catch {
@@ -69,6 +76,10 @@ export class WikiService {
 
             // if the cache isn't available either, generate and return it
             wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
+            wiki.metadata = wiki.metadata.map((obj) => {
+                if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
+                else return obj;
+            });
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
