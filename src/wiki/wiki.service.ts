@@ -35,7 +35,7 @@ export class WikiService {
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
-            [slug, mysql_slug, mysql_slug, mysql_slug, lang_code]
+            [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code]
         );
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 

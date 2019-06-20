@@ -130,6 +130,7 @@ export class PreviewService {
         //     .map((w) => [w.lang_code, w.slug])
         //     .reduce((flat, piece) => flat.concat(piece), []);
 
+        const or_clauses = [];
         const whereClause = wiki_identities.map((w) => { 
             let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
             return SqlString.format(
@@ -137,8 +138,15 @@ export class PreviewService {
                 [w.lang_code, cleanedSlug]
             );
         }).join(' OR ');
+        const whereClause2 = wiki_identities.map((w) => { 
+            let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
+            return SqlString.format(
+                '(art.page_lang = ? AND art.slug_alt = ?)',
+                [w.lang_code, cleanedSlug]
+            );
+        }).join(' OR ');
         
-        const query = `
+        const query1 = `
             SELECT 
                 art.page_title, 
                 art.slug,
@@ -153,7 +161,24 @@ export class PreviewService {
                 art.creation_timestamp,
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art 
-            WHERE ${whereClause}`;
+            WHERE ${whereClause2}`;
+        const query2 = `
+            SELECT 
+                art.page_title, 
+                art.slug,
+                art.photo_url AS main_photo, 
+                art.photo_thumb_url AS thumbnail,
+                art.page_lang AS lang_code,
+                art.ipfs_hash_current AS ipfs_hash, 
+                art.blurb_snippet AS text_preview, 
+                art.pageviews, 
+                art.page_note,
+                art.is_adult_content, 
+                art.creation_timestamp,
+                art.lastmod_timestamp
+            FROM enterlink_articletable AS art 
+            WHERE ${whereClause2}`;
+        const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         const previews: Array<any> = await this.mysql.TryQuery(query);
