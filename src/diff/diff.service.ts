@@ -16,15 +16,14 @@ export class DiffService {
         for (const i in proposal_ids) {
             const proposal_id = proposal_ids[i];
 
-            // KEDAR: Turn off diff caching temporarily for proposals
             // check for cached diff
-            //const cached_diff = await this.mongo.connection().diffs.findOne({ 
-            //    metadata: { $elemMatch: { key: 'proposal_id', 'value': proposal_id }}
-            //})
-            //if (cached_diff) {
-            //    diffs.push(cached_diff);
-            //    continue;
-            //}
+            const cached_diff = await this.mongo.connection().diffs.findOne({ 
+                metadata: { $elemMatch: { key: 'proposal_id', 'value': proposal_id }}
+            })
+            if (cached_diff) {
+                diffs.push(cached_diff);
+                continue;
+            }
 
             const proposal = await this.mongo.connection().actions.findOne({
                 'trace.act.account': 'eparticlectr',
@@ -69,7 +68,7 @@ export class DiffService {
                 diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
 
                 // cache result
-                //this.mongo.connection().diffs.insertOne(diff_wiki);
+                this.mongo.connection().diffs.insertOne(diff_wiki);
 
                 diffs.push(diff_wiki);
             } catch (e) {
