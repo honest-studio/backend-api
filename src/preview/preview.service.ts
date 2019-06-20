@@ -178,9 +178,7 @@ export class PreviewService {
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art 
             WHERE ${whereClause2}`;
-        // This became too slow so it had to be turned off for now
-        //const query = `${query1} UNION ALL ${query2}`;
-        const query = query1;
+        const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         const previews: Array<any> = await this.mysql.TryQuery(query);
