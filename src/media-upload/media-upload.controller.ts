@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UploadedFile, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiImplicitFile, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { MediaUploadDto } from './media-upload-dto';
-import { FaviconPack, MediaUploadService } from './media-upload.service';
+import { MediaUploadDto, FileFetchResult } from './media-upload-dto';
+import { UrlPack, MediaUploadService } from './media-upload.service';
 const path = require('path');
 
 @Controller('v2/media-upload')
@@ -12,8 +12,14 @@ export class MediaUploadController {
 
     @Post('get-favicon')
     @ApiOperation({ title: 'Get a favicon for a url' })
-    async getFaviconCtrl(@Body() pack: FaviconPack): Promise<any> {
+    async getFaviconCtrl(@Body() pack: UrlPack): Promise<any> {
         return this.MediaUploadService.getFavicon(pack);
+    }
+
+    @Post('get-remote-file')
+    @ApiOperation({ title: 'Get a remote file' })
+    async getRemoteFileCtrl(@Body() pack: UrlPack): Promise<FileFetchResult> {
+        return this.MediaUploadService.getRemoteFile(pack);
     }
 
     @Post('/')

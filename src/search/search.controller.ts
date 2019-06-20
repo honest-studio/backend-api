@@ -15,7 +15,7 @@ export class SearchController {
         status: 200,
         description: `Returns search results`
     })
-    async submitWiki(@Body() pack: SearchQueryPack): Promise<any> {
+    async searchTitleCtrl(@Body() pack: SearchQueryPack): Promise<any> {
         return this.searchService.searchTitle(pack);
     }
 

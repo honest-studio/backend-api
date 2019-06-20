@@ -4,6 +4,7 @@ import * as crypto from 'crypto';
 import { DWebp } from 'cwebp';
 import * as extractVideoPreview from 'ffmpeg-extract-frame';
 import * as fs from 'fs';
+const axios = require('axios');
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
 import * as imagemin_Jpegtran from 'imagemin-jpegtran';
@@ -20,7 +21,7 @@ import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
 import { extractFrames } from './gif-extract-frames';
-import { MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
+import { MediaUploadResult, MimePack, PhotoExtraData, FileFetchResult } from './media-upload-dto';
 const fileType = require('file-type');
 const getYouTubeID = require('get-youtube-id');
 const slugify = require('slugify');
@@ -46,7 +47,7 @@ const PHOTO_CONSTANTS = {
     }
 };
 
-export interface FaviconPack {
+export interface UrlPack {
     url: string
 }
 
@@ -98,7 +99,27 @@ export class MediaUploadService {
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
-    getFavicon(inputPack: FaviconPack): Promise<any> {
+    getFavicon(inputPack: UrlPack): Promise<any> {
+        return fetchUrl(inputPack.url);
+    }
+
+    // Fetch a file from an external URL
+    getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
+        axios({
+            url: inputPack.url,
+            method: 'GET',
+            responseType: 'arraybuffer',
+        }).then((response) => {
+            let fileBuffer = response.data;
+            let mimeResult = fileType(fileBuffer);
+            console.log(mimeResult)
+            // const url = window.URL.createObjectURL(new Blob([response.data]));
+            // const link = document.createElement('a');
+            // link.href = url;
+            // link.setAttribute('download', 'file.pdf'); //or any other extension
+            // document.body.appendChild(link);
+            // link.click();
+        });
         return fetchUrl(inputPack.url);
     }
 

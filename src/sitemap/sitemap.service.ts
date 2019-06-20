@@ -95,7 +95,7 @@ export class SitemapService {
                     enterlink_articletable art 
                 WHERE 
                     art.is_removed = 0
-                    AND art.is_removed_from_index = 0
+                    AND art.is_indexed = 1
                     AND redirect_page_id IS NULL
                     AND art.page_lang = ?
                     AND art.id > ?

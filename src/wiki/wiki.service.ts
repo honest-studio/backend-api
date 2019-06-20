@@ -31,13 +31,16 @@ export class WikiService {
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
-            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash
+            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
             [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code]
         );
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
+
+        // Account for the boolean flipping issue being in old articles
+        const overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
 
         // Try and grab cached json wiki
         const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
@@ -61,6 +64,10 @@ export class WikiService {
             // check if wiki is already in JSON format
             // return it immediately if it is
             wiki = JSON.parse(wiki_rows[0].html_blob);
+            wiki.metadata = wiki.metadata.map((obj) => {
+                if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
+                else return obj;
+            });
             
             return infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
         } catch {
@@ -69,6 +76,10 @@ export class WikiService {
 
             // if the cache isn't available either, generate and return it
             wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
+            wiki.metadata = wiki.metadata.map((obj) => {
+                if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
+                else return obj;
+            });
             wiki.ipfs_hash = ipfs_hash;
 
             // some wikis don't have page langs set
@@ -331,15 +342,16 @@ export class WikiService {
                     const photo_thumb_url = wiki.main_photo[0].thumb;
                     const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
                     const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
+                    const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
                     const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
                     const article_insertion = await this.mysql.TryQuery(
                         `
                         INSERT INTO enterlink_articletable 
-                            (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_removed_from_index, bing_index_override, has_pending_edits)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 0, 0, 0)
+                            (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
                         ON DUPLICATE KEY UPDATE 
                             ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
-                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?
+                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?
                         `,
                         [
                             ipfs_hash,
@@ -358,7 +370,8 @@ export class WikiService {
                             photo_url,
                             photo_thumb_url,
                             page_type,
-                            is_adult_content
+                            is_adult_content,
+                            is_indexed
                         ]
                     )
             

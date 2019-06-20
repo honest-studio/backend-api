@@ -55,6 +55,11 @@ export interface MimePack {
     mime: string;
 }
 
+export interface FileFetchResult {
+    file: File,
+    mime_pack: MimePack;
+    category: CitationCategoryType;
+}
 
 /**
  * Describe a successful response to a media upload

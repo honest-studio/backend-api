@@ -31,7 +31,7 @@ export class AmpRenderPartial {
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
         const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
-        const is_indexed = !(this.artJSON.metadata.find(w => w.key == 'is_indexed').value); // UNTIL THE is_removed_from_index issue in MySQL is fixed
+        const is_indexed = (this.artJSON.metadata.find(w => w.key == 'is_indexed').value); // UNTIL THE is_indexed issue in MySQL is fixed
 
         return `
             <meta charset="utf-8" />
