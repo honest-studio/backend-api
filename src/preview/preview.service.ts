@@ -131,7 +131,7 @@ export class PreviewService {
         //     .reduce((flat, piece) => flat.concat(piece), []);
 
         const or_clauses = [];
-        const whereClause = wiki_identities.map((w) => { 
+        const whereClause1 = wiki_identities.map((w) => { 
             let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
             return SqlString.format(
                 '(art.page_lang = ? AND art.slug = ?)',
@@ -161,7 +161,7 @@ export class PreviewService {
                 art.creation_timestamp,
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art 
-            WHERE ${whereClause2}`;
+            WHERE ${whereClause1}`;
         const query2 = `
             SELECT 
                 art.page_title, 
@@ -178,7 +178,9 @@ export class PreviewService {
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art 
             WHERE ${whereClause2}`;
-        const query = `${query1} UNION ALL ${query2}`;
+        // This became too slow so it had to be turned off for now
+        //const query = `${query1} UNION ALL ${query2}`;
+        const query = query1;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         const previews: Array<any> = await this.mysql.TryQuery(query);
