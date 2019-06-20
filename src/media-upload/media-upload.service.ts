@@ -120,7 +120,7 @@ export class MediaUploadService {
             // document.body.appendChild(link);
             // link.click();
         });
-        return fetchUrl(inputPack.url);
+        return fetchUrl(inputPack.url) as Promise<FileFetchResult>;
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image

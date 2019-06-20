@@ -479,13 +479,6 @@ function extractInfoboxHtml($: CheerioStatic): Table {
     // no infobox found
     if (blobbox.length == 0) return null;
 
-    const html = decode(
-        $('div.blobbox-wrap')
-            .html()
-            .trim(),
-        'all'
-    );
-    
     let parsedBlobBox = parseTable($(blobbox), 'wikitable');
     return parsedBlobBox;
 }
