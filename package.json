@@ -32,7 +32,6 @@
     "@types/ws": "^6.0.1",
     "aws-sdk": "^2.478.0",
     "azure-storage": "^2.10.3",
-    "blob-util": "^2.0.2",
     "boolean": "^1.0.0",
     "buffer-image-size": "^0.6.4",
     "canvas": "^2.5.0",

@@ -2,10 +2,9 @@ import { Injectable } from '@nestjs/common';
 import sizeOf from 'buffer-image-size';
 import * as crypto from 'crypto';
 import { DWebp } from 'cwebp';
-import * as extractVideoPreview from 'ffmpeg-extract-frame';
+const extractFrame = require('ffmpeg-extract-frame')
 import * as fs from 'fs';
 const axios = require('axios');
-import { blobToArrayBuffer } from 'blob-util';
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
 import * as imagemin_Jpegtran from 'imagemin-jpegtran';
@@ -21,14 +20,15 @@ import { StringDecoder } from 'string_decoder';
 import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
-import { extractFrames } from './gif-extract-frames';
+const extractGIFFrames = require('./gif-extract-frames')
+var colors = require('colors');
 import { MediaUploadResult, MimePack, PhotoExtraData, FileFetchResult } from './media-upload-dto';
 const fileType = require('file-type');
 const getYouTubeID = require('get-youtube-id');
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
 
-const TEMP_DIR = path.join(__dirname, 'tmp');
+const TEMP_DIR = path.join(__dirname, 'tmp-do-not-delete');
 const PHOTO_CONSTANTS = {
     CROPPED_WIDTH: 1201,
     CROPPED_HEIGHT: 1201,
@@ -195,7 +195,6 @@ export class MediaUploadService {
             // Find the MIME type and the extension
             let theMIME = mimeClass.getType(inputString);
             let theExtension = mimeClass.getExtension(theMIME);
-
             // Test for different categories
             if (theMIME == '' || theMIME == null) {
                 return 'NONE';
@@ -205,9 +204,9 @@ export class MediaUploadService {
                 return 'PICTURE';
             } else if (this.getYouTubeIdIfPresent(inputString)) {
                 return 'YOUTUBE';
-            } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
+            } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
                 return 'NORMAL_VIDEO';
-            } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension)) {
+            } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
                 return 'AUDIO';
             } else {
                 return 'NONE';
@@ -237,11 +236,11 @@ export class MediaUploadService {
     }
 
     // Get a png buffer from the first frame of a GIF. Will be used as the GIF's thumbnail.
-    async getPNGFrameFromGIF(gifBuffer: Buffer): Promise<any[]> {
+    async getPNGFrameFromGIF(gifBuffer: Buffer): Promise<Buffer> {
 
         try {
             // Get the PNG stream first
-            const pngStream = await extractFrames({
+            const pngStream = await extractGIFFrames({
                 input_buffer: gifBuffer,
                 input_mime: 'image/gif'
             });
@@ -446,26 +445,29 @@ export class MediaUploadService {
                         // Get a PNG frame from the GIF, resize, then compress it to a JPEG
                         // Must resize to fit 1201x1201 to help with AMP
                         // FIX THIS LATER
-                        bufferPack.thumbBuf = bufferPack.mainBuf;
-                        // await this.getPNGFrameFromGIF(mediaBuffer)
-                            // .then((pngFrame) => {
-                            //     console.log(pngFrame);
-                            //     return pngFrame;
-                            //     // return Jimp.read(pngFrame)
-                            // })
-                            // .then((image) => { 
-                                
-                            //     return image
-                            //     .background(0xffffffff)
-                            //     .scaleToFit(mainWidth, mainHeight)
-                            //     .quality(85)
-                            //     .getBufferAsync('image/jpeg');
-                            // })
-                            // .then((buffer) => buffer as any)
-                            // .catch((err) => {
-                            //     console.log("ERROR BEE")
-                            //     console.log(err)
-                            // });
+                        // bufferPack.thumbBuf = bufferPack.mainBuf;
+                        try {
+                            bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer)
+                                .then((pngFrame) => {
+                                    console.log(pngFrame);
+                                    // return pngFrame;
+                                    return Jimp.read(pngFrame)
+                                })
+                                .then((image) => { 
+                                    return image
+                                    .background(0xffffffff)
+                                    .scaleToFit(mainWidth, mainHeight)
+                                    .quality(85)
+                                    .getBufferAsync('image/jpeg');
+                                })
+                                .then((buffer) => buffer as any)
+                                .catch((err) => {
+                                    console.log("ERROR BEE")
+                                    console.log(err)
+                                });
+                        } catch (e) {
+                            bufferPack.thumbBuf = bufferPack.mainBuf;
+                        }
                         break;
                     }
                     // Process WEBPs
@@ -601,7 +603,8 @@ export class MediaUploadService {
 
                     // Set the AWS S3 bucket key
                     let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
-                    
+                    theMainKey = encodeURIComponent(theMainKey);
+
                     // Specify S3 upload options
                     let uploadParamsMain = {
                         Bucket: this.awsS3Service.getBucket(),
@@ -615,7 +618,9 @@ export class MediaUploadService {
 
                     // Upload the file to S3
                     await this.awsS3Service.upload(uploadParamsMain, function(s3Err, data) {
-                        if (s3Err) throw s3Err;
+                        console.log(colors.yellow('ERROR: s3Err'));
+                        console.log(s3Err);
+                        throw s3Err;
                     });
 
                     // Update the return dictionary with the main photo URL
@@ -635,7 +640,7 @@ export class MediaUploadService {
                 fs.writeFileSync(snapshotPath, '');
 
                 try {
-                    await extractVideoPreview({
+                    await extractFrame({
                         input: tempPath,
                         output: snapshotPath,
                         offset: 1000 // seek offset in milliseconds
@@ -660,8 +665,8 @@ export class MediaUploadService {
                         )
                         .then((buffer) => buffer as any)
                         .catch((err) => {
+                            console.log(colors.yellow('Video thumb buffer failed'));
                             console.log(err);
-                            throw 'File upload failed';
                         });
 
                     // Delete the temp file
@@ -670,11 +675,12 @@ export class MediaUploadService {
                     // Upload the video as a stream
                     // Set the AWS S3 bucket key
                     let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
+                    theMainKey = encodeURIComponent(theMainKey);
 
                     fs.readFile(tempPath, function(err, data) {
                         if (err) {
+                            console.log(colors.yellow('Video file read failed'));
                             console.log('fs error:' + err);
-                            throw 'File upload failed';
                         } else {
                             // Specify S3 upload options
                             let uploadParamsMain = {
@@ -689,8 +695,8 @@ export class MediaUploadService {
                             // Upload the file as a stream
                             this.s3.putObject(uploadParamsMain, function(err, data) {
                                 if (err) {
+                                    console.log(colors.yellow('Video S3 PUT failed'));
                                     console.log('Error putting object on S3: ', err);
-                                    throw 'File upload failed';
                                 }
                             });
                         }
@@ -721,6 +727,7 @@ export class MediaUploadService {
 
             // Set the AWS S3 bucket key
             let theThumbKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}__thumb.${varPack.thumbSuffix}`;
+            theThumbKey = encodeURIComponent(theThumbKey);
 
             // Specify S3 upload options
             let uploadParamsThumb = {
@@ -735,7 +742,11 @@ export class MediaUploadService {
 
             // Upload the file to S3
             await this.awsS3Service.upload(uploadParamsThumb, function(s3Err, data) {
-                if (s3Err) throw s3Err;
+                if (s3Err) {
+                    console.log(colors.yellow('ERROR: s3Err'));
+                    console.log(s3Err);
+                    throw s3Err;
+                } ;
             });
 
             // Update the return dictionary with the thumbnail URL
