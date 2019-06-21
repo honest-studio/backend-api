@@ -5,6 +5,7 @@ import { DWebp } from 'cwebp';
 import * as extractVideoPreview from 'ffmpeg-extract-frame';
 import * as fs from 'fs';
 const axios = require('axios');
+import { blobToArrayBuffer } from 'blob-util';
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
 import * as imagemin_Jpegtran from 'imagemin-jpegtran';
@@ -105,22 +106,19 @@ export class MediaUploadService {
 
     // Fetch a file from an external URL
     getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
-        axios({
+        return axios({
             url: inputPack.url,
             method: 'GET',
             responseType: 'arraybuffer',
-        }).then((response) => {
+        }).then(response => {
             let fileBuffer = response.data;
-            let mimeResult = fileType(fileBuffer);
-            console.log(mimeResult)
-            // const url = window.URL.createObjectURL(new Blob([response.data]));
-            // const link = document.createElement('a');
-            // link.href = url;
-            // link.setAttribute('download', 'file.pdf'); //or any other extension
-            // document.body.appendChild(link);
-            // link.click();
-        });
-        return fetchUrl(inputPack.url);
+            let mimePack: MimePack = fileType(fileBuffer);
+            return {
+                file_buffer: fileBuffer,
+                mime_pack: mimePack,
+                category: this.linkCategorizer(inputPack.url),
+            }
+        })
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image

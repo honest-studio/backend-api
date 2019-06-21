@@ -56,7 +56,7 @@ export interface MimePack {
 }
 
 export interface FileFetchResult {
-    file: File,
+    file_buffer: Buffer,
     mime_pack: MimePack;
     category: CitationCategoryType;
 }
