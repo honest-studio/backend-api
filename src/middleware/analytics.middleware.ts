@@ -1,10 +1,10 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response } from 'express';
-import ua from 'universal-analytics';
+import { MysqlService } from '../feature-modules/database/mysql-service';
 
 @Injectable()
-export class GoogleAnalyticsMiddleware implements NestMiddleware {
-    private readonly client = ua('UA-57561457-7');
+export class AnalyticsMiddleware implements NestMiddleware {
+    private constructor(private mysql: MysqlService) {}
 
     use(req: Request, res: Response, next: Function): void {
         const url = req.originalUrl;
@@ -13,7 +13,11 @@ export class GoogleAnalyticsMiddleware implements NestMiddleware {
         let query;
         if (parts[1]) query = parts[1];
         else query = '';
-        this.client.pageview(path, query).send();
+        this.mysql.TryQuery(`
+            INSERT INTO ep2_backend_requests (path, query, timestamp)
+            VALUES (?, ?, NOW())`,
+            [path, query]
+        );
         next();
     }
 }

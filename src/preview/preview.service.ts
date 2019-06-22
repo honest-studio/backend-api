@@ -130,7 +130,6 @@ export class PreviewService {
         //     .map((w) => [w.lang_code, w.slug])
         //     .reduce((flat, piece) => flat.concat(piece), []);
 
-        const or_clauses = [];
         const whereClause1 = wiki_identities.map((w) => { 
             let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
             return SqlString.format(

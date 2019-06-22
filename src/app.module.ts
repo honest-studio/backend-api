@@ -16,10 +16,9 @@ import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
-import { OAuthController, OAuthService } from './oauth';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 import {
-    GoogleAnalyticsMiddleware,
+    AnalyticsMiddleware,
     RequestIpMiddleware,
     JsonRequestMiddleware,
     CorsMiddleware,
@@ -152,7 +151,6 @@ const histogramLabelBuckets = ['pid']
         UserController,
         StatController,
         ContactUsController,
-        OAuthController,
         SitemapController
     ],
     providers: [
@@ -169,7 +167,6 @@ const histogramLabelBuckets = ['pid']
         UserService,
         StatService,
         ContactUsService,
-        OAuthService,
         SitemapService
     ]
 })
@@ -178,7 +175,7 @@ export class AppModule implements NestModule {
         //consumer.apply(RequestIpMiddleware).forRoutes('*');
         consumer.apply(CorsMiddleware).forRoutes('*');
         consumer.apply(MorganMiddleware).forRoutes('*');
-        consumer.apply(GoogleAnalyticsMiddleware).forRoutes('*');
+        consumer.apply(AnalyticsMiddleware).forRoutes('*');
 
         // Automatically set the Content-Type headers for the /v2/chain routes
         // Both eosjs and cleos don't set those headers explicitly, and Nestjs
