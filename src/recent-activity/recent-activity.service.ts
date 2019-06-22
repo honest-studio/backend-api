@@ -80,7 +80,9 @@ export class RecentActivityService {
             .limit(query.limit)
             .toArray();
 
-        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id);
+        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id)
+            .filter((v, i, a) => a.indexOf(v) === i);
+                
         const proposal_options = {
             preview: query.preview,
             diff: query.diff
