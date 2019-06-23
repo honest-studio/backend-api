@@ -297,8 +297,7 @@ export class WikiService {
             );
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY")){
-                console.log(colors.green('Duplicate submission. IPFS hash already exists'));
-                throw new BadRequestException("Duplicate submission. IPFS hash already exists");
+                console.log(colors.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
             }
             else throw e;
         }
