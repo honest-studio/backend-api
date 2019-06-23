@@ -64,11 +64,5 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     AZURE_STORAGE_ACCOUNT_NAME: Joi.string(),
     AZURE_STORAGE_ACCOUNT_KEY: Joi.string(),
     AZURE_STORAGE_CONTAINER: Joi.string(),
-    GOOGLE_ANALYTICS_TRACKING_ID: Joi.string(),
-    GOOGLE_ANALYTICS_VIEW_ID: Joi.string(),
-    GOOGLE_API_CLIENT_ID: Joi.string(),
-    GOOGLE_API_CLIENT_SECRET: Joi.string(),
-    GOOGLE_API_REFRESH_TOKEN: Joi.string(),
-    GOOGLE_API_REDIRECT_URI: Joi.string()
 });
 

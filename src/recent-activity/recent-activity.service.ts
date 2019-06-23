@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { EosAction } from '../feature-modules/database/mongodb-schema';
-import { OAuthService } from '../oauth/oauth.service';
 import { PreviewService } from '../preview/preview.service';
 import { Proposal, ProposalService } from '../proposal';
 
@@ -12,7 +11,6 @@ export class RecentActivityService {
         private mongo: MongoDbService,
         private proposalService: ProposalService,
         private mysql: MysqlService,
-        private oauthService: OAuthService,
         private previewService: PreviewService,
     ) {}
 
@@ -82,7 +80,9 @@ export class RecentActivityService {
             .limit(query.limit)
             .toArray();
 
-        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id);
+        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id)
+            .filter((v, i, a) => a.indexOf(v) === i);
+                
         const proposal_options = {
             preview: query.preview,
             diff: query.diff
@@ -93,60 +93,24 @@ export class RecentActivityService {
 
     async getTrendingWikis(langs: string[] = [], range: string = 'today', limit: number = 10) {
         if (range == 'today') {
-            const access_token = await this.oauthService.getGoogleAnalyticsToken();
-            let match_tokens;
-            if (langs.length > 0)
-                match_tokens = langs.map(lang => `/v2/wiki/slug/lang_${lang}`);
-            else
-                match_tokens = [`/v2/wiki/slug/lang_`];
+            const top_slugs: Array<any> = await this.mysql.TryQuery(
+                `
+                SELECT path, COUNT(*) AS pageviews 
+                FROM ep2_backend_requests
+                WHERE path LIKE "/v2/wiki/slug/%"
+                GROUP BY path
+                ORDER BY pageviews DESC
+                LIMIT ?
+                `,
+                [limit]
+            );
 
-            const now = new Date();
-            const yesterday = new Date(Date.now() - 24*3600*1000);
-            const startDate = yesterday.toISOString().split('T')[0];
-            const endDate = now.toISOString().split('T')[0];
-            const body = {
-                reportRequests: [
-                    {
-                        viewId: '192421339',
-                        dateRanges: [{ startDate, endDate }],
-                        dimensions: [{ name: 'ga:pagePath' }],
-                        dimensionFilterClauses: [
-                            {
-                                filters: [
-                                    {
-                                        dimensionName: 'ga:pagePath',
-                                        operator: 'PARTIAL',
-                                        expressions: match_tokens
-                                    }
-                                ]
-                            }
-                        ],
-                        metrics: [{ expression: 'ga:pageviews' }, { expression: 'ga:uniquePageviews' }],
-                        orderBys: [{ fieldName: 'ga:pageviews', sortOrder: 'DESCENDING' }]
-                    }
-                ]
-            };
-            const report = await fetch('https://analyticsreporting.googleapis.com/v4/reports:batchGet', {
-                method: 'POST',
-                body: JSON.stringify(body),
-                headers: {
-                    Authorization: `Bearer ${access_token.token}`
-                }
-            }).then((response) => response.json());
-
-            if (!report.reports[0].data.rows)
-                return [];
-
-            const trending = report.reports[0].data.rows
-            .slice(0, limit)
-            .map((row) => ({
-                slug: row.dimensions[0].slice(14).split('/')[1],
-                lang_code: row.dimensions[0].slice(14).split('/')[0].slice(5),
-                pageviews_today: Number(row.metrics[0].values[0]),
-                unique_pageviews_today: Number(row.metrics[0].values[1])
+            return top_slugs.map(row => ({
+                slug: row.path.substring(row.path.lastIndexOf('/') + 1),
+                lang_code: row.path.slice(19, row.path.lastIndexOf('/')),
+                pageviews_today: row.pageviews,
+                unique_pageviews_today: row.pageviews,
             }));
-
-            return trending;
         }
         else if (range == 'all') {
             const top_pages: Array<any> = await this.mysql.TryQuery(

@@ -428,19 +428,19 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/site-usage')
         .expect(200)
-  }, 30000);
+  }, 90000);
 
   it('Stat: Editor Leaderboard', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/editor-leaderboard')
         .expect(200)
-  });
+  }, 30000);
 
   it('Stat: Editor Leaderboard - All Time', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/editor-leaderboard?period=all-time')
         .expect(200)
-  });
+  }, 30000);
 
   it('Stat: Editor Leaderboard - Since long time', () => {
     return request(app.getHttpServer())
