@@ -29,21 +29,40 @@ export class WikiService {
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
-        let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
-            `
-            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
-            FROM enterlink_articletable AS art
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
-            [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code]
-        );
-        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
-        // Account for the boolean flipping issue being in old articles
-        const overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
+        // grab latest proposal if one exists
+        const last_prop = await this.mongo.connection().actions.find({
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo',
+            'trace.act.data.slug': slug,
+            'trace.act.data.lang_code': lang_code
+        })
+        .sort({ 'proposal_id': -1 })
+        .limit(1)
+        .toArray();
 
-        // Try and grab cached json wiki
-        const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+        let ipfs_hash;
+        let overrideIsIndexed = false;
+        if (last_prop.length > 0)
+            ipfs_hash = last_prop[0].trace.act.data.ipfs_hash;
+        else {
+            let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
+                `
+                SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND art.page_lang = ?`,
+                [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code]
+            );
+            if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
+
+            // Account for the boolean flipping issue being in old articles
+            overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
+
+            // Try and grab cached json wiki
+            ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+        }
+
         let cache_wiki;
         if (BooleanTools.default(cache)) {
             cache_wiki = await this.mongo.connection().json_wikis.findOne({
