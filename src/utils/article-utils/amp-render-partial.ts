@@ -771,7 +771,7 @@ export class AmpRenderPartial {
             <li>
                 ${
                     citation.thumb && citation.thumb != 'None'
-                        ? `<a class='avatar-wrap' data-attrib='${citation.attribution ? citation.attribution : "NONE"}' href="${
+                        ? `<a class='avatar-wrap' href="${
                               citation.url
                           }" title="Preview Thumbnail">
                         <amp-img alt='Thumbnail' class="link-image" width=50 height=50 layout="fixed" src="${
@@ -787,9 +787,9 @@ export class AmpRenderPartial {
                     <div class="link-url">
                         ${
                             citation.social_type && citation.social_type != 'None'
-                                ? `<span itemprop="sameAs"><a href="${citation.url}" class="link-box-url" data-attrib='${citation.attribution ? citation.attribution : "NONE"}' target="_blank">${citation.url}</a></span>`
+                                ? `<span itemprop="sameAs"><a href="${citation.url}" class="link-box-url" target="_blank">${citation.url}</a></span>`
                                 : true
-                                ? `<a href="${citation.url}" class="link-box-url" data-attrib='${citation.attribution ? citation.attribution : "NONE"}' target="_blank">${citation.url}</a>`
+                                ? `<a href="${citation.url}" class="link-box-url" target="_blank">${citation.url}</a>`
                                 : ``
                         }
                     </div>
