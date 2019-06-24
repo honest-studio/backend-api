@@ -707,56 +707,57 @@ export class MediaUploadService {
 
 
             console.log("About to await");
-            this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
-                if (s3ErrOuter){
-                    console.log(colors.yellow('ERROR: s3ErrOuter for main image'));
-                    console.log(s3ErrOuter);
-                    throw s3ErrOuter;
-                }
-                else {
-                    console.log("SETTING RETURNPACK FOR MAIN");
-                    // Update the return dictionary with the main photo URL
-                    // returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
-                    returnPack.mainPhotoURL = dataOuter.Location;
-                    returnPack.mime = varPack.mainMIME;
-                    returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
+            return new Promise((resolve, reject) => {
+                this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
+                    if (s3ErrOuter){
+                        console.log(colors.yellow('ERROR: s3ErrOuter for main image'));
+                        console.log(s3ErrOuter);
+                        reject(s3ErrOuter);
+                    }
+                    else {
+                        console.log("SETTING RETURNPACK FOR MAIN");
+                        // Update the return dictionary with the main photo URL
+                        // returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
+                        returnPack.mainPhotoURL = dataOuter.Location;
+                        returnPack.mime = varPack.mainMIME;
+                        returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
 
-                    // Create and upload the thumbnail
-                    // gzip the thumbnail
-                    bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+                        // Create and upload the thumbnail
+                        // gzip the thumbnail
+                        bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
 
-                    // Set the AWS S3 bucket key
-                    let theThumbKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}__thumb.${varPack.thumbSuffix}`;
-                    theThumbKey = encodeURIComponent(theThumbKey);
+                        // Set the AWS S3 bucket key
+                        let theThumbKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}__thumb.${varPack.thumbSuffix}`;
+                        theThumbKey = encodeURIComponent(theThumbKey);
 
-                    // Specify S3 upload options
-                    let uploadParamsThumb = {
-                        Bucket: this.awsS3Service.getBucket(),
-                        Key: theThumbKey,
-                        Body: bufferPack.thumbBuf,
-                        ACL: 'public-read',
-                        ContentType: varPack.thumbMIME,
-                        CacheControl: 'max-age=31536000',
-                        ContentEncoding: 'gzip'
-                    };
+                        // Specify S3 upload options
+                        let uploadParamsThumb = {
+                            Bucket: this.awsS3Service.getBucket(),
+                            Key: theThumbKey,
+                            Body: bufferPack.thumbBuf,
+                            ACL: 'public-read',
+                            ContentType: varPack.thumbMIME,
+                            CacheControl: 'max-age=31536000',
+                            ContentEncoding: 'gzip'
+                        };
 
-                    // Upload the file to S3
-                    this.awsS3Service.upload(uploadParamsThumb, (s3ErrInner, dataInner) => {
-                        if (s3ErrInner){
-                            console.log(colors.yellow('ERROR: s3ErrInner for thumb'));
-                            console.log(s3ErrInner);
-                            throw s3ErrInner;
-                        }
-                        else {
-                            console.log("SETTING RETURNPACK FOR THUMB");
-                            // Update the return dictionary with the thumbnail URL
-                            // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
-                            returnPack.thumbnailPhotoURL = dataInner.Location;
-                            console.log(returnPack)
-                            return returnPack;
-                        }
-                    });
-                }
+                        // Upload the file to S3
+                        this.awsS3Service.upload(uploadParamsThumb, (s3ErrInner, dataInner) => {
+                            if (s3ErrInner){
+                                console.log(colors.yellow('ERROR: s3ErrInner for thumb'));
+                                console.log(s3ErrInner);
+                                reject(s3ErrInner);
+                            }
+                            else {
+                                console.log("SETTING RETURNPACK FOR THUMB");
+                                // Update the return dictionary with the thumbnail URL
+                                // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
+                                returnPack.thumbnailPhotoURL = dataInner.Location;
+                                resolve(returnPack);
+                            }
+                        });
+                    }
+                });
             });
         } catch (e) {
             return null;
