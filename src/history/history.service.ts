@@ -1,24 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
-import { MongoDbService } from '../feature-modules/database';
+import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { Proposal, ProposalOptions, ProposalService } from '../proposal';
 
 @Injectable()
 export class HistoryService {
     constructor(
         private mongo: MongoDbService,
+        private mysql: MysqlService,
         private proposalService: ProposalService,
         private diffService: DiffService
     ) {}
 
     async getWikiHistory(lang_code: string, slug: string, options: ProposalOptions): Promise<Array<Proposal>> {
+        // the slugs are sometimes getting submitted with URL encoding
+        // idk why, I just work with what I have ¯\_(ツ)_/¯
+        // so we search for both regular and encoded slugs
+        const mysql_slug = this.mysql.cleanSlugForMysql(slug);
         const proposal_id_docs = await this.mongo
             .connection()
             .actions.find(
                 {
                     'trace.act.account': 'eparticlectr',
                     'trace.act.name': 'logpropinfo',
-                    'trace.act.data.slug': slug,
+                    $or: [
+                        { 'trace.act.data.slug': slug },
+                        { 'trace.act.data.slug': mysql_slug }
+                    ],
                     'trace.act.data.lang_code': lang_code
                 },
                 { projection: { 'trace.act.data.proposal_id': 1 } }
@@ -31,6 +39,8 @@ export class HistoryService {
             .map(Number);
 
         const proposals = await this.proposalService.getProposals(proposal_ids, options);
+
+        console.log(slug);
 
         return proposals;
     }
