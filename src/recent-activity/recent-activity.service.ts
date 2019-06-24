@@ -7,7 +7,7 @@ import { Proposal, ProposalService } from '../proposal';
 
 @Injectable()
 export class RecentActivityService {
-    private const TRENDING_CACHE_EXPIRE_MS = 10 * 60 * 1000;
+    private readonly TRENDING_CACHE_EXPIRE_MS = 10 * 60 * 1000;
 
     constructor(
         private mongo: MongoDbService,
