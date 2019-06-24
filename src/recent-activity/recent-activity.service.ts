@@ -103,7 +103,7 @@ export class RecentActivityService {
             if (cache) {
                 delete cache._id;
                 const cache_age = Date.now() - cache.timestamp.getTime();
-                if (cache_age < this.TRENDING_CACHE_EXPIRE_MS) return cache.trending;
+                if (cache_age < this.TRENDING_CACHE_EXPIRE_MS) return cache.trending.slice(0, limit);
             }
 
             // No cache? Compute it
@@ -114,9 +114,9 @@ export class RecentActivityService {
                 WHERE path LIKE "/v2/wiki/slug/%"
                 GROUP BY path
                 ORDER BY pageviews DESC
-                LIMIT ?
+                LIMIT 100
                 `,
-                [limit]
+                []
             );
 
             const trending = top_slugs.map(row => ({
@@ -135,7 +135,7 @@ export class RecentActivityService {
             await this.mongo.connection().statistics.deleteMany({ key: 'trending_pages', range });
             this.mongo.connection().statistics.insertOne(doc);
 
-            return trending;
+            return trending.slice(0, limit);
         }
         else if (range == 'all') {
             const top_pages: Array<any> = await this.mysql.TryQuery(
