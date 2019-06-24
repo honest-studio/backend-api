@@ -7,6 +7,8 @@ import { Proposal, ProposalService } from '../proposal';
 
 @Injectable()
 export class RecentActivityService {
+    private readonly TRENDING_CACHE_EXPIRE_MS = 10 * 60 * 1000;
+
     constructor(
         private mongo: MongoDbService,
         private proposalService: ProposalService,
@@ -93,6 +95,18 @@ export class RecentActivityService {
 
     async getTrendingWikis(langs: string[] = [], range: string = 'today', limit: number = 10) {
         if (range == 'today') {
+            // check cache first
+            const cache = await this.mongo.connection().statistics.findOne({ 
+                key: 'trending_pages',
+                range
+            });
+            if (cache) {
+                delete cache._id;
+                const cache_age = Date.now() - cache.timestamp.getTime();
+                if (cache_age < this.TRENDING_CACHE_EXPIRE_MS) return cache.trending;
+            }
+
+            // No cache? Compute it
             const top_slugs: Array<any> = await this.mysql.TryQuery(
                 `
                 SELECT path, COUNT(*) AS pageviews 
@@ -105,12 +119,23 @@ export class RecentActivityService {
                 [limit]
             );
 
-            return top_slugs.map(row => ({
+            const trending = top_slugs.map(row => ({
                 slug: row.path.substring(row.path.lastIndexOf('/') + 1),
                 lang_code: row.path.slice(19, row.path.lastIndexOf('/')),
                 pageviews_today: row.pageviews,
                 unique_pageviews_today: row.pageviews,
             }));
+
+            const doc = {
+                key: 'trending_pages', 
+                timestamp: new Date(),
+                range, 
+                trending
+            };
+            await this.mongo.connection().statistics.deleteMany({ key: 'trending_pages', range });
+            this.mongo.connection().statistics.insertOne(doc);
+
+            return trending;
         }
         else if (range == 'all') {
             const top_pages: Array<any> = await this.mysql.TryQuery(
