@@ -28,7 +28,9 @@ const getYouTubeID = require('get-youtube-id');
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
 
-const TEMP_DIR = path.join(__dirname, 'tmp-do-not-delete');
+// const TEMP_DIR = path.join(__dirname, 'tmp-do-not-delete');
+// const TEMP_DIR = path.join('tmp');
+const TEMP_DIR = '/tmp';
 const PHOTO_CONSTANTS = {
     CROPPED_WIDTH: 1201,
     CROPPED_HEIGHT: 1201,
@@ -612,6 +614,7 @@ export class MediaUploadService {
 
                     // Set some variables
                     varPack.suffix = mimePack.ext;
+                    varPack.mainMIME = mimePack.mime;
                     varPack.thumbSuffix = 'jpeg';
                     varPack.thumbMIME = 'image/jpeg';
 
@@ -633,62 +636,24 @@ export class MediaUploadService {
                             console.log(err);
                         });
 
-                    // Delete the temp file
-                    await fs.unlinkSync(snapshotPath);
-
-                    // Upload the video as a stream
-                    // Set the AWS S3 bucket key
-                    let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
-                    theMainKey = encodeURIComponent(theMainKey);
-
-                    fs.readFile(tempPath, function(err, data) {
-                        if (err) {
-                            console.log(colors.yellow('Video file read failed'));
-                            console.log('fs error:' + err);
-                        } else {
-                            // Specify S3 upload options
-                            let uploadParamsMain = {
-                                Bucket: this.awsS3Service.getBucket(),
-                                Key: theMainKey,
-                                Body: data,
-                                ACL: 'public-read',
-                                ContentType: mimePack.mime,
-                                CacheControl: 'max-age=31536000'
-                            };
-
-                            // Upload the file as a stream
-                            this.awsS3Service.upload(uploadParamsMain, function(err, data) {
-                                if (err) {
-                                    console.log(colors.yellow('Video S3 PUT failed'));
-                                    console.log('Error putting object on S3: ', err);
-                                }
-                            });
-                        }
-                    });
-
-                    // Delete the temp file
-                    await fs.unlinkSync(tempPath);
-
-                    // Update the return dictionary with the main photo URL
-                    returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
-                    returnPack.mime = mimePack.mime;
-                    returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
-
                 } catch (err) {
                     console.log(err);
-
-                    // Delete the temp files
-                    await fs.unlinkSync(tempPath);
-                    await fs.unlinkSync(snapshotPath);
                 }
+
+                // Delete the temp files
+                await fs.unlinkSync(tempPath);
+                await fs.unlinkSync(snapshotPath);
             } else if (mimePack.mime.includes('audio')) {
                 // TODO: Audio support
             }
 
             // gzip the main file
-            bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
-                level: zlib.constants.Z_BEST_COMPRESSION
-            });
+            if (!mimePack.mime.includes('video')){
+                bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
+                    level: zlib.constants.Z_BEST_COMPRESSION
+                });
+            }
+
 
             // Set the AWS S3 bucket key
             let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
@@ -702,11 +667,12 @@ export class MediaUploadService {
                 ACL: 'public-read',
                 ContentType: varPack.mainMIME,
                 CacheControl: 'max-age=31536000',
-                ContentEncoding: 'gzip'
             };
 
+            if (!mimePack.mime.includes('video')){
+                uploadParamsMain['ContentEncoding'] = 'gzip';
+            }
 
-            console.log("About to await");
             return new Promise((resolve, reject) => {
                 this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
                     if (s3ErrOuter){
@@ -715,7 +681,6 @@ export class MediaUploadService {
                         reject(s3ErrOuter);
                     }
                     else {
-                        console.log("SETTING RETURNPACK FOR MAIN");
                         // Update the return dictionary with the main photo URL
                         // returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
                         returnPack.mainPhotoURL = dataOuter.Location;
@@ -749,10 +714,10 @@ export class MediaUploadService {
                                 reject(s3ErrInner);
                             }
                             else {
-                                console.log("SETTING RETURNPACK FOR THUMB");
                                 // Update the return dictionary with the thumbnail URL
                                 // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
                                 returnPack.thumbnailPhotoURL = dataInner.Location;
+                                console.log(returnPack);
                                 resolve(returnPack);
                             }
                         });
