@@ -21,7 +21,8 @@
     "server:status": "ssh beekeeper@api.everipedia.org 'pm2 logs --nostream && systemctl status mongodb && systemctl --user status ep2-synconly'",
     "server:reload": "ssh beekeeper@api.everipedia.org 'pm2 reload backend'",
     "server:restart-mongo": "ssh beekeeper@api.everipedia.org 'sudo systemctl restart mongodb && pm2 reload backend && systemctl --user restart ep2-synconly'",
-    "deploy:prod": "ssh beekeeper@api.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'"
+    "deploy:prod": "ssh beekeeper@apitest.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'",
+    "deploy:backup": "ssh beekeeper@frontend.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'"
   },
   "dependencies": {
     "@nestjs/common": "^6.3.1",
