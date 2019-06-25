@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import sizeOf from 'buffer-image-size';
 import * as crypto from 'crypto';
 import { DWebp } from 'cwebp';
-import * as extractVideoPreview from 'ffmpeg-extract-frame';
+const extractFrame = require('ffmpeg-extract-frame')
 import * as fs from 'fs';
 const axios = require('axios');
 import * as imagemin from 'imagemin';
@@ -20,14 +20,17 @@ import { StringDecoder } from 'string_decoder';
 import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
-import { extractFrames } from './gif-extract-frames';
+const extractGIFFrames = require('./gif-extract-frames')
+var colors = require('colors');
 import { MediaUploadResult, MimePack, PhotoExtraData, FileFetchResult } from './media-upload-dto';
 const fileType = require('file-type');
 const getYouTubeID = require('get-youtube-id');
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
 
-const TEMP_DIR = path.join(__dirname, 'tmp');
+// const TEMP_DIR = path.join(__dirname, 'tmp-do-not-delete');
+// const TEMP_DIR = path.join('tmp');
+const TEMP_DIR = '/tmp';
 const PHOTO_CONSTANTS = {
     CROPPED_WIDTH: 1201,
     CROPPED_HEIGHT: 1201,
@@ -105,22 +108,19 @@ export class MediaUploadService {
 
     // Fetch a file from an external URL
     getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
-        axios({
+        return axios({
             url: inputPack.url,
             method: 'GET',
             responseType: 'arraybuffer',
-        }).then((response) => {
+        }).then(response => {
             let fileBuffer = response.data;
-            let mimeResult = fileType(fileBuffer);
-            console.log(mimeResult)
-            // const url = window.URL.createObjectURL(new Blob([response.data]));
-            // const link = document.createElement('a');
-            // link.href = url;
-            // link.setAttribute('download', 'file.pdf'); //or any other extension
-            // document.body.appendChild(link);
-            // link.click();
-        });
-        return fetchUrl(inputPack.url) as Promise<FileFetchResult>;
+            let mimePack: MimePack = fileType(fileBuffer);
+            return {
+                file_buffer: fileBuffer,
+                mime_pack: mimePack,
+                category: this.linkCategorizer(inputPack.url),
+            }
+        })
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
@@ -197,7 +197,6 @@ export class MediaUploadService {
             // Find the MIME type and the extension
             let theMIME = mimeClass.getType(inputString);
             let theExtension = mimeClass.getExtension(theMIME);
-
             // Test for different categories
             if (theMIME == '' || theMIME == null) {
                 return 'NONE';
@@ -207,9 +206,9 @@ export class MediaUploadService {
                 return 'PICTURE';
             } else if (this.getYouTubeIdIfPresent(inputString)) {
                 return 'YOUTUBE';
-            } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
+            } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
                 return 'NORMAL_VIDEO';
-            } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension)) {
+            } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
                 return 'AUDIO';
             } else {
                 return 'NONE';
@@ -239,11 +238,11 @@ export class MediaUploadService {
     }
 
     // Get a png buffer from the first frame of a GIF. Will be used as the GIF's thumbnail.
-    async getPNGFrameFromGIF(gifBuffer: Buffer): Promise<any[]> {
+    async getPNGFrameFromGIF(gifBuffer: Buffer): Promise<Buffer> {
 
         try {
             // Get the PNG stream first
-            const pngStream = await extractFrames({
+            const pngStream = await extractGIFFrames({
                 input_buffer: gifBuffer,
                 input_mime: 'image/gif'
             });
@@ -297,15 +296,15 @@ export class MediaUploadService {
             let includeMainPhoto: boolean = true;
 
             // Set the thumbnail width and height
-            if (uploadType == 'ProfilePicture' || uploadType == 'NewlinkFiles') {
-                thumbWidth = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
-                thumbHeight = PHOTO_CONSTANTS.CROPPED_THUMB_HEIGHT;
-                includeMainPhoto = true;
-            } else if (uploadType == 'GalleryMediaItem') {
-                thumbWidth = PHOTO_CONSTANTS.CROPPED_META_THUMB_WIDTH;
-                thumbHeight = PHOTO_CONSTANTS.CROPPED_META_THUMB_HEIGHT;
-                includeMainPhoto = false;
-            }
+            // if (uploadType == 'ProfilePicture' || uploadType == 'NewlinkFiles') {
+            //     thumbWidth = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
+            //     thumbHeight = PHOTO_CONSTANTS.CROPPED_THUMB_HEIGHT;
+            //     includeMainPhoto = true;
+            // } else if (uploadType == 'GalleryMediaItem') {
+            //     thumbWidth = PHOTO_CONSTANTS.CROPPED_META_THUMB_WIDTH;
+            //     thumbHeight = PHOTO_CONSTANTS.CROPPED_META_THUMB_HEIGHT;
+            //     includeMainPhoto = false;
+            // }
 
 
 
@@ -326,7 +325,7 @@ export class MediaUploadService {
                 returnDict: returnMiniDict,
                 mime: '',
                 category: 'NONE'
-             };
+            };
 
             // Determine how to move forward based on the MIME type
             if (mimePack.mime.includes('image')) {
@@ -449,25 +448,28 @@ export class MediaUploadService {
                         // Must resize to fit 1201x1201 to help with AMP
                         // FIX THIS LATER
                         bufferPack.thumbBuf = bufferPack.mainBuf;
-                        // await this.getPNGFrameFromGIF(mediaBuffer)
-                            // .then((pngFrame) => {
-                            //     console.log(pngFrame);
-                            //     return pngFrame;
-                            //     // return Jimp.read(pngFrame)
-                            // })
-                            // .then((image) => { 
-                                
-                            //     return image
-                            //     .background(0xffffffff)
-                            //     .scaleToFit(mainWidth, mainHeight)
-                            //     .quality(85)
-                            //     .getBufferAsync('image/jpeg');
-                            // })
-                            // .then((buffer) => buffer as any)
-                            // .catch((err) => {
-                            //     console.log("ERROR BEE")
-                            //     console.log(err)
-                            // });
+                        // try {
+                        //     bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer)
+                        //         .then((pngFrame) => {
+                        //             console.log(pngFrame);
+                        //             // return pngFrame;
+                        //             return Jimp.read(pngFrame)
+                        //         })
+                        //         .then((image) => { 
+                        //             return image
+                        //             .background(0xffffffff)
+                        //             .scaleToFit(mainWidth, mainHeight)
+                        //             .quality(85)
+                        //             .getBufferAsync('image/jpeg');
+                        //         })
+                        //         .then((buffer) => buffer as any)
+                        //         .catch((err) => {
+                        //             console.log("ERROR BEE")
+                        //             console.log(err)
+                        //         });
+                        // } catch (e) {
+                        //     bufferPack.thumbBuf = bufferPack.mainBuf;
+                        // }
                         break;
                     }
                     // Process WEBPs
@@ -593,39 +595,6 @@ export class MediaUploadService {
                         break;
                     }
                 }
-
-                // Create and upload the main file
-                if (includeMainPhoto) {
-                    // gzip the main file
-                    bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
-                        level: zlib.constants.Z_BEST_COMPRESSION
-                    });
-
-                    // Set the AWS S3 bucket key
-                    let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
-                    
-                    // Specify S3 upload options
-                    let uploadParamsMain = {
-                        Bucket: this.awsS3Service.getBucket(),
-                        Key: theMainKey,
-                        Body: bufferPack.mainBuf,
-                        ACL: 'public-read',
-                        ContentType: varPack.mainMIME,
-                        CacheControl: 'max-age=31536000',
-                        ContentEncoding: 'gzip'
-                    };
-
-                    // Upload the file to S3
-                    await this.awsS3Service.upload(uploadParamsMain, function(s3Err, data) {
-                        if (s3Err) throw s3Err;
-                    });
-
-                    // Update the return dictionary with the main photo URL
-                    returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
-                    returnPack.mime = varPack.mainMIME;
-                    returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
-                    
-                }
             } else if (mimePack.mime.includes('video')) {
                 // Because of various shenanigans, you need to write the buffer to /tmp first...
                 var tempFileNameInput =
@@ -637,7 +606,7 @@ export class MediaUploadService {
                 fs.writeFileSync(snapshotPath, '');
 
                 try {
-                    await extractVideoPreview({
+                    await extractFrame({
                         input: tempPath,
                         output: snapshotPath,
                         offset: 1000 // seek offset in milliseconds
@@ -645,6 +614,7 @@ export class MediaUploadService {
 
                     // Set some variables
                     varPack.suffix = mimePack.ext;
+                    varPack.mainMIME = mimePack.mime;
                     varPack.thumbSuffix = 'jpeg';
                     varPack.thumbMIME = 'image/jpeg';
 
@@ -662,89 +632,98 @@ export class MediaUploadService {
                         )
                         .then((buffer) => buffer as any)
                         .catch((err) => {
+                            console.log(colors.yellow('Video thumb buffer failed'));
                             console.log(err);
-                            throw 'File upload failed';
                         });
-
-                    // Delete the temp file
-                    await fs.unlinkSync(snapshotPath);
-
-                    // Upload the video as a stream
-                    // Set the AWS S3 bucket key
-                    let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
-
-                    fs.readFile(tempPath, function(err, data) {
-                        if (err) {
-                            console.log('fs error:' + err);
-                            throw 'File upload failed';
-                        } else {
-                            // Specify S3 upload options
-                            let uploadParamsMain = {
-                                Bucket: this.awsS3Service.getBucket(),
-                                Key: theMainKey,
-                                Body: data,
-                                ACL: 'public-read',
-                                ContentType: mimePack.mime,
-                                CacheControl: 'max-age=31536000'
-                            };
-
-                            // Upload the file as a stream
-                            this.s3.putObject(uploadParamsMain, function(err, data) {
-                                if (err) {
-                                    console.log('Error putting object on S3: ', err);
-                                    throw 'File upload failed';
-                                }
-                            });
-                        }
-                    });
-
-                    // Delete the temp file
-                    await fs.unlinkSync(tempPath);
-
-                    // Update the return dictionary with the main photo URL
-                    returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
-                    returnPack.mime = mimePack.mime;
-                    returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
 
                 } catch (err) {
                     console.log(err);
-
-                    // Delete the temp files
-                    await fs.unlinkSync(tempPath);
-                    await fs.unlinkSync(snapshotPath);
                 }
+
+                // Delete the temp files
+                await fs.unlinkSync(tempPath);
+                await fs.unlinkSync(snapshotPath);
             } else if (mimePack.mime.includes('audio')) {
                 // TODO: Audio support
             }
 
-            // Create and upload the thumbnail
-            // gzip the thumbnail
-            bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+            // gzip the main file
+            if (!mimePack.mime.includes('video')){
+                bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
+                    level: zlib.constants.Z_BEST_COMPRESSION
+                });
+            }
+
 
             // Set the AWS S3 bucket key
-            let theThumbKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}__thumb.${varPack.thumbSuffix}`;
+            let theMainKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}.${varPack.suffix}`;
+            theMainKey = encodeURIComponent(theMainKey);
 
             // Specify S3 upload options
-            let uploadParamsThumb = {
+            let uploadParamsMain = {
                 Bucket: this.awsS3Service.getBucket(),
-                Key: theThumbKey,
-                Body: bufferPack.thumbBuf,
+                Key: theMainKey,
+                Body: bufferPack.mainBuf,
                 ACL: 'public-read',
-                ContentType: varPack.thumbMIME,
+                ContentType: varPack.mainMIME,
                 CacheControl: 'max-age=31536000',
-                ContentEncoding: 'gzip'
             };
 
-            // Upload the file to S3
-            await this.awsS3Service.upload(uploadParamsThumb, function(s3Err, data) {
-                if (s3Err) throw s3Err;
+            if (!mimePack.mime.includes('video')){
+                uploadParamsMain['ContentEncoding'] = 'gzip';
+            }
+
+            return new Promise((resolve, reject) => {
+                this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
+                    if (s3ErrOuter){
+                        console.log(colors.yellow('ERROR: s3ErrOuter for main image'));
+                        console.log(s3ErrOuter);
+                        reject(s3ErrOuter);
+                    }
+                    else {
+                        // Update the return dictionary with the main photo URL
+                        // returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
+                        returnPack.mainPhotoURL = dataOuter.Location;
+                        returnPack.mime = varPack.mainMIME;
+                        returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
+
+                        // Create and upload the thumbnail
+                        // gzip the thumbnail
+                        bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+
+                        // Set the AWS S3 bucket key
+                        let theThumbKey = `${uploadType}/${lang}/${slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))}/${filename}__thumb.${varPack.thumbSuffix}`;
+                        theThumbKey = encodeURIComponent(theThumbKey);
+
+                        // Specify S3 upload options
+                        let uploadParamsThumb = {
+                            Bucket: this.awsS3Service.getBucket(),
+                            Key: theThumbKey,
+                            Body: bufferPack.thumbBuf,
+                            ACL: 'public-read',
+                            ContentType: varPack.thumbMIME,
+                            CacheControl: 'max-age=31536000',
+                            ContentEncoding: 'gzip'
+                        };
+
+                        // Upload the file to S3
+                        this.awsS3Service.upload(uploadParamsThumb, (s3ErrInner, dataInner) => {
+                            if (s3ErrInner){
+                                console.log(colors.yellow('ERROR: s3ErrInner for thumb'));
+                                console.log(s3ErrInner);
+                                reject(s3ErrInner);
+                            }
+                            else {
+                                // Update the return dictionary with the thumbnail URL
+                                // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
+                                returnPack.thumbnailPhotoURL = dataInner.Location;
+                                console.log(returnPack);
+                                resolve(returnPack);
+                            }
+                        });
+                    }
+                });
             });
-
-            // Update the return dictionary with the thumbnail URL
-            returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
-
-            // Return some information about the uploads
-            return returnPack;
         } catch (e) {
             return null;
         }
