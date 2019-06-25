@@ -17,47 +17,52 @@ export class StatService {
     private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
-        // TEMPORARY: Just pull the cache no matter what
-        const cache = await this.mongo.connection().statistics.findOne({ 
-            key: 'editor_leaderboard',
-            period: options.period
-        });
-        if (cache) return cache.editor_rewards.slice(0, options.limit);
+        // temporarily force all month and all-time leaderboard queries
+        // to the cache. running these queries bricks the server
+        // today and this-week don't require a cache so this is basically 
+        // ignoring options.cache
+        if (options.period == 'all-time' || 
+            options.period == 'this-month') {
+            const cache = await this.mongo.connection().statistics.findOne({ 
+                key: 'editor_leaderboard',
+                period: options.period
+            });
+            if (cache) {
+                delete cache._id;
+                return cache.editor_rewards.slice(0, options.limit);
+            }
+        }
 
-        //    if (cache) {
-        // pull from cache if available
-        //if (options.cache) {
-        //    const cache = await this.mongo.connection().statistics.findOne({ 
-        //        key: 'editor_leaderboard',
-        //        period: options.period
-        //    });
-        //    if (cache) {
-        //        delete cache._id;
-        //        const cache_age = Date.now() - cache.timestamp.getTime();
-        //        if (cache_age < this.EDITOR_LEADERBOARD_CACHE_EXPIRE_MS) return cache.editor_rewards.slice(0, options.limit);
-        //    }
-        //}
+        const approx_head_block_res = await this.mongo.connection().actions.find({
+            'trace.act.account': 'everipediaiq',
+            'trace.act.name': 'transfer'
+        })
+        .sort({ block_num: -1 })
+        .limit(1)
+        .toArray();
+        const approx_head_block = approx_head_block_res[0].block_num;
 
-        let starttime;
+        let startblock;
         if (options.since) {
-            starttime = options.since * 1000;
+            const secsDiff = (Date.now() / 1000 | 0) - options.since;
+            startblock = approx_head_block - 2*secsDiff;
         } else if (options.period == 'today') {
-            starttime = Date.now() - 24 * 3600 * 1000;
+            startblock = approx_head_block - 2*86400;
         } else if (options.period == 'this-week') {
-            starttime = Date.now() - 7 * 24 * 3600 * 1000;
+            startblock = approx_head_block - 2*86400*7;
         } else if (options.period == 'this-month') {
-            starttime = Date.now() - 30 * 24 * 3600 * 1000;
+            startblock = approx_head_block - 2*86400*30;
         } else if (options.period == 'all-time') {
-            starttime = 0;
+            startblock = 15000000;
         }
         let editor_rewards = await this.mongo
             .connection()
             .actions.mapReduce(
-                `function () { emit( this.trace.act.data.to, new Date(this.block_time) > ${starttime} ? Number(this.trace.act.data.quantity.split(' ')[0]) : 0) }`,
+                `function () { emit( this.trace.act.data.to, Number(this.trace.act.data.quantity.split(' ')[0]) ) }`,
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
-                        'block_num': { $gt: 15000000 },
+                        'block_num': { $gt: startblock },
                         'trace.act.account': 'everipediaiq',
                         'trace.act.name': 'issue'
                     },
@@ -71,13 +76,16 @@ export class StatService {
             .sort((a, b) => b.value - a.value)
             .slice(0, 100)
             .map((doc) => ({ user: doc._id, cumulative_iq_rewards: Number(doc.value.toFixed(3)) }));
+
+        // Get number of edits and votes per user
         let edits = await this.mongo
             .connection()
             .actions.mapReduce(
-                `function () { emit( this.trace.act.data.proposer, new Date(this.block_time) > ${starttime} ? 1:0) }`,
+                `function () { emit( this.trace.act.data.proposer, 1) }`,
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
+                        'block_num': { $gt: startblock },
                         'trace.act.account': 'eparticlectr',
                         '$or': [
                             { 'trace.act.name': 'propose' },
@@ -88,12 +96,34 @@ export class StatService {
                 }
             );
         edits = edits.filter(e => e.value > 0);
+        let votes = await this.mongo
+            .connection()
+            .actions.mapReduce(
+                `function () { emit( this.trace.act.data.voter, 1) }`,
+                'function (key, values) { return Array.sum(values) }',
+                {
+                    query: {
+                        'block_num': { $gt: startblock },
+                        'trace.act.account': 'eparticlectr',
+                        '$or': [
+                            { 'trace.act.name': 'votebyhash' },
+                            { 'trace.act.name': 'vote' }
+                        ]
+                    },
+                    out: { inline: 1 }
+                }
+            );
+        edits = edits.filter(e => e.value > 0);
 
-        // assign number of edits to editor
+        // assign number of edits and votes to editor
         for (let i in editor_rewards) {
             const edits_row = edits.find(row => row._id == editor_rewards[i].user);
             if (edits_row) editor_rewards[i].edits = edits_row.value;
             else editor_rewards[i].edits = 0;
+
+            const votes_row = votes.find(row => row._id == editor_rewards[i].user);
+            if (votes_row) editor_rewards[i].votes = votes_row.value;
+            else editor_rewards[i].votes = 0;
         }
 
         // clear old cache and cache new result
@@ -103,8 +133,7 @@ export class StatService {
             timestamp: new Date(),
             editor_rewards
         };
-        this.mongo.connection().statistics.deleteMany({ key: 'editor_leaderboard', period: options.period });
-        this.mongo.connection().statistics.insertOne(doc);
+        this.mongo.connection().statistics.replaceOne({ key: 'editor_leaderboard', period: options.period }, doc, { upsert: true });
 
         return editor_rewards.slice(0, options.limit);
     }

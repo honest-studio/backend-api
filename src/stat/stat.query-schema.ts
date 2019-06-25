@@ -5,7 +5,7 @@ const StatQuerySchema = {
     limit: Joi.number().integer().min(1).max(100).default(10),
     period: Joi.boolean()
         .valid('today', 'this-week', 'this-month', 'all-time')
-        .default('all-time'),
+        .default('today'),
     since: Joi.number()
 };
 
