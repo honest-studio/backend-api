@@ -17,18 +17,26 @@ export class StatService {
     private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
+        // TEMPORARY: Just pull the cache no matter what
+        const cache = await this.mongo.connection().statistics.findOne({ 
+            key: 'editor_leaderboard',
+            period: options.period
+        });
+        if (cache) return cache.editor_rewards.slice(0, options.limit);
+
+        //    if (cache) {
         // pull from cache if available
-        if (options.cache) {
-            const cache = await this.mongo.connection().statistics.findOne({ 
-                key: 'editor_leaderboard',
-                period: options.period
-            });
-            if (cache) {
-                delete cache._id;
-                const cache_age = Date.now() - cache.timestamp.getTime();
-                if (cache_age < this.EDITOR_LEADERBOARD_CACHE_EXPIRE_MS) return cache.editor_rewards.slice(0, options.limit);
-            }
-        }
+        //if (options.cache) {
+        //    const cache = await this.mongo.connection().statistics.findOne({ 
+        //        key: 'editor_leaderboard',
+        //        period: options.period
+        //    });
+        //    if (cache) {
+        //        delete cache._id;
+        //        const cache_age = Date.now() - cache.timestamp.getTime();
+        //        if (cache_age < this.EDITOR_LEADERBOARD_CACHE_EXPIRE_MS) return cache.editor_rewards.slice(0, options.limit);
+        //    }
+        //}
 
         let starttime;
         if (options.since) {
@@ -102,15 +110,19 @@ export class StatService {
     }
 
     async siteUsage(use_cache: boolean = true): Promise<any> {
+        // TEMPORARY: Just return the cache no matter what
+        const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
+        if (cache) return cache;
+
         // pull from cache if available
-        if (use_cache) {
-            const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
-            if (cache) {
-                delete cache._id;
-                const cache_age = Date.now() - cache.timestamp.getTime();
-                if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
-            }
-        }
+        //if (use_cache) {
+        //    const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
+        //    if (cache) {
+        //        delete cache._id;
+        //        const cache_age = Date.now() - cache.timestamp.getTime();
+        //        if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
+        //    }
+        //}
 
         const total_article_count: Array<any> = await this.mysql.TryQuery(
             `SELECT COUNT(*) AS num_articles FROM enterlink_articletable`
