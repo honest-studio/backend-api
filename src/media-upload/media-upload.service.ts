@@ -447,29 +447,29 @@ export class MediaUploadService {
                         // Get a PNG frame from the GIF, resize, then compress it to a JPEG
                         // Must resize to fit 1201x1201 to help with AMP
                         // FIX THIS LATER
-                        // bufferPack.thumbBuf = bufferPack.mainBuf;
-                        try {
-                            bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer)
-                                .then((pngFrame) => {
-                                    console.log(pngFrame);
-                                    // return pngFrame;
-                                    return Jimp.read(pngFrame)
-                                })
-                                .then((image) => { 
-                                    return image
-                                    .background(0xffffffff)
-                                    .scaleToFit(mainWidth, mainHeight)
-                                    .quality(85)
-                                    .getBufferAsync('image/jpeg');
-                                })
-                                .then((buffer) => buffer as any)
-                                .catch((err) => {
-                                    console.log("ERROR BEE")
-                                    console.log(err)
-                                });
-                        } catch (e) {
-                            bufferPack.thumbBuf = bufferPack.mainBuf;
-                        }
+                        bufferPack.thumbBuf = bufferPack.mainBuf;
+                        // try {
+                        //     bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer)
+                        //         .then((pngFrame) => {
+                        //             console.log(pngFrame);
+                        //             // return pngFrame;
+                        //             return Jimp.read(pngFrame)
+                        //         })
+                        //         .then((image) => { 
+                        //             return image
+                        //             .background(0xffffffff)
+                        //             .scaleToFit(mainWidth, mainHeight)
+                        //             .quality(85)
+                        //             .getBufferAsync('image/jpeg');
+                        //         })
+                        //         .then((buffer) => buffer as any)
+                        //         .catch((err) => {
+                        //             console.log("ERROR BEE")
+                        //             console.log(err)
+                        //         });
+                        // } catch (e) {
+                        //     bufferPack.thumbBuf = bufferPack.mainBuf;
+                        // }
                         break;
                     }
                     // Process WEBPs
