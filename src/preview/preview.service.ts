@@ -64,7 +64,9 @@ export class PreviewService {
             FROM enterlink_articletable AS art 
             INNER JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id
-            WHERE cache.ipfs_hash IN (?)`,
+            WHERE cache.ipfs_hash IN (?)
+            AND art.is_removed = 0
+            `,
             [ipfs_hashes]
         );
 
@@ -161,7 +163,9 @@ export class PreviewService {
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE ${whereClause1}`;
+            WHERE 
+                ${whereClause1}
+                AND COALESCE(art_redir.is_removed, art.is_removed) = 0`;
         const query2 = `
             SELECT 
                 COALESCE (art_redir.page_title, art.page_title) AS page_title,
@@ -178,7 +182,9 @@ export class PreviewService {
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE ${whereClause2}`;
+            WHERE 
+                ${whereClause2}
+                AND COALESCE(art_redir.is_removed, art.is_removed) = 0`;
         const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);

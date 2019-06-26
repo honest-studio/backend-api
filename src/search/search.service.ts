@@ -93,7 +93,9 @@ export class SearchService {
                 art.creation_timestamp,
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art
-            WHERE art.id IN (?) 
+            WHERE 
+                art.id IN (?)
+                AND art.is_removed = 0
             ORDER BY FIELD(art.id, ?)`,
             [canonical_ids, canonical_ids]
         );

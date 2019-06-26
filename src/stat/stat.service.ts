@@ -154,11 +154,16 @@ export class StatService {
         //}
 
         const total_article_count: Array<any> = await this.mysql.TryQuery(
-            `SELECT COUNT(*) AS num_articles FROM enterlink_articletable`
+            `SELECT COUNT(*) AS num_articles 
+            FROM enterlink_articletable
+            WHERE art.is_removed = 0
+            `
         );
 
         const total_pageviews: Array<any> = await this.mysql.TryQuery(
-            `SELECT SUM(pageviews) AS pageviews FROM enterlink_articletable`
+            `SELECT SUM(pageviews) AS pageviews 
+            FROM enterlink_articletable art
+            WHERE art.is_removed = 0`
         );
 
         let total_edits: any = await this.mongo
