@@ -436,6 +436,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Stat: Editor Leaderboard - This Week', () => {
+    return request(app.getHttpServer())
+        .get('/v2/stat/editor-leaderboard')
+        .expect(200)
+  });
+
   it('Stat: Editor Leaderboard - All Time', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/editor-leaderboard?period=all-time')
