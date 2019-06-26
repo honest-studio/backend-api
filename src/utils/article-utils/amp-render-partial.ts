@@ -9,8 +9,13 @@ import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from './arti
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];
+    public sanitizedVariables = {
+        page_title: ""
+    }
 
-    constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {}
+    constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
+        this.sanitizedVariables.page_title = this.artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
+    }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
         let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
@@ -73,24 +78,24 @@ export class AmpRenderPartial {
             ${is_indexed ? '' : '<meta name="googlebot" content="noindex, nofollow, noarchive" />'}
             ${
                 page_type == 'Person'
-                    ? `<title>${this.artJSON.page_title[0].text} | Wiki & Bio | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki & Bio |" />`
+                    ? `<title>${this.sanitizedVariables.page_title} | Wiki & Bio | Everipedia</title>
+                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki & Bio |" />`
                     : page_type == 'Product'
-                    ? `<title>${this.artJSON.page_title[0].text} | Wiki & Review | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki & Review |" />`
+                    ? `<title>${this.sanitizedVariables.page_title} | Wiki & Review | Everipedia</title>
+                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki & Review |" />`
                     : page_type == 'Organization'
-                    ? `<title>${this.artJSON.page_title[0].text} | Wiki & Review | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki & Review |" />`
+                    ? `<title>${this.sanitizedVariables.page_title} | Wiki & Review | Everipedia</title>
+                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki & Review |" />`
                     : page_type
-                    ? `<title>${this.artJSON.page_title[0].text} | Wiki | Everipedia</title>
-                <meta property="og:title" content="${this.artJSON.page_title[0].text}"/>
-                <meta name="twitter:title" content="${this.artJSON.page_title[0].text} | Wiki |" />`
+                    ? `<title>${this.sanitizedVariables.page_title} | Wiki | Everipedia</title>
+                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki |" />`
                     : ''
             }
-            <meta property="article:tag" content="${this.artJSON.page_title[0].text}" />
+            <meta property="article:tag" content="${this.sanitizedVariables.page_title}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
             <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
@@ -188,15 +193,15 @@ export class AmpRenderPartial {
                             alt="
                                 ${
                                     page_type == 'Person'
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} bio`
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} bio`
                                         : page_type == 'Product'
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review`
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review`
                                         : page_type == 'Organization'
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review, ${
-                                              this.artJSON.page_title[0].text
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review, ${
+                                              this.sanitizedVariables.page_title
                                           } history`
                                         : true
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} history`
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} history`
                                         : ``
                                 }
                         ">
@@ -211,15 +216,15 @@ export class AmpRenderPartial {
                             alt="
                                 ${
                                     page_type == 'Person'
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} bio`
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} bio`
                                         : page_type == 'Product'
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review`
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review`
                                         : page_type == 'Organization'
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} review, ${
-                                              this.artJSON.page_title[0].text
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review, ${
+                                              this.sanitizedVariables.page_title
                                           } history`
                                         : true
-                                        ? `${this.artJSON.page_title[0].text} wiki, ${this.artJSON.page_title[0].text} history`
+                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} history`
                                         : ``
                                 }
                         ">
@@ -249,7 +254,7 @@ export class AmpRenderPartial {
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
         const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
-        const page_title = this.artJSON.page_title[0].text;
+        const page_title = this.sanitizedVariables.page_title;
 
         return `
             <div class="name-container">
@@ -766,7 +771,7 @@ export class AmpRenderPartial {
                 return result.text;
             })
             .join('');
-
+        
         return `
             <li>
                 ${
@@ -1182,15 +1187,16 @@ export class AmpRenderPartial {
     };
 
     renderOneLanguage = (langPack: LanguagePack): string => {
+        let sanitizedTitle = langPack.article_title.replace(/["“”‘’]/gm, "\'");
         return `
             <li class="lang-li">
                 <a rel="nofollow" href="/wiki/lang_${langPack.lang}/${langPack.slug}">
                     <amp-img class="mini-lang-flag" height="35" width="35" layout="fixed" alt="${
-                        langPack.article_title
+                        sanitizedTitle
                     }" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${
             langPack.lang
         }.png"></amp-img>
-                    <span class="mini-lang-title">${langPack.article_title}</span>
+                    <span class="mini-lang-title">${sanitizedTitle}</span>
                 </a>
             </li>
         `;
@@ -1231,7 +1237,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "{{ PAGETITLE }}" // TODO: FIX
+                        "title": "${this.artJSON.page_title[0].text}"
                         }
                     }
                     }

@@ -62,7 +62,7 @@ export class PreviewService {
                 art.creation_timestamp,
                 art.lastmod_timestamp
             FROM enterlink_articletable AS art 
-            JOIN enterlink_hashcache AS cache
+            INNER JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id
             WHERE cache.ipfs_hash IN (?)`,
             [ipfs_hashes]
@@ -147,35 +147,37 @@ export class PreviewService {
         
         const query1 = `
             SELECT 
-                art.page_title, 
-                art.slug,
-                art.photo_url AS main_photo, 
-                art.photo_thumb_url AS thumbnail,
-                art.page_lang AS lang_code,
-                art.ipfs_hash_current AS ipfs_hash, 
-                art.blurb_snippet AS text_preview, 
-                art.pageviews, 
-                art.page_note,
-                art.is_adult_content, 
-                art.creation_timestamp,
-                art.lastmod_timestamp
+                COALESCE (art_redir.page_title, art.page_title) AS page_title,
+                COALESCE (art_redir.slug, art.slug) AS slug,
+                COALESCE (art_redir.photo_url, art.photo_url) AS main_photo,
+                COALESCE (art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
+                COALESCE (art_redir.page_lang, art.page_lang) AS lang_code,
+                COALESCE (art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash,
+                COALESCE (art_redir.blurb_snippet, art.blurb_snippet) AS text_preview,
+                COALESCE (art_redir.pageviews, art.pageviews) AS pageviews,
+                COALESCE (art_redir.page_note, art.page_note) AS page_note,
+                COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
+                COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
+                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art 
+            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE ${whereClause1}`;
         const query2 = `
             SELECT 
-                art.page_title, 
-                art.slug,
-                art.photo_url AS main_photo, 
-                art.photo_thumb_url AS thumbnail,
-                art.page_lang AS lang_code,
-                art.ipfs_hash_current AS ipfs_hash, 
-                art.blurb_snippet AS text_preview, 
-                art.pageviews, 
-                art.page_note,
-                art.is_adult_content, 
-                art.creation_timestamp,
-                art.lastmod_timestamp
+                COALESCE (art_redir.page_title, art.page_title) AS page_title,
+                COALESCE (art_redir.slug, art.slug) AS slug,
+                COALESCE (art_redir.photo_url, art.photo_url) AS main_photo,
+                COALESCE (art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
+                COALESCE (art_redir.page_lang, art.page_lang) AS lang_code,
+                COALESCE (art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash,
+                COALESCE (art_redir.blurb_snippet, art.blurb_snippet) AS text_preview,
+                COALESCE (art_redir.pageviews, art.pageviews) AS pageviews,
+                COALESCE (art_redir.page_note, art.page_note) AS page_note,
+                COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
+                COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
+                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art 
+            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE ${whereClause2}`;
         const query = `${query1} UNION ALL ${query2}`;
 
