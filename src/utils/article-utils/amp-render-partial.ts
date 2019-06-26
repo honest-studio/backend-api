@@ -1231,7 +1231,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "{{ PAGETITLE }}" // TODO: FIX
+                        "title": "${this.artJSON.page_title[0].text}"
                         }
                     }
                     }
