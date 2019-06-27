@@ -66,6 +66,7 @@ export class WikiService {
             [ipfs_hash]
         );
         let wiki: ArticleJson;
+        let cachePresent = false;
         try {
             // check if wiki is already in JSON format
             // return it immediately if it is
@@ -75,38 +76,44 @@ export class WikiService {
                 else return obj;
             });
             
-            return infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
+            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
         } catch {
             // if the wiki is not in JSON format, try and return the cache first
-            if (cache_wiki) return infoboxDtoPatcher(mergeMediaIntoCitations(cache_wiki));
+            if (cache_wiki){
+                wiki = infoboxDtoPatcher(mergeMediaIntoCitations(cache_wiki));
+                cachePresent = true;
+            }
+            else{
+                // if the cache isn't available either, generate and return it
+                wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
+                wiki.metadata = wiki.metadata.map((obj) => {
+                    if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
+                    else return obj;
+                });
+                wiki.ipfs_hash = ipfs_hash;
 
-            // if the cache isn't available either, generate and return it
-            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
-            wiki.metadata = wiki.metadata.map((obj) => {
-                if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
-                else return obj;
-            });
-            wiki.ipfs_hash = ipfs_hash;
+                // some wikis don't have page langs set
+                if (!wiki.metadata.find((w) => w.key == 'page_lang'))
+                    wiki.metadata.push({ key: 'page_lang', value: lang_code });
+            }
 
-            // some wikis don't have page langs set
-            if (!wiki.metadata.find((w) => w.key == 'page_lang'))
-                wiki.metadata.push({ key: 'page_lang', value: lang_code });
+
         }
 
-
-        // cache wiki - upsert so that cache=false updates the cache
-        this.mongo
-            .connection()
-            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
-            .catch(console.log);
-
-
-        
-        const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp').value;
-        const mobile_cache_timestamp = wiki.metadata.find(w => w.key == 'mobile_cache_timestamp').value;
+        const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp') 
+                                    ? wiki.metadata.find(w => w.key == 'lastmod_timestamp').value 
+                                    : '1919-12-31 00:00:00';
+        const mobile_cache_timestamp = wiki.metadata.find(w => w.key == 'mobile_cache_timestamp') 
+                                    ? wiki.metadata.find(w => w.key == 'mobile_cache_timestamp').value
+                                    : '1919-12-31 00:00:00';
 
         // If the page has been modified since the last prerender, recache it
-        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+        // console.log(lastmod_timestamp);
+        // console.log(mobile_cache_timestamp);
+        // console.log(mobile_cache_timestamp <= lastmod_timestamp);
+        // if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+        if (false){
+            console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             let payload = {
                 "prerenderToken": prerenderToken,
@@ -117,13 +124,20 @@ export class WikiService {
             .then(response => {
                 return response;
             })
-            console.log(result)
+            //console.log(result)
 
-            this.incrementPageviewCount(lang_code, mysql_slug, false, true );
+            // Update the cache timestamp too in the same query to save overhead
+            this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
-    
 
+        // cache wiki - upsert so that cache=false updates the cache
+        if (!cachePresent){
+            this.mongo
+            .connection()
+            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
+            .catch(console.log);
+        }
 
         return wiki;
     }
@@ -373,6 +387,7 @@ export class WikiService {
                     const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
                     const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
                     const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+                    const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
                     const article_insertion = await this.mysql.TryQuery(
                         `
                         INSERT INTO enterlink_articletable 
@@ -381,7 +396,7 @@ export class WikiService {
                         ON DUPLICATE KEY UPDATE 
                             ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
                             page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
-                            desktop_cache_timestamp=0, mobile_cache_timestamp=0
+                            is_removed=?, desktop_cache_timestamp=0, mobile_cache_timestamp=0
                         `,
                         [
                             ipfs_hash,
@@ -401,7 +416,8 @@ export class WikiService {
                             photo_thumb_url,
                             page_type,
                             is_adult_content,
-                            is_indexed
+                            is_indexed,
+                            is_removed
                         ]
                     )
             
