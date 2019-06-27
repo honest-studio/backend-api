@@ -34,7 +34,11 @@ export class WikiService {
             SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) AND (art.page_lang = ? OR art_redir.page_lang = ?)`,
+            WHERE 
+                ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                AND COALESCE(art_redir.is_removed, art.is_removed) = 0
+            `,
             [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code, lang_code]
         );
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
@@ -381,7 +385,10 @@ export class WikiService {
                             id,
                             page_title
                         FROM enterlink_articletable AS art 
-                        WHERE page_lang = ? AND slug = ?
+                        WHERE 
+                            page_lang = ? 
+                            AND slug = ?
+                            AND art.is_removed = 0
                         `,
                         [page_lang, cleanedSlug]
                     );
