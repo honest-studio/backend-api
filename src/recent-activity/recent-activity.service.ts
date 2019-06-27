@@ -146,7 +146,6 @@ export class RecentActivityService {
                     art.ipfs_hash_current AS ipfs_hash, 
                     art.pageviews AS pageviews
                 FROM enterlink_articletable AS art 
-                WHERE art.is_removed = 0
                 ORDER BY pageviews DESC
                 LIMIT ?`,
                 [limit]
