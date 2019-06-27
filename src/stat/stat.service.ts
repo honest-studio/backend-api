@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
+import * as BooleanTools from 'boolean';
 
 export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
@@ -140,30 +141,40 @@ export class StatService {
 
     async siteUsage(use_cache: boolean = true): Promise<any> {
         // TEMPORARY: Just return the cache no matter what
-        const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
-        if (cache) return cache;
+        // const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
+        // if (cache) return cache;
 
         // pull from cache if available
-        //if (use_cache) {
-        //    const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
-        //    if (cache) {
-        //        delete cache._id;
-        //        const cache_age = Date.now() - cache.timestamp.getTime();
-        //        if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
-        //    }
-        //}
-
+        // console.log("cache: ", BooleanTools.default(use_cache))
+        if (BooleanTools.default(use_cache)) {
+           const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
+           if (cache) {
+               const cache_age = Date.now() - cache.timestamp.getTime();
+               if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
+               else delete cache._id;
+           }
+        }
+        
         const total_article_count: Array<any> = await this.mysql.TryQuery(
             `SELECT COUNT(*) AS num_articles 
-            FROM enterlink_articletable
-            WHERE art.is_removed = 0
-            `
+            FROM enterlink_articletable art
+            WHERE 
+                art.is_removed = 0
+                AND art.redirect_page_id IS NULL
+            `,
+            [],
+            60000
         );
 
         const total_pageviews: Array<any> = await this.mysql.TryQuery(
             `SELECT SUM(pageviews) AS pageviews 
             FROM enterlink_articletable art
-            WHERE art.is_removed = 0`
+            WHERE 
+                art.is_removed = 0
+                AND art.redirect_page_id IS NULL
+            `,
+            [],
+            180000
         );
 
         let total_edits: any = await this.mongo
@@ -203,14 +214,16 @@ export class StatService {
             `SELECT COUNT(*) AS count 
             FROM enterlink_articletable 
             WHERE 
-                page_note IS NULL AND
-                redirect_page_id IS NULL AND
-                is_removed = 0`,
+                page_note IS NULL
+                AND redirect_page_id IS NULL
+                AND is_removed = 0`,
             [],
-            20000
+            60000
         )
+        
         const original_pages = (original_pages_rows != undefined) && 
                                (original_pages_rows.length > 0 ? original_pages_rows[0].count : 0);
+
 
         // clear old cache and cache new result
         const doc = {
