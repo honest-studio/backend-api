@@ -126,7 +126,7 @@ export class AmpRenderPartial {
                 <ul>
                     <li class="amp-header-toc">
                         <button on='tap:sidebar.toggle'>
-                            <amp-img height="24" width="30" layout="fixed" alt="{% trans 'Table of contents and facts for this wiki' %}" src="https://epcdn-vz.azureedge.net/static/images/bull-icon.png" ></amp-img>
+                            <amp-img height="24" width="30" layout="fixed" alt="Table of contents and facts for this wiki" src="https://epcdn-vz.azureedge.net/static/images/bull-icon.png" ></amp-img>
                         </button>
                     </li>
                     <li class="amp-header-logo">
@@ -137,7 +137,7 @@ export class AmpRenderPartial {
                     <li class="amp-header-menu">
                         <button on='tap:usermenu-lightbox'>
                         <span class="bull-menu">
-                            <amp-img height="25" width="7" layout="fixed" alt="{% trans 'Bullet' %}" src="https://epcdn-vz.azureedge.net/static/images/bull-menu.png" ></amp-img>
+                            <amp-img height="25" width="7" layout="fixed" alt="Bullet" src="https://epcdn-vz.azureedge.net/static/images/bull-menu.png" ></amp-img>
                         </span>
                         </button>
                     </li>
@@ -878,7 +878,7 @@ export class AmpRenderPartial {
             <section expanded>
                 <h2 class="acc-header" >See Also
                     <span class="icon"><i class="fa fa-chevron-down"></i>
-                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="{% trans 'See related encyclopedia articles, biographies, reviews, and historical facts.' %}" />
+                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="See related encyclopedia articles, biographies, reviews, and historical facts." />
                     </span>
                 </h2>
                 <div>

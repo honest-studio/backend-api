@@ -2,11 +2,12 @@ import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErro
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import * as BooleanTools from 'boolean';
 import * as fetch from 'node-fetch';
+import * as axios from 'axios';
 import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async/dynamic';
 import * as SqlString from 'sqlstring';
 import { URL } from 'url';
 import { CacheService } from '../cache';
-import { IpfsService } from '../common';
+import { IpfsService, ConfigService } from '../common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
@@ -25,6 +26,7 @@ export class WikiService {
         private mediaUploadService: MediaUploadService,
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
+        private config: ConfigService
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
@@ -98,7 +100,30 @@ export class WikiService {
             .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
             .catch(console.log);
 
-        this.incrementPageviewCount(lang_code, mysql_slug);
+
+        
+        const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp').value;
+        const mobile_cache_timestamp = wiki.metadata.find(w => w.key == 'mobile_cache_timestamp').value;
+
+        // If the page has been modified since the last prerender, recache it
+        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+            const prerenderToken = this.config.get('PRERENDER_TOKEN');
+            let payload = {
+                "prerenderToken": prerenderToken,
+                "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}/amp`
+            }
+    
+            let result = await axios.default.post('https://api.prerender.io/recache', payload)
+            .then(response => {
+                return response;
+            })
+            console.log(result)
+
+            this.incrementPageviewCount(lang_code, mysql_slug, false, true );
+        }
+        else this.incrementPageviewCount(lang_code, mysql_slug);
+    
+
 
         return wiki;
     }
@@ -110,6 +135,7 @@ export class WikiService {
         ampWiki.main_photo[0].height = photoExtraData.height;
         ampWiki.main_photo[0].mime = photoExtraData.mime;
         const wikiExtraInfo = await this.getWikiExtras(lang_code, slug);
+
         return renderAMP(ampWiki, wikiExtraInfo);
     }
 
@@ -354,7 +380,8 @@ export class WikiService {
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
                         ON DUPLICATE KEY UPDATE 
                             ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
-                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?
+                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
+                            desktop_cache_timestamp=0, mobile_cache_timestamp=0
                         `,
                         [
                             ipfs_hash,
@@ -419,12 +446,16 @@ export class WikiService {
         return { ipfs_hash };
     }
 
-    async incrementPageviewCount(lang_code: string, slug: string): Promise<boolean> {
+    async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
+        let desktopCacheString = setDesktopCache ? "AND desktop_cache_timestamp=NOW() ": "";
+        let mobileCacheString = setMobileCache ? "AND mobile_cache_timestamp=NOW() ": "";
         return this.mysql.TryQuery(
             `
             UPDATE enterlink_articletable 
             SET pageviews = pageviews + 1
-            WHERE page_lang= ? AND slug = ?
+            WHERE page_lang= ? AND slug = ? 
+            ${desktopCacheString}
+            ${mobileCacheString}
             `,
             [lang_code, slug]
         );
