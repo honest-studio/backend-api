@@ -166,8 +166,7 @@ export class PreviewService {
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
-                ${whereClause1}
-                and COALESCE (art_redir.is_removed, art.is_removed) = 0`;
+                ${whereClause1}`;
         const query2 = `
             SELECT 
                 COALESCE (art_redir.page_title, art.page_title) AS page_title,
@@ -186,8 +185,7 @@ export class PreviewService {
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
-                ${whereClause2}
-                and COALESCE (art_redir.is_removed, art.is_removed) = 0`;
+                ${whereClause2}`;
         const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
