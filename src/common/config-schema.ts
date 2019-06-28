@@ -64,5 +64,6 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     AZURE_STORAGE_ACCOUNT_NAME: Joi.string(),
     AZURE_STORAGE_ACCOUNT_KEY: Joi.string(),
     AZURE_STORAGE_CONTAINER: Joi.string(),
+    PRERENDER_TOKEN: Joi.string().required(),
 });
 
