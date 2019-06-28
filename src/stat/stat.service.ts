@@ -141,8 +141,8 @@ export class StatService {
 
     async siteUsage(use_cache: boolean = true): Promise<any> {
         // TEMPORARY: Just return the cache no matter what
-        // const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
-        // if (cache) return cache;
+        const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
+        if (cache) return cache;
 
         // pull from cache if available
         // console.log("cache: ", BooleanTools.default(use_cache))
