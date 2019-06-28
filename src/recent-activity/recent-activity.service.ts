@@ -107,16 +107,18 @@ export class RecentActivityService {
             }
 
             // No cache? Compute it
+            const one_day_ago = new Date(Date.now() - 24*3600*1000).toISOString().slice(0, 19).replace('T', ' ');
             const top_slugs: Array<any> = await this.mysql.TryQuery(
                 `
                 SELECT path, COUNT(*) AS pageviews 
                 FROM ep2_backend_requests
                 WHERE path LIKE "/v2/wiki/slug/%"
+                    AND timestamp > ?
                 GROUP BY path
                 ORDER BY pageviews DESC
                 LIMIT 100
                 `,
-                []
+                [one_day_ago]
             );
 
             const trending = top_slugs.map(row => ({
