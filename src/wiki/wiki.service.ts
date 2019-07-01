@@ -30,7 +30,8 @@ export class WikiService {
     ) {}
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
-        const mysql_slug = this.mysql.cleanSlugForMysql(slug);
+        let mysql_slug = this.mysql.cleanSlugForMysql(slug);
+        let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
@@ -41,7 +42,7 @@ export class WikiService {
                 AND (art.page_lang = ? OR art_redir.page_lang = ?)
                 AND COALESCE(art_redir.is_removed, art.is_removed) = 0
             `,
-            [mysql_slug, mysql_slug, mysql_slug, mysql_slug, lang_code, lang_code]
+            [mysql_slug, mysql_slug, decodedSlug, decodedSlug, lang_code, lang_code]
         );
         if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 

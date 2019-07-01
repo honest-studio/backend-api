@@ -187,7 +187,7 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
         .get('/v2/wiki/slug/lang_en/aq%C5%9Fin-qurbanl%C4%B1')
         .expect(200)
-});
+  });
 
   it('Wiki: Get wiki redirect', () => {
     return request(app.getHttpServer())
