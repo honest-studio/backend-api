@@ -69,3 +69,15 @@ All of these require SSH access.
 * Restart IPFS: `systemctl --user restart ipfs`
 * Restart Backend API server: `systemctl --user restart ep2-backend`
 * Update .env: It is located at ~/ep2-backend/.env
+* package.json has some good commands too
+
+# PM2 Problems
+If you get `[PM2][ERROR] Process backend not found`, do this:
+pm2 update
+
+# Mongo Problems
+If you restart the Azure server, you will probably need to remount the disk.
+mkdir /data/db
+sudo mount /dev/sdc1 /data/db
+sudo chown mongodb:mongodb /data/db
+sudo chmod -R go+w /data/db
