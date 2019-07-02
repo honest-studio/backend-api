@@ -161,8 +161,7 @@ export class PreviewService {
                 COALESCE (art_redir.page_note, art.page_note) AS page_note,
                 COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
                 COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
-                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                COALESCE (art_redir.is_removed, art.is_removed) AS is_removed
+                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -180,8 +179,7 @@ export class PreviewService {
                 COALESCE (art_redir.page_note, art.page_note) AS page_note,
                 COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
                 COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
-                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                COALESCE (art_redir.is_removed, art.is_removed) AS is_removed
+                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
