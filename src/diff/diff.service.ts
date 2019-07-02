@@ -22,8 +22,8 @@ export class DiffService {
             })
             if (cached_diff) {
                 diffs.push(cached_diff);
-                continue;
             }
+            continue;
 
             const proposal = await this.mongo.connection().actions.findOne({
                 'trace.act.account': 'eparticlectr',
