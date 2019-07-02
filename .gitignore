@@ -8,6 +8,7 @@ dist
 build
 *.swp
 package-lock.json
+nginx.conf
 kylin.env
 mainnet.env
 synconly.env
