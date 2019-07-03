@@ -123,6 +123,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Proposal: Too Large Diff', () => {
+    return request(app.getHttpServer())
+        .get('/v2/proposal/3875?diff=full')
+        .expect(200)
+  });
+
   it('Proposal: Multiple proposals w/ preview', () => {
     return request(app.getHttpServer())
         .get('/v2/proposal/182,192,190?preview=true')
