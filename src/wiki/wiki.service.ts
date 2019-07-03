@@ -325,6 +325,7 @@ export class WikiService {
 
         // Save submission immediately so we don't lose data
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+        if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
         let wikiCopy: ArticleJson = wiki;
