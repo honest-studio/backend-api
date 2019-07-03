@@ -872,7 +872,7 @@ function sanitizeText($: CheerioStatic) {
     // Convert images inside wikitables and ul's to markup
     $('.wikitable img, .blurb-wrap ul img, .infobox img').each(function(i, el) {
         // Construct a dictionary
-        const src = urlCleaner($(this).attr('src'));
+        const src = urlCleaner($(this).attr('src')).replace(/http:/g, "https:");
         const srcSet = $(this).attr('srcset') || '';
         const height = $(this).attr('height');
         const width = $(this).attr('width');
