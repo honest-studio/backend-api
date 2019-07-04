@@ -235,6 +235,8 @@ function diffPageBody(old_page_body: Section[], new_page_body: Section[]): Secti
 
     const old_lines = old_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
     const new_lines = new_page_body.map(sectionToLines).join(SECTION_SEPARATOR);
+    if (old_lines.length + new_lines.length > 300000)
+        throw new Error(`Page body too large to diff`);
 
     const diff_json = JsDiff.diffLines(old_lines, new_lines);
 

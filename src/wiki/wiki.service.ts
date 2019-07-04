@@ -49,8 +49,31 @@ export class WikiService {
         // Account for the boolean flipping issue being in old articles
         const overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
 
+        // Make sure IPFS hash is most recent
+        let ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+        const latest_proposals = await this.mongo
+            .connection()
+            .actions.find(
+                {
+                    'trace.act.account': 'eparticlectr',
+                    'trace.act.name': 'logpropinfo',
+                    $or: [
+                        { 'trace.act.data.slug': slug },
+                        { 'trace.act.data.slug': mysql_slug }
+                    ],
+                    'trace.act.data.lang_code': lang_code
+                }
+            )
+            .sort({ 'trace.act.data.proposal_id': -1 })
+            .limit(1)
+            .toArray();
+        if (latest_proposals.length > 0) {
+            const latest_ipfs_hash = latest_proposals[0].trace.act.data.ipfs_hash;
+            if (latest_ipfs_hash != ipfs_hash)
+                ipfs_hash = latest_ipfs_hash;
+        }
+
         // Try and grab cached json wiki
-        const ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
         let cache_wiki;
         if (BooleanTools.default(cache)) {
             cache_wiki = await this.mongo.connection().json_wikis.findOne({
@@ -325,6 +348,7 @@ export class WikiService {
 
         // Save submission immediately so we don't lose data
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+        if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
         let wikiCopy: ArticleJson = wiki;
