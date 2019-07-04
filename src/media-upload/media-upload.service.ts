@@ -694,7 +694,6 @@ export class MediaUploadService {
                         // Set the AWS S3 bucket key
                         let theThumbSuffix = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}__thumb.${varPack.thumbSuffix}`;
                         let theThumbKey = `${uploadType}/${lang}/${theThumbSuffix}`;
-                        theThumbKey = encodeURIComponent(theThumbKey);
 
                         // Specify S3 upload options
                         let uploadParamsThumb = {
