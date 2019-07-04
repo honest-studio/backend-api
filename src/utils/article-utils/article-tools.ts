@@ -12,6 +12,14 @@ import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, U
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from './article-types';
 const normalizeUrl = require('normalize-url');
 
+export function compareURLs (firstURL: string, secondURL: string): Boolean {
+    if (firstURL == secondURL) return true;
+    else if (firstURL == encodeURIComponent(secondURL)) return true;
+    else if (encodeURIComponent(firstURL) == secondURL) return true;
+    else if (encodeURIComponent(firstURL) == encodeURIComponent(secondURL)) return true;
+    return false;
+}
+
 // Convert React attributes back into HTML ones
 const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
     if (!inputAttrs) return {};
@@ -671,7 +679,16 @@ export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
     if (modifiedWiki && modifiedWiki.media_gallery && modifiedWiki.media_gallery.length) {
         let startingCitationIndex = getFirstAvailableCitationIndex(modifiedWiki.citations);
         modifiedWiki.media_gallery.forEach((media, index) => {
-            modifiedWiki.citations.push(convertMediaToCitation(media, startingCitationIndex + index));
+            let replacedExisting = false;
+            modifiedWiki.citations.forEach((existingCtn, ctnArrIdx) => {
+                if (compareURLs(existingCtn.url, media.url)){
+                    modifiedWiki.citations[ctnArrIdx] = convertMediaToCitation(media, existingCtn.citation_id);
+                    replacedExisting = true;
+                }
+            })
+            if (!replacedExisting){
+                modifiedWiki.citations.push(convertMediaToCitation(media, startingCitationIndex + index));
+            }
         });
         modifiedWiki.media_gallery = [];
     }
