@@ -135,8 +135,8 @@ export class WikiService {
         // console.log(lastmod_timestamp);
         // console.log(mobile_cache_timestamp);
         // console.log(mobile_cache_timestamp <= lastmod_timestamp);
-        // if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
-        if (false){
+        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+        // if (false){
             console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             let payload = {
@@ -148,9 +148,9 @@ export class WikiService {
             .then(response => {
                 return response;
             })
-            //console.log(result)
+            // console.log(result)
 
-            // Update the cache timestamp too in the same query to save overhead
+            // Update the cache timestamp too in the pageview increment query to save overhead
             this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
@@ -488,15 +488,13 @@ export class WikiService {
     }
 
     async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
-        let desktopCacheString = setDesktopCache ? "AND desktop_cache_timestamp=NOW() ": "";
-        let mobileCacheString = setMobileCache ? "AND mobile_cache_timestamp=NOW() ": "";
+        let desktopCacheString = setDesktopCache ? ", desktop_cache_timestamp = NOW()": "";
+        let mobileCacheString = setMobileCache ? ", mobile_cache_timestamp = NOW()": "";
         return this.mysql.TryQuery(
             `
             UPDATE enterlink_articletable 
-            SET pageviews = pageviews + 1
+            SET pageviews = pageviews + 1${desktopCacheString}${mobileCacheString} 
             WHERE page_lang= ? AND slug = ? 
-            ${desktopCacheString}
-            ${mobileCacheString}
             `,
             [lang_code, slug]
         );
