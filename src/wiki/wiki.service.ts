@@ -124,6 +124,15 @@ export class WikiService {
 
         }
 
+        // cache wiki - upsert so that cache=false updates the cache
+        if (!cachePresent){
+            this.mongo
+            .connection()
+            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
+            .catch(console.log);
+        }
+
+
         const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp') 
                                     ? wiki.metadata.find(w => w.key == 'lastmod_timestamp').value 
                                     : '1919-12-31 00:00:00';
@@ -132,36 +141,24 @@ export class WikiService {
                                     : '1919-12-31 00:00:00';
 
         // If the page has been modified since the last prerender, recache it
-        // console.log(lastmod_timestamp);
-        // console.log(mobile_cache_timestamp);
-        // console.log(mobile_cache_timestamp <= lastmod_timestamp);
         if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
-        // if (false){
-            console.log("Refreshing prerender")
+            // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             let payload = {
                 "prerenderToken": prerenderToken,
                 "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}/amp`
             }
     
-            let result = await axios.default.post('https://api.prerender.io/recache', payload)
+            // Send the recache request
+            await axios.default.post('https://api.prerender.io/recache', payload)
             .then(response => {
                 return response;
             })
-            // console.log(result)
 
             // Update the cache timestamp too in the pageview increment query to save overhead
             this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
-
-        // cache wiki - upsert so that cache=false updates the cache
-        if (!cachePresent){
-            this.mongo
-            .connection()
-            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
-            .catch(console.log);
-        }
 
         return wiki;
     }
@@ -419,9 +416,9 @@ export class WikiService {
                             (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
                         ON DUPLICATE KEY UPDATE 
-                            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
+                            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
                             page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
-                            is_removed=?, desktop_cache_timestamp=0, mobile_cache_timestamp=0
+                            is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL
                         `,
                         [
                             ipfs_hash,
