@@ -45,7 +45,6 @@ export const renderAMPHoverLink = (inputArticle: ArticleJson, targetUrl: string)
             <div class="hvrblrb-ajax-blurb ${optionalClass}">
                 <a rel='nofollow' class="name-block cls-newlink" href="#" onclick="newWindow();">
                     ${CITATION_URL}
-                    <span class="icon icon-export"></span>
                 </a>
                 <div class="hvrlnk-cite-container">
                     <div class="hvrlnk-cite-avatar-extras-container">

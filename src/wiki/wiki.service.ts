@@ -185,6 +185,9 @@ export class WikiService {
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
         let json_wikis = [];
 
+
+
+
         // try to directly fetch cached json wikis
         const cached_json_wikis = await this.mongo
             .connection()
@@ -217,7 +220,8 @@ export class WikiService {
         //    }
         //}
 
-        const uncached_hashes = ipfs_hashes.filter((hash) => !json_wikis.find((json) => json.ipfs_hash == hash));
+        const uncached_hashes = ipfs_hashes.filter(hash => !json_wikis.find(json => json.ipfs_hash == hash));
+
         if (uncached_hashes.length > 0) {
             // fetch remainder from mysql if they exist
             const rows: Array<any> = await this.mysql.TryQuery(

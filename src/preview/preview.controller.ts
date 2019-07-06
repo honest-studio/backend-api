@@ -102,8 +102,8 @@ export class PreviewController {
         description: `An AMP HTML wiki encoded in UTF-8`
     })
     async getAMPHoverLink(@Param('ipfs_hash') ipfs_hash, @Query() options): Promise<string> {
-        const theArticle = this.wikiService.getWikisByHash([ipfs_hash]);
-        return renderAMPHoverLink(theArticle[0], options.target_url);
+        const theArticles = await this.wikiService.getWikisByHash([ipfs_hash]);
+        return renderAMPHoverLink(theArticles[0], options.target_url);
     }
 
     @Post('slugs')
