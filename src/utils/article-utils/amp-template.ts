@@ -1,6 +1,6 @@
+import { ArticleJson } from '../../types/article';
+import { WikiExtraInfo } from '../../types/article-helpers';
 import { AmpRenderPartial } from './amp-render-partial';
-import { ArticleJson } from './article-dto';
-import { WikiExtraInfo } from './article-types';
 const fs = require('fs');
 const crypto = require('crypto');
 

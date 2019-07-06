@@ -4,8 +4,8 @@ import * as SqlString from 'sqlstring';
 import { CacheService } from '../cache';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
 import { MysqlService } from '../feature-modules/database';
+import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
-import { WikiIdentity } from '../utils/article-utils/article-types';
 import { WikiService } from '../wiki';
 const pid = `PID-${process.pid}`;
 /**

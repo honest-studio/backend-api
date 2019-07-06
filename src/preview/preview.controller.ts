@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { renderAMPHoverCard } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
 
 @Controller('v2/preview')
@@ -57,6 +58,25 @@ export class PreviewController {
     async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
         return previews[0];
+    }
+
+    @Get('amp-hovercard/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get AMP Hovercard HTML for a given article' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `An AMP HTML wiki encoded in UTF-8`
+    })
+    async getAMPHoverCardBySlugCtrl(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
+        return renderAMPHoverCard(previews[0]);
     }
 
     @Post('slugs')

@@ -2,9 +2,9 @@ import CleanCSS from 'clean-css';
 import striptags from 'striptags';
 import urlSlug from 'url-slug';
 import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
+import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
+import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { styleNugget } from './amp-style';
-import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from './article-dto';
-import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from './article-types';
 
 
 export class AmpRenderPartial {

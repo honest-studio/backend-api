@@ -6,10 +6,10 @@ import MarkdownIt from 'markdown-it';
 import striptags from 'striptags';
 import decode from 'unescape';
 import urlSlug from 'url-slug';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow } from '../../types/article';
+import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow } from './article-dto';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
-import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from './article-types';
 const normalizeUrl = require('normalize-url');
 
 export function compareURLs (firstURL: string, secondURL: string): Boolean {
@@ -127,7 +127,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
                     'src',
-                    `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverblurb/${linkCodeAndSlugNoWiki}/`
+                    `https://api.everipedia.org/v2/preview/amp-hovercard/${linkCodeAndSlugNoWiki}/`
                 );
 
                 // Placeholder image (leave this here or it will cause stupid AMP problems)

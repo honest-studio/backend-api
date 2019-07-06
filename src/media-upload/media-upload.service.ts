@@ -2,9 +2,7 @@ import { Injectable } from '@nestjs/common';
 import sizeOf from 'buffer-image-size';
 import * as crypto from 'crypto';
 import { DWebp } from 'cwebp';
-const extractFrame = require('ffmpeg-extract-frame')
 import * as fs from 'fs';
-const axios = require('axios');
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
 import * as imagemin_Jpegtran from 'imagemin-jpegtran';
@@ -20,9 +18,11 @@ import { StringDecoder } from 'string_decoder';
 import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
+import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
+const extractFrame = require('ffmpeg-extract-frame')
+const axios = require('axios');
 const extractGIFFrames = require('./gif-extract-frames')
 var colors = require('colors');
-import { MediaUploadResult, MimePack, PhotoExtraData, FileFetchResult } from './media-upload-dto';
 const fileType = require('file-type');
 const getYouTubeID = require('get-youtube-id');
 const slugify = require('slugify');

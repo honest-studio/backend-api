@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as fetch from 'node-fetch';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { PreviewService } from '../preview/preview.service';

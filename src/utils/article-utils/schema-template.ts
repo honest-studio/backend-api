@@ -1,9 +1,8 @@
 import crypto from 'crypto';
 import striptags from 'striptags';
 import { CheckForLinksOrCitationsAMP } from '.';
-import { Sentence } from '../../utils/article-utils';
+import { ArticleJson, Sentence } from '../../types/article';
 import { getYouTubeID } from './article-converter';
-import { ArticleJson } from './article-dto';
 import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
 
 

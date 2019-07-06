@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { MongoDbService } from '../feature-modules/database';
+import { ArticleJson } from '../types/article';
 import { diffArticleJson } from '../utils/article-utils/article-differ';
-import { ArticleJson } from '../utils/article-utils/article-dto';
 import { WikiService } from '../wiki';
 
 @Injectable()

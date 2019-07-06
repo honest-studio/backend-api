@@ -4,7 +4,7 @@ import * as mimePackage from 'mime';
 import * as path from 'path';
 import { convert as ReactAttrConvert } from 'react-attr-converter';
 import * as tokenizer from 'sbd';
-import { ArticleJson, Citation, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from './article-dto';
+import { ArticleJson, Citation, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
 import { urlCleaner } from './article-tools';
 import * as JSONCycleCustom from './json-cycle-custom';
 var colors = require('colors');

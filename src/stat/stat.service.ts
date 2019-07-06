@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
 import * as BooleanTools from 'boolean';
+import { MongoDbService, MysqlService } from '../feature-modules/database';
 
 export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';

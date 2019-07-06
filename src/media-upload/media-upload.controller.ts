@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UploadedFile, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiImplicitFile, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { MediaUploadDto, FileFetchResult } from './media-upload-dto';
-import { UrlPack, MediaUploadService } from './media-upload.service';
+import { FileFetchResult, MediaUploadDto } from './media-upload-dto';
+import { MediaUploadService, UrlPack } from './media-upload.service';
 const path = require('path');
 
 @Controller('v2/media-upload')

@@ -1,29 +1,23 @@
-import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
-import { ProposalController, ProposalService } from './proposal';
-import { WikiController, WikiService } from './wiki';
-import { CommonModule, ConfigService, MetricsModule, MetricType } from './common';
-import { RecentActivityController } from './recent-activity/recent-activity.controller';
-import { RecentActivityService } from './recent-activity/recent-activity.service';
-import { SitemapController, SitemapService } from './sitemap';
-import { ChainController, ChainService } from './chain';
-import { DiffController, DiffService } from './diff';
-import { PreviewController, PreviewService } from './preview';
-import { SearchController, SearchService } from './search';
-import { ContactUsController, ContactUsService } from './contact-us';
 import { CacheController, CacheService } from './cache';
+import { ChainController, ChainService } from './chain';
+import { CommonModule, ConfigService, MetricsModule, MetricType } from './common';
+import { ContactUsController, ContactUsService } from './contact-us';
+import { DiffController, DiffService } from './diff';
+import { DatabaseModule, EosClientModule } from './feature-modules';
 import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
-import { UserController, UserService } from './user';
+import { AnalyticsMiddleware, CorsMiddleware, JsonRequestMiddleware, MorganMiddleware } from './middleware';
+import { PreviewController, PreviewService } from './preview';
+import { ProposalController, ProposalService } from './proposal';
+import { RecentActivityController } from './recent-activity/recent-activity.controller';
+import { RecentActivityService } from './recent-activity/recent-activity.service';
+import { SearchController, SearchService } from './search';
+import { SitemapController, SitemapService } from './sitemap';
 import { StatController, StatService } from './stat';
-import { EosClientModule, DatabaseModule } from './feature-modules';
-import {
-    AnalyticsMiddleware,
-    RequestIpMiddleware,
-    JsonRequestMiddleware,
-    CorsMiddleware,
-    MorganMiddleware
-} from './middleware';
+import { UserController, UserService } from './user';
+import { WikiController, WikiService } from './wiki';
 
 // timer buckets by ms. each bucket is <value. must scale all down by 10e9 because of process.hrtime
 const histogramTimerBuckets = [50, 100, 200, 500, 1000, 5000, 30000];
