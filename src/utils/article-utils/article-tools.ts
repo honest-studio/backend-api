@@ -127,7 +127,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
                     'src',
-                    `https://api.everipedia.org/v2/preview/amp-hovercard/${linkCodeAndSlugNoWiki}/`
+                    `https://api.everipedia.org/v2/preview/amp-hoverblurb/${linkCodeAndSlugNoWiki}/`
                 );
 
                 // Placeholder image (leave this here or it will cause stupid AMP problems)

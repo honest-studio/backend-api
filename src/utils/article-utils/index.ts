@@ -1,4 +1,5 @@
-export * from './amp-render-hovercard';
+export * from './amp-render-hoverblurb';
+export * from './amp-render-hoverlink';
 export * from './amp-render-partial';
 export * from './amp-style';
 export * from './amp-template';

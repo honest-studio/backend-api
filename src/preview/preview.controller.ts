@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { renderAMPHoverCard } from '../utils/article-utils';
+import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
 
 @Controller('v2/preview')
@@ -60,7 +60,7 @@ export class PreviewController {
         return previews[0];
     }
 
-    @Get('amp-hovercard/lang_:lang_code/:slug')
+    @Get('amp-hoverblurb/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get AMP Hovercard HTML for a given article' })
     @ApiImplicitParam({
         name: 'lang_code',
@@ -76,7 +76,7 @@ export class PreviewController {
     })
     async getAMPHoverCardBySlugCtrl(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
-        return renderAMPHoverCard(previews[0]);
+        return renderAMPHoverBlurb(previews[0]);
     }
 
     @Post('slugs')
