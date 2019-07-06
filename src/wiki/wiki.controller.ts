@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post, Query, UsePipes } from '@nestjs/common';
 import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
-import { ArticleJson } from '../utils/article-utils/article-dto';
-import { WikiExtraInfo } from '../utils/article-utils/article-types';
+import { ArticleJson } from '../types/article';
+import { WikiExtraInfo } from '../types/article-helpers';
 import { WikiQuerySchema } from './wiki.query-schema';
 import { WikiService } from './wiki.service';
 

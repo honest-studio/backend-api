@@ -1,16 +1,23 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
+import { WikiService } from '../wiki/wiki.service';
+import { ArticleJson } from '../types/article';
+import { PreviewResult } from '../types/api';
 
 @Controller('v2/preview')
 @ApiUseTags('Preview')
 export class PreviewController {
-    constructor(private readonly previewService: PreviewService) {}
+    constructor(
+        private readonly previewService: PreviewService,
+        private wikiService: WikiService
+    ) {}
 
     @Get('hash/:ipfs_hashes')
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
-        name: 'ipfs_hash',
+        name: 'ipfs_hashes',
         description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
             Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
             Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
@@ -27,7 +34,7 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getPreviewsByHash(@Param('ipfs_hashes') query_hashes): Promise<any> {
+    async getPreviewsByHash(@Param('ipfs_hashes') query_hashes): Promise<PreviewResult[]> {
         const ipfs_hashes = query_hashes.split(',');
         return this.previewService.getPreviewsByHash(ipfs_hashes);
     }
@@ -54,9 +61,49 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+    async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<PreviewResult> {
         const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
         return previews[0];
+    }
+
+    @Get('amp-hoverblurb/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get AMP Hoverblurb HTML for a given article' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `An AMP HTML wiki encoded in UTF-8`
+    })
+    async getAMPHoverBlurbBySlugCtrl(@Param('lang_code') lang_code, @Param('slug') slug): Promise<string> {
+        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
+        return renderAMPHoverBlurb(previews[0]);
+    }
+
+    @Get('amp-hoverlink/:ipfs_hash/')
+    @ApiOperation({ title: 'Get AMP Hoverlink HTML for a given article' })
+    @ApiImplicitParam({
+        name: 'ipfs_hash',
+        description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
+            Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
+            Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
+    })
+    @ApiImplicitQuery({
+        name: 'target_url',
+        description: `The URL of the citation`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `An AMP HTML wiki encoded in UTF-8`
+    })
+    async getAMPHoverLink(@Param('ipfs_hash') ipfs_hash, @Query() options): Promise<string> {
+        const theArticles = await this.wikiService.getWikisByHash([ipfs_hash]);
+        return renderAMPHoverLink(theArticles[0], options.target_url);
     }
 
     @Post('slugs')

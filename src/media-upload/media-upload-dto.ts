@@ -1,6 +1,6 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { CitationCategoryType } from '../utils/article-utils/article-dto';
+import { CitationCategoryType } from '../types/article';
 
 export interface PhotoExtraData {
     width: number;

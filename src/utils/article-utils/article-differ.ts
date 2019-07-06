@@ -1,6 +1,6 @@
 import * as crypto from 'crypto';
 import * as JsDiff from 'diff';
-import { ArticleJson, Citation, DescList, DiffType, Infobox, ListItem, Media, Metadata, NestedContentItem, Paragraph, Section, Sentence, Table, TableCaption, TableRow, TableSection } from './article-dto';
+import { ArticleJson, Citation, DescList, DiffType, Infobox, ListItem, Media, Metadata, NestedContentItem, Paragraph, Section, Sentence, Table, TableCaption, TableRow, TableSection } from '../../types/article';
 
 const METADATA_EXCLUDE_FIELDS = ['pageviews'];
 

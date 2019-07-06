@@ -1,17 +1,19 @@
 import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
+import * as axios from 'axios';
 import * as BooleanTools from 'boolean';
 import * as fetch from 'node-fetch';
-import * as axios from 'axios';
 import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async/dynamic';
 import * as SqlString from 'sqlstring';
 import { URL } from 'url';
 import { CacheService } from '../cache';
-import { IpfsService, ConfigService } from '../common';
+import { ConfigService, IpfsService } from '../common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
-import { ArticleJson, calculateSeeAlsos, infoboxDtoPatcher, LanguagePack, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema, SeeAlso, Sentence, WikiExtraInfo } from '../utils/article-utils';
+import { ArticleJson, Sentence } from '../types/article';
+import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 var colors = require('colors');
@@ -124,6 +126,15 @@ export class WikiService {
 
         }
 
+        // mongo cache wiki - upsert so that cache=false updates the cache
+        if (!cachePresent){
+            this.mongo
+            .connection()
+            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
+            .catch(console.log);
+        }
+
+
         const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp') 
                                     ? wiki.metadata.find(w => w.key == 'lastmod_timestamp').value 
                                     : '1919-12-31 00:00:00';
@@ -132,36 +143,24 @@ export class WikiService {
                                     : '1919-12-31 00:00:00';
 
         // If the page has been modified since the last prerender, recache it
-        // console.log(lastmod_timestamp);
-        // console.log(mobile_cache_timestamp);
-        // console.log(mobile_cache_timestamp <= lastmod_timestamp);
-        // if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
-        if (false){
-            console.log("Refreshing prerender")
+        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+            // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             let payload = {
                 "prerenderToken": prerenderToken,
                 "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}/amp`
             }
     
-            let result = await axios.default.post('https://api.prerender.io/recache', payload)
+            // Send the recache request
+            await axios.default.post('https://api.prerender.io/recache', payload)
             .then(response => {
                 return response;
             })
-            //console.log(result)
 
-            // Update the cache timestamp too in the same query to save overhead
+            // Update the cache timestamp too in the pageview increment query to save overhead
             this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
-
-        // cache wiki - upsert so that cache=false updates the cache
-        if (!cachePresent){
-            this.mongo
-            .connection()
-            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
-            .catch(console.log);
-        }
 
         return wiki;
     }
@@ -185,6 +184,9 @@ export class WikiService {
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
         let json_wikis = [];
+
+
+
 
         // try to directly fetch cached json wikis
         const cached_json_wikis = await this.mongo
@@ -218,7 +220,8 @@ export class WikiService {
         //    }
         //}
 
-        const uncached_hashes = ipfs_hashes.filter((hash) => !json_wikis.find((json) => json.ipfs_hash == hash));
+        const uncached_hashes = ipfs_hashes.filter(hash => !json_wikis.find(json => json.ipfs_hash == hash));
+
         if (uncached_hashes.length > 0) {
             // fetch remainder from mysql if they exist
             const rows: Array<any> = await this.mysql.TryQuery(
@@ -419,9 +422,9 @@ export class WikiService {
                             (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
                         ON DUPLICATE KEY UPDATE 
-                            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=1, ipfs_hash_current=?, 
+                            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
                             page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
-                            is_removed=?, desktop_cache_timestamp=0, mobile_cache_timestamp=0
+                            is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL
                         `,
                         [
                             ipfs_hash,
@@ -460,16 +463,40 @@ export class WikiService {
                         `,
                         [page_lang, cleanedSlug]
                     );
-                    
+
+ 
                     // Update Elasticsearch
-                    let elasticResult = await updateElasticsearch(
+                    await updateElasticsearch(
                         articleResultPacket[0].id, 
                         articleResultPacket[0].page_title, 
                         page_lang,
                         'PAGE_UPDATED_OR_CREATED' , 
                         this.elasticSearch
-                    )
-            
+                    ).then(() => {
+                        console.log(colors.green(`Elasticsearch for ${page_lang}/${slug} updated`));
+                    }).catch(e => {
+                        console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
+                    })
+
+                    // Flush the prerender cache for this page
+                    try {
+                        console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
+                        const prerenderToken = this.config.get('PRERENDER_TOKEN');
+                        let payload = {
+                            "prerenderToken": prerenderToken,
+                            "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}/amp`
+                        }
+                        await axios.default.post('https://api.prerender.io/recache', payload)
+                        .then(response => {
+                            console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
+                            return response;
+                        })
+                        .catch(err => {
+                            throw err;
+                        })
+                    } catch (e) {
+                        console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
+                    }
 
                     console.log(colors.green('========================================'));
                     console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
@@ -488,15 +515,13 @@ export class WikiService {
     }
 
     async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
-        let desktopCacheString = setDesktopCache ? "AND desktop_cache_timestamp=NOW() ": "";
-        let mobileCacheString = setMobileCache ? "AND mobile_cache_timestamp=NOW() ": "";
+        let desktopCacheString = setDesktopCache ? ", desktop_cache_timestamp = NOW()": "";
+        let mobileCacheString = setMobileCache ? ", mobile_cache_timestamp = NOW()": "";
         return this.mysql.TryQuery(
             `
             UPDATE enterlink_articletable 
-            SET pageviews = pageviews + 1
+            SET pageviews = pageviews + 1${desktopCacheString}${mobileCacheString} 
             WHERE page_lang= ? AND slug = ? 
-            ${desktopCacheString}
-            ${mobileCacheString}
             `,
             [lang_code, slug]
         );

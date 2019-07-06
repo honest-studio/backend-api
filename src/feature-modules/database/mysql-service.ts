@@ -29,7 +29,8 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
                         port: this.config.get('MYSQL_PORT'),
                         user: this.config.get('MYSQL_USERNAME'),
                         password: this.config.get('MYSQL_PASSWORD'),
-                        database: this.config.get('MYSQL_DATABASE')
+                        database: this.config.get('MYSQL_DATABASE'),
+                        charset: 'UTF8MB4_UNICODE_CI'
                     });
                     resolve(this.connectionPool);
                 } catch (e) {

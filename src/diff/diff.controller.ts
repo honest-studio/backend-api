@@ -1,6 +1,6 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { ArticleJson } from '../utils/article-utils/article-dto';
+import { ArticleJson } from '../types/article';
 import { DiffService } from './diff.service';
 
 @Controller('v2/diff')

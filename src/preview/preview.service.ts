@@ -4,9 +4,10 @@ import * as SqlString from 'sqlstring';
 import { CacheService } from '../cache';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
 import { MysqlService } from '../feature-modules/database';
+import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
-import { WikiIdentity } from '../utils/article-utils/article-types';
 import { WikiService } from '../wiki';
+import { PreviewResult } from '../types/api';
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now
@@ -39,7 +40,7 @@ export class PreviewService {
         private readonly getPrevBySlugTotalReqHisto: HistogramMetric
     ) {}
 
-    async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<any> {
+    async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<PreviewResult[]> {
         if (ipfs_hashes.length == 0) return [];
 
         const previews = [];
@@ -121,7 +122,7 @@ export class PreviewService {
         return previews;
     }
 
-    async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<any> {
+    async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<PreviewResult[]> {
         if (wiki_identities.length == 0) return [];
 
         // strip lang_ prefix in lang_code if it exists
