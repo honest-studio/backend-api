@@ -211,7 +211,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
                     'src',
-                    `https://www.everipedia.org/AJAX-REQUEST/AJAX_Hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
+                    `https://api.everipedia.org/v2/preview/amp-hoverlink/${currentIPFS}/?target_url=${linkURLEncoded}`
                 );
 
                 // Placeholder image (leave this here or it will cause stupid AMP problems)

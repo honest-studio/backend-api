@@ -1,67 +1,81 @@
-import { PreviewResult } from '../../types/api';
+import { ArticleJson, Citation } from '../../types/article';
 import CleanCSS from 'clean-css';
+import { compareURLs } from '../article-utils/article-tools'
 const fs = require('fs');
 const crypto = require('crypto');
-import { styleNugget } from './amp-style-hoverblurb';
+import { styleNugget } from './amp-style-hovercard';
 
-export const renderAMPHoverLink = (inputPreview: PreviewResult): string => {
+export const renderAMPHoverLink = (inputArticle: ArticleJson, targetUrl: string): string => {
+    if (!inputArticle) return "NO ARTICLE FOUND";
     let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
 
-    const ARTICLE_TITLE = inputPreview.page_title;
+    let theCitation: Citation = inputArticle.citations.find(existingCtn => compareURLs(existingCtn.url, targetUrl));
 
-    const ARTICLE_PHOTO_URL = inputPreview.main_photo ? inputPreview.main_photo 
-                            : inputPreview.thumbnail ? inputPreview.thumbnail : "";
+    if (!theCitation) return "NO CITATION FOUND";
 
-    const ARTICLE_SNIPPET = inputPreview.text_preview;
+    const CITATION_MIME = theCitation.mime;
+    const CITATION_URL = theCitation.url;
+    const CITATION_THUMB = theCitation.thumb ? theCitation : "";
+    const CITATION_DESCRIPTION = theCitation.description.map(sent => sent.text).join("");
+    const CITATION_TIMESTAMP = theCitation.timestamp;
 
-    const renderMainBlock = () => {
-        if (ARTICLE_PHOTO_URL != ''){
+    const renderPicture = () => {
+        if (CITATION_MIME != ''){
+            let imgString;
+            if (CITATION_MIME != null && CITATION_MIME != "None"){
+                imgString = `<img class="b-lazy" src="${CITATION_URL}" onerror="this.onerror=null;this.src='https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'" />`;
+            }
+            else{
+                imgString = `<img class="b-lazy" src="${CITATION_THUMB}" onerror="this.onerror=null;this.src='https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'" />`
+            }
             return `
                 <div class="hvrblrb-ajax-picture">
-                    <a class="pic-block" href="javascript:void(0);" onclick="newWindow();">
-                        <img id="main_pic" src='${ARTICLE_PHOTO_URL}' onError="this.onerror=null;this.src='${ARTICLE_PHOTO_URL}'" />
+                    <a class="pic-block cls-newlink" href="javascript:;" onclick="newWindow();">
+                        ${imgString}
                     </a>
-                </div>
-                <div class="hvrblrb-ajax-blurb">
-                    <a class="name-block" href="#" onclick="newWindow();">
-                        ${ARTICLE_TITLE}
-                    </a>
-                    <div class="description-block" onclick="newWindow();">
-                        ${ARTICLE_SNIPPET}
-                    </div>
                 </div>
             `
         }
-        else {
-            return `
-                <div class="hvrblrb-ajax-blurb hvrblrb-no-photo">
-                    <a class="name-block" href="#" onclick="newWindow();">
-                        ${ARTICLE_TITLE}
-                    </a>
-                    <div class="description-block" onclick="newWindow();">
-                        ${ARTICLE_SNIPPET}
+        else return "";
+    }
+
+    const renderMainBlock = () => {
+        let optionalClass = (CITATION_MIME == null || CITATION_MIME == "None") ? "hvrblrb-no-photo" : "";
+        return `
+            <div class="hvrblrb-ajax-blurb ${optionalClass}">
+                <a rel='nofollow' class="name-block cls-newlink" href="#" onclick="newWindow();">
+                    ${CITATION_URL}
+                    <span class="icon icon-export"></span>
+                </a>
+                <div class="hvrlnk-cite-container">
+                    <div class="hvrlnk-cite-avatar-extras-container">
+                        <div class="hvrlnk-cite"><span class="hvrlnk-label">Cited On: </span>${CITATION_TIMESTAMP}</div>
                     </div>
                 </div>
-            `
-        }
+                <div class="description-block cls-newlink" onclick="newWindow();">
+                    ${CITATION_DESCRIPTION}
+                </div>
+
+            </div>
+        `
     }
 
     const theHTML = `
         <!DOCTYPE html>
         <html>
             <head>
-                <title>${ARTICLE_TITLE}</title>
+                <title>${CITATION_URL}</title>
                 <script type='text/javascript'>
                     function newWindow() {
-                        top.location.href = "https://everipedia.org/wiki/lang_${inputPreview.lang_code}/${inputPreview.slug}/";
+                        top.location.href = "${CITATION_URL}";
                     }
                 </script>
                 <style>${compressedCSS}</style>
             </head>
             <div id="hoverblurb_AJAX">
                 <div class="main-content-block">
+                    ${renderPicture()}
                     ${renderMainBlock()}
-                    <a class="goto-btn" href="#" onclick="newWindow();">Go to article</a>
                 </div>
             </div>
         </html>

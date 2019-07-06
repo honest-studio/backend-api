@@ -2,7 +2,7 @@ import { PreviewResult } from '../../types/api';
 import CleanCSS from 'clean-css';
 const fs = require('fs');
 const crypto = require('crypto');
-import { styleNugget } from './amp-style-hoverblurb';
+import { styleNugget } from './amp-style-hovercard';
 
 export const renderAMPHoverBlurb = (inputPreview: PreviewResult): string => {
     let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
