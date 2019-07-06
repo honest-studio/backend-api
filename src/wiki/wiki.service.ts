@@ -466,16 +466,20 @@ export class WikiService {
                         page_lang,
                         'PAGE_UPDATED_OR_CREATED' , 
                         this.elasticSearch
-                    )
+                    ).then(() => {
+                        console.log(colors.green(`Elasticsearch for ${page_lang}/${slug} updated`));
+                    }).catch(e => {
+                        console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
+                    })
 
                     // Flush the prerender cache for this page
                     try {
+                        console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
                         const prerenderToken = this.config.get('PRERENDER_TOKEN');
                         let payload = {
                             "prerenderToken": prerenderToken,
                             "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}/amp`
                         }
-                        console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
                         await axios.default.post('https://api.prerender.io/recache', payload)
                         .then(response => {
                             console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
@@ -488,7 +492,6 @@ export class WikiService {
                         console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
                     }
 
-        
                     console.log(colors.green('========================================'));
                     console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
