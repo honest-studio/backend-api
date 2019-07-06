@@ -124,7 +124,7 @@ export class WikiService {
 
         }
 
-        // cache wiki - upsert so that cache=false updates the cache
+        // mongo cache wiki - upsert so that cache=false updates the cache
         if (!cachePresent){
             this.mongo
             .connection()
@@ -457,17 +457,38 @@ export class WikiService {
                         `,
                         [page_lang, cleanedSlug]
                     );
-                    
+
+ 
                     // Update Elasticsearch
-                    let elasticResult = await updateElasticsearch(
+                    await updateElasticsearch(
                         articleResultPacket[0].id, 
                         articleResultPacket[0].page_title, 
                         page_lang,
                         'PAGE_UPDATED_OR_CREATED' , 
                         this.elasticSearch
                     )
-            
 
+                    // Flush the prerender cache for this page
+                    try {
+                        const prerenderToken = this.config.get('PRERENDER_TOKEN');
+                        let payload = {
+                            "prerenderToken": prerenderToken,
+                            "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}/amp`
+                        }
+                        console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
+                        await axios.default.post('https://api.prerender.io/recache', payload)
+                        .then(response => {
+                            console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
+                            return response;
+                        })
+                        .catch(err => {
+                            throw err;
+                        })
+                    } catch (e) {
+                        console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
+                    }
+
+        
                     console.log(colors.green('========================================'));
                     console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
                     console.log(colors.green('========================================'));
