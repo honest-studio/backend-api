@@ -484,7 +484,7 @@ export class WikiService {
                         const prerenderToken = this.config.get('PRERENDER_TOKEN');
                         let payload = {
                             "prerenderToken": prerenderToken,
-                            "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}/amp`
+                            "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}`
                         }
                         await axios.default.post('https://api.prerender.io/recache', payload)
                         .then(response => {
@@ -514,6 +514,8 @@ export class WikiService {
         return { ipfs_hash };
     }
 
+    // increment the pageview counter for a page
+    // optionally update the mobile and desktop cache timestamps at the same time
     async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
         let desktopCacheString = setDesktopCache ? ", desktop_cache_timestamp = NOW()": "";
         let mobileCacheString = setMobileCache ? ", mobile_cache_timestamp = NOW()": "";
