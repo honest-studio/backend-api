@@ -67,13 +67,36 @@ export class WikiService {
                 }
             )
             .sort({ 'trace.act.data.proposal_id': -1 })
-            .limit(1)
+            .limit(5)
             .toArray();
         if (latest_proposals.length > 0) {
-            const latest_ipfs_hash = latest_proposals[0].trace.act.data.ipfs_hash;
-            if (latest_ipfs_hash != ipfs_hash)
-                ipfs_hash = latest_ipfs_hash;
+            // Make sure chosen hash is not a rejected edit
+            // Set the hash to the most recent unrejected edit
+            const proposal_ids = latest_proposals.map(l => l.trace.act.data.proposal_id);
+            const latest_results = await this.mongo
+                .connection()
+                .actions.find(
+                    {
+                        'trace.act.account': 'eparticlectr',
+                        'trace.act.name': 'logpropres',
+                        'trace.act.data.proposal_id': { $in: proposal_ids }
+                    }
+                )
+                .sort({ 'trace.act.data.proposal_id': -1 })
+                .limit(5)
+                .toArray();
+            for (let i in latest_proposals) {
+                const latest_ipfs_hash = latest_proposals[i].trace.act.data.ipfs_hash;
+                const proposal_id = latest_proposals[i].trace.act.data.proposal_id;
+                const result = latest_results.find(l => l.trace.act.data.proposal_id == proposal_id);
+                if (latest_ipfs_hash == ipfs_hash && result && result.trace.act.data.approved == 0) continue;
+                else {
+                    ipfs_hash = latest_ipfs_hash;
+                    break;
+                }
+            }
         }
+
 
         // Try and grab cached json wiki
         let cache_wiki;
