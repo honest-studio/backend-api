@@ -396,6 +396,7 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
                 lang: result[1],
                 slug: result[2],
                 title: '',
+                photo_url: '',
                 thumbnail_url: '',
                 snippet: ''
             });
