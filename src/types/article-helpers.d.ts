@@ -7,6 +7,7 @@ export interface SeeAlso {
     lang: string;
     slug: string;
     title: string;
+    photo_url: string;
     thumbnail_url: string;
     snippet: string;
 }

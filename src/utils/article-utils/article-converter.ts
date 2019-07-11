@@ -63,8 +63,8 @@ export const CAPTURE_REGEXES = {
     inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
 };
 export const REPLACEMENTS = [
-    { regex: /\u{00A0}/g, replacement: ' ' },
-    { regex: /\u{200B}/g, replacement: '' },
+    { regex: /\u00A0/g, replacement: ' ' },
+    { regex: /\u200B/g, replacement: '' },
     { regex: /\n <\/a>\n/g, replacement: '</a>' },
     { regex: /<\/a> (,|.|:|;|'|\))/g, replacement: '</a>$1' },
     { regex: / {1,}/g, replacement: ' ' },
