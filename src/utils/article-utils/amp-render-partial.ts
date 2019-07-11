@@ -853,7 +853,7 @@ export class AmpRenderPartial {
     renderOneSeeAlso = (seealso: SeeAlso): string => {
         return `
             <a class='sa-ancr-wrp' href="/wiki/lang_${seealso.lang}/${seealso.slug}">
-                <amp-img layout="fixed-height" height=80 src="${seealso.thumbnail_url}" alt="${seealso.title} wiki">
+                <amp-img layout="fixed-height" height=80 src="${seealso.photo_url ? seealso.photo_url : seealso.thumbnail_url}" alt="${seealso.title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
                         seealso.title
                     }"></amp-img>
