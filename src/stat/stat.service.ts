@@ -139,105 +139,135 @@ export class StatService {
         return editor_rewards.slice(0, options.limit);
     }
 
-    async siteUsage(use_cache: boolean = true): Promise<any> {
-        // TEMPORARY: Just return the cache no matter what
-        const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
-        if (cache) return cache;
+    async siteUsage(): Promise<any> {
+        // TEMPORARY: Just return the cache no matter what unless explicity passed up
+        let doc = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
 
-        // pull from cache if available
-        // console.log("cache: ", BooleanTools.default(use_cache))
-        if (BooleanTools.default(use_cache)) {
-           const cache = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
-           if (cache) {
-               const cache_age = Date.now() - cache.timestamp.getTime();
-               if (cache_age < this.SITE_USAGE_CACHE_EXPIRE_MS) return cache;
-               else delete cache._id;
-           }
+        if (doc) {
+            delete doc._id;
         }
-        
-        const total_article_count: Array<any> = await this.mysql.TryQuery(
+        else {
+            doc = {
+                key: 'site_usage',
+                timestamp: new Date('2015-01-01'),
+                total_article_count: 0,
+                total_pageviews: 0,
+                total_editors: 0,
+                total_iq_rewards: 0,
+                original_pages: 0,
+                total_edits: 0
+            };
+        }
+
+        // for the update case where block_num doesn't exist
+        if (!doc.block_num) {
+            const block_doc = await this.mongo.connection().actions.findOne({ 
+                block_time: { $gt: doc.timestamp.toISOString() }
+            });
+            doc.block_num = block_doc.block_num;
+        }
+
+        const mysql_date = doc.timestamp.toISOString().slice(0, 19).replace('T', ' ');
+        const new_article_count: Array<any> = await this.mysql.TryQuery(
             `SELECT COUNT(*) AS num_articles 
             FROM enterlink_articletable art
             WHERE 
                 art.is_removed = 0
                 AND art.redirect_page_id IS NULL
+                AND creation_timestamp > ?
             `,
-            [],
-            60000
+            [mysql_date],
+            3000
         );
+        doc.total_article_count[0].num_articles += new_article_count[0].num_articles;
 
-        const total_pageviews: Array<any> = await this.mysql.TryQuery(
-            `SELECT SUM(pageviews) AS pageviews 
-            FROM enterlink_articletable art
-            WHERE 
-                art.is_removed = 0
-                AND art.redirect_page_id IS NULL
-            `,
-            [],
-            180000
-        );
+        if (doc.total_pageviews == 0) {
+            const total_pageviews: Array<any> = await this.mysql.TryQuery(
+                `SELECT SUM(pageviews) AS pageviews 
+                FROM enterlink_articletable art
+                WHERE 
+                    art.is_removed = 0
+                    AND art.redirect_page_id IS NULL
+                `,
+                [],
+                180000
+            );
+        }
+        else {
+            const new_pageviews: Array<any> = await this.mysql.TryQuery(
+                `SELECT COUNT(*) as new_pageviews
+                FROM ep2_backend_requests
+                WHERE timestamp > ?
+                `,
+                [mysql_date],
+                10000
+            );
+            doc.total_pageviews[0].pageviews += new_pageviews[0].new_pageviews;
+        }
 
         let total_edits: any = await this.mongo
             .connection()
-            .actions.count({ $or: [
-                { 'trace.act.name': 'propose' },
-                { 'trace.act.name': 'propose2' }
-            ]});
+            .actions.countDocuments({ 
+                $or: [
+                    { 'trace.act.name': 'propose' },
+                    { 'trace.act.name': 'propose2' }
+                ]
+            });
 
         let total_editors: any = await this.mongo
             .connection()
             .actions.aggregate([
+                { $match: { 
+                    'trace.act.account': 'eparticlectr',
+                    'trace.act.name': 'logpropinfo',
+                }},
                 { $group: { _id: '$trace.act.data.proposer' } },
                 { $group: { _id: 1, count: { $sum: 1 } } }
             ])
             .toArray();
         total_editors = total_editors[0].count;
 
-        let total_iq_rewards = await this.mongo
+        let new_iq_rewards = await this.mongo
             .connection()
             .actions.mapReduce(
                 'function () { emit( 1, Number(this.trace.act.data.quantity.split(" ")[0]) ) }',
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
-                        'block_num': { $gt: 15000000 },
+                        'block_num': { $gte: doc.block_num },
                         'trace.act.account': 'everipediaiq',
                         'trace.act.name': 'issue'
                     },
                     out: { inline: 1 }
                 }
             );
-        if (total_iq_rewards.length > 0) total_iq_rewards = Number(total_iq_rewards[0].value.toFixed(3));
-        else total_iq_rewards = 0;
+        if (new_iq_rewards.length > 0) doc.total_iq_rewards += Number(new_iq_rewards[0].value.toFixed(3));
+        doc.total_iq_rewards = Number(doc.total_iq_rewards.toFixed(3)); // fix decimal precision issues
 
-        const original_pages_rows: Array<any> = await this.mysql.TryQuery(
+        const new_original_pages: Array<any> = await this.mysql.TryQuery(
             `SELECT COUNT(*) AS count 
             FROM enterlink_articletable 
             WHERE 
                 page_note IS NULL
+                AND creation_timestamp > ?
                 AND redirect_page_id IS NULL
                 AND is_removed = 0`,
-            [],
+            [mysql_date],
             60000
         )
+        doc.original_pages += new_original_pages[0].count;
+
+        // Update the timestamp and block number
+        doc.timestamp = new Date();
+        const block_docs = await this.mongo.connection().actions
+            .find()
+            .sort({ block_num: -1 })
+            .limit(1)
+            .toArray();
         
-        const original_pages = (original_pages_rows != undefined) && 
-                               (original_pages_rows.length > 0 ? original_pages_rows[0].count : 0);
+        doc.block_num = block_docs[0].block_num;
 
-
-        // clear old cache and cache new result
-        const doc = {
-            key: 'site_usage',
-            timestamp: new Date(),
-            total_article_count,
-            total_pageviews,
-            total_editors,
-            total_iq_rewards,
-            original_pages,
-            total_edits
-        };
-        this.mongo.connection().statistics.deleteMany({ key: 'site_usage' });
-        this.mongo.connection().statistics.insertOne(doc);
+        this.mongo.connection().statistics.replaceOne({ key: 'site_usage' }, doc, { upsert: true });
 
         return doc;
     }

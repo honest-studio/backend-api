@@ -40,13 +40,7 @@ export class StatController {
 
     @Get('site-usage')
     @ApiOperation({ title: 'All-time site usage' })
-    @ApiImplicitQuery({
-        name: 'cache',
-        description: `Set to false if you don't want to use the cache`,
-        required: false
-    })
-    @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
-    async siteUsage(@Query() query): Promise<any> {
-        return await this.statService.siteUsage(query.cache);
+    async siteUsage(): Promise<any> {
+        return await this.statService.siteUsage();
     }
 }
