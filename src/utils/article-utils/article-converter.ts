@@ -247,6 +247,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
 
     const page_body = extractPageBody($);
 
+
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }
 
@@ -639,9 +640,17 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 function splitIntoSections($body: Cheerio): Cheerio[] {
     const bodyHtml = $body.html();
     if (!bodyHtml) return [];
+
     return bodyHtml
         .split(/(?=<h[1-6])/g)
         .map((htmlSection) => htmlSection.trim())
+        .map((htmlSection) => {
+            if (htmlSection.length && htmlSection.charAt(0) != "<"){
+                console.log("No section immediate child wrap found. Adding a <p>");
+                return `<p>${htmlSection}</p>`;
+            }
+            else return htmlSection;
+        })
         .map((htmlSection) => `<div class="section">${htmlSection}</div>`)
         .map((htmlSection) => cheerio.load(htmlSection))
         .map(($) => $('.section'));
@@ -763,6 +772,10 @@ function parseSection($section: Cheerio): Section {
 
             const table = parseTable($element, 'body-table');
             paragraph.items.push(table);
+        }
+        else{
+            console.log(colors.red(`ERROR IN PARSING: TAG ${element.tagName.toLowerCase()} NOT HANDLED! NEED A DEFAULT: `, $element.html() ))
+            console.log(colors.red("TO DEBUG, YOU WILL NEED TO set cache: boolean = false on getWikiBySlug")
         }
 
         // Add the object to the array
