@@ -140,7 +140,6 @@ export class StatService {
     }
 
     async siteUsage(): Promise<any> {
-        // TEMPORARY: Just return the cache no matter what unless explicity passed up
         let doc = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
 
         if (doc) {
@@ -234,7 +233,7 @@ export class StatService {
                 'function (key, values) { return Array.sum(values) }',
                 {
                     query: {
-                        'block_num': { $gte: doc.block_num },
+                        'block_num': { $gt: doc.block_num },
                         'trace.act.account': 'everipediaiq',
                         'trace.act.name': 'issue'
                     },
