@@ -20,6 +20,8 @@ var colors = require('colors');
 
 @Injectable()
 export class WikiService {
+    private updateWikiIntervals;
+
     constructor(
         private ipfs: IpfsService,
         private mysql: MysqlService,
@@ -29,7 +31,9 @@ export class WikiService {
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
         private config: ConfigService
-    ) {}
+    ) {
+        this.updateWikiIntervals = {};
+    }
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
@@ -46,13 +50,15 @@ export class WikiService {
             `,
             [mysql_slug, mysql_slug, decodedSlug, decodedSlug, lang_code, lang_code]
         );
-        if (ipfs_hash_rows.length == 0) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
-
-        // Account for the boolean flipping issue being in old articles
-        const overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
+        let ipfs_hash;
+        let overrideIsIndexed;
+        if (ipfs_hash_rows.length > 0) {
+            ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+            // Account for the boolean flipping issue being in old articles
+            overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
+        }
 
         // Make sure IPFS hash is most recent
-        let ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
         const latest_proposals = await this.mongo
             .connection()
             .actions.find(
@@ -96,6 +102,7 @@ export class WikiService {
                 }
             }
         }
+        if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
 
         // Try and grab cached json wiki
@@ -400,141 +407,141 @@ export class WikiService {
 
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
-        let timesRun = 0, trxID = "";
-        let LOOP_LIMIT = 25;
-        let INTERVAL_MSEC = 5000;
-        let interval = setIntervalAsync(
-            async () => {
-                console.log(colors.yellow(`Waiting for ${ipfs_hash} to hit the mainnet... Iteration ${timesRun} of ${LOOP_LIMIT}`));
-                timesRun += 1;
-                const twoMinutesAgo = (Date.now() / 1000 | 0) - 60*2;
-                const submitted_proposal = await this.mongo
-                    .connection()
-                    .actions.findOne({
-                        'trace.act.account': 'eparticlectr',
-                        'trace.act.name': 'logpropinfo',
-                        'trace.act.data.ipfs_hash': ipfs_hash,
-                        'trace.act.data.starttime': { $gt: twoMinutesAgo }
-                    })
-                if (submitted_proposal) trxID = submitted_proposal.trx_id;
-                if(trxID){
-                    console.log(colors.green(`Transaction found! (${trxID})`));
-                    
-                    const page_title = wiki.page_title[0].text;
-                    const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
-                    const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
-                    let text_preview;
-                    try {
-                        const first_para = wiki.page_body[0].paragraphs[0];
-                        text_preview = (first_para.items[0] as Sentence).text;
-                        if (first_para.items.length > 1)
-                            text_preview += (first_para.items[1] as Sentence).text;
-                    } catch (e) {
-                        text_preview = "";
-                    }
-                    const photo_url = wiki.main_photo[0].url;
-                    const photo_thumb_url = wiki.main_photo[0].thumb;
-                    const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
-                    const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
-                    const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
-                    const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-                    const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
-                    const article_insertion = await this.mysql.TryQuery(
-                        `
-                        INSERT INTO enterlink_articletable 
-                            (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
-                        ON DUPLICATE KEY UPDATE 
-                            ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
-                            page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
-                            is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL
-                        `,
-                        [
-                            ipfs_hash,
-                            cleanedSlug,
-                            cleanedSlug,
-                            page_title,
-                            text_preview,
-                            photo_url,
-                            photo_thumb_url,
-                            page_type,
-                            is_adult_content,
-                            page_lang,
-                            ipfs_hash,
-                            page_title,
-                            text_preview,
-                            photo_url,
-                            photo_thumb_url,
-                            page_type,
-                            is_adult_content,
-                            is_indexed,
-                            is_removed
-                        ]
-                    )
-            
-                    // Get the article object
-                    let articleResultPacket = await this.mysql.TryQuery(
-                        `
-                        SELECT 
-                            id,
-                            page_title
-                        FROM enterlink_articletable AS art 
-                        WHERE 
-                            page_lang = ? 
-                            AND slug = ?
-                            AND art.is_removed = 0
-                        `,
-                        [page_lang, cleanedSlug]
-                    );
-
- 
-                    // Update Elasticsearch
-                    await updateElasticsearch(
-                        articleResultPacket[0].id, 
-                        articleResultPacket[0].page_title, 
-                        page_lang,
-                        'PAGE_UPDATED_OR_CREATED' , 
-                        this.elasticSearch
-                    ).then(() => {
-                        console.log(colors.green(`Elasticsearch for ${page_lang}/${slug} updated`));
-                    }).catch(e => {
-                        console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
-                    })
-
-                    // Flush the prerender cache for this page
-                    try {
-                        console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
-                        const prerenderToken = this.config.get('PRERENDER_TOKEN');
-                        let payload = {
-                            "prerenderToken": prerenderToken,
-                            "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}`
-                        }
-                        await axios.default.post('https://api.prerender.io/recache', payload)
-                        .then(response => {
-                            console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
-                            return response;
-                        })
-                        .catch(err => {
-                            throw err;
-                        })
-                    } catch (e) {
-                        console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
-                    }
-
-                    console.log(colors.green('========================================'));
-                    console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
-                    console.log(colors.green('========================================'));
-
-                    clearIntervalAsync(interval);
-                    return;
-                }
-                if(timesRun > LOOP_LIMIT || trxID){
-                    clearIntervalAsync(interval);
-                }
-            },
+        let INTERVAL_MSEC = 2000;
+        this.updateWikiIntervals[ipfs_hash] = setIntervalAsync(
+            async () => this.updateWiki(wiki, ipfs_hash),
             INTERVAL_MSEC
-          )
+        )
+        setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC * 30);
+
         return { ipfs_hash };
+    }
+
+    async updateWiki(wiki: ArticleJson, ipfs_hash: string) {
+        console.log(colors.yellow(`Checking on ${ipfs_hash} to hit the mainnet`));
+        const twoMinutesAgo = (Date.now() / 1000 | 0) - 60*2;
+        const submitted_proposal = await this.mongo
+            .connection()
+            .actions.findOne({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo',
+                'trace.act.data.ipfs_hash': ipfs_hash,
+                'trace.act.data.starttime': { $gt: twoMinutesAgo }
+            })
+        if (submitted_proposal) {
+            const trxID = submitted_proposal.trx_id;
+            console.log(colors.green(`Transaction found! (${trxID})`));
+            clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
+            
+            const page_title = wiki.page_title[0].text;
+            const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+            const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+            let text_preview;
+            try {
+                const first_para = wiki.page_body[0].paragraphs[0];
+                text_preview = (first_para.items[0] as Sentence).text;
+                if (first_para.items.length > 1)
+                    text_preview += (first_para.items[1] as Sentence).text;
+            } catch (e) {
+                text_preview = "";
+            }
+            const photo_url = wiki.main_photo[0].url;
+            const photo_thumb_url = wiki.main_photo[0].thumb;
+            const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
+            const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
+            const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
+            const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+            const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
+            const article_insertion = await this.mysql.TryQuery(
+                `
+                INSERT INTO enterlink_articletable 
+                    (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
+                ON DUPLICATE KEY UPDATE 
+                    ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
+                    page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
+                    is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL
+                `,
+                [
+                    ipfs_hash,
+                    cleanedSlug,
+                    cleanedSlug,
+                    page_title,
+                    text_preview,
+                    photo_url,
+                    photo_thumb_url,
+                    page_type,
+                    is_adult_content,
+                    page_lang,
+                    ipfs_hash,
+                    page_title,
+                    text_preview,
+                    photo_url,
+                    photo_thumb_url,
+                    page_type,
+                    is_adult_content,
+                    is_indexed,
+                    is_removed
+                ]
+            )
+    
+            // Get the article object
+            let articleResultPacket: Array<any> = await this.mysql.TryQuery(
+                `
+                SELECT 
+                    id,
+                    page_title
+                FROM enterlink_articletable AS art 
+                WHERE 
+                    page_lang = ? 
+                    AND slug = ?
+                    AND art.is_removed = 0
+                `,
+                [page_lang, cleanedSlug]
+            );
+
+
+            // Update Elasticsearch
+            if (articleResultPacket.length > 0) {
+                await updateElasticsearch(
+                    articleResultPacket[0].id, 
+                    articleResultPacket[0].page_title, 
+                    page_lang,
+                    'PAGE_UPDATED_OR_CREATED' , 
+                    this.elasticSearch
+                ).then(() => {
+                    console.log(colors.green(`Elasticsearch for ${page_lang}/${slug} updated`));
+                }).catch(e => {
+                    console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
+                })
+            }
+
+            // Flush the prerender cache for this page
+            try {
+                console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
+                const prerenderToken = this.config.get('PRERENDER_TOKEN');
+                let payload = {
+                    "prerenderToken": prerenderToken,
+                    "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}`
+                }
+                await axios.default.post('https://api.prerender.io/recache', payload)
+                .then(response => {
+                    console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
+                    return response;
+                })
+                .catch(err => {
+                    throw err;
+                })
+            } catch (e) {
+                console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
+            }
+
+            console.log(colors.green('========================================'));
+            console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
+            console.log(colors.green('========================================'));
+
+            return;
+        }
     }
 
     // increment the pageview counter for a page
