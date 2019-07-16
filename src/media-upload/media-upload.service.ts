@@ -108,18 +108,31 @@ export class MediaUploadService {
 
     // Fetch a file from an external URL
     getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
+        let theCategory = this.linkCategorizer(inputPack.url);
+        let urlToUse = inputPack.url;
+
+        // Test for YouTube first
+        if (theCategory == 'YOUTUBE'){
+            urlToUse = `https://i.ytimg.com/vi/${getYouTubeID(urlToUse)}/hqdefault.jpg`;
+        }
+
+        console.log("TESTING HERE!!!");
+        console.log("TESTING HERE!!!");
+        console.log(urlToUse)
+
         return axios({
-            url: inputPack.url,
+            url: urlToUse,
             method: 'GET',
             responseType: 'arraybuffer',
         }).then(response => {
             let fileBuffer = response.data;
             let mimePack: MimePack = fileType(fileBuffer);
-            return {
+            let returnPack: FileFetchResult = {
                 file_buffer: fileBuffer,
                 mime_pack: mimePack,
-                category: this.linkCategorizer(inputPack.url),
-            }
+                category: theCategory as any,
+            };
+            return returnPack;
         })
     }
 
@@ -198,11 +211,9 @@ export class MediaUploadService {
             let theMIME = mimeClass.getType(inputString);
             let theExtension = mimeClass.getExtension(theMIME);
             // Test for different categories
-            if (theMIME == '' || theMIME == null) {
-                return 'NONE';
-            } else if (theMIME == 'image/gif') {
+            if (theMIME == 'image/gif') {
                 return 'GIF';
-            } else if (theMIME.includes('image')) {
+            } else if (theMIME && theMIME.indexOf('image') > 0) {
                 return 'PICTURE';
             } else if (this.getYouTubeIdIfPresent(inputString)) {
                 return 'YOUTUBE';
@@ -210,7 +221,11 @@ export class MediaUploadService {
                 return 'NORMAL_VIDEO';
             } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
                 return 'AUDIO';
-            } else {
+            } 
+            else if (theMIME == '' || theMIME == null) {
+                return 'NONE';
+            }
+            else {
                 return 'NONE';
             }
         } catch (e) {

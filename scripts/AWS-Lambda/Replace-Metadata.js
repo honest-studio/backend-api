@@ -13,7 +13,8 @@ let s3 = new aws.S3();
  
 exports.handler = async (event) => {
     const promise = new Promise(function(resolve, reject) {
-        const taskId = event.tasks[0].s3VersionId;
+        console.log("EVENT\n" + JSON.stringify(event, null, 2));
+        const taskId = event.tasks[0].taskId;
         const invocationId = event['invocationId'];
         const invocationSchemaVersion = event['invocationSchemaVersion'];
         const bucket = event.tasks[0].s3BucketArn.replace("arn:aws:s3:::", "");
@@ -21,14 +22,14 @@ exports.handler = async (event) => {
         var params = { Bucket: bucket, Key: key };
 
         let returnNugget = {
-            invocationSchemaVersion: invocationSchemaVersion,
-            treatMissingKeysAs: "PermanentFailure",
-            results: [{
-                taskId: taskId,
-                resultCode: "",
-                resultString: ""
+            "invocationSchemaVersion": invocationSchemaVersion,
+            "treatMissingKeysAs": "PermanentFailure",
+            "invocationId": invocationId,
+            "results": [{
+                "taskId": taskId,
+                "resultCode": "",
+                "resultString": ""
             }],
-            invocationId: invocationId
         }
 
         s3.getObject(params, (err, data) => {
@@ -37,6 +38,7 @@ exports.handler = async (event) => {
                 console.log(message);
                 returnNugget.results[0].resultCode = 'PermanentFailure';
                 returnNugget.results[0].resultString = message;
+                console.log("REJECT\n" + JSON.stringify(returnNugget, null, 2));
                 reject(returnNugget);
             } 
             else {
@@ -57,21 +59,24 @@ exports.handler = async (event) => {
                             console.log(message);
                             returnNugget.results[0].resultCode = 'PermanentFailure';
                             returnNugget.results[0].resultString = message;
+                            console.log("REJECT\n" + JSON.stringify(returnNugget, null, 2));
                             reject(returnNugget);
                         } 
                         else {
                             message = 'Success: Metadata update completed!'; // OBJECT: s3://'+bucket+'/'+key+' CONTENT-TYPE: '+mimeHeader+' CACHE-CONTROL: '+NewCacheControlHeader;
                             console.log(message);
-                            returnNugget.results[0].resultCode = 'Successful';
+                            returnNugget.results[0].resultCode = 'Succeeded';
                             returnNugget.results[0].resultString = message;
+                            console.log("RESOLVE\n" + JSON.stringify(returnNugget, null, 2));
                             resolve(returnNugget);
                         }
                     });
                 } else {
                     message = 'Success: Metadata already updated!'; // OBJECT: s3://'+bucket+'/'+key+' CONTENT-TYPE: '+mimeHeader+' CACHE-CONTROL: '+NewCacheControlHeader;
                     console.log(message);
-                    returnNugget.results[0].resultCode = 'Successful';
+                    returnNugget.results[0].resultCode = 'Succeeded';
                     returnNugget.results[0].resultString = message;
+                    console.log("RESOLVE\n" + JSON.stringify(returnNugget, null, 2));
                     resolve(returnNugget);
                 }
             }

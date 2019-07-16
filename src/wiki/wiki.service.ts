@@ -31,7 +31,7 @@ export class WikiService {
         private config: ConfigService
     ) {}
 
-    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
+    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(

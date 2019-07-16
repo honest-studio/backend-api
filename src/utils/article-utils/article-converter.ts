@@ -775,7 +775,7 @@ function parseSection($section: Cheerio): Section {
         }
         else{
             console.log(colors.red(`ERROR IN PARSING: TAG ${element.tagName.toLowerCase()} NOT HANDLED! NEED A DEFAULT: `, $element.html() ))
-            console.log(colors.red("TO DEBUG, YOU WILL NEED TO set cache: boolean = false on getWikiBySlug")
+            console.log(colors.red("TO DEBUG, YOU WILL NEED TO set cache: boolean = false on getWikiBySlug"));
         }
 
         // Add the object to the array
