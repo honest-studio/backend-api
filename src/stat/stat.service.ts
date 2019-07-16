@@ -216,12 +216,19 @@ export class StatService {
         let total_editors: any = await this.mongo
             .connection()
             .actions.aggregate([
-                { $match: { 'trace.act.name': 'logpropinfo' }},
+                { $match: { 
+                    $or: [
+                        { 'trace.act.name': 'propose' },
+                        { 'trace.act.name': 'propose2' }
+                    ]
+                    //block_num: { $gt: doc.block_num }
+                }},
                 { $group: { _id: '$trace.act.data.proposer' } },
                 { $group: { _id: 1, count: { $sum: 1 } } }
             ])
             .toArray();
-        doc.total_editors = total_editors[0].count;
+            //if (total_editors.length > 0)
+            doc.total_editors = total_editors[0].count;
 
         let new_iq_rewards = await this.mongo
             .connection()
