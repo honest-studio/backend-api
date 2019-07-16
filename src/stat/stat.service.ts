@@ -216,15 +216,12 @@ export class StatService {
         let total_editors: any = await this.mongo
             .connection()
             .actions.aggregate([
-                { $match: { 
-                    'trace.act.account': 'eparticlectr',
-                    'trace.act.name': 'logpropinfo',
-                }},
+                { $match: { 'trace.act.name': 'logpropinfo' }},
                 { $group: { _id: '$trace.act.data.proposer' } },
                 { $group: { _id: 1, count: { $sum: 1 } } }
             ])
             .toArray();
-        total_editors = total_editors[0].count;
+        doc.total_editors = total_editors[0].count;
 
         let new_iq_rewards = await this.mongo
             .connection()
