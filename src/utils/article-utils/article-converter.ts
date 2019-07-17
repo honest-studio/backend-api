@@ -4,7 +4,7 @@ import * as mimePackage from 'mime';
 import * as path from 'path';
 import { convert as ReactAttrConvert } from 'react-attr-converter';
 import * as tokenizer from 'sbd';
-import { ArticleJson, Citation, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
+import { ArticleJson, Citation, CitationCategoryType, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
 import { urlCleaner, getYouTubeIdIfPresent } from './article-tools';
 import * as JSONCycleCustom from './json-cycle-custom';
 var colors = require('colors');
@@ -1156,7 +1156,7 @@ function splitSentences(text: string): Array<string> {
     return splits;
 }
 
-export function linkCategorizer(inputString: string) {
+export function linkCategorizer(inputString: string): CitationCategoryType {    
     // Find the MIME type and the extension
     let theMIME = mimePackage.getType(inputString);
     let theExtension = mimePackage.getExtension(theMIME);
@@ -1168,13 +1168,13 @@ export function linkCategorizer(inputString: string) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
-    } else if (theMIME && theMIME.indexOf('image') > 0) {
+    } else if (theMIME && theMIME.indexOf('image') >= 0) {
         return 'PICTURE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'NORMAL_VIDEO';
     } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
-    } 
+    } else return 'NONE'
 }
 
 // Copied with light modifications from NPM package get-youtube-id

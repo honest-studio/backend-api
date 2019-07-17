@@ -658,6 +658,7 @@ export class MediaUploadService {
                         // returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
                         returnPack.mainPhotoURL = dataOuter.Location;
                         returnPack.mime = varPack.mainMIME;
+                        returnPack.category = linkCategorizer(returnPack.mainPhotoURL);
 
                         // Create and upload the thumbnail
                         // gzip the thumbnail
