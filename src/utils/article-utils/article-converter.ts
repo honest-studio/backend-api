@@ -5,7 +5,7 @@ import * as path from 'path';
 import { convert as ReactAttrConvert } from 'react-attr-converter';
 import * as tokenizer from 'sbd';
 import { ArticleJson, Citation, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
-import { urlCleaner } from './article-tools';
+import { urlCleaner, getYouTubeIdIfPresent } from './article-tools';
 import * as JSONCycleCustom from './json-cycle-custom';
 var colors = require('colors');
 const voidElements = require('html-void-elements');
@@ -1162,21 +1162,19 @@ export function linkCategorizer(inputString: string) {
     let theExtension = mimePackage.getExtension(theMIME);
 
     // Test for different categories
-    if (getYouTubeID(inputString)) {
+    if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
     } else if (theMIME == '' || theMIME == null) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
-    } else if (theMIME.includes('image')) {
+    } else if (theMIME && theMIME.indexOf('image') > 0) {
         return 'PICTURE';
-    } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
+    } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'NORMAL_VIDEO';
-    } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension)) {
+    } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
-    } else {
-        return 'NONE';
-    }
+    } 
 }
 
 // Copied with light modifications from NPM package get-youtube-id
