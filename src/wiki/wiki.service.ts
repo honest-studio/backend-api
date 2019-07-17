@@ -35,7 +35,7 @@ export class WikiService {
         this.updateWikiIntervals = {};
     }
 
-    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<ArticleJson> {
+    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
@@ -135,12 +135,17 @@ export class WikiService {
             wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
         } catch {
             // if the wiki is not in JSON format, try and return the cache first
-            if (cache_wiki){
+            if (cache_wiki 
+                && cache_wiki.page_body 
+                && cache_wiki.page_body[0].paragraphs 
+                && cache_wiki.page_body[0].paragraphs.length
+            ){
+                
                 wiki = infoboxDtoPatcher(mergeMediaIntoCitations(cache_wiki));
                 cachePresent = true;
             }
             else{
-                // if the cache isn't available either, generate and return it
+                // if the cache isn't available either, or there are no paragraphs, generate the JSON from the html_blob and return it
                 wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
                 wiki.metadata = wiki.metadata.map((obj) => {
                     if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
@@ -149,8 +154,7 @@ export class WikiService {
                 wiki.ipfs_hash = ipfs_hash;
 
                 // some wikis don't have page langs set
-                if (!wiki.metadata.find((w) => w.key == 'page_lang'))
-                    wiki.metadata.push({ key: 'page_lang', value: lang_code });
+                if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
             }
 
 
@@ -195,7 +199,7 @@ export class WikiService {
         return wiki;
     }
 
-    async getAMPBySlug(lang_code: string, slug: string, cache: boolean = true): Promise<string> {
+    async getAMPBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<string> {
         let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug, BooleanTools.default(cache));
         let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
         ampWiki.main_photo[0].width = photoExtraData.width;

@@ -18,6 +18,8 @@ import { StringDecoder } from 'string_decoder';
 import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
+import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
+import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
 const extractFrame = require('ffmpeg-extract-frame')
 const axios = require('axios');
@@ -85,21 +87,7 @@ const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 export class MediaUploadService {
     constructor(private awsS3Service: AWSS3Service) {}
 
-    // Get the YouTube ID from a URL
-    getYouTubeIdIfPresent(inputURL: string) {
-        try {
-            // Also handle image URLs
-            inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
 
-            // Get the ID
-            let result = getYouTubeID(inputURL);
-
-            // Return the YouTube ID string
-            return result ? result : false;
-        } catch (e) {
-            return false;
-        }
-    }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
     getFavicon(inputPack: UrlPack): Promise<any> {
@@ -108,18 +96,31 @@ export class MediaUploadService {
 
     // Fetch a file from an external URL
     getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
+        let theCategory = linkCategorizer(inputPack.url);
+        let urlToUse = inputPack.url;
+
+        // Test for YouTube first
+        if (theCategory == 'YOUTUBE'){
+            urlToUse = `https://i.ytimg.com/vi/${getYouTubeID(urlToUse)}/hqdefault.jpg`;
+        }
+
+        // console.log("TESTING HERE!!!");
+        // console.log("TESTING HERE!!!");
+        // console.log(urlToUse)
+
         return axios({
-            url: inputPack.url,
+            url: urlToUse,
             method: 'GET',
             responseType: 'arraybuffer',
         }).then(response => {
             let fileBuffer = response.data;
             let mimePack: MimePack = fileType(fileBuffer);
-            return {
+            let returnPack: FileFetchResult = {
                 file_buffer: fileBuffer,
                 mime_pack: mimePack,
-                category: this.linkCategorizer(inputPack.url),
-            }
+                category: theCategory as any,
+            };
+            return returnPack;
         })
     }
 
@@ -188,34 +189,6 @@ export class MediaUploadService {
         } catch (e) {
             console.log(e);
             return photoDataResult;
-        }
-    }
-
-    // Categorize a link
-    linkCategorizer(inputString: string) {
-        try {
-            // Find the MIME type and the extension
-            let theMIME = mimeClass.getType(inputString);
-            let theExtension = mimeClass.getExtension(theMIME);
-            // Test for different categories
-            if (theMIME == '' || theMIME == null) {
-                return 'NONE';
-            } else if (theMIME == 'image/gif') {
-                return 'GIF';
-            } else if (theMIME.includes('image')) {
-                return 'PICTURE';
-            } else if (this.getYouTubeIdIfPresent(inputString)) {
-                return 'YOUTUBE';
-            } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
-                return 'NORMAL_VIDEO';
-            } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
-                return 'AUDIO';
-            } else {
-                return 'NONE';
-            }
-        } catch (e) {
-            console.log(e);
-            return 'NONE';
         }
     }
 
@@ -685,7 +658,7 @@ export class MediaUploadService {
                         // returnPack.mainPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theMainKey;
                         returnPack.mainPhotoURL = dataOuter.Location;
                         returnPack.mime = varPack.mainMIME;
-                        returnPack.category = this.linkCategorizer(returnPack.mainPhotoURL);
+                        returnPack.category = linkCategorizer(returnPack.mainPhotoURL);
 
                         // Create and upload the thumbnail
                         // gzip the thumbnail

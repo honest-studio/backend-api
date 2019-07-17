@@ -20,6 +20,22 @@ export function compareURLs (firstURL: string, secondURL: string): Boolean {
     return false;
 }
 
+// Get the YouTube ID from a URL
+export const getYouTubeIdIfPresent = (inputURL: string) => {
+    try {
+        // Also handle image URLs
+        inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
+
+        // Get the ID
+        let result = getYouTubeID(inputURL);
+
+        // Return the YouTube ID string
+        return result ? result : false;
+    } catch (e) {
+        return false;
+    }
+}
+
 // Convert React attributes back into HTML ones
 const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
     if (!inputAttrs) return {};

@@ -4,8 +4,8 @@ import * as mimePackage from 'mime';
 import * as path from 'path';
 import { convert as ReactAttrConvert } from 'react-attr-converter';
 import * as tokenizer from 'sbd';
-import { ArticleJson, Citation, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
-import { urlCleaner } from './article-tools';
+import { ArticleJson, Citation, CitationCategoryType, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
+import { urlCleaner, getYouTubeIdIfPresent } from './article-tools';
 import * as JSONCycleCustom from './json-cycle-custom';
 var colors = require('colors');
 const voidElements = require('html-void-elements');
@@ -246,6 +246,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     });
 
     const page_body = extractPageBody($);
+
 
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }
@@ -639,9 +640,17 @@ function extractInfoboxes($: CheerioStatic): Infobox[] {
 function splitIntoSections($body: Cheerio): Cheerio[] {
     const bodyHtml = $body.html();
     if (!bodyHtml) return [];
+
     return bodyHtml
         .split(/(?=<h[1-6])/g)
         .map((htmlSection) => htmlSection.trim())
+        .map((htmlSection) => {
+            if (htmlSection.length && htmlSection.charAt(0) != "<"){
+                console.log("No section immediate child wrap found. Adding a <p>");
+                return `<p>${htmlSection}</p>`;
+            }
+            else return htmlSection;
+        })
         .map((htmlSection) => `<div class="section">${htmlSection}</div>`)
         .map((htmlSection) => cheerio.load(htmlSection))
         .map(($) => $('.section'));
@@ -763,6 +772,10 @@ function parseSection($section: Cheerio): Section {
 
             const table = parseTable($element, 'body-table');
             paragraph.items.push(table);
+        }
+        else{
+            console.log(colors.red(`ERROR IN PARSING: TAG ${element.tagName.toLowerCase()} NOT HANDLED! NEED A DEFAULT: `, $element.html() ))
+            console.log(colors.red("TO DEBUG, YOU WILL NEED TO set cache: boolean = false on getWikiBySlug"));
         }
 
         // Add the object to the array
@@ -1143,27 +1156,25 @@ function splitSentences(text: string): Array<string> {
     return splits;
 }
 
-export function linkCategorizer(inputString: string) {
+export function linkCategorizer(inputString: string): CitationCategoryType {    
     // Find the MIME type and the extension
     let theMIME = mimePackage.getType(inputString);
     let theExtension = mimePackage.getExtension(theMIME);
 
     // Test for different categories
-    if (getYouTubeID(inputString)) {
+    if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
     } else if (theMIME == '' || theMIME == null) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
-    } else if (theMIME.includes('image')) {
+    } else if (theMIME && theMIME.indexOf('image') >= 0) {
         return 'PICTURE';
-    } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension)) {
+    } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'NORMAL_VIDEO';
-    } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension)) {
+    } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
-    } else {
-        return 'NONE';
-    }
+    } else return 'NONE'
 }
 
 // Copied with light modifications from NPM package get-youtube-id
