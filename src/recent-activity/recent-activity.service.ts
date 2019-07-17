@@ -67,6 +67,9 @@ export class RecentActivityService {
         } else {
             sort_direction = -1;
         }
+        if (query.account_name) {
+            find_query['trace.act.data.proposer'] = query.account_name;
+        }
         if (query.completed) {
             find_query['trace.act.data.endtime'] = { $lt: now };
         }
