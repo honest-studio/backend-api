@@ -100,6 +100,12 @@ export class RecentActivityController {
         type: Boolean
     })
     @ApiImplicitQuery({
+        name: 'account_name',
+        description: `Filter by EOS account name`,
+        required: false,
+        type: String
+    })
+    @ApiImplicitQuery({
         name: 'diff',
         description: `Include diff data in the proposals. Takes one of three values:
             'none': (default) Don't include diff data.
