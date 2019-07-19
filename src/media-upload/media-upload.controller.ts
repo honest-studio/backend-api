@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UploadedFile, UseInterceptors, ValidationPipe } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiImplicitFile, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { FileFetchResult, MediaUploadDto } from './media-upload-dto';
+import { FileFetchResult, MediaUploadResult, MediaUploadDto, MediaUploadDtoNoFile } from './media-upload-dto';
 import { MediaUploadService, UrlPack } from './media-upload.service';
 const path = require('path');
 
@@ -37,12 +37,30 @@ export class MediaUploadController {
     })
     // KNOWN ISSUE: /docs issue with application/json and multipart/form-data
     // https://github.com/nestjs/swagger/issues/167
-    async uploadMedia(@UploadedFile() file, @Body(new ValidationPipe()) message: MediaUploadDto): Promise<any> {
+    async uploadMedia(@UploadedFile() file, @Body(new ValidationPipe()) message: MediaUploadDto): Promise<MediaUploadResult> {
         return this.MediaUploadService.processMedia(
             file.buffer,
             message.lang,
             message.slug,
             path.parse(file.originalname).name,
+            message.upload_type,
+            message.caption
+        );
+    }
+
+    @Post('/upload-no-file')
+    @ApiOperation({ title: 'Upload media' })
+    @ApiResponse({
+        status: 200,
+        description: `Success`
+    })
+    async uploadMediaNoFile(@Body(new ValidationPipe()) message: MediaUploadDtoNoFile): Promise<MediaUploadResult> {
+        let resultBuffer = await this.MediaUploadService.getImageBufferFromURL(message.url);
+        return this.MediaUploadService.processMedia(
+            resultBuffer,
+            message.lang,
+            message.slug,
+            message.identifier,
             message.upload_type,
             message.caption
         );
