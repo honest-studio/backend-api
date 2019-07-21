@@ -472,6 +472,8 @@ export class WikiService {
             }
             else throw e;
         }
+
+        return { status: 'Success' };
     }
 
     async processWikiUpdate(wiki: ArticleJson, ipfs_hash: string): Promise<any>{
