@@ -49,6 +49,23 @@ export class MediaUploadDto {
     // upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
 }
 
+// Parameters for the media upload
+export class MediaUploadDtoNoFile extends MediaUploadDto {
+    @ApiModelProperty({
+        description: 'The url of the target file to upload to S3',
+        required: true
+    })
+    @IsString()
+    url: string;
+
+    @ApiModelProperty({
+        description: 'Filename / identifier prefix',
+        required: true
+    })
+    @IsString()
+    identifier: string;
+}
+
 // Mimetype interface
 export interface MimePack {
     ext: string;

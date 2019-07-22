@@ -160,7 +160,7 @@ export class MediaUploadService {
     // }
 
     // Get a buffer from a URL
-    async getImageBufferFromURL(inputURL: string) {
+    async getImageBufferFromURL(inputURL: string): Promise<Buffer> {
         const options = {
             headers: UNIVERSAL_HEADERS
         };
@@ -238,7 +238,7 @@ export class MediaUploadService {
 
     // Process a photo and upload it to the AWS S3 Bucket.
     async processMedia(
-        mediaBuffer: Buffer,
+        mediaBuffer: Buffer | string,
         lang: string,
         slug: string,
         identifier: string,
@@ -246,8 +246,15 @@ export class MediaUploadService {
         fileCaption: string
     ): Promise<MediaUploadResult> {
         try {
+            // let bufferToUse: Buffer;
+            // if (mediaBuffer.constructor !== Array) {
+            //     bufferToUse = await this.getImageBufferFromURL(mediaBuffer as string);
+            // }
+            // else { bufferToUse = mediaBuffer as Buffer };
+            let bufferToUse = mediaBuffer as Buffer;
+
             // Determine the MIME type
-            let mimePack: MimePack = fileType(mediaBuffer);
+            let mimePack: MimePack = fileType(bufferToUse);
 
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
@@ -309,7 +316,7 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/svg+xml';
                         varPack.thumbSuffix = 'svg';
                         varPack.thumbMIME = 'image/svg+xml';
-                        bufferPack.mainBuf = mediaBuffer;
+                        bufferPack.mainBuf = bufferToUse;
                         bufferPack.thumbBuf = bufferPack.mainBuf;
                         break;
                     }
@@ -328,7 +335,7 @@ export class MediaUploadService {
 
                         // // Decode the HEIF and convert to a JPEG buffer using Canvas
                         // const decoder = new libheif.HeifDecoder();
-                        // const [image] = decoder.decode(mediaBuffer);
+                        // const [image] = decoder.decode(bufferToUse);
                         // const w = image.get_width();
                         // const h = image.get_height();
                         // const canvas = new Canvas(w, h);
@@ -340,8 +347,8 @@ export class MediaUploadService {
                         //     let one = 1;
                         // })
 
-                        // bufferPack.mainBuf = mediaBuffer;
-                        // bufferPack.thumbBuf = mediaBuffer;
+                        // bufferPack.mainBuf = bufferToUse;
+                        // bufferPack.thumbBuf = bufferToUse;
                         break;
                     }
                     // Process BMPs
@@ -354,7 +361,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the BMP and convert it to JPEG due to AMP and compatibility issues (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -365,7 +372,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Set the BMP thumbnail as a JPEG
-                        bufferPack.thumbBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -386,7 +393,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the TIFF and convert it to JPEG due to AMP and compatibility issues (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -397,7 +404,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Set the TIFF thumbnail as a JPEG
-                        bufferPack.thumbBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -415,14 +422,14 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/gif';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = 'image/jpeg';
-                        bufferPack.mainBuf = mediaBuffer;
+                        bufferPack.mainBuf = bufferToUse;
 
                         // Get a PNG frame from the GIF, resize, then compress it to a JPEG
                         // Must resize to fit 1201x1201 to help with AMP
                         // FIX THIS LATER
                         bufferPack.thumbBuf = bufferPack.mainBuf;
                         // try {
-                        //     bufferPack.thumbBuf = await this.getPNGFrameFromGIF(mediaBuffer)
+                        //     bufferPack.thumbBuf = await this.getPNGFrameFromGIF(bufferToUse)
                         //         .then((pngFrame) => {
                         //             console.log(pngFrame);
                         //             // return pngFrame;
@@ -452,7 +459,7 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/jpeg';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = 'image/jpeg';
-                        bufferPack.mainBuf = await this.compressImage(mediaBuffer);
+                        bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
                         // Convert to PNG
                         let dwebpObj = new DWebp(bufferPack.mainBuf);
@@ -504,8 +511,8 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/x-icon';
                         varPack.thumbSuffix = 'ico';
                         varPack.thumbMIME = 'image/x-icon';
-                        bufferPack.mainBuf = mediaBuffer;
-                        bufferPack.thumbBuf = mediaBuffer;
+                        bufferPack.mainBuf = bufferToUse;
+                        bufferPack.thumbBuf = bufferToUse;
                         break;
                     }
                     // Process JPEGs
@@ -516,7 +523,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the JPEG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -527,7 +534,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Resize the JPEG for its thumbnail
-                        bufferPack.thumbBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -547,13 +554,13 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/png';
 
                         // Resize the PNG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
                             .then((image) => image.scaleToFit(mainWidth, mainHeight).getBufferAsync('image/png'))
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Resize the PNG for its thumbnail
-                        bufferPack.thumbBuf = await Jimp.read(mediaBuffer)
+                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .scaleToFit(thumbWidth, thumbHeight)
@@ -575,7 +582,7 @@ export class MediaUploadService {
                 var tempFileNameOutput = crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.jpeg';
                 let tempPath = path.join(TEMP_DIR, tempFileNameInput);
                 let snapshotPath = path.join(TEMP_DIR, tempFileNameOutput);
-                fs.writeFileSync(tempPath, mediaBuffer);
+                fs.writeFileSync(tempPath, bufferToUse);
                 fs.writeFileSync(snapshotPath, '');
 
                 try {
@@ -592,7 +599,7 @@ export class MediaUploadService {
                     varPack.thumbMIME = 'image/jpeg';
 
                     // Set the buffer
-                    bufferPack.mainBuf = mediaBuffer;
+                    bufferPack.mainBuf = bufferToUse;
 
                     // Resize the snapshot JPEG
                     bufferPack.thumbBuf = await Jimp.read(fs.readFileSync(snapshotPath))
