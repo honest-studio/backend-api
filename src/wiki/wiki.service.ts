@@ -40,19 +40,23 @@ export class WikiService {
         let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
-            SELECT COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, art.is_indexed as is_idx, art_redir.is_indexed as is_idx_redir
+            SELECT 
+                COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, 
+                art.is_indexed as is_idx, 
+                art_redir.is_indexed as is_idx_redir,
+                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
                 ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
                 AND (art.page_lang = ? OR art_redir.page_lang = ?)
-                AND COALESCE(art_redir.is_removed, art.is_removed) = 0
             `,
             [mysql_slug, mysql_slug, decodedSlug, decodedSlug, lang_code, lang_code]
         );
         let ipfs_hash;
         let overrideIsIndexed;
         if (ipfs_hash_rows.length > 0) {
+            if (ipfs_hash_rows[0].is_removed) throw new NotFoundException(`Wiki ${lang_code}/${slug} is marked as removed`);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
