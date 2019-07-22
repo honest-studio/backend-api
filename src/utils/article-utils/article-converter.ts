@@ -51,7 +51,7 @@ export const BLOCK_ELEMENTS = [
     "tr",
     "ul",
     "video"
-  ];
+];
 
 // constants
 const ROOT_DIR = path.join(__dirname, '../..');
