@@ -668,7 +668,10 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number): Cita
         timestamp: inputMedia.timestamp || new Date(),
         mime: inputMedia.mime || null,
         media_props: {
-            type: inputMedia.type
+            type: inputMedia.type,
+            webp_original: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
+            webp_medium: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
+            webp_thumb: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
         },
         in_blurb: false,
     }
