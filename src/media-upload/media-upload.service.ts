@@ -102,7 +102,7 @@ export class MediaUploadService {
         // console.log("TESTING HERE!!!");
         // console.log(urlToUse)
 
-        return axios({
+        return axios.default({
             url: urlToUse,
             method: 'GET',
             responseType: 'arraybuffer',
@@ -547,33 +547,7 @@ export class MediaUploadService {
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
-                        // Convert the JPEG into WEBP
-                        bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
-                            .webp({ quality: 100, lossless: true })
-                            .toBuffer()
-                            .then((buffer) => buffer as any)
-                            .catch((err) => console.log(err));
-
-                        // Resize the WEBP for the medium image
-                        bufferPack.webpMediumBuf = await sharp.default(bufferToUse)
-                            .resize(mediumWidth, mediumHeight, {
-                                fit: 'contain',
-                            })
-                            .webp({ quality: 80, lossless: false })
-                            .toBuffer()
-                            .then((buffer) => buffer as any)
-                            .catch((err) => console.log(err));
-
-                        // Resize the WEBP for the thumb image
-                        bufferPack.webpThumbBuf = await sharp.default(bufferToUse)
-                            .resize(thumbWidth, thumbHeight, {
-                                fit: 'contain',
-                            })
-                            .webp({ quality: 80, lossless: false })
-                            .toBuffer()
-                            .then((buffer) => buffer as any)
-                            .catch((err) => console.log(err));
-
+                        
                         break;
                     }
                     // Process PNG files
@@ -657,6 +631,46 @@ export class MediaUploadService {
                 // TODO: Audio support
             }
 
+            if(
+                    varPack.suffix == 'jpeg' 
+                    || varPack.suffix == 'png' 
+                    || mimePack.mime.indexOf('webp') >= 0 
+                    || mimePack.mime.indexOf('tiff') >= 0
+                    || mimePack.mime.indexOf('gif') >= 0
+                    || mimePack.mime.indexOf('svg') >= 0
+                ){
+                // Get the original image in WEBP form
+                bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
+                    .resize(mainWidth, mainHeight, {
+                        fit: 'contain',
+                    })
+                    .webp({ quality: 100, lossless: true, force: true })
+                    .toBuffer()
+                    .then((buffer) => buffer as any)
+                    .catch((err) => console.log(err));
+
+                // Resize the WEBP for the medium image
+                bufferPack.webpMediumBuf = await sharp.default(bufferToUse)
+                    .resize(mediumWidth, mediumHeight, {
+                        fit: 'contain',
+                    })
+                    .webp({ quality: 80, nearLossless: true, force: true })
+                    .toBuffer()
+                    .then((buffer) => buffer as any)
+                    .catch((err) => console.log(err));
+
+                // Resize the WEBP for the thumb image
+                bufferPack.webpThumbBuf = await sharp.default(bufferToUse)
+                    .resize(thumbWidth, thumbHeight, {
+                        fit: 'contain',
+                    })
+                    .webp({ quality: 80, lossless: false, force: true })
+                    .toBuffer()
+                    .then((buffer) => buffer as any)
+                    .catch((err) => console.log(err));
+            }
+
+
             // gzip the main files (and the webp's, if present)
             if (!mimePack.mime.includes('video')){
                 bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
@@ -727,6 +741,9 @@ export class MediaUploadService {
 
             if (!mimePack.mime.includes('video')){
                 uploadParamsMain['ContentEncoding'] = 'gzip';
+                uploadParamsMainWebpOriginal['ContentEncoding'] = 'gzip';
+                uploadParamsMainWebpMedium['ContentEncoding'] = 'gzip';
+                uploadParamsMainWebpThumb['ContentEncoding'] = 'gzip';
             }
 
             // Upload the main image and the main thumb
