@@ -120,7 +120,8 @@ export class RecentActivityService {
                 ORDER BY pageviews DESC
                 LIMIT 100
                 `,
-                [one_day_ago]
+                [one_day_ago],
+                20000
             );
 
             const trending = top_slugs.map(row => ({
