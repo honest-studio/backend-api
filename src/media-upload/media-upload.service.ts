@@ -21,8 +21,9 @@ import { fetchUrl } from './fetch-favicon';
 import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
-const extractFrame = require('ffmpeg-extract-frame')
-const axios = require('axios');
+import * as sharp from 'sharp';
+import * as axios from 'axios';
+const extractFrame = require('ffmpeg-extract-frame');
 const extractGIFFrames = require('./gif-extract-frames')
 var colors = require('colors');
 const fileType = require('file-type');
@@ -251,7 +252,13 @@ export class MediaUploadService {
 
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
-            let bufferPack = { mainBuf: new Buffer(''), thumbBuf: new Buffer('') };
+            let bufferPack = { 
+                mainBuf: new Buffer(''), 
+                thumbBuf: new Buffer(''),
+                webpOriginalBuf: new Buffer(''),
+                webpMediumBuf: new Buffer(''),
+                webpThumbBuf: new Buffer('')
+            };
 
             // NOTES FOR S3 AND PUSHING STREAMS/BUFFERS
             // https://stackoverflow.com/questions/15817746/stream-uploading-an-gm-resized-image-to-s3-with-aws-sdk
@@ -539,6 +546,34 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
+
+                        // Convert the JPEG into WEBP
+                        bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
+                            .webp({ quality: 100, lossless: true })
+                            .toBuffer()
+                            .then((buffer) => buffer as any)
+                            .catch((err) => console.log(err));
+
+                        // Resize the WEBP for the medium image
+                        bufferPack.webpMediumBuf = await sharp.default(bufferToUse)
+                            .resize(mediumWidth, mediumHeight, {
+                                fit: 'contain',
+                            })
+                            .webp({ quality: 80, lossless: false })
+                            .toBuffer()
+                            .then((buffer) => buffer as any)
+                            .catch((err) => console.log(err));
+
+                        // Resize the WEBP for the thumb image
+                        bufferPack.webpThumbBuf = await sharp.default(bufferToUse)
+                            .resize(thumbWidth, thumbHeight, {
+                                fit: 'contain',
+                            })
+                            .webp({ quality: 80, lossless: false })
+                            .toBuffer()
+                            .then((buffer) => buffer as any)
+                            .catch((err) => console.log(err));
+
                         break;
                     }
                     // Process PNG files
@@ -622,19 +657,35 @@ export class MediaUploadService {
                 // TODO: Audio support
             }
 
-            // gzip the main file
+            // gzip the main files (and the webp's, if present)
             if (!mimePack.mime.includes('video')){
                 bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });
+                bufferPack.webpOriginalBuf = zlib.gzipSync(bufferPack.webpOriginalBuf, {
+                    level: zlib.constants.Z_BEST_COMPRESSION
+                });
+                bufferPack.webpMediumBuf = zlib.gzipSync(bufferPack.webpMediumBuf, {
+                    level: zlib.constants.Z_BEST_COMPRESSION
+                });
+                bufferPack.webpThumbBuf = zlib.gzipSync(bufferPack.webpThumbBuf, {
+                    level: zlib.constants.Z_BEST_COMPRESSION
+                });
+
             }
 
-
-            // Set the AWS S3 bucket key
-            let encodedSuffix = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}.${varPack.suffix}`;
+            // Set the AWS S3 bucket keys
+            let encodedSuffixFirstPart = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}`;
+            let encodedSuffix = `${encodedSuffixFirstPart}.${varPack.suffix}`;
+            let encodedSuffixWebpOriginal = `${encodedSuffixFirstPart}_original.webp`;
+            let encodedSuffixWebpMedium = `${encodedSuffixFirstPart}_medium.webp`;
+            let encodedSuffixWebpThumb = `${encodedSuffixFirstPart}_thumb.webp`;
             let theMainKey = `${uploadType}/${lang}/${encodedSuffix}`;
+            let theMainKeyWebpOriginal = `${uploadType}/${lang}/${encodedSuffixWebpOriginal}`;
+            let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
+            let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
 
-            // Specify S3 upload options
+            // Specify S3 upload options for the original image
             let uploadParamsMain = {
                 Bucket: this.awsS3Service.getBucket(),
                 Key: theMainKey,
@@ -644,11 +695,41 @@ export class MediaUploadService {
                 CacheControl: 'max-age=31536000',
             };
 
+            // Specify S3 upload options for the webp'd original
+            let uploadParamsMainWebpOriginal = {
+                Bucket: this.awsS3Service.getBucket(),
+                Key: theMainKeyWebpOriginal,
+                Body: bufferPack.webpOriginalBuf,
+                ACL: 'public-read',
+                ContentType: "image/webp",
+                CacheControl: 'max-age=31536000',
+            };
+
+            // Specify S3 upload options for the medium webp
+            let uploadParamsMainWebpMedium = {
+                Bucket: this.awsS3Service.getBucket(),
+                Key: theMainKeyWebpMedium,
+                Body: bufferPack.webpMediumBuf,
+                ACL: 'public-read',
+                ContentType: "image/webp",
+                CacheControl: 'max-age=31536000',
+            };
+
+            // Specify S3 upload options for the thumb webp
+            let uploadParamsMainWebpThumb = {
+                Bucket: this.awsS3Service.getBucket(),
+                Key: theMainKeyWebpThumb,
+                Body: bufferPack.webpThumbBuf,
+                ACL: 'public-read',
+                ContentType: "image/webp",
+                CacheControl: 'max-age=31536000',
+            };
+
             if (!mimePack.mime.includes('video')){
                 uploadParamsMain['ContentEncoding'] = 'gzip';
             }
 
-            return new Promise((resolve, reject) => {
+            let mainAndThumbResult = await new Promise((resolve, reject) => {
                 this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
                     if (s3ErrOuter){
                         console.log(colors.yellow('ERROR: s3ErrOuter for main image'));
@@ -699,6 +780,8 @@ export class MediaUploadService {
                     }
                 });
             });
+            console.log(mainAndThumbResult)
+            return null;
         } catch (e) {
             return null;
         }
