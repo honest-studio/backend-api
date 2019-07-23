@@ -166,11 +166,16 @@ export class MediaUploadService {
             headers: UNIVERSAL_HEADERS
         };
         try {
-            return fetch(inputURL, options)
-                .then((res) => res.buffer())
-                .then((buffer) => {
-                    return buffer;
-                });
+            console.log(colors.yellow(inputURL))
+            return axios.default({
+                url: inputURL,
+                method: 'GET',
+                responseType: 'arraybuffer',
+            }).then(response => {
+                let buffer = response.data;
+                return buffer;
+            })
+            
         } catch (e) {
             console.log(e);
         }
@@ -255,7 +260,6 @@ export class MediaUploadService {
         fileCaption: string
     ): Promise<MediaUploadResult> {
         try {
-
             // let bufferToUse: Buffer;
             // if (mediaBuffer.constructor !== Array) {
             //     bufferToUse = await this.getImageBufferFromURL(mediaBuffer as string);

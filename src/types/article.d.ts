@@ -95,6 +95,7 @@ export interface Media {
     category?: CitationCategoryType;
     diff?: DiffType;
     srcSet?: string;
+    media_props?: MediaProps;
 }
 
 export interface MediaProps {
