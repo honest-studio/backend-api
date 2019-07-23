@@ -90,5 +90,8 @@ export interface MediaUploadResult {
     thumbnailPhotoURL: string;
     mime: string;
     category: CitationCategoryType;
+    webp_original?: string;
+    webp_medium?: string;
+    webp_thumb?: string;
 }
 

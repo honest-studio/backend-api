@@ -37,19 +37,12 @@ const PHOTO_CONSTANTS = {
     CROPPED_WIDTH: 1201,
     CROPPED_HEIGHT: 1201,
     DISPLAY_WIDTH: 275,
-    SCALING_RATIO: function() {
-        return this.CROPPED_WIDTH / this.DISPLAY_WIDTH;
-    },
-    CROPPED_THUMB_WIDTH: 250,
-    CROPPED_THUMB_HEIGHT: 250,
-    SCALING_RATIO_THUMB: function() {
-        return this.CROPPED_WIDTH / this.DISPLAY_WIDTH;
-    },
+    CROPPED_MEDIUM_WIDTH: 600,
+    CROPPED_MEDIUM_HEIGHT: 600,
+    CROPPED_THUMB_WIDTH: 200,
+    CROPPED_THUMB_HEIGHT: 200,
     CROPPED_META_THUMB_WIDTH: 250,
     CROPPED_META_THUMB_HEIGHT: 250,
-    SCALING_RATIO_META_THUMB: function() {
-        return this.CROPPED_WIDTH / this.DISPLAY_WIDTH;
-    }
 };
 
 export interface UrlPack {
@@ -271,6 +264,8 @@ export class MediaUploadService {
             // Initialize the height and width of the thumbnails
             let mainWidth = PHOTO_CONSTANTS.CROPPED_WIDTH;
             let mainHeight = PHOTO_CONSTANTS.CROPPED_HEIGHT;
+            let mediumWidth = 450;
+            let mediumHeight = 450;
             let thumbWidth = 200;
             let thumbHeight = 200;
             let includeMainPhoto: boolean = true;

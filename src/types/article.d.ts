@@ -102,6 +102,9 @@ export interface MediaProps {
     height?: number;
     width?: number;
     srcSet?: string;
+    webp_original?: string;
+    webp_medium?: string;
+    webp_thumb?: string;
 }
 
 // Valid Metadata keys
