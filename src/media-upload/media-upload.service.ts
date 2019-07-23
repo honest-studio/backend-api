@@ -729,7 +729,8 @@ export class MediaUploadService {
                 uploadParamsMain['ContentEncoding'] = 'gzip';
             }
 
-            let mainAndThumbResult = await new Promise((resolve, reject) => {
+            // Upload the main image and the main thumb
+            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
                 this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
                     if (s3ErrOuter){
                         console.log(colors.yellow('ERROR: s3ErrOuter for main image'));
@@ -773,15 +774,62 @@ export class MediaUploadService {
                                 // Update the return dictionary with the thumbnail URL
                                 // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
                                 returnPack.thumbnailPhotoURL = dataInner.Location;
-                                console.log(returnPack);
                                 resolve(returnPack);
                             }
                         });
                     }
                 });
             });
-            console.log(mainAndThumbResult)
-            return null;
+
+
+
+            // Upload the original in webp form
+            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                this.awsS3Service.upload(uploadParamsMainWebpOriginal, (s3ErrOuter, dataOuter) => {
+                    if (s3ErrOuter){
+                        console.log(colors.yellow('ERROR: s3ErrOuter for webp original image'));
+                        console.log(s3ErrOuter);
+                        reject(s3ErrOuter);
+                    }
+                    else {
+                        returnPack.webp_original = dataOuter.Location;
+                        resolve(returnPack);
+                    }
+                });
+            });
+
+            // Upload the medium webp
+            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                this.awsS3Service.upload(uploadParamsMainWebpMedium, (s3ErrOuter, dataOuter) => {
+                    if (s3ErrOuter){
+                        console.log(colors.yellow('ERROR: s3ErrOuter for webp medium image'));
+                        console.log(s3ErrOuter);
+                        reject(s3ErrOuter);
+                    }
+                    else {
+                        returnPack.webp_medium = dataOuter.Location;
+                        resolve(returnPack);
+                    }
+                });
+            });
+
+            // Upload the thumb webp
+            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                this.awsS3Service.upload(uploadParamsMainWebpThumb, (s3ErrOuter, dataOuter) => {
+                    if (s3ErrOuter){
+                        console.log(colors.yellow('ERROR: s3ErrOuter for webp thumb image'));
+                        console.log(s3ErrOuter);
+                        reject(s3ErrOuter);
+                    }
+                    else {
+                        returnPack.webp_thumb = dataOuter.Location;
+                        resolve(returnPack);
+                    }
+                });
+            });
+
+            console.log(returnPack)
+            return returnPack;
         } catch (e) {
             return null;
         }
