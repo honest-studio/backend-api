@@ -23,6 +23,7 @@ import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
 import * as sharp from 'sharp';
 import * as axios from 'axios';
+const isSvg = require('is-svg');
 const extractFrame = require('ffmpeg-extract-frame');
 const extractGIFFrames = require('./gif-extract-frames')
 var colors = require('colors');
@@ -81,8 +82,6 @@ const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 export class MediaUploadService {
     constructor(private awsS3Service: AWSS3Service) {}
 
-
-
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
     getFavicon(inputPack: UrlPack): Promise<any> {
         return fetchUrl(inputPack.url);
@@ -109,6 +108,14 @@ export class MediaUploadService {
         }).then(response => {
             let fileBuffer = response.data;
             let mimePack: MimePack = fileType(fileBuffer);
+            if (mimePack == null){
+                if (isSvg(fileBuffer)){
+                    mimePack = {
+                        ext: 'svg',
+                        mime: 'image/svg+xml'
+                    }
+                }
+            }
             let returnPack: FileFetchResult = {
                 file_buffer: fileBuffer,
                 mime_pack: mimePack,
@@ -175,6 +182,14 @@ export class MediaUploadService {
         try {
             let imgBuffer = await this.getImageBufferFromURL(inputURL);
             let mimeResult = fileType(imgBuffer);
+            if (mimeResult == null){
+                if (isSvg(imgBuffer)){
+                    mimeResult = {
+                        ext: 'svg',
+                        mime: 'image/svg+xml'
+                    }
+                }
+            }
             let sizeResult = sizeOf(imgBuffer);
             photoDataResult.width = sizeResult.width;
             photoDataResult.height = sizeResult.height;
@@ -240,6 +255,7 @@ export class MediaUploadService {
         fileCaption: string
     ): Promise<MediaUploadResult> {
         try {
+
             // let bufferToUse: Buffer;
             // if (mediaBuffer.constructor !== Array) {
             //     bufferToUse = await this.getImageBufferFromURL(mediaBuffer as string);
@@ -249,6 +265,14 @@ export class MediaUploadService {
 
             // Determine the MIME type
             let mimePack: MimePack = fileType(bufferToUse);
+            if (mimePack == null){
+                if (isSvg(bufferToUse)){
+                    mimePack = {
+                        ext: 'svg',
+                        mime: 'image/svg+xml'
+                    }
+                }
+            }
 
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
@@ -277,6 +301,9 @@ export class MediaUploadService {
             let thumbHeight = 200;
             let includeMainPhoto: boolean = true;
 
+
+
+
             // Set the thumbnail width and height
             // if (uploadType == 'ProfilePicture' || uploadType == 'NewlinkFiles') {
             //     thumbWidth = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
@@ -287,8 +314,6 @@ export class MediaUploadService {
             //     thumbHeight = PHOTO_CONSTANTS.CROPPED_META_THUMB_HEIGHT;
             //     includeMainPhoto = false;
             // }
-
-
 
             // Get a timestamp string from the Unix epoch
             let theTimeString = new Date()
@@ -309,6 +334,7 @@ export class MediaUploadService {
                 category: 'NONE'
             };
 
+
             // Determine how to move forward based on the MIME type
             if (mimePack.mime.includes('image')) {
                 switch (mimePack.mime) {
@@ -316,10 +342,21 @@ export class MediaUploadService {
                     case 'image/svg+xml': {
                         varPack.suffix = 'svg';
                         varPack.mainMIME = 'image/svg+xml';
-                        varPack.thumbSuffix = 'svg';
-                        varPack.thumbMIME = 'image/svg+xml';
+                        varPack.thumbSuffix = 'jpeg';
+                        varPack.thumbMIME = 'image/jpeg';
                         bufferPack.mainBuf = bufferToUse;
-                        bufferPack.thumbBuf = bufferPack.mainBuf;
+
+                        // Convert the SVG into jpeg and resize it into a thumbnail
+                        bufferPack.thumbBuf = await sharp.default(bufferToUse)
+                            .resize(thumbWidth, thumbHeight, {
+                                fit: 'contain',
+                                // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                            })
+                            .jpeg({ quality: 85, force: true })
+                            .toBuffer()
+                            .then((buffer) => buffer as any)
+                            .catch((err) => console.log(err));
+
                         break;
                     }
                     // Process HEIF / HEIC
@@ -639,10 +676,12 @@ export class MediaUploadService {
                     || mimePack.mime.indexOf('gif') >= 0
                     || mimePack.mime.indexOf('svg') >= 0
                 ){
+                    
                 // Get the original image in WEBP form
                 bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
                     .resize(mainWidth, mainHeight, {
                         fit: 'contain',
+                        // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
                     .webp({ quality: 100, lossless: true, force: true })
                     .toBuffer()
@@ -653,8 +692,9 @@ export class MediaUploadService {
                 bufferPack.webpMediumBuf = await sharp.default(bufferToUse)
                     .resize(mediumWidth, mediumHeight, {
                         fit: 'contain',
+                        // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 80, nearLossless: true, force: true })
+                    .webp({ quality: 85, nearLossless: true, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log(err));
@@ -663,8 +703,9 @@ export class MediaUploadService {
                 bufferPack.webpThumbBuf = await sharp.default(bufferToUse)
                     .resize(thumbWidth, thumbHeight, {
                         fit: 'contain',
+                        // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 80, lossless: false, force: true })
+                    .webp({ quality: 85, lossless: false, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log(err));
