@@ -1,0 +1,9 @@
+Info https://docs.aws.amazon.com/lambda/latest/dg/nodejs-create-deployment-pkg.html
+NOTES
+rm -rf node_modules/sharp
+npm install --arch=x64 --platform=linux --target=8.10.0 sharp
+
+
+aws lambda list-functions --region us-east-1
+zip -r function.zip .
+aws lambda update-function-code --function-name AddWebpImages --zip-file fileb://function.zip --region us-east-1

@@ -133,7 +133,7 @@ export class SitemapService {
             let sitemap = sm.createSitemap({
                 hostname: hostName,
                 cacheTime: 600000, // 600 sec - cache purge period
-                urls: urlPacks
+                urls: urlPacks as any
             });
     
             let fileName = `${lang}-${currentLoop}.xml`;

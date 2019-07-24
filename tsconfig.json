@@ -23,6 +23,6 @@
         "resolveJsonModule": true,
         "sourceMap": true
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "scripts/Non-Lambda/*"],
     "exclude": ["dist", "node_modules", "**/*.spec.ts"]
 }

@@ -353,7 +353,7 @@ export class MediaUploadService {
                         // Convert the SVG into jpeg and resize it into a thumbnail
                         bufferPack.thumbBuf = await sharp.default(bufferToUse)
                             .resize(thumbWidth, thumbHeight, {
-                                fit: 'contain',
+                                fit: 'inside',
                                 // background: { r: 255, g: 255, b: 255, alpha: 1 }
                             })
                             .jpeg({ quality: 85, force: true })
@@ -684,7 +684,7 @@ export class MediaUploadService {
                 // Get the original image in WEBP form
                 bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
                     .resize(mainWidth, mainHeight, {
-                        fit: 'contain',
+                        fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
                     .webp({ quality: 100, lossless: true, force: true })
@@ -695,7 +695,7 @@ export class MediaUploadService {
                 // Resize the WEBP for the medium image
                 bufferPack.webpMediumBuf = await sharp.default(bufferToUse)
                     .resize(mediumWidth, mediumHeight, {
-                        fit: 'contain',
+                        fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
                     .webp({ quality: 85, nearLossless: true, force: true })
@@ -706,7 +706,7 @@ export class MediaUploadService {
                 // Resize the WEBP for the thumb image
                 bufferPack.webpThumbBuf = await sharp.default(bufferToUse)
                     .resize(thumbWidth, thumbHeight, {
-                        fit: 'contain',
+                        fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
                     .webp({ quality: 85, lossless: false, force: true })
