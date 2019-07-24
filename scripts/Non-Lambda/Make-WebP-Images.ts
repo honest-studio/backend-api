@@ -32,9 +32,9 @@ const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
 const theBucket = theAWSS3.getBucket();
 
-// SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', art.page_title)
+// SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))
 // FROM enterlink_articletable art
-// WHERE id < 100
+// WHERE id BETWEEN 1000 AND 1000000
 // AND art.is_removed = 0
 // AND art.is_indexed = 1
 // AND redirect_page_id IS NULL
@@ -86,11 +86,12 @@ const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_co
     }
     else if (inputItem.media_props 
             && inputItem.media_props.webp_original
-            && inputItem.media_props.webp_original.indexOf('webp') >= 0){
+            && inputItem.media_props.webp_original.indexOf('webp') >= 0
+            && inputItem.media_props.webp_original.indexOf('no-image-slide') == -1){
         console.log(chalk.green("Existing WebP found, so skipping."));
     }
     else {
-        console.log(chalk.yellow(`Need to make new WebP's for |${inputItem.url}|.`));
+        console.log(chalk.yellow(`Need to make new WebP's for ${inputItem.url}.`));
         let theTrio = await MakeWebPTrio(inputItem.url, slug, lang_code, `${auxiliary_prefix}${uploadTypeInput}`);
         returnItem = {
             ...inputItem,
@@ -100,7 +101,7 @@ const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_co
                 ...theTrio
             }
         };
-        console.log(chalk.green("Made the WebP images"))//: " )), util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
+        console.log(chalk.green(`Made a WebP image for ${uploadTypeInput}: ${theTrio.webp_original}`))//: " )), util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
     }
     return returnItem;
 }
@@ -280,7 +281,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
 export const MakeWebPImages = async (inputString: string) => {
     let wikiLangSlug = inputString.split("|")[0];
     let inputIPFS = inputString.split("|")[1];
-    let pageTitle = inputString.split("|")[2];
+    let pageTitle = inputString.split("|")[2].trim();
 
     let lang_code, slug;
     if (wikiLangSlug.includes('lang_')) {
@@ -294,7 +295,7 @@ export const MakeWebPImages = async (inputString: string) => {
     console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
     console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
     console.log(chalk.blue.bold("=========================================START========================================="));
-    console.log(chalk.blue.bold(`Starting to process: |${inputString}|`));
+    console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`))
     console.log(chalk.blue.bold(`Page Slug: |${slug}|`))
 

@@ -19,6 +19,7 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
     "maintenance:create-webp": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Make-WebP-Images.js --input '../../../scripts/Non-Lambda/input/slug-list.txt'",
+    "maintenance:batch": "tsc --p ./tsconfig.json && python ./dist/scripts/batch/batch-commands.py &",
     "server:status": "ssh beekeeper@apitest.everipedia.org 'pm2 logs --nostream && pm2 status && systemctl status mongodb && systemctl --user status ep2-synconly'",
     "server:reload": "ssh beekeeper@apitest.everipedia.org 'pm2 reload backend'",
     "server:restart-mongo": "ssh beekeeper@apitest.everipedia.org 'sudo systemctl restart mongodb && systemctl --user restart ipfs && pm2 reload backend && systemctl --user restart ep2-synconly'",
