@@ -33,20 +33,20 @@ export class MediaUploadDto {
 
     // Can only have specific types of uploads
     @ApiModelProperty({
-        description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, or GalleryMediaItem)',
+        description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, NewlinkFiles, or GalleryMediaItem)',
         required: true
     })
     @IsString()
     upload_type: string;
     // @ApiModelProperty({
-    //     description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, or GalleryMediaItem)',
+    //     description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, NewlinkFiles, or GalleryMediaItem)',
     //     required: true
     // })
     // @IsString()
-    // @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem)$/gimu, {
-    //     message: 'Needs to be either ProfilePicture, CitationThumbnail, or GalleryMediaItem'
+    // @Matches(/^(ProfilePicture|CitationThumbnail|GalleryMediaItem|NewlinkFiles)$/gimu, {
+    //     message: 'Needs to be either ProfilePicture, CitationThumbnail, NewlinkFiles, or GalleryMediaItem'
     // })
-    // upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem';
+    // upload_type: 'ProfilePicture|CitationThumbnail|GalleryMediaItem|NewlinkFiles';
 }
 
 // Parameters for the media upload
