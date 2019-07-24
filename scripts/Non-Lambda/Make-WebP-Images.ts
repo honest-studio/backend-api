@@ -46,7 +46,11 @@ interface WebPTrioURL {
     webp_thumb?: string;
 }
 
-const MakeWebPTrio = (startingURL: string): WebPTrioURL => {
+export const logYlw = (inputString: string) => {
+    return console.log(chalk.yellow.bold(inputString));
+}
+
+const MakeWebPTrio = async (startingURL: string): Promise<WebPTrioURL> => {
     return null;
 }
 
@@ -75,18 +79,61 @@ export const MakeWebPImages = async (inputString: string) => {
     );
 
     // Get the article JSON
-    let mainArticleJson: ArticleJson;
+    let wiki: ArticleJson;
     try {
-        mainArticleJson = JSON.parse(hashCacheResult[0].html_blob);
+        wiki = JSON.parse(hashCacheResult[0].html_blob);
     } catch (e) {
-        mainArticleJson = oldHTMLtoJSON(hashCacheResult[0].html_blob);
-        mainArticleJson.ipfs_hash = hashCacheResult[0].ipfs_hash;
+        wiki = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
     // Run the patches for now
-    mainArticleJson = infoboxDtoPatcher(mergeMediaIntoCitations(mainArticleJson));
+    wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
 
-    console.log(util.inspect(mainArticleJson, {showHidden: false, depth: null, chalk: true}));
+    logYlw("==================================MAIN PHOTO=================================");
+    // Deal with the main photo first
+    // If the default photo is present, just put in the default WebP images and skip the upload
+    if (wiki.main_photo && wiki.main_photo.length){
+        let theMainPhoto: Media = wiki.main_photo[0];
+        if (theMainPhoto.url == 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'){
+            theMainPhoto = {
+                ...theMainPhoto,
+                media_props: {
+                    ...theMainPhoto.media_props,
+                    webp_original: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
+                    webp_medium: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
+                    webp_thumb: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
+                }
+            }
+            console.log(chalk.green("Default image found, so using default WebP's."));
+            wiki.main_photo = [theMainPhoto];
+        }
+        else if (theMainPhoto.media_props 
+                && theMainPhoto.media_props.webp_original
+                && theMainPhoto.media_props.webp_original.indexOf('webp') >= 0){
+            console.log(chalk.green("Existing WebP found, so skipping."));
+        }
+        else {
+            console.log(chalk.yellow("Need to make new WebP's."));
+            let theTrio = await MakeWebPTrio(theMainPhoto.url);
+            theMainPhoto = {
+                ...theMainPhoto,
+                media_props: {
+                    ...theMainPhoto.media_props,
+                    ...theTrio
+                }
+            }
+            console.log(chalk.green("Made the WebP images: ", theTrio));
+        }
+    }
+
+    
+    logYlw("================================MEDIA GALLERY================================");
+
+    console.log(util.inspect(wiki, {showHidden: false, depth: null, chalk: true}));
+
+
+
     
 }
 
