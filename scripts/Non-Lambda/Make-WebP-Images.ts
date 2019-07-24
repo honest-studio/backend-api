@@ -4,7 +4,6 @@ import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph } from '..
 import * as readline from 'readline';
 const path = require('path');
 const getYouTubeID = require('get-youtube-id');
-const Blob = require('node-blob');
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -22,6 +21,7 @@ const readInterface = readline.createInterface({
     // output: process.stdout,
     // console: false
 });
+
 
 export const MakeWebPImages = async (wikiLangSlug: string) => {
     console.log(chalk.yellow(`Starting to scrape: |${wikiLangSlug}|`));
