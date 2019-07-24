@@ -5,9 +5,20 @@ import * as readline from 'readline';
 const path = require('path');
 import { MysqlService } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
+import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations } from '../../src/utils/article-utils';
+
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
+const sharp = require('sharp');
+const zlib = require('zlib');
+
+const mainWidth = 1201;
+const mainHeight = 1201;
+const mediumWidth = 450;
+const mediumHeight = 450;
+const thumbWidth = 200;
+const thumbHeight = 200;
 
 commander
   .version('1.0.0', '-v, --version')
@@ -23,9 +34,27 @@ const readInterface = readline.createInterface({
     // console: false
 });
 
+interface WebPTrioBuf {
+    webpOriginalBuf: Buffer,
+    webpMediumBuf: Buffer,
+    webpThumbBuf: Buffer,
+}
 
-export const MakeWebPImages = async (wikiLangSlug: string) => {
-    console.log(chalk.yellow(`Starting to scrape: |${wikiLangSlug}|`));
+interface WebPTrioURL {
+    webp_original?: string;
+    webp_medium?: string;
+    webp_thumb?: string;
+}
+
+const MakeWebPTrio = (startingURL: string): WebPTrioURL => {
+    return null;
+}
+
+export const MakeWebPImages = async (inputString: string) => {
+    console.log(chalk.yellow(`Starting to scrape: |${inputString}|`));
+    let wikiLangSlug = inputString.split("|")[0];
+    let inputIPFS = inputString.split("|")[1];
+
     let lang_code, slug;
     if (wikiLangSlug.includes('lang_')) {
         lang_code = wikiLangSlug.split('/')[0].substring(5); // ignore the lang_ at the start
@@ -36,30 +65,38 @@ export const MakeWebPImages = async (wikiLangSlug: string) => {
     }
     const theConfig = new ConfigService(`.env`);
     const theMysql = new MysqlService(theConfig);
+
     // Get the article object
-    let articleResultPacket: Array<any> = await theMysql.TryQuery(
+    let hashCacheResult: Array<any> = await theMysql.TryQuery(
         `
-        SELECT 
-            id,
-            page_title
-        FROM enterlink_articletable AS art 
-        WHERE 
-            page_lang = ? 
-            AND slug = ?
-            AND art.is_removed = 0
+            SELECT * FROM enterlink_hashcache WHERE ipfs_hash = ?
         `,
-        [lang_code, slug]
+        [inputIPFS]
     );
-    console.log(articleResultPacket)
+
+    // Get the article JSON
+    let mainArticleJson: ArticleJson;
+    try {
+        mainArticleJson = JSON.parse(hashCacheResult[0].html_blob);
+    } catch (e) {
+        mainArticleJson = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        mainArticleJson.ipfs_hash = hashCacheResult[0].ipfs_hash;
+    }
+
+    // Run the patches for now
+    mainArticleJson = infoboxDtoPatcher(mergeMediaIntoCitations(mainArticleJson));
+
+    console.log(util.inspect(mainArticleJson, {showHidden: false, depth: null, chalk: true}));
+    
 }
 
 (async () => {
-    for await (const inputWikiLangSlug of readInterface) {
+    for await (const inputLine of readInterface) {
         try{
-            await MakeWebPImages(inputWikiLangSlug);
+            await MakeWebPImages(inputLine);
         }
         catch (err){
-            console.error(`${inputWikiLangSlug} FAILED!!! [${err}]`);
+            console.error(`${inputLine} FAILED!!! [${err}]`);
         }
     }
 
