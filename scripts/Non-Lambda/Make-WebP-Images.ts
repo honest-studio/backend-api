@@ -1,6 +1,6 @@
 
 const commander = require('commander');
-import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph } from '../../src/types/article';
+import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
 import * as readline from 'readline';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
@@ -60,6 +60,42 @@ interface WebPTrioURL {
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
+}
+
+const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_code: string, auxiliary_prefix: string, mediaType: MediaType): Promise<Media | Citation> => {
+    let returnItem = inputItem;
+    if (inputItem.url == 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'){
+        returnItem = {
+            ...inputItem,
+            media_props: {
+                ...inputItem.media_props,
+                type: mediaType,
+                webp_original: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
+                webp_medium: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
+                webp_thumb: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
+            }
+        }
+        console.log(chalk.green("Default image found, so using default WebP's."));
+    }
+    else if (inputItem.media_props 
+            && inputItem.media_props.webp_original
+            && inputItem.media_props.webp_original.indexOf('webp') >= 0){
+        console.log(chalk.green("Existing WebP found, so skipping."));
+    }
+    else {
+        console.log(chalk.yellow(`Need to make new WebP's for |${inputItem.url}|.`));
+        let theTrio = await MakeWebPTrio(inputItem.url, slug, lang_code, `${auxiliary_prefix}/ProfilePicture`);
+        returnItem = {
+            ...inputItem,
+            media_props: {
+                ...inputItem.media_props,
+                type: mediaType,
+                ...theTrio
+            }
+        };
+        console.log(chalk.green("Made the WebP images: " ))//, util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
+    }
+    return returnItem;
 }
 
 const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, uploadType: string): Promise<WebPTrioURL> => {
@@ -235,7 +271,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
 }
 
 export const MakeWebPImages = async (inputString: string) => {
-    console.log(chalk.yellow(`Starting to scrape: |${inputString}|`));
+    console.log(chalk.yellow(`Starting to process: |${inputString}|`));
     let wikiLangSlug = inputString.split("|")[0];
     let inputIPFS = inputString.split("|")[1];
 
@@ -280,43 +316,41 @@ export const MakeWebPImages = async (inputString: string) => {
     // If the default photo is present, just put in the default WebP images and skip the upload
     if (wiki.main_photo && wiki.main_photo.length){
         let theMainPhoto: Media = wiki.main_photo[0];
-        if (theMainPhoto.url == 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'){
-            theMainPhoto = {
-                ...theMainPhoto,
-                media_props: {
-                    ...theMainPhoto.media_props,
-                    webp_original: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
-                    webp_medium: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
-                    webp_thumb: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
-                }
-            }
-            console.log(chalk.green("Default image found, so using default WebP's."));
-            wiki.main_photo = [theMainPhoto];
-        }
-        else if (theMainPhoto.media_props 
-                && theMainPhoto.media_props.webp_original
-                && theMainPhoto.media_props.webp_original.indexOf('webp') >= 0){
-            console.log(chalk.green("Existing WebP found, so skipping."));
-        }
-        else {
-            console.log(chalk.yellow("Need to make new WebP's."));
-            let theTrio = await MakeWebPTrio(theMainPhoto.url, slug, lang_code, `${auxiliary_prefix}/ProfilePicture`);
-            theMainPhoto = {
-                ...theMainPhoto,
-                media_props: {
-                    ...theMainPhoto.media_props,
-                    ...theTrio
-                }
-            }
-            console.log(chalk.green("Made the WebP images: ", theTrio));
-        }
+        wiki.main_photo = [await UpdateWithWebP(theMainPhoto, slug, lang_code, auxiliary_prefix, 'main_photo') as Media]
     }
+    // console.log(util.inspect(wiki.main_photo, {showHidden: false, depth: null, chalk: true}));
 
-    
     logYlw("================================MEDIA GALLERY================================");
+    // Deal with the other media now
+    wiki.citations = await Promise.all(wiki.citations.map(async (ctn) => {
+        // Only process media citations
+        if (!ctn.media_props) return ctn;
+        if (ctn.category == 'YOUTUBE' || ctn.category == 'NORMAL_VIDEO' || ctn.category == 'AUDIO' || ctn.category == 'NONE') return ctn;
+        else {
+            return await UpdateWithWebP(ctn, slug, lang_code, auxiliary_prefix, 'normal') as Citation
+        }
+    }));
+    // console.log(util.inspect(wiki.citations, {showHidden: false, depth: null, chalk: true}));
 
-    // console.log(util.inspect(wiki, {showHidden: false, depth: null, chalk: true}));
+    logYlw("=================================MAIN UPLOAD=================================");
 
+    try {
+        const json_insertion = await theMysql.TryQuery(
+            `
+                UPDATE enterlink_hashcache
+                SET html_blob = ?
+                WHERE ipfs_hash = ? 
+            `,
+            [JSON.stringify(wiki), inputIPFS]
+        );
+    } catch (e) {
+        if (e.message.includes("ER_DUP_ENTRY")){
+            console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
+        }
+        else throw e;
+    }
+    
+    return null;
 }
 
 (async () => {
