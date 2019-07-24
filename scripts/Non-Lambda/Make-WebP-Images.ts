@@ -32,6 +32,13 @@ const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
 const theBucket = theAWSS3.getBucket();
 
+// SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', art.page_title)
+// FROM enterlink_articletable art
+// WHERE id < 100
+// AND art.is_removed = 0
+// AND art.is_indexed = 1
+// AND redirect_page_id IS NULL
+
 commander
   .version('1.0.0', '-v, --version')
   .description('Make WebP images')
@@ -62,7 +69,7 @@ export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
 
-const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_code: string, auxiliary_prefix: string, mediaType: MediaType): Promise<Media | Citation> => {
+const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_code: string, auxiliary_prefix: string, uploadTypeInput: string, mediaType: MediaType): Promise<Media | Citation> => {
     let returnItem = inputItem;
     if (inputItem.url == 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'){
         returnItem = {
@@ -84,7 +91,7 @@ const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_co
     }
     else {
         console.log(chalk.yellow(`Need to make new WebP's for |${inputItem.url}|.`));
-        let theTrio = await MakeWebPTrio(inputItem.url, slug, lang_code, `${auxiliary_prefix}/ProfilePicture`);
+        let theTrio = await MakeWebPTrio(inputItem.url, slug, lang_code, `${auxiliary_prefix}${uploadTypeInput}`);
         returnItem = {
             ...inputItem,
             media_props: {
@@ -93,7 +100,7 @@ const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_co
                 ...theTrio
             }
         };
-        console.log(chalk.green("Made the WebP images: " ))//, util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
+        console.log(chalk.green("Made the WebP images"))//: " )), util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
     }
     return returnItem;
 }
@@ -271,9 +278,9 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
 }
 
 export const MakeWebPImages = async (inputString: string) => {
-    console.log(chalk.yellow(`Starting to process: |${inputString}|`));
     let wikiLangSlug = inputString.split("|")[0];
     let inputIPFS = inputString.split("|")[1];
+    let pageTitle = inputString.split("|")[2];
 
     let lang_code, slug;
     if (wikiLangSlug.includes('lang_')) {
@@ -283,8 +290,13 @@ export const MakeWebPImages = async (inputString: string) => {
         lang_code = 'en';
         slug = wikiLangSlug;
     }
-
-
+    console.log("\n");
+    console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+    console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+    console.log(chalk.blue.bold("=========================================START========================================="));
+    console.log(chalk.blue.bold(`Starting to process: |${inputString}|`));
+    console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`))
+    console.log(chalk.blue.bold(`Page Slug: |${slug}|`))
 
     // Get the article object
     let hashCacheResult: Array<any> = await theMysql.TryQuery(
@@ -309,30 +321,30 @@ export const MakeWebPImages = async (inputString: string) => {
     // If it is an import, prefix with AuxiliaryImports and the page note
     const pageNoteFilter = wiki.metadata.filter(w => w.key == 'page_note');
     const page_note = pageNoteFilter.length ? pageNoteFilter[0].value : null;
-    const auxiliary_prefix = page_note ? `AuxiliaryImports/${page_note.slice(1, -1)}` : "";
+    const auxiliary_prefix = page_note ? `AuxiliaryImports/${page_note.slice(1, -1)}/` : "";
 
-    logYlw("==================================MAIN PHOTO=================================");
+    logYlw("==================MAIN PHOTO=================");
     // Deal with the main photo first
     // If the default photo is present, just put in the default WebP images and skip the upload
     if (wiki.main_photo && wiki.main_photo.length){
         let theMainPhoto: Media = wiki.main_photo[0];
-        wiki.main_photo = [await UpdateWithWebP(theMainPhoto, slug, lang_code, auxiliary_prefix, 'main_photo') as Media]
+        wiki.main_photo = [await UpdateWithWebP(theMainPhoto, slug, lang_code, auxiliary_prefix, 'ProfilePicture', 'main_photo') as Media]
     }
     // console.log(util.inspect(wiki.main_photo, {showHidden: false, depth: null, chalk: true}));
 
-    logYlw("================================MEDIA GALLERY================================");
+    logYlw("================MEDIA GALLERY================");
     // Deal with the other media now
     wiki.citations = await Promise.all(wiki.citations.map(async (ctn) => {
         // Only process media citations
         if (!ctn.media_props) return ctn;
         if (ctn.category == 'YOUTUBE' || ctn.category == 'NORMAL_VIDEO' || ctn.category == 'AUDIO' || ctn.category == 'NONE') return ctn;
         else {
-            return await UpdateWithWebP(ctn, slug, lang_code, auxiliary_prefix, 'normal') as Citation
+            return await UpdateWithWebP(ctn, slug, lang_code, auxiliary_prefix, 'NewlinkFiles', 'normal') as Citation
         }
     }));
     // console.log(util.inspect(wiki.citations, {showHidden: false, depth: null, chalk: true}));
 
-    logYlw("=================================MAIN UPLOAD=================================");
+    logYlw("=================MAIN UPLOAD=================");
 
     try {
         const json_insertion = await theMysql.TryQuery(
@@ -350,6 +362,7 @@ export const MakeWebPImages = async (inputString: string) => {
         else throw e;
     }
     
+    console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
 }
 
