@@ -1,3 +1,4 @@
+"CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))"
 lang_en/jannidelerblogg|QmYVyotkpTWAqHBrsUDFgjvN6cb66ishqgRmhQjQQehGq9|Janni Delér
 lang_en/jordanbartel|Qmc8ppXjfMRgw3Tg1giuQHttqTiXrLx1jgq3xR4AmryCZ8|Jordan Bartel
 lang_en/baltimoresun|QmUWnLiuU5anQrmNR3FnxRnWs1i9spbb5RH6KQwEi2sBMm|The Baltimore Sun

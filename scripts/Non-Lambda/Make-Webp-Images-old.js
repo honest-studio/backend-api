@@ -7,10 +7,10 @@ const zlib = require('zlib');
 
 const mainWidth = 1201;
 const mainHeight = 1201;
-const mediumWidth = 450;
-const mediumHeight = 450;
-const thumbWidth = 200;
-const thumbHeight = 200;
+const mediumWidth = 640;
+const mediumHeight = 640;
+const thumbWidth = 320;
+const thumbHeight = 320;
  
 exports.handler = async (event) => {
     const promise = new Promise(async function(resolve, reject) {
