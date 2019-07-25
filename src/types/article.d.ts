@@ -95,6 +95,7 @@ export interface Media {
     category?: CitationCategoryType;
     diff?: DiffType;
     srcSet?: string;
+    media_props?: MediaProps;
 }
 
 export interface MediaProps {
@@ -102,6 +103,9 @@ export interface MediaProps {
     height?: number;
     width?: number;
     srcSet?: string;
+    webp_original?: string;
+    webp_medium?: string;
+    webp_thumb?: string;
 }
 
 // Valid Metadata keys

@@ -12,7 +12,7 @@ import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from '.
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
 
-export function compareURLs (firstURL: string, secondURL: string): Boolean {
+export function compareURLs (firstURL: string, secondURL: string): boolean {
     if (firstURL == secondURL) return true;
     else if (firstURL == encodeURIComponent(secondURL)) return true;
     else if (encodeURIComponent(firstURL) == secondURL) return true;
@@ -668,7 +668,10 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number): Cita
         timestamp: inputMedia.timestamp || new Date(),
         mime: inputMedia.mime || null,
         media_props: {
-            type: inputMedia.type
+            type: inputMedia.type,
+            webp_original: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
+            webp_medium: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
+            webp_thumb: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
         },
         in_blurb: false,
     }
