@@ -299,10 +299,10 @@ export class MediaUploadService {
             // Initialize the height and width of the thumbnails
             let mainWidth = PHOTO_CONSTANTS.CROPPED_WIDTH;
             let mainHeight = PHOTO_CONSTANTS.CROPPED_HEIGHT;
-            let mediumWidth = 450;
-            let mediumHeight = 450;
-            let thumbWidth = 200;
-            let thumbHeight = 200;
+            let mediumWidth = 640;
+            let mediumHeight = 640;
+            let thumbWidth = 320;
+            let thumbHeight = 320;
             let includeMainPhoto: boolean = true;
 
 
