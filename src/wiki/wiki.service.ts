@@ -44,7 +44,8 @@ export class WikiService {
                 COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, 
                 art.is_indexed as is_idx, 
                 art_redir.is_indexed as is_idx_redir,
-                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed
+                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
+                COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -55,15 +56,17 @@ export class WikiService {
         );
         let ipfs_hash;
         let overrideIsIndexed;
+        let db_timestamp
         if (ipfs_hash_rows.length > 0) {
             if (ipfs_hash_rows[0].is_removed) throw new NotFoundException(`Wiki ${lang_code}/${slug} is marked as removed`);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
+            db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp);
         }
 
-        // Make sure IPFS hash is most recent
-        const latest_proposals = await this.mongo
+        // Get the 5 most recent proposals to compare and make sure the DB's IPFS hash is current
+        let latest_proposals = await this.mongo
             .connection()
             .actions.find(
                 {
@@ -79,6 +82,12 @@ export class WikiService {
             .sort({ 'trace.act.data.proposal_id': -1 })
             .limit(5)
             .toArray();
+
+        // Filter out proposals that are older than the DB timestamp
+        if (db_timestamp) {
+            latest_proposals = latest_proposals.filter(prop => new Date(prop.block_time) > db_timestamp);
+        }
+
         if (latest_proposals.length > 0) {
             // Make sure chosen hash is not a rejected edit
             // Set the hash to the most recent unrejected edit

@@ -43,4 +43,20 @@ export class StatController {
     async siteUsage(): Promise<any> {
         return await this.statService.siteUsage();
     }
+
+    //@Get('uniques')
+    //@ApiImplicitQuery({
+    //    name: 'starttime',
+    //    description: `Start date as a UNIX timestamp.`,
+    //    required: false
+    //})
+    //@ApiImplicitQuery({
+    //    name: 'endtime',
+    //    description: `End date as a UNIX timestamp.`,
+    //    required: false
+    //})
+    //@UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
+    //async getUniques(@Query() query): Promise<any> {
+    //    return await this.statService.getUniques(query);
+    //}
 }
