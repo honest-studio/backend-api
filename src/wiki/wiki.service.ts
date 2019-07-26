@@ -195,13 +195,26 @@ export class WikiService {
         if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
             // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
+            // Construct the payload for AMP
             let payload = {
                 "prerenderToken": prerenderToken,
                 "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}/amp`
             }
     
-            // Send the recache request
+            // Send the recache request for AMP
             await axios.default.post('https://api.prerender.io/recache', payload)
+            .then(response => {
+                return response;
+            })
+
+            // Construct the payload for desktop
+            let payload2 = {
+                "prerenderToken": prerenderToken,
+                "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}`
+            }
+    
+            // Send the recache request for desktop
+            await axios.default.post('https://api.prerender.io/recache', payload2)
             .then(response => {
                 return response;
             })
@@ -581,9 +594,23 @@ export class WikiService {
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             let payload = {
                 "prerenderToken": prerenderToken,
+                "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}/amp`
+            }
+    
+            // Send the recache request for AMP
+            await axios.default.post('https://api.prerender.io/recache', payload)
+            .then(response => {
+                return response;
+            })
+
+            // Construct the payload for desktop
+            let payload2 = {
+                "prerenderToken": prerenderToken,
                 "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}`
             }
-            await axios.default.post('https://api.prerender.io/recache', payload)
+    
+            // Send the recache request for desktop
+            await axios.default.post('https://api.prerender.io/recache', payload2)
             .then(response => {
                 console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
                 return response;
@@ -591,6 +618,7 @@ export class WikiService {
             .catch(err => {
                 throw err;
             })
+
         } catch (e) {
             console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
         }
