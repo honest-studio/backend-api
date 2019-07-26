@@ -84,7 +84,9 @@ export class WikiService {
             .toArray();
 
         // Filter out proposals that are older than the DB timestamp
+        console.log(db_timestamp);
         if (db_timestamp) {
+            latest_proposals.map(prop => console.log(new Date(prop.block_time)));
             latest_proposals = latest_proposals.filter(prop => new Date(prop.block_time).getTime() > db_timestamp.getTime());
         }
 
