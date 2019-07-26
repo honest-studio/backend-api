@@ -18,17 +18,19 @@ export class StatService {
     private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
-        // temporarily force all month and all-time leaderboard queries
+        // temporarily force all-time leaderboard queries
         // to the cache. running these queries bricks the server
-        // today and this-week don't require a cache so this is basically 
-        // ignoring options.cache
+        // use an extensive cache for one month
+        // today and this-week don't require a cache
         if (options.period == 'all-time' || 
             options.period == 'this-month') {
             const cache = await this.mongo.connection().statistics.findOne({ 
                 key: 'editor_leaderboard',
                 period: options.period
             });
-            if (cache) {
+            const yesterday_timestamp = Date.now() - 86400*1000;
+            if (cache && options.period == 'all-time' || 
+                cache && options.period == 'this-month' && cache.timestamp.getTime() > yesterday_timestamp) {
                 delete cache._id;
                 return cache.editor_rewards.slice(0, options.limit);
             }
