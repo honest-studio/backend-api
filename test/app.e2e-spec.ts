@@ -91,7 +91,7 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
       .get('/v2/recent-activity/trending')
       .expect(200)
-  });
+  }, 10000);
 
   it('Recent Activity: Trending All Time', () => {
     return request(app.getHttpServer())
@@ -103,7 +103,7 @@ describe('Backend API', () => {
     return request(app.getHttpServer())
       .get('/v2/recent-activity/trending?langs=en')
       .expect(200)
-  });
+  }, 10000);
 
   it('Recent Activity: Trending Bad language', () => {
     return request(app.getHttpServer())

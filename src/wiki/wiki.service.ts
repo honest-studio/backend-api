@@ -62,7 +62,7 @@ export class WikiService {
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
-            db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp);
+            db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
         }
 
         // Get the 5 most recent proposals to compare and make sure the DB's IPFS hash is current
@@ -84,9 +84,7 @@ export class WikiService {
             .toArray();
 
         // Filter out proposals that are older than the DB timestamp
-        console.log(db_timestamp);
         if (db_timestamp) {
-            latest_proposals.map(prop => console.log(new Date(prop.block_time)));
             latest_proposals = latest_proposals.filter(prop => new Date(prop.block_time).getTime() > db_timestamp.getTime());
         }
 
@@ -118,7 +116,6 @@ export class WikiService {
             }
         }
         if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
-
 
         // Try and grab cached json wiki
         let cache_wiki;
