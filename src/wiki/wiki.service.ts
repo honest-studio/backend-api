@@ -145,6 +145,8 @@ export class WikiService {
             });
             
             wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
+            // some wikis don't have page langs set
+            if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         } catch {
             // if the wiki is not in JSON format, try and return the cache first
             if (cache_wiki 
@@ -155,6 +157,8 @@ export class WikiService {
                 
                 wiki = infoboxDtoPatcher(mergeMediaIntoCitations(cache_wiki));
                 cachePresent = true;
+                // some wikis don't have page langs set
+                if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
             }
             else{
                 // if the cache isn't available either, or there are no paragraphs, generate the JSON from the html_blob and return it
@@ -412,7 +416,8 @@ export class WikiService {
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
-        const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+        let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
+        page_lang = page_lang ? page_lang.value : 'en';
         let wikiCopy: ArticleJson = wiki;
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);
@@ -519,7 +524,7 @@ export class WikiService {
         const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
         const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
         const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
-        const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+        let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
         const article_insertion = await this.mysql.TryQuery(
             `
