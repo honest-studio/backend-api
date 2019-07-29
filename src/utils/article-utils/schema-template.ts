@@ -14,7 +14,9 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
     // Metadata values
     const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified') ? inputJSON.metadata.find(w => w.key == 'last_modified').value : '';
     const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
-    const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
+    const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value 
+                    ? inputJSON.metadata.find(w => w.key == 'page_lang') 
+                    : 'en';
     const url_slug = inputJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
     const page_type = inputJSON.metadata.find(w => w.key == 'page_type').value;
     const page_title = inputJSON.page_title[0].text;
