@@ -32,6 +32,7 @@ export class SitemapController {
     })
     // @UsePipes(new JoiValidationPipe(SitemapQuerySchema))
     async getSitemapXML(@Res() res, @Param('lang') lang: string, @Query() options): Promise<any> {
+        if (lang.slice(-4) == ".xml") lang = lang.slice(0, -4);
         return this.sitemapService.getSitemapRecent(res, lang, options.limit);
     }
 

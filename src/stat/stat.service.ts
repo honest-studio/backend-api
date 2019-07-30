@@ -28,9 +28,10 @@ export class StatService {
                 key: 'editor_leaderboard',
                 period: options.period
             });
-            const yesterday_timestamp = Date.now() - 86400*1000;
-            if (cache && options.period == 'all-time' || 
-                cache && options.period == 'this-month' && cache.timestamp.getTime() > yesterday_timestamp) {
+
+            // One out of 1000 times, update the cache
+            const random = Math.random();
+            if (cache && random > 0.001) {
                 delete cache._id;
                 return cache.editor_rewards.slice(0, options.limit);
             }
@@ -206,7 +207,7 @@ export class StatService {
             doc.total_pageviews[0].pageviews += new_pageviews[0].new_pageviews;
         }
 
-        let total_edits: any = await this.mongo
+        const total_edits: any = await this.mongo
             .connection()
             .actions.countDocuments({ 
                 $or: [
@@ -214,6 +215,7 @@ export class StatService {
                     { 'trace.act.name': 'propose2' }
                 ]
             });
+        doc.total_edits = total_edits;
 
         let total_editors: any = await this.mongo
             .connection()
@@ -248,18 +250,36 @@ export class StatService {
         if (new_iq_rewards.length > 0) doc.total_iq_rewards += Number(new_iq_rewards[0].value.toFixed(3));
         doc.total_iq_rewards = Number(doc.total_iq_rewards.toFixed(3)); // fix decimal precision issues
 
-        const new_original_pages: Array<any> = await this.mysql.TryQuery(
-            `SELECT COUNT(*) AS count 
-            FROM enterlink_articletable 
-            WHERE 
-                page_note IS NULL
-                AND creation_timestamp > ?
-                AND redirect_page_id IS NULL
-                AND is_removed = 0`,
-            [mysql_date],
-            60000
-        )
-        doc.original_pages += new_original_pages[0].count;
+        // Once in 1000 requests, re-generate it from scratch to keep the tallying honest
+        // and deal with random issues like *cough* scrapers *cough*
+        const random2 = Math.random();
+        if (random2 < 0.001) {
+            const original_pages: Array<any> = await this.mysql.TryQuery(
+                `SELECT COUNT(*) AS count 
+                FROM enterlink_articletable 
+                WHERE 
+                    page_note IS NULL
+                    AND redirect_page_id IS NULL
+                    AND is_removed = 0`,
+                [mysql_date],
+                60000
+            );
+            doc.original_pages = original_pages[0].count;
+        }
+        else {
+            const new_original_pages: Array<any> = await this.mysql.TryQuery(
+                `SELECT COUNT(*) AS count 
+                FROM enterlink_articletable 
+                WHERE 
+                    page_note IS NULL
+                    AND creation_timestamp > ?
+                    AND redirect_page_id IS NULL
+                    AND is_removed = 0`,
+                [mysql_date],
+                60000
+            )
+            doc.original_pages += new_original_pages[0].count;
+        }
 
         // Update the timestamp and block number
         doc.timestamp = new Date();
