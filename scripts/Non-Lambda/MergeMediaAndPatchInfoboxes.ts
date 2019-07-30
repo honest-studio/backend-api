@@ -18,19 +18,15 @@ commander
   .version('1.0.0', '-v, --version')
   .description('Merge Media and Patch Infoboxes')
   .usage('[OPTIONS]...')
-  .option('-i, --input <path>', 'Input file')
+  .option('-s, --start <pageid>', 'Starting ID')
+  .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
+
+const BATCH_SIZE = 10;
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
-
-// Open the file with the URLs
-const readInterface = readline.createInterface({
-    input: fs.createReadStream(path.resolve(__dirname, commander.input)), 
-    // output: process.stdout,
-    // console: false
-});
 
 export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
     let wikiLangSlug = inputString.split("|")[0];
@@ -45,10 +41,7 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
         lang_code = 'en';
         slug = wikiLangSlug;
     }
-    console.log("\n");
-    console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
-    console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
-    console.log(chalk.blue.bold("=========================================START========================================="));
+
     console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`))
     console.log(chalk.blue.bold(`Page Slug: |${slug}|`))
@@ -102,13 +95,43 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
 }
 
 (async () => {
-    for await (const inputLine of readInterface) {
-        try{
-            await MergeMediaAndPatchInfoboxes(inputLine);
-        }
-        catch (err){
-            console.error(`${inputLine} FAILED!!! [${err}]`);
-        }
+    let batchCounter = 0;
+    let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
+    console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`))
+    let currentStart, currentEnd;
+    for (let i = 0; i < totalBatches; i++) {
+        currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
+        currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;
+
+        console.log("\n");
+        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+        console.log(chalk.blue.bold("=========================================START========================================="));
+        console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`))
+
+        const batch = await theMysql.TryQuery(
+            `
+                SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))
+                FROM enterlink_articletable art
+                WHERE art.id between ? and ?
+                AND art.is_removed = 0
+                AND redirect_page_id IS NULL
+            `,
+            [currentStart, currentEnd]
+        );
+        // for (let ipfsIdx = 0; ipfsIdx <= (batch as any).length; ipfsIdx++) {
+        //     try{
+        //         await MergeMediaAndPatchInfoboxes(batch[ipfsIdx]);
+        //     }
+        //     catch (err){
+        //         console.error(`${batch[ipfsIdx]} FAILED!!! [${err}]`);
+        //     }
+        // }
+        batchCounter = batchCounter + 1;
     }
+
+
+
+
 
 })();
