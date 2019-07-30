@@ -11,7 +11,7 @@ import { ConfigService, IpfsService } from '../common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
-import { ArticleJson, Sentence } from '../types/article';
+import { ArticleJson, Sentence, Citation, Media } from '../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
@@ -37,29 +37,85 @@ export class WikiService {
 
     async mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJson): Promise<ArticleJson> {
         let resultantWiki = targetWiki;
+        let workingSourceWiki = sourceWiki;
         let newCitationsToAdd = [], newInfoboxesToAdd = [];
         let availableCitationID = getFirstAvailableCitationIndex(targetWiki.citations);
 
         // If the target does not have a photo, or the default one, and the source does, replace it
         // If they both have photos, move the source's into the media gallery (converting it first from Media to Citation)
-        let sourceWikiPhoto = (sourceWiki.main_photo && sourceWiki.main_photo[0] && sourceWiki.main_photo[0].url) || 'no-image-slide';
-        let targetWikiPhoto = (targetWiki.main_photo && targetWiki.main_photo[0] && sourceWiki.main_photo[0].url) || 'no-image-slide';
+        let sourceWikiPhoto = (workingSourceWiki.main_photo && workingSourceWiki.main_photo[0] && workingSourceWiki.main_photo[0].url) || 'no-image-slide';
+        let targetWikiPhoto = (targetWiki.main_photo && targetWiki.main_photo[0] && workingSourceWiki.main_photo[0].url) || 'no-image-slide';
         if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') == -1){
             // Both have good photos
-
             // Move the source wiki photo to the gallery of the target
-            newCitationsToAdd.push(convertMediaToCitation(sourceWiki.main_photo[0], availableCitationID));
+            newCitationsToAdd.push(convertMediaToCitation(workingSourceWiki.main_photo[0], availableCitationID));
             availableCitationID = availableCitationID + 1;
 
         } else if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') >= 0){
             // The source has a good photo and the target has the default
+            // Set the source wiki photo as the target's main photo
+            resultantWiki.main_photo = [workingSourceWiki.main_photo[0]];
 
         } else if (sourceWikiPhoto.indexOf('no-image-slide') >= 0 && targetWikiPhoto.indexOf('no-image-slide') == -1){
             // The target has a good photo and the source has the default
+            // Do nothing
 
         } else {
             // Both wikis have the default photo
             // Check the media gallery of both and 'promote' an image to be the main one
+            let sourcePhotoCtns: Citation[] = [], targetPhotoCtns: Citation[] = [], comboPhotoCtns: Citation[] = [];
+
+            // Collect the photos from the source
+            sourcePhotoCtns = workingSourceWiki.citations.filter(ctn => {
+                if (!ctn.media_props && (ctn.category == 'PICTURE' || ctn.category == 'GIF')) return ctn;
+            })
+
+            // Collect the photos from the target
+            targetPhotoCtns = targetWiki.citations.filter(ctn => {
+                if (!ctn.media_props && (ctn.category == 'PICTURE' || ctn.category == 'GIF')) return ctn;
+            })
+
+            // Combine all of the photos
+            comboPhotoCtns = comboPhotoCtns.concat(targetPhotoCtns, sourcePhotoCtns);
+
+            // Promote a media citation to the main photo
+            if(comboPhotoCtns.length){
+                let promotedCitation = comboPhotoCtns[0];
+                resultantWiki.main_photo = [{    
+                    type: 'main_photo',
+                    url: promotedCitation.url,
+                    caption: promotedCitation.description,
+                    thumb: promotedCitation.thumb,
+                    timestamp: promotedCitation.timestamp,
+                    attribution_url: promotedCitation.attribution,
+                    mime: promotedCitation.mime,
+                    alt: '',
+                    height: 1201,
+                    width: 1201,
+                    category: promotedCitation.category,
+                    diff: promotedCitation.diff ? promotedCitation.diff : null,
+                    media_props: {
+                        type: 'main_photo', // section_image, main_photo, inline_image, normal
+                        webp_original: promotedCitation.media_props && promotedCitation.media_props.webp_original 
+                            ? promotedCitation.media_props.webp_original 
+                            : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
+                        webp_medium: promotedCitation.media_props && promotedCitation.media_props.webp_medium 
+                            ? promotedCitation.media_props.webp_medium 
+                            : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
+                        webp_thumb: promotedCitation.media_props && promotedCitation.media_props.webp_thumb 
+                            ? promotedCitation.media_props.webp_thumb 
+                            : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
+                    },
+                }];
+
+                // Remove the media citation from the citations
+                // Do it for both since comboPhotoCtns is not tracking where promotedCitation came from
+                workingSourceWiki.citations = workingSourceWiki.citations.filter(ctn => ctn.url != promotedCitation.url);
+                resultantWiki.citations = resultantWiki.citations.filter(ctn => ctn.url != promotedCitation.url);
+            }
+            
+
+
         }
 
 
