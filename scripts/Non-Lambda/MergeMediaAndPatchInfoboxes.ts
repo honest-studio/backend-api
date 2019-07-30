@@ -22,7 +22,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 250;
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -95,9 +95,10 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
 }
 
 (async () => {
+    logYlw("=================STARTING MAIN SCRIPT=================");
     let batchCounter = 0;
     let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
-    console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`))
+    console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
     let currentStart, currentEnd;
     for (let i = 0; i < totalBatches; i++) {
         currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
@@ -107,11 +108,11 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
         console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
         console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
         console.log(chalk.blue.bold("=========================================START========================================="));
-        console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`))
+        console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`));
 
-        const batch = await theMysql.TryQuery(
+        const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))
+                SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title)) as concatted
                 FROM enterlink_articletable art
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0
@@ -119,14 +120,16 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
             `,
             [currentStart, currentEnd]
         );
-        // for (let ipfsIdx = 0; ipfsIdx <= (batch as any).length; ipfsIdx++) {
-        //     try{
-        //         await MergeMediaAndPatchInfoboxes(batch[ipfsIdx]);
-        //     }
-        //     catch (err){
-        //         console.error(`${batch[ipfsIdx]} FAILED!!! [${err}]`);
-        //     }
-        // }
+
+        for await (const artResult of fetchedArticles) {
+            try{
+                await MergeMediaAndPatchInfoboxes(artResult.concatted);
+            }
+            catch (err){
+                console.error(`${artResult.concatted} FAILED!!! [${err}]`);
+            }
+        }
+
         batchCounter = batchCounter + 1;
     }
 
