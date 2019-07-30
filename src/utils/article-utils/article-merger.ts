@@ -1,9 +1,16 @@
-import { ArticleJson, Sentence, Citation, Media, Infobox } from '../../types/article';
+import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue } from '../../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
-import { convertMediaToCitation, getFirstAvailableCitationIndex } from '../../utils/article-utils';
+import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex } from '../../utils/article-utils';
 var colors = require('colors');
 
-export interface InfoboxComparePack {
+export interface InfoboxKeyComparePack {
+    status: 'add-new' | 'merge',
+    key: string,
+    ibox: Infobox,
+    insertIndex: number
+}
+
+export interface InfoboxValueComparePack {
     status: 'add-new' | 'merge',
     key: string,
     ibox: Infobox,
@@ -108,15 +115,14 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
 
     // ============================================INFOBOXES============================================
     // Merge infoboxes if present. Be aware of dupes
-    let newInfoboxesToAdd = [], addedKeys: string[] = [];
     let sourceWikiInfoboxes = workingSourceWiki.infoboxes ? workingSourceWiki.infoboxes : [];
     let targetWikiInfoboxes = resultantWiki.infoboxes ? resultantWiki.infoboxes : [];
     if (sourceWikiInfoboxes.length && targetWikiInfoboxes.length){
         // Both have infoboxes
         // Merge the source boxes into the target
-        let resultPacks: InfoboxComparePack[] = [];
-        sourceWikiInfoboxes.forEach((srcIbox) => {
-            let resultPack: InfoboxComparePack = {
+        let resultPacks: InfoboxKeyComparePack[] = [];
+        sourceWikiInfoboxes.forEach(srcIbox => {
+            let resultPack: InfoboxKeyComparePack = {
                 status: 'add-new',
                 key: srcIbox.key,
                 ibox: srcIbox,
@@ -142,7 +148,30 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
                     resultantWiki.infoboxes.push(resPack.ibox);
                     break;
                 case 'merge':
-                    // Loop through the values and check for duplicates
+                    // Loop through the values and merge, checking for duplicates along the way
+                    let insertionPointIbox = resultantWiki.infoboxes[resPack.insertIndex];
+                    let newValues: InfoboxValue[] = [];
+
+                    // Collect all the values already present in the target.
+                    let allTargetValueSentences = insertionPointIbox.values.map(tgtVal => {
+                        return tgtVal.sentences.join('');
+                    })
+
+                    // Compare the source values with the target values
+                    let availableIboxValueIdx = getFirstAvailableInfoboxValueIndex(insertionPointIbox.values);
+                    resPack.ibox.values.forEach(srcVal => {
+                        let joinedSrcSentences = srcVal.sentences.join('');
+                        if (allTargetValueSentences.includes(joinedSrcSentences)) { /* Do nothing if there is a dupe */ }
+                        else {
+                            newValues.push({
+                                ...srcVal,
+                                index: availableIboxValueIdx
+                            })
+                            availableIboxValueIdx = availableIboxValueIdx + 1;
+                        }
+                    })
+                    insertionPointIbox.values.push(...newValues);
+                    resultantWiki.infoboxes[resPack.insertIndex] = insertionPointIbox;
                     break;
             }
 

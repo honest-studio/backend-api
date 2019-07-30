@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 import striptags from 'striptags';
 import decode from 'unescape';
 import urlSlug from 'url-slug';
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow, Infobox } from '../../types/article';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
@@ -694,6 +694,14 @@ export function getFirstAvailableCitationIndex(citations: Citation[]): number {
     let highestID = 1;
     citations.forEach((ctn) => {
         if (ctn.citation_id >= highestID) highestID = ctn.citation_id + 1;
+    })
+    return highestID;
+}
+
+export function getFirstAvailableInfoboxValueIndex(ibox_values: InfoboxValue[]): number {
+    let highestID = 1;
+    ibox_values.forEach((val) => {
+        if (val.index >= highestID) highestID = val.index + 1;
     })
     return highestID;
 }
