@@ -96,7 +96,7 @@ export class SearchService {
             WHERE 
                 art.id IN (?)
                 AND art.is_removed = 0
-            ORDER BY FIELD(art.id, ?)`,
+            ORDER BY art.is_adult_content ASC, FIELD(art.id, ?)`,
             [canonical_ids, canonical_ids]
         );
 
