@@ -13,7 +13,7 @@ import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence } from '../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
-import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema } from '../utils/article-utils';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 var colors = require('colors');
@@ -33,6 +33,37 @@ export class WikiService {
         private config: ConfigService
     ) {
         this.updateWikiIntervals = {};
+    }
+
+    async mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJson): Promise<ArticleJson> {
+        let resultantWiki = targetWiki;
+        let newCitationsToAdd = [], newInfoboxesToAdd = [];
+        let availableCitationID = getFirstAvailableCitationIndex(targetWiki.citations);
+
+        // If the target does not have a photo, or the default one, and the source does, replace it
+        // If they both have photos, move the source's into the media gallery (converting it first from Media to Citation)
+        let sourceWikiPhoto = (sourceWiki.main_photo && sourceWiki.main_photo[0] && sourceWiki.main_photo[0].url) || 'no-image-slide';
+        let targetWikiPhoto = (targetWiki.main_photo && targetWiki.main_photo[0] && sourceWiki.main_photo[0].url) || 'no-image-slide';
+        if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') == -1){
+            // Both have good photos
+
+            // Move the source wiki photo to the gallery of the target
+            newCitationsToAdd.push(convertMediaToCitation(sourceWiki.main_photo[0], availableCitationID));
+            availableCitationID = availableCitationID + 1;
+
+        } else if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') >= 0){
+            // The source has a good photo and the target has the default
+
+        } else if (sourceWikiPhoto.indexOf('no-image-slide') >= 0 && targetWikiPhoto.indexOf('no-image-slide') == -1){
+            // The target has a good photo and the source has the default
+
+        } else {
+            // Both wikis have the default photo
+            // Check the media gallery of both and 'promote' an image to be the main one
+        }
+
+
+        return null;
     }
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<ArticleJson> {
