@@ -669,9 +669,15 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number): Cita
         mime: inputMedia.mime || null,
         media_props: {
             type: inputMedia.type,
-            webp_original: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
-            webp_medium: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
-            webp_thumb: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
+            webp_original: inputMedia.media_props && inputMedia.media_props.webp_original 
+                ? inputMedia.media_props.webp_original 
+                : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
+            webp_medium: inputMedia.media_props && inputMedia.media_props.webp_medium 
+                ? inputMedia.media_props.webp_medium 
+                : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp',
+            webp_thumb: inputMedia.media_props && inputMedia.media_props.webp_thumb 
+                ? inputMedia.media_props.webp_thumb 
+                : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp'
         },
         in_blurb: false,
     }
