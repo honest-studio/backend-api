@@ -467,58 +467,63 @@ export class WikiService {
     }
 
     async submitWikiViaBot(wiki: ArticleJson, token: string, bypassIPFS: boolean = true): Promise<any> {
-        // Jank
-        if (token != this.config.get('BOT_TOKEN_1')) {
-            console.log(colors.red.bold("AUTHORIZATION DENIED"));
-            return false;
-        }
+        try{
+            // Jank
+            if (token != this.config.get('BOT_TOKEN_1')) {
+                console.log(colors.red.bold("AUTHORIZATION DENIED"));
+                return false;
+            }
 
-        let ipfs_hash;
-        if (!bypassIPFS){
-            if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
+            let ipfs_hash;
+            if (!bypassIPFS){
+                if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-            let blob = JSON.stringify(wiki);
-            let submission;
+                let blob = JSON.stringify(wiki);
+                let submission;
+                try {
+                    submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+                } catch (err) {
+                    if (err.code == 'ECONNREFUSED') {
+                        console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                        throw new InternalServerErrorException(`Server error: The IPFS node is down`);
+                    } else throw err;
+                }
+                ipfs_hash = submission[0].hash;
+            }
+            else ipfs_hash = wiki.ipfs_hash;
+
+            await this.processWikiUpdate(wiki, ipfs_hash);
+
+            // Save submission immediately so we don't lose data
+            const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+            if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
+            const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+            const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
+            let wikiCopy: ArticleJson = wiki;
+            wikiCopy.ipfs_hash = ipfs_hash;
+            let stringifiedWikiCopy = JSON.stringify(wikiCopy);
             try {
-                submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
-            } catch (err) {
-                if (err.code == 'ECONNREFUSED') {
-                    console.log(`WARNING: IPFS could not be accessed. Is it running?`);
-                    throw new InternalServerErrorException(`Server error: The IPFS node is down`);
-                } else throw err;
+                const json_insertion = await this.mysql.TryQuery(
+                    `
+                    INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
+                    VALUES (
+                        (SELECT id FROM enterlink_articletable where slug = ? AND page_lang = ?), 
+                        ?, ?, NOW())
+                    `,
+                    [cleanedSlug, page_lang, ipfs_hash, stringifiedWikiCopy]
+                );
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(colors.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
+                }
+                else throw e;
             }
-            ipfs_hash = submission[0].hash;
+
+            return { status: 'Success' };
         }
-        else ipfs_hash = wiki.ipfs_hash;
-
-        await this.processWikiUpdate(wiki, ipfs_hash);
-
-        // Save submission immediately so we don't lose data
-        const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
-        if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
-        const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
-        const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-        let wikiCopy: ArticleJson = wiki;
-        wikiCopy.ipfs_hash = ipfs_hash;
-        let stringifiedWikiCopy = JSON.stringify(wikiCopy);
-        try {
-            const json_insertion = await this.mysql.TryQuery(
-                `
-                INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
-                VALUES (
-                    (SELECT id FROM enterlink_articletable where slug = ? AND page_lang = ?), 
-                    ?, ?, NOW())
-                `,
-                [cleanedSlug, page_lang, ipfs_hash, stringifiedWikiCopy]
-            );
-        } catch (e) {
-            if (e.message.includes("ER_DUP_ENTRY")){
-                console.log(colors.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
-            }
-            else throw e;
+        catch (e){
+            return { status: e };
         }
-
-        return { status: 'Success' };
     }
 
     async processWikiUpdate(wiki: ArticleJson, ipfs_hash: string): Promise<any>{
