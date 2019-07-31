@@ -438,6 +438,21 @@ export class WikiService {
             else throw e;
         }
 
+        // Pin to Eternum
+        const pin_data = {
+                hash: ipfs_hash,
+                name: `lang_${page_lang}/${slug}`
+        };
+        fetch(`https://www.eternum.io/api/pin/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
+            },
+            body: JSON.stringify(pin_data)
+        });
+
+
 
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
