@@ -80,6 +80,7 @@ export const REPLACEMENTS = [
 
 export const NON_AMP_BAD_TAGS = [
     'head',
+    'noscript',
     'map',
     'math',
     'mi',
@@ -96,7 +97,7 @@ export const NON_AMP_BAD_TAGS = [
     'xml',
     'worddocument',
     'mathpr',
-    'mathfont',
+    'mathfont'
 ];
 
 export const VALID_VIDEO_EXTENSIONS = [

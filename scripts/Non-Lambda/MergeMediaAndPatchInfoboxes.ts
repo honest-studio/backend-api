@@ -6,6 +6,8 @@ const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import * as axios from 'axios';
+const fetch = require("node-fetch");
+import { WikiService } from '../../src/wiki/wiki.service';
 import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations } from '../../src/utils/article-utils';
 const util = require('util');
 const chalk = require('chalk');
@@ -23,6 +25,7 @@ commander
   .parse(process.argv);
 
 const BATCH_SIZE = 250;
+const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00' 
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -49,10 +52,18 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
     // Get the article object
     let hashCacheResult: Array<any> = await theMysql.TryQuery(
         `
-            SELECT * FROM enterlink_hashcache WHERE ipfs_hash = ?
+            SELECT * 
+            FROM enterlink_hashcache 
+            WHERE ipfs_hash = ?
+            AND timestamp <= ?
         `,
-        [inputIPFS]
+        [inputIPFS, LASTMOD_TIMESTAMP_CEIL]
     );
+
+    if (hashCacheResult.length == 0) {
+        console.log(chalk.red(`NO ${inputIPFS} FOUND BELOW ${LASTMOD_TIMESTAMP_CEIL}. Continuing...`));
+        return;
+    }
 
     // Get the article JSON
     let wiki: ArticleJson;
@@ -89,6 +100,20 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
         }
         else throw e;
     }
+
+    // const data: Response = await fetch(`${'https://api.everipedia.org/v2/'}wiki/bot-submit?token=HmMhOCDZTspmAfNugg8AZPBnxN2DZ4ZCaivyvCKMdK2MomxJx56M9SdsmAK&bypass_ipfs=1`, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(wiki)
+    // });
+    // let theResult = await data.json();
+    // if ((theResult as any).status == 'Success'){
+    //     return theResult;
+    // }
+    // else{
+    //     console.log(util.inspect(theResult, {showHidden: false, depth: null, chalk: true}));
+    //     throw new Error((theResult as any).status) as any;
+    // }
     
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
@@ -127,14 +152,11 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
             }
             catch (err){
                 console.error(`${artResult.concatted} FAILED!!! [${err}]`);
+                console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
             }
         }
 
         batchCounter = batchCounter + 1;
     }
-
-
-
-
-
+    return;
 })();

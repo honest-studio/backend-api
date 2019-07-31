@@ -9,7 +9,7 @@
   "metadata": [
     {
       "key": "page_type",
-      "value": null
+      "value": "Person"
     },
     {
       "key": "is_removed",
@@ -637,6 +637,122 @@
           "category": "NORMAL_VIDEO"
         }
       ]
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "tag_type": "p",
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "**Dylan Thomas Brosnan** (born [[LINK|lang_en|January|]] January 13, 1997) is an American model, singer-songwriter, and [[LINK|lang_en|Cinematographer|cinematographer]] based in Los Angeles, California. He is best known as a son of [[LINK|lang_en|Pierce_Brosnan|Pierce Brosnan]]. [[CITE|9|https://heightline.com/meet-dylan-brosnan-runway-model/]] [[CITE|5|https://everipedia-storage.s3.amazonaws.com/ProfilePicture/lang_en/dylan-thomas-brosnan__eae6dc/blob__43835.png]] [[CITE|8|https://www.popsugar.com/celebrity/Who-Dylan-Brosnan-46417093]]"
+            }
+          ]
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "tag_type": "h2",
+          "attrs": {
+            "id": "Early-Life"
+          },
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Early Life & Education"
+            }
+          ]
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "tag_type": "p",
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Dylan Thomas Brosnan was born on January 13, 1997 in Los Angeles, California. "
+            },
+            {
+              "type": "sentence",
+              "index": 1,
+              "text": "He attended [[LINK|lang_en|USC_School_of_Cinematic_Arts|USC School of Cinematic Arts]]. "
+            }
+          ]
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "tag_type": "p",
+          "attrs": {},
+          "items": []
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "tag_type": "h2",
+          "attrs": {
+            "id": "Career"
+          },
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Career"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "tag_type": "p",
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "After catching the attention of photographer [[LINK|lang_en|Hedi_Slimane|Hedi Slimane]], he went on to model for [[LINK|lang_en|saint-laurent|Saint Laurent]], [[LINK|lang_en|burberry|Burberry]], and has graced the cover of Elle Russia.[[LINK|lang_en|Elleria|]] [[CITE|9|https://heightline.com/meet-dylan-brosnan-runway-model/]]"
+            }
+          ]
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "tag_type": "h2",
+          "attrs": {
+            "id": "Personal-Life"
+          },
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Personal Life"
+            }
+          ]
+        }
+      ],
+      "images": []
     },
     {
       "paragraphs": [
