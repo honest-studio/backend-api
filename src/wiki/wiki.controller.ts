@@ -4,7 +4,7 @@ import { JoiValidationPipe } from '../common';
 import { ArticleJson } from '../types/article';
 import { WikiExtraInfo } from '../types/article-helpers';
 import { WikiQuerySchema } from './wiki.query-schema';
-import { WikiService } from './wiki.service';
+import { WikiService, MergeInputPack } from './wiki.service';
 
 
 @Controller('v2/wiki')
@@ -149,6 +149,12 @@ export class WikiController {
     })
     async submitWiki(@Body() wiki): Promise<any> {
         return this.wikiService.submitWiki(wiki);
+    }
+
+    @Post('get-merged-result')
+    @ApiOperation({ title: 'Get the result of merging two wiki articles' })
+    async getMergedWikiCtrl(@Body() pack: MergeInputPack): Promise<any> {
+        return this.wikiService.getMergedWiki(pack);
     }
 
     @Post('/bot-submit')

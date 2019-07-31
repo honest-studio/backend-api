@@ -23,6 +23,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     let newCitationsToAdd = [];
     let availableCitationID = getFirstAvailableCitationIndex(resultantWiki.citations);
 
+
     // ========================================MAIN PHOTO========================================
     // If the target does not have a photo, or the default one, and the source does, replace it
     // If they both have photos, move the source's into the media gallery (converting it first from Media to Citation)
@@ -189,6 +190,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
         // Do nothing
     }
 
+
     // ============================================CITATIONS============================================
     // Merge citations. Be aware of duplicate URLs
     let newCitations: Citation[] = [];
@@ -209,5 +211,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     // Add the source's Sections[] to the end of the target's
     resultantWiki.page_body.push(...workingSourceWiki.page_body);
 
-    return addAMPInfo(resultantWiki);
+    resultantWiki = addAMPInfo(resultantWiki);
+
+    return resultantWiki;
 }
