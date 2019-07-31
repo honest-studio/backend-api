@@ -66,5 +66,6 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     AZURE_STORAGE_CONTAINER: Joi.string(),
     PRERENDER_TOKEN: Joi.string().required(),
     BOT_TOKEN_1: Joi.string().required(),
+    ETERNUM_API_KEY: Joi.string().required()
 });
 
