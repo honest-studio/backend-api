@@ -206,11 +206,42 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
         }
     })
     resultantWiki.citations.push(...newCitations);
-
+    
     // ============================================PAGE BODY============================================
     // Add the source's Sections[] to the end of the target's
     resultantWiki.page_body.push(...workingSourceWiki.page_body);
 
+    // ============================================METADATA=============================================
+    // Adjust the metadata
+    resultantWiki.metadata = resultantWiki.metadata.map(meta => {
+        switch(meta.key) {
+            case 'lastmod_timestamp':
+                return {...meta, value: new Date()};
+            case 'page_type': {
+                // If the target page type is Thing or null, see if the source page has something more specific
+                if (meta.value == null || meta.value == 'Thing'){
+                    let srcWikiPageType = sourceWiki.metadata.find(srcMeta => srcMeta.key == 'page_type').value;
+                    if (srcWikiPageType && srcWikiPageType != 'Thing') return {...meta, value: srcWikiPageType};
+                    else return meta;
+                }
+                else return meta;
+            }
+            case 'sub_page_type': {
+                // If the target sub_page_type is null, see if the source page has something more specific
+                if (meta.value == null){
+                    let srcWikiPageType = sourceWiki.metadata.find(srcMeta => srcMeta.key == 'sub_page_type').value;
+                    if (srcWikiPageType) return {...meta, value: srcWikiPageType};
+                    else return meta;
+                }
+                else return meta;
+            }
+                
+            default:
+                return meta
+        }
+    })
+
+    // ============================================AMP INFO=============================================
     resultantWiki = addAMPInfo(resultantWiki);
 
     return resultantWiki;
