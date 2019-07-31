@@ -13,7 +13,7 @@ import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
-import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 var colors = require('colors');
@@ -420,7 +420,7 @@ export class WikiService {
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
-        let wikiCopy: ArticleJson = wiki;
+        let wikiCopy: ArticleJson = addAMPInfo(wiki);
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);
         try {
@@ -486,8 +486,9 @@ export class WikiService {
             if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
             const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
             const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-            let wikiCopy: ArticleJson = wiki;
+            let wikiCopy: ArticleJson = addAMPInfo(wiki);
             wikiCopy.ipfs_hash = ipfs_hash;
+
             let stringifiedWikiCopy = JSON.stringify(wikiCopy);
             try {
                 const json_insertion = await this.mysql.TryQuery(

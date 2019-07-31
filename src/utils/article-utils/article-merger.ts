@@ -1,6 +1,6 @@
 import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue } from '../../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
-import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs } from '../../utils/article-utils';
+import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs, addAMPInfo } from '../../utils/article-utils';
 var colors = require('colors');
 
 export interface InfoboxKeyComparePack {
@@ -209,8 +209,5 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     // Add the source's Sections[] to the end of the target's
     resultantWiki.page_body.push(...workingSourceWiki.page_body);
 
-
-    // NEED TO UPDATE IN THE DB
-
-    return null;
+    return addAMPInfo(resultantWiki);
 }

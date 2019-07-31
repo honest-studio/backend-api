@@ -219,7 +219,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     const infoboxes = extractInfoboxes($);
 
 
-    // amp info
+    // AMP info
     const amp_info = {
         load_youtube_js: false,
         load_audio_js: false,

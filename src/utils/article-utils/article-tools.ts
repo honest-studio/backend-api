@@ -768,3 +768,36 @@ export function urlCleaner (inputURL: string): string {
     }
 
 }
+
+export function addAMPInfo (inputArticle: ArticleJson): ArticleJson {
+    // AMP info
+    const amp_info = {
+        load_youtube_js: false,
+        load_audio_js: false,
+        load_video_js: false,
+        lightboxes: []
+    };
+    inputArticle.citations.filter(ctn => ctn.media_props).forEach((value, index) => {
+        switch (value.category) {
+            case 'YOUTUBE': {
+                amp_info.load_youtube_js = true;
+                break;
+            }
+            case 'NORMAL_VIDEO': {
+                amp_info.load_video_js = true;
+                break;
+            }
+            case 'AUDIO': {
+                amp_info.load_audio_js = true;
+                break;
+            }
+            default:
+                break;
+        }
+    });
+
+    return {
+        ...inputArticle,
+        amp_info: amp_info
+    }
+}
