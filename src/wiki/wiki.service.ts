@@ -6,17 +6,34 @@ import * as fetch from 'node-fetch';
 import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async/dynamic';
 import * as SqlString from 'sqlstring';
 import { URL } from 'url';
+import * as fs from 'fs';
+import * as path from 'path';
 import { CacheService } from '../cache';
 import { ConfigService, IpfsService } from '../common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
-import { ArticleJson, Sentence } from '../types/article';
+import { ArticleJson, Sentence, Citation, Media } from '../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
-import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, renderAMP, renderSchema } from '../utils/article-utils';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { mergeWikis } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
+const util = require('util');
 var colors = require('colors');
+
+export interface MergeInputPack {
+    source: {
+        slug: string,
+        lang: string,
+        ipfs_hash: string
+    },
+    target: {
+        slug: string,
+        lang: string,
+        ipfs_hash: string
+    }
+}
 
 @Injectable()
 export class WikiService {
@@ -33,6 +50,15 @@ export class WikiService {
         private config: ConfigService
     ) {
         this.updateWikiIntervals = {};
+    }
+
+    async getMergedWiki(inputPack: MergeInputPack): Promise<ArticleJson>{
+        let sourceWiki = await this.getWikiBySlug(inputPack.source.lang, inputPack.source.slug, false);
+        let targetWiki = await this.getWikiBySlug(inputPack.target.lang, inputPack.target.slug, false);
+        let mergedResult = await mergeWikis(sourceWiki, targetWiki);
+        // console.log(util.inspect(mergedResult, {showHidden: false, depth: null, chalk: true}));
+        fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(mergedResult, null, 2));
+        return null;
     }
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<ArticleJson> {
@@ -418,7 +444,7 @@ export class WikiService {
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
-        let wikiCopy: ArticleJson = wiki;
+        let wikiCopy: ArticleJson = addAMPInfo(wiki);
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);
         try {
@@ -499,8 +525,9 @@ export class WikiService {
             if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
             const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
             const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
-            let wikiCopy: ArticleJson = wiki;
+            let wikiCopy: ArticleJson = addAMPInfo(wiki);
             wikiCopy.ipfs_hash = ipfs_hash;
+
             let stringifiedWikiCopy = JSON.stringify(wikiCopy);
             try {
                 const json_insertion = await this.mysql.TryQuery(

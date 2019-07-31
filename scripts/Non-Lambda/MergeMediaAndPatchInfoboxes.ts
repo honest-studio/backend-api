@@ -6,6 +6,8 @@ const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import * as axios from 'axios';
+const fetch = require("node-fetch");
+import { WikiService } from '../../src/wiki/wiki.service';
 import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations } from '../../src/utils/article-utils';
 const util = require('util');
 const chalk = require('chalk');
@@ -18,19 +20,16 @@ commander
   .version('1.0.0', '-v, --version')
   .description('Merge Media and Patch Infoboxes')
   .usage('[OPTIONS]...')
-  .option('-i, --input <path>', 'Input file')
+  .option('-s, --start <pageid>', 'Starting ID')
+  .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
+
+const BATCH_SIZE = 250;
+const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00' 
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
-
-// Open the file with the URLs
-const readInterface = readline.createInterface({
-    input: fs.createReadStream(path.resolve(__dirname, commander.input)), 
-    // output: process.stdout,
-    // console: false
-});
 
 export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
     let wikiLangSlug = inputString.split("|")[0];
@@ -45,10 +44,7 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
         lang_code = 'en';
         slug = wikiLangSlug;
     }
-    console.log("\n");
-    console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
-    console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
-    console.log(chalk.blue.bold("=========================================START========================================="));
+
     console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`))
     console.log(chalk.blue.bold(`Page Slug: |${slug}|`))
@@ -56,10 +52,18 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
     // Get the article object
     let hashCacheResult: Array<any> = await theMysql.TryQuery(
         `
-            SELECT * FROM enterlink_hashcache WHERE ipfs_hash = ?
+            SELECT * 
+            FROM enterlink_hashcache 
+            WHERE ipfs_hash = ?
+            AND timestamp <= ?
         `,
-        [inputIPFS]
+        [inputIPFS, LASTMOD_TIMESTAMP_CEIL]
     );
+
+    if (hashCacheResult.length == 0) {
+        console.log(chalk.red(`NO ${inputIPFS} FOUND BELOW ${LASTMOD_TIMESTAMP_CEIL}. Continuing...`));
+        return;
+    }
 
     // Get the article JSON
     let wiki: ArticleJson;
@@ -96,19 +100,63 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
         }
         else throw e;
     }
+
+    // const data: Response = await fetch(`${'https://api.everipedia.org/v2/'}wiki/bot-submit?token=HmMhOCDZTspmAfNugg8AZPBnxN2DZ4ZCaivyvCKMdK2MomxJx56M9SdsmAK&bypass_ipfs=1`, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(wiki)
+    // });
+    // let theResult = await data.json();
+    // if ((theResult as any).status == 'Success'){
+    //     return theResult;
+    // }
+    // else{
+    //     console.log(util.inspect(theResult, {showHidden: false, depth: null, chalk: true}));
+    //     throw new Error((theResult as any).status) as any;
+    // }
     
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
 }
 
 (async () => {
-    for await (const inputLine of readInterface) {
-        try{
-            await MergeMediaAndPatchInfoboxes(inputLine);
-        }
-        catch (err){
-            console.error(`${inputLine} FAILED!!! [${err}]`);
-        }
-    }
+    logYlw("=================STARTING MAIN SCRIPT=================");
+    let batchCounter = 0;
+    let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
+    console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
+    let currentStart, currentEnd;
+    for (let i = 0; i < totalBatches; i++) {
+        currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
+        currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;
 
+        console.log("\n");
+        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+        console.log(chalk.blue.bold("=========================================START========================================="));
+        console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`));
+
+        const fetchedArticles: any[] = await theMysql.TryQuery(
+            `
+                SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title)) as concatted
+                FROM enterlink_articletable art
+                WHERE art.id between ? and ?
+                AND art.is_removed = 0
+                AND redirect_page_id IS NULL
+            `,
+            [currentStart, currentEnd]
+        );
+
+        for await (const artResult of fetchedArticles) {
+            try{
+                await MergeMediaAndPatchInfoboxes(artResult.concatted);
+            }
+            catch (err){
+                console.error(`${artResult.concatted} FAILED!!! [${err}]`);
+                console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
+            }
+        }
+
+        batchCounter = batchCounter + 1;
+    }
+    return;
 })();

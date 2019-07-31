@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 import striptags from 'striptags';
 import decode from 'unescape';
 import urlSlug from 'url-slug';
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow } from '../../types/article';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
@@ -698,6 +698,14 @@ export function getFirstAvailableCitationIndex(citations: Citation[]): number {
     return highestID;
 }
 
+export function getFirstAvailableInfoboxValueIndex(ibox_values: InfoboxValue[]): number {
+    let highestID = 1;
+    ibox_values.forEach((val) => {
+        if (val.index >= highestID) highestID = val.index + 1;
+    })
+    return highestID;
+}
+
 export function mergeMediaIntoCitations(inputWiki: ArticleJson): ArticleJson {
     // Eventually the media_gallery will be merged into citations. Dupe them for now
     // Interestingly, if an article does not have a main photo, you could set it as one of the gallery images...
@@ -759,4 +767,37 @@ export function urlCleaner (inputURL: string): string {
         return "";
     }
 
+}
+
+export function addAMPInfo (inputArticle: ArticleJson): ArticleJson {
+    // AMP info
+    const amp_info = {
+        load_youtube_js: false,
+        load_audio_js: false,
+        load_video_js: false,
+        lightboxes: []
+    };
+    inputArticle.citations.filter(ctn => ctn.media_props).forEach((value, index) => {
+        switch (value.category) {
+            case 'YOUTUBE': {
+                amp_info.load_youtube_js = true;
+                break;
+            }
+            case 'NORMAL_VIDEO': {
+                amp_info.load_video_js = true;
+                break;
+            }
+            case 'AUDIO': {
+                amp_info.load_audio_js = true;
+                break;
+            }
+            default:
+                break;
+        }
+    });
+
+    return {
+        ...inputArticle,
+        amp_info: amp_info
+    }
 }
