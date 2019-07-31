@@ -1,6 +1,6 @@
 import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue } from '../../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
-import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex } from '../../utils/article-utils';
+import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs } from '../../utils/article-utils';
 var colors = require('colors');
 
 export interface InfoboxKeyComparePack {
@@ -21,7 +21,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     let resultantWiki = targetWiki;
     let workingSourceWiki = sourceWiki;
     let newCitationsToAdd = [];
-    let availableCitationID = getFirstAvailableCitationIndex(targetWiki.citations);
+    let availableCitationID = getFirstAvailableCitationIndex(resultantWiki.citations);
 
     // ========================================MAIN PHOTO========================================
     // If the target does not have a photo, or the default one, and the source does, replace it
@@ -174,9 +174,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
                     resultantWiki.infoboxes[resPack.insertIndex] = insertionPointIbox;
                     break;
             }
-
         })
-
     } else if (sourceWikiInfoboxes.length && !targetWikiInfoboxes.length){
         // The source has infoboxes and the target does not
         // Set the target's infoboxes as the source's
@@ -191,6 +189,28 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
         // Do nothing
     }
 
+    // ============================================CITATIONS============================================
+    // Merge citations. Be aware of duplicate URLs
+    let newCitations: Citation[] = [];
+    let availableCtnID = getFirstAvailableCitationIndex(resultantWiki.citations);
+    workingSourceWiki.citations.forEach(srcCtn => {
+        // If the source citation URL is not the same and the target URL, add the source citation
+        if(resultantWiki.citations.every(tgtCtn => !compareURLs(srcCtn.url, tgtCtn.url))){
+            newCitations.push({
+                ...srcCtn,
+                citation_id: availableCtnID
+            });
+            availableCtnID = availableCtnID + 1;
+        }
+    })
+    resultantWiki.citations.push(...newCitations);
+
+    // ============================================PAGE BODY============================================
+    // Add the source's Sections[] to the end of the target's
+    resultantWiki.page_body.push(...workingSourceWiki.page_body);
+
+
+    // NEED TO UPDATE IN THE DB
 
     return null;
 }
