@@ -626,7 +626,7 @@ export class WikiService {
                     FROM enterlink_articletable AS art 
                     WHERE 
                         page_lang = ? 
-                        AND slug = (slug = ? OR slug_alt = ?)
+                        AND (slug = ? OR slug_alt = ?)
                         AND art.is_removed = 0
                     `,
                     [merged_lang, merged_slug, merged_slug]
@@ -646,9 +646,9 @@ export class WikiService {
                         [articleResultPacket[0].id, mergedArticleResult[0].id]
                     );
 
-                    // Update Elasticsearch for the merged article
+                    // Update Elasticsearch for the merged article to point it to the canonical article
                     await updateElasticsearch(
-                        mergedArticleResult[0].id, // source article id
+                        mergedArticleResult[0].id, // merged article id
                         mergedArticleResult[0].page_title, 
                         merged_lang,
                         'MERGE_REDIRECT' , 
@@ -679,14 +679,16 @@ export class WikiService {
             }).catch(e => {
                 console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
             })
+
+            // Flush prerender for the main article
+            flushPrerenders(page_lang, slug, prerenderToken);
+
+            console.log(colors.green('========================================'));
+            console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
+            console.log(colors.green('========================================'));
         }
 
-        // Flush prerender for the main article
-        flushPrerenders(page_lang, slug, prerenderToken);
 
-        console.log(colors.green('========================================'));
-        console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
-        console.log(colors.green('========================================'));
 
         return;
     }
@@ -703,7 +705,7 @@ export class WikiService {
                 'trace.act.data.starttime': { $gt: twoMinutesAgo }
             })
         if (submitted_proposal) {
-            console.log(util.inspect(submitted_proposal, {showHidden: false, depth: null, chalk: true}));
+            // console.log(util.inspect(submitted_proposal, {showHidden: false, depth: null, chalk: true}));
             const trxID = submitted_proposal.trx_id;
             console.log(colors.green(`Transaction found! (${trxID})`));
             clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
