@@ -11,12 +11,13 @@ export const updateElasticsearch = async (
     articleTitle: string, 
     articleLang: string,
     action: ElasticSearchAction,
-    elSearchSvc: ElasticsearchService
+    elSearchSvc: ElasticsearchService,
+    canonicalID?: number
 ): Promise<any> => {
     let jsonRequest = {
         "id": artID,
         "page_title": articleTitle,
-        "canonical_id": artID,    
+        "canonical_id": canonicalID ? canonicalID : artID,    
         "lang": articleLang
     }
 
