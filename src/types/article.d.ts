@@ -221,4 +221,5 @@ export interface ArticleJson {
 
     ipfs_hash?: string;
     categories?: string[];
+    redirect_wikilangslug?: string;
 }

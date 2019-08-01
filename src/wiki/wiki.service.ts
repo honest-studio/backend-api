@@ -79,7 +79,8 @@ export class WikiService {
                 art.is_indexed as is_idx, 
                 art_redir.is_indexed as is_idx_redir,
                 COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
-                COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
+                COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
+                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -90,14 +91,16 @@ export class WikiService {
         );
         let ipfs_hash;
         let overrideIsIndexed;
-        let db_timestamp
+        let db_timestamp;
+        let main_redirect_wikilangslug;
         if (ipfs_hash_rows.length > 0) {
             if (ipfs_hash_rows[0].is_removed) throw new NotFoundException(`Wiki ${lang_code}/${slug} is marked as removed`);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+            main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
-        }
+        };
 
         // Get the 5 most recent proposals to compare and make sure the DB's IPFS hash is current
         let latest_proposals = await this.mongo
@@ -236,6 +239,9 @@ export class WikiService {
             this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
+
+        // Add redirect information, if present
+        wiki.redirect_wikilangslug = main_redirect_wikilangslug;
 
         return wiki;
     }
