@@ -464,8 +464,6 @@ export class WikiService {
             body: JSON.stringify(pin_data)
         });
 
-
-
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
         let INTERVAL_MSEC = 2000;
@@ -559,6 +557,7 @@ export class WikiService {
         const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
+
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
@@ -688,8 +687,6 @@ export class WikiService {
             console.log(colors.green('========================================'));
         }
 
-
-
         return;
     }
 
@@ -777,6 +774,13 @@ export class WikiService {
             else throw e;
         }
 
-        return { alt_langs, see_also, pageviews, schema };
+        return { 
+            alt_langs, 
+            see_also, 
+            pageviews, 
+            schema, 
+            canonical_lang: lang_code, 
+            canonical_slug: slug  
+        };
     }
 }
