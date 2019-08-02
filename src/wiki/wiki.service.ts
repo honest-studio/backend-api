@@ -609,11 +609,12 @@ export class WikiService {
             FROM enterlink_articletable AS art 
             WHERE 
                 page_lang = ? 
-                AND slug = ?
+                AND (slug = ? OR slug_alt = ?)
                 AND art.is_removed = 0
             `,
-            [page_lang, cleanedSlug]
+            [page_lang, cleanedSlug, cleanedSlug]
         );
+
 
 
         if (articleResultPacket.length > 0) {
@@ -637,7 +638,12 @@ export class WikiService {
                     [merged_lang, merged_slug, merged_slug]
                 );
 
+                console.log(colors.blue(`cleanedSlug: ${cleanedSlug}`));
+                console.log(colors.blue(`merged_slug: ${merged_slug}`));
+
                 if (mergedArticleResult.length > 0) {
+                    console.log(colors.blue(`articleResultPacket[0].id: ${articleResultPacket[0].id}`));
+                    console.log(colors.blue(`mergedArticleResult[0].id: ${mergedArticleResult[0].id}`));
                     await this.mysql.TryQuery(
                         `
                         UPDATE enterlink_articletable 

@@ -7,7 +7,7 @@ import striptags from 'striptags';
 import decode from 'unescape';
 import urlSlug from 'url-slug';
 import * as axios from 'axios';
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
@@ -658,7 +658,7 @@ export function sanitizeTextPreview(inputText: string): string {
     return sanitizedText;
 }
 
-export function convertMediaToCitation(inputMedia: Media, idToUse: number): Citation {
+export function convertMediaToCitation(inputMedia: Media, idToUse: number, mediaTypeOverride?: MediaType): Citation {
     let newCitation: Citation = {
         url: inputMedia.url,
         thumb: inputMedia.thumb,
@@ -670,7 +670,7 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number): Cita
         timestamp: inputMedia.timestamp || new Date(),
         mime: inputMedia.mime || null,
         media_props: {
-            type: inputMedia.type,
+            type: mediaTypeOverride ? mediaTypeOverride : inputMedia.type,
             webp_original: inputMedia.media_props && inputMedia.media_props.webp_original 
                 ? inputMedia.media_props.webp_original 
                 : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
