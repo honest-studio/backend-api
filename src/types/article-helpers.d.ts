@@ -34,6 +34,8 @@ export interface WikiExtraInfo {
     see_also: SeeAlso[];
     alt_langs: LanguagePack[];
     schema: {[key: string]: any};
+    canonical_slug: string;
+    canonical_lang: string;
 }
 
 export interface LanguagePack {

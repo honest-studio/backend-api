@@ -20,7 +20,6 @@ export interface InfoboxValueComparePack {
 export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJson): Promise<ArticleJson> {
     let resultantWiki = targetWiki;
     let workingSourceWiki = sourceWiki;
-    let newCitationsToAdd = [];
     let availableCitationID = getFirstAvailableCitationIndex(resultantWiki.citations);
 
 
@@ -29,10 +28,11 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     // If they both have photos, move the source's into the media gallery (converting it first from Media to Citation)
     let sourceWikiPhoto = (workingSourceWiki.main_photo && workingSourceWiki.main_photo[0] && workingSourceWiki.main_photo[0].url) || 'no-image-slide';
     let targetWikiPhoto = (targetWiki.main_photo && targetWiki.main_photo[0] && workingSourceWiki.main_photo[0].url) || 'no-image-slide';
+    
     if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') == -1){
         // Both have good photos
         // Move the source wiki photo to the gallery of the target
-        newCitationsToAdd.push(convertMediaToCitation(workingSourceWiki.main_photo[0], availableCitationID));
+        resultantWiki.citations.push(convertMediaToCitation(workingSourceWiki.main_photo[0], availableCitationID, 'normal'));
         availableCitationID = availableCitationID + 1;
 
     } else if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') >= 0){

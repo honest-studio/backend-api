@@ -15,7 +15,7 @@ import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
-import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { mergeWikis } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
@@ -26,12 +26,11 @@ export interface MergeInputPack {
     source: {
         slug: string,
         lang: string,
-        ipfs_hash: string
+        override_articlejson?: ArticleJson
     },
     target: {
         slug: string,
-        lang: string,
-        ipfs_hash: string
+        lang: string
     }
 }
 
@@ -53,12 +52,21 @@ export class WikiService {
     }
 
     async getMergedWiki(inputPack: MergeInputPack): Promise<ArticleJson>{
-        let sourceWiki = await this.getWikiBySlug(inputPack.source.lang, inputPack.source.slug, false);
+        let sourceWiki: ArticleJson;
+
+        // Get the source wiki, which might be present in the input pack
+        if (inputPack.source.override_articlejson){
+            sourceWiki = inputPack.source.override_articlejson;
+        } else sourceWiki = await this.getWikiBySlug(inputPack.source.lang, inputPack.source.slug, false);
+
+        // Get the target ArticleJson
         let targetWiki = await this.getWikiBySlug(inputPack.target.lang, inputPack.target.slug, false);
+
+        // Get the merged result
         let mergedResult = await mergeWikis(sourceWiki, targetWiki);
         // console.log(util.inspect(mergedResult, {showHidden: false, depth: null, chalk: true}));
         fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(mergedResult, null, 2));
-        return null;
+        return mergedResult;
     }
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<ArticleJson> {
@@ -71,7 +79,8 @@ export class WikiService {
                 art.is_indexed as is_idx, 
                 art_redir.is_indexed as is_idx_redir,
                 COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
-                COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
+                COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
+                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -82,14 +91,16 @@ export class WikiService {
         );
         let ipfs_hash;
         let overrideIsIndexed;
-        let db_timestamp
+        let db_timestamp;
+        let main_redirect_wikilangslug;
         if (ipfs_hash_rows.length > 0) {
             if (ipfs_hash_rows[0].is_removed) throw new NotFoundException(`Wiki ${lang_code}/${slug} is marked as removed`);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+            main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
-        }
+        };
 
         // Get the 5 most recent proposals to compare and make sure the DB's IPFS hash is current
         let latest_proposals = await this.mongo
@@ -222,34 +233,15 @@ export class WikiService {
         if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
             // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
-            // Construct the payload for AMP
-            let payload = {
-                "prerenderToken": prerenderToken,
-                "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}/amp`
-            }
-    
-            // Send the recache request for AMP
-            await axios.default.post('https://api.prerender.io/recache', payload)
-            .then(response => {
-                return response;
-            })
-
-            // Construct the payload for desktop
-            let payload2 = {
-                "prerenderToken": prerenderToken,
-                "url": `https://everipedia.org/wiki/lang_${lang_code}/${slug}`
-            }
-    
-            // Send the recache request for desktop
-            await axios.default.post('https://api.prerender.io/recache', payload2)
-            .then(response => {
-                return response;
-            })
+            flushPrerenders(lang_code, slug, prerenderToken);
 
             // Update the cache timestamp too in the pageview increment query to save overhead
             this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
+
+        // Add redirect information, if present
+        wiki.redirect_wikilangslug = main_redirect_wikilangslug;
 
         return wiki;
     }
@@ -478,8 +470,6 @@ export class WikiService {
             body: JSON.stringify(pin_data)
         });
 
-
-
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
         let INTERVAL_MSEC = 2000;
@@ -553,7 +543,7 @@ export class WikiService {
         }
     }
 
-    async processWikiUpdate(wiki: ArticleJson, ipfs_hash: string): Promise<any>{
+    async processWikiUpdate(wiki: ArticleJson, ipfs_hash: string, mergeTx?: any): Promise<any>{
         const page_title = wiki.page_title[0].text;
         const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
@@ -573,6 +563,7 @@ export class WikiService {
         const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
+
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
@@ -606,6 +597,9 @@ export class WikiService {
             ]
         )
 
+        // Get the prerender token
+        const prerenderToken = this.config.get('PRERENDER_TOKEN');
+
         // Get the article object
         let articleResultPacket: Array<any> = await this.mysql.TryQuery(
             `
@@ -615,15 +609,76 @@ export class WikiService {
             FROM enterlink_articletable AS art 
             WHERE 
                 page_lang = ? 
-                AND slug = ?
+                AND (slug = ? OR slug_alt = ?)
                 AND art.is_removed = 0
             `,
-            [page_lang, cleanedSlug]
+            [page_lang, cleanedSlug, cleanedSlug]
         );
 
 
-        // Update Elasticsearch
+
         if (articleResultPacket.length > 0) {
+            // Handle the merge redirect, if present
+            if(mergeTx){
+                // Get the merged article
+                let quickSplit = mergeTx.trace.act.data.comment.split("|")[1].split("/");
+                let merged_slug = quickSplit.slice(1).join("");
+                let merged_lang = quickSplit[0].replace("lang_", "");
+                let mergedArticleResult: Array<any> = await this.mysql.TryQuery(
+                    `
+                    SELECT 
+                        id,
+                        page_title
+                    FROM enterlink_articletable AS art 
+                    WHERE 
+                        page_lang = ? 
+                        AND (slug = ? OR slug_alt = ?)
+                        AND art.is_removed = 0
+                    `,
+                    [merged_lang, merged_slug, merged_slug]
+                );
+
+                console.log(colors.blue(`cleanedSlug: ${cleanedSlug}`));
+                console.log(colors.blue(`merged_slug: ${merged_slug}`));
+
+                if (mergedArticleResult.length > 0) {
+                    console.log(colors.blue(`articleResultPacket[0].id: ${articleResultPacket[0].id}`));
+                    console.log(colors.blue(`mergedArticleResult[0].id: ${mergedArticleResult[0].id}`));
+                    await this.mysql.TryQuery(
+                        `
+                        UPDATE enterlink_articletable 
+                            SET is_removed = 0, 
+                                is_indexed = 0, 
+                                bing_index_override = 0,
+                                lastmod_timestamp = NOW(),
+                                redirect_page_id = ?
+                            WHERE id = ?
+                        `,
+                        [articleResultPacket[0].id, mergedArticleResult[0].id]
+                    );
+
+                    // Update Elasticsearch for the merged article to point it to the canonical article
+                    await updateElasticsearch(
+                        mergedArticleResult[0].id, // merged article id
+                        mergedArticleResult[0].page_title, 
+                        merged_lang,
+                        'MERGE_REDIRECT' , 
+                        this.elasticSearch,
+                        articleResultPacket[0].id, // canonical id
+                    ).then(() => {
+                        console.log(colors.green(`Elasticsearch for lang_${merged_lang}/${merged_slug} updated`));
+                    }).catch(e => {
+                        console.log(colors.red(`Elasticsearch for lang_${merged_lang}/${merged_slug} failed:`), colors.red(e));
+                    })
+
+                    // Flush prerender for the merged article
+                    flushPrerenders(merged_lang, merged_slug, prerenderToken);
+                    
+                }
+
+            }
+
+            // Update Elasticsearch for the main article
             await updateElasticsearch(
                 articleResultPacket[0].id, 
                 articleResultPacket[0].page_title, 
@@ -631,50 +686,18 @@ export class WikiService {
                 'PAGE_UPDATED_OR_CREATED' , 
                 this.elasticSearch
             ).then(() => {
-                console.log(colors.green(`Elasticsearch for ${page_lang}/${slug} updated`));
+                console.log(colors.green(`Elasticsearch for lang_${page_lang}/${slug} updated`));
             }).catch(e => {
                 console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
             })
+
+            // Flush prerender for the main article
+            flushPrerenders(page_lang, slug, prerenderToken);
+
+            console.log(colors.green('========================================'));
+            console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
+            console.log(colors.green('========================================'));
         }
-
-        // Flush the prerender cache for this page
-        try {
-            console.log(colors.yellow(`Flushing prerender for lang_${page_lang}/${slug}`));
-            const prerenderToken = this.config.get('PRERENDER_TOKEN');
-            let payload = {
-                "prerenderToken": prerenderToken,
-                "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}/amp`
-            }
-    
-            // Send the recache request for AMP
-            await axios.default.post('https://api.prerender.io/recache', payload)
-            .then(response => {
-                return response;
-            })
-
-            // Construct the payload for desktop
-            let payload2 = {
-                "prerenderToken": prerenderToken,
-                "url": `https://everipedia.org/wiki/lang_${page_lang}/${slug}`
-            }
-    
-            // Send the recache request for desktop
-            await axios.default.post('https://api.prerender.io/recache', payload2)
-            .then(response => {
-                console.log(colors.green(`lang_${page_lang}/${slug} prerender successfully flushed`));
-                return response;
-            })
-            .catch(err => {
-                throw err;
-            })
-
-        } catch (e) {
-            console.log(colors.red(`Failed to flush prerender for lang_${page_lang}/${slug} :`), colors.red(e));
-        }
-
-        console.log(colors.green('========================================'));
-        console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
-        console.log(colors.green('========================================'));
 
         return;
     }
@@ -691,11 +714,15 @@ export class WikiService {
                 'trace.act.data.starttime': { $gt: twoMinutesAgo }
             })
         if (submitted_proposal) {
+            // console.log(util.inspect(submitted_proposal, {showHidden: false, depth: null, chalk: true}));
             const trxID = submitted_proposal.trx_id;
             console.log(colors.green(`Transaction found! (${trxID})`));
             clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
-            
-            await this.processWikiUpdate(wiki, ipfs_hash);
+            // Check for a merge
+            if(submitted_proposal.trace.act.data.comment.indexOf("MERGE_FROM|") >= 0 
+                && submitted_proposal.trace.act.data.memo.indexOf("Merge") >= 0 
+            ) await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+            else await this.processWikiUpdate(wiki, ipfs_hash);
         }
     }
 
@@ -759,6 +786,13 @@ export class WikiService {
             else throw e;
         }
 
-        return { alt_langs, see_also, pageviews, schema };
+        return { 
+            alt_langs, 
+            see_also, 
+            pageviews, 
+            schema, 
+            canonical_lang: lang_code, 
+            canonical_slug: slug  
+        };
     }
 }

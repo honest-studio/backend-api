@@ -6,11 +6,13 @@ import MarkdownIt from 'markdown-it';
 import striptags from 'striptags';
 import decode from 'unescape';
 import urlSlug from 'url-slug';
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
+import * as axios from 'axios';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
+var colors = require('colors');
 
 export function compareURLs (firstURL: string, secondURL: string): boolean {
     if (firstURL == secondURL) return true;
@@ -656,7 +658,7 @@ export function sanitizeTextPreview(inputText: string): string {
     return sanitizedText;
 }
 
-export function convertMediaToCitation(inputMedia: Media, idToUse: number): Citation {
+export function convertMediaToCitation(inputMedia: Media, idToUse: number, mediaTypeOverride?: MediaType): Citation {
     let newCitation: Citation = {
         url: inputMedia.url,
         thumb: inputMedia.thumb,
@@ -668,7 +670,7 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number): Cita
         timestamp: inputMedia.timestamp || new Date(),
         mime: inputMedia.mime || null,
         media_props: {
-            type: inputMedia.type,
+            type: mediaTypeOverride ? mediaTypeOverride : inputMedia.type,
             webp_original: inputMedia.media_props && inputMedia.media_props.webp_original 
                 ? inputMedia.media_props.webp_original 
                 : 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp',
@@ -800,4 +802,42 @@ export function addAMPInfo (inputArticle: ArticleJson): ArticleJson {
         ...inputArticle,
         amp_info: amp_info
     }
+}
+
+export async function flushPrerenders (inputLang: string, inputSlug: string, prerenderToken: string ): Promise<void> {
+    // Flush the prerender cache for this page
+    try {
+        console.log(colors.yellow(`Flushing prerender for lang_${inputLang}/${inputSlug}`));
+        let payload = {
+            "prerenderToken": prerenderToken,
+            "url": `https://everipedia.org/wiki/lang_${inputLang}/${inputSlug}/amp`
+        }
+
+        // Send the recache request for AMP
+        await axios.default.post('https://api.prerender.io/recache', payload)
+        .then(response => {
+            console.log(colors.green(`lang_${inputLang}/${inputSlug}/amp prerender successfully flushed`));
+            return response;
+        })
+
+        // Construct the payload for desktop
+        let payload2 = {
+            "prerenderToken": prerenderToken,
+            "url": `https://everipedia.org/wiki/lang_${inputLang}/${inputSlug}`
+        }
+
+        // Send the recache request for desktop
+        await axios.default.post('https://api.prerender.io/recache', payload2)
+        .then(response => {
+            console.log(colors.green(`lang_${inputLang}/${inputSlug} prerender successfully flushed`));
+            return response;
+        })
+        .catch(err => {
+            throw err;
+        })
+
+    } catch (e) {
+        console.log(colors.red(`Failed to flush prerender for lang_${inputLang}/${inputSlug} :`), colors.red(e));
+    }
+    return null;
 }
