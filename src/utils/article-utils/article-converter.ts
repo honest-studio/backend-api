@@ -1169,13 +1169,15 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
+    } else if (inputString.indexOf('https://openlibrary.org/books/') == 0) {
+        return 'BOOK';
     } else if (theMIME && theMIME.indexOf('image') >= 0) {
         return 'PICTURE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'NORMAL_VIDEO';
     } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
-    } else return 'NONE'
+    } else return 'FILE'
 }
 
 // Copied with light modifications from NPM package get-youtube-id

@@ -21,6 +21,18 @@ export interface PreviewResult {
 }
 export type WikiSearchResult = PreviewResult;
 
+export interface BookInfoPack {
+    title: string;
+    thumb: string;
+    url: string;
+    isbn_10: string;
+    isbn_13: string;
+    author: string;
+    publisher: string;
+    published: string;
+    description: Sentence[];
+}
+
 export interface FileFetchResult {
     file_buffer: Buffer,
     mime_pack: MimePack;
