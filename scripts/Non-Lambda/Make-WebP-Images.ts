@@ -338,7 +338,13 @@ export const MakeWebPImages = async (inputString: string) => {
     wiki.citations = await Promise.all(wiki.citations.map(async (ctn) => {
         // Only process media citations
         if (!ctn.media_props) return ctn;
-        if (ctn.category == 'YOUTUBE' || ctn.category == 'NORMAL_VIDEO' || ctn.category == 'AUDIO' || ctn.category == 'NONE') return ctn;
+        if (ctn.category == 'YOUTUBE' 
+        || ctn.category == 'NORMAL_VIDEO' 
+        || ctn.category == 'AUDIO' 
+        || ctn.category == 'NONE'
+        || ctn.category == 'BOOK'
+        || ctn.category == 'FILE'
+        ) return ctn;
         else {
             return await UpdateWithWebP(ctn, slug, lang_code, auxiliary_prefix, 'NewlinkFiles', 'normal') as Citation
         }

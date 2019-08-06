@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import sizeOf from 'buffer-image-size';
 import * as crypto from 'crypto';
+import * as htmlparser2 from 'htmlparser2';
 import { DWebp } from 'cwebp';
+import * as Cheerio from 'cheerio';
 import * as fs from 'fs';
+const util = require('util');
+import * as rp from 'request-promise';
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
 import * as imagemin_Jpegtran from 'imagemin-jpegtran';
@@ -21,6 +25,7 @@ import { fetchUrl } from './fetch-favicon';
 import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
+import { BookInfoPack } from '../types/api';
 import * as sharp from 'sharp';
 import * as axios from 'axios';
 const isSvg = require('is-svg');
@@ -85,6 +90,74 @@ export class MediaUploadService {
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
     getFavicon(inputPack: UrlPack): Promise<any> {
         return fetchUrl(inputPack.url);
+    }
+
+    async getBookInfoFromISBN(inputISBN: string): Promise<BookInfoPack> {
+        let initialPack: BookInfoPack = {
+            title: null,
+            thumb: null,
+            url: null,
+            isbn_10: null,
+            isbn_13: null,
+            author: null,
+            publisher: null,
+            published: null,
+            description: []
+        };
+        
+        // Fetch the url
+        let response = await rp.default({
+            uri: `https://openlibrary.org/api/books?bibkeys=ISBN:${inputISBN}&jscmd=data&format=json`,
+            headers: UNIVERSAL_HEADERS,
+            resolveWithFullResponse: true,
+            // gzip: true
+        }).then((response) => {
+            return response;
+        }).catch((err) => {
+            console.log(err);
+        });
+        let bookJSON = JSON.parse(response.body);
+        let theKey = Object.keys(bookJSON)[0];
+        bookJSON = bookJSON[theKey];
+
+        initialPack.title = `${bookJSON.title}${bookJSON.subtitle ? ": " + bookJSON.subtitle : ""}`;
+        initialPack.thumb = bookJSON.cover && bookJSON.cover.medium;
+        initialPack.url = bookJSON.url;
+        initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
+        initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
+        initialPack.author = bookJSON.authors && bookJSON.authors.map(author => author.name).join(", ");
+        initialPack.publisher = bookJSON.publishers && bookJSON.publishers.map(publisher => publisher.name).join(", ");
+        initialPack.published = bookJSON.publish_date;
+        
+        let availableIndex = 1;
+        initialPack.description = [
+            {
+                index: 0,
+                type: 'sentence',
+                text: `${initialPack.author ? initialPack.author + '. ' : ''}***${initialPack.title}***, ${initialPack.publisher}, ${initialPack.published}.`
+            },
+        ]
+        if (initialPack.isbn_10) {
+            initialPack.description.push(
+                {
+                    index: availableIndex,
+                    type: 'sentence',
+                    text: `\nISBN-10: ${initialPack.isbn_10}`
+                }
+            );
+            availableIndex = availableIndex + 1;
+        }
+        if (initialPack.isbn_13) {
+            initialPack.description.push(
+                {
+                    index: availableIndex,
+                    type: 'sentence',
+                    text: `\nISBN-13: ${initialPack.isbn_13}`
+                }
+            );
+            availableIndex = availableIndex + 1;
+        }
+        return initialPack;
     }
 
     // Fetch a file from an external URL
