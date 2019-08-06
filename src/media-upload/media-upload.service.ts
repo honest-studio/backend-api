@@ -125,28 +125,38 @@ export class MediaUploadService {
         initialPack.url = bookJSON.url;
         initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
         initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
-        initialPack.author = bookJSON.authors.map(author => author.name).join(", ");
-        initialPack.publisher = bookJSON.publishers.map(publisher => publisher.name).join(", ");
+        initialPack.author = bookJSON.authors && bookJSON.authors.map(author => author.name).join(", ");
+        initialPack.publisher = bookJSON.publishers && bookJSON.publishers.map(publisher => publisher.name).join(", ");
         initialPack.published = bookJSON.publish_date;
         
+        let availableIndex = 1;
         initialPack.description = [
             {
                 index: 0,
                 type: 'sentence',
-                text: `${initialPack.author}. ***${initialPack.title}*** ${initialPack.publisher}, ${initialPack.published}.`
+                text: `${initialPack.author ? initialPack.author + '. ' : ''}***${initialPack.title}***, ${initialPack.publisher}, ${initialPack.published}.`
             },
-            {
-                index: 1,
-                type: 'sentence',
-                text: `\nISBN-10: ${initialPack.isbn_10}`
-            },
-            {
-                index: 2,
-                type: 'sentence',
-                text: `\nISBN-13: ${initialPack.isbn_13}`
-            }
-        ];
-
+        ]
+        if (initialPack.isbn_10) {
+            initialPack.description.push(
+                {
+                    index: availableIndex,
+                    type: 'sentence',
+                    text: `\nISBN-10: ${initialPack.isbn_10}`
+                }
+            );
+            availableIndex = availableIndex + 1;
+        }
+        if (initialPack.isbn_13) {
+            initialPack.description.push(
+                {
+                    index: availableIndex,
+                    type: 'sentence',
+                    text: `\nISBN-13: ${initialPack.isbn_13}`
+                }
+            );
+            availableIndex = availableIndex + 1;
+        }
         return initialPack;
     }
 
