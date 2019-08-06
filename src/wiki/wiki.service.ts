@@ -1,4 +1,4 @@
-import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import * as axios from 'axios';
 import * as BooleanTools from 'boolean';
@@ -94,7 +94,7 @@ export class WikiService {
         let db_timestamp;
         let main_redirect_wikilangslug;
         if (ipfs_hash_rows.length > 0) {
-            if (ipfs_hash_rows[0].is_removed) throw new NotFoundException(`Wiki ${lang_code}/${slug} is marked as removed`);
+            if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
             main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
             // Account for the boolean flipping issue being in old articles
