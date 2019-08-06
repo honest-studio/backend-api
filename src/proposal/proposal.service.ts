@@ -1,6 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
-import { EosAction, MongoDbService, MysqlService, ProposalResult, Propose, Vote } from '../feature-modules/database';
+import { EosAction, MongoDbService, MysqlService, RedisService, ProposalResult, Propose, Vote } from '../feature-modules/database';
 import { PreviewService } from '../preview';
 
 export type Proposal = {
@@ -23,10 +23,16 @@ export class ProposalService {
         private mongo: MongoDbService,
         private mysql: MysqlService,
         private previewService: PreviewService,
+        private redis: RedisService,
         @Inject(forwardRef(() => DiffService)) private diffService: DiffService
     ) {}
 
     async getProposals(proposal_ids: Array<number>, options: ProposalOptions): Promise<Array<Proposal>> {
+        // Check Redis for fast results
+        const memkey = JSON.stringify([...proposal_ids, options.preview, options.diff]);
+        const memcache = await this.redis.connection().get(memkey);
+        if (memcache) return JSON.parse(memcache);
+
         const proposals: Array<any> = proposal_ids.map((proposal_id) => {
             return { proposal_id };
         });
@@ -117,6 +123,9 @@ export class ProposalService {
                     proposals.find((p) => p.proposal_id == proposal_id).diff = { metadata: diff.metadata };
                 });
         }
+
+        // save for fast cache
+        this.redis.connection().set(memkey, JSON.stringify(proposals));
 
         return proposals;
     }

@@ -8,7 +8,7 @@ echo "Done"
 echo
 
 echo "Installing MongoDB"
-sudo apt install mongodb -y
+sudo apt install mongodb-org -y
 echo "Done"
 echo
 
@@ -48,6 +48,9 @@ echo "Done"
 # Install NodeJS 11 & NPM
 curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
 sudo apt install nodejs -y
+
+# Install Redis
+sudo apt-get install redis-server
 
 # Install NPM packages
 cd ..

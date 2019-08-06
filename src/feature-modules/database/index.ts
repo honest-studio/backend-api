@@ -5,4 +5,5 @@ export * from './database-module';
 export * from './mongodb-schema';
 export * from './mongodb-service';
 export * from './mysql-service';
+export * from './redis-service';
 
