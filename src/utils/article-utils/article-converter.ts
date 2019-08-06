@@ -1169,7 +1169,7 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
-    } else if (inputString.indexOf('https://isbnsearch.org/isbn/') == 0) {
+    } else if (inputString.indexOf('https://openlibrary.org/books/') == 0) {
         return 'BOOK';
     } else if (theMIME && theMIME.indexOf('image') >= 0) {
         return 'PICTURE';

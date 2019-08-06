@@ -5,6 +5,7 @@ import * as htmlparser2 from 'htmlparser2';
 import { DWebp } from 'cwebp';
 import * as Cheerio from 'cheerio';
 import * as fs from 'fs';
+const util = require('util');
 import * as rp from 'request-promise';
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
@@ -95,19 +96,18 @@ export class MediaUploadService {
         let initialPack: BookInfoPack = {
             title: null,
             thumb: null,
+            url: null,
             isbn_10: null,
             isbn_13: null,
             author: null,
-            edition: null,
-            binding: null,
             publisher: null,
-            published: null
+            published: null,
+            description: []
         };
-        console.log("COIN")
         
         // Fetch the url
         let response = await rp.default({
-            uri: `https://isbnsearch.org/isbn/${inputISBN}`,
+            uri: `https://openlibrary.org/api/books?bibkeys=ISBN:${inputISBN}&jscmd=data&format=json`,
             headers: UNIVERSAL_HEADERS,
             resolveWithFullResponse: true,
             // gzip: true
@@ -116,42 +116,37 @@ export class MediaUploadService {
         }).catch((err) => {
             console.log(err);
         });
-        let bodyHTML = response.body;
+        let bookJSON = JSON.parse(response.body);
+        let theKey = Object.keys(bookJSON)[0];
+        bookJSON = bookJSON[theKey];
 
-        // Load the HTML into htmlparser2 beforehand since it is more forgiving
-        let dom = htmlparser2.parseDOM(bodyHTML, {decodeEntities: true}); 
-
-        // Load the HTML into cheerio for parsing
-        let $ = Cheerio.load(dom);
-
-        $('div.bookinfo p').each((idx, elem) => {
-            let entireText = $(elem).text().trim();
-            let [theKey, theValue] = entireText.split(": ");
-            switch(theKey){
-                case "ISBN-13":
-                    initialPack.isbn_13 = theValue;
-                    break;
-                case "ISBN-10":
-                    initialPack.isbn_10 = theValue;
-                    break;
-                case "Author":
-                    initialPack.author = theValue;
-                    break;
-                case "Edition":
-                    initialPack.edition = theValue;
-                    break;
-                case "Binding":
-                    initialPack.binding = theValue;
-                    break;
-                case "Publisher":
-                    initialPack.publisher = theValue;
-                    break;
-                case "Published":
-                    initialPack.published = theValue;
-                    break;
+        initialPack.title = `${bookJSON.title}${bookJSON.subtitle ? ": " + bookJSON.subtitle : ""}`;
+        initialPack.thumb = bookJSON.cover && bookJSON.cover.medium;
+        initialPack.url = bookJSON.url;
+        initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
+        initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
+        initialPack.author = bookJSON.authors.map(author => author.name).join(", ");
+        initialPack.publisher = bookJSON.publishers.map(publisher => publisher.name).join(", ");
+        initialPack.published = bookJSON.publish_date;
+        
+        initialPack.description = [
+            {
+                index: 0,
+                type: 'sentence',
+                text: `${initialPack.author}. ***${initialPack.title}*** ${initialPack.publisher}, ${initialPack.published}.`
+            },
+            {
+                index: 1,
+                type: 'sentence',
+                text: `\nISBN-10: ${initialPack.isbn_10}`
+            },
+            {
+                index: 2,
+                type: 'sentence',
+                text: `\nISBN-13: ${initialPack.isbn_13}`
             }
-        });
-        console.log(initialPack);
+        ];
+
         return initialPack;
     }
 

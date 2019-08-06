@@ -24,7 +24,7 @@ export class MediaUploadController {
         description: 'The ISBN-13 or ISBN-10 code for the book'
     })
     async getBookInfoCtrl(@Param('isbn') isbn): Promise<BookInfoPack> {
-        return this.MediaUploadService.getBookInfoFromISBN(isbn);
+        return await this.MediaUploadService.getBookInfoFromISBN(isbn);
     }
 
     @Post('get-remote-file')
