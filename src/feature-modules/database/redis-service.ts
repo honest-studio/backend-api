@@ -10,7 +10,7 @@ export class RedisService {
         this.redis = new Redis();
     }
 
-    connection(): AppConnectionInstance {
+    connection() {
         return this.redis;
     }
 
