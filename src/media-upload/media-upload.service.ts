@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import sizeOf from 'buffer-image-size';
 import * as crypto from 'crypto';
+import * as htmlparser2 from 'htmlparser2';
 import { DWebp } from 'cwebp';
+import * as Cheerio from 'cheerio';
 import * as fs from 'fs';
+import * as rp from 'request-promise';
 import * as imagemin from 'imagemin';
 import * as imagemin_Gifsicle from 'imagemin-gifsicle';
 import * as imagemin_Jpegtran from 'imagemin-jpegtran';
@@ -21,6 +24,7 @@ import { fetchUrl } from './fetch-favicon';
 import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
+import { BookInfoPack } from '../types/api';
 import * as sharp from 'sharp';
 import * as axios from 'axios';
 const isSvg = require('is-svg');
@@ -85,6 +89,70 @@ export class MediaUploadService {
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
     getFavicon(inputPack: UrlPack): Promise<any> {
         return fetchUrl(inputPack.url);
+    }
+
+    async getBookInfoFromISBN(inputISBN: string): Promise<BookInfoPack> {
+        let initialPack: BookInfoPack = {
+            title: null,
+            thumb: null,
+            isbn_10: null,
+            isbn_13: null,
+            author: null,
+            edition: null,
+            binding: null,
+            publisher: null,
+            published: null
+        };
+        console.log("COIN")
+        
+        // Fetch the url
+        let response = await rp.default({
+            uri: `https://isbnsearch.org/isbn/${inputISBN}`,
+            headers: UNIVERSAL_HEADERS,
+            resolveWithFullResponse: true,
+            // gzip: true
+        }).then((response) => {
+            return response;
+        }).catch((err) => {
+            console.log(err);
+        });
+        let bodyHTML = response.body;
+
+        // Load the HTML into htmlparser2 beforehand since it is more forgiving
+        let dom = htmlparser2.parseDOM(bodyHTML, {decodeEntities: true}); 
+
+        // Load the HTML into cheerio for parsing
+        let $ = Cheerio.load(dom);
+
+        $('div.bookinfo p').each((idx, elem) => {
+            let entireText = $(elem).text().trim();
+            let [theKey, theValue] = entireText.split(": ");
+            switch(theKey){
+                case "ISBN-13":
+                    initialPack.isbn_13 = theValue;
+                    break;
+                case "ISBN-10":
+                    initialPack.isbn_10 = theValue;
+                    break;
+                case "Author":
+                    initialPack.author = theValue;
+                    break;
+                case "Edition":
+                    initialPack.edition = theValue;
+                    break;
+                case "Binding":
+                    initialPack.binding = theValue;
+                    break;
+                case "Publisher":
+                    initialPack.publisher = theValue;
+                    break;
+                case "Published":
+                    initialPack.published = theValue;
+                    break;
+            }
+        });
+        console.log(initialPack);
+        return initialPack;
     }
 
     // Fetch a file from an external URL

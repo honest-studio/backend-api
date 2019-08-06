@@ -1,8 +1,9 @@
-import { Body, Controller, Post, UploadedFile, UseInterceptors, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Post, Get, UploadedFile, UseInterceptors, ValidationPipe, Param } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiImplicitFile, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiImplicitFile, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam } from '@nestjs/swagger';
 import { FileFetchResult, MediaUploadResult, MediaUploadDto, MediaUploadDtoNoFile } from './media-upload-dto';
 import { MediaUploadService, UrlPack } from './media-upload.service';
+import { BookInfoPack } from '../types/api';
 const path = require('path');
 
 @Controller('v2/media-upload')
@@ -14,6 +15,16 @@ export class MediaUploadController {
     @ApiOperation({ title: 'Get a favicon for a url' })
     async getFaviconCtrl(@Body() pack: UrlPack): Promise<any> {
         return this.MediaUploadService.getFavicon(pack);
+    }
+
+    @Get('get-book-info/:isbn')
+    @ApiOperation({ title: 'Get information on a book given its ISBN' })
+    @ApiImplicitParam({
+        name: 'isbn',
+        description: 'The ISBN-13 or ISBN-10 code for the book'
+    })
+    async getBookInfoCtrl(@Param('isbn') isbn): Promise<BookInfoPack> {
+        return this.MediaUploadService.getBookInfoFromISBN(isbn);
     }
 
     @Post('get-remote-file')
