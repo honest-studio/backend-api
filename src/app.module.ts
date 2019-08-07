@@ -16,6 +16,7 @@ import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
+import { StatusController } from './status/status.controller';
 import { EosClientModule, DatabaseModule } from './feature-modules';
 import {
     AnalyticsMiddleware,
@@ -151,7 +152,8 @@ const histogramLabelBuckets = ['pid']
         UserController,
         StatController,
         ContactUsController,
-        SitemapController
+        SitemapController,
+        StatusController
     ],
     providers: [
         ProposalService,
