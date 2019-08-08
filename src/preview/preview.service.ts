@@ -8,6 +8,8 @@ import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
 import { PreviewResult } from '../types/api';
+import { ArticleJson } from '../types/article';
+import { oldHTMLtoJSON } from '../utils/article-utils';
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now
@@ -47,7 +49,7 @@ export class PreviewService {
         for (const i in ipfs_hashes) {
             previews.push({ ipfs_hash: ipfs_hashes[i] });
         }
-        const article_info: Array<any> = await this.mysql.TryQuery(
+        const article_info: Array<PreviewResult> = await this.mysql.TryQuery(
             `
             SELECT 
                 art.page_title, 
@@ -62,7 +64,8 @@ export class PreviewService {
                 art.is_adult_content, 
                 art.creation_timestamp,
                 art.lastmod_timestamp,
-                art.is_removed
+                art.is_removed,
+                cache.html_blob
             FROM enterlink_articletable AS art 
             INNER JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id
@@ -73,13 +76,38 @@ export class PreviewService {
         );
 
         article_info.forEach((a) => {
-            const i = previews.findIndex((p) => p.ipfs_hash === a.ipfs_hash);
-            previews[i] = a;
+            let localRow = a;
+            const i = previews.findIndex((p) => p.ipfs_hash === localRow.ipfs_hash);
+
+            // Pull out the WebP main photo and thumb, if present
+            let wiki = JSON.parse(localRow.html_blob);
+            let { main_photo } = wiki;
+
+            let photoToUse: string = "", thumbToUse: string = "";
+            if (
+                main_photo &&
+                main_photo.media_props &&
+                main_photo.media_props.webp_medium &&
+                main_photo.media_props.webp_medium.indexOf('no-image-') == -1
+            ) {
+                photoToUse = main_photo.media_props.webp_medium;
+                thumbToUse = main_photo.media_props.webp_thumb;
+            } else if (main_photo && main_photo.url) {
+                photoToUse = main_photo.url;
+                thumbToUse = main_photo.thumb;
+            }
+            localRow.main_photo = photoToUse;
+            localRow.thumbnail = thumbToUse;
+
+            previews[i] = localRow;
         });
 
         // clean up text previews
         previews.forEach((preview) => {
+            // Clean up the page title
             preview.page_title = sanitizeTextPreview(preview.page_title);
+
+            // Clean up the text preview
             if (!preview.text_preview) return; // continue
             preview.text_preview = sanitizeTextPreview(preview.text_preview);
         });
@@ -162,9 +190,11 @@ export class PreviewService {
                 COALESCE (art_redir.page_note, art.page_note) AS page_note,
                 COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
                 COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
-                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
+                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
+                cache.html_blob
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+            INNER JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
             WHERE 
                 ${whereClause1}`;
         const query2 = `
@@ -180,15 +210,18 @@ export class PreviewService {
                 COALESCE (art_redir.page_note, art.page_note) AS page_note,
                 COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
                 COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
-                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp
+                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
+                cache.html_blob
             FROM enterlink_articletable AS art 
+            INNER JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
                 ${whereClause2}`;
         const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
-        const previews: Array<any> = await this.mysql.TryQuery(query);
+        const previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
+
 
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
@@ -198,9 +231,40 @@ export class PreviewService {
             if (preview.text_preview) {
                 preview.text_preview = sanitizeTextPreview(preview.text_preview);
             }
+
+            // Pull out the WebP main photo and thumb, if present
+            // Get the article JSON
+            let wiki: ArticleJson;
+            try {
+                wiki = JSON.parse(preview.html_blob);
+            } catch (e) {
+                wiki = oldHTMLtoJSON(preview.html_blob);
+            }
+
+            let main_photo = wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+
+            let photoToUse: string = "", thumbToUse: string = "";
+            if (
+                main_photo &&
+                main_photo.media_props &&
+                main_photo.media_props.webp_medium &&
+                main_photo.media_props.webp_medium.indexOf('no-image-') == -1
+            ) {
+                photoToUse = main_photo.media_props.webp_medium;
+                thumbToUse = main_photo.media_props.webp_thumb;
+            } else if (main_photo && main_photo.url) {
+                photoToUse = main_photo.url;
+                thumbToUse = main_photo.thumb;
+            }
+            preview.main_photo = photoToUse;
+            preview.thumbnail = thumbToUse;
+
+            // Remove the html_blob from the preview
+            const { html_blob, ...newPreview } = preview
+            preview = newPreview;
         }
 
-        // Replace default thumbnail with null
+        // Replace default thumbnail with null and also try to get the WebP's
         for (let preview of previews) {
             if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
                 preview.thumbnail = null;

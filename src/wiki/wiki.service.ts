@@ -59,17 +59,18 @@ export class WikiService {
             sourceWiki = inputPack.source.override_articlejson;
         } else sourceWiki = await this.getWikiBySlug(inputPack.source.lang, inputPack.source.slug, false);
 
-        // Get the target ArticleJson
-        let targetWiki = await this.getWikiBySlug(inputPack.target.lang, inputPack.target.slug, false);
+        // Get the target ArticleJson, or handle the case where the page is removed
+        let targetWiki = await this.getWikiBySlug(inputPack.target.lang, inputPack.target.slug, false, true);
 
         // Get the merged result
         let mergedResult = await mergeWikis(sourceWiki, targetWiki);
         // console.log(util.inspect(mergedResult, {showHidden: false, depth: null, chalk: true}));
-        fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(mergedResult, null, 2));
+        // fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(mergedResult, null, 2));
+        console.log(mergedResult)
         return mergedResult;
     }
 
-    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<ArticleJson> {
+    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus?: boolean): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
@@ -94,7 +95,8 @@ export class WikiService {
         let db_timestamp;
         let main_redirect_wikilangslug;
         if (ipfs_hash_rows.length > 0) {
-            if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
+            if (ignoreRemovalStatus && ignoreRemovalStatus == true) { /* Do nothing */ }
+            else if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
             main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
             // Account for the boolean flipping issue being in old articles
@@ -431,7 +433,7 @@ export class WikiService {
         const ipfs_hash = submission[0].hash;
 
         // Save submission immediately so we don't lose data
-        const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+        const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
@@ -511,7 +513,7 @@ export class WikiService {
             await this.processWikiUpdate(wiki, ipfs_hash);
 
             // Save submission immediately so we don't lose data
-            const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+            const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
             if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
             const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
             const page_lang = wiki.metadata.find((m) => m.key == 'page_lang').value;
@@ -545,7 +547,7 @@ export class WikiService {
 
     async processWikiUpdate(wiki: ArticleJson, ipfs_hash: string, mergeTx?: any): Promise<any>{
         const page_title = wiki.page_title[0].text;
-        const slug = wiki.metadata.find((m) => m.key == 'url_slug').value;
+        const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         let text_preview;
         try {

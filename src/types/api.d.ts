@@ -18,6 +18,7 @@ export interface PreviewResult {
     is_adult_content: boolean;
     creation_timestamp: Date;
     lastmod_timestamp: Date;
+    html_blob?: string;
 }
 export type WikiSearchResult = PreviewResult;
 
