@@ -103,6 +103,9 @@ export class PreviewService {
             } else if (main_photo && main_photo.url) {
                 photoToUse = main_photo.url;
                 thumbToUse = main_photo.thumb;
+            } else {
+                photoToUse = a.main_photo;
+                thumbToUse = a.thumbnail;
             }
 
             localRow.main_photo = photoToUse;
@@ -125,6 +128,7 @@ export class PreviewService {
             preview.text_preview = sanitizeTextPreview(preview.text_preview);
         });
 
+    
         // try and fill in missing previews with pinned wikis
         for (const i in previews) {
             const preview = previews[i];
@@ -206,8 +210,8 @@ export class PreviewService {
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
                 cache.html_blob
             FROM enterlink_articletable AS art 
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            INNER JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
+            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
+            LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
             WHERE 
                 ${whereClause1}`;
         const query2 = `
@@ -226,14 +230,15 @@ export class PreviewService {
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
                 cache.html_blob
             FROM enterlink_articletable AS art 
-            INNER JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
+            LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
             WHERE 
                 ${whereClause2}`;
         const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         const previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
+
 
 
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
@@ -269,6 +274,9 @@ export class PreviewService {
             } else if (main_photo && main_photo.url) {
                 photoToUse = main_photo.url;
                 thumbToUse = main_photo.thumb;
+            } else {
+                photoToUse = preview.main_photo;
+                thumbToUse = preview.thumbnail;
             }
             preview.main_photo = photoToUse;
             preview.thumbnail = thumbToUse;
