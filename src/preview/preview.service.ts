@@ -80,8 +80,16 @@ export class PreviewService {
             const i = previews.findIndex((p) => p.ipfs_hash === localRow.ipfs_hash);
 
             // Pull out the WebP main photo and thumb, if present
-            let wiki = JSON.parse(localRow.html_blob);
-            let { main_photo } = wiki;
+            // Get the article JSON
+            let wiki: ArticleJson;
+            try {
+                wiki = JSON.parse(a.html_blob);
+            } catch (e) {
+                // SKIPPING for speed concerns
+                // wiki = oldHTMLtoJSON(preview.html_blob);
+            }
+
+            let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
 
             let photoToUse: string = "", thumbToUse: string = "";
             if (
@@ -96,8 +104,13 @@ export class PreviewService {
                 photoToUse = main_photo.url;
                 thumbToUse = main_photo.thumb;
             }
+
             localRow.main_photo = photoToUse;
             localRow.thumbnail = thumbToUse;
+
+            // Remove the html_blob from the preview
+            const { html_blob, ...newPreview } = localRow
+            localRow = newPreview;
 
             previews[i] = localRow;
         });
