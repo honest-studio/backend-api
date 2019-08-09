@@ -259,7 +259,7 @@ export class WikiService {
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
-        const wiki = await this.getWikiBySlug(lang_code, slug);
+        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
         const schema = renderSchema(wiki, 'html');
         return schema;
     }
