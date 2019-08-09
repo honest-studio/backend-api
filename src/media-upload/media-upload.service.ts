@@ -789,7 +789,7 @@ export class MediaUploadService {
 
 
             // gzip the main files (and the webp's, if present)
-            if (!mimePack.mime.includes('video')){
+            if (!mimePack.mime.includes('video') && useMediaRoute){
                 bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });

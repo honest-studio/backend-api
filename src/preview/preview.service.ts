@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 import * as SqlString from 'sqlstring';
 import { CacheService } from '../cache';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
-import { MysqlService } from '../feature-modules/database';
+import { MysqlService, RedisService } from '../feature-modules/database';
 import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
@@ -25,6 +25,7 @@ export class PreviewService {
         private wikiService: WikiService,
         private mysql: MysqlService,
         private ipfs: IpfsService,
+        private redis: RedisService,
         private cacheService: CacheService,
         // preview by hash:
         @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,
@@ -170,6 +171,11 @@ export class PreviewService {
     async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<PreviewResult[]> {
         if (wiki_identities.length == 0) return [];
 
+        // check Redis for fast cache
+        const memkey = JSON.stringify([wiki_identities]);
+        const memcache = await this.redis.connection().get(memkey);
+        if (memcache) return JSON.parse(memcache);
+
         // strip lang_ prefix in lang_code if it exists
         wiki_identities.forEach((w) => {
             if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
@@ -211,7 +217,7 @@ export class PreviewService {
                 cache.html_blob
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
+            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause1}`;
         const query2 = `
@@ -231,15 +237,12 @@ export class PreviewService {
                 cache.html_blob
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
+            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause2}`;
         const query = `${query1} UNION ${query2}`;
 
-        // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         let previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
-
-        console.log(previews.length)
 
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
@@ -289,6 +292,9 @@ export class PreviewService {
             preview.thumbnail = null;
             return preview;
         });
+
+        // save for fast cache
+        this.redis.connection().set(memkey, JSON.stringify(previews));
 
         return previews;
     }
