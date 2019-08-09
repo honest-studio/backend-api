@@ -29,9 +29,9 @@ export class ProposalService {
 
     async getProposals(proposal_ids: Array<number>, options: ProposalOptions): Promise<Array<Proposal>> {
         // Check Redis for fast results
-        const memkey = JSON.stringify([...proposal_ids, options.preview, options.diff]);
-        const memcache = await this.redis.connection().get(memkey);
-        if (memcache) return JSON.parse(memcache);
+        //const memkey = JSON.stringify([...proposal_ids, options.preview, options.diff]);
+        //const memcache = await this.redis.connection().get(memkey);
+        //if (memcache) return JSON.parse(memcache);
 
         const proposals: Array<any> = proposal_ids.map((proposal_id) => {
             return { proposal_id };
@@ -125,7 +125,7 @@ export class ProposalService {
         }
 
         // save for fast cache
-        this.redis.connection().set(memkey, JSON.stringify(proposals));
+        //this.redis.connection().set(memkey, JSON.stringify(proposals));
 
         return proposals;
     }

@@ -236,10 +236,9 @@ export class WikiService {
             flushPrerenders(lang_code, slug, prerenderToken);
 
             // Update the cache timestamp too in the pageview increment query to save overhead
-            if (increment_views)
-                this.incrementPageviewCount(lang_code, mysql_slug, false, true);
+            this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
-        else if (increment_views) this.incrementPageviewCount(lang_code, mysql_slug);
+        else this.incrementPageviewCount(lang_code, mysql_slug);
 
         // Add redirect information, if present
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
