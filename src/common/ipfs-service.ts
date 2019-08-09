@@ -26,7 +26,7 @@ export class IpfsService {
         return this.ipfsClient;
     }
 
-    async test(): boolean {
+    async test(): Promise<boolean> {
         await this.ipfsClient.pin.ls();
         return true;
     }
