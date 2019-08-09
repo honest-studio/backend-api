@@ -3,7 +3,7 @@ import * as cheerio from 'cheerio';
 import * as SqlString from 'sqlstring';
 import { CacheService } from '../cache';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
-import { MysqlService } from '../feature-modules/database';
+import { MysqlService, RedisService } from '../feature-modules/database';
 import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
@@ -25,6 +25,7 @@ export class PreviewService {
         private wikiService: WikiService,
         private mysql: MysqlService,
         private ipfs: IpfsService,
+        private redis: RedisService,
         private cacheService: CacheService,
         // preview by hash:
         @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,
@@ -170,6 +171,11 @@ export class PreviewService {
     async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<PreviewResult[]> {
         if (wiki_identities.length == 0) return [];
 
+        // check Redis for fast cache
+        const memkey = JSON.stringify([wiki_identities]);
+        const memcache = await this.redis.connection().get(memkey);
+        if (memcache) return JSON.parse(memcache);
+
         // strip lang_ prefix in lang_code if it exists
         wiki_identities.forEach((w) => {
             if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
@@ -286,6 +292,9 @@ export class PreviewService {
             preview.thumbnail = null;
             return preview;
         });
+
+        // save for fast cache
+        this.redis.connection().set(memkey, JSON.stringify(previews));
 
         return previews;
     }
