@@ -737,6 +737,10 @@ export class MediaUploadService {
                 varPack.suffix = mimePack.ext;
                 varPack.mainMIME = mimePack.mime;
                 bufferPack.mainBuf = bufferToUse;
+
+                bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
+                    level: zlib.constants.Z_BEST_COMPRESSION
+                });
             }
 
             if(
@@ -816,6 +820,10 @@ export class MediaUploadService {
                 CacheControl: 'max-age=31536000',
             };
 
+            if (!mimePack.mime.includes('video')){
+                uploadParamsMain['ContentEncoding'] = 'gzip';
+            };
+
             if (useMediaRoute){
                 let encodedSuffixWebpOriginal = `${encodedSuffixFirstPart}_original.webp`;
                 let encodedSuffixWebpMedium = `${encodedSuffixFirstPart}_medium.webp`;
@@ -855,7 +863,6 @@ export class MediaUploadService {
                 };
 
                 if (!mimePack.mime.includes('video')){
-                    uploadParamsMain['ContentEncoding'] = 'gzip';
                     uploadParamsMainWebpOriginal['ContentEncoding'] = 'gzip';
                     uploadParamsMainWebpMedium['ContentEncoding'] = 'gzip';
                     uploadParamsMainWebpThumb['ContentEncoding'] = 'gzip';
