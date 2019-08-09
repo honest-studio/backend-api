@@ -211,7 +211,7 @@ export class PreviewService {
                 cache.html_blob
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
+            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause1}`;
         const query2 = `
@@ -231,15 +231,12 @@ export class PreviewService {
                 cache.html_blob
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
+            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause2}`;
         const query = `${query1} UNION ALL ${query2}`;
 
-        // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         let previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
-
-
 
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
