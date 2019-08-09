@@ -240,7 +240,7 @@ export class PreviewService {
             LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause2}`;
-        const query = `${query1} UNION ALL ${query2}`;
+        const query = `${query1} UNION ${query2}`;
 
         let previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
 
