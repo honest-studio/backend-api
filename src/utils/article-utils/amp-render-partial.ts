@@ -34,7 +34,7 @@ export class AmpRenderPartial {
         const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified') ? this.artJSON.metadata.find(w => w.key == 'last_modified').value : '';
         const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp') ? this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
         const is_indexed = (this.artJSON.metadata.find(w => w.key == 'is_indexed').value); // UNTIL THE is_indexed issue in MySQL is fixed
 
@@ -253,7 +253,7 @@ export class AmpRenderPartial {
         // Metadata values
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const page_title = this.sanitizedVariables.page_title;
 
         return `
@@ -1096,7 +1096,7 @@ export class AmpRenderPartial {
     renderShareLightbox = (): string => {
         // Metadata values
         const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        const url_slug = this.artJSON.metadata.find(w => w.key == 'url_slug').value;
+        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
         return `  

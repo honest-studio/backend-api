@@ -22,6 +22,8 @@ export type TableCellType = 'th' | 'td';
 
 export type TagClass = 'inline' | 'block' | 'void';
 
+export type ActivityType = 'edit' | 'merge' | 'page-removal';
+
 export interface Sentence {
     type: string; // sentence
     index: number;

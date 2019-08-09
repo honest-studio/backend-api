@@ -3,6 +3,7 @@ import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { PreviewService } from '../preview/preview.service';
 import { Proposal, ProposalService } from '../proposal';
+import { ActivityType } from '../types/article';
 
 @Injectable()
 export class RecentActivityService {
