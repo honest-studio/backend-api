@@ -238,10 +238,11 @@ export class PreviewService {
             try {
                 wiki = JSON.parse(preview.html_blob);
             } catch (e) {
-                wiki = oldHTMLtoJSON(preview.html_blob);
+                // SKIPPING for speed concerns
+                // wiki = oldHTMLtoJSON(preview.html_blob);
             }
 
-            let main_photo = wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+            let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
 
             let photoToUse: string = "", thumbToUse: string = "";
             if (
