@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import * as cheerio from 'cheerio';
 import * as SqlString from 'sqlstring';
-import { CacheService } from '../cache';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
 import { MysqlService, RedisService } from '../feature-modules/database';
 import { WikiIdentity } from '../types/article-helpers';
@@ -26,7 +25,6 @@ export class PreviewService {
         private mysql: MysqlService,
         private ipfs: IpfsService,
         private redis: RedisService,
-        private cacheService: CacheService,
         // preview by hash:
         @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,
         @InjectHistogramMetric('get_prev_by_hash_sql_only')
@@ -128,33 +126,6 @@ export class PreviewService {
             if (!preview.text_preview) return; // continue
             preview.text_preview = sanitizeTextPreview(preview.text_preview);
         });
-
-    
-        // try and fill in missing previews with pinned wikis
-        for (const i in previews) {
-            const preview = previews[i];
-            if (preview.page_title) continue;
-            const ipfs_hash = preview.ipfs_hash;
-
-            try {
-                const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
-                const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
-                const wiki = buffer.toString('utf8');
-
-                const $ = cheerio.load(wiki);
-
-                const page_title = $('h1.page-title')
-                    .text()
-                    .trim();
-                const thumbnail = $('.main-photo').attr('data-thumbnail');
-                const main_photo = $('.main-photo').attr('src');
-                const text_preview: string = sanitizeTextPreview($('.blurb-wrap').text().substring(0, 200));
-                previews[i] = { ipfs_hash, page_title, thumbnail, main_photo, text_preview };
-            } catch (e) {
-                // try and pin the file so future requests can use it
-                this.cacheService.cacheWiki(ipfs_hash);
-            }
-        }
 
         // Replace default thumbnail with null
         for (let preview of previews) {

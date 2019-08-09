@@ -8,7 +8,6 @@ import * as SqlString from 'sqlstring';
 import { URL } from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
-import { CacheService } from '../cache';
 import { ConfigService, IpfsService } from '../common';
 import { MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
@@ -42,7 +41,6 @@ export class WikiService {
         private ipfs: IpfsService,
         private mysql: MysqlService,
         private mongo: MongoDbService,
-        private cacheService: CacheService,
         private mediaUploadService: MediaUploadService,
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
@@ -70,7 +68,7 @@ export class WikiService {
         return mergedResult;
     }
 
-    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus?: boolean): Promise<ArticleJson> {
+    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
@@ -95,7 +93,7 @@ export class WikiService {
         let db_timestamp;
         let main_redirect_wikilangslug;
         if (ipfs_hash_rows.length > 0) {
-            if (ignoreRemovalStatus && ignoreRemovalStatus == true) { /* Do nothing */ }
+            if (ignoreRemovalStatus) { /* Do nothing */ }
             else if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
             ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
             main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
@@ -238,9 +236,10 @@ export class WikiService {
             flushPrerenders(lang_code, slug, prerenderToken);
 
             // Update the cache timestamp too in the pageview increment query to save overhead
-            this.incrementPageviewCount(lang_code, mysql_slug, false, true);
+            if (increment_views)
+                this.incrementPageviewCount(lang_code, mysql_slug, false, true);
         }
-        else this.incrementPageviewCount(lang_code, mysql_slug);
+        else if (increment_views) this.incrementPageviewCount(lang_code, mysql_slug);
 
         // Add redirect information, if present
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
@@ -335,9 +334,6 @@ export class WikiService {
                     .json_wikis.insertMany(uncached_wikis, { ordered: false })
                     .catch((e) => console.log('Failed to cache some wikis', e));
             }
-
-            //// attempt to cache uncached IPFS hashes
-            //uncached_html_hashes.forEach((hash) => this.cacheService.cacheWiki(hash));
 
             // mark wikis that couldn't be found
             for (let hash of ipfs_hashes) {
@@ -762,7 +758,7 @@ export class WikiService {
     }
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
-        const wiki = await this.getWikiBySlug(lang_code, slug);
+        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
         const see_also = await this.getSeeAlsos(wiki);
         const schema = renderSchema(wiki, 'JSON');
         const pageviews_rows: any[] = await this.mysql.TryQuery(

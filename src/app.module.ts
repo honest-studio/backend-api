@@ -11,7 +11,6 @@ import { DiffController, DiffService } from './diff';
 import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
 import { ContactUsController, ContactUsService } from './contact-us';
-import { CacheController, CacheService } from './cache';
 import { HistoryController, HistoryService } from './history';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
@@ -146,7 +145,6 @@ const histogramLabelBuckets = ['pid']
         SearchController,
         DiffController,
         PreviewController,
-        CacheController,
         HistoryController,
         MediaUploadController,
         UserController,
@@ -163,7 +161,6 @@ const histogramLabelBuckets = ['pid']
         SearchService,
         DiffService,
         PreviewService,
-        CacheService,
         HistoryService,
         MediaUploadService,
         UserService,

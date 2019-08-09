@@ -424,12 +424,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Cache: Wiki', () => {
-    return request(app.getHttpServer())
-        .get('/v2/cache/wiki/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd')
-        .expect(200)
-  });
-
   it('Stat: Site Usage', () => {
     return request(app.getHttpServer())
         .get('/v2/stat/site-usage')
