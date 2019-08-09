@@ -339,6 +339,7 @@ export class MediaUploadService {
             // }
             // else { bufferToUse = mediaBuffer as Buffer };
             let bufferToUse = mediaBuffer as Buffer;
+            let useMediaRoute = true;
 
             // Determine the MIME type
             let mimePack: MimePack = fileType(bufferToUse);
@@ -377,20 +378,6 @@ export class MediaUploadService {
             let thumbWidth = 320;
             let thumbHeight = 320;
             let includeMainPhoto: boolean = true;
-
-
-
-
-            // Set the thumbnail width and height
-            // if (uploadType == 'ProfilePicture' || uploadType == 'NewlinkFiles') {
-            //     thumbWidth = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
-            //     thumbHeight = PHOTO_CONSTANTS.CROPPED_THUMB_HEIGHT;
-            //     includeMainPhoto = true;
-            // } else if (uploadType == 'GalleryMediaItem') {
-            //     thumbWidth = PHOTO_CONSTANTS.CROPPED_META_THUMB_WIDTH;
-            //     thumbHeight = PHOTO_CONSTANTS.CROPPED_META_THUMB_HEIGHT;
-            //     includeMainPhoto = false;
-            // }
 
             // Get a timestamp string from the Unix epoch
             let theTimeString = new Date()
@@ -743,17 +730,25 @@ export class MediaUploadService {
                 await fs.unlinkSync(snapshotPath);
             } else if (mimePack.mime.includes('audio')) {
                 // TODO: Audio support
+            } else {
+                // Normal file
+                useMediaRoute = false;
+                console.log(mimePack)
+                varPack.suffix = mimePack.ext;
+                varPack.mainMIME = mimePack.mime;
+                bufferPack.mainBuf = bufferToUse;
             }
 
             if(
+                useMediaRoute && (
                     varPack.suffix == 'jpeg' 
                     || varPack.suffix == 'png' 
                     || mimePack.mime.indexOf('webp') >= 0 
                     || mimePack.mime.indexOf('tiff') >= 0
                     || mimePack.mime.indexOf('gif') >= 0
                     || mimePack.mime.indexOf('svg') >= 0
-                ){
-                    
+                )
+            ){
                 // Get the original image in WEBP form
                 bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
                     .resize(mainWidth, mainHeight, {
@@ -809,14 +804,8 @@ export class MediaUploadService {
             // Set the AWS S3 bucket keys
             let encodedSuffixFirstPart = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}`;
             let encodedSuffix = `${encodedSuffixFirstPart}.${varPack.suffix}`;
-            let encodedSuffixWebpOriginal = `${encodedSuffixFirstPart}_original.webp`;
-            let encodedSuffixWebpMedium = `${encodedSuffixFirstPart}_medium.webp`;
-            let encodedSuffixWebpThumb = `${encodedSuffixFirstPart}_thumb.webp`;
             let theMainKey = `${uploadType}/${lang}/${encodedSuffix}`;
-            let theMainKeyWebpOriginal = `${uploadType}/${lang}/${encodedSuffixWebpOriginal}`;
-            let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
-            let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
-
+            
             // Specify S3 upload options for the original image
             let uploadParamsMain = {
                 Bucket: this.awsS3Service.getBucket(),
@@ -827,43 +816,97 @@ export class MediaUploadService {
                 CacheControl: 'max-age=31536000',
             };
 
-            // Specify S3 upload options for the webp'd original
-            let uploadParamsMainWebpOriginal = {
-                Bucket: this.awsS3Service.getBucket(),
-                Key: theMainKeyWebpOriginal,
-                Body: bufferPack.webpOriginalBuf,
-                ACL: 'public-read',
-                ContentType: "image/webp",
-                CacheControl: 'max-age=31536000',
-            };
+            if (useMediaRoute){
+                let encodedSuffixWebpOriginal = `${encodedSuffixFirstPart}_original.webp`;
+                let encodedSuffixWebpMedium = `${encodedSuffixFirstPart}_medium.webp`;
+                let encodedSuffixWebpThumb = `${encodedSuffixFirstPart}_thumb.webp`;
+                let theMainKeyWebpOriginal = `${uploadType}/${lang}/${encodedSuffixWebpOriginal}`;
+                let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
+                let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
 
-            // Specify S3 upload options for the medium webp
-            let uploadParamsMainWebpMedium = {
-                Bucket: this.awsS3Service.getBucket(),
-                Key: theMainKeyWebpMedium,
-                Body: bufferPack.webpMediumBuf,
-                ACL: 'public-read',
-                ContentType: "image/webp",
-                CacheControl: 'max-age=31536000',
-            };
+                // Specify S3 upload options for the webp'd original
+                let uploadParamsMainWebpOriginal = {
+                    Bucket: this.awsS3Service.getBucket(),
+                    Key: theMainKeyWebpOriginal,
+                    Body: bufferPack.webpOriginalBuf,
+                    ACL: 'public-read',
+                    ContentType: "image/webp",
+                    CacheControl: 'max-age=31536000',
+                };
 
-            // Specify S3 upload options for the thumb webp
-            let uploadParamsMainWebpThumb = {
-                Bucket: this.awsS3Service.getBucket(),
-                Key: theMainKeyWebpThumb,
-                Body: bufferPack.webpThumbBuf,
-                ACL: 'public-read',
-                ContentType: "image/webp",
-                CacheControl: 'max-age=31536000',
-            };
+                // Specify S3 upload options for the medium webp
+                let uploadParamsMainWebpMedium = {
+                    Bucket: this.awsS3Service.getBucket(),
+                    Key: theMainKeyWebpMedium,
+                    Body: bufferPack.webpMediumBuf,
+                    ACL: 'public-read',
+                    ContentType: "image/webp",
+                    CacheControl: 'max-age=31536000',
+                };
 
-            if (!mimePack.mime.includes('video')){
-                uploadParamsMain['ContentEncoding'] = 'gzip';
-                uploadParamsMainWebpOriginal['ContentEncoding'] = 'gzip';
-                uploadParamsMainWebpMedium['ContentEncoding'] = 'gzip';
-                uploadParamsMainWebpThumb['ContentEncoding'] = 'gzip';
+                // Specify S3 upload options for the thumb webp
+                let uploadParamsMainWebpThumb = {
+                    Bucket: this.awsS3Service.getBucket(),
+                    Key: theMainKeyWebpThumb,
+                    Body: bufferPack.webpThumbBuf,
+                    ACL: 'public-read',
+                    ContentType: "image/webp",
+                    CacheControl: 'max-age=31536000',
+                };
+
+                if (!mimePack.mime.includes('video')){
+                    uploadParamsMain['ContentEncoding'] = 'gzip';
+                    uploadParamsMainWebpOriginal['ContentEncoding'] = 'gzip';
+                    uploadParamsMainWebpMedium['ContentEncoding'] = 'gzip';
+                    uploadParamsMainWebpThumb['ContentEncoding'] = 'gzip';
+                };
+
+                // Upload the original in webp form
+                returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                    this.awsS3Service.upload(uploadParamsMainWebpOriginal, (s3ErrOuter, dataOuter) => {
+                        if (s3ErrOuter){
+                            console.log(colors.yellow('ERROR: s3ErrOuter for webp original image'));
+                            console.log(s3ErrOuter);
+                            reject(s3ErrOuter);
+                        }
+                        else {
+                            returnPack.webp_original = dataOuter.Location;
+                            resolve(returnPack);
+                        }
+                    });
+                });
+
+                // Upload the medium webp
+                returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                    this.awsS3Service.upload(uploadParamsMainWebpMedium, (s3ErrOuter, dataOuter) => {
+                        if (s3ErrOuter){
+                            console.log(colors.yellow('ERROR: s3ErrOuter for webp medium image'));
+                            console.log(s3ErrOuter);
+                            reject(s3ErrOuter);
+                        }
+                        else {
+                            returnPack.webp_medium = dataOuter.Location;
+                            resolve(returnPack);
+                        }
+                    });
+                });
+
+                // Upload the thumb webp
+                returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                    this.awsS3Service.upload(uploadParamsMainWebpThumb, (s3ErrOuter, dataOuter) => {
+                        if (s3ErrOuter){
+                            console.log(colors.yellow('ERROR: s3ErrOuter for webp thumb image'));
+                            console.log(s3ErrOuter);
+                            reject(s3ErrOuter);
+                        }
+                        else {
+                            returnPack.webp_thumb = dataOuter.Location;
+                            resolve(returnPack);
+                        }
+                    });
+                });
             }
-
+            
             // Upload the main image and the main thumb
             returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
                 this.awsS3Service.upload(uploadParamsMain, (s3ErrOuter, dataOuter) => {
@@ -879,86 +922,42 @@ export class MediaUploadService {
                         returnPack.mime = varPack.mainMIME;
                         returnPack.category = linkCategorizer(returnPack.mainPhotoURL);
 
-                        // Create and upload the thumbnail
-                        // gzip the thumbnail
-                        bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+                        if (useMediaRoute) {
+                            // Create and upload the thumbnail
+                            // gzip the thumbnail
+                            bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
 
-                        // Set the AWS S3 bucket key
-                        let theThumbSuffix = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}__thumb.${varPack.thumbSuffix}`;
-                        let theThumbKey = `${uploadType}/${lang}/${theThumbSuffix}`;
+                            // Set the AWS S3 bucket key
+                            let theThumbSuffix = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}__thumb.${varPack.thumbSuffix}`;
+                            let theThumbKey = `${uploadType}/${lang}/${theThumbSuffix}`;
 
-                        // Specify S3 upload options
-                        let uploadParamsThumb = {
-                            Bucket: this.awsS3Service.getBucket(),
-                            Key: theThumbKey,
-                            Body: bufferPack.thumbBuf,
-                            ACL: 'public-read',
-                            ContentType: varPack.thumbMIME,
-                            CacheControl: 'max-age=31536000',
-                            ContentEncoding: 'gzip'
-                        };
+                            // Specify S3 upload options
+                            let uploadParamsThumb = {
+                                Bucket: this.awsS3Service.getBucket(),
+                                Key: theThumbKey,
+                                Body: bufferPack.thumbBuf,
+                                ACL: 'public-read',
+                                ContentType: varPack.thumbMIME,
+                                CacheControl: 'max-age=31536000',
+                                ContentEncoding: 'gzip'
+                            };
 
-                        // Upload the file to S3
-                        this.awsS3Service.upload(uploadParamsThumb, (s3ErrInner, dataInner) => {
-                            if (s3ErrInner){
-                                console.log(colors.yellow('ERROR: s3ErrInner for thumb'));
-                                console.log(s3ErrInner);
-                                reject(s3ErrInner);
-                            }
-                            else {
-                                // Update the return dictionary with the thumbnail URL
-                                // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
-                                returnPack.thumbnailPhotoURL = dataInner.Location;
-                                resolve(returnPack);
-                            }
-                        });
-                    }
-                });
-            });
-
-
-
-            // Upload the original in webp form
-            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
-                this.awsS3Service.upload(uploadParamsMainWebpOriginal, (s3ErrOuter, dataOuter) => {
-                    if (s3ErrOuter){
-                        console.log(colors.yellow('ERROR: s3ErrOuter for webp original image'));
-                        console.log(s3ErrOuter);
-                        reject(s3ErrOuter);
-                    }
-                    else {
-                        returnPack.webp_original = dataOuter.Location;
-                        resolve(returnPack);
-                    }
-                });
-            });
-
-            // Upload the medium webp
-            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
-                this.awsS3Service.upload(uploadParamsMainWebpMedium, (s3ErrOuter, dataOuter) => {
-                    if (s3ErrOuter){
-                        console.log(colors.yellow('ERROR: s3ErrOuter for webp medium image'));
-                        console.log(s3ErrOuter);
-                        reject(s3ErrOuter);
-                    }
-                    else {
-                        returnPack.webp_medium = dataOuter.Location;
-                        resolve(returnPack);
-                    }
-                });
-            });
-
-            // Upload the thumb webp
-            returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
-                this.awsS3Service.upload(uploadParamsMainWebpThumb, (s3ErrOuter, dataOuter) => {
-                    if (s3ErrOuter){
-                        console.log(colors.yellow('ERROR: s3ErrOuter for webp thumb image'));
-                        console.log(s3ErrOuter);
-                        reject(s3ErrOuter);
-                    }
-                    else {
-                        returnPack.webp_thumb = dataOuter.Location;
-                        resolve(returnPack);
+                            // Upload the file to S3
+                            this.awsS3Service.upload(uploadParamsThumb, (s3ErrInner, dataInner) => {
+                                if (s3ErrInner){
+                                    console.log(colors.yellow('ERROR: s3ErrInner for thumb'));
+                                    console.log(s3ErrInner);
+                                    reject(s3ErrInner);
+                                }
+                                else {
+                                    // Update the return dictionary with the thumbnail URL
+                                    // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
+                                    returnPack.thumbnailPhotoURL = dataInner.Location;
+                                    resolve(returnPack);
+                                }
+                            });
+                        } else resolve(returnPack);
+                        
                     }
                 });
             });

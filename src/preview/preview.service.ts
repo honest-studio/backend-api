@@ -234,12 +234,12 @@ export class PreviewService {
             LEFT JOIN enterlink_hashcache AS cache ON cache.articletable_id=art.id 
             WHERE 
                 ${whereClause2}`;
-        const query = `${query1} UNION ALL ${query2}`;
+        const query = `${query1} UNION ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
         let previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
 
-
+        console.log(previews.length)
 
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
