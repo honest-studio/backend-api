@@ -237,14 +237,14 @@ export class PreviewService {
         const query = `${query1} UNION ALL ${query2}`;
 
         // const previews: Array<any> = await this.mysql.TryQuery(query, substitutions);
-        const previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
+        let previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
 
 
 
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
 
         // clean up text previews
-        for (let preview of previews) {
+        previews = previews.map(preview => {
             preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = sanitizeTextPreview(preview.text_preview);
@@ -284,13 +284,11 @@ export class PreviewService {
             // Remove the html_blob from the preview
             const { html_blob, ...newPreview } = preview
             preview = newPreview;
-        }
 
-        // Replace default thumbnail with null and also try to get the WebP's
-        for (let preview of previews) {
             if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
-                preview.thumbnail = null;
-        }
+            preview.thumbnail = null;
+            return preview;
+        });
 
         return previews;
     }
