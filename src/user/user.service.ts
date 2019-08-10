@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MongoDbService } from '../feature-modules/database';
+import { MongoDbService, RedisService } from '../feature-modules/database';
 
 export interface UserServiceOptions {
     limit: number;
@@ -8,48 +8,21 @@ export interface UserServiceOptions {
 
 @Injectable()
 export class UserService {
-    constructor(private mongo: MongoDbService) {}
+    constructor(private mongo: MongoDbService, private redis: RedisService) {}
 
     async getStakes(account_name: string, options: UserServiceOptions) {
-        const stakes = await this.mongo
-            .connection()
-            .actions.find({
-                'block_num': { $gt: 59902500 },
-                'trace.act.account': 'everipediaiq',
-                'trace.act.name': 'transfer',
-                'trace.act.data.to': 'eparticlectr',
-                'trace.act.data.from': account_name
-            })
-            .sort({ block_num: -1 })
-            .toArray();
-
-        const refunds = await this.mongo
-            .connection()
-            .actions.find({
-                'block_num': { $gt: 59902500 },
-                'trace.act.account': 'everipediaiq',
-                'trace.act.name': 'transfer',
-                'trace.act.data.from': 'eparticlectr',
-                'trace.act.data.to': account_name
-            })
-            .sort({ block_num: -1 })
-            .toArray();
-
-        const sum_stakes = stakes
-            .map((s) => s.trace.act.data.quantity.split(' ')[0])
-            .map(Number)
-            .reduce((sum, addend) => (sum += addend), 0);
-
-        const sum_refunds = refunds
-            .map((s) => s.trace.act.data.quantity.split(' ')[0])
-            .map(Number)
-            .reduce((sum, addend) => (sum += addend), 0);
+        const pipeline = this.redis.connection().pipeline();
+        pipeline.lrange(`user:${account_name}:stakes`, options.offset, options.limit);
+        pipeline.lrange(`user:${account_name}:refunds`, options.offset, options.limit);
+        pipeline.get(`user:${account_name}:sum_stakes`);
+        pipeline.get(`user:${account_name}:sum_refunds`);
+        const values = await pipeline.exec();
 
         return {
-            stakes: stakes.slice(options.offset, options.offset + options.limit),
-            refunds: refunds.slice(options.offset, options.offset + options.limit),
-            sum_stakes,
-            sum_refunds
+            stakes: values[0][1].map(v => JSON.parse(v)),
+            refunds: values[1][1].map(v => JSON.parse(v)),
+            sum_stakes: Number(values[2][1]),
+            sum_refunds: Number(values[3][1])
         };
     }
 

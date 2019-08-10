@@ -28,55 +28,36 @@ export class ProposalService {
     ) {}
 
     async getProposals(proposal_ids: Array<number>, options: ProposalOptions): Promise<Array<Proposal>> {
-        // Check Redis for fast results
-        //const memkey = JSON.stringify([...proposal_ids, options.preview, options.diff]);
-        //const memcache = await this.redis.connection().get(memkey);
-        //if (memcache) return JSON.parse(memcache);
-
         const proposals: Array<any> = proposal_ids.map((proposal_id) => {
             return { proposal_id };
         });
 
-        const info = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.proposal_id': { $in: proposal_ids }
-            })
-            .toArray();
-        info.forEach((doc) => (proposals.find((p) => p.proposal_id == doc.trace.act.data.proposal_id).info = doc));
-        proposals
-            .filter((p) => !p.info)
-            .forEach((p) => (p.info = { error: `Proposal ${p.proposal_id} could not be found` }));
+        const pipeline = this.redis.connection().pipeline();
+        proposal_ids.forEach(proposal_id => pipeline.get(`proposal:${proposal_id}:info`));
+        proposal_ids.forEach(proposal_id => pipeline.smembers(`proposal:${proposal_id}:votes`));
+        proposal_ids.forEach(proposal_id => pipeline.get(`proposal:${proposal_id}:result`));
+        const values = await pipeline.exec();
 
-        const votes = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'vote',
-                'trace.act.data.proposal_id': { $in: proposal_ids }
-            })
-            .toArray();
-        proposals.forEach((prop) => (prop.votes = []));
-        votes.forEach((vote) =>
-            proposals.find((p) => p.proposal_id == vote.trace.act.data.proposal_id).votes.push(vote)
-        );
-
-        const results = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropres',
-                'trace.act.data.proposal_id': { $in: proposal_ids }
-            })
-            .toArray();
-        results.forEach(
-            (result) => (proposals.find((p) => p.proposal_id == result.trace.act.data.proposal_id).result = result)
-        );
-        proposals
-            .filter((p) => !p.result)
-            .forEach((p) => (p.result = { error: `Proposal ${p.proposal_id} has not finalized` }));
+        const len = proposal_ids.length;
+        for (let i=0; i < len; i++) {
+            const proposal_id = proposal_ids[i];
+            try {
+                proposals[i].info = JSON.parse(values[i][1]);
+            }
+            catch {
+                proposals[i].info = { error: `Proposal ${proposal_id} could not be found` };
+            }
+            try {
+                proposals[i].votes = values[i + len][1].map(v => JSON.parse(v));
+            } catch {
+                proposals[i].votes = [];
+            }
+            try {
+                proposals[i].result = JSON.parse(values[i + 2*len][1]);
+            } catch {
+                proposals[i].result = { error: `Proposal ${proposal_id} has not finalized` };
+            }
+        }
 
         if (options.preview) {
             const packs = proposals
@@ -123,9 +104,6 @@ export class ProposalService {
                     proposals.find((p) => p.proposal_id == proposal_id).diff = { metadata: diff.metadata };
                 });
         }
-
-        // save for fast cache
-        //this.redis.connection().set(memkey, JSON.stringify(proposals));
 
         return proposals;
     }
