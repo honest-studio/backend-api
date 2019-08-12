@@ -21,7 +21,7 @@ export class StatService {
         if (options.period == 'all-time') {
             const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 0, options.limit, 'WITHSCORES');
             let doc = [];
-            for (let i in rewards) {
+            for (let i=0; i < rewards.length; i++) {
                 if (i % 2 == 0) doc.push({ user: rewards[i] });
                 else doc[doc.length - 1].cumulative_iq_rewards = Number(rewards[i]);
             }
@@ -31,7 +31,7 @@ export class StatService {
                 pipeline.get(`user:${row.user}:num_votes`);
             }
             const edits_votes = await pipeline.exec();
-            for (let i in edits_votes) {
+            for (let i=0; i < edits_votes.length; i++) {
                 if (i % 2 == 0) doc[Math.floor(i/2)].edits = Number(edits_votes[i][1]);
                 else doc[Math.floor(i/2)].votes = Number(edits_votes[i][1]);
             }
