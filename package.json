@@ -8,6 +8,7 @@
     "build": "cross-env-shell NODE_ENV=production \"tsc --p ./tsconfig.json\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "seed": "tsc && node dist/seed.js",
+    "sync": "node ./dist/scripts/synconly.js",
     "start": "cross-env-shell NODE_ENV=production \"node ./dist/src/main.js\"",
     "dev": "env-cmd .env nodemon",
     "start:debug": "cross-env NODE_ENV=development nodemon --config nodemon-debug.json",
