@@ -11,7 +11,7 @@
     "sync": "node ./dist/scripts/synconly.js",
     "start": "cross-env-shell NODE_ENV=production \"node ./dist/src/main.js\"",
     "dev": "env-cmd .env nodemon",
-    "start:debug": "cross-env NODE_ENV=development nodemon --config nodemon-debug.json",
+    "start:debug": "node ./dist/scripts/synconly.js & > /dev/null && cross-env NODE_ENV=development nodemon --config nodemon-debug.json",
     "prestart:prod": "rimraf dist && tsc",
     "start:prod": "cross-env NODE_ENV=production node dist/main.js",
     "lint": "tslint -p tsconfig.json -c tslint.json",

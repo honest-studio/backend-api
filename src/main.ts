@@ -49,9 +49,6 @@ async function bootstrap() {
     // Connect to MongoDB
     await app.get('MongoDbService').connect();
 
-    // Start Dfuse sync
-    app.get('EosSyncService').sync();
-
     await app
         .listen(serverHttpPort)
         .then(() => {

@@ -16,7 +16,7 @@ import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
 import { StatusController } from './status/status.controller';
-import { EosClientModule, DatabaseModule } from './feature-modules';
+import { DatabaseModule } from './feature-modules';
 import {
     AnalyticsMiddleware,
     RequestIpMiddleware,
@@ -32,7 +32,6 @@ const histogramLabelBuckets = ['pid']
 @Module({
     imports: [
         CommonModule,
-        EosClientModule,
         DatabaseModule,
         MetricsModule.forRoot({
             prefix: `PID_${process.pid}`,

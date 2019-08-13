@@ -161,7 +161,7 @@ async function replayRedis () {
     while (true) {
         let query = { block_num: { $gte: token_block_num }, 'trace.act.account': 'everipediaiq' };
         let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        console.log(`EOS-SYNC-SERVICE: Syncing ${actions.length} everipediaiq actions since block ${token_block_num} to Redis`);
+        console.log(`REDIS: Syncing ${actions.length} everipediaiq actions since block ${token_block_num} to Redis`);
 
         await redis_process_actions(actions);
         if (actions.length < BATCH_SIZE) break;
@@ -172,7 +172,6 @@ async function replayRedis () {
 }
 
 async function redis_process_actions (actions) {
-    let pipeline = redis.pipeline();
     let results = [];
     for (let action of actions) {
         // Make sure this action hasn't already been processed
@@ -214,7 +213,10 @@ async function redis_process_actions (actions) {
                     pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
                 } catch {
                     // some proposals dont have info strangely enough
-                    console.log(`REDIS: No info found for proposal ${proposal_id}`);
+                    // mark as unprocessed and continue
+                    console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
+                    await redis.del(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
+                    continue;
                 }
             }
         }
@@ -250,8 +252,54 @@ async function redis_process_actions (actions) {
 }
 
 
+async function catchupMongo () {
+    const MAX_ACTIONS_PER_REQUEST = 100000;
+    const dfuse_catchup_url = config.get("DFUSE_CATCHUP_URL");
+    if (!dfuse_catchup_url) {
+        console.log(`MONGO: No DFUSE_CATCHUP_URL found. Skipping fast catchup`);
+        return;
+    }
+    const mongo_actions = await mongo_actions_promise;
+
+    let more = true;
+    while (more) {
+        const article_start_block = await get_start_block('eparticlectr');
+        const article_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/eparticlectr?since=${article_start_block}`;
+
+        console.log(`MONGO: Catching up on eparticlectr actions since block ${article_start_block}...`);
+        const article_actions = await fetch(article_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
+            .then(response => response.json())
+
+        const filtered_actions = article_actions.filter(a => a.block_num != article_start_block);
+        if (filtered_actions.length > 0) {
+            const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
+            console.log(`MONGO: Synced ${insertion.insertedCount} eparticlectr actions`);
+        }
+        if (article_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
+    }
+
+    more = true;
+    while (more) {
+        const token_start_block = await get_start_block('everipediaiq');
+        const token_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/everipediaiq?since=${token_start_block}`;
+
+        console.log(`MONGO: Catching up on everipediaiq actions since block ${token_start_block}...`);
+        const token_actions = await fetch(token_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
+            .then(response => response.json())
+
+        const filtered_actions = token_actions.filter(a => a.block_num != token_start_block);
+        if (filtered_actions.length > 0) {
+            const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
+            console.log(`MONGO: Synced ${insertion.insertedCount} everipediaiq actions`);
+        }
+        if (token_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
+    }
+}
+
+
 async function main () {
-    await replayRedis();
+    await catchupMongo();
+    replayRedis();
     start();
     setInterval(() => restartIfFailing.apply(this), 15 * 1000);
 }
