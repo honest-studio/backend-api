@@ -5,6 +5,7 @@ import * as htmlparser2 from 'htmlparser2';
 import MarkdownIt from 'markdown-it';
 import striptags from 'striptags';
 import decode from 'unescape';
+import { BrowserInfo } from 'detect-browser';
 import urlSlug from 'url-slug';
 import * as axios from 'axios';
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
@@ -840,4 +841,73 @@ export async function flushPrerenders (inputLang: string, inputSlug: string, pre
         console.log(colors.red(`Failed to flush prerender for lang_${inputLang}/${inputSlug} :`), colors.red(e));
     }
     return null;
+}
+
+export interface PhotoToUsePack {
+	is_webp_compatible: boolean;
+	full: string,
+	medium: string,
+	thumb: string
+}
+
+export const sizes = {
+	desktop: 992,
+	tablet: 768,
+	phone: 576
+};
+
+const WEBP_UNSUPPORTED_BROWSERS: Partial<BrowserInfo['name']>[] = ['edge', 'safari', 'ie', 'bb10', 'ios', 'ios-webview'];
+
+export const IsWebPCompatibleBrowser = (browser: BrowserInfo['name']): boolean => {
+	return !WEBP_UNSUPPORTED_BROWSERS.includes(browser);
+}
+
+export const PhotoToUse = (inputPhoto: Media, browser: BrowserInfo['name']): PhotoToUsePack => {
+	// Initialize the return pack
+	let photoReturnPack: PhotoToUsePack = {
+		is_webp_compatible: true,
+		full: null,
+		medium: null,
+		thumb: null
+	};
+
+	// Get the normal photos
+	let theFull = inputPhoto && inputPhoto.url;
+	let theThumb = inputPhoto && inputPhoto.thumb;
+	theFull = theFull ? theFull 
+					  : theThumb ? theThumb : null;
+
+	// Handle browsers that do not support WebP
+	if (WEBP_UNSUPPORTED_BROWSERS.includes(browser)){
+		photoReturnPack = {
+			is_webp_compatible: false,
+			full: theFull,
+			medium: theFull,
+			thumb: theThumb
+		};
+	}
+	else {
+		if (
+			inputPhoto &&
+			inputPhoto.media_props &&
+			inputPhoto.media_props.webp_medium &&
+			inputPhoto.media_props.webp_medium.indexOf('no-image-') == -1
+		) {
+			photoReturnPack = {
+				is_webp_compatible: true,
+				full: inputPhoto.media_props.webp_original,
+				medium: inputPhoto.media_props.webp_medium,
+				thumb: inputPhoto.media_props.webp_thumb
+			};
+	
+		} else {
+			photoReturnPack = {
+				is_webp_compatible: true,
+				full: theFull,
+				medium: theFull,
+				thumb: theThumb
+			};
+		}
+	}
+	return photoReturnPack;
 }
