@@ -378,31 +378,40 @@ describe('Backend API', () => {
 
   it('Preview: By Slug - Scraped Wiki', () => {
     return request(app.getHttpServer())
-        .get('/v2/preview/slug/lang_en/wikipedia')
-        .expect(200)
+        .post('/v2/preview/slug/lang_en/wikipedia')
+        .send({ user_agent: "chrome" })
+        .set('Accept', 'application/json')
+        .expect(201)
   });
 
   it('Preview: By Slug - Original Wiki', () => {
     return request(app.getHttpServer())
-        .get('/v2/preview/slug/lang_en/mvgenvideos')
-        .expect(200)
+        .post('/v2/preview/slug/lang_en/mvgenvideos')
+        .send({ user_agent: "safari" })
+        .set('Accept', 'application/json')
+        .expect(201)
   });
 
   it('Preview: Multiple By Slug', () => {
     return request(app.getHttpServer())
         .post('/v2/preview/slugs')
-        .send([
-            { "lang_code": "en", "slug": "Donald_Trump" },
-            { "lang_code": "en", "slug": "nusrat-jahan-rafi" },
-            { "lang_code": "en", "slug": "kill-bill-the-rapper" },
-            { "lang_code": "en", "slug": "wikipedia" },
-            { "lang_code": "en", "slug": "mvgenvideos" },
-            { "lang_code": "en", "slug": "William_Legate" },
-            { "lang_code": "en", "slug": "Donald_Trump" },
-            { "lang_code": "en", "slug": "cardi-b" },
-            { "lang_code": "ko", "slug": "%EB%B2%A0%EB%A0%88%ED%83%80_92" },
-            { "lang_code": "en", "slug": "kamala-harris" }
-        ])
+        .send(
+          {
+            array: [
+              { "lang_code": "en", "slug": "Donald_Trump" },
+              { "lang_code": "en", "slug": "nusrat-jahan-rafi" },
+              { "lang_code": "en", "slug": "kill-bill-the-rapper" },
+              { "lang_code": "en", "slug": "wikipedia" },
+              { "lang_code": "en", "slug": "mvgenvideos" },
+              { "lang_code": "en", "slug": "William_Legate" },
+              { "lang_code": "en", "slug": "Donald_Trump" },
+              { "lang_code": "en", "slug": "cardi-b" },
+              { "lang_code": "ko", "slug": "%EB%B2%A0%EB%A0%88%ED%83%80_92" },
+              { "lang_code": "en", "slug": "kamala-harris" }
+            ],
+            user_agent: 'chrome'
+          }
+        )
         .expect(201)
   });
 

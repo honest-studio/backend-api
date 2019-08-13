@@ -8,7 +8,8 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
 import { PreviewResult } from '../types/api';
 import { ArticleJson } from '../types/article';
-import { oldHTMLtoJSON } from '../utils/article-utils';
+import { BrowserInfo } from 'detect-browser';
+import { oldHTMLtoJSON, PhotoToUse, IsWebPCompatibleBrowser } from '../utils/article-utils';
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now
@@ -139,84 +140,90 @@ export class PreviewService {
         return previews;
     }
 
-    async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<PreviewResult[]> {
+    async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
         if (wiki_identities.length == 0) return [];
+        let previews: Array<PreviewResult>;
 
         // check Redis for fast cache
-        const memkey = JSON.stringify([wiki_identities]);
-        const memcache = await this.redis.connection().get(memkey);
-        if (memcache) return JSON.parse(memcache);
-
-        // strip lang_ prefix in lang_code if it exists
-        wiki_identities.forEach((w) => {
-            if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
+        const memkey = JSON.stringify({ 
+            wikis: [wiki_identities], 
+            useWebP: IsWebPCompatibleBrowser(user_agent) 
         });
+        const memcache = await this.redis.connection().get(memkey);
+        if (memcache){
+            return JSON.parse(memcache);
+        } 
+        else {
+            // strip lang_ prefix in lang_code if it exists
+            wiki_identities.forEach((w) => {
+                if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
+            });
 
-        // const substitutions = wiki_identities
-        //     .map((w) => [w.lang_code, w.slug])
-        //     .reduce((flat, piece) => flat.concat(piece), []);
+            // const substitutions = wiki_identities
+            //     .map((w) => [w.lang_code, w.slug])
+            //     .reduce((flat, piece) => flat.concat(piece), []);
 
-        const whereClause1 = wiki_identities.map((w) => { 
-            let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
-            return SqlString.format(
-                '(art.page_lang = ? AND art.slug = ?)',
-                [w.lang_code, cleanedSlug]
-            );
-        }).join(' OR ');
-        const whereClause2 = wiki_identities.map((w) => { 
-            let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
-            return SqlString.format(
-                '(art.page_lang = ? AND art.slug_alt = ?)',
-                [w.lang_code, cleanedSlug]
-            );
-        }).join(' OR ');
+            const whereClause1 = wiki_identities.map((w) => { 
+                let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
+                return SqlString.format(
+                    '(art.page_lang = ? AND art.slug = ?)',
+                    [w.lang_code, cleanedSlug]
+                );
+            }).join(' OR ');
+            const whereClause2 = wiki_identities.map((w) => { 
+                let cleanedSlug = this.mysql.cleanSlugForMysql(w.slug);
+                return SqlString.format(
+                    '(art.page_lang = ? AND art.slug_alt = ?)',
+                    [w.lang_code, cleanedSlug]
+                );
+            }).join(' OR ');
+
+            const query1 = `
+                SELECT 
+                    COALESCE (art_redir.page_title, art.page_title) AS page_title,
+                    COALESCE (art_redir.slug, art.slug) AS slug,
+                    COALESCE (art_redir.photo_url, art.photo_url) AS main_photo,
+                    COALESCE (art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
+                    COALESCE (art_redir.page_lang, art.page_lang) AS lang_code,
+                    COALESCE (art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash,
+                    COALESCE (art_redir.blurb_snippet, art.blurb_snippet) AS text_preview,
+                    COALESCE (art_redir.pageviews, art.pageviews) AS pageviews,
+                    COALESCE (art_redir.page_note, art.page_note) AS page_note,
+                    COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
+                    COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
+                    COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
+                    cache.html_blob
+                FROM enterlink_articletable AS art 
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
+                LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
+                WHERE 
+                    ${whereClause1}`;
+            const query2 = `
+                SELECT 
+                    COALESCE (art_redir.page_title, art.page_title) AS page_title,
+                    COALESCE (art_redir.slug, art.slug) AS slug,
+                    COALESCE (art_redir.photo_url, art.photo_url) AS main_photo,
+                    COALESCE (art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
+                    COALESCE (art_redir.page_lang, art.page_lang) AS lang_code,
+                    COALESCE (art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash,
+                    COALESCE (art_redir.blurb_snippet, art.blurb_snippet) AS text_preview,
+                    COALESCE (art_redir.pageviews, art.pageviews) AS pageviews,
+                    COALESCE (art_redir.page_note, art.page_note) AS page_note,
+                    COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
+                    COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
+                    COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
+                    cache.html_blob
+                FROM enterlink_articletable AS art 
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
+                LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
+                WHERE 
+                    ${whereClause2}`;
+            const query = `${query1} UNION ${query2}`;
+
+            previews = await this.mysql.TryQuery(query);
+            if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
+        }
         
-        const query1 = `
-            SELECT 
-                COALESCE (art_redir.page_title, art.page_title) AS page_title,
-                COALESCE (art_redir.slug, art.slug) AS slug,
-                COALESCE (art_redir.photo_url, art.photo_url) AS main_photo,
-                COALESCE (art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
-                COALESCE (art_redir.page_lang, art.page_lang) AS lang_code,
-                COALESCE (art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash,
-                COALESCE (art_redir.blurb_snippet, art.blurb_snippet) AS text_preview,
-                COALESCE (art_redir.pageviews, art.pageviews) AS pageviews,
-                COALESCE (art_redir.page_note, art.page_note) AS page_note,
-                COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
-                COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
-                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                cache.html_blob
-            FROM enterlink_articletable AS art 
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
-            WHERE 
-                ${whereClause1}`;
-        const query2 = `
-            SELECT 
-                COALESCE (art_redir.page_title, art.page_title) AS page_title,
-                COALESCE (art_redir.slug, art.slug) AS slug,
-                COALESCE (art_redir.photo_url, art.photo_url) AS main_photo,
-                COALESCE (art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
-                COALESCE (art_redir.page_lang, art.page_lang) AS lang_code,
-                COALESCE (art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash,
-                COALESCE (art_redir.blurb_snippet, art.blurb_snippet) AS text_preview,
-                COALESCE (art_redir.pageviews, art.pageviews) AS pageviews,
-                COALESCE (art_redir.page_note, art.page_note) AS page_note,
-                COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
-                COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
-                COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                cache.html_blob
-            FROM enterlink_articletable AS art 
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
-            WHERE 
-                ${whereClause2}`;
-        const query = `${query1} UNION ${query2}`;
-
-        let previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
-
-        if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
-
         // clean up text previews
         previews = previews.map(preview => {
             preview.page_title = sanitizeTextPreview(preview.page_title);
@@ -231,36 +238,20 @@ export class PreviewService {
                 wiki = JSON.parse(preview.html_blob);
             } catch (e) {
                 // SKIPPING for speed concerns
-                // wiki = oldHTMLtoJSON(preview.html_blob);
+                wiki = oldHTMLtoJSON(preview.html_blob);
             }
-
             let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
 
-            let photoToUse: string = "", thumbToUse: string = "";
-            if (
-                main_photo &&
-                main_photo.media_props &&
-                main_photo.media_props.webp_medium &&
-                main_photo.media_props.webp_medium.indexOf('no-image-') == -1
-            ) {
-                photoToUse = main_photo.media_props.webp_medium;
-                thumbToUse = main_photo.media_props.webp_thumb;
-            } else if (main_photo && main_photo.url) {
-                photoToUse = main_photo.url;
-                thumbToUse = main_photo.thumb;
-            } else {
-                photoToUse = preview.main_photo;
-                thumbToUse = preview.thumbnail;
-            }
-            preview.main_photo = photoToUse;
-            preview.thumbnail = thumbToUse;
+            let photoPack = PhotoToUse(main_photo, user_agent);
+
+
+            preview.main_photo = photoPack.full;
+            preview.thumbnail = photoPack.thumb;
 
             // Remove the html_blob from the preview
             const { html_blob, ...newPreview } = preview
             preview = newPreview;
 
-            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
-            preview.thumbnail = null;
             return preview;
         });
 

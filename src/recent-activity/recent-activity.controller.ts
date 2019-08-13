@@ -51,6 +51,12 @@ export class RecentActivityController {
         required: false,
         type: Number
     })
+    @ApiImplicitQuery({
+        name: 'user_agent',
+        type: 'string',
+        required: false,
+        description: 'user agent for the request. Important for WebP issues'
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getArticleActions(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getArticleActions(query);

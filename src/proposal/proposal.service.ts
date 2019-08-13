@@ -2,6 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
 import { EosAction, MongoDbService, MysqlService, RedisService, ProposalResult, Propose, Vote } from '../feature-modules/database';
 import { PreviewService } from '../preview';
+import { BrowserInfo } from 'detect-browser';
 
 export type Proposal = {
     proposal_id: number;
@@ -15,6 +16,7 @@ export type Proposal = {
 export type ProposalOptions = {
     preview: boolean;
     diff: 'full' | 'metadata' | 'none';
+    user_agent: string;
 };
 
 @Injectable()
@@ -60,7 +62,7 @@ export class ProposalService {
                 .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
             let previews;
             try {
-                previews = await this.previewService.getPreviewsBySlug(packs);
+                previews = await this.previewService.getPreviewsBySlug(packs, options.user_agent as any);
             } catch (e) {
                 if (e.message.error == "Could not find wikis") previews = [];
                 else throw e;

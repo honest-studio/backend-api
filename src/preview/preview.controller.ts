@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
 import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
 import { WikiService } from '../wiki/wiki.service';
@@ -39,15 +39,20 @@ export class PreviewController {
         return this.previewService.getPreviewsByHash(ipfs_hashes);
     }
 
-    @Get('slug/lang_:lang_code/:slug')
+    @Post('slug/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
-        name: 'lang_code',
-        description: 'ISO 639 language code'
+        name: 'slug',
+        description: 'slug for the wiki'
     })
     @ApiImplicitParam({
         name: 'lang_code',
         description: 'ISO 639 language code'
+    })
+    @ApiImplicitBody({
+        name: 'user_agent',
+        description: 'user agent type',
+        type: String
     })
     @ApiResponse({
         status: 200,
@@ -61,8 +66,8 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<PreviewResult> {
-        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
+    async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Body() options): Promise<PreviewResult> {
+        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }], options.user_agent);
         return previews[0];
     }
 
@@ -81,7 +86,7 @@ export class PreviewController {
         description: `An AMP HTML wiki encoded in UTF-8`
     })
     async getAMPHoverBlurbBySlugCtrl(@Param('lang_code') lang_code, @Param('slug') slug): Promise<string> {
-        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }]);
+        const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }], 'chrome');
         return renderAMPHoverBlurb(previews[0]);
     }
 
@@ -109,13 +114,17 @@ export class PreviewController {
     @Post('slugs')
     @ApiOperation({ 
         title: 'Get preview for multiple wikis', 
-        description: `Body format: An array of WikiIdentity objects. Example:
-            [
-                { "lang_code": "en", "slug": "Donald_Trump" },
-                { "lang_code": "en", "slug": "worbli" },
-                { "lang_code": "kr", "slug": "Donald_Trump" },
-                { "lang_code": "es", "slug": "jonah_kabidiman" },
-            ]`
+        description: `Body format: An array of WikiIdentity objects, as well as a user agent. Example:
+            {
+                array: [
+                    { "lang_code": "en", "slug": "Donald_Trump" },
+                    { "lang_code": "en", "slug": "worbli" },
+                    { "lang_code": "kr", "slug": "Donald_Trump" },
+                    { "lang_code": "es", "slug": "jonah_kabidiman" },
+                ],
+                user_agent: 'chrome'
+            }
+        `
     })
     @ApiResponse({
         status: 200,
@@ -129,7 +138,7 @@ export class PreviewController {
                 text_preview: Snippet of text from the article
             }`
     })
-    async getWikiPreviewsBySlug(@Body() wiki_identities): Promise<any> {
-        return this.previewService.getPreviewsBySlug(wiki_identities);
+    async getWikiPreviewsBySlug(@Body() options): Promise<any> {
+        return this.previewService.getPreviewsBySlug(options.array, options.user_agent);
     }
 }
