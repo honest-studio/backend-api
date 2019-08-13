@@ -22,7 +22,8 @@ const RecentActivityQuerySchema = {
     langs: Joi.string(),
     range: Joi.string()
         .valid('today', 'all')
-        .default('today')
+        .default('today'),
+    user_agent: Joi.string().default('chrome')
 };
 
 export { RecentActivityQuerySchema };

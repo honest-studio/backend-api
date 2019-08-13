@@ -8,7 +8,8 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
 import { PreviewResult } from '../types/api';
 import { ArticleJson } from '../types/article';
-import { oldHTMLtoJSON } from '../utils/article-utils';
+import { BrowserInfo } from 'detect-browser';
+import { oldHTMLtoJSON, PhotoToUse } from '../utils/article-utils';
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now
@@ -139,7 +140,7 @@ export class PreviewService {
         return previews;
     }
 
-    async getPreviewsBySlug(wiki_identities: WikiIdentity[]): Promise<PreviewResult[]> {
+    async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
         if (wiki_identities.length == 0) return [];
 
         // check Redis for fast cache
