@@ -138,34 +138,25 @@ function restartIfFailing() {
 }
 
 async function replayRedis () {
+    console.log(config.get("REDIS_REPLAY_ACTIONS"));
+    //if (config.get("REDIS_REPLAY_ACTIONS") === false) return;
+
     await redis.flushdb();
     console.log(`REDIS: Flushed DB. Replaying actions`);
 
     const BATCH_SIZE = 50000;
     const mongo_actions = await mongo_actions_promise;
-    let article_block_num = 0;
-    let token_block_num = 0;
+    let last_block_num = 0;
 
-    // catchup article actions
+    // catchup actions
     while (true) {
-        let query = { block_num: { $gte: article_block_num }, 'trace.act.account': 'eparticlectr' };
+        let query = { block_num: { $gte: last_block_num }};
         let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        console.log(`REDIS: Syncing ${actions.length} eparticlectr actions since block ${article_block_num}`);
+        console.log(`REDIS: Syncing ${actions.length} actions since block ${last_block_num} to Redis`);
 
         await redis_process_actions(actions);
         if (actions.length < BATCH_SIZE) break;
-        article_block_num = actions[actions.length - 1].block_num;
-    }
-
-    // catch up token actions
-    while (true) {
-        let query = { block_num: { $gte: token_block_num }, 'trace.act.account': 'everipediaiq' };
-        let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        console.log(`REDIS: Syncing ${actions.length} everipediaiq actions since block ${token_block_num} to Redis`);
-
-        await redis_process_actions(actions);
-        if (actions.length < BATCH_SIZE) break;
-        token_block_num = actions[actions.length - 1].block_num;
+        last_block_num = actions[actions.length - 1].block_num;
     }
 
     return true;
