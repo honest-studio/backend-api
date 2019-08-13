@@ -41,6 +41,7 @@ export class WikiService {
         private ipfs: IpfsService,
         private mysql: MysqlService,
         private mongo: MongoDbService,
+        private redis: RedisService,
         private mediaUploadService: MediaUploadService,
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,

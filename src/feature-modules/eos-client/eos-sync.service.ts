@@ -42,7 +42,7 @@ export class EosSyncService {
     }
 
     async catchupRedis () {
-        const BATCH_SIZE = 25000;
+        const BATCH_SIZE = 50000;
         let article_block_num = 0;
         let token_block_num = 0;
         let last_processed: any = await this.redis.connection().get('eos_actions:last_processed');
@@ -56,9 +56,9 @@ export class EosSyncService {
         while (true) {
             let query = { block_num: { $gte: article_block_num }};
             let actions = await this.mongo.connection().actions.find(query).limit(BATCH_SIZE).toArray();
-            console.log(`EOS-SYNC-SERVICE: Publishing ${actions.length} eparticlectr actions since block ${article_block_num} to Redis`);
+            console.log(`EOS-SYNC-SERVICE: Syncing ${actions.length} eparticlectr actions since block ${article_block_num} to Redis`);
 
-            this.redis.connection().publish("eos_actions", JSON.stringify(actions));
+            await this.redis.process_actions(actions);
             if (actions.length < BATCH_SIZE) break;
             article_block_num = actions[actions.length - 1].block_num;
         }
@@ -67,9 +67,9 @@ export class EosSyncService {
         while (true) {
             let query = { block_num: { $gte: token_block_num }};
             let actions = await this.mongo.connection().actions.find(query).limit(BATCH_SIZE).toArray();
-            console.log(`EOS-SYNC-SERVICE: Publishing ${actions.length} eparticlectr actions since block ${token_block_num} to Redis`);
+            console.log(`EOS-SYNC-SERVICE: Syncing ${actions.length} everipediaiq actions since block ${token_block_num} to Redis`);
 
-            this.redis.connection().publish("eos_actions", JSON.stringify(actions));
+            await this.redis.process_actions(actions);
             if (actions.length < BATCH_SIZE) break;
             token_block_num = actions[actions.length - 1].block_num;
         }
@@ -191,7 +191,7 @@ export class EosSyncService {
                     }
                 });
 
-            this.redis.connection().publish("eos_actions", JSON.stringify([msg.data]));
+            this.redis.process_actions([msg.data]);
         });
 
         this.dfuse.on('error', (e) => {

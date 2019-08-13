@@ -41,31 +41,23 @@ export class ProposalService {
         const len = proposal_ids.length;
         for (let i=0; i < len; i++) {
             const proposal_id = proposal_ids[i];
-            try {
-                proposals[i].info = JSON.parse(values[i][1]);
-            }
-            catch {
+            proposals[i].info = JSON.parse(values[i][1]);
+            if (!proposals[i].info)
                 proposals[i].info = { error: `Proposal ${proposal_id} could not be found` };
-            }
             try {
                 proposals[i].votes = values[i + len][1].map(v => JSON.parse(v));
             } catch {
                 proposals[i].votes = [];
             }
-            try {
-                proposals[i].result = JSON.parse(values[i + 2*len][1]);
-            } catch {
+            proposals[i].result = JSON.parse(values[i + 2*len][1]);
+            if (!proposals[i].result)
                 proposals[i].result = { error: `Proposal ${proposal_id} has not finalized` };
-            }
         }
 
         if (options.preview) {
             const packs = proposals
                 .filter((p) => !p.info.error)
                 .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
-            //const ipfs_hashes = proposals
-            //    .filter((p) => !p.info.error)
-            //    .map((p) => (p.info.trace.act.data.ipfs_hash));
             let previews;
             try {
                 previews = await this.previewService.getPreviewsBySlug(packs);
@@ -76,7 +68,7 @@ export class ProposalService {
 
             previews.forEach((preview) => {
                 proposals.forEach(p => {
-                    if (this.mysql.cleanSlugForMysql(p.info.trace.act.data.slug) === preview.slug)
+                    if (!p.info.error && this.mysql.cleanSlugForMysql(p.info.trace.act.data.slug) === preview.slug)
                         p.preview = preview;
                 })
             });

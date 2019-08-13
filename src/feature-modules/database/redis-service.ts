@@ -41,7 +41,7 @@ export class RedisService {
             };
         }
 
-        const pipeline = this.redis.pipeline();
+        let pipeline = this.redis.pipeline();
         for (let action of actions) {
             if (Number(action.trace.receipt.global_sequence) <= last_processed[action.trace.act.account].global_sequence) {
                 continue;
@@ -68,11 +68,26 @@ export class RedisService {
             }
             else if (action.trace.act.name == "logpropres") {
                 const proposal_id = action.trace.act.data.proposal_id;
-                pipeline.set(`proposal:${proposal_id}:result`, JSON.stringify(action));
-                if (action.trace.act.data.approved === 1) {
-                    const info = await this.redis.connection().get(`proposal:${proposal_id}:info`);
-                    const ipfs_hash = info.trace.act.data.ipfs_hash;
-                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
+                if (proposal_id)
+                    pipeline.set(`proposal:${proposal_id}:result`, JSON.stringify(action));
+                else {
+                    const proposal = action.trace.act.data.proposal;
+                    pipeline.set(`proposal:${proposal}:result`, JSON.stringify(action));
+                }
+                if (proposal_id && action.trace.act.data.approved === 1) {
+                    // flush pipeline so proposal info can be saved
+                    await pipeline.exec();
+                    pipeline = this.redis.pipeline();
+                    const info = JSON.parse(await this.redis.get(`proposal:${proposal_id}:info`));
+                    try {
+                        const ipfs_hash = info.trace.act.data.ipfs_hash;
+                        const lang_code = info.trace.act.data.lang_code;
+                        const slug = info.trace.act.data.slug;
+                        pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
+                    } catch {
+                        // some proposals dont have info strangely enough
+                        console.log(`REDIS-SERVICE: No info found for proposal ${proposal_id}`);
+                    }
                 }
             }
             else if (action.trace.act.name == "propose" || action.trace.act.name == "propose2") {
