@@ -100,7 +100,6 @@ async function start() {
                 const block_num = msg.data.block_num;
                 const account = msg.data.trace.act.account;
                 const name = msg.data.trace.act.name;
-                redis.publish("eos_actions", JSON.stringify([msg.data]));
                 console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
             })
             .catch((err) => {
@@ -112,6 +111,7 @@ async function start() {
                     throw err;
                 }
             });
+        redis_process_actions([msg.data])
     });
     dfuse.on('error', (e) => {
         console.log('DFUSE: ERROR: ', e);
@@ -145,18 +145,12 @@ async function replayRedis () {
     const mongo_actions = await mongo_actions_promise;
     let article_block_num = 0;
     let token_block_num = 0;
-    let last_processed: any = await redis.get('eos_actions:last_processed');
-    if (last_processed) {
-        last_processed = JSON.parse(last_processed);
-        token_block_num = last_processed.everipediaiq.block_num;
-        article_block_num = last_processed.eparticlectr.block_num;
-    }
 
     // catchup article actions
     while (true) {
         let query = { block_num: { $gte: article_block_num }, 'trace.act.account': 'eparticlectr' };
         let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        console.log(`EOS-SYNC-SERVICE: Syncing ${actions.length} eparticlectr actions since block ${article_block_num} to Redis`);
+        console.log(`REDIS: Syncing ${actions.length} eparticlectr actions since block ${article_block_num}`);
 
         await redis_process_actions(actions);
         if (actions.length < BATCH_SIZE) break;
@@ -178,19 +172,6 @@ async function replayRedis () {
 }
 
 async function redis_process_actions (actions) {
-    let last_processed: any = await redis.get('eos_actions:last_processed');
-    if (last_processed) last_processed = JSON.parse(last_processed);
-    else {
-        last_processed = {
-            eparticlectr: {
-                block_num: 0,
-            },
-            everipediaiq: {
-                block_num: 0,
-            }
-        };
-    }
-
     let pipeline = redis.pipeline();
     let results = [];
     for (let action of actions) {
@@ -199,9 +180,6 @@ async function redis_process_actions (actions) {
         const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
         if (processed) continue;
         else await redis.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
-
-        // mark last processed by contract
-        last_processed[action.trace.act.account].block_num = action.block_num;
 
         // process action
         const pipeline = redis.pipeline();
@@ -268,7 +246,7 @@ async function redis_process_actions (actions) {
     }
 
 
-    return redis.set('eos_actions:last_processed', JSON.stringify(last_processed));
+    return true;
 }
 
 
