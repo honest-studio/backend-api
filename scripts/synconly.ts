@@ -137,8 +137,145 @@ function restartIfFailing() {
     }
 }
 
+async function replayRedis () {
+    await redis.flushdb();
+    console.log(`REDIS: Flushed DB. Replaying actions`);
 
-start();
-setInterval(() => restartIfFailing.apply(this), 15 * 1000);
+    const BATCH_SIZE = 50000;
+    const mongo_actions = await mongo_actions_promise;
+    let article_block_num = 0;
+    let token_block_num = 0;
+    let last_processed: any = await redis.get('eos_actions:last_processed');
+    if (last_processed) {
+        last_processed = JSON.parse(last_processed);
+        token_block_num = last_processed.everipediaiq.block_num;
+        article_block_num = last_processed.eparticlectr.block_num;
+    }
+
+    // catchup article actions
+    while (true) {
+        let query = { block_num: { $gte: article_block_num }, 'trace.act.account': 'eparticlectr' };
+        let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
+        console.log(`EOS-SYNC-SERVICE: Syncing ${actions.length} eparticlectr actions since block ${article_block_num} to Redis`);
+
+        await redis_process_actions(actions);
+        if (actions.length < BATCH_SIZE) break;
+        article_block_num = actions[actions.length - 1].block_num;
+    }
+
+    // catch up token actions
+    while (true) {
+        let query = { block_num: { $gte: token_block_num }, 'trace.act.account': 'everipediaiq' };
+        let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
+        console.log(`EOS-SYNC-SERVICE: Syncing ${actions.length} everipediaiq actions since block ${token_block_num} to Redis`);
+
+        await redis_process_actions(actions);
+        if (actions.length < BATCH_SIZE) break;
+        token_block_num = actions[actions.length - 1].block_num;
+    }
+
+    return true;
+}
+
+async function redis_process_actions (actions) {
+    let last_processed: any = await redis.get('eos_actions:last_processed');
+    if (last_processed) last_processed = JSON.parse(last_processed);
+    else {
+        last_processed = {
+            eparticlectr: {
+                block_num: 0,
+            },
+            everipediaiq: {
+                block_num: 0,
+            }
+        };
+    }
+
+    let pipeline = redis.pipeline();
+    let results = [];
+    for (let action of actions) {
+        // Make sure this action hasn't already been processed
+        // Re-processing happens a lot during restarts and replays
+        const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
+        if (processed) continue;
+        else await redis.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
+
+        // mark last processed by contract
+        last_processed[action.trace.act.account].block_num = action.block_num;
+
+        // process action
+        const pipeline = redis.pipeline();
+        if (action.trace.act.name == "vote" || action.trace.act.name == "votebyhash") {
+            const proposal_id = action.trace.act.data.proposal_id;
+            pipeline.sadd(`proposal:${proposal_id}:votes`, JSON.stringify(action));
+            const user = action.trace.act.data.voter;
+            pipeline.incr(`user:${user}:num_votes`);
+        }
+        else if (action.trace.act.name == "logpropinfo") {
+            const proposal_id = action.trace.act.data.proposal_id;
+            const ipfs_hash = action.trace.act.data.ipfs_hash;
+            const lang_code = action.trace.act.data.lang_code;
+            const slug = action.trace.act.data.slug;
+            pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
+            pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
+        }
+        else if (action.trace.act.name == "logpropres") {
+            // v1 results are done based on proposal hash
+            // v2 results are done based on proposal ID
+            const proposal_id = action.trace.act.data.proposal_id;
+            const proposal = action.trace.act.data.proposal;
+            const key = proposal_id ? proposal_id : proposal;
+            pipeline.set(`proposal:${key}:result`, JSON.stringify(action));
+
+            if (proposal_id) {
+                const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
+                try {
+                    const ipfs_hash = info.trace.act.data.ipfs_hash;
+                    const lang_code = info.trace.act.data.lang_code;
+                    const slug = info.trace.act.data.slug;
+                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
+                } catch {
+                    // some proposals dont have info strangely enough
+                    console.log(`REDIS: No info found for proposal ${proposal_id}`);
+                }
+            }
+        }
+        else if (action.trace.act.name == "propose" || action.trace.act.name == "propose2") {
+            const user = action.trace.act.data.proposer;
+            pipeline.incr(`user:${user}:num_edits`);
+        }
+        else if (action.trace.act.name == "issue") {
+            const user = action.trace.act.data.to;
+            const amount = action.trace.act.data.quantity.split(' ')[0];
+            // All-time leaderboard
+            pipeline.zincrby("editor-leaderboard:all-time:rewards", amount, user);
+        }
+        else if (action.trace.act.name == "transfer") {
+            if (action.trace.act.data.to == "eparticlectr") {
+                const user = action.trace.act.data.from;
+                const amount = action.trace.act.data.quantity.split(' ')[0];
+                pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
+                pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
+            }
+            else if (action.trace.act.data.from == "eparticlectr") {
+                const user = action.trace.act.data.to;
+                const amount = action.trace.act.data.quantity.split(' ')[0];
+                pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
+                pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
+            }
+        }
+        await pipeline.exec();
+    }
 
 
+    return redis.set('eos_actions:last_processed', JSON.stringify(last_processed));
+}
+
+
+async function main () {
+    await replayRedis();
+    start();
+    setInterval(() => restartIfFailing.apply(this), 15 * 1000);
+}
+
+main();

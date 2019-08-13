@@ -9,7 +9,7 @@ import { URL } from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigService, IpfsService } from '../common';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
+import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
