@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery } from '@nestjs/swagger';
+import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
 import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
 import { WikiService } from '../wiki/wiki.service';
@@ -42,12 +42,17 @@ export class PreviewController {
     @Post('slug/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get preview of a wiki' })
     @ApiImplicitParam({
-        name: 'lang_code',
-        description: 'ISO 639 language code'
+        name: 'slug',
+        description: 'slug for the wiki'
     })
     @ApiImplicitParam({
         name: 'lang_code',
         description: 'ISO 639 language code'
+    })
+    @ApiImplicitBody({
+        name: 'user_agent',
+        description: 'user agent type',
+        type: String
     })
     @ApiResponse({
         status: 200,
