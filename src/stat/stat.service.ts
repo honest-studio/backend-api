@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as BooleanTools from 'boolean';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
+import { MongoDbService, RedisService, MysqlService } from '../feature-modules/database';
 
 export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
@@ -11,30 +11,31 @@ export interface LeaderboardOptions {
 
 @Injectable()
 export class StatService {
-    constructor(private mongo: MongoDbService, private mysql: MysqlService) {}
+    constructor(private mongo: MongoDbService, private mysql: MysqlService, private redis: RedisService) {}
 
     private readonly EDITOR_LEADERBOARD_CACHE_EXPIRE_MS = 10 * 60 * 1000; // 10 minutes
     private readonly SITE_USAGE_CACHE_EXPIRE_MS = 30 * 60 * 1000; // 30 minutes
     private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
-        // temporarily force all-time leaderboard queries
-        // to the cache. running these queries bricks the server
-        // use an extensive cache for one month
-        // today and this-week don't require a cache
-        if (options.period == 'all-time' || 
-            options.period == 'this-month') {
-            const cache = await this.mongo.connection().statistics.findOne({ 
-                key: 'editor_leaderboard',
-                period: options.period
-            });
-
-            // One out of 1000 times, update the cache
-            const random = Math.random();
-            if (cache && random > 0.001) {
-                delete cache._id;
-                return cache.editor_rewards.slice(0, options.limit);
+        if (options.period == 'all-time') {
+            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 0, options.limit, 'WITHSCORES');
+            let doc = [];
+            for (let i=0; i < rewards.length; i++) {
+                if (i % 2 == 0) doc.push({ user: rewards[i] });
+                else doc[doc.length - 1].cumulative_iq_rewards = Number(rewards[i]);
             }
+            const pipeline = this.redis.connection().pipeline();
+            for (let row of doc) {
+                pipeline.get(`user:${row.user}:num_edits`);
+                pipeline.get(`user:${row.user}:num_votes`);
+            }
+            const edits_votes = await pipeline.exec();
+            for (let i=0; i < edits_votes.length; i++) {
+                if (i % 2 == 0) doc[Math.floor(i/2)].edits = Number(edits_votes[i][1]);
+                else doc[Math.floor(i/2)].votes = Number(edits_votes[i][1]);
+            }
+            return doc;
         }
 
         const approx_head_block_res = await this.mongo.connection().actions.find({

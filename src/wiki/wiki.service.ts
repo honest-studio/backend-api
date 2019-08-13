@@ -9,7 +9,7 @@ import { URL } from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ConfigService, IpfsService } from '../common';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
+import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
@@ -41,6 +41,7 @@ export class WikiService {
         private ipfs: IpfsService,
         private mysql: MysqlService,
         private mongo: MongoDbService,
+        private redis: RedisService,
         private mediaUploadService: MediaUploadService,
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
