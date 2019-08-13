@@ -41,7 +41,43 @@ export class EosSyncService {
             });
     }
 
-    async catchup () {
+    async catchupRedis () {
+        const BATCH_SIZE = 25000;
+        let article_block_num = 0;
+        let token_block_num = 0;
+        let last_processed: any = await this.redis.connection().get('eos_actions:last_processed');
+        if (last_processed) {
+            last_processed = JSON.parse(last_processed);
+            token_block_num = last_processed.everipediaiq.block_num;
+            article_block_num = last_processed.eparticlectr.block_num;
+        }
+
+        // catchup article actions
+        while (true) {
+            let query = { block_num: { $gte: article_block_num }};
+            let actions = await this.mongo.connection().actions.find(query).limit(BATCH_SIZE).toArray();
+            console.log(`EOS-SYNC-SERVICE: Publishing ${actions.length} eparticlectr actions since block ${article_block_num} to Redis`);
+
+            this.redis.connection().publish("eos_actions", JSON.stringify(actions));
+            if (actions.length < BATCH_SIZE) break;
+            article_block_num = actions[actions.length - 1].block_num;
+        }
+
+        // catch up token actions
+        while (true) {
+            let query = { block_num: { $gte: token_block_num }};
+            let actions = await this.mongo.connection().actions.find(query).limit(BATCH_SIZE).toArray();
+            console.log(`EOS-SYNC-SERVICE: Publishing ${actions.length} eparticlectr actions since block ${token_block_num} to Redis`);
+
+            this.redis.connection().publish("eos_actions", JSON.stringify(actions));
+            if (actions.length < BATCH_SIZE) break;
+            token_block_num = actions[actions.length - 1].block_num;
+        }
+
+        return true;
+    }
+
+    async catchupMongo () {
         const MAX_ACTIONS_PER_REQUEST = 100000;
         const DFUSE_ACTION_LOGGING = this.config.get("DFUSE_ACTION_LOGGING");
         const dfuse_catchup_url = this.config.get("DFUSE_CATCHUP_URL");
@@ -85,7 +121,7 @@ export class EosSyncService {
         }
     }
 
-    async start() {
+    async startDfuse() {
         const dfuseToken = await this.obtainDfuseToken();
 
         try {
@@ -154,6 +190,8 @@ export class EosSyncService {
                         throw err;
                     }
                 });
+
+            this.redis.connection().publish("eos_actions", JSON.stringify([msg.data]));
         });
 
         this.dfuse.on('error', (e) => {
@@ -176,7 +214,7 @@ export class EosSyncService {
             console.log('No messages received in 30s. Restarting dfuse');
 
             if (this.dfuse) this.dfuse.close();
-            this.start();
+            this.startDfuse();
         }
     }
 
@@ -185,84 +223,11 @@ export class EosSyncService {
             console.warn("EOS-SYNC-SERVICE: [WARN] Dfuse sync is turned off");
             return;
         }
-        await this.catchup();
-        this.start();
-        //this.redisUpdate();
+        await this.redis.is_subscribed();
+        await this.catchupRedis();
+        await this.catchupMongo();
+        this.startDfuse();
         setInterval(() => this.restartIfFailing.apply(this), 15 * 1000); // every 15 seconds
     }
 
-    async redisUpdate () {
-
-        console.log(`EOS-SYNC-SERVICE: Building redis cache`);
-        await this.redis.connection().flushdb();
-
-        while (true) {
-            const last_processed = await this.redis.connection().get('mongo:last_processed');
-            let query; 
-            let block_num;
-            if (!last_processed) {
-                query = {}
-                block_num = 0;
-            }
-            else {
-                block_num = JSON.parse(last_processed).block_num;
-                query = { block_num: { $gt: block_num }};
-            }
-            const actions = await this.mongo.connection().actions.find(query).limit(50000).toArray();
-            console.log(`EOS-SYNC-SERVICE: Redis: Processing ${actions.length} actions from block ${block_num}`);
-
-            const pipeline = this.redis.connection().pipeline();
-            for (let action of actions) {
-                if (action.trace.act.name == "vote" || action.trace.act.name == "votebyhash") {
-                    const proposal_id = action.trace.act.data.proposal_id;
-                    pipeline.sadd(`proposal:${proposal_id}:votes`, JSON.stringify(action));
-                    const user = action.trace.act.data.voter;
-                    pipeline.incr(`user:${user}:num_votes`);
-                }
-                else if (action.trace.act.name == "logpropinfo") {
-                    const proposal_id = action.trace.act.data.proposal_id;
-                    pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
-                }
-                else if (action.trace.act.name == "logpropres") {
-                    const proposal_id = action.trace.act.data.proposal_id;
-                    pipeline.set(`proposal:${proposal_id}:result`, JSON.stringify(action));
-                }
-                else if (action.trace.act.name == "propose" || action.trace.act.name == "propose2") {
-                    const user = action.trace.act.data.proposer;
-                    pipeline.incr(`user:${user}:num_edits`);
-                }
-                else if (action.trace.act.name == "issue") {
-                    const user = action.trace.act.data.to;
-                    const amount = action.trace.act.data.quantity.split(' ')[0];
-                    // All-time leaderboard
-                    pipeline.zincrby("editor-leaderboard:all-time:rewards", amount, user);
-                }
-                else if (action.trace.act.name == "transfer") {
-                    if (action.trace.act.data.to == "eparticlectr") {
-                        const user = action.trace.act.data.from;
-                        const amount = action.trace.act.data.quantity.split(' ')[0];
-                        pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
-                        pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
-                    }
-                    else if (action.trace.act.data.from == "eparticlectr") {
-                        const user = action.trace.act.data.to;
-                        const amount = action.trace.act.data.quantity.split(' ')[0];
-                        pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
-                        pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
-                    }
-                }
-            }
-            if (actions.length == 0) break;
-            else {
-                pipeline.exec();
-                const last_processed = {
-                    _id: actions[actions.length - 1]._id,
-                    block_num: actions[actions.length - 1].block_num
-                };
-                await this.redis.connection().set('mongo:last_processed', JSON.stringify(last_processed));
-            }
-        } 
-        console.log(`EOS-SYNC-SERVICE: Done building redis cache`);
-
-    }
 }
