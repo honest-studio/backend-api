@@ -900,7 +900,8 @@ export const PhotoToUse = (inputPhoto: Media, browser: BrowserInfo['name']): Pho
 				thumb: inputPhoto.media_props.webp_thumb
 			};
 	
-		} else {
+        } 
+        else {
 			photoReturnPack = {
 				is_webp_compatible: true,
 				full: theFull,
