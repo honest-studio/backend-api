@@ -171,6 +171,12 @@ export class RecentActivityController {
         required: false,
         type: Number
     })
+    @ApiImplicitQuery({
+        name: 'user_agent',
+        description: 'User agent. Needed for WebP. Use "chrome" to serve WebP (if available) or "safari" to serve normal',
+        required: false,
+        type: String
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getTrendingWikis(@Query() query): Promise<Array<any>> {
         let langs = [];
