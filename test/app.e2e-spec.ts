@@ -358,18 +358,6 @@ describe('Backend API', () => {
         .expect(404)
   });
 
-  it('Diff: Hash diff', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
-        .expect(200)
-  });
-
-  it('Diff: Spam hashes', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/hash/null/Qmasfdsa')
-        .expect(200)
-  });
-
   it('Preview: By Hash', () => {
     return request(app.getHttpServer())
         .get('/v2/preview/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd,QmTbt2AFYFbyF1cae7AuXiYfEWEsDVgnth2Z5X4YBceu6z')

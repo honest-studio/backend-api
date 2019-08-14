@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
+import { RedisService, MysqlService } from '../feature-modules/database';
 import { Proposal, ProposalOptions, ProposalService } from '../proposal';
 
 @Injectable()
 export class HistoryService {
     constructor(
-        private mongo: MongoDbService,
         private mysql: MysqlService,
+        private redis: RedisService,
         private proposalService: ProposalService,
         private diffService: DiffService
     ) {}
@@ -17,47 +17,19 @@ export class HistoryService {
         // idk why, I just work with what I have ¯\_(ツ)_/¯
         // so we search for both regular and encoded slugs
         const mysql_slug = this.mysql.cleanSlugForMysql(slug);
-        let proposal_id_docs = await this.mongo
-            .connection()
-            .actions.find(
-                {
-                    'trace.act.account': 'eparticlectr',
-                    'trace.act.name': 'logpropinfo',
-                    $or: [
-                        { 'trace.act.data.slug': slug },
-                        { 'trace.act.data.slug': mysql_slug },
-                    ],
-                    'trace.act.data.lang_code': lang_code
-                },
-                { projection: { 'trace.act.data.proposal_id': 1 } }
-            )
-            .sort({ 'trace.act.data.proposal_id': -1 })
-            .toArray();
+        const encoded_slug = encodeURIComponent(slug);
+        const encoded_mysql_slug = encodeURIComponent(mysql_slug);
 
-        // If the proposal isn't found yet, try more slugs 
-        if (!proposal_id_docs.length){
-            proposal_id_docs = await this.mongo
-            .connection()
-            .actions.find(
-                {
-                    'trace.act.account': 'eparticlectr',
-                    'trace.act.name': 'logpropinfo',
-                    $or: [
-                        { 'trace.act.data.slug': encodeURIComponent(slug) },
-                        { 'trace.act.data.slug': encodeURIComponent(mysql_slug) },
-                    ],
-                    'trace.act.data.lang_code': lang_code
-                },
-                { projection: { 'trace.act.data.proposal_id': 1 } }
-            )
-            .sort({ 'trace.act.data.proposal_id': -1 })
-            .toArray();
-        }
+        const pipeline = this.redis.connection().pipeline();
+        pipeline.zrevrange(`wiki:lang_${lang_code}:${slug}:proposals`, 0, -1);
+        pipeline.zrevrange(`wiki:lang_${lang_code}:${mysql_slug}:proposals`, 0, -1);
+        pipeline.zrevrange(`wiki:lang_${lang_code}:${encoded_slug}:proposals`, 0, -1);
+        pipeline.zrevrange(`wiki:lang_${lang_code}:${encoded_mysql_slug}:proposals`, 0, -1);
+        const values = await pipeline.exec();
 
-        const proposal_ids = proposal_id_docs
-            .map((doc) => doc.trace.act.data.proposal_id)
-            .filter((v, i, arr) => arr.indexOf(v) === i) // get unique values
-            .map(Number);
+        const value = values.find(v => v[1]);
+        if (!value) return []; // no history
+        const proposal_ids = value[1];
 
         const proposals = await this.proposalService.getProposals(proposal_ids, options);
 

@@ -23,6 +23,8 @@ export class DiffController {
     })
     async getDiffByProposal(@Param('proposal_id') query_ids): Promise<Array<ArticleJson>> {
         const proposal_ids: Array<number> = query_ids.split(',').map(Number);
-        return await this.diffService.getDiffsByProposal(proposal_ids);
+        const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
+        if (diffs.length == 0) throw new NotFoundException(
+        return diffs;
     }
 }
