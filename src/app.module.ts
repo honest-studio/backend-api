@@ -7,7 +7,7 @@ import { RecentActivityController } from './recent-activity/recent-activity.cont
 import { RecentActivityService } from './recent-activity/recent-activity.service';
 import { SitemapController, SitemapService } from './sitemap';
 import { ChainController, ChainService } from './chain';
-import { DiffController, DiffService } from './diff';
+import { DiffService } from './diff';
 import { PreviewController, PreviewService } from './preview';
 import { SearchController, SearchService } from './search';
 import { ContactUsController, ContactUsService } from './contact-us';
@@ -142,7 +142,6 @@ const histogramLabelBuckets = ['pid']
         RecentActivityController,
         ChainController,
         SearchController,
-        DiffController,
         PreviewController,
         HistoryController,
         MediaUploadController,
