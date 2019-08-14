@@ -141,7 +141,7 @@ export class PreviewService {
     }
 
     async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
-        if (wiki_identities && wiki_identities.length == 0) return [];
+        if (!wiki_identities || wiki_identities.length == 0) return [];
         let previews: Array<PreviewResult>;
 
         // check Redis for fast cache
