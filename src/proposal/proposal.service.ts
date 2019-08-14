@@ -85,18 +85,13 @@ export class ProposalService {
         }
 
         if (options.diff != 'none') {
-            const diffs = await this.diffService.getDiffsByProposal(proposal_ids);
-            if (options.diff === 'full')
-                diffs.forEach(diff => {
-                    const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
-                    const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
-                    proposal.diff = diff;
-                });
-            else if (options.diff === 'metadata')
-                diffs.forEach(diff => {
-                    const proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
-                    proposals.find((p) => p.proposal_id == proposal_id).diff = { metadata: diff.metadata };
-                });
+            const metadata_only = (options.diff == "metadata");
+            const diffs = await this.diffService.getDiffsByProposal(proposal_ids, metadata_only);
+            diffs.forEach(diff => {
+                const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
+                const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
+                proposal.diff = diff;
+            });
         }
 
         return proposals;

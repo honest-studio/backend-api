@@ -1,29 +1,38 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { MongoDbService } from '../feature-modules/database';
+import { MongoDbService, RedisService } from '../feature-modules/database';
 import { ArticleJson } from '../types/article';
 import { diffArticleJson } from '../utils/article-utils/article-differ';
 import { WikiService } from '../wiki';
 
 @Injectable()
 export class DiffService {
-    constructor(private wikiService: WikiService, private mongo: MongoDbService) {}
+    constructor(private wikiService: WikiService, private mongo: MongoDbService, private redis: RedisService) {}
 
-    async getDiffsByProposal(proposal_ids: Array<number>): Promise<Array<ArticleJson>> {
+    async getDiffsByProposal(proposal_ids: Array<number>, metadata_only: boolean = false): Promise<Array<ArticleJson>> {
         const ipfs_hashes = [];
         const proposal_hashes = [];
 
-        const diffs = [];
-        for (const i in proposal_ids) {
-            const proposal_id = proposal_ids[i];
+        // Redis cache get
+        const pipeline = this.redis.connection().pipeline();
+        for (let proposal_id of proposal_ids) {
+            if (metadata_only)
+                pipeline.get(`proposal:${proposal_id}:diff:metadata`);
+            else
+                pipeline.get(`proposal:${proposal_id}:diff`);
+        }
+        const values = await pipeline.exec();
 
-            // check for cached diff
-            const cached_diff = await this.mongo.connection().diffs.findOne({ 
-                metadata: { $elemMatch: { key: 'proposal_id', 'value': proposal_id }}
-            })
-            if (cached_diff) {
-                diffs.push(cached_diff);
-                continue;
-            }
+        const diffs = [];
+        const uncached_proposals = [];
+        for (let i in values) {
+            if (values[i][1])
+                diffs.push(JSON.parse(values[i][1]));
+            else
+                uncached_proposals.push(proposal_ids[i]);
+        }
+
+        for (const i in uncached_proposals) {
+            const proposal_id = uncached_proposals[i];
 
             const proposal = await this.mongo.connection().actions.findOne({
                 'trace.act.account': 'eparticlectr',
@@ -60,6 +69,7 @@ export class DiffService {
         }
         const wikis = await this.wikiService.getWikisByHash(ipfs_hashes);
 
+        const pipeline2 = this.redis.connection().pipeline();
         proposal_hashes.forEach((prop) => {
             const old_wiki = wikis.find((w) => w.ipfs_hash == prop.old_hash);
             const new_wiki = wikis.find((w) => w.ipfs_hash == prop.new_hash);
@@ -68,9 +78,13 @@ export class DiffService {
                 diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
 
                 // cache result
-                this.mongo.connection().diffs.insertOne(diff_wiki);
+                pipeline2.set(`proposal:${prop.proposal_id}:diff`, JSON.stringify(diff_wiki));
+                pipeline2.set(`proposal:${prop.proposal_id}:diff:metadata`, JSON.stringify({ metadata: diff_wiki.metadata }));
 
-                diffs.push(diff_wiki);
+                if (metadata_only)
+                    diffs.push({ metadata: diff_wiki.metadata });
+                else
+                    diffs.push(diff_wiki);
             } catch (e) {
                 diffs.push({ 
                     error: "Error while diffing proposal " + prop.proposal_id,
@@ -78,27 +92,8 @@ export class DiffService {
                 })
             }
         });
+        pipeline2.exec();
 
         return diffs;
     }
-
-    // TODO: add caching
-    async getDiffByHash(old_hash: string, new_hash: string): Promise<ArticleJson> {
-        const cached_diff = await this.mongo
-            .connection()
-            .diffs.findOne({
-            })
-
-        const wikis = await this.wikiService.getWikisByHash([old_hash, new_hash]);
-
-        const old_wiki = wikis.find((w) => w.ipfs_hash == old_hash);
-        const new_wiki = wikis.find((w) => w.ipfs_hash == new_hash);
-        const diff_wiki = await diffArticleJson(old_wiki, new_wiki);
-
-        // cache result
-        this.mongo.connection().diffs.insertOne(diff_wiki);
-
-        return diff_wiki;
-    }
-
 }

@@ -138,15 +138,16 @@ function restartIfFailing() {
 }
 
 async function replayRedis () {
-    console.log(config.get("REDIS_REPLAY_ACTIONS"));
-    //if (config.get("REDIS_REPLAY_ACTIONS") === false) return;
-
-    await redis.flushdb();
-    console.log(`REDIS: Flushed DB. Replaying actions`);
+    if (config.get("REDIS_REPLAY_ACTIONS") !== "false") {
+        await redis.flushdb();
+        console.log(`REDIS: Flushed DB. Replaying actions`);
+    }
 
     const BATCH_SIZE = 50000;
     const mongo_actions = await mongo_actions_promise;
-    let last_block_num = 0;
+    let last_block_num = Number(await redis.get(`eos_actions:last_block_replayed`));
+    if (!last_block_num)
+        last_block_num = 0;
 
     // catchup actions
     while (true) {
@@ -157,6 +158,7 @@ async function replayRedis () {
         await redis_process_actions(actions);
         if (actions.length < BATCH_SIZE) break;
         last_block_num = actions[actions.length - 1].block_num;
+        await redis.set(`eos_actions:last_block_replayed`, last_block_num);
     }
 
     return true;
