@@ -856,7 +856,8 @@ export const sizes = {
 	phone: 576
 };
 
-const WEBP_UNSUPPORTED_BROWSERS: Partial<BrowserInfo['name']>[] = ['edge', 'safari', 'ie', 'bb10', 'ios', 'ios-webview'];
+// Edge and the latest Firefox do support WebP, but only as of ~ late 2018
+const WEBP_UNSUPPORTED_BROWSERS: Partial<BrowserInfo['name']>[] = ['edge', 'safari', 'ie', 'bb10', 'ios', 'ios-webview', 'firefox'];
 
 export const IsWebPCompatibleBrowser = (browser: BrowserInfo['name']): boolean => {
 	return !WEBP_UNSUPPORTED_BROWSERS.includes(browser);

@@ -52,7 +52,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         citation: []
     };
     schemaJSON.about['name'] = page_title;
-    schemaJSON.about['@type'] = page_type;
+    schemaJSON.about['@type'] = page_type ? page_type : "Thing";
     
     switch (page_type) {
         case 'Person':
