@@ -138,25 +138,29 @@ function restartIfFailing() {
 }
 
 async function replayRedis () {
-    console.log(config.get("REDIS_REPLAY_ACTIONS"));
-    //if (config.get("REDIS_REPLAY_ACTIONS") === false) return;
-
-    await redis.flushdb();
-    console.log(`REDIS: Flushed DB. Replaying actions`);
-
+    const replay_config = (config.get("REDIS_REPLAY_ACTIONS") && config.get("REDIS_REPLAY_ACTIONS") === "true");
+    const reset_config = (config.get("REDIS_RESET_DB") && config.get("REDIS_RESET_DB") === "true");
+    if (reset_config) {
+        await redis.flushdb();
+        console.log(`REDIS: Flushed DB.`);
+    }
     const BATCH_SIZE = 50000;
     const mongo_actions = await mongo_actions_promise;
-    let last_block_num = 0;
+
+    const last_block_replayed = Number(await redis.get(`eos_actions:last_block_replayed`));
+    let start_block = replay_config ? 0 : last_block_replayed;
 
     // catchup actions
     while (true) {
-        let query = { block_num: { $gte: last_block_num }};
+        let query = { block_num: { $gte: start_block }};
         let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        console.log(`REDIS: Syncing ${actions.length} actions since block ${last_block_num} to Redis`);
+        console.log(`REDIS: Syncing ${actions.length} actions since block ${start_block} to Redis`);
 
         await redis_process_actions(actions);
         if (actions.length < BATCH_SIZE) break;
-        last_block_num = actions[actions.length - 1].block_num;
+        start_block = actions[actions.length - 1].block_num; // start block for next iteration
+        if (start_block > last_block_replayed)
+            await redis.set(`eos_actions:last_block_replayed`, start_block);
     }
 
     return true;
@@ -168,8 +172,15 @@ async function redis_process_actions (actions) {
         // Make sure this action hasn't already been processed
         // Re-processing happens a lot during restarts and replays
         const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
+
+        // Temporary reprocess to add history
+        if (processed && action.trace.act.name == "logpropinfo") {
+            const proposal_id = action.trace.act.data.proposal_id;
+            const lang_code = action.trace.act.data.lang_code;
+            const slug = action.trace.act.data.slug;
+            await redis.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
+        }
         if (processed) continue;
-        else await redis.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
 
         // process action
         const pipeline = redis.pipeline();
@@ -186,6 +197,7 @@ async function redis_process_actions (actions) {
             const slug = action.trace.act.data.slug;
             pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
             pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
+            pipeline.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
         }
         else if (action.trace.act.name == "logpropres") {
             // v1 results are done based on proposal hash

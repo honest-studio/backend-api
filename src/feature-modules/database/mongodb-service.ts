@@ -6,7 +6,6 @@ import { ConfigService } from '../../common';
 export type ActionEntity = any;
 export type PlagiarismEntity = any;
 export type WikiEntity = any;
-export type DiffEntity = any;
 export type JsonWikiEntity = any;
 export type StatEntity = any;
 export type OAuthTokenEntity = any;
@@ -15,7 +14,6 @@ export type AppConnectionInstance = {
     client: MongoClient;
     db: Db;
     actions: Collection<ActionEntity>;
-    diffs: Collection<DiffEntity>;
     statistics: Collection<StatEntity>;
     json_wikis: Collection<JsonWikiEntity>;
     oauth_tokens: Collection<OAuthTokenEntity>;
@@ -52,11 +50,10 @@ export class MongoDbService {
                         } else {
                             const db = client.db(this.config.get("MONGODB_DATABASE_NAME"));
                             const actions = db.collection('actions');
-                            const diffs = db.collection('diffs');
                             const json_wikis = db.collection('json_wikis');
                             const statistics = db.collection('statistics');
                             const oauth_tokens = db.collection('oauth_tokens');
-                            resolve({ client, db, actions, diffs, json_wikis, statistics, oauth_tokens });
+                            resolve({ client, db, actions, json_wikis, statistics, oauth_tokens });
                         }
                     }
                 );

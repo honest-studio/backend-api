@@ -67,6 +67,7 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     PRERENDER_TOKEN: Joi.string().required(),
     BOT_TOKEN_1: Joi.string().required(),
     ETERNUM_API_KEY: Joi.string().required(),
-    REDIS_REPLAY_ACTIONS: Joi.boolean().default(true)
+    REDIS_REPLAY_ACTIONS: Joi.boolean().default(false),
+    REDIS_RESET_DB: Joi.boolean().default(false)
 });
 

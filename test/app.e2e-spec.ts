@@ -339,36 +339,6 @@ describe('Backend API', () => {
         .get('/v2/search/schema-by-type/birth?page_type=Person')
         .expect(200)
   });
-  
-  it('Diff: Proposal diff', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/proposal/190')
-        .expect(200)
-  });
-
-  it('Diff: Proposal diffs', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/proposal/182,192,190')
-        .expect(200)
-  });
-
-  it('Diff: Non-existent proposal', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/proposal/7989239023')
-        .expect(404)
-  });
-
-  it('Diff: Hash diff', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/hash/Qma8CesWPfYnM5JyZ4E5qtrSPUfUVRu3EmrqmE1oCAdfEd/QmTEYQdsqrjSP9PNLbtZVzSeAm9XSircTgL6bB2LGoAB6v')
-        .expect(200)
-  });
-
-  it('Diff: Spam hashes', () => {
-    return request(app.getHttpServer())
-        .get('/v2/diff/hash/null/Qmasfdsa')
-        .expect(200)
-  });
 
   it('Preview: By Hash', () => {
     return request(app.getHttpServer())
@@ -483,6 +453,12 @@ describe('Backend API', () => {
   it('Sitemap: Recent', () => {
     return request(app.getHttpServer())
         .get('/v2/sitemap/recent/en')
+        .expect(200)
+  });
+
+  it('Status: IPFS', () => {
+    return request(app.getHttpServer())
+    .get('/v2/status/ipfs')
         .expect(200)
   });
 
