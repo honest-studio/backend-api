@@ -18,6 +18,7 @@ dotenv.config();
 const config = {
     get: (param) => process.env[param]
 };
+const DFUSE_ACTION_LOGGING = (config.get("DFUSE_ACTION_LOGGING") && config.get("DFUSE_ACTION_LOGGING") === "true");
 
 const mongo_actions_promise: Promise<Collection> = new Promise((resolve, reject) => {
     MongoClient.connect(config.get("MONGODB_URL"), { poolSize: 10, useNewUrlParser: true }, (err, client) => {
@@ -60,7 +61,7 @@ async function start() {
         });
     }
     catch (err) {
-        console.log('failed to connect to websocket in eos-sync-service ', err);
+        console.error('failed to connect to websocket in scripts/synconly.ts ', err);
     }
     dfuse.on('open', async () => {
         const article_req = {
@@ -91,7 +92,7 @@ async function start() {
         lastMessageReceived = Date.now();
         const msg = JSON.parse(msg_str);
         if (msg.type != 'action_trace') {
-            console.log(msg);
+            if (DFUSE_ACTION_LOGGING) console.log(msg);
             return;
         }
         const mongo_actions = await mongo_actions_promise;
@@ -100,14 +101,14 @@ async function start() {
                 const block_num = msg.data.block_num;
                 const account = msg.data.trace.act.account;
                 const name = msg.data.trace.act.name;
-                console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
+                if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
             })
             .catch((err) => {
                 if (err.code == 11000) {
-                    console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
+                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
                 }
                 else {
-                    console.log('MONGO: Error inserting action ', msg, ' \n Error message on insert: ', err);
+                    if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', msg, ' \n Error message on insert: ', err);
                     throw err;
                 }
             });
@@ -142,7 +143,7 @@ async function replayRedis () {
     const reset_config = (config.get("REDIS_RESET_DB") && config.get("REDIS_RESET_DB") === "true");
     if (reset_config) {
         await redis.flushdb();
-        console.log(`REDIS: Flushed DB.`);
+        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Flushed DB.`);
     }
     const BATCH_SIZE = 50000;
     const mongo_actions = await mongo_actions_promise;
@@ -154,7 +155,7 @@ async function replayRedis () {
     while (true) {
         let query = { block_num: { $gte: start_block }};
         let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        console.log(`REDIS: Syncing ${actions.length} actions since block ${start_block} to Redis`);
+        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Syncing ${actions.length} actions since block ${start_block} to Redis`);
 
         await redis_process_actions(actions);
         if (actions.length < BATCH_SIZE) break;
@@ -182,12 +183,25 @@ async function redis_process_actions (actions) {
             const endtime = action.trace.act.data.endtime;
             const ttl = endtime - (Date.now() / 1000 | 0);
             if (ttl > 0) {
-                console.log(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
                 pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
                 pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ttl);
             }
             else
-                pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, 0);
+                pipeline.del(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
+            await pipeline.exec();
+        }
+        if (processed && action.trace.act.name == "logpropres") {
+            const pipeline = redis.pipeline();
+            const approved = action.trace.act.data.approved;
+            if (approved === 1) {
+                const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
+                const ipfs_hash = info.trace.act.data.ipfs_hash;
+                const lang_code = info.trace.act.data.lang_code;
+                const slug = info.trace.act.data.slug;
+                const endtime = action.trace.act.data.endtime;
+                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
+                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_updated`, endtime);
+            }
             await pipeline.exec();
         }
         if (processed) continue;
@@ -217,22 +231,25 @@ async function redis_process_actions (actions) {
         else if (action.trace.act.name == "logpropres") {
             // v1 results are done based on proposal hash
             // v2 results are done based on proposal ID
+            const approved = action.trace.act.data.approved;
             const proposal_id = action.trace.act.data.proposal_id;
             const proposal = action.trace.act.data.proposal;
             const key = proposal_id ? proposal_id : proposal;
             pipeline.set(`proposal:${key}:result`, JSON.stringify(action));
 
-            if (proposal_id) {
+            if (proposal_id && approved === 1) {
                 const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
                 try {
                     const ipfs_hash = info.trace.act.data.ipfs_hash;
                     const lang_code = info.trace.act.data.lang_code;
                     const slug = info.trace.act.data.slug;
+                    const endtime = info.trace.act.data.endtime;
                     pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
+                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_updated`, endtime);
                 } catch {
                     // some proposals dont have info strangely enough
                     // mark as unprocessed and continue
-                    console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
+                    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
                     await redis.del(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
                     continue;
                 }
@@ -274,7 +291,7 @@ async function catchupMongo () {
     const MAX_ACTIONS_PER_REQUEST = 100000;
     const dfuse_catchup_url = config.get("DFUSE_CATCHUP_URL");
     if (!dfuse_catchup_url) {
-        console.log(`MONGO: No DFUSE_CATCHUP_URL found. Skipping fast catchup`);
+        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: No DFUSE_CATCHUP_URL found. Skipping fast catchup`);
         return;
     }
     const mongo_actions = await mongo_actions_promise;
@@ -284,14 +301,14 @@ async function catchupMongo () {
         const article_start_block = await get_start_block('eparticlectr');
         const article_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/eparticlectr?since=${article_start_block}`;
 
-        console.log(`MONGO: Catching up on eparticlectr actions since block ${article_start_block}...`);
+        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Catching up on eparticlectr actions since block ${article_start_block}...`);
         const article_actions = await fetch(article_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
             .then(response => response.json())
 
         const filtered_actions = article_actions.filter(a => a.block_num != article_start_block);
         if (filtered_actions.length > 0) {
             const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
-            console.log(`MONGO: Synced ${insertion.insertedCount} eparticlectr actions`);
+            if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} eparticlectr actions`);
         }
         if (article_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
     }
@@ -301,14 +318,14 @@ async function catchupMongo () {
         const token_start_block = await get_start_block('everipediaiq');
         const token_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/everipediaiq?since=${token_start_block}`;
 
-        console.log(`MONGO: Catching up on everipediaiq actions since block ${token_start_block}...`);
+        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Catching up on everipediaiq actions since block ${token_start_block}...`);
         const token_actions = await fetch(token_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
             .then(response => response.json())
 
         const filtered_actions = token_actions.filter(a => a.block_num != token_start_block);
         if (filtered_actions.length > 0) {
             const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
-            console.log(`MONGO: Synced ${insertion.insertedCount} everipediaiq actions`);
+            if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} everipediaiq actions`);
         }
         if (token_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
     }
