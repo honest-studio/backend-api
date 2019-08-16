@@ -18,6 +18,7 @@ import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLt
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { mergeWikis } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
+import wikiImport from '../utils/wikipedia-importer/main';
 const util = require('util');
 var colors = require('colors');
 
@@ -70,6 +71,8 @@ export class WikiService {
     }
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
+        return wikiImport(slug);
+
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let decodedSlug = decodeURIComponent(mysql_slug);
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
