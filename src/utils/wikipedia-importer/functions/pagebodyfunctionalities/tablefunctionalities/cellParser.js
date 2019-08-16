@@ -21,20 +21,20 @@ const getParsedCellContent = (cell, $) => {
 	if (tempLength == 0) {	
 	nestedContentItems.push({ 
    	  	type: 'text', 
-     	content: [{type: 'sentence', index: 0, content: accumulator}] });
+     	content: [{type: 'sentence', index: 0, text: accumulator}] });
 	} else {
 		if (nestedContentItems[tempLength - 1].type == 'text') {
 			if (nestedContentItems[tempLength - 1].content[0].content != accumulator) {
 				nestedContentItems.push({ 
 			   	  	type: 'text', 
-			     	content: [{type: 'sentence', index: 0, content: accumulator}] });
+			     	content: [{type: 'sentence', index: 0, text: accumulator}] });
 			}
 		}
 		else {
 			if (accumulator != '') {
 				nestedContentItems.push({ 
 			   	  	type: 'text', 
-			     	content: [{type: 'sentence', index: 0, content: accumulator}] });
+			     	content: [{type: 'sentence', index: 0, text: accumulator}] });
 			}
 		}	
 	}
@@ -70,7 +70,7 @@ const cellParser = (element, $) => {
 				//sentence is completed 
 				nestedContentItems.push({
 	        	type: 'text', 
-	        	content: [{type: 'sentence', index: 0, content: accumulator}] });
+	        	content: [{type: 'sentence', index: 0, text: accumulator}] });
       		}
       		//push br tag 
       		nestedContentItems.push({
@@ -100,7 +100,7 @@ const cellParser = (element, $) => {
   					attrs: cleanAttributes(listElements[i].attrs),
   					content: { 
   						type: 'text',
-  						content: parseText(listElements[i], $)
+  						text: parseText(listElements[i], $)
   					} 
   				}) 
   			} 

@@ -81,7 +81,7 @@ const getPageBody = (html, url) => {
 					index: paragraphIndex,
 					items: table,
 					tag_type: 'table',
-					attrs: getAttributes(el.attrs)
+					attrs: getAttributes(el.attribs)
 				})
 				paragraphIndex++;
 			}
@@ -96,7 +96,7 @@ const getPageBody = (html, url) => {
 					index: paragraphIndex,
 					items: table,
 					tag_type: 'table',
-					attrs: getAttributes(childTable.attrs)
+					attrs: getAttributes(childTable[0].attribs)
 				})
 				paragraphIndex++;
 			}
@@ -107,7 +107,7 @@ const getPageBody = (html, url) => {
 				index: paragraphIndex,
 				items: items,
 				tag_type: 'ul',
-				attrs: getAttributes(el.attrs)
+				attrs: getAttributes(el.attribs)
 			})
 			paragraphIndex++;	
 		}

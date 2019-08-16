@@ -39,9 +39,4 @@ const newImport = async (page) => {
 	return articlejson; //return promise 
 }
 
-const main = async (page) => {
-	let articlejson = await newImport(page); //wait for promise to resolve 
-	console.log(articlejson);
-}
-
-module.exports = main; 
+module.exports = newImport; 

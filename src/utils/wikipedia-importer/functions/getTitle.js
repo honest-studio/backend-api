@@ -12,9 +12,9 @@ const getTitle = async (page) => {
 	const prop = 'prop=displaytitle';
 	var page = 'page=' + page;
 	const url = wikiMedia + action + '&' + prop + '&' + format + '&' + page;
-	let title = rp(url)
+	let title = await rp(url)
 					.then(body => JSON.parse(body).parse.displaytitle);
-	return title;
+	return [{ index: 0, text: title, type: "sentence" }];
 }
 
 
