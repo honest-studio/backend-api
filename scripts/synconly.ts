@@ -190,18 +190,22 @@ async function redis_process_actions (actions) {
                 pipeline.del(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
             await pipeline.exec();
         }
+        if (!action) console.log("Null action");
         if (processed && action.trace.act.name == "logpropres") {
             const pipeline = redis.pipeline();
             const approved = action.trace.act.data.approved;
-            if (approved === 1) {
-                const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
-                const ipfs_hash = info.trace.act.data.ipfs_hash;
-                const lang_code = info.trace.act.data.lang_code;
-                const slug = info.trace.act.data.slug;
+            const proposal_id = action.trace.act.data.proposal_id;
+            const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
+            const ipfs_hash = info.trace.act.data.ipfs_hash;
+            const lang_code = info.trace.act.data.lang_code;
+            const slug = info.trace.act.data.slug;
+            if (proposal_id && approved === 1) {
                 const endtime = action.trace.act.data.endtime;
                 pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
                 pipeline.set(`wiki:lang_${lang_code}:${slug}:last_updated`, endtime);
             }
+            else if (proposal_id && approved === 0)
+                pipeline.del(`wiki:lang_${lang_code}:${slug}:last_approved_hash`);
             await pipeline.exec();
         }
         if (processed) continue;

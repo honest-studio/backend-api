@@ -72,6 +72,29 @@ export class WikiService {
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         let decodedSlug = decodeURIComponent(mysql_slug);
+
+        // Get current IPFS hash
+        const pipeline = this.redis.connection().pipeline();
+        pipeline.get(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_proposed_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_proposed_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${slug}:last_accepted_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_accepted_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_accepted_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`);
+        const values = await pipeline.exec();
+        let current_hash;
+        for (let value of values) {
+            if (value[1]) current_hash = value[1];
+        }
+
+        // Try and get cached wiki
+        console.log("Current hash", current_hash);
+        if (current_hash) {
+            const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
+            if (cache_wiki) return JSON.parse(cache_wiki);
+        }
+
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT 
@@ -89,80 +112,28 @@ export class WikiService {
             `,
             [mysql_slug, mysql_slug, decodedSlug, decodedSlug, lang_code, lang_code]
         );
-        let ipfs_hash;
+        let db_hash;
         let overrideIsIndexed;
         let db_timestamp;
         let main_redirect_wikilangslug;
         if (ipfs_hash_rows.length > 0) {
             if (ignoreRemovalStatus) { /* Do nothing */ }
             else if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
-            ipfs_hash = ipfs_hash_rows[0].ipfs_hash;
+            db_hash = ipfs_hash_rows[0].ipfs_hash;
             main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
         };
 
-        // Get the 5 most recent proposals to compare and make sure the DB's IPFS hash is current
-        let latest_proposals = await this.mongo
-            .connection()
-            .actions.find(
-                {
-                    'trace.act.account': 'eparticlectr',
-                    'trace.act.name': 'logpropinfo',
-                    $or: [
-                        { 'trace.act.data.slug': slug },
-                        { 'trace.act.data.slug': mysql_slug }
-                    ],
-                    'trace.act.data.lang_code': lang_code
-                }
-            )
-            .sort({ 'trace.act.data.proposal_id': -1 })
-            .limit(5)
-            .toArray();
+        if (db_hash) this.redis.connection().set(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`, db_hash);
+        let ipfs_hash = db_hash;
+        if (current_hash && current_hash != ipfs_hash)
+            ipfs_hash = current_hash;
 
-        // Filter out proposals that are older than the DB timestamp
-        if (db_timestamp) {
-            latest_proposals = latest_proposals.filter(prop => new Date(prop.block_time).getTime() > db_timestamp.getTime());
-        }
-
-        if (latest_proposals.length > 0) {
-            // Make sure chosen hash is not a rejected edit
-            // Set the hash to the most recent unrejected edit
-            const proposal_ids = latest_proposals.map(l => l.trace.act.data.proposal_id);
-            const latest_results = await this.mongo
-                .connection()
-                .actions.find(
-                    {
-                        'trace.act.account': 'eparticlectr',
-                        'trace.act.name': 'logpropres',
-                        'trace.act.data.proposal_id': { $in: proposal_ids }
-                    }
-                )
-                .sort({ 'trace.act.data.proposal_id': -1 })
-                .limit(5)
-                .toArray();
-            for (let i in latest_proposals) {
-                const latest_ipfs_hash = latest_proposals[i].trace.act.data.ipfs_hash;
-                const proposal_id = latest_proposals[i].trace.act.data.proposal_id;
-                const result = latest_results.find(l => l.trace.act.data.proposal_id == proposal_id);
-                if (latest_ipfs_hash == ipfs_hash && result && result.trace.act.data.approved == 0) continue;
-                else {
-                    ipfs_hash = latest_ipfs_hash;
-                    break;
-                }
-            }
-        }
         if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
-        // Try and grab cached json wiki
-        let cache_wiki;
-        if (BooleanTools.default(cache)) {
-            cache_wiki = await this.mongo.connection().json_wikis.findOne({
-                ipfs_hash: ipfs_hash
-            });
-        }
-
+        // No cache available. Pull and construct it
         // get wiki from MySQL
         let wiki_rows: Array<any> = await this.mysql.TryQuery(
             `
@@ -172,10 +143,8 @@ export class WikiService {
             [ipfs_hash]
         );
         let wiki: ArticleJson;
-        let cachePresent = false;
         try {
             // check if wiki is already in JSON format
-            // return it immediately if it is
             wiki = JSON.parse(wiki_rows[0].html_blob);
             wiki.metadata = wiki.metadata.map((obj) => {
                 if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
@@ -186,40 +155,16 @@ export class WikiService {
             // some wikis don't have page langs set
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         } catch {
-            // if the wiki is not in JSON format, try and return the cache first
-            if (cache_wiki 
-                && cache_wiki.page_body 
-                && cache_wiki.page_body[0].paragraphs 
-                && cache_wiki.page_body[0].paragraphs.length
-            ){
-                
-                wiki = infoboxDtoPatcher(mergeMediaIntoCitations(cache_wiki));
-                cachePresent = true;
-                // some wikis don't have page langs set
-                if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
-            }
-            else{
-                // if the cache isn't available either, or there are no paragraphs, generate the JSON from the html_blob and return it
-                wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
-                wiki.metadata = wiki.metadata.map((obj) => {
-                    if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
-                    else return obj;
-                });
-                wiki.ipfs_hash = ipfs_hash;
+            // if the wiki is not in JSON format, generate the JSON from the html_blob and return it
+            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(wiki_rows[0].html_blob)));
+            wiki.metadata = wiki.metadata.map((obj) => {
+                if (obj.key == 'is_indexed') return { key: 'is_indexed', value: overrideIsIndexed }
+                else return obj;
+            });
+            wiki.ipfs_hash = ipfs_hash;
 
-                // some wikis don't have page langs set
-                if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
-            }
-
-
-        }
-
-        // mongo cache wiki - upsert so that cache=false updates the cache
-        if (!cachePresent){
-            this.mongo
-            .connection()
-            .json_wikis.replaceOne({ ipfs_hash: wiki.ipfs_hash }, wiki, { upsert: true })
-            .catch(console.log);
+            // some wikis don't have page langs set
+            if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
 
 
@@ -243,6 +188,9 @@ export class WikiService {
 
         // Add redirect information, if present
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
+
+        // cache wiki
+        this.redis.connection().set(`wiki:${ipfs_hash}`, JSON.stringify(wiki));
 
         return wiki;
     }
@@ -468,6 +416,9 @@ export class WikiService {
             body: JSON.stringify(pin_data)
         });
 
+        // Cache to Redis
+        this.redis.connection().set(`wiki:${ipfs_hash}`, JSON.stringify(wiki));
+
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
         let INTERVAL_MSEC = 2000;
@@ -692,9 +643,13 @@ export class WikiService {
             // Flush prerender for the main article
             flushPrerenders(page_lang, slug, prerenderToken);
 
+            // Set the DB hash in Redis
+            this.redis.connection().set(`wiki:lang_${page_lang}:${slug}:db_hash`, ipfs_hash);
+
             console.log(colors.green('========================================'));
             console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
             console.log(colors.green('========================================'));
+
         }
 
         return;
