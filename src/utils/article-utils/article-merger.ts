@@ -17,12 +17,20 @@ export interface InfoboxValueComparePack {
     insertIndex: number
 }
 
+export interface CountBeforePack {
+    page_body: number,
+    citations: number
+}
+
 export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJson): Promise<ArticleJson> {
     let resultantWiki = targetWiki;
     let workingSourceWiki = sourceWiki;
     let availableCitationID = getFirstAvailableCitationIndex(resultantWiki.citations);
 
-
+    let theCountBeforePack: CountBeforePack = {
+        page_body: targetWiki.page_body.length,
+        citations: targetWiki.citations.length
+    }
     // ========================================MAIN PHOTO========================================
     // If the target does not have a photo, or the default one, and the source does, replace it
     // If they both have photos, move the source's into the media gallery (converting it first from Media to Citation)
@@ -206,10 +214,16 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
         }
     })
     resultantWiki.citations.push(...newCitations);
-    
+
+    // Make sure the citation merge succeeded
+    if (resultantWiki.citations.length <= theCountBeforePack.citations) throw new Error('Something went wrong merging the two citations');
+
     // ============================================PAGE BODY============================================
     // Add the source's Sections[] to the end of the target's
     resultantWiki.page_body.push(...workingSourceWiki.page_body);
+
+    // Make sure the page_body merge succeeded
+    if (resultantWiki.page_body.length <= theCountBeforePack.page_body) throw new Error('Something went wrong merging the two body paragraphs');
 
     // ============================================METADATA=============================================
     // Adjust the metadata
@@ -245,4 +259,6 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     resultantWiki = addAMPInfo(resultantWiki);
 
     return resultantWiki;
+
+    
 }

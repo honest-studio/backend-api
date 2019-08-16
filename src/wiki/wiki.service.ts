@@ -65,7 +65,8 @@ export class WikiService {
         let mergedResult = await mergeWikis(sourceWiki, targetWiki);
         // console.log(util.inspect(mergedResult, {showHidden: false, depth: null, chalk: true}));
         // fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(mergedResult, null, 2));
-        console.log(mergedResult)
+        // console.log(mergedResult);
+        // return null;
         return mergedResult;
     }
 
@@ -545,6 +546,7 @@ export class WikiService {
         const page_title = wiki.page_title[0].text;
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+
         let text_preview;
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
