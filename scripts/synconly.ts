@@ -173,12 +173,22 @@ async function redis_process_actions (actions) {
         // Re-processing happens a lot during restarts and replays
         const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
 
-        // Temporary reprocess to add history
+        // Temporary reprocess to expire proposed hashes
         if (processed && action.trace.act.name == "logpropinfo") {
-            const proposal_id = action.trace.act.data.proposal_id;
+            const pipeline = redis.pipeline();
+            const ipfs_hash = action.trace.act.data.ipfs_hash;
             const lang_code = action.trace.act.data.lang_code;
             const slug = action.trace.act.data.slug;
-            await redis.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
+            const endtime = action.trace.act.data.endtime;
+            const ttl = endtime - (Date.now() / 1000 | 0);
+            if (ttl > 0) {
+                console.log(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
+                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
+                pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ttl);
+            }
+            else
+                pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, 0);
+            await pipeline.exec();
         }
         if (processed) continue;
 
@@ -195,9 +205,14 @@ async function redis_process_actions (actions) {
             const ipfs_hash = action.trace.act.data.ipfs_hash;
             const lang_code = action.trace.act.data.lang_code;
             const slug = action.trace.act.data.slug;
+            const endtime = action.trace.act.data.endtime;
+            const ttl = endtime - (Date.now() / 1000 | 0);
             pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
-            pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
             pipeline.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
+            if (ttl > 0) {
+                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
+                pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ttl);
+            }
         }
         else if (action.trace.act.name == "logpropres") {
             // v1 results are done based on proposal hash
