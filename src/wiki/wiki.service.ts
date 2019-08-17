@@ -89,7 +89,6 @@ export class WikiService {
         }
 
         // Try and get cached wiki
-        console.log("Current hash", current_hash);
         if (current_hash) {
             const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
             if (cache_wiki) return JSON.parse(cache_wiki);
