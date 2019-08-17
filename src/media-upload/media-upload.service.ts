@@ -94,20 +94,20 @@ export class MediaUploadService {
 
     async getBookInfoFromISBN(inputISBN: string): Promise<BookInfoPack> {
         let initialPack: BookInfoPack = {
-            title: null,
+            title: "<TITLE>",
             thumb: null,
-            url: null,
-            isbn_10: null,
-            isbn_13: null,
-            author: null,
-            publisher: null,
-            published: null,
+            url: `https://openlibrary.org/api/books?bibkeys=ISBN:${inputISBN}&jscmd=data&format=json`,
+            isbn_10: "<ISBN-10>",
+            isbn_13: "<ISBN-13>",
+            author: "<AUTHOR>",
+            publisher: "<PUBLISHER>",
+            published: "<PUBLISHED DATE>",
             description: []
         };
         
         // Fetch the url
         let response = await rp.default({
-            uri: `https://openlibrary.org/api/books?bibkeys=ISBN:${inputISBN}&jscmd=data&format=json`,
+            uri: initialPack.url,
             headers: UNIVERSAL_HEADERS,
             resolveWithFullResponse: true,
             // gzip: true
@@ -116,19 +116,22 @@ export class MediaUploadService {
         }).catch((err) => {
             console.log(err);
         });
+        
         let bookJSON = JSON.parse(response.body);
         let theKey = Object.keys(bookJSON)[0];
         bookJSON = bookJSON[theKey];
 
-        initialPack.title = `${bookJSON.title}${bookJSON.subtitle ? ": " + bookJSON.subtitle : ""}`;
-        initialPack.thumb = bookJSON.cover && bookJSON.cover.medium;
-        initialPack.url = bookJSON.url;
-        initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
-        initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
-        initialPack.author = bookJSON.authors && bookJSON.authors.map(author => author.name).join(", ");
-        initialPack.publisher = bookJSON.publishers && bookJSON.publishers.map(publisher => publisher.name).join(", ");
-        initialPack.published = bookJSON.publish_date;
-        
+        if(bookJSON && bookJSON.title){
+            initialPack.title = `${bookJSON.title}${bookJSON.subtitle ? ": " + bookJSON.subtitle : ""}`;
+            initialPack.thumb = bookJSON.cover && bookJSON.cover.medium;
+            initialPack.url = bookJSON.url;
+            initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
+            initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
+            initialPack.author = bookJSON.authors && bookJSON.authors.map(author => author.name).join(", ");
+            initialPack.publisher = bookJSON.publishers && bookJSON.publishers.map(publisher => publisher.name).join(", ");
+            initialPack.published = bookJSON.publish_date;
+        }
+
         let availableIndex = 1;
         initialPack.description = [
             {
@@ -157,6 +160,7 @@ export class MediaUploadService {
             );
             availableIndex = availableIndex + 1;
         }
+        
         return initialPack;
     }
 
