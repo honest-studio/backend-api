@@ -653,7 +653,16 @@ export class WikiService {
             flushPrerenders(page_lang, slug, prerenderToken);
 
             // Set the DB hash in Redis
-            this.redis.connection().set(`wiki:lang_${page_lang}:${slug}:db_hash`, ipfs_hash);
+            // Delete previews
+            // TODO: Update previews
+            const pipeline = this.redis.connection().pipeline();
+            const lowerslug = slug.toLowerCase();
+            pipeline.set(`wiki:lang_${page_lang}:${slug}:db_hash`, ipfs_hash);
+            pipeline.del(`preview:lang_${page_lang}:${slug}:webp`);
+            pipeline.del(`preview:lang_${page_lang}:${slug}`);
+            pipeline.del(`preview:lang_${page_lang}:${cleanedSlug}:webp`);
+            pipeline.del(`preview:lang_${page_lang}:${cleanedSlug}`);
+            pipeline.exec();
 
             console.log(colors.green('========================================'));
             console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
