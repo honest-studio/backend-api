@@ -375,6 +375,16 @@ export class WikiService {
         }
         const ipfs_hash = submission[0].hash;
 
+        // Pin it so it can be accessed on the network
+        try {
+            await this.ipfs.client().pin.add(ipfs_hash);
+        } catch (err) {
+            if (err.code == 'ECONNREFUSED') {
+                console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                throw new InternalServerErrorException(`Server error: The IPFS file could not be pinned`);
+            } else throw err;
+        }
+
         // Save submission immediately so we don't lose data
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');

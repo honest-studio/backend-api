@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MongoDbService, MysqlService } from '../feature-modules/database';
+import { MongoDbService, MysqlService, RedisService } from '../feature-modules/database';
 import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { PreviewService } from '../preview/preview.service';
 import { Proposal, ProposalService } from '../proposal';
@@ -11,6 +11,7 @@ export class RecentActivityService {
 
     constructor(
         private mongo: MongoDbService,
+        private redis: RedisService,
         private proposalService: ProposalService,
         private mysql: MysqlService,
         private previewService: PreviewService,
@@ -100,14 +101,9 @@ export class RecentActivityService {
     async getTrendingWikis(langs: string[] = [], range: string = 'today', limit: number = 10) {
         if (range == 'today') {
             // check cache first
-            const cache = await this.mongo.connection().statistics.findOne({ 
-                key: 'trending_pages',
-                range
-            });
+            const cache = await this.redis.connection().get(`trending_pages:today`);
             if (cache) {
-                delete cache._id;
-                const cache_age = Date.now() - cache.timestamp.getTime();
-                if (cache_age < this.TRENDING_CACHE_EXPIRE_MS) return cache.trending.slice(0, limit);
+                return JSON.parse(cache).slice(0, limit);
             }
 
             // No cache? Compute it
@@ -133,14 +129,7 @@ export class RecentActivityService {
                 unique_pageviews_today: row.pageviews,
             }));
 
-            const doc = {
-                key: 'trending_pages', 
-                timestamp: new Date(),
-                range, 
-                trending
-            };
-            await this.mongo.connection().statistics.deleteMany({ key: 'trending_pages', range });
-            this.mongo.connection().statistics.insertOne(doc);
+            this.redis.connection().set('trending_pages:today', JSON.stringify(trending));
 
             return trending.slice(0, limit);
         }
