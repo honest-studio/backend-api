@@ -224,8 +224,8 @@ export class PreviewService {
             if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
         }
         
-        // clean up text previews
         previews = previews.map(preview => {
+            // clean up text previews
             preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = sanitizeTextPreview(preview.text_preview);
