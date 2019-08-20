@@ -214,42 +214,16 @@ export class WikiService {
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
         let json_wikis = [];
 
-
-
-
-        // try to directly fetch cached json wikis
-        const cached_json_wikis = await this.mongo
-            .connection()
-            .json_wikis.find({
-                ipfs_hash: { $in: ipfs_hashes }
-            })
-            .toArray();
-        for (let json_wiki of cached_json_wikis) {
-            const index = ipfs_hashes.findIndex((hash) => hash == json_wiki.ipfs_hash);
-            json_wikis.push(json_wiki);
+        const pipeline = this.redis.connection().pipeline();
+        for (let hash in ipfs_hashes) {
+            pipeline.get(`wiki:${hash}`);
         }
-
-        // KEDAR: 
-            // This is a useless action. nothing is ever found in IPFS
-            // We need a better way to fetch wikis from IPFS
-            // Sync them from IPFS straight to our DB so we don't have to keep going back to the network
-        //// try to fetch wikis from local IPFS node
-        //const uncached_json_hashes = ipfs_hashes.filter((hash) => !json_wikis.find((json) => json.ipfs_hash == hash));
-        //for (const i in uncached_json_hashes) {
-        //    const ipfs_hash = uncached_json_hashes[i];
-        //    try {
-        //        const pinned = await this.ipfs.client().pin.ls(ipfs_hash);
-        //        const buffer: Buffer = await this.ipfs.client().cat(ipfs_hash);
-        //        const wiki = buffer.toString('utf8');
-        //        const json_wiki = oldHTMLtoJSON(wiki);
-        //        json_wiki.ipfs_hash = ipfs_hash;
-        //        json_wikis.push(json_wiki);
-        //    } catch (e) {
-        //        continue;
-        //    }
-        //}
-
-        const uncached_hashes = ipfs_hashes.filter(hash => !json_wikis.find(json => json.ipfs_hash == hash));
+        const values = await pipeline.exec();
+        let uncached_hashes = [];
+        for (let i in values) {
+            if (values[i][1]) json_wikis.push(JSON.parse(values[i][1]));
+            else uncached_hashes.push(ipfs_hashes[i]);
+        }
 
         if (uncached_hashes.length > 0) {
             // fetch remainder from mysql if they exist
@@ -258,6 +232,8 @@ export class WikiService {
                 [uncached_hashes]
             );
 
+            // Parse and cache wikis
+            const pipeline2 = this.redis.connection().pipeline();
             rows.forEach((r) => {
                 let json_wiki;
                 try {
@@ -266,21 +242,11 @@ export class WikiService {
                     json_wiki = oldHTMLtoJSON(r.html_blob);
                     json_wiki.ipfs_hash = r.ipfs_hash;
                 }
+                json_wiki = infoboxDtoPatcher(mergeMediaIntoCitations(json_wiki));
                 json_wikis.push(json_wiki);
+                pipeline.set(`wiki:${r.ipfs_hash}`, JSON.stringify(json_wiki));
             });
-
-            // cache uncached json wikis
-            const uncached_wikis = uncached_hashes
-                .map((hash) => json_wikis.find((json) => json.ipfs_hash == hash))
-                .filter((json) => json); // filter out non-existent wikis
-
-            uncached_wikis.forEach((json) => delete json._id);
-            if (uncached_wikis.length > 0) {
-                this.mongo
-                    .connection()
-                    .json_wikis.insertMany(uncached_wikis, { ordered: false })
-                    .catch((e) => console.log('Failed to cache some wikis', e));
-            }
+            pipeline2.exec();
 
             // mark wikis that couldn't be found
             for (let hash of ipfs_hashes) {
@@ -288,10 +254,6 @@ export class WikiService {
                 if (!json) json_wikis.push({ ipfs_hash: hash, error: `Wiki ${hash} could not be found` });
             }
         }
-
-        json_wikis = json_wikis.map((innerWiki) => {
-            return infoboxDtoPatcher(mergeMediaIntoCitations(innerWiki));
-        })
 
         return json_wikis;
     }

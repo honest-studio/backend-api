@@ -86,8 +86,9 @@ export class DiffService {
 
         const pipeline5 = this.redis.connection().pipeline();
         proposal_hashes.forEach((prop) => {
-            const old_wiki = wikis.find((w) => w.ipfs_hash == prop.old_hash);
-            const new_wiki = wikis.find((w) => w.ipfs_hash == prop.new_hash);
+            let old_wiki: any = wikis.find((w) => w.ipfs_hash == prop.old_hash);
+            let new_wiki = wikis.find((w) => w.ipfs_hash == prop.new_hash);
+            if (!old_wiki) old_wiki = {};
             try {
                 const diff_wiki = diffArticleJson(old_wiki, new_wiki);
                 diff_wiki.metadata.push({ key: 'proposal_id', value: prop.proposal_id });
@@ -101,6 +102,7 @@ export class DiffService {
                 else
                     diffs.push(diff_wiki);
             } catch (e) {
+                console.error(e);
                 diffs.push({ 
                     error: "Error while diffing proposal " + prop.proposal_id,
                     metadata: [{ key: "proposal_id", value: prop.proposal_id }]

@@ -17,13 +17,6 @@ export class StatController {
         required: false
     })
     @ApiImplicitQuery({
-        name: 'since',
-        description: `UNIX timestamp of point in time to start leaderboard calculation
-            If specified, this overrides 'period'.
-            Example: 1553712876`,
-        required: false
-    })
-    @ApiImplicitQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`,
         required: false

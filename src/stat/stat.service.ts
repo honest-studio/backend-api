@@ -4,7 +4,6 @@ import { MongoDbService, RedisService, MysqlService } from '../feature-modules/d
 
 export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
-    since: number; // UNIX timestamp. overrides period
     cache: boolean;
     limit: number;
 }
@@ -48,10 +47,7 @@ export class StatService {
         const approx_head_block = approx_head_block_res[0].block_num;
 
         let startblock;
-        if (options.since) {
-            const secsDiff = (Date.now() / 1000 | 0) - options.since;
-            startblock = approx_head_block - 2*secsDiff;
-        } else if (options.period == 'today') {
+        if (options.period == 'today') {
             startblock = approx_head_block - 2*86400;
         } else if (options.period == 'this-week') {
             startblock = approx_head_block - 2*86400*7;
