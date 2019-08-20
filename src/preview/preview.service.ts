@@ -146,6 +146,7 @@ export class PreviewService {
 
         // check Redis for fast cache
         const useWebP = IsWebPCompatibleBrowser(user_agent);
+        console.log(useWebP);
         const pipeline = this.redis.connection().pipeline();
         for (let id of wiki_identities) {
             let memkey = `preview:lang_${id.lang_code}:${id.slug}`;
@@ -233,20 +234,21 @@ export class PreviewService {
 
             // Pull out the WebP main photo and thumb, if present
             // Get the article JSON
-            let wiki: ArticleJson;
-            try {
-                wiki = JSON.parse(preview.html_blob);
-            } catch (e) {
-                // SKIPPING for speed concerns
-                wiki = oldHTMLtoJSON(preview.html_blob);
+            if (useWebP) {
+                let wiki: ArticleJson;
+                try {
+                    wiki = JSON.parse(preview.html_blob);
+                } catch (e) {
+                    // SKIPPING for speed concerns
+                    wiki = oldHTMLtoJSON(preview.html_blob);
+                }
+                let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+
+                let photoPack = PhotoToUse(main_photo, user_agent);
+
+                preview.main_photo = photoPack.full;
+                preview.thumbnail = photoPack.thumb;
             }
-            let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
-
-            let photoPack = PhotoToUse(main_photo, user_agent);
-
-
-            preview.main_photo = photoPack.full;
-            preview.thumbnail = photoPack.thumb;
 
             // Remove the html_blob from the preview
             const { html_blob, ...newPreview } = preview
