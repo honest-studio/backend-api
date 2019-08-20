@@ -19,7 +19,7 @@ export class StatService {
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
         if (options.period == 'all-time') {
-            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 0, options.limit, 'WITHSCORES');
+            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 1, options.limit + 1, 'WITHSCORES');
             let doc = [];
             for (let i=0; i < rewards.length; i++) {
                 if (i % 2 == 0) doc.push({ user: rewards[i] });
@@ -57,9 +57,7 @@ export class StatService {
             startblock = approx_head_block - 2*86400*7;
         } else if (options.period == 'this-month') {
             startblock = approx_head_block - 2*86400*30;
-        } else if (options.period == 'all-time') {
-            startblock = 15000000;
-        }
+        } 
         let editor_rewards = await this.mongo
             .connection()
             .actions.mapReduce(
