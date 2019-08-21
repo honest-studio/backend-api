@@ -20,6 +20,7 @@ import { mergeWikis } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
 var colors = require('colors');
+import FormData from 'form-data';
 
 export interface MergeInputPack {
     source: {
@@ -325,34 +326,51 @@ export class WikiService {
     async submitWiki(wiki: ArticleJson): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
-        let blob = JSON.stringify(wiki);
-        let submission;
-        try {
-            submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
-        } catch (err) {
-            if (err.code == 'ECONNREFUSED') {
-                console.log(`WARNING: IPFS could not be accessed. Is it running?`);
-                throw new InternalServerErrorException(`Server error: The IPFS node is down`);
-            } else throw err;
-        }
-        const ipfs_hash = submission[0].hash;
-
-        // Pin it so it can be accessed on the network
-        try {
-            await this.ipfs.client().pin.add(ipfs_hash);
-        } catch (err) {
-            if (err.code == 'ECONNREFUSED') {
-                console.log(`WARNING: IPFS could not be accessed. Is it running?`);
-                throw new InternalServerErrorException(`Server error: The IPFS file could not be pinned`);
-            } else throw err;
-        }
-
-        // Save submission immediately so we don't lose data
+        // get wiki info
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
+
+        // Pin to Eternum
+        let blob = JSON.stringify(wiki);
+        const form = new FormData();
+        form.append('path', blob);
+        const random_id = Math.random().toString(36).substring(2);
+        let ipfs_hash = await fetch(`https://ipfs.eternum.io/ipfs/QmPCacqc5icpYCuoKKBnChawTK9E732hPWeHc7snezwjLa/${random_id}`, {
+            method: 'PUT',
+            body: form,
+            headers: form.getHeaders()
+        }).then(response => response.headers.get('ipfs-hash'));
+
+        const pin_data = {
+            hash: ipfs_hash,
+            name: `lang_${page_lang}/${slug}`
+        };
+        fetch(`https://www.eternum.io/api/pin/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
+            },
+            body: JSON.stringify(pin_data)
+        })
+
+        if (!ipfs_hash) {
+            let submission;
+            try {
+                submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
+            } catch (err) {
+                if (err.code == 'ECONNREFUSED') {
+                    console.log(`WARNING: IPFS could not be accessed. Is it running?`);
+                    throw new InternalServerErrorException(`Server error: The IPFS node is down`);
+                } else throw err;
+            }
+            const ipfs_hash = submission[0].hash;
+        }
+
+        // Save submission immediately so we don't lose data
         let wikiCopy: ArticleJson = addAMPInfo(wiki);
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);
@@ -373,19 +391,7 @@ export class WikiService {
             else throw e;
         }
 
-        // Pin to Eternum
-        const pin_data = {
-                hash: ipfs_hash,
-                name: `lang_${page_lang}/${slug}`
-        };
-        fetch(`https://www.eternum.io/api/pin/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
-            },
-            body: JSON.stringify(pin_data)
-        });
+
 
         // Cache to Redis
         this.redis.connection().set(`wiki:${ipfs_hash}`, JSON.stringify(wiki));
