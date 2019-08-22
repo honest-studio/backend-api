@@ -79,15 +79,20 @@ export class WikiService {
         pipeline.get(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_proposed_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_proposed_hash`);
-        pipeline.get(`wiki:lang_${lang_code}:${slug}:last_accepted_hash`);
-        pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_accepted_hash`);
-        pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_accepted_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${slug}:last_approved_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_approved_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_approved_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`);
         const values = await pipeline.exec();
         let current_hash;
         for (let value of values) {
             if (value[1]) current_hash = value[1];
+            break;
         }
+
+        // Checked for removed wiki
+        if (current_hash == "removed")
+            throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
 
         // Try and get cached wiki
         if (current_hash) {
