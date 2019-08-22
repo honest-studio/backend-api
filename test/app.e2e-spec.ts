@@ -427,12 +427,6 @@ describe('Backend API', () => {
         .expect(200)
   });
 
-  it('Stat: Editor Leaderboard - Since long time', () => {
-    return request(app.getHttpServer())
-        .get('/v2/stat/editor-leaderboard?since=1573243')
-        .expect(200)
-  });
-
   it('Contact Us: Submit', () => {
     return request(app.getHttpServer())
         .post('/v2/contact-us')

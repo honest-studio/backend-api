@@ -6,7 +6,6 @@ const StatQuerySchema = {
     period: Joi.boolean()
         .valid('today', 'this-week', 'this-month', 'all-time')
         .default('today'),
-    since: Joi.number()
 };
 
 export { StatQuerySchema };

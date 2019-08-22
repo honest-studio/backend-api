@@ -69,6 +69,7 @@
     "express": "^4.17.1",
     "ffmpeg-extract-frame": "^1.0.2",
     "file-type": "^12.1.0",
+    "form-data": "^2.5.0",
     "get-pixels": "^3.3.2",
     "get-youtube-id": "^1.0.1",
     "html-tag": "^2.0.0",

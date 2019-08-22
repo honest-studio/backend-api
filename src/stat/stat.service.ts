@@ -4,7 +4,6 @@ import { MongoDbService, RedisService, MysqlService } from '../feature-modules/d
 
 export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
-    since: number; // UNIX timestamp. overrides period
     cache: boolean;
     limit: number;
 }
@@ -48,10 +47,7 @@ export class StatService {
         const approx_head_block = approx_head_block_res[0].block_num;
 
         let startblock;
-        if (options.since) {
-            const secsDiff = (Date.now() / 1000 | 0) - options.since;
-            startblock = approx_head_block - 2*secsDiff;
-        } else if (options.period == 'today') {
+        if (options.period == 'today') {
             startblock = approx_head_block - 2*86400;
         } else if (options.period == 'this-week') {
             startblock = approx_head_block - 2*86400*7;
@@ -142,12 +138,16 @@ export class StatService {
     }
 
     async siteUsage(): Promise<any> {
-        let doc = await this.mongo.connection().statistics.findOne({ key: 'site_usage' });
+        let doc: any = await this.redis.connection().get('site_usage');
 
         if (doc) {
-            delete doc._id;
+            doc = JSON.parse(doc);
+            doc.timestamp = new Date(doc.timestamp);
         }
         else {
+            doc = await this.mongo.connection().statistics.findOne({ 'key': 'site_usage' });
+        }
+        if (!doc) {
             doc = {
                 key: 'site_usage',
                 timestamp: new Date('2015-01-01'),
@@ -160,13 +160,14 @@ export class StatService {
             };
         }
 
-        // for the update case where block_num doesn't exist
-        if (!doc.block_num) {
-            const block_doc = await this.mongo.connection().actions.findOne({ 
-                block_time: { $gt: doc.timestamp.toISOString() }
-            });
-            doc.block_num = block_doc.block_num;
-        }
+        const pipeline = this.redis.connection().pipeline();
+        pipeline.get("stat:total_edits");
+        pipeline.scard("stat:unique_editors");
+        pipeline.get("stat:total_iq_rewards");
+        const values = await pipeline.exec();
+        doc.total_edits = Number(values[0][1]);
+        doc.total_editors = Number(values[1][1]);
+        doc.total_iq_rewards = (Number(values[2][1]) - 1e10).toFixed(3)
 
         const mysql_date = doc.timestamp.toISOString().slice(0, 19).replace('T', ' ');
         const new_article_count: Array<any> = await this.mysql.TryQuery(
@@ -205,49 +206,6 @@ export class StatService {
             );
             doc.total_pageviews[0].pageviews += new_pageviews[0].new_pageviews;
         }
-
-        const total_edits: any = await this.mongo
-            .connection()
-            .actions.countDocuments({ 
-                $or: [
-                    { 'trace.act.name': 'propose' },
-                    { 'trace.act.name': 'propose2' }
-                ]
-            });
-        doc.total_edits = total_edits;
-
-        let total_editors: any = await this.mongo
-            .connection()
-            .actions.aggregate([
-                { $match: { 
-                    $or: [
-                        { 'trace.act.name': 'propose' },
-                        { 'trace.act.name': 'propose2' }
-                    ]
-                    //block_num: { $gt: doc.block_num }
-                }},
-                { $group: { _id: '$trace.act.data.proposer' } },
-                { $group: { _id: 1, count: { $sum: 1 } } }
-            ])
-            .toArray();
-        doc.total_editors = total_editors[0].count;
-
-        let new_iq_rewards = await this.mongo
-            .connection()
-            .actions.mapReduce(
-                'function () { emit( 1, Number(this.trace.act.data.quantity.split(" ")[0]) ) }',
-                'function (key, values) { return Array.sum(values) }',
-                {
-                    query: {
-                        'block_num': { $gt: doc.block_num },
-                        'trace.act.account': 'everipediaiq',
-                        'trace.act.name': 'issue'
-                    },
-                    out: { inline: 1 }
-                }
-            );
-        if (new_iq_rewards.length > 0) doc.total_iq_rewards += Number(new_iq_rewards[0].value.toFixed(3));
-        doc.total_iq_rewards = Number(doc.total_iq_rewards.toFixed(3)); // fix decimal precision issues
 
         // Once in 1000 requests, re-generate it from scratch to keep the tallying honest
         // and deal with random issues like *cough* scrapers *cough*
@@ -290,7 +248,7 @@ export class StatService {
         
         doc.block_num = block_docs[0].block_num;
 
-        this.mongo.connection().statistics.replaceOne({ key: 'site_usage' }, doc, { upsert: true });
+        this.redis.connection().set('site_usage', JSON.stringify(doc));
 
         return doc;
     }

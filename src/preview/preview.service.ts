@@ -146,11 +146,12 @@ export class PreviewService {
 
         // check Redis for fast cache
         const useWebP = IsWebPCompatibleBrowser(user_agent);
-        console.log(useWebP);
         const pipeline = this.redis.connection().pipeline();
         for (let id of wiki_identities) {
-            let memkey = `preview:lang_${id.lang_code}:${id.slug}`;
+            let cleanedSlug = this.mysql.cleanSlugForMysql(id.slug);
+            let memkey = `preview:lang_${id.lang_code}:${cleanedSlug}`;
             if (useWebP) memkey = memkey + ":webp";
+            memkey = memkey.toLowerCase();
             pipeline.get(memkey);
         }
         const values = await pipeline.exec();
