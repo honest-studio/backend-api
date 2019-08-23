@@ -10,6 +10,7 @@ import * as JSONCycleCustom from './json-cycle-custom';
 var colors = require('colors');
 const voidElements = require('html-void-elements');
 const decode = require('unescape');
+const writeJsonFile = require('write-json-file');
 
 export const BLOCK_ELEMENTS = [
     "address",
@@ -248,6 +249,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
 
     const page_body = extractPageBody($);
 
+    writeJsonFile(path.resolve(__dirname, 'foo.json'), page_body)
 
     return { infobox_html, page_title, page_body, main_photo, citations, media_gallery, infoboxes, metadata, amp_info };
 }
@@ -1003,7 +1005,15 @@ export function parseSentences(inputString: string): Sentence[] {
         returnTokens.push(sentence);
     });
 
-    // console.log(returnTokens)
+    // Don't split inside a LINK, CITE, or INLINE IMAGE
+    for (let i = 0; i < returnTokens.length; i++) {
+        // const lastWord = returnTokens[i].split(' ').pop();
+        if (returnTokens[i].text.match(/\[\[(LINK|CITE|INLINE_IMAGE)\|(.*?)\|(.*?)\|(.*?)[!?.\s]\s?$/gm) && i + 1 < returnTokens.length) {
+            returnTokens[i].text = `${returnTokens[i].text}${returnTokens[i + 1].text}`;
+            returnTokens.splice(i + 1, 1);
+            i--; // re-check this sentence in case there's multiple bad splits
+        }
+    }
 
     return returnTokens;
 }

@@ -772,6 +772,46 @@ export function urlCleaner (inputURL: string): string {
 
 }
 
+export function sentenceSplitFixer(inputWiki: ArticleJson): ArticleJson {
+    // Convert values: Sentences[] to values: InfoboxValue[]
+    let modifiedWiki = inputWiki;
+    if (modifiedWiki && modifiedWiki.page_body && modifiedWiki.page_body.length) {
+        // Handle the body
+        modifiedWiki.page_body = modifiedWiki.page_body.map(section => {
+            let cleanedParagraphs: Paragraph[] = section.paragraphs;
+            cleanedParagraphs = cleanedParagraphs.map(para => {
+                switch (para.tag_type){
+                    case 'p': {
+                        if(para.items && para.items.length && para.items[0].hasOwnProperty('text')){
+                            let newPara = para;
+                            // Don't split inside a LINK, CITE, or INLINE IMAGE
+                            for (let i = 0; i < newPara.items.length; i++) {
+                                // const lastWord = returnTokens[i].split(' ').pop();
+                                if ((newPara.items[i] as Sentence).text.match(/\[\[(LINK|CITE|INLINE_IMAGE)\|(.*?)\|(.*?)\|(.*?)[!?.\s]\s?$/gm) && i + 1 < newPara.items.length) {
+                                    (newPara.items[i] as Sentence).text = `${(newPara.items[i] as Sentence).text}${(newPara.items[i + 1] as Sentence).text}`;
+                                    newPara.items.splice(i + 1, 1);
+                                    i--; // re-check this sentence in case there's multiple bad splits
+                                }
+                            }
+                            return newPara;
+                        }
+                        else return para;
+                    }
+                    default:
+                        return para;
+                }
+            })
+
+            return {
+                paragraphs: cleanedParagraphs,
+                images: section.images
+            }
+        })
+        // Check for the old style values
+    }
+    return modifiedWiki;
+}
+
 export function addAMPInfo (inputArticle: ArticleJson): ArticleJson {
     // AMP info
     const amp_info = {
