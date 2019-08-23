@@ -88,8 +88,10 @@ export class WikiService {
         const values = await pipeline.exec();
         let current_hash;
         for (let value of values) {
-            if (value[1]) current_hash = value[1];
-            break;
+            if (value[1]) {
+                current_hash = value[1];
+                break;
+            }
         }
 
         // Checked for removed wiki
@@ -378,6 +380,7 @@ export class WikiService {
         }
 
         // Save submission immediately so we don't lose data
+        // TODO: change ipfs_hash to eternum_hash
         let wikiCopy: ArticleJson = addAMPInfo(wiki);
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);

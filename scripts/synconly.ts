@@ -173,35 +173,6 @@ async function redis_process_actions (actions) {
         // Make sure this action hasn't already been processed
         // Re-processing happens a lot during restarts and replays
         const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
-        if (processed && (action.trace.act.name == "propose" || action.trace.act.name == "propose2")) {
-            const user = action.trace.act.data.proposer;
-            redis.incr(`stat:total_edits`);
-            redis.sadd(`stat:unique_editors`, user);
-        }
-        else if (processed && action.trace.act.name == "issue") {
-            const user = action.trace.act.data.to;
-            const amount = action.trace.act.data.quantity.split(' ')[0];
-            redis.incrbyfloat("stat:total_iq_rewards", amount);
-        }
-        else if (processed && action.trace.act.name == "logpropres") {
-            const approved = action.trace.act.data.approved;
-            const proposal_id = action.trace.act.data.proposal_id;
-
-            if (proposal_id && approved === 1) {
-                const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
-                try {
-                    const lang_code = info.trace.act.data.lang_code;
-                    const slug = info.trace.act.data.slug;
-                    const removal = info.trace.act.data.comment.includes("PAGE_REMOVAL");
-                    if (removal)
-                        redis.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, "removed");
-                } catch {
-                    // some proposals dont have info strangely enough
-                    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
-                    continue;
-                }
-            }
-        }
         if (processed) continue;
 
         // process action
