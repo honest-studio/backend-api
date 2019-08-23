@@ -5,13 +5,7 @@
 				"index": 0,
 				"tag_type": "p",
 				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In some [[LINK|lang_en|Team_sport|team sports]], an **attacker** is a specific type of player, usually involved in aggressive play. Heavy attackers are, usually, placed up front: their goal is to score the most possible points for the team."
-					}
-				]
+				"items": []
 			},
 			{
 				"index": 1,
@@ -21,7 +15,224 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "In [[LINK|lang_en|Association_football|association football]], attackers are also referred to as [[LINK|lang_en|Forward_(association_football)#Striker|strikers]]."
+						"text": "**None** may refer to:"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|0_(number)|Zero]], the mathematical concept of the quantity \"none\""
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Empty_set|The empty set]], the mathematical concept of the collection of things represented by \"none\""
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*none*, an [[LINK|lang_en|Indefinite_pronoun|indefinite pronoun]] in the English language"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "music"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Music"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|None_(Meshuggah_EP)|None (Meshuggah EP)]], an EP by Swedish heavy metal band Meshuggah"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|None_(Cloak_of_Altering_EP)|None (Cloak of Altering EP)]], an EP by Dutch group Cloak of Altering"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "other-uses"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other uses"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|None_(liturgy)|None (liturgy)]], a liturgical hour"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|None,_Piedmont|None, Piedmont]], a commune in the province of Turin in the Italian region of Piedmont"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Irreligion|Irreligion]], a lack of religious affiliation"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "see-also"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "See also"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nones_(disambiguation)|Nones (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nothing_(disambiguation)|Nothing (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Zero_(disambiguation)|Zero (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
 					}
 				]
 			},

@@ -2,18 +2,20 @@
   "infobox_html": {
     "type": "wikitable",
     "attrs": {
-      "className": "infobox",
+      "className": "infobox vcard",
       "style": {
-        "width": "30em"
+        "width": "26em"
       }
     },
     "caption": {
-      "attrs": {},
+      "attrs": {
+        "className": "fn summary"
+      },
       "sentences": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Presidents of Morgan State University"
+          "text": "Cinmeon Bowers"
         }
       ]
     },
@@ -32,9 +34,16 @@
             {
               "index": 0,
               "attrs": {
+                "className": "ep-blobbox-tbl-hdr",
                 "colSpan": "2",
                 "style": {
-                  "textAlign": "center"
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(245, 245, 245) !important",
+                  "nothing": "#000033",
+                  "color": "#FFFFFF",
+                  "MozBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "WebkitBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "boxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff"
                 }
               },
               "tag_type": "th",
@@ -46,7 +55,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Centenary Biblical Institute"
+                      "text": "No. 0 – Earth Friends Tokyo Z"
                     }
                   ]
                 }
@@ -63,10 +72,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -77,7 +83,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1869–1882"
+                      "text": "Position"
                     }
                   ]
                 }
@@ -85,7 +91,9 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "className": "role"
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -95,7 +103,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "J. Emory Round, D.D."
+                      "text": "[[LINK|lang_en|Power_forward_(basketball)|Power forward]]"
                     }
                   ]
                 }
@@ -112,10 +120,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -126,7 +131,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1882–1888"
+                      "text": "League"
                     }
                   ]
                 }
@@ -144,7 +149,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "W. Maslin Frysinger, D.D."
+                      "text": "[[LINK|lang_en|B.League|B.League]]"
                     }
                   ]
                 }
@@ -161,9 +166,16 @@
             {
               "index": 0,
               "attrs": {
+                "className": "ep-blobbox-tbl-hdr",
                 "colSpan": "2",
                 "style": {
-                  "textAlign": "center"
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(245, 245, 245) !important",
+                  "nothing": "#000033",
+                  "color": "#FFFFFF",
+                  "MozBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "WebkitBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "boxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff"
                 }
               },
               "tag_type": "th",
@@ -175,7 +187,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Morgan College"
+                      "text": "Personal information"
                     }
                   ]
                 }
@@ -192,10 +204,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -206,7 +215,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1888–1901"
+                      "text": "Born"
                     }
                   ]
                 }
@@ -224,7 +233,99 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "John J. Wagner, D.D."
+                      "text": " "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "display": "none"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "("
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "span",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "className": "bday"
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "type": "sentence",
+                              "index": 0,
+                              "text": "1993-05-01"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": ")"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "May 1, 1993"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "noprint ForceAgeToShow"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "(age 24)"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Racine,_Wisconsin|Racine, Wisconsin]]"
                     }
                   ]
                 }
@@ -241,10 +342,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -255,7 +353,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1901–1902"
+                      "text": "Nationality"
                     }
                   ]
                 }
@@ -273,7 +371,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Charles Edmond Young, D.D. (acting)"
+                      "text": "American"
                     }
                   ]
                 }
@@ -290,10 +388,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -304,7 +399,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1902–1937"
+                      "text": "Listed height"
                     }
                   ]
                 }
@@ -322,12 +417,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|John_O._Spencer|John O. Spencer]], Ph.D., "
-                    },
-                    {
-                      "type": "sentence",
-                      "index": 1,
-                      "text": "LL.D."
+                      "text": "6 ft 7 in (2.01 m)"
                     }
                   ]
                 }
@@ -344,10 +434,7 @@
             {
               "index": 0,
               "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -358,7 +445,25 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Morgan State College"
+                      "text": "Listed weight"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "250 lb (113 kg)"
                     }
                   ]
                 }
@@ -375,9 +480,16 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
+                "className": "ep-blobbox-tbl-hdr",
+                "colSpan": "2",
                 "style": {
-                  "width": "40%"
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(245, 245, 245) !important",
+                  "nothing": "#000033",
+                  "color": "#FFFFFF",
+                  "MozBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "WebkitBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "boxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff"
                 }
               },
               "tag_type": "th",
@@ -389,30 +501,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1937–1948"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Dwight_O.W._Holmes|Dwight "
-                    },
-                    {
-                      "type": "sentence",
-                      "index": 1,
-                      "text": "O.W. Holmes]], Ph.D., LL.D."
+                      "text": "Career information"
                     }
                   ]
                 }
@@ -429,10 +518,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -443,7 +529,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1948–1970"
+                      "text": "High school"
                     }
                   ]
                 }
@@ -451,7 +537,9 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "className": "plainlist"
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -461,12 +549,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|Martin_David_Jenkins|Martin D. Jenkins]], Ph.D., "
-                    },
-                    {
-                      "type": "sentence",
-                      "index": 1,
-                      "text": "LL.D."
+                      "text": "[[LINK|lang_en|Rufus_King_High_School|Rufus King]] ([[LINK|lang_en|Milwaukee,_Wisconsin|Milwaukee, Wisconsin]])"
                     }
                   ]
                 }
@@ -483,10 +566,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -497,7 +577,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1970–1971"
+                      "text": "College"
                     }
                   ]
                 }
@@ -505,7 +585,9 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "className": "plainlist"
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -515,7 +597,91 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Thomas P. Fraser, II Ph.D. (interim)"
+                      "text": " "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "ul",
+                  "tag_class": "block",
+                  "attrs": {},
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": " "
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "li",
+                      "tag_class": "block",
+                      "attrs": {},
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "type": "sentence",
+                              "index": 0,
+                              "text": "[[LINK|lang_en|Chipola_College|Chipola College]] (2012–2014)"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": " "
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "li",
+                      "tag_class": "block",
+                      "attrs": {},
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "type": "sentence",
+                              "index": 0,
+                              "text": "[[LINK|lang_en|Auburn_Tigers_men%27s_basketball|Auburn]] (2014-2016)"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": " "
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " "
                     }
                   ]
                 }
@@ -532,10 +698,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -546,7 +709,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1971–1974"
+                      "text": "[[LINK|lang_en|NBA_draft|NBA draft]]"
                     }
                   ]
                 }
@@ -564,7 +727,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|King_Virgil_Cheek|King Virgil Cheek]], J.D."
+                      "text": "[[LINK|lang_en|2016_NBA_draft|2016]] / [[LINK|lang_en|Undrafted_sportsperson|Undrafted]]"
                     }
                   ]
                 }
@@ -581,10 +744,7 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row",
-                "style": {
-                  "width": "40%"
-                }
+                "scope": "row"
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -595,7 +755,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1974–1975"
+                      "text": "Playing career"
                     }
                   ]
                 }
@@ -613,7 +773,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Thomas P. Fraser, Ph.D."
+                      "text": "2016–present"
                     }
                   ]
                 }
@@ -630,9 +790,16 @@
             {
               "index": 0,
               "attrs": {
+                "className": "ep-blobbox-tbl-hdr",
                 "colSpan": "2",
                 "style": {
-                  "textAlign": "center"
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(245, 245, 245) !important",
+                  "nothing": "#000033",
+                  "color": "#FFFFFF",
+                  "MozBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "WebkitBoxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff",
+                  "boxShadow": "inset 2.5px 2.5px 0 #ffffff, inset -2.5px -2.5px 0 #ffffff"
                 }
               },
               "tag_type": "th",
@@ -644,7 +811,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Morgan State University"
+                      "text": "Career history"
                     }
                   ]
                 }
@@ -663,7 +830,7 @@
               "attrs": {
                 "scope": "row",
                 "style": {
-                  "width": "40%"
+                  "fontWeight": "normal"
                 }
               },
               "tag_type": "th",
@@ -675,7 +842,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1975–1984"
+                      "text": "2016-2017"
                     }
                   ]
                 }
@@ -683,7 +850,12 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "style": {
+                  "textAlign": "left",
+                  "lineHeight": "1.2em"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -693,7 +865,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|Andrew_Billingsley|Andrew Billingsley]], Ph.D."
+                      "text": "[[LINK|lang_en|Hapoel_Galil_Elyon|Hapoel Galil Elyon]]"
                     }
                   ]
                 }
@@ -712,7 +884,7 @@
               "attrs": {
                 "scope": "row",
                 "style": {
-                  "width": "40%"
+                  "fontWeight": "normal"
                 }
               },
               "tag_type": "th",
@@ -724,7 +896,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "1984–2010"
+                      "text": "2017"
                     }
                   ]
                 }
@@ -732,7 +904,12 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "style": {
+                  "textAlign": "left",
+                  "lineHeight": "1.2em"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -742,7 +919,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|Earl_S._Richardson|Earl S. Richardson]], Ed.D."
+                      "text": "[[LINK|lang_en|Purefoods_Star_Hotshots|Purefoods Star Hotshots]]"
                     }
                   ]
                 }
@@ -761,7 +938,7 @@
               "attrs": {
                 "scope": "row",
                 "style": {
-                  "width": "40%"
+                  "fontWeight": "normal"
                 }
               },
               "tag_type": "th",
@@ -773,7 +950,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "2010–present"
+                      "text": "2018-"
                     }
                   ]
                 }
@@ -781,7 +958,12 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "style": {
+                  "textAlign": "left",
+                  "lineHeight": "1.2em"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -791,7 +973,70 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|David_Wilson_(university_administrator)|David Wilson, Ed.D.]]"
+                      "text": "[[LINK|lang_en|Earth_Friends_Tokyo_Z|Earth Friends Tokyo Z]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "tag_type": "tr",
+          "tag_class": "block",
+          "attrs": {
+            "style": {
+              "display": "none"
+            }
+          },
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "tag_type": "tr",
+          "tag_class": "block",
+          "attrs": {},
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " "
                     }
                   ]
                 }
@@ -811,7 +1056,7 @@
     {
       "index": 0,
       "type": "sentence",
-      "text": "Morgan State University"
+      "text": "Cinmeon Bowers"
     }
   ],
   "page_body": [
@@ -831,3090 +1076,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Designated as a National Treasure"
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "**Morgan State University** (commonly referred to as **MSU**, **Morgan State**, or **Morgan**) is an [[LINK|lang_en|United_States|American]] [[LINK|lang_en|Historically_black_colleges_and_universities|historically black college]] (HBCU) in [[LINK|lang_en|Baltimore|Baltimore]], [[LINK|lang_en|Maryland|Maryland]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Morgan is Maryland's designated public [[LINK|lang_en|Urban_university|urban university]] and the largest HBCU in Maryland. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "In 1890 the university, formerly known as the \"Centenary Biblical Institute\", changed its name to Morgan College to honor [[LINK|lang_en|Lyttleton_Morgan|Reverend Lyttleton Morgan]], the first chairman of its Board of Trustees who had donated land to the college. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "[[CITE|21|http://baltimoresun.com/entertainment/visitor/college/bal-hl-morgan,0,5357177.story?coll=bal-health-headlines]] It became a university in 1975. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "MSU is a member of [[LINK|lang_en|Thurgood_Marshall_College_Fund|Thurgood Marshall College Fund]]."
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Although a public institution, MSU is not a part of the [[LINK|lang_en|University_System_of_Maryland|University System of Maryland]]; the school opted out and possesses its own governing [[LINK|lang_en|Governing_board_(US_higher_education)|Board of Regents]]."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h2",
-          "attrs": {
-            "id": "history"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "History"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan State University (MSU) was founded in 1872 as the Centenary Biblical Institute, a [[LINK|lang_en|Methodist_Episcopal_Church|Methodist Episcopal]] [[LINK|lang_en|Seminary|seminary]], to train young men in the ministry. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "At the time of his death, [[LINK|lang_en|Thomas_Kelso|Thomas Kelso]], cofounder and president of the board of directors, endowed the Male Free School and Colored Institute through a legacy of his [[LINK|lang_en|Estate_(law)|estate]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|29|http://media.www.msuspokesman.com/media/storage/paper270/news/2002/02/08/CampusLife/Our-Forefathers.The.Founders.Of.Morgan.State-177947.shtml]] It later broadened its mission to educate both men and women as teachers. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "The school was renamed Morgan College in 1890 in honor of the [[LINK|lang_en|Reverend_Lyttleton_Morgan|Reverend Lyttleton Morgan]], the first chairman of its Board of Trustees, who donated land to the college. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "[[CITE|21|http://baltimoresun.com/entertainment/visitor/college/bal-hl-morgan,0,5357177.story?coll=bal-health-headlines]] In 1895, the institution awarded its first baccalaureate degree to George F. McMechen, after whom the building of the school of business and management is named today. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "George F. McMechen later obtained a law degree from [[LINK|lang_en|Yale_University|Yale University]] and later became one of Morgan's main financial supporters. "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "[[CITE|34|http://morgan.edu/about_msu/university_history.html]]"
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In 1915 [[LINK|lang_en|Andrew_Carnegie|Andrew Carnegie]] gave the school a grant of $50,000 for a central academic building. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The terms of the grant included the purchase of a new site for the College, payment of all outstanding obligations, and the construction of a building to be named after him. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The College met the conditions and moved to its present site in northeast Baltimore in 1917. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "Then a controversy exploded: in 1918, the white community of [[LINK|lang_en|Lauraville,_Baltimore|Lauraville]] was incensed that the Ivy Mill property, where Morgan was to be built, had been sold to a \"negro\" college. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "It attempted to have the sale revoked by filing suit in the circuit court in [[LINK|lang_en|Towson,_Maryland|Towson]], which dismissed the suit. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "They then appealed the case to the state [[LINK|lang_en|Maryland_Court_of_Appeals|Court of Appeals]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "The appellate court upheld the lower court decision, finding no basis that siting the college at this location would constitute a public nuisance. "
-            },
-            {
-              "type": "sentence",
-              "index": 7,
-              "text": "[[CITE|38|https://courtlistener.com/opinion/3490882/diggs-v-morgan-college]] Despite some ugly threats and several demonstrations against the project, Morgan College was allowed to be constructed at the new site and later expanded. "
-            },
-            {
-              "type": "sentence",
-              "index": 8,
-              "text": "Carnegie Hall, the oldest original building on the present MSU campus, was erected a year later."
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan remained a private institution until 1939. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "That year, the state of Maryland purchased the school in response to a state study that determined that Maryland needed to provide more opportunities for its black citizens. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Morgan College became Morgan State College. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "In 1975, Morgan added several doctoral programs and its Board of Directors petitioned the Maryland Legislature to be granted University status."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "21st-century-hbcu-renaissance"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "21st Century HBCU Renaissance"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan State University has undergone a physical renaissance. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "In the 21st century alone, the school has seen the construction of a new student union, two dedicated parking garages, the Earl S. Richardson Library, the Dixon Research Center, the Communications Building, and the Center for the Built Environment and Infrastructure Studies. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The latter two buildings, plus one of the two parking garages, are in the far north of the campus, connected by a new Communications Bridge over Herring Run. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "The central quad was also rebuilt, completed in early 2012, and includes a direct connection between the two main bridges on campus and many new bicycle racks. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "The [[LINK|lang_en|Carl_J._Murphy|Carl J. Murphy]] Fine Arts Center has also become a much used venue for plays and concerts that come to Baltimore, and is also the home of a museum of African-American art. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "In September 2012, Morgan State opened its doors to the Center for the Built Environment and Infrastructure Studies (CBEIS) which now houses the School of Architecture and Planning, School of Transportation Studies, and the School of Engineering. "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "Lastly, the university's new Earl G. Graves School of Business and Management opened its doors in September 2015 near the Northwood Shopping Center; expanding the contiguous campus to the west of Hillen Road for the first time and housing the School of Business and Management."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h2",
-          "attrs": {
-            "id": "academics"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Academics"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan awards Baccalaureate, Master's and Doctorate [[LINK|lang_en|Academic_degree|degrees]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "More than 7,698 [[CITE|-1|http://morgan.edu/Documents/ADMINISTRATION/Planningand%20Info%20Tech/InstitutionalResearch/Fall%202014%20Student%20Demographics.pdf]] students are enrolled at Morgan. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Recently, emphasis has been placed on the urban orientation of the university. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "This emphasis has been incorporated into the graduate programs."
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "At the graduate level, the university offers the Master of Arts degree in African American studies, economics, English, history, international studies, mathematics, music, museum studies and historical preservation, sociology, and teaching. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The Master of Business Administration is offered in accounting, finance, hospitality management, information systems, international business, management, and marketing and taxation. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The Master of Science degree is offered in [[LINK|lang_en|Bioinformatics|bioinformatics]], educational administration and supervision, student affairs, elementary and middle school education, [[LINK|lang_en|Project_management|project management]], psychometrics, science, sociology, telecommunications, and transportation. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "The Master of Science degree program in science is offered in biology, chemistry, and physics. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "Professional master's degrees are offered in architecture, city and regional planning, engineering, landscape architecture, public health, and social work."
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Doctor of Education degree is offered in community college leadership, mathematics education, science education, and urban educational leadership. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The Doctor of Philosophy degree is offered in bioenvironmental science, business administration, English, higher education, history, and [[LINK|lang_en|Psychometrics|psychometrics]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The Doctor of Engineering degree is offered in civil, electrical, and industrial engineering. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "In addition, the Doctor of Public Health degree and master's and doctoral degrees in social work are offered."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "enrollment"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Enrollment"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "As of the 2014–15 school year, there were approximately 6,302 [[LINK|lang_en|Undergraduate_education|undergraduates]] and 1,396 [[LINK|lang_en|Postgraduate_education|graduate students]] enrolled at Morgan, about 22% were non-Maryland residents, including many from foreign countries. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The largest sources of its enrollment outside of Maryland are [[LINK|lang_en|New_York_(state)|New York]], [[LINK|lang_en|New_Jersey|New Jersey]], and [[LINK|lang_en|Pennsylvania|Pennsylvania]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|-1|http://morgan.edu/Documents/ADMINISTRATION/Planningand%20Info%20Tech/InstitutionalResearch/Fall%202014%20Student%20Demographics.pdf]]"
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "schools-and-colleges"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Schools and colleges"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The university operates twelve colleges, schools and institutes."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "ul",
-          "attrs": {},
-          "items": [
-            {
-              "type": "list-item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "College of Liberal Arts"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Business and Management"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 2,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Education and Urban Studies"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 3,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Engineering"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 4,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Computer, Mathematical, and Natural Sciences"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 5,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Graduate Studies"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 6,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Architecture and Planning"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 7,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Community Health and Policy"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 8,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "Patuxent Environmental & Aquatic Research Laboratory"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 9,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Social Work"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 10,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "School of Global Journalism and Communication"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 11,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "Dr. Clara Adams [[LINK|lang_en|Honors_College|Honors College]]"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "college-of-liberal-arts"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "College of Liberal Arts"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The College of Liberal Arts is the largest academic division at the university. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "In addition to offering a wide variety of degree programs, it also offers a large portion of the courses in the General Education Requirements. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The College of Liberal Arts offers twelve undergraduate degree programs leading to the Bachelor of Arts Degree and the Bachelor of Science Degree. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "It offers the Bachelor of Arts degrees in Economics, English, Fine Art, History, Music, Philosophy, Political Science, Sociology, Speech Communication, Telecommunications, and Theater Arts. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "It offers the Bachelor of Science Degree in: Economics, Psychology, and Screenwriting & Animation."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The College of Liberal Arts offers minors in fifteen areas: African Studies (Interdisciplinary), Anthropology, Criminal Justice, East Asian Studies (Interdisciplinary), English, Environmental Studies (Interdisciplinary), World Languages and International Studies, [[LINK|lang_en|Gender_studies|Gender Studies]] (Interdisciplinary), Geography, History, Journalism, [[LINK|lang_en|Museology|Museum Studies]] (Interdisciplinary), Music, Philosophy, Pre-Law, Religious Studies, Sociology."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "school-of-business-and-management"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "School of Business and Management"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Earl G. Graves School of Business and Management (GSBM) is named in honor of alumnus [[LINK|lang_en|Earl_G._Graves,_Sr.|Earl G. Graves, Sr.]] and is housed in the Graves School of Business and Management building, which was opened for the Fall Semester 2015 at the western edge of the campus. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "It is a state-of-the-art classroom, laboratory, office building, with rooms for hospitality management students to operate. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The GSBM offers Bachelor of Science degrees in Accounting, Business Administration, Finance, Hospitality Management, Human Resource Management, and Information Science and Systems, and Marketing; a Master of Business Administration; a Master of Science in [[LINK|lang_en|Project_Management|Project Management]]; and a Ph.D. in Business Administration. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "These programs are accredited by The [[LINK|lang_en|Association_to_Advance_Collegiate_Schools_of_Business|Association to Advance Collegiate Schools of Business]] (AACSB)."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "school-of-education-and-urban-studies"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "School of Education and Urban Studies"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The School of Education and Urban Studies is located in Banneker Hall. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The school offers programs in Family and Consumer Sciences, Health, Physical Education and Recreation, Social Work (Mental Health, Gerontology), Higher Edcation Administration, Student Affairs, and Teacher Education and Administration (Elementary Education, Secondary Education). "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Additionally, programs are offered within the Center for Excellence in Mathematics and Science Education (CEMSE). "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "Masters-level programs are offered in Educational and Administration Supervision and in Teaching."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "school-of-engineering"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "School of Engineering"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The School of Engineering admitted its first class starting in 1984. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The first graduates received degrees in 1988. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Eugene M. DeLoatch, is the first Dean of the School of Engineering. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "He accepted the position and left [[LINK|lang_en|Howard_University|Howard University]] where he had been the Chairman of the Department of Electrical Engineering. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "Dr. DeLoatch retired in 2016. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "His successor is Dr. Michael G. Spencer who was a professor of electrical engineering at Cornell University"
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Morgan State University, School of Engineering has fully [[LINK|lang_en|ABET|ABET]]-accredited undergraduate programs in [[LINK|lang_en|Civil_engineering|civil engineering]]; electrical and computer engineering; and [[LINK|lang_en|Industrial_engineering|industrial]], [[LINK|lang_en|Manufacturing_engineering|manufacturing]], and [[LINK|lang_en|Information_engineering|information engineering]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The school also offers graduate programs that confer the Master of Engineering Degree, Doctor of Engineering Degree, and Master of Transportation Degree."
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "By 1991, the construction of the 35,000 sq ft (3,300 m 2) [[LINK|lang_en|Clarence_M._Mitchell,_Jr.|Clarence M. Mitchell, Jr.]] School of Engineering building was completed, and the facility included sixteen teaching laboratories and five research laboratories. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The [[LINK|lang_en|William_Donald_Schaefer|William Donald Schaefer]] Building is a 40,000 sq ft (3,700 m 2) addition to the Engineering School and was completed in April 1998. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The facility provided instructional laboratories, classrooms, a student lounge, research laboratories and a 2,200 sq ft (200 m 2) library annex. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "Morgan State University's School of Engineering graduates more than two-thirds of the state's African-American Civil Engineers, 60 percent of the African-American Electrical Engineers, 80 percent of the African-American Telecommunications specialists, more than one-third of the African-American Mathematicians, and all of Maryland's Industrial Engineers. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "[[CITE|4|http://www.soe.morgan.edu/dean/general_information.html]] Nearly one-third of the nation's top black engineering students have graduated from historically black institutions, like Morgan, in the past decade."
-            }
-          ]
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/12/Morgan_State_University_-_Holmes_Hall.JPG",
-          "mime": "image/png",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The historic Holmes Hall"
-            }
-          ],
-          "category": "PICTURE",
-          "attribution_url": "https://en.wikipedia.org/wiki/File:Morgan_State_University_-_Holmes_Hall.JPG"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "school-of-architecture-and-planning"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "School of Architecture and Planning"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The School of Architecture and Planning has three graduate programs (Architecture, Landscape Architecture, City & Regional Planning) and two undergraduate programs (Architecture and Environmental Design and Construction Management). "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The School prepares students to address the challenges associated with systems of the built environment and their integration with systems in the natural environment. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The objective is to link domains of environmental (natural patterns and flows), economic (financial patterns and equity), and social (human, cultural, and spiritual) as related to the professional practices of planning, design and management. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "Morgan's education is directed towards a sustainable urban environment that is beautiful, humane, socially appropriate, and restorative."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "library"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Library"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Earl S. Richardson Library's holdings constitute more than 660,000 volumes, including works in special collections. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "One such collection includes books on Africa, with an emphasis on [[LINK|lang_en|Sub-Saharan_Africa|sub-Saharan Africa]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The African-American collection is a body of historically significant and current books by and about African Americans and includes papers and memorabilia of such persons as the late Emmett P. Scott, secretary to [[LINK|lang_en|Booker_T._Washington|Booker T. Washington]], and Arthur J. Smith, who was associated with the Far East Consular Division of the [[LINK|lang_en|United_States_Department_of_State|State Department]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "The Forbush Collection, named for Bliss Forbush, is composed of materials associated with the [[LINK|lang_en|Quakers|Quakers]] and slavery. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "The Martin D. Jenkins Collection was acquired in 1980. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "Together, these collections provide both a contemporary and historical view of African Americans in education, military service, politics, and religion."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h2",
-          "attrs": {
-            "id": "student-life-and-activities"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Student life and activities"
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "residential-facilities"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Residential facilities"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Approximately 2,000 students are housed in four traditional residence halls, two high rise buildings and three apartment complexes. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Baldwin Hall, Cummings Hall, Harper-Tubman House and O'Connell House are traditional style housing."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "ul",
-          "attrs": {},
-          "items": [
-            {
-              "type": "list-item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "Baldwin (upper-class male)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "Cummings (male)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 2,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "Harper-Tubman (preferred honors co-ed)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list-item",
-              "index": 3,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "O'Connell Hall (freshman male)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Blount Towers (all female classifications) and Rawlings Hall (all male classifications) are high-rise (six to eight floors) residence halls. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Thurgood Marshall (co-ed upper-class) is an apartment style complex located on-campus. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Both Morgan View Apartments and Marble Hall Gardens are the co-ed upper-class apartment style residence hall complexes located off-campus. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "Morgan View is a privatized facility that caters to Morgan State students."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "athletics"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Athletics"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan's athletic teams are known as the Bears, and they compete in the [[LINK|lang_en|Mid-Eastern_Athletic_Conference|Mid-Eastern Athletic Conference]] (MEAC). "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Between 1926 and 1928, a young [[LINK|lang_en|Charles_R._Drew|Charles Drew]] served as Athletic Director. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "During this time he made great improvements in the school's teams' records. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "[[CITE|16|http://profiles.nlm.nih.gov/ps/retrieve/Narrative/BG/p-nid/337]] From the 1930s through 1960s, led by coach and then athletic director [[LINK|lang_en|Edward_P._Hurt|Edward P. Hurt]], Morgan's athletic teams were legendary. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "More than thirty of its [[LINK|lang_en|Morgan_State_Bears_football|football players]] were drafted by and played in the [[LINK|lang_en|National_Football_League|NFL]] [[CITE|19|http://databasefootball.com/players/bycollege.htm?sch=Morgan+State+University]] and many of its track athletes competed internationally and received world-class status. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "By the late 1960s most white colleges and universities ended their [[LINK|lang_en|Racial_segregation|segregation]] against black high school students [[CITE|26|http://www.history.appstate.edu/WadeTolliver.htm]] and many top black high school students and athletes started matriculating to schools from which they had been barred just a decade prior. "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "While achieving a national goal of [[LINK|lang_en|Desegregation|desegregation]], [[LINK|lang_en|Social_integration|integration]] depleted the athletic strength of schools like Morgan and [[LINK|lang_en|Grambling_State_University|Grambling State University]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 7,
-              "text": "For example, the annual contest between Morgan and Grambling played in New York City in the late 1960s drew more than 60,000 fans. "
-            },
-            {
-              "type": "sentence",
-              "index": 8,
-              "text": "[[CITE|32|https://query.nytimes.com/gst/fullpage.html?res=9406EED8163BF93BA15752C0A962948260]] Today, the two teams do not even play each other and Morgan's home football games rarely draw as many as 10,000 fans with the exception of the school's homecoming game. "
-            },
-            {
-              "type": "sentence",
-              "index": 9,
-              "text": "Morgan State archrivals are the [[LINK|lang_en|Howard_Bison_and_Lady_Bison|Howard University Bisons]] (the matchup is often called the *Battle of the Beltway*) and the [[LINK|lang_en|Coppin_State_Eagles|Coppin State Eagles]]."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "lacrosse"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Lacrosse"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "By 1975 Morgan became noted for its [[LINK|lang_en|Lacrosse|lacrosse]] team. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Lacrosse, a sport that, up until then, had been dominated by white athletes. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Black high school lacrosse players in Maryland and New York still had trouble getting into non-black schools. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "Morgan was the first—and, until the turn of the 20th century, the only—historically black university to field a lacrosse team. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "Several members of the team now coach lacrosse in local high schools. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "Tony Fulton and [[LINK|lang_en|Curt_Anderson|Curt Anderson]] were elected to the Maryland House of Delegates. "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "Miles Harrison and Coach [[LINK|lang_en|Chip_Silverman|Howard \"Chip\" Silverman]] collaborated on the book, *Ten Bears*; which is being made into a movie."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In 2005 students organized a lacrosse club which plays other college's lacrosse clubs, but the team has yet to qualify to become an [[LINK|lang_en|National_Collegiate_Athletic_Association|NCAA]]-sanctioned team. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "[[CITE|37|http://msuspokesman.com/media/paper270/news/2005/07/01/Sports/Lacrosse.Returns.To.Morgan.State.University-961055.shtml]] The University will not allow the new club team to use any of its fields or facilities. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The club team has played more than twenty games in the last three years, most of them \"away\" because of the Bears' lack of a home field, locker rooms or visiting team amenities."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "basketball"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Basketball"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In 2009, the Morgan State men's basketball team won the MEAC regular season and tournament championship and qualified for the 2009 NCAA Division I Men's Basketball Tournament. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "In their first tournament appearance, the 15th-[[LINK|lang_en|Seed_(sports)|seeded]] Bears lost to the 2008–09 Oklahoma Sooners men's basketball team Oklahoma Sooners, 82–54, in the first round of the South Regional. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|2|http://sports.espn.go.com/ncb/tournament/bracket]]"
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In 2010 the Morgan State men's basketball team again won the MEAC regular season and tournament championship [[CITE|6|http://meacsports.com/ViewArticle.dbml?ATCLID=204907715&DB_OEM_ID=20800]] and qualified for the [[LINK|lang_en|2010_NCAA_Division_I_Men's_Basketball_Tournament|2010 NCAA Division I Men's Basketball Tournament]], again as a 15 seed. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Morgan State lost to [[LINK|lang_en|West_Virginia_Mountaineers_men's_basketball|West Virginia University]] in the first round by a score of 77–50. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|18|http://espn.go.com/ncb/boxscore?gameId=300780277]]"
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h4",
-          "attrs": {
-            "id": "athletic-hall-of-fame"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Athletic Hall of Fame"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "More than two hundred male and female Morgan State athletes have been inducted into the Morgan State University Hall of Fame including National Football League Hall of Famers [[LINK|lang_en|Rosey_Brown|Rosey Brown]], [[LINK|lang_en|Leroy_Kelly|Leroy Kelly]] and [[LINK|lang_en|Willie_Lanier|Willie Lanier]], two-time Olympic Gold medalist [[LINK|lang_en|George_Rhoden|George Rhoden]], and the coach of the legendary [[LINK|lang_en|Morgan_State_Bears_lacrosse|Ten Bears]] lacrosse team [[LINK|lang_en|Chip_Silverman|Howard \"Chip\" Silverman]]."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "choir"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Choir"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Morgan State University Choir is one of the nation's most prestigious university choral ensembles and was led for more than three decades by the late Dr. Nathan Carter, celebrated conductor, composer, and arranger. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "The groups that are subdivisions of the critically acclaimed choir include the University Choir, which is over 140 voices strong, and The Morgan Singers (approximately 40 voices). "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "While classical, gospel, and contemporary popular music comprise the majority of the choir's repertoire, the choir is noted for its emphasis on preserving the heritage of the spiritual, especially in the historic practices of performance. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "The Morgan State University Choir has performed for audiences throughout the United States and all over the world—including [[LINK|lang_en|The_Bahamas|The Bahamas]], [[LINK|lang_en|Virgin_Islands|Virgin Islands]], [[LINK|lang_en|Canary_Islands|Canary Islands]], Canada, Africa, Asia, and Europe. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "Their most recent international appearance was in [[LINK|lang_en|Saint_Petersburg|Saint Petersburg]], Russia, at the invitation of Maestro Yuri Temirkanov, music director and conductor for the [[LINK|lang_en|Baltimore_Symphony_Orchestra|Baltimore Symphony Orchestra]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "In Russia, the Choir performed in the 5th International Festival Arts Square and was received enthusiastically by their Russian audiences. "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "The Choir has appeared at the [[LINK|lang_en|John_F._Kennedy_Center_for_the_Performing_Arts|Kennedy Center for the Performing Arts]] in Washington, D.C., and at the [[LINK|lang_en|Lincoln_Center_for_the_Performing_Arts|Lincoln Center]] and [[LINK|lang_en|Carnegie_Hall|Carnegie Hall]] in New York City on numerous occasions, performing and premiering works such as [[LINK|lang_en|John_Corigliano|John Corigliano]]'s \"Poem On His Birthday,\" \"Too Hot to Handel\" arranged by Broadway composers Bob Christianson and [[LINK|lang_en|Gary_M._Anderson|Gary Anderson]] [[CITE|22|http://toohot2handel.com/creativeteam.html]] and Hannibal Lokumbe's \"African Portraits\", led by music director [[LINK|lang_en|Leonard_Slatkin|Leonard Slatkin]], as part of the Kennedy Center's African Festival. "
-            },
-            {
-              "type": "sentence",
-              "index": 7,
-              "text": "One of the Choir's most historic moments came with the opportunity to sing under the baton of Robert Shaw, conducting the [[LINK|lang_en|Orchestra_of_St._Luke's|Orchestra of St. Luke's]] and joined by [[LINK|lang_en|Jessye_Norman|Jessye Norman]] and others in Carnegie Hall's One Hundredth Birthday Tribute to [[LINK|lang_en|Marian_Anderson|Marian Anderson]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 8,
-              "text": "A major milestone and historical movement occurred during the 1996–1997 season with the sounds of the \"Silver Anniversary\" concert being broadcast into households throughout the state of Maryland. "
-            },
-            {
-              "type": "sentence",
-              "index": 9,
-              "text": "The concert won three Emmy Awards for [[LINK|lang_en|Maryland_Public_Television|Maryland Public Television]] (MPT). "
-            },
-            {
-              "type": "sentence",
-              "index": 10,
-              "text": "MPT continues to air this hallmark performance during select sections of their membership drives. "
-            },
-            {
-              "type": "sentence",
-              "index": 11,
-              "text": "In 1993, the choir joined actor [[LINK|lang_en|James_Earl_Jones|James Earl Jones]] in a performance of [[LINK|lang_en|The_Star-Spangled_Banner|the Star-Spangled Banner]] at the [[LINK|lang_en|1993_Major_League_Baseball_All-Star_Game|1993 Major League Baseball All-Star Game]] at [[LINK|lang_en|Oriole_Park_at_Camden_Yards|Oriole Park at Camden Yards]], broadcast on [[LINK|lang_en|CBS|CBS]]."
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tleft"
-          },
-          "items": []
-        },
-        {
-          "index": 4,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Known for its consistency of performances, the Choir probably does more annual appearances with major orchestras of the United States than any other university choir. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "For example, the 1998–1999 season included performances with the [[LINK|lang_en|National_Symphony_Orchestra|National Symphony Orchestra]], the [[LINK|lang_en|New_York_Philharmonic|New York Philharmonic]], the Philadelphia Orchestra, The Buffalo Symphony Orchestra, the Baltimore Symphony, and the [[LINK|lang_en|Knoxville_Symphony_Orchestra|Knoxville Symphony Orchestra]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "During the 1999–2000 season, the Choir was featured with the New York Philharmonic Orchestra in a then-newly commissioned work for the millennium, \"All Rise\", by [[LINK|lang_en|Wynton_Marsalis|Wynton Marsalis]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "The Choir reprised \"All Rise\" in Prague, in October 2000 and recorded it with the Lincoln Center Jazz Orchestra, the [[LINK|lang_en|Los_Angeles_Philharmonic|Los Angeles Philharmonic]] and, in 2003, the Choir recorded the piece in Paris, France. "
-            },
-            {
-              "type": "sentence",
-              "index": 4,
-              "text": "In December 2003 the Choir performed \"African Portraits\" with the Baltimore Symphony at the Gala Concert for the [[LINK|lang_en|Reginald_Lewis|Reginald F. Lewis]] Museum of Maryland African American History & Culture. "
-            },
-            {
-              "type": "sentence",
-              "index": 5,
-              "text": "In their May 2004 issue, *[[LINK|lang_en|Reader's_Digest|Reader's Digest]] * named the Morgan State University Choir as the \"Best College Choir\" in its list of \"America's 100 Best\". "
-            },
-            {
-              "type": "sentence",
-              "index": 6,
-              "text": "[[CITE|27|http://rd.com/your-america-inspiring-people-and-stories/best-of-america-college-choir/article36660.html]]"
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In January 2005, under the leadership of Eric Conway, the choir performed [[LINK|lang_en|Felix_Mendelssohn|Felix Mendelssohn]]'s *Symphony #2*, \"Lobgesang\", with the [[LINK|lang_en|Baltimore_Symphony_Orchestra|Baltimore Symphony Orchestra]], as well as performing at the State Department at the personal invitation of Secretary of State [[LINK|lang_en|Condoleezza_Rice|Condoleezza Rice]], to wide acclaim. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Most recently, the Morgan State University Choir performed for the service honoring Rosa Parks, the unassuming matriarch of the civil rights movement, who became the first woman to lie in state at our nation's [[LINK|lang_en|United_States_Capitol_rotunda|Capitol Rotunda]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "In July 2006, the Choir traveled to [[LINK|lang_en|Prague|Prague]], [[LINK|lang_en|Czech_Republic|Czech Republic]], for two concerts with Maestro Paul Freeman. "
-            },
-            {
-              "type": "sentence",
-              "index": 3,
-              "text": "In November 2006, the Morgan State Choir participated in a concert celebrating the Bicentennial Celebration and Re-opening of the Basilica of the Assumption—the first cathedral in America."
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Morgan State University Choir has shared its musical gifts on many grand stages all over the world—with numerous dignitaries and celebrated performers—making them cultural ambassadors for Morgan State University, the city of Baltimore, and the state of Maryland. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Each spring, the Choir concludes its season at home with its annual Spring Concert, which large audiences enthusiastically anticipate and receive. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "The University Choir was recently in [[LINK|lang_en|Ghana|Ghana]] under the invitation of Morgan State alumni and U.S. ambassador to Ghana [[LINK|lang_en|Pamela_E._Bridgewater|Pamela E. Bridgewater]], performed in major cities such as [[LINK|lang_en|Accra|Accra]], [[LINK|lang_en|Kumasi|Kumasi]], and [[LINK|lang_en|Sekondi-Takoradi|Takoradi]]."
-            }
-          ]
-        },
-        {
-          "index": 7,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "On November 24, 2008, members of the choir appeared with country singer [[LINK|lang_en|Faith_Hill|Faith Hill]] on [[LINK|lang_en|NBC|NBC]]'s *[[LINK|lang_en|Today_(U.S._TV_program)|Today "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "show]] *. [[CITE|31|http://www.msnbc.msn.com/id/27828033]] They also made appearances on the *[[LINK|lang_en|Late_Show_with_David_Letterman|Late Show with David Letterman]] * and Christmas in Rockefeller Center 2008. On "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "January 20, 2009, the choir performed at the [[LINK|lang_en|War_Memorial_Plaza|War Memorial Plaza]] in downtown Baltimore as a warm-up act to President Barack Obama's whistlestop tour speech. [[CITE|36|http://pww.org/article/articleview/14301]]"
-            }
-          ]
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f2/Hill_Field_House.jpg",
-          "mime": "image/png",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "[[LINK|lang_en|Hill_Field_House|Hill Field House]], Morgan's indoor athletic venue"
-            }
-          ],
-          "category": "PICTURE",
-          "attribution_url": "https://en.wikipedia.org/wiki/File:Hill_Field_House.jpg"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "band"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Band"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Morgan State University Band Program consists of six ensembles: the marching band, symphonic band, symphonic winds, pep band, jazz ensemble, and jazz combo. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Self-titled the Magnificent Marching Machine, the marching band has performed at MSU football games, [[LINK|lang_en|National_Football_League|NFL]] games, Presidential Inaugurations, World Series games and in regional and local television appearances. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|1|http://morganstatebears.com/sports/2003/7/17/MarchingBand.aspx?tab=6]] The band also made a cameo appearance in the 2003 American movie *[[LINK|lang_en|Head_of_State_(film)|Head of State]] * and appeared on *The Skyshow*, a television show featuring [[LINK|lang_en|Tom_Joyner|Tom Joyner]]."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "div",
-          "attrs": {
-            "style": {
-              "clear": "both"
-            }
-          },
-          "items": []
-        },
-        {
-          "index": 3,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        },
-        {
-          "index": 4,
-          "tag_type": "div",
-          "attrs": {
-            "className": "thumb tright"
-          },
-          "items": []
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Morgan_State_University_Choir.jpg",
-          "mime": "image/png",
-          "thumb": null,
-          "caption": [],
-          "category": "PICTURE",
-          "attribution_url": "https://en.wikipedia.org/wiki/File:Morgan_State_University_Choir.jpg"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h3",
-          "attrs": {
-            "id": "greek-life"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Greek life"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan State University has chapters from each of the [[LINK|lang_en|National_Pan-Hellenic_Council|National Pan-Hellenic Council]] organizations."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "table",
-          "attrs": {
-            "cellPadding": "2",
-            "cellSpacing": "2",
-            "className": "ep-table wikitable",
-            "style": {
-              "fontSize": "90%"
-            }
-          },
-          "items": [
-            {
-              "type": "body-table",
-              "attrs": {
-                "cellPadding": "2",
-                "cellSpacing": "2",
-                "className": "ep-table wikitable",
-                "style": {
-                  "fontSize": "90%"
-                }
-              },
-              "caption": {
-                "attrs": {
-                  "style": {
-                    "fontSize": "1.25em"
-                  }
-                },
-                "sentences": [
-                  {
-                    "type": "sentence",
-                    "index": 0,
-                    "text": "NPHC organizations at Morgan State (in order of establishment)"
-                  }
-                ]
-              },
-              "thead": {
-                "rows": [],
-                "attrs": {}
-              },
-              "tbody": {
-                "rows": [
-                  {
-                    "index": 0,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {
-                          "width": "350"
-                        },
-                        "tag_type": "th",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Organization"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "th",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Chapter name"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 1,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Alpha_Phi_Alpha|Alpha Phi Alpha]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Beta Alpha"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 2,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Alpha_Kappa_Alpha|Alpha Kappa Alpha]] Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha Delta"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 3,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Kappa_Alpha_Psi|Kappa Alpha Psi]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha Iota"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 4,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Omega_Psi_Phi|Omega Psi Phi]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Pi"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 5,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Delta_Sigma_Theta|Delta Sigma Theta]] Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha Gamma"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 6,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Phi_Beta_Sigma|Phi Beta Sigma]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Gamma"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 7,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Iota_Phi_Theta|Iota Phi Theta]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 8,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Zeta_Phi_Beta|Zeta Phi Beta]] Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Gamma"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 9,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Sigma_Gamma_Rho|Sigma Gamma Rho]] Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Beta Tau"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "attrs": {}
-              },
-              "tfoot": {
-                "rows": [],
-                "attrs": {}
-              }
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Morgan State University houses a variety of other fraternal organizations. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "These organizations are a part of the Council of Independent Organizations (CIO). "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|5|http://msustudentcenter.com/studentActivities/GreekLife.asp]]"
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "tag_type": "table",
-          "attrs": {
-            "align": "left",
-            "cellPadding": "2",
-            "cellSpacing": "2",
-            "className": "ep-table wikitable",
-            "style": {
-              "fontSize": "90%"
-            }
-          },
-          "items": [
-            {
-              "type": "body-table",
-              "attrs": {
-                "align": "left",
-                "cellPadding": "2",
-                "cellSpacing": "2",
-                "className": "ep-table wikitable",
-                "style": {
-                  "fontSize": "90%"
-                }
-              },
-              "caption": {
-                "attrs": {
-                  "style": {
-                    "fontSize": "1.25em"
-                  }
-                },
-                "sentences": [
-                  {
-                    "type": "sentence",
-                    "index": 0,
-                    "text": "Council of Independent Organizations"
-                  }
-                ]
-              },
-              "thead": {
-                "rows": [],
-                "attrs": {}
-              },
-              "tbody": {
-                "rows": [
-                  {
-                    "index": 0,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {
-                          "width": "350"
-                        },
-                        "tag_type": "th",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Organization"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {
-                          "width": "100"
-                        },
-                        "tag_type": "th",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Chapter name"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 1,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Alpha_Nu_Omega|Alpha Nu Omega]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 2,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha Nu Omega Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Alpha"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 3,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Groove_Phi_Groove|Groove Phi Groove]] Social Fellowship"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Mother Bear"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "tag",
-                            "tag_type": "sup",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "className": "reference",
-                              "id": "cite_ref-27"
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "[[CITE|17|http://freewebs.com/mother-bear/index2.html]]"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": " "
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 4,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Kappa_Kappa_Psi|Kappa Kappa Psi]] National Honorary Band Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Eta Gamma"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 5,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Malika Kambe Umfazi Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Njeri Zubari Queendom"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "tag",
-                            "tag_type": "sup",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "className": "reference",
-                              "id": "cite_ref-28"
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "[[CITE|24|http://malikakambeumfazi.org/page.php?page_id=37650]]"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": " "
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 6,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Coed_Affiliates_Pershing_Rifles|Pershing Angels]] Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Company J-8-5"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 7,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Pershing_Rifles|Pershing Rifles]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Company J-8"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 8,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Phi_Mu_Alpha_Sinfonia|Phi Mu Alpha Sinfonia]] Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Pi Eta"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 9,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Sigma_Alpha_Iota|Sigma Alpha Iota]] Music Fraternity for Women"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Kappa Xi"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 10,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Swing_Phi_Swing|Swing Phi Swing]] Social Fellowship"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Marali Nubia Bear"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "tag",
-                            "tag_type": "sup",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "className": "reference",
-                              "id": "cite_ref-29"
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "[[CITE|28|http://swingphiswing.org/leadership/maRegion.htm]]"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": " "
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 11,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Tau_Beta_Sigma|Tau Beta Sigma]] National Honorary Band Sorority"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Epsilon Omega"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "tag",
-                            "tag_type": "sup",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "className": "reference",
-                              "id": "cite_ref-30"
-                            },
-                            "content": [
-                              {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "[[CITE|33|http://freewebs.com/tbsigma144]]"
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": " "
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "index": 12,
-                    "tag_type": "tr",
-                    "tag_class": "block",
-                    "attrs": {},
-                    "cells": [
-                      {
-                        "index": 0,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "[[LINK|lang_en|Delta_Chi_Xi|Delta Chi Xi]] Honorary Dance Fraternity"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "index": 1,
-                        "attrs": {},
-                        "tag_type": "td",
-                        "tag_class": "block",
-                        "content": [
-                          {
-                            "type": "text",
-                            "content": [
-                              {
-                                "type": "sentence",
-                                "index": 0,
-                                "text": "Zeta"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "attrs": {}
-              },
-              "tfoot": {
-                "rows": [],
-                "attrs": {}
-              }
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "tag_type": "div",
-          "attrs": {
-            "style": {
-              "clear": "both"
-            }
-          },
-          "items": []
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h2",
-          "attrs": {
-            "id": "notable-alumni-and-faculty"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Notable alumni and faculty"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Alumni of Morgan State University have achieved notability in the fields of athletics, science, government and the military including four members of the NFL Football Hall of Fame (Willie Lanier, Roosevelt Brown, Leroy Kelly, and Len Ford), *Black Enterprise Magazine* publisher [[LINK|lang_en|Earl_G._Graves,_Sr.|Earl Graves]], the Chief Judge of Maryland's highest court, nearly a dozen U.S. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Army Generals including [[LINK|lang_en|Kip_Ward|Lieutenant General William \"Kip\" Ward]], the first Commanding Officer of the [[LINK|lang_en|United_States_Africa_Command|United States Africa Command]], *[[LINK|lang_en|The_New_York_Times|The New York Times]] * sports columnist [[LINK|lang_en|William_C._Rhoden|William C. Rhoden]], playwright, TV producer, and entrepreneur [[LINK|lang_en|David_E._Talbert|David E. Talbert]], and American-Israeli Olympic sprinter [[LINK|lang_en|Donald_Sanford_(athlete)|Donald Sanford]]. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "Civil rights activist and music critic for the Baltimore Afro-American newspaper [[LINK|lang_en|Adah_Louise_Killion_Jenkins|Adah Jenkins]] graduated from Morgan Staate."
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "tag_type": "p",
-          "attrs": {},
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Notable faculty currently teaching at Morgan State University include bestselling author and filmmaker [[LINK|lang_en|M._K._Asante|MK Asante]], and scholar [[LINK|lang_en|Raymond_Winbush|Raymond Winbush]], and African-American historian [[LINK|lang_en|Rosalyn_Terborg-Penn|Rosalyn Terborg-Penn]]."
-            }
-          ]
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "tag_type": "h2",
-          "attrs": {
-            "id": "notes"
-          },
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Notes"
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "tag_type": "ul",
-          "attrs": {},
-          "items": [
-            {
-              "type": "list-item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "A [[LINK|lang_en|Iota_Phi_Theta|Iota Phi Theta Fraternity, Inc.]] was founded at Morgan State University on September 19, 1963."
-                }
-              ],
-              "tag_type": "li"
+              "text": "**Cinmeon Bowers** (born May 1, 1993) is an American professional [[LINK|lang_en|Basketball|basketball]] player for [[LINK|lang_en|Earth_Friends_Tokyo_Z|Earth Friends Tokyo Z]] in Japan. [[CITE|2|https://eftokyo-z.jp/news/180224-01.html]]"
             }
           ]
         },
@@ -3936,17 +1098,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Morgan State University is a historically black college in Baltimore, Maryland, United States. "
-            },
-            {
-              "type": "sentence",
-              "index": 1,
-              "text": "Morgan is Maryland's designated public urban university and the largest HBCU in Maryland. "
-            },
-            {
-              "type": "sentence",
-              "index": 2,
-              "text": "[[CITE|1|https://en.wikipedia.org/wiki/Morgan_State_University]]"
+              "text": "**Cinmeon Bowers** (raised in [[LINK|lang_en|Milwaukee|Milwaukee]]) is an [[LINK|lang_en|Americans|American]] [[LINK|lang_en|Student|student]] and [[LINK|lang_en|basketball|basketball player]]. He plays for [[LINK|lang_en|Auburn_Tigers|Auburn Tigers]] and is affiliated with the [[LINK|lang_en|National_Collegiate_Athletic_Association|National Collegiate Athletic Association]]. [[CITE|666666|/wiki/lang_en/]]"
             }
           ]
         }
@@ -3957,16 +1109,10 @@
   "main_photo": [
     {
       "type": "main_photo",
-      "url": "https://everipedia-storage.s3-accelerate.amazonaws.com/NewlinkFiles/12782151/31613237.jpg",
-      "thumb": "https://everipedia-storage.s3-accelerate.amazonaws.com/NewlinkFiles/12782151/31613237_250x250.png",
-      "caption": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "New student union building"
-        }
-      ],
-      "attribution_url": "https://commons.wikimedia.org/wiki/File:Student_Union%2C_Morgan_State_University_%2816_10_2007%29.jpg",
+      "url": "https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/6666658352806554259.PNG",
+      "thumb": "https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/6666658352806554259_100x100.PNG",
+      "caption": [],
+      "attribution_url": null,
       "category": "PICTURE"
     }
   ],
@@ -4000,10 +1146,10 @@
           "text": "Images/media credited individually (click the icon for details)."
         }
       ],
-      "timestamp": "09/19/2016 01:28:45 PM UTC",
+      "timestamp": "03/03/2018 09:20:20 PM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "https://en.wikipedia.org/wiki/Morgan%20State%20University",
+      "url": "https://en.wikipedia.org/wiki/Cinmeon_Bowers",
       "social_type": null,
       "category": "NONE"
     },
@@ -4013,15 +1159,15 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Morgan State University Marching Band\""
+          "text": "Cinmeon Bowers player profile-Auburn Tigers Men's Basketball"
         }
       ],
-      "timestamp": "12/06/2017 05:13:34 PM UTC",
+      "timestamp": "03/03/2018 09:20:20 PM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://morganstatebears.com/sports/2003/7/17/MarchingBand.aspx?tab=6",
+      "url": "http://auburntigers.com/sports/m-baskbl/mtt/cinmeon_bowers_915628.html",
       "social_type": null,
-      "category": "NONE"
+      "category": "FILE"
     },
     {
       "citation_id": 3,
@@ -4029,15 +1175,15 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"NCAA Tournament Bracket – 2009\""
+          "text": "\"選手契約基本合意のお知らせ\""
         }
       ],
-      "timestamp": "12/06/2017 05:13:25 PM UTC",
+      "timestamp": "03/03/2018 09:20:20 PM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://sports.espn.go.com/ncb/tournament/bracket",
+      "url": "https://eftokyo-z.jp/news/180224-01.html",
       "social_type": null,
-      "category": "NONE"
+      "category": "FILE"
     },
     {
       "citation_id": 4,
@@ -4045,177 +1191,191 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Morgan State University: Branding Toolkit\""
+          "text": "Detailed profile on 247Sports."
         }
       ],
-      "timestamp": "12/06/2017 05:13:07 PM UTC",
+      "timestamp": "06/13/2016 07:47:17 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://morgan.edu/toolkit/colors",
+      "url": "http://247sports.com/Player/Cinmeon-Bowers-7635",
       "social_type": null,
       "category": "NONE"
     },
     {
+      "in_blurb": false,
+      "social_type": null,
+      "url": "https://s3media.247sports.com/Uploads/Assets/558/359/4359558.jpeg",
       "citation_id": 5,
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "PICTURE",
+        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
+        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
+        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
+      },
+      "timestamp": "06/13/2016 07:47:20 AM UTC",
+      "thumb": "None",
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Clarence M. Mitchell, Jr. – School of Engineering\""
+          "text": "Picture"
         }
       ],
-      "timestamp": "12/06/2017 05:13:16 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://www.soe.morgan.edu/dean/general_information.html",
-      "social_type": null,
-      "category": "FILE"
+      "category": "PICTURE",
+      "attribution": null
     },
     {
+      "in_blurb": false,
+      "social_type": null,
+      "url": "https://s3media.247sports.com/Uploads/Assets/720/316/4316720.JPG",
       "citation_id": 6,
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "PICTURE",
+        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
+        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
+        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
+      },
+      "timestamp": "06/13/2016 07:47:25 AM UTC",
+      "thumb": "None",
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"www.msustudentcenter.com – Education\""
+          "text": "Photo of Cinmeon"
         }
       ],
-      "timestamp": "12/06/2017 05:13:35 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://msustudentcenter.com/studentActivities/GreekLife.asp",
-      "social_type": null,
-      "category": "NONE"
+      "category": "PICTURE",
+      "attribution": null
     },
     {
+      "in_blurb": false,
+      "social_type": null,
+      "url": "https://s3media.247sports.com/Uploads/Assets/895/307/4307895.jpg",
       "citation_id": 7,
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "PICTURE",
+        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
+        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
+        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
+      },
+      "timestamp": "06/13/2016 07:47:31 AM UTC",
+      "thumb": "None",
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Morgan State Wins 2010 MEAC Men's Tournament\""
+          "text": "Cinmeon Bowers"
         }
       ],
-      "timestamp": "12/06/2017 05:13:26 PM UTC",
+      "category": "PICTURE",
+      "attribution": null
+    },
+    {
+      "in_blurb": false,
+      "social_type": null,
+      "url": "https://s3media.247sports.com/Uploads/Assets/843/307/4307843.jpg",
+      "citation_id": 8,
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "PICTURE",
+        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
+        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
+        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
+      },
+      "timestamp": "06/13/2016 07:47:37 AM UTC",
+      "thumb": "None",
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Image of Cinmeon Bowers"
+        }
+      ],
+      "category": "PICTURE",
+      "attribution": null
+    },
+    {
+      "in_blurb": false,
+      "social_type": null,
+      "url": "https://s3media.247sports.com/Uploads/Assets/33/295/4295033.JPG",
+      "citation_id": 9,
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "PICTURE",
+        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
+        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
+        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
+      },
+      "timestamp": "06/13/2016 07:47:42 AM UTC",
+      "thumb": "None",
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Undated image of Cinmeon"
+        }
+      ],
+      "category": "PICTURE",
+      "attribution": null
+    },
+    {
+      "in_blurb": false,
+      "social_type": null,
+      "url": "https://s3media.247sports.com/Uploads/Assets/357/282/4282357.jpg",
+      "citation_id": 10,
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "PICTURE",
+        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
+        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
+        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
+      },
+      "timestamp": "06/13/2016 07:47:48 AM UTC",
+      "thumb": "None",
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Photo"
+        }
+      ],
+      "category": "PICTURE",
+      "attribution": null
+    },
+    {
+      "citation_id": 11,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Men's basketball team hands out end-of-season awards"
+        }
+      ],
+      "timestamp": "06/13/2016 07:47:54 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://meacsports.com/ViewArticle.dbml?ATCLID=204907715&DB_OEM_ID=20800",
+      "url": "http://auburn.247sports.com/Bolt/Mens-basketball-team-hands-out-end-of-season-awards-44743642",
       "social_type": null,
       "category": "NONE"
     },
     {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613238.JPG",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613238_250x250.png",
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "The historic Holmes Hall"
-        }
-      ],
-      "category": "PICTURE",
-      "citation_id": 8,
-      "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Morgan_State_University_-_Holmes_Hall.JPG",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
-    },
-    {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613239.jpg",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613239_250x250.png",
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "[[LINK|lang_en|Clarence_M._Mitchell,_Jr.|Clarence M. Mitchell, Jr.]] School of Engineering building"
-        }
-      ],
-      "category": "PICTURE",
-      "citation_id": 9,
-      "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Clarence_Mitchell_Building%2C_Morgan_State_University_%2816-10-2007%29.jpg",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
-    },
-    {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613240.jpg",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613240_250x250.png",
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "[[LINK|lang_en|Hill_Field_House|Hill Field House]], Morgan's indoor athletic venue"
-        }
-      ],
-      "category": "PICTURE",
-      "citation_id": 10,
-      "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Hill_Field_House.jpg",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
-    },
-    {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613241.jpg",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613241_250x250.png",
-      "description": [],
-      "category": "PICTURE",
-      "citation_id": 11,
-      "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Morgan_State_University_Choir.jpg",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
-    },
-    {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613242.jpg",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613242_250x250.png",
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "When at home, the choir performs here at the Carl J. Murphy Fine Arts Center"
-        }
-      ],
-      "category": "PICTURE",
       "citation_id": 12,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Auburn basketball: The season that was"
+        }
+      ],
+      "timestamp": "06/13/2016 07:47:57 AM UTC",
+      "mime": "None",
+      "attribution": "rel='nofollow'",
+      "url": "http://auburn.247sports.com/Article/Auburn-basketball-The-season-that-was-44184556",
       "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Carl._J._Murphy_Fine_Arts_Center.jpg",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
+      "category": "NONE"
     },
     {
       "citation_id": 13,
@@ -4223,63 +1383,47 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "Official website"
+          "text": "Hoops Breakdown: The Tennessee game, Part III"
         }
       ],
-      "timestamp": "12/06/2017 05:13:00 PM UTC",
+      "timestamp": "06/13/2016 07:48:02 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://morgan.edu",
+      "url": "http://auburn.247sports.com/Article/Hoops-Breakdown-The-Tennessee-game-Part-III-44160201",
       "social_type": null,
       "category": "NONE"
     },
     {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613243.JPG",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613243_250x250.png",
+      "citation_id": 14,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "The Morgan State Marching Band performing during halftime at the [[LINK|lang_en|Rutgers_University|Rutgers University]]-Morgan State football game in [[LINK|lang_en|Piscataway,_New_Jersey|Piscataway, New Jersey]] (September 2008)"
+          "text": "Is there any SEC Tournament magic left in Tigers?"
         }
       ],
-      "category": "PICTURE",
-      "citation_id": 14,
+      "timestamp": "06/13/2016 07:48:06 AM UTC",
+      "mime": "None",
+      "attribution": "rel='nofollow'",
+      "url": "http://auburn.247sports.com/Article/Is-there-any-SEC-Tournament-magic-left-in-Tigers-44151210",
       "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Morganstateband.JPG",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
+      "category": "NONE"
     },
     {
-      "url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613244.jpg",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12782151/31613244_250x250.png",
+      "citation_id": 15,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "1977 photo of Morgan State University Marching Band"
+          "text": "Dog day afternoon: Tigers battered by Bulldogs"
         }
       ],
-      "category": "PICTURE",
-      "citation_id": 15,
+      "timestamp": "06/13/2016 07:48:10 AM UTC",
+      "mime": "None",
+      "attribution": "rel='nofollow'",
+      "url": "http://auburn.247sports.com/Article/Dog-day-afternoon-Tigers-battered-by-Bulldogs-44100073",
       "social_type": null,
-      "attribution": "https://commons.wikimedia.org/wiki/File:Morgan_State_University_Marching_Band_1977.jpg",
-      "timestamp": "09/19/2016 01:28:51 PM UTC",
-      "mime": "image/jpeg",
-      "media_props": {
-        "type": "PICTURE",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
+      "category": "NONE"
     },
     {
       "citation_id": 16,
@@ -4287,13 +1431,13 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Morgan State University This historically black college has a well-rounded liberal arts core\""
+          "text": "Texas A&M 81, Auburn 63: Five takeaways"
         }
       ],
-      "timestamp": "12/06/2017 05:13:09 PM UTC",
+      "timestamp": "06/13/2016 07:48:14 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "https://web.archive.org/web/20070927193139/http://www.baltimoresun.com/entertainment/visitor/college/bal-hl-morgan,0,5357177.story?coll=bal-health-headlines",
+      "url": "http://auburn.247sports.com/Article/Texas-AM-81-Auburn-63-Five-takeaways-44033517",
       "social_type": null,
       "category": "NONE"
     },
@@ -4303,13 +1447,13 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"The Charles R. Drew Papers\""
+          "text": "Hoops Breakdown: The Texas A&M game"
         }
       ],
-      "timestamp": "12/06/2017 05:13:17 PM UTC",
+      "timestamp": "06/13/2016 07:48:17 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://profiles.nlm.nih.gov/ps/retrieve/Narrative/BG/p-nid/337",
+      "url": "http://auburn.247sports.com/Article/Hoops-Breakdown-The-Texas-AM-game-44014347",
       "social_type": null,
       "category": "NONE"
     },
@@ -4319,15 +1463,15 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "Mother Bear chapter"
+          "text": "Bowers, seniors brace for emotional home finale"
         }
       ],
-      "timestamp": "12/06/2017 05:13:36 PM UTC",
+      "timestamp": "06/13/2016 07:48:21 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://freewebs.com/mother-bear/index2.html",
+      "url": "http://auburn.247sports.com/Article/Bowers-seniors-brace-for-emotional-home-finale-44004666",
       "social_type": null,
-      "category": "FILE"
+      "category": "NONE"
     },
     {
       "citation_id": 19,
@@ -4335,13 +1479,13 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Morgan State Bears vs. West Virginia Mountaineers – NCAA Tournament Game – Box Score – March 19, 2010 – ESPN\""
+          "text": "Reshaped Reed 'will definitely help' Tigers in 2016"
         }
       ],
-      "timestamp": "12/06/2017 05:13:27 PM UTC",
+      "timestamp": "06/13/2016 07:48:24 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://espn.go.com/ncb/boxscore?gameId=300780277",
+      "url": "http://auburn.247sports.com/Bolt/Reshaped-Reed-will-definitely-help-Tigers-in-2016-44002140",
       "social_type": null,
       "category": "NONE"
     },
@@ -4351,376 +1495,150 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"NFL Players who attended Morgan State University\""
+          "text": "Alabama 65, Auburn 57: Five takeaways"
         }
       ],
-      "timestamp": "12/06/2017 05:13:19 PM UTC",
+      "timestamp": "06/13/2016 07:48:27 AM UTC",
       "mime": "None",
       "attribution": "rel='nofollow'",
-      "url": "http://databasefootball.com/players/bycollege.htm?sch=Morgan+State+University",
+      "url": "http://auburn.247sports.com/Article/Alabama-65-Auburn-57-Five-takeaways-43974102",
       "social_type": null,
       "category": "NONE"
-    },
-    {
-      "citation_id": 21,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Morgan State Athletics website"
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:01 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://morganstatebears.com",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 22,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "the original"
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:10 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://baltimoresun.com/entertainment/visitor/college/bal-hl-morgan,0,5357177.story?coll=bal-health-headlines",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 23,
-      "description": [],
-      "timestamp": "12/06/2017 05:13:29 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://toohot2handel.com/creativeteam.html",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 24,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Professor Revising History of College Desegregation\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:20 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "https://web.archive.org/web/20070619040328/http://www.history.appstate.edu/WadeTolliver.htm",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 25,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Malika Kambe Umfazi\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:38 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://malikakambeumfazi.org/page.php?page_id=37650",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 26,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Morgan State University: Overview\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:03 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "https://usnews.com/best-colleges/morgan-state-2083",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 27,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "the original"
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:21 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://www.history.appstate.edu/WadeTolliver.htm",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 28,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"America's Best\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:30 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://rd.com/your-america-inspiring-people-and-stories/best-of-america-college-choir/article36660.html",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 29,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Swing Phi Swing SFI\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:39 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://swingphiswing.org/leadership/maRegion.htm",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 30,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Morgan State University Spokesman 'Our Forefathers: The Founders of Morgan State', Feb, 8, 2002, Cox"
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:12 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://media.www.msuspokesman.com/media/storage/paper270/news/2002/02/08/CampusLife/Our-Forefathers.The.Founders.Of.Morgan.State-177947.shtml",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 31,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Morgan State University – Education Rankings & Advice\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:04 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://colleges.usnews.rankingsandreviews.com/best-colleges/morgan-state-2083",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 32,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Faith Hill fulfills her Christmas dream\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:31 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://www.msnbc.msn.com/id/27828033",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 33,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Sports: Scouting\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:22 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "https://query.nytimes.com/gst/fullpage.html?res=9406EED8163BF93BA15752C0A962948260",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 34,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "[1]"
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:40 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://freewebs.com/tbsigma144",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 35,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Brief History of Morgan State University\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:13 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://morgan.edu/about_msu/university_history.html",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 36,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Morgan State University – Fall 2014 Student Demographics\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:05 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://morgan.edu/Documents/ADMINISTRATION/Planning%20and%20Info%20Tech/InstitutionalResearch/Fall%202014%20Student%20Demographics.pdf",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 37,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"40,000 at Whistlestop Cheer Obama on Way to Capital\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:32 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://pww.org/article/articleview/14301",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "citation_id": 38,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Lacrosse Returns to Morgan State University\""
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:24 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "http://msuspokesman.com/media/paper270/news/2005/07/01/Sports/Lacrosse.Returns.To.Morgan.State.University-961055.shtml",
-      "social_type": null,
-      "category": "FILE"
-    },
-    {
-      "citation_id": 39,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "105 A. 157 270"
-        }
-      ],
-      "timestamp": "12/06/2017 05:13:15 PM UTC",
-      "mime": "None",
-      "attribution": "rel='nofollow'",
-      "url": "https://courtlistener.com/opinion/3490882/diggs-v-morgan-college",
-      "social_type": null,
-      "category": "NONE"
-    },
-    {
-      "url": "https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/6666607184067054983.png",
-      "thumb": "https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/6666607184067054983_100x100.png",
-      "description": [],
-      "category": "PICTURE",
-      "citation_id": 40,
-      "social_type": null,
-      "attribution": null,
-      "timestamp": "2019-08-16T01:06:36.892Z",
-      "mime": null,
-      "media_props": {
-        "type": "normal",
-        "webp_original": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp",
-        "webp_medium": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp",
-        "webp_thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp"
-      },
-      "in_blurb": false
-    },
-    {
-      "social_type": null,
-      "url": "https://en.wikipedia.org/wiki/Morgan_State_University",
-      "citation_id": 41,
-      "mime": "None",
-      "timestamp": "08/21/2016 09:02:38 PM UTC",
-      "thumb": null,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia. "
-        },
-        {
-          "type": "sentence",
-          "index": 1,
-          "text": "Text is available under the Creative Commons Attribution-ShareAlike License. "
-        },
-        {
-          "type": "sentence",
-          "index": 2,
-          "text": "Additional terms may apply. "
-        },
-        {
-          "type": "sentence",
-          "index": 3,
-          "text": "See everipedia.org/everipedia-termsfor further details. "
-        },
-        {
-          "type": "sentence",
-          "index": 4,
-          "text": "Images/media credited individually (click the icon for details)."
-        }
-      ],
-      "category": "NONE",
-      "attribution": "rel='nofollow'"
     }
   ],
   "media_gallery": [],
-  "infoboxes": [],
+  "infoboxes": [
+    {
+      "key": "Occupation",
+      "schema": "jobTitle",
+      "addlSchematype": null,
+      "addlSchemaItemProp": null,
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[LINK|lang_en|basketball|Basketball player]](Power Forward)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Hometown",
+      "schema": "homeLocation",
+      "addlSchematype": "Place",
+      "addlSchemaItemProp": "name",
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[LINK|lang_en|Milwaukee|Milwaukee]]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "High School",
+      "schema": "alumniOf",
+      "addlSchematype": "HighSchool",
+      "addlSchemaItemProp": "name",
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "King"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Affiliation",
+      "schema": "affiliation",
+      "addlSchematype": "Organization",
+      "addlSchemaItemProp": "name",
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[LINK|lang_en|National_Collegiate_Athletic_Association|National Collegiate Athletic Association]]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Sports Team(s)",
+      "schema": "affiliation",
+      "addlSchematype": "SportsTeam",
+      "addlSchemaItemProp": "name",
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[LINK|lang_en|Auburn_Tigers|Auburn Tigers]]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Height",
+      "schema": "height",
+      "addlSchematype": "QuantitativeValue",
+      "addlSchemaItemProp": "value",
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "6-7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "Weight",
+      "schema": "weight",
+      "addlSchematype": "QuantitativeValue",
+      "addlSchemaItemProp": "value",
+      "values": [
+        {
+          "index": 0,
+          "sentences": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "278"
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "metadata": [
     {
       "key": "page_type",
-      "value": "Organization"
+      "value": "Person"
     },
     {
       "key": "is_removed",
@@ -4732,19 +1650,19 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "09/19/2016 01:28:33 PM UTC"
+      "value": "03/03/2018 09:20:18 PM UTC"
     },
     {
       "key": "last_modified",
-      "value": "12/06/2017 05:13:45 PM UTC"
+      "value": "03/03/2018 09:20:20 PM UTC"
     },
     {
       "key": "url_slug",
-      "value": "Morgan_State_University"
+      "value": "Cinmeon_Bowers"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Morgan_State_University"
+      "value": "Cinmeon_Bowers"
     },
     {
       "key": "sub_page_type",
@@ -4760,7 +1678,7 @@
     },
     {
       "key": "bing_index_override",
-      "value": true
+      "value": false
     },
     {
       "key": "is_locked",
@@ -4777,6 +1695,6 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "Qmb7nxtZ7FgSxo2kwW2Fn8EfwyEEwM3fkBduVP11kufaR7",
+  "ipfs_hash": "QmRp6hMw42nno7AeyQdi1tJW9KjsALYcpebgdGLPG5Vrkz",
   "redirect_wikilangslug": null
 }

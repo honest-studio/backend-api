@@ -1,4 +1,4 @@
-import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue } from '../../types/article';
+import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue, Section } from '../../types/article';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs, addAMPInfo } from '../../utils/article-utils';
 var colors = require('colors');
@@ -35,8 +35,8 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     // If the target does not have a photo, or the default one, and the source does, replace it
     // If they both have photos, move the source's into the media gallery (converting it first from Media to Citation)
     let sourceWikiPhoto = (workingSourceWiki.main_photo && workingSourceWiki.main_photo[0] && workingSourceWiki.main_photo[0].url) || 'no-image-slide';
-    let targetWikiPhoto = (targetWiki.main_photo && targetWiki.main_photo[0] && workingSourceWiki.main_photo[0].url) || 'no-image-slide';
-    
+    let targetWikiPhoto = (targetWiki.main_photo && targetWiki.main_photo[0] && targetWiki.main_photo[0].url) || 'no-image-slide';
+
     if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') == -1){
         // Both have good photos
         // Move the source wiki photo to the gallery of the target
@@ -111,6 +111,8 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     
     }
 
+
+
     // ========================================WIKIPEDIA INFOBOX========================================
     // Keep the target's Wikipedia infobox if it exists. Otherwise, take it from the source
     if (workingSourceWiki.infobox_html && resultantWiki.infobox_html){ /* Both have good Wikipedia infoboxes. Do nothing. */ } 
@@ -125,7 +127,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     // ============================================INFOBOXES============================================
     // Merge infoboxes if present. Be aware of dupes
     let sourceWikiInfoboxes = workingSourceWiki.infoboxes ? workingSourceWiki.infoboxes : [];
-    let targetWikiInfoboxes = resultantWiki.infoboxes ? resultantWiki.infoboxes : [];
+    let targetWikiInfoboxes = targetWiki.infoboxes ? targetWiki.infoboxes : [];
     if (sourceWikiInfoboxes.length && targetWikiInfoboxes.length){
         // Both have infoboxes
         // Merge the source boxes into the target
@@ -220,6 +222,29 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
 
     // ============================================PAGE BODY============================================
     // Add the source's Sections[] to the end of the target's
+    const sourceLang = sourceWiki.metadata.filter(w => w.key == 'page_lang')[0].value;
+    const sourceSlug = sourceWiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
+    const mergeContentNotice: Section = {  
+        "paragraphs":[  
+           {  
+              "index":0,
+              "tag_type":"h2",
+              "attrs":{  
+                 "id":"merged-content-warning"
+              },
+              "items":[  
+                 {  
+                    "type":"sentence",
+                    "index":0,
+                    "text":`====THE CONTENT BELOW WAS MERGED IN FROM [/lang_${sourceLang}/${sourceSlug}]====`
+                 }
+              ]
+           },
+        ],
+        "images":[]
+    }
+    resultantWiki.page_body.push(mergeContentNotice);
+
     resultantWiki.page_body.push(...workingSourceWiki.page_body);
 
     // Make sure the page_body merge succeeded
