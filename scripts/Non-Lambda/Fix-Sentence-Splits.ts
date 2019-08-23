@@ -31,7 +31,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 1;
+const BATCH_SIZE = 250;
 const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00';
 const PAGE_NOTE = '|SOCCERWAY_PLAYERS|';
 
@@ -101,7 +101,8 @@ export const FixSentenceSplits = async (inputString: string) => {
         const json_insertion = await theMysql.TryQuery(
             `
                 UPDATE enterlink_hashcache
-                SET html_blob = ?
+                SET html_blob = ?,
+                    timestamp = NOW() 
                 WHERE ipfs_hash = ? 
             `,
             [JSON.stringify(wiki), inputIPFS]
@@ -176,8 +177,9 @@ export const FixSentenceSplits = async (inputString: string) => {
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0
                 AND redirect_page_id IS NULL
+                AND art.page_note = ?
             `,
-            [currentStart, currentEnd]
+            [currentStart, currentEnd, PAGE_NOTE]
         );
 
         for await (const artResult of fetchedArticles) {
