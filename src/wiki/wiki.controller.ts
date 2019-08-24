@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Query, UsePipes } from '@nestjs/com
 import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { ArticleJson } from '../types/article';
+import { MergeResult } from '../types/api';
 import { WikiExtraInfo } from '../types/article-helpers';
 import { WikiQuerySchema } from './wiki.query-schema';
 import { WikiService, MergeInputPack } from './wiki.service';
@@ -153,7 +154,7 @@ export class WikiController {
 
     @Post('get-merged-result')
     @ApiOperation({ title: 'Get the result of merging two wiki articles' })
-    async getMergedWikiCtrl(@Body() pack: MergeInputPack): Promise<any> {
+    async getMergedWikiCtrl(@Body() pack: MergeInputPack): Promise<MergeResult> {
         return this.wikiService.getMergedWiki(pack);
     }
 

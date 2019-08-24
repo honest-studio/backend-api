@@ -1,4 +1,5 @@
 import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue, Section } from '../../types/article';
+import { MergeResult } from '../../types/api';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs, addAMPInfo } from '../../utils/article-utils';
 var colors = require('colors');
@@ -22,7 +23,7 @@ export interface CountBeforePack {
     citations: number
 }
 
-export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJson): Promise<ArticleJson> {
+export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJson): Promise<MergeResult> {
     let resultantWiki = targetWiki;
     let workingSourceWiki = sourceWiki;
     let availableCitationID = getFirstAvailableCitationIndex(resultantWiki.citations);
@@ -283,7 +284,15 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     // ============================================AMP INFO=============================================
     resultantWiki = addAMPInfo(resultantWiki);
 
-    return resultantWiki;
+    return {
+        merged_json: resultantWiki,
+        target_original_ipfs_hash: targetWiki.ipfs_hash
+    };
 
     
 }
+
+// export async function undoMerge(oldSourceWikiLangSlug: string, oldTargetSlug: string, ): Promise<ArticleJson> {
+
+
+// }

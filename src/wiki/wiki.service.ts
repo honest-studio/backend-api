@@ -13,6 +13,7 @@ import { RedisService, MongoDbService, MysqlService } from '../feature-modules/d
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
+import { MergeResult } from '../types/api';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
@@ -51,7 +52,7 @@ export class WikiService {
         this.updateWikiIntervals = {};
     }
 
-    async getMergedWiki(inputPack: MergeInputPack): Promise<ArticleJson>{
+    async getMergedWiki(inputPack: MergeInputPack): Promise<MergeResult>{
         let sourceWiki: ArticleJson;
 
         // Get the source wiki, which might be present in the input pack
@@ -509,12 +510,12 @@ export class WikiService {
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
-                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
+                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits, webp_large, webp_medium, webp_small)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
             ON DUPLICATE KEY UPDATE 
                 ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
                 page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
-                is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL webp_large=? webp_medium=? webp_small=? 
+                is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL, webp_large=?, webp_medium=?, webp_small=? 
             `,
             [
                 ipfs_hash,
@@ -680,9 +681,17 @@ export class WikiService {
             console.log(colors.green(`Transaction found! (${trxID})`));
             clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
             // Check for a merge
-            if(submitted_proposal.trace.act.data.comment.indexOf("MERGE_FROM|") >= 0 
-                && submitted_proposal.trace.act.data.memo.indexOf("Merge") >= 0 
-            ) await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+            const theComment = submitted_proposal.trace.act.data.comment;
+            const theMemo = submitted_proposal.trace.act.data.comment;
+            if(theComment.indexOf("MERGE_FROM|") >= 0 && theMemo.indexOf("Merge") >= 0) {
+                await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+            }
+            // else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
+            //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+            // } 
+            // else if(theComment.indexOf("UNDO_REMOVAL|") >= 0 && theMemo.indexOf("Undo Removal") >= 0 ) {
+            //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+            // } 
             else await this.processWikiUpdate(wiki, ipfs_hash);
         }
     }

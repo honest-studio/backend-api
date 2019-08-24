@@ -40,6 +40,11 @@ export interface FileFetchResult {
     category: CitationCategoryType;
 }
 
+interface MergeResult {
+    merged_json: ArticleJson;
+    target_original_ipfs_hash: string;
+}
+
 export interface SchemaSearchResult {
     key: string;
     schema: string;
