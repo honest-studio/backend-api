@@ -5,7 +5,32 @@
 				"index": 0,
 				"tag_type": "p",
 				"attrs": {},
-				"items": []
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The **Pan American Fencing Championships** ([[LINK|lang_en|Spanish_language|Spanish]] : *Campeonato Panamericano de Esgrima* ; [[LINK|lang_en|French_language|French]] : *Championnats Panaméricains*) are an annual top-level [[LINK|lang_en|Fencing_(sport)|fencing]] tournament organized by the [[LINK|lang_en|Pan_American_Fencing_Confederation|Pan American Fencing Confederation]]. They serve as zone championships for the [[LINK|lang_en|Fencing_World_Cup|Fencing World Cup]] run by the [[LINK|lang_en|Fédération_Internationale_d'Escrime|International Fencing Federation]]."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "list-of-tournaments"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "List of tournaments"
+					}
+				]
 			},
 			{
 				"index": 1,
@@ -15,7 +40,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**None** may refer to:"
+						"text": "Non-exhaustive list."
 					}
 				]
 			},
@@ -31,7 +56,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|0_(number)|Zero]], the mathematical concept of the quantity \"none\""
+								"text": "[[LINK|lang_en|2017_Pan_American_Fencing_Championships|2017]] : [[LINK|lang_en|Canada|]] [[LINK|lang_en|Montreal|Montreal]]"
 							}
 						],
 						"tag_type": "li"
@@ -43,7 +68,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Empty_set|The empty set]], the mathematical concept of the collection of things represented by \"none\""
+								"text": "[[LINK|lang_en|2016_Pan_American_Fencing_Championships|2016]] : [[LINK|lang_en|Panama|]] [[LINK|lang_en|Panama_City|Panama City]]"
 							}
 						],
 						"tag_type": "li"
@@ -55,119 +80,115 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "*none*, an [[LINK|lang_en|Indefinite_pronoun|indefinite pronoun]] in the English language"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "music"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Music"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|None_(Meshuggah_EP)|None (Meshuggah EP)]], an EP by Swedish heavy metal band Meshuggah"
+								"text": "[[LINK|lang_en|2015_Pan_American_Fencing_Championships|2015]] : [[LINK|lang_en|Chile|]] [[LINK|lang_en|Santiago_de_Chile|Santiago de Chile]]"
 							}
 						],
 						"tag_type": "li"
 					},
 					{
 						"type": "list-item",
-						"index": 1,
+						"index": 3,
 						"sentences": [
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|None_(Cloak_of_Altering_EP)|None (Cloak of Altering EP)]], an EP by Dutch group Cloak of Altering"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "other-uses"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Other uses"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|None_(liturgy)|None (liturgy)]], a liturgical hour"
+								"text": "[[LINK|lang_en|2014_Pan_American_Fencing_Championships|2014]] : [[LINK|lang_en|Costa_Rica|]] [[LINK|lang_en|San_José,_Costa_Rica|San José]]"
 							}
 						],
 						"tag_type": "li"
 					},
 					{
 						"type": "list-item",
-						"index": 1,
+						"index": 4,
 						"sentences": [
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|None,_Piedmont|None, Piedmont]], a commune in the province of Turin in the Italian region of Piedmont"
+								"text": "[[LINK|lang_en|2013_Pan_American_Fencing_Championships|2013]] : [[LINK|lang_en|Colombia|]] [[LINK|lang_en|Cartagena,_Colombia|Cartagena]]"
 							}
 						],
 						"tag_type": "li"
 					},
 					{
 						"type": "list-item",
-						"index": 2,
+						"index": 5,
 						"sentences": [
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Irreligion|Irreligion]], a lack of religious affiliation"
+								"text": "[[LINK|lang_en|2012_Pan_American_Fencing_Championships|2012]] : [[LINK|lang_en|Mexico|]] [[LINK|lang_en|Cancún|Cancún]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|2011_Pan_American_Fencing_Championships|2011]] : [[LINK|lang_en|United_States|]] [[LINK|lang_en|Reno,_Nevada|Reno, Nevada]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|2010_Pan_American_Fencing_Championships|2010]] : [[LINK|lang_en|Costa_Rica|]] [[LINK|lang_en|San_José,_Costa_Rica|San José]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "2009: [[LINK|lang_en|El_Salvador|]] [[LINK|lang_en|San_Salvador|San Salvador]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "2008: [[LINK|lang_en|Mexico|]] [[LINK|lang_en|Querétaro|Querétaro]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "2007: [[LINK|lang_en|Canada|]] [[LINK|lang_en|Montreal|Montreal]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|2006_Pan_American_Fencing_Championships|2006]] : [[LINK|lang_en|Venezuela|]] [[LINK|lang_en|Valencia,_Carabobo|Valencia]]"
 							}
 						],
 						"tag_type": "li"
@@ -205,7 +226,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Nones_(disambiguation)|Nones (disambiguation)]]"
+								"text": "[[LINK|lang_en|Fencing_at_the_Summer_Olympics|Fencing at the Summer Olympics]]"
 							}
 						],
 						"tag_type": "li"
@@ -217,7 +238,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Nothing_(disambiguation)|Nothing (disambiguation)]]"
+								"text": "[[LINK|lang_en|World_Fencing_Championships|World Fencing Championships]]"
 							}
 						],
 						"tag_type": "li"
@@ -229,18 +250,12 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Zero_(disambiguation)|Zero (disambiguation)]]"
+								"text": "other zone championships: [[LINK|lang_en|African_Fencing_Championships|African Fencing Championships]], [[LINK|lang_en|Asian_Fencing_Championships|Asian Fencing Championships]], [[LINK|lang_en|European_Fencing_Championships|European Fencing Championships]]"
 							}
 						],
 						"tag_type": "li"
 					}
 				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": []
 			}
 		],
 		"images": []
