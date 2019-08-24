@@ -89,9 +89,19 @@ export const AddWebPToArticletable = async (inputString: string) => {
 
     let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
     const media_props = main_photo.media_props || null;
-    const webp_large = media_props && media_props.webp_original || "NULL";
-    const webp_medium = media_props && media_props.webp_medium || "NULL";
-    const webp_small =  media_props && media_props.webp_thumb || "NULL";
+    
+    const webp_large = (media_props 
+            && media_props.webp_original
+            && media_props.webp_original.indexOf('no-image-slide') == -1
+        ) ? media_props.webp_original : "NULL";
+    const webp_medium = (media_props 
+            && media_props.webp_medium
+            && media_props.webp_medium.indexOf('no-image-slide') == -1 
+        ) ? media_props.webp_medium : "NULL";
+    const webp_small =  (media_props 
+            && media_props.webp_thumb
+            && media_props.webp_thumb.indexOf('no-image-slide') == -1 
+        ) ? media_props.webp_thumb : "NULL";
 
     try {
         const article_update = await theMysql.TryQuery(

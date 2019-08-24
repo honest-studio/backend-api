@@ -11,7 +11,7 @@ import * as axios from 'axios';
 import * as crypto from 'crypto';
 const isSvg = require('is-svg');
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from '../../src/media-upload/media-upload-dto';
-import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations } from '../../src/utils/article-utils';
+import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations, flushPrerenders } from '../../src/utils/article-utils';
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
 const util = require('util');
@@ -32,6 +32,9 @@ const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
 const theBucket = theAWSS3.getBucket();
 
+const BATCH_SIZE = 250;
+const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00' 
+
 // SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))
 // FROM enterlink_articletable art
 // WHERE id BETWEEN 1000 AND 1000000
@@ -41,17 +44,11 @@ const theBucket = theAWSS3.getBucket();
 
 commander
   .version('1.0.0', '-v, --version')
-  .description('Make WebP images')
+  .description('Make WebP Images')
   .usage('[OPTIONS]...')
-  .option('-i, --input <path>', 'Input file')
+  .option('-s, --start <pageid>', 'Starting ID')
+  .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
-
-// Open the file with the URLs
-const readInterface = readline.createInterface({
-    input: fs.createReadStream(path.resolve(__dirname, commander.input)), 
-    // output: process.stdout,
-    // console: false
-});
 
 interface WebPTrioBuf {
     webpOriginalBuf: Buffer,
@@ -101,7 +98,7 @@ const UpdateWithWebP = async (inputItem: Media | Citation, slug: string, lang_co
                 ...theTrio
             }
         };
-        console.log(chalk.green(`Made a WebP image for ${uploadTypeInput}: ${theTrio.webp_original}`))//: " )), util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
+        console.log(chalk.green.bold(`Made a WebP image for ${uploadTypeInput}: ${theTrio.webp_original}`))//: " )), util.inspect(theTrio, {showHidden: false, depth: null, chalk: true})));
     }
     return returnItem;
 }
@@ -278,7 +275,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
     return returnPack;
 }
 
-export const MakeWebPImages = async (inputString: string) => {
+export const MakeWebPImages = async (inputString: string, processMediaGallery: boolean = true) => {
     let wikiLangSlug = inputString.split("|")[0];
     let inputIPFS = inputString.split("|")[1];
     let pageTitle = inputString.split("|")[2].trim();
@@ -296,8 +293,8 @@ export const MakeWebPImages = async (inputString: string) => {
     console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
     console.log(chalk.blue.bold("=========================================START========================================="));
     console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
-    console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`))
-    console.log(chalk.blue.bold(`Page Slug: |${slug}|`))
+    console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
+    console.log(chalk.blue.bold(`Page Slug: |${slug}|`));
 
     // Get the article object
     let hashCacheResult: Array<any> = await theMysql.TryQuery(
@@ -333,23 +330,26 @@ export const MakeWebPImages = async (inputString: string) => {
     }
     // console.log(util.inspect(wiki.main_photo, {showHidden: false, depth: null, chalk: true}));
 
-    logYlw("================MEDIA GALLERY================");
-    // Deal with the other media now
-    wiki.citations = await Promise.all(wiki.citations.map(async (ctn) => {
-        // Only process media citations
-        if (!ctn.media_props) return ctn;
-        if (ctn.category == 'YOUTUBE' 
-        || ctn.category == 'NORMAL_VIDEO' 
-        || ctn.category == 'AUDIO' 
-        || ctn.category == 'NONE'
-        || ctn.category == 'BOOK'
-        || ctn.category == 'FILE'
-        ) return ctn;
-        else {
-            return await UpdateWithWebP(ctn, slug, lang_code, auxiliary_prefix, 'NewlinkFiles', 'normal') as Citation
-        }
-    }));
-    // console.log(util.inspect(wiki.citations, {showHidden: false, depth: null, chalk: true}));
+    if(processMediaGallery){
+        logYlw("================MEDIA GALLERY================");
+        // Deal with the other media now
+        wiki.citations = await Promise.all(wiki.citations.map(async (ctn) => {
+            // Only process media citations
+            if (!ctn.media_props) return ctn;
+            if (ctn.category == 'YOUTUBE' 
+            || ctn.category == 'NORMAL_VIDEO' 
+            || ctn.category == 'AUDIO' 
+            || ctn.category == 'NONE'
+            || ctn.category == 'BOOK'
+            || ctn.category == 'FILE'
+            ) return ctn;
+            else {
+                return await UpdateWithWebP(ctn, slug, lang_code, auxiliary_prefix, 'NewlinkFiles', 'normal') as Citation
+            }
+        }));
+        // console.log(util.inspect(wiki.citations, {showHidden: false, depth: null, chalk: true}));
+    }
+
 
     logYlw("=================MAIN UPLOAD=================");
 
@@ -368,19 +368,85 @@ export const MakeWebPImages = async (inputString: string) => {
         }
         else throw e;
     }
+
+    let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+    const media_props = main_photo.media_props || null;
+    const webp_large = media_props && media_props.webp_original || "NULL";
+    const webp_medium = media_props && media_props.webp_medium || "NULL";
+    const webp_small =  media_props && media_props.webp_thumb || "NULL";
+
+    try {
+        const article_update = await theMysql.TryQuery(
+            `
+                UPDATE enterlink_articletable 
+                SET lastmod_timestamp = NOW(),
+                    desktop_cache_timestamp = NULL,
+                    mobile_cache_timestamp = NULL,
+                    webp_large = ?,
+                    webp_medium = ?,
+                    webp_small = ?
+                WHERE ipfs_hash_current = ? 
+            `,
+            [webp_large, webp_medium, webp_small, inputIPFS]
+        );
+    } catch (e) {
+        if (e.message.includes("ER_DUP_ENTRY")){
+            console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
+        }
+        else throw e;
+    }
+
+    // Flush the prerenders
+    const prerenderToken = theConfig.get('PRERENDER_TOKEN');
+    flushPrerenders(lang_code, slug, prerenderToken);
     
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
 }
 
 (async () => {
-    for await (const inputLine of readInterface) {
-        try{
-            await MakeWebPImages(inputLine);
-        }
-        catch (err){
-            console.error(`${inputLine} FAILED!!! [${err}]`);
-        }
-    }
+    logYlw("=================STARTING MAIN SCRIPT=================");
+    let batchCounter = 0;
+    let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
+    console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
+    let currentStart, currentEnd;
+    for (let i = 0; i < totalBatches; i++) {
+        currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
+        currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;
 
+        console.log("\n");
+        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
+        console.log(chalk.blue.bold("=========================================START========================================="));
+        console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`));
+
+        const fetchedArticles: any[] = await theMysql.TryQuery(
+            `
+                SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title)) as concatted
+                FROM enterlink_articletable art
+                WHERE art.id between ? and ?
+                AND art.is_removed = 0
+                AND redirect_page_id IS NULL
+                AND webp_large IS NULL
+                AND photo_url <> 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'
+            `,
+            [currentStart, currentEnd]
+        );
+
+        for await (const artResult of fetchedArticles) {
+            try{
+                await MakeWebPImages(artResult.concatted, false);
+            }
+            catch (err){
+                console.error(`${artResult.concatted} FAILED!!! [${err}]`);
+                console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
+            }
+        }
+
+        batchCounter = batchCounter + 1;
+    }
+    return;
 })();
+
+
+
