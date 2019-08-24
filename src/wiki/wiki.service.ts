@@ -66,12 +66,15 @@ export class WikiService {
         let mergedResult = await mergeWikis(sourceWiki, targetWiki);
         // console.log(util.inspect(mergedResult, {showHidden: false, depth: null, chalk: true}));
         // fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(mergedResult, null, 2));
-        console.log(mergedResult)
+        // console.log(mergedResult);
+        // return null;
+
         return mergedResult;
     }
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
+        console.log("mysql slug: ", mysql_slug)
         let decodedSlug = decodeURIComponent(mysql_slug);
 
         // Get current IPFS hash
@@ -481,6 +484,7 @@ export class WikiService {
         const page_title = wiki.page_title[0].text;
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+
         let text_preview;
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
@@ -492,6 +496,10 @@ export class WikiService {
         }
         const photo_url = wiki.main_photo[0].url;
         const photo_thumb_url = wiki.main_photo[0].thumb;
+        const media_props = wiki.main_photo[0].media_props || null;
+        const webp_large = media_props && media_props.webp_original || null;
+        const webp_medium = media_props && media_props.webp_medium || null;
+        const webp_small =  media_props && media_props.webp_thumb || null;
         const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
         const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
         const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
@@ -502,11 +510,11 @@ export class WikiService {
             `
             INSERT INTO enterlink_articletable 
                 (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
             ON DUPLICATE KEY UPDATE 
                 ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
                 page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
-                is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL
+                is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL webp_large=? webp_medium=? webp_small=? 
             `,
             [
                 ipfs_hash,
@@ -519,6 +527,9 @@ export class WikiService {
                 page_type,
                 is_adult_content,
                 page_lang,
+                webp_large,
+                webp_medium,
+                webp_small,
                 ipfs_hash,
                 page_title,
                 text_preview,
@@ -527,7 +538,10 @@ export class WikiService {
                 page_type,
                 is_adult_content,
                 is_indexed,
-                is_removed
+                is_removed,
+                webp_large,
+                webp_medium,
+                webp_small,
             ]
         )
 

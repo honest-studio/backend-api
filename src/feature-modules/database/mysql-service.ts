@@ -123,20 +123,23 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
 
     // Our DB has very specific legacy encoding schemes for slugs
     // This function takes care of that
-    public cleanSlugForMysql(slug: string) {
+    public cleanSlugForMysql(slug: string, encodeToo: boolean = false) {
+        let slugToReturn = slug;
+        // slugToReturn = decodeURIComponent(slug)
         const replacements = [
-    //        { find: /,/g, replace: "%2C" },
+           { find: /%2C/g, replace: "," },
             { find: /'/g, replace: "%27" },
             { find: /\(/g, replace: "%28" },
             { find: /\)/g, replace: "%29" },
     //        { find: /–/g, replace: "%E2%80%93" },
         ]
         for (let set of replacements) {
-            slug = slug.replace(set.find, set.replace);
+            slugToReturn = slugToReturn.replace(set.find, set.replace);
         }
-        slug = encodeURIComponent(slug);
-        slug = slug.replace(/%25/g, '%');
-        return slug;
+
+        if (encodeToo) slugToReturn = encodeURIComponent(slugToReturn);
+        slugToReturn = slugToReturn.replace(/%25/g, '%');
+        return slugToReturn;
     }
 
     private tryTerminate = () => {
