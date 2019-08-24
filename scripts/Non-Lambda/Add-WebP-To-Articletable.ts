@@ -25,7 +25,7 @@ const fs = require('fs');
 
 commander
   .version('1.0.0', '-v, --version')
-  .description('Fix sentence splitting on certain pages')
+  .description('Add WebP data to enterlink_articletable')
   .usage('[OPTIONS]...')
   .option('-s, --start <pageid>', 'Starting ID')
   .option('-e, --end <endid>', 'Ending ID')
@@ -33,13 +33,13 @@ commander
 
 const BATCH_SIZE = 250;
 const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00';
-const PAGE_NOTE = '|SOCCERWAY_PLAYERS|';
+// const PAGE_NOTE = '|SOCCERWAY_PLAYERS|';
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
 
-export const FixSentenceSplits = async (inputString: string) => {
+export const AddWebPToArticletable = async (inputString: string) => {
     let wikiLangSlug = inputString.split("|")[0];
     let inputIPFS = inputString.split("|")[1];
     let pageTitle = inputString.split("|")[2].trim();
@@ -62,11 +62,12 @@ export const FixSentenceSplits = async (inputString: string) => {
         `
             SELECT * 
             FROM enterlink_hashcache 
-            INNER JOIN enterlink_articletable art ON art.ipfs_hash_current = ? AND art.page_note = ? 
-            WHERE ipfs_hash = ?
-            AND timestamp <= ?
+            INNER JOIN enterlink_articletable art ON art.ipfs_hash_current = ? 
+            WHERE ipfs_hash = ? 
+            AND timestamp <= ? 
+            AND art.is_indexed = 1 
         `,
-        [inputIPFS, PAGE_NOTE, inputIPFS, LASTMOD_TIMESTAMP_CEIL]
+        [inputIPFS, inputIPFS, LASTMOD_TIMESTAMP_CEIL]
     );
 
     if (hashCacheResult.length == 0) {
@@ -83,32 +84,14 @@ export const FixSentenceSplits = async (inputString: string) => {
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
-    console.log(chalk.yellow("Running the patch"));
-
-    // Run the patches for now
-    wiki = sentenceSplitFixer(wiki);
-
-    // console.log(wiki)
-    // return false;
 
     logYlw("=================MAIN UPLOAD=================");
 
-    try {
-        const json_insertion = await theMysql.TryQuery(
-            `
-                UPDATE enterlink_hashcache
-                SET html_blob = ?,
-                    timestamp = NOW() 
-                WHERE ipfs_hash = ? 
-            `,
-            [JSON.stringify(wiki), inputIPFS]
-        );
-    } catch (e) {
-        if (e.message.includes("ER_DUP_ENTRY")){
-            console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
-        }
-        else throw e;
-    }
+    let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+    const media_props = main_photo.media_props || null;
+    const webp_large = media_props && media_props.webp_original || "NULL";
+    const webp_medium = media_props && media_props.webp_medium || "NULL";
+    const webp_small =  media_props && media_props.webp_thumb || "NULL";
 
     try {
         const article_update = await theMysql.TryQuery(
@@ -116,10 +99,13 @@ export const FixSentenceSplits = async (inputString: string) => {
                 UPDATE enterlink_articletable 
                 SET lastmod_timestamp = NOW(),
                     desktop_cache_timestamp = NULL,
-                    mobile_cache_timestamp = NULL
+                    mobile_cache_timestamp = NULL,
+                    webp_large = ?,
+                    webp_medium = ?,
+                    webp_small = ?
                 WHERE ipfs_hash_current = ? 
             `,
-            [inputIPFS]
+            [webp_large, webp_medium, webp_small, inputIPFS]
         );
     } catch (e) {
         if (e.message.includes("ER_DUP_ENTRY")){
@@ -132,20 +118,6 @@ export const FixSentenceSplits = async (inputString: string) => {
     const prerenderToken = theConfig.get('PRERENDER_TOKEN');
     flushPrerenders(lang_code, slug, prerenderToken);
 
-    // const data: Response = await fetch(`${'https://api.everipedia.org/v2/'}wiki/bot-submit?token=HmMhOCDZTspmAfNugg8AZPBnxN2DZ4ZCaivyvCKMdK2MomxJx56M9SdsmAK&bypass_ipfs=1`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(wiki)
-    // });
-    // let theResult = await data.json();
-    // if ((theResult as any).status == 'Success'){
-    //     return theResult;
-    // }
-    // else{
-    //     console.log(util.inspect(theResult, {showHidden: false, depth: null, chalk: true}));
-    //     throw new Error((theResult as any).status) as any;
-    // }
-    
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
 }
@@ -173,14 +145,14 @@ export const FixSentenceSplits = async (inputString: string) => {
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0
                 AND redirect_page_id IS NULL
-                AND art.page_note = ?
+                AND art.is_indexed = 1
             `,
-            [currentStart, currentEnd, PAGE_NOTE]
+            [currentStart, currentEnd]
         );
 
         for await (const artResult of fetchedArticles) {
             try{
-                await FixSentenceSplits(artResult.concatted);
+                await AddWebPToArticletable(artResult.concatted);
             }
             catch (err){
                 console.error(`${artResult.concatted} FAILED!!! [${err}]`);

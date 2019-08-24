@@ -7,20 +7,29 @@ import os
 
 commands = [
 'export PYTHONIOENCODING=utf-8',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49690000 -e 4970000000 >> scripts/batch/log/batch_00.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49700000 -e 4971000001 >> scripts/batch/log/batch_01.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49710000 -e 4972000002 >> scripts/batch/log/batch_02.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49720000 -e 4973000003 >> scripts/batch/log/batch_03.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49730000 -e 4974000004 >> scripts/batch/log/batch_04.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49740000 -e 4975000005 >> scripts/batch/log/batch_05.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49750000 -e 4976000006 >> scripts/batch/log/batch_06.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49760000 -e 4977000007 >> scripts/batch/log/batch_07.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49770000 -e 4978000008 >> scripts/batch/log/batch_08.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49780000 -e 4979000009 >> scripts/batch/log/batch_09.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49790000 -e 4980000010 >> scripts/batch/log/batch_10.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49800000 -e 4981000011 >> scripts/batch/log/batch_11.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49810000 -e 4982000012 >> scripts/batch/log/batch_12.log 2>&1',
-'node dist/scripts/Non-Lambda/Fix-Sentence-Splits.js -s 49820000 -e 4983000013 >> scripts/batch/log/batch_13.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 1 -e 2600000 >> scripts/batch/log/batch_00.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 2600000 -e 5200000 >> scripts/batch/log/batch_01.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 5200000 -e 7800000 >> scripts/batch/log/batch_02.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 7800000 -e 10400000 >> scripts/batch/log/batch_03.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 10400000 -e 13000000 >> scripts/batch/log/batch_04.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 13000000 -e 15600000 >> scripts/batch/log/batch_05.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 15600000 -e 18200000 >> scripts/batch/log/batch_06.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 18200000 -e 20800000 >> scripts/batch/log/batch_07.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 20800000 -e 23400000 >> scripts/batch/log/batch_08.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 23400000 -e 26000000 >> scripts/batch/log/batch_09.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 26000000 -e 28600000 >> scripts/batch/log/batch_10.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 28600000 -e 31200000 >> scripts/batch/log/batch_11.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 31200000 -e 33800000 >> scripts/batch/log/batch_12.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 33800000 -e 36400000 >> scripts/batch/log/batch_13.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 36400000 -e 39000000 >> scripts/batch/log/batch_14.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 39000000 -e 41600000 >> scripts/batch/log/batch_15.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 41600000 -e 44200000 >> scripts/batch/log/batch_16.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 44200000 -e 46800000 >> scripts/batch/log/batch_17.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 46800000 -e 49400000 >> scripts/batch/log/batch_18.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 49400000 -e 52000000 >> scripts/batch/log/batch_19.log 2>&1',
+'node dist/scripts/Non-Lambda/Add-WebP-To-Articletable.js -s 52000000 -e 54600000 >> scripts/batch/log/batch_20.log 2>&1',
+
+
 
 ]
 # run in parallel
