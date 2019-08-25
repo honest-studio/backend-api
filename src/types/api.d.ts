@@ -10,6 +10,9 @@ export interface PreviewResult {
     slug: string;
     main_photo: string;
     thumbnail: string;
+    webp_large: string;
+    webp_medium: string;
+    webp_small: string;
     lang_code: string;
     ipfs_hash: string;
     text_preview: string;
