@@ -52,6 +52,20 @@ export interface SchemaSearchResult {
     addl_schema_itemprop: string;
 }
 
+export interface MergeProposalParsePack {
+    source: {
+        slug: string;
+        lang: string;
+        ipfs_hash: string;
+    },
+    target: {
+        slug: string;
+        lang: string;
+        ipfs_hash: string;
+    },
+    final_hash: string;
+}
+
 /**
  * Describe a successful response to a media upload
  */

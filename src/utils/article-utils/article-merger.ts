@@ -1,5 +1,5 @@
 import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue, Section } from '../../types/article';
-import { MergeResult } from '../../types/api';
+import { MergeResult, MergeProposalParsePack } from '../../types/api';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs, addAMPInfo } from '../../utils/article-utils';
 var colors = require('colors');
@@ -292,7 +292,27 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     
 }
 
-// export async function undoMerge(oldSourceWikiLangSlug: string, oldTargetSlug: string, ): Promise<ArticleJson> {
+// Parse a merge proposal
+export function parseMergeInfoFromProposal(merge_proposal: any): MergeProposalParsePack {
+    const theData = merge_proposal.trace.act.data;
+    const theComment = theData.comment;
+    const theLangCode = theData.lang_code;
 
+    let theCommentSplit = theComment.split("|");
 
-// }
+    let parsePack: MergeProposalParsePack = {
+        source: {
+            slug: theCommentSplit[1].split("/")[1],
+            lang: theLangCode,
+            ipfs_hash: theCommentSplit[2].split('-->')[0]
+        },
+        target: {
+            slug: theData.slug,
+            lang: theLangCode,
+            ipfs_hash: theCommentSplit[2].split('-->')[1]
+        },
+        final_hash: theData.ipfs_hash
+    }
+
+    return parsePack;
+}

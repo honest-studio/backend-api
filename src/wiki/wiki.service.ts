@@ -13,11 +13,11 @@ import { RedisService, MongoDbService, MysqlService } from '../feature-modules/d
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
-import { MergeResult } from '../types/api';
+import { MergeResult, MergeProposalParsePack } from '../types/api';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
-import { mergeWikis } from '../utils/article-utils/article-merger';
+import { mergeWikis, parseMergeInfoFromProposal } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
 var colors = require('colors');
@@ -50,6 +50,39 @@ export class WikiService {
         private config: ConfigService
     ) {
         this.updateWikiIntervals = {};
+    }
+
+    async unmergeWiki(rejected_merge_proposal: any){
+        let parsedMergeInfo: MergeProposalParsePack = parseMergeInfoFromProposal(rejected_merge_proposal);
+        const prerenderToken = this.config.get('PRERENDER_TOKEN');
+        console.log(util.inspect(parsedMergeInfo, {showHidden: false, depth: null, chalk: true}));
+
+        // Update the source of the merge
+        await this.mysql.TryQuery(
+            `
+            UPDATE enterlink_articletable 
+            SET redirect_page_id = NULL,
+                lastmod_timestamp = NOW()
+            WHERE ((slug = ? OR slug_alt = ?) AND (page_lang = ?));
+            `,
+            [parsedMergeInfo.source.slug, parsedMergeInfo.source.slug, parsedMergeInfo.source.lang]
+        );
+        console.log(colors.blue.bold(`Unmerged source [lang_${parsedMergeInfo.source.lang}/${parsedMergeInfo.source.slug}]`));
+        flushPrerenders(parsedMergeInfo.source.lang, parsedMergeInfo.source.slug, prerenderToken);
+
+        // Update the target of the merge
+        await this.mysql.TryQuery(
+            `
+            UPDATE enterlink_articletable
+            SET ipfs_hash_current = ?,
+                ipfs_hash_parent = ?,
+                lastmod_timestamp = NOW()
+            WHERE ((slug = ? OR slug_alt = ?) AND (page_lang = ?));
+            `,
+            [parsedMergeInfo.target.ipfs_hash, parsedMergeInfo.final_hash, parsedMergeInfo.target.slug, parsedMergeInfo.target.slug, parsedMergeInfo.target.lang]
+        );
+        console.log(colors.blue.bold(`Unmerged source [lang_${parsedMergeInfo.target.lang}/${parsedMergeInfo.target.slug}]`));
+        flushPrerenders(parsedMergeInfo.target.lang, parsedMergeInfo.target.slug, prerenderToken);
     }
 
     async getMergedWiki(inputPack: MergeInputPack): Promise<MergeResult>{
@@ -682,9 +715,12 @@ export class WikiService {
             clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
             // Check for a merge
             const theComment = submitted_proposal.trace.act.data.comment;
-            const theMemo = submitted_proposal.trace.act.data.comment;
+            const theMemo = submitted_proposal.trace.act.data.memo;
+            // console.log(colors.blue.bold(theComment));
+            // console.log(colors.blue.bold(theMemo));
             if(theComment.indexOf("MERGE_FROM|") >= 0 && theMemo.indexOf("Merge") >= 0) {
                 await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+                this.unmergeWiki(submitted_proposal);
             }
             // else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
             //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
