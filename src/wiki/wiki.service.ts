@@ -108,7 +108,7 @@ export class WikiService {
 
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
-        console.log("mysql slug: ", mysql_slug)
+        // console.log("mysql slug: ", mysql_slug)
         let decodedSlug = decodeURIComponent(mysql_slug);
 
         // Get current IPFS hash
