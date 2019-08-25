@@ -152,12 +152,19 @@ export class PreviewService {
             let memkey = `preview:lang_${id.lang_code}:${cleanedSlug}`;
             if (useWebP) memkey = memkey + ":webp";
             memkey = memkey.toLowerCase();
+
+            let memkey2 = `preview:lang_${id.lang_code}:${id.slug}`;
+            if (useWebP) memkey2 = memkey2 + ":webp";
+            memkey2 = memkey2.toLowerCase();
+
             pipeline.get(memkey);
+            pipeline.get(memkey2);
         }
         const values = await pipeline.exec();
         const uncached_previews = [];
-        for (let i in values) {
-            if (values[i][1]) previews.push(JSON.parse(values[i][1]));
+        for (let i=0; i < wiki_identities.length; i++) {
+            if (values[i*2][1]) previews.push(JSON.parse(values[i*2][1]));
+            else if (values[i*2 + 1][1]) previews.push(JSON.parse(values[i*2 + 1][1]));
             else uncached_previews.push(wiki_identities[i]);
         }
         if (uncached_previews.length == 0) return previews;
