@@ -22,7 +22,7 @@ export type TableCellType = 'th' | 'td';
 
 export type TagClass = 'inline' | 'block' | 'void';
 
-export type ActivityType = 'edit' | 'merge' | 'page-removal';
+export type ActivityType = 'edit' | 'merge' | 'page-removal' | 'undo-merge' | 'undo-page-removal';
 
 export interface Sentence {
     type: string; // sentence

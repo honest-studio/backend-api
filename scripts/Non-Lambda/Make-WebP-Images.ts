@@ -33,7 +33,8 @@ const theAWSS3 = new AWSS3Service(theConfig);
 const theBucket = theAWSS3.getBucket();
 
 const BATCH_SIZE = 250;
-const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00' 
+const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00';
+const LANGUAGES = ['en', 'ko'];
 
 // SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))
 // FROM enterlink_articletable art
@@ -429,8 +430,9 @@ export const MakeWebPImages = async (inputString: string, processMediaGallery: b
                 AND redirect_page_id IS NULL
                 AND webp_large IS NULL
                 AND photo_url <> 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'
+                AND page_lang IN (?)
             `,
-            [currentStart, currentEnd]
+            [currentStart, currentEnd, LANGUAGES]
         );
 
         for await (const artResult of fetchedArticles) {
