@@ -52,7 +52,7 @@ export class WikiService {
         this.updateWikiIntervals = {};
     }
 
-    async unmergeWiki(rejected_merge_proposal: any){
+    async unmergeProposal(rejected_merge_proposal: any){
         let parsedMergeInfo: MergeProposalParsePack = parseMergeInfoFromProposal(rejected_merge_proposal);
         const prerenderToken = this.config.get('PRERENDER_TOKEN');
         console.log(util.inspect(parsedMergeInfo, {showHidden: false, depth: null, chalk: true}));
@@ -720,11 +720,10 @@ export class WikiService {
             // console.log(colors.blue.bold(theMemo));
             if(theComment.indexOf("MERGE_FROM|") >= 0 && theMemo.indexOf("Merge") >= 0) {
                 await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
-                this.unmergeWiki(submitted_proposal);
             }
-            // else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
-            //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
-            // } 
+            else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
+                await this.unmergeProposal(submitted_proposal);
+            } 
             // else if(theComment.indexOf("UNDO_REMOVAL|") >= 0 && theMemo.indexOf("Undo Removal") >= 0 ) {
             //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
             // } 
