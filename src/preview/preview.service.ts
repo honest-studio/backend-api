@@ -4,6 +4,7 @@ import * as SqlString from 'sqlstring';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
 import { MysqlService, RedisService } from '../feature-modules/database';
 import { WikiIdentity } from '../types/article-helpers';
+import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
 import { PreviewResult } from '../types/api';
@@ -45,10 +46,10 @@ export class PreviewService {
     async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<PreviewResult[]> {
         if (ipfs_hashes.length == 0) return [];
 
-        const previews = [];
-        for (const i in ipfs_hashes) {
-            previews.push({ ipfs_hash: ipfs_hashes[i] });
-        }
+        const previews: PreviewResult[] = [];
+        // for (const i in ipfs_hashes) {
+        //     previews.push({ ipfs_hash: ipfs_hashes[i] });
+        // }
         const article_info: Array<PreviewResult> = await this.mysql.TryQuery(
             `
             SELECT 
@@ -65,7 +66,9 @@ export class PreviewService {
                 art.creation_timestamp,
                 art.lastmod_timestamp,
                 art.is_removed,
-                cache.html_blob
+                art.webp_large,
+                art.webp_medium,
+                art.webp_small
             FROM enterlink_articletable AS art 
             INNER JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id
@@ -75,69 +78,69 @@ export class PreviewService {
             [ipfs_hashes]
         );
 
-        article_info.forEach((a) => {
-            let localRow = a;
-            const i = previews.findIndex((p) => p.ipfs_hash === localRow.ipfs_hash);
+        // article_info.forEach((a) => {
+        //     let localRow = a;
+        //     const i = previews.findIndex((p) => p.ipfs_hash === localRow.ipfs_hash);
 
-            // Pull out the WebP main photo and thumb, if present
-            // Get the article JSON
-            let wiki: ArticleJson;
-            try {
-                wiki = JSON.parse(a.html_blob);
-            } catch (e) {
-                // SKIPPING for speed concerns
-                // wiki = oldHTMLtoJSON(preview.html_blob);
-            }
+        //     // Pull out the WebP main photo and thumb, if present
+        //     // Get the article JSON
+        //     let wiki: ArticleJson;
+        //     try {
+        //         wiki = JSON.parse(a.html_blob);
+        //     } catch (e) {
+        //         // SKIPPING for speed concerns
+        //         // wiki = oldHTMLtoJSON(preview.html_blob);
+        //     }
 
-            let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+        //     let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
 
-            let photoToUse: string = "", thumbToUse: string = "";
-            if (
-                main_photo &&
-                main_photo.media_props &&
-                main_photo.media_props.webp_medium &&
-                main_photo.media_props.webp_medium.indexOf('no-image-') == -1
-            ) {
-                photoToUse = main_photo.media_props.webp_medium;
-                thumbToUse = main_photo.media_props.webp_thumb;
-            } else if (main_photo && main_photo.url) {
-                photoToUse = main_photo.url;
-                thumbToUse = main_photo.thumb;
-            } else {
-                photoToUse = a.main_photo;
-                thumbToUse = a.thumbnail;
-            }
+        //     let photoToUse: string = "", thumbToUse: string = "";
+        //     if (
+        //         main_photo &&
+        //         main_photo.media_props &&
+        //         main_photo.media_props.webp_medium &&
+        //         main_photo.media_props.webp_medium.indexOf('no-image-') == -1
+        //     ) {
+        //         photoToUse = main_photo.media_props.webp_medium;
+        //         thumbToUse = main_photo.media_props.webp_thumb;
+        //     } else if (main_photo && main_photo.url) {
+        //         photoToUse = main_photo.url;
+        //         thumbToUse = main_photo.thumb;
+        //     } else {
+        //         photoToUse = a.main_photo;
+        //         thumbToUse = a.thumbnail;
+        //     }
 
-            localRow.main_photo = photoToUse;
-            localRow.thumbnail = thumbToUse;
+        //     localRow.main_photo = photoToUse;
+        //     localRow.thumbnail = thumbToUse;
 
-            // Remove the html_blob from the preview
-            const { html_blob, ...newPreview } = localRow
-            localRow = newPreview;
-
-            previews[i] = localRow;
-        });
+        //     previews[i] = localRow;
+        // });
 
         // clean up text previews
-        previews.forEach((preview) => {
+        let previewsToUse = previews.map((preview) => {
             // Clean up the page title
             preview.page_title = sanitizeTextPreview(preview.page_title);
 
             // Clean up the text preview
             if (!preview.text_preview) return; // continue
             preview.text_preview = sanitizeTextPreview(preview.text_preview);
+
+            // Replace default thumbnail with null
+            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
+            preview.thumbnail = null;
+
+            // Get the main photo category
+            preview.main_photo_category = linkCategorizer(preview.main_photo);
+
+            return preview;
         });
 
-        // Replace default thumbnail with null
-        for (let preview of previews) {
-            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
-                preview.thumbnail = null;
-        }
 
         // error messages for missing wikis
-        previews.filter((p) => !p.page_title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
+        // previewsToUse.filter((p) => !p.page_title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
 
-        return previews;
+        return previewsToUse;
     }
 
     async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
@@ -203,10 +206,11 @@ export class PreviewService {
                 COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
                 COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                cache.html_blob
+                COALESCE (art_redir.webp_large, art.webp_large) AS webp_large,
+                COALESCE (art_redir.webp_medium, art.webp_medium) AS webp_medium,
+                COALESCE (art_redir.webp_small, art.webp_small) AS webp_small
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause1}`;
         const query2 = `
@@ -223,10 +227,11 @@ export class PreviewService {
                 COALESCE (art_redir.is_adult_content, art.is_adult_content) AS is_adult_content,
                 COALESCE (art_redir.creation_timestamp, art.creation_timestamp) AS creation_timestamp,
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                cache.html_blob
+                COALESCE (art_redir.webp_large, art.webp_large) AS webp_large,
+                COALESCE (art_redir.webp_medium, art.webp_medium) AS webp_medium,
+                COALESCE (art_redir.webp_small, art.webp_small) AS webp_small
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
-            LEFT JOIN enterlink_hashcache AS cache ON cache.ipfs_hash=art.ipfs_hash_current 
             WHERE 
                 ${whereClause2}`;
         const query = `${query1} UNION ${query2}`;
@@ -240,28 +245,32 @@ export class PreviewService {
                 preview.text_preview = sanitizeTextPreview(preview.text_preview);
             }
 
-            // Pull out the WebP main photo and thumb, if present
-            // Get the article JSON
-            if (useWebP) {
-                let wiki: ArticleJson;
-                try {
-                    wiki = JSON.parse(preview.html_blob);
-                } catch (e) {
-                    // SKIPPING for speed concerns
-                    wiki = oldHTMLtoJSON(preview.html_blob);
-                }
-                let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
+            // // Pull out the WebP main photo and thumb, if present
+            // // Get the article JSON
+            // if (useWebP) {
+            //     let wiki: ArticleJson;
+            //     try {
+            //         wiki = JSON.parse(preview.html_blob);
+            //     } catch (e) {
+            //         // SKIPPING for speed concerns
+            //         wiki = oldHTMLtoJSON(preview.html_blob);
+            //     }
+            //     let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
 
-                let photoPack = PhotoToUse(main_photo, user_agent);
+            //     let photoPack = PhotoToUse(main_photo, user_agent);
 
-                preview.main_photo = photoPack.full;
-                preview.thumbnail = photoPack.thumb;
-            }
+            //     preview.main_photo = photoPack.full;
+            //     preview.thumbnail = photoPack.thumb;
+            // }
 
-            // Remove the html_blob from the preview
-            const { html_blob, ...newPreview } = preview
-            preview = newPreview;
+            // // Remove the html_blob from the preview
+            // const { html_blob, ...newPreview } = preview
+            // preview = newPreview;
 
+            // Get the main photo category
+            preview.main_photo_category = linkCategorizer(preview.main_photo);
+
+            // console.log(preview)
             return preview;
         });
 

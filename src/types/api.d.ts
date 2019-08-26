@@ -9,7 +9,11 @@ export interface PreviewResult {
     page_title: string;
     slug: string;
     main_photo: string;
+    main_photo_category: CitationCategoryType;
     thumbnail: string;
+    webp_large: string;
+    webp_medium: string;
+    webp_small: string;
     lang_code: string;
     ipfs_hash: string;
     text_preview: string;

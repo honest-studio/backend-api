@@ -985,7 +985,8 @@ export class AmpRenderPartial {
                             para.tag_type === 'h5' ||
                             para.tag_type === 'h6'
                         ) {
-                            const text: string = (para.items[0] as Sentence).text;
+                            const text = para.items && para.items[0] && (para.items[0] as Sentence).text;
+                            if (!text) return '';
                             return `
                         <li class='toc-header-${para.tag_type}' data-blurb-id="${urlSlug(text).slice(0, 15)}">
                             <a rel="nofollow" class='toc-header-${para.tag_type}' href="#${urlSlug(text).slice(0, 15)}">
