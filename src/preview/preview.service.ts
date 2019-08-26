@@ -262,6 +262,7 @@ export class PreviewService {
             // const { html_blob, ...newPreview } = preview
             // preview = newPreview;
 
+            // console.log(preview)
             return preview;
         });
 
