@@ -4,6 +4,7 @@ import * as SqlString from 'sqlstring';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
 import { MysqlService, RedisService } from '../feature-modules/database';
 import { WikiIdentity } from '../types/article-helpers';
+import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { WikiService } from '../wiki';
 import { PreviewResult } from '../types/api';
@@ -45,10 +46,10 @@ export class PreviewService {
     async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<PreviewResult[]> {
         if (ipfs_hashes.length == 0) return [];
 
-        const previews = [];
-        for (const i in ipfs_hashes) {
-            previews.push({ ipfs_hash: ipfs_hashes[i] });
-        }
+        const previews: PreviewResult[] = [];
+        // for (const i in ipfs_hashes) {
+        //     previews.push({ ipfs_hash: ipfs_hashes[i] });
+        // }
         const article_info: Array<PreviewResult> = await this.mysql.TryQuery(
             `
             SELECT 
@@ -117,25 +118,29 @@ export class PreviewService {
         // });
 
         // clean up text previews
-        previews.forEach((preview) => {
+        let previewsToUse = previews.map((preview) => {
             // Clean up the page title
             preview.page_title = sanitizeTextPreview(preview.page_title);
 
             // Clean up the text preview
             if (!preview.text_preview) return; // continue
             preview.text_preview = sanitizeTextPreview(preview.text_preview);
+
+            // Replace default thumbnail with null
+            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
+            preview.thumbnail = null;
+
+            // Get the main photo category
+            preview.main_photo_category = linkCategorizer(preview.main_photo);
+
+            return preview;
         });
 
-        // Replace default thumbnail with null
-        for (let preview of previews) {
-            if (preview.thumbnail == "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png")
-                preview.thumbnail = null;
-        }
 
         // error messages for missing wikis
-        previews.filter((p) => !p.page_title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
+        // previewsToUse.filter((p) => !p.page_title).forEach((p) => (p.error = `Wiki ${p.ipfs_hash} could not be found`));
 
-        return previews;
+        return previewsToUse;
     }
 
     async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
@@ -261,6 +266,9 @@ export class PreviewService {
             // // Remove the html_blob from the preview
             // const { html_blob, ...newPreview } = preview
             // preview = newPreview;
+
+            // Get the main photo category
+            preview.main_photo_category = linkCategorizer(preview.main_photo);
 
             // console.log(preview)
             return preview;
