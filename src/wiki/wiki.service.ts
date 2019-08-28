@@ -12,6 +12,7 @@ import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ProposalService } from '../proposal';
+import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
 import { MergeResult, MergeProposalParsePack } from '../types/api';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
@@ -35,6 +36,11 @@ export interface MergeInputPack {
     }
 }
 
+export interface UserServiceOptions {
+    limit: number;
+    offset: number;
+}
+
 @Injectable()
 export class WikiService {
     private updateWikiIntervals;
@@ -47,7 +53,8 @@ export class WikiService {
         private mediaUploadService: MediaUploadService,
         @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
-        private config: ConfigService
+        private config: ConfigService,
+        private chain: ChainService
     ) {
         this.updateWikiIntervals = {};
     }
@@ -254,6 +261,19 @@ export class WikiService {
         const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
         const schema = renderSchema(wiki, 'html');
         return schema;
+    }
+
+    async getBoostsByWikiID(wiki_id: string) {
+        // TODO: Needs to be implemented using ChainService
+        let theBody = {
+            "code": "eparticlectr",
+            "table": "booststbl",
+            "scope": "eparticlectr",
+            "index_position": "tertiary",
+            "key_type": "i64",
+            "upper_bound": wiki_id,
+            "lower_bound": wiki_id
+        };
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {

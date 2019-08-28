@@ -29,4 +29,16 @@ export class ChainService {
             body: JSON.stringify(transaction)
         }).then((r) => r.json());
     }
+
+    async getTableRows(body): Promise<any> {
+        return fetch(`${this.config.get("DFUSE_API_REST_ENDPOINT")}/v1/chain/get_table_rows`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer: ${this.config.get("DFUSE_API_KEY")}`,
+                'X-Eos-Push-Guarantee': 'in-block'
+            },
+            body: JSON.stringify(body)
+        }).then((r) => r.json());
+    }
 }

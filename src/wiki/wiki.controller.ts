@@ -7,7 +7,6 @@ import { WikiExtraInfo } from '../types/article-helpers';
 import { WikiQuerySchema } from './wiki.query-schema';
 import { WikiService, MergeInputPack } from './wiki.service';
 
-
 @Controller('v2/wiki')
 @ApiUseTags('Wikis')
 export class WikiController {
@@ -28,6 +27,21 @@ export class WikiController {
     async getWikisByHash(@Param('ipfs_hash') query_hashes): Promise<ArticleJson[]> {
         const ipfs_hashes = query_hashes.split(',');
         return this.wikiService.getWikisByHash(ipfs_hashes);
+    }
+
+    @Get('boosts_by_wiki_id/:wiki_id')
+    @ApiOperation({ title: 'Get boosts for a given wiki_id' })
+    @ApiImplicitParam({
+        name: 'wiki_id',
+        description: `ID of the wiki in the wikistbl2
+            Example: 123`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `returns an array of boosts`
+    })
+    async getBoostsByWikiID(@Param('wiki_id') wiki_id): Promise<any> {
+        return this.wikiService.getBoostsByWikiID(wiki_id);
     }
 
     @Get('slug/lang_:lang_code/:slug')

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { MongoDbService, RedisService } from '../feature-modules/database';
+import { ChainService } from '../chain';
 
 export interface UserServiceOptions {
     limit: number;
@@ -8,7 +9,11 @@ export interface UserServiceOptions {
 
 @Injectable()
 export class UserService {
-    constructor(private mongo: MongoDbService, private redis: RedisService) {}
+    constructor(
+        private mongo: MongoDbService, 
+        private redis: RedisService,
+        private chain: ChainService
+    ) {}
 
     async getStakes(account_name: string, options: UserServiceOptions) {
         const pipeline = this.redis.connection().pipeline();
@@ -23,6 +28,19 @@ export class UserService {
             refunds: values[1][1].map(v => JSON.parse(v)),
             sum_stakes: Number(values[2][1]),
             sum_refunds: Number(values[3][1])
+        };
+    }
+
+    async getBoostsByUser(account_name: string) {
+        // TODO: Needs to be implemented using ChainService
+        let theBody = {
+            "code": "eparticlectr",
+            "table": "booststbl",
+            "scope": "eparticlectr",
+            "index_position": "secondary",
+            "key_type": "name",
+            "upper_bound": account_name,
+            "lower_bound": account_name
         };
     }
 

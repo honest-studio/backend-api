@@ -25,6 +25,21 @@ export class UserController {
         return this.userService.getStakes(eos_account_name, query);
     }
 
+    @Get(':eos_account_name/boosts')
+    @ApiOperation({ title: 'Get boosts for a user' })
+    @ApiImplicitParam({
+        name: 'eos_account_name',
+        description: `Max 12-char EOS account name
+            Example: kedartheiyer`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `returns an array of boosts`
+    })
+    async getBoostsByUser(@Param('eos_account_name') eos_account_name): Promise<any> {
+        return this.userService.getBoostsByUser(eos_account_name);
+    }
+
     @Get(':eos_account_name/rewards')
     @ApiOperation({ title: 'Get rewards and slashes for a user' })
     @ApiImplicitParam({
