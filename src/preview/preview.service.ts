@@ -23,9 +23,7 @@ const getDeltaMs = (bi: bigint): number => {
 @Injectable()
 export class PreviewService {
     constructor(
-        private wikiService: WikiService,
         private mysql: MysqlService,
-        private ipfs: IpfsService,
         private redis: RedisService,
         // preview by hash:
         @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,

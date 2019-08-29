@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack } from '../types/api';
 import { MongoDbService, RedisService } from '../feature-modules/database';
+import { PreviewService } from '../preview';
 import { ChainService } from '../chain';
 
 export interface UserServiceOptions {
@@ -12,6 +14,7 @@ export class UserService {
     constructor(
         private mongo: MongoDbService, 
         private redis: RedisService,
+        private previewService: PreviewService,
         private chain: ChainService
     ) {}
 
@@ -31,7 +34,7 @@ export class UserService {
         };
     }
 
-    async getBoostsByUser(account_name: string) {
+    async getBoostsByUser(account_name: string): Promise<BoostsByUserReturnPack> {
         // TODO: Needs to be implemented using ChainService
         let theBoostsBody = {
             "code": "eparticlectr",
@@ -47,7 +50,19 @@ export class UserService {
         // Get all of the boosts for the user
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts = boostResults.rows;
-        return theBoosts;
+
+        // Prepare the BoostsByUserReturnPack
+        let returnPack: BoostsByUserReturnPack = 
+        {
+            user: null,
+            wikis: theBoosts.map(boost => {
+                return {
+                    ...boost,
+                    preview: null,
+                }
+            })
+        }
+        return returnPack;
     }
 
     async getRewards(account_name: string, options: UserServiceOptions) {

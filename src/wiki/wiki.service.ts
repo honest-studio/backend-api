@@ -12,10 +12,10 @@ import { sha256 } from 'js-sha256';
 import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
-import { ProposalService } from '../proposal';
 import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
-import { MergeResult, MergeProposalParsePack } from '../types/api';
+import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
 import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
@@ -54,8 +54,8 @@ export class WikiService {
         private mysql: MysqlService,
         private mongo: MongoDbService,
         private redis: RedisService,
+        // @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         private mediaUploadService: MediaUploadService,
-        @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
         private config: ConfigService,
         private chain: ChainService
@@ -267,7 +267,7 @@ export class WikiService {
         return schema;
     }
 
-    async getBoostsByWikiID(wiki_id: string) {
+    async getBoostsByWikiID(wiki_id: string): Promise<BoostsByWikiReturnPack> {
         // TODO: Needs to be implemented using ChainService
         let theBoostsBody = {
             "code": "eparticlectr",
@@ -283,10 +283,37 @@ export class WikiService {
         // Get all of the boosts for the wiki using the wiki_id
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts = boostResults.rows;
-        return theBoosts;
+
+        // Prepare the BoostReturnPacks
+        let returnPack: BoostsByWikiReturnPack = 
+        {
+            preview: null,
+            boosts: theBoosts
+        }
+        return returnPack;
     }
 
-    async getBoostsByWikiLangSlug(lang_code: string, slug: string) {
+    async getWikiByWikiID(wiki_id: string): Promise<Wikistbl2Item> {
+        // TODO: Needs to be implemented using ChainService
+        let theWikiBody = {
+            "code": "eparticlectr",
+            "table": "wikistbl2",
+            "scope": "eparticlectr",
+            "index_position": "primary",
+            "key_type": "i64",
+            "upper_bound": wiki_id,
+            "lower_bound": wiki_id,
+            "json": true
+        };
+
+        // Get the wiki_id from the slug and lang_code
+        let wikiResult = await this.chain.getTableRows(theWikiBody);
+        let wiki_obj = wikiResult.rows[0];
+
+        return wiki_obj;
+    }
+
+    async getBoostsByWikiLangSlug(lang_code: string, slug: string): Promise<BoostsByWikiReturnPack> {
         let padded_slug = slug;
         let padded_lang_code = lang_code;
         let combined = "";
@@ -332,7 +359,19 @@ export class WikiService {
         // Get all of the boosts for the wiki now that you have the wiki_id
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts = boostResults.rows;
-        return theBoosts;
+
+        // Prepare the BoostReturnPacks
+        return null
+        // let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(theWikiId);
+        // let returnPack: BoostsByWikiReturnPack = 
+        // {
+        //     preview: await this.previewService.getPreviewsBySlug([{
+        //         lang_code: wikiInfo.lang_code,
+        //         slug: wikiInfo.slug
+        //     }], null)[0],
+        //     boosts: theBoosts
+        // }
+        // return returnPack;
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
