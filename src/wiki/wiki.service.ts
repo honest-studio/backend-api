@@ -8,6 +8,7 @@ import * as SqlString from 'sqlstring';
 import { URL } from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
+import { sha256 } from 'js-sha256';
 import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
@@ -17,12 +18,15 @@ import { ArticleJson, Sentence, Citation, Media } from '../types/article';
 import { MergeResult, MergeProposalParsePack } from '../types/api';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
-import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
 import { mergeWikis, parseMergeInfoFromProposal } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
 var colors = require('colors');
 import FormData from 'form-data';
+
+const MAX_SLUG_SIZE = 256;
+const MAX_LANG_CODE_SIZE = 7;
 
 export interface MergeInputPack {
     source: {
@@ -274,6 +278,50 @@ export class WikiService {
             "upper_bound": wiki_id,
             "lower_bound": wiki_id
         };
+    }
+
+
+    // static fixed_bytes<32> sha256_slug_lang(std::string slug, std::string lang_code) {
+    //     eosio::check(slug.size() <= MAX_SLUG_SIZE, "slug max size is 32 bytes");
+    //     eosio::check(lang_code.size() <= MAX_LANG_CODE_SIZE, "lang_code max size is 8 bytes");
+    //     std::string padded_slug = slug;
+    //     std::string padded_lang_code = lang_code;
+    //     while (padded_slug.size() < MAX_SLUG_SIZE)
+    //         padded_slug.append(" ");
+    //     while (padded_lang_code.size() < MAX_LANG_CODE_SIZE)
+    //         padded_lang_code.append(" ");
+    //     std::string combined = padded_slug + padded_lang_code;
+    //     return sha256(combined.c_str(), combined.size());
+    // }
+
+    async getBoostsByWikiLangSlug(lang_code: string, slug: string) {
+        let padded_slug = slug;
+        let padded_lang_code = lang_code;
+        let combined = "";
+        while (padded_slug.length < MAX_SLUG_SIZE){
+            padded_slug = padded_slug + " ";
+        }
+        while (padded_lang_code.length < MAX_LANG_CODE_SIZE){
+            padded_lang_code = padded_lang_code + " ";
+        }
+        combined = padded_slug + padded_lang_code;
+
+        var sha256ed_wiki_id = sha256(combined);
+
+        sha256ToChecksum256EndianSwapper(sha256ed_wiki_id);
+
+        // TODO: Needs to be implemented using ChainService
+        let theWikiBody = {
+            "code": "eparticlectr",
+            "table": "wikistbl2",
+            "scope": "eparticlectr",
+            "index_position": "secondary",
+            "key_type": "sha256",
+            "upper_bound": sha256ed_wiki_id,
+            "lower_bound": sha256ed_wiki_id
+        };
+
+        console.log(theWikiBody);
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {
