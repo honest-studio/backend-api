@@ -309,7 +309,6 @@ export class WikiService {
         // Get the wiki_id from the slug and lang_code
         let wikiResult = await this.chain.getTableRows(theWikiBody);
         let wiki_obj = wikiResult.rows[0];
-
         return wiki_obj;
     }
 
@@ -343,7 +342,7 @@ export class WikiService {
         // Get the wiki_id from the slug and lang_code
         let wikiResult = await this.chain.getTableRows(theWikiBody);
         let wiki_obj = wikiResult.rows[0];
-        let theWikiId = wiki_obj.wiki_id;
+        let theWikiId = wiki_obj.id;
 
         let theBoostsBody = {
             "code": "eparticlectr",
@@ -362,12 +361,14 @@ export class WikiService {
 
         // Prepare the BoostReturnPacks
         let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(theWikiId);
+        let thePreview = await this.previewService.getPreviewsBySlug([{
+            lang_code: wikiInfo.lang_code,
+            slug: wikiInfo.slug
+        }], "safari")[0];
+        console.log(thePreview)
         let returnPack: BoostsByWikiReturnPack = 
         {
-            preview: await this.previewService.getPreviewsBySlug([{
-                lang_code: wikiInfo.lang_code,
-                slug: wikiInfo.slug
-            }], null)[0],
+            preview: thePreview,
             boosts: theBoosts
         }
         return returnPack;

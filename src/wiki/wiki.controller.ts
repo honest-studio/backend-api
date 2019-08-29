@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Query, UsePipes } from '@nestjs/com
 import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { ArticleJson } from '../types/article';
-import { MergeResult } from '../types/api';
+import { MergeResult, BoostsByWikiReturnPack } from '../types/api';
 import { WikiExtraInfo } from '../types/article-helpers';
 import { WikiQuerySchema } from './wiki.query-schema';
 import { WikiService, MergeInputPack } from './wiki.service';
@@ -40,7 +40,7 @@ export class WikiController {
         status: 200,
         description: `returns an array of boosts`
     })
-    async getBoostsByWikiID(@Param('wiki_id') wiki_id): Promise<any> {
+    async getBoostsByWikiID(@Param('wiki_id') wiki_id): Promise<BoostsByWikiReturnPack> {
         return this.wikiService.getBoostsByWikiID(wiki_id);
     }
 
@@ -58,7 +58,7 @@ export class WikiController {
         status: 200,
         description: `returns an array of boosts`
     })
-    async getBoostsByWikiLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+    async getBoostsByWikiLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<BoostsByWikiReturnPack> {
         return this.wikiService.getBoostsByWikiLangSlug(lang_code, slug);
     }
 

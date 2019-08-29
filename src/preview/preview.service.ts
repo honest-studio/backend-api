@@ -144,7 +144,6 @@ export class PreviewService {
     async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
         if (!wiki_identities || wiki_identities.length == 0) return [];
         let previews: Array<PreviewResult> = [];
-
         // check Redis for fast cache
         const useWebP = IsWebPCompatibleBrowser(user_agent);
         const pipeline = this.redis.connection().pipeline();
@@ -235,7 +234,7 @@ export class PreviewService {
         const query = `${query1} UNION ${query2}`;
 
         let mysql_previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
-        
+
         mysql_previews = mysql_previews.map(preview => {
             // clean up text previews
             preview.page_title = sanitizeTextPreview(preview.page_title);
@@ -268,9 +267,10 @@ export class PreviewService {
             // Get the main photo category
             preview.main_photo_category = linkCategorizer(preview.main_photo);
 
-            // console.log(preview)
+            console.log(preview)
             return preview;
         });
+
 
         // save for fast cache
         const pipeline2 = this.redis.connection().pipeline();
@@ -284,6 +284,7 @@ export class PreviewService {
 
         previews.push(...mysql_previews);
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
+
 
 
         return previews;

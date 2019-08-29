@@ -3,6 +3,7 @@ import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs
 import { JoiValidationPipe } from '../common';
 import { UserQuerySchema } from './user.query-schema';
 import { UserService } from './user.service';
+import { BoostsByUserReturnPack } from '../types/api';
 
 @Controller('v2/user')
 @ApiUseTags('User')
@@ -36,7 +37,7 @@ export class UserController {
         status: 200,
         description: `returns an array of boosts`
     })
-    async getBoostsByUser(@Param('eos_account_name') eos_account_name): Promise<any> {
+    async getBoostsByUser(@Param('eos_account_name') eos_account_name): Promise<BoostsByUserReturnPack> {
         return this.userService.getBoostsByUser(eos_account_name);
     }
 
