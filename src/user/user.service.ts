@@ -33,7 +33,7 @@ export class UserService {
 
     async getBoostsByUser(account_name: string) {
         // TODO: Needs to be implemented using ChainService
-        let theBody = {
+        let theBoostsBody = {
             "code": "eparticlectr",
             "table": "booststbl",
             "scope": "eparticlectr",
@@ -43,6 +43,11 @@ export class UserService {
             "lower_bound": account_name,
             "json": true
         };
+
+        // Get all of the boosts for the user
+        let boostResults = await this.chain.getTableRows(theBoostsBody);
+        let theBoosts = boostResults.rows;
+        return theBoosts;
     }
 
     async getRewards(account_name: string, options: UserServiceOptions) {
