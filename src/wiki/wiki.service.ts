@@ -365,7 +365,6 @@ export class WikiService {
             lang_code: wikiInfo.lang_code,
             slug: wikiInfo.slug
         }], "safari")[0];
-        console.log(thePreview)
         let returnPack: BoostsByWikiReturnPack = 
         {
             preview: thePreview,

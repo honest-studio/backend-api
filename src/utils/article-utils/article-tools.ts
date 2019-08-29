@@ -116,13 +116,13 @@ export const CheckForLinksOrCitationsAMP = (
                 let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
                 // Load the HTML into cheerio for parsing
-                let $ = cheerio.load(dom);
+                let $ = cheerio.load(dom as any);
 
                 // Create the button that will be substituted
                 let openButtonTag = $('<button />');
                 $(openButtonTag).addClass('tooltippable');
                 $(openButtonTag).attr('role', 'button');
-                $(openButtonTag).attr('tabindex', 0);
+                $(openButtonTag).attr('tabindex', "0");
                 $(openButtonTag).attr('aria-label', linkCodeAndSlug);
                 $(openButtonTag).attr('aria-labelledby', `${linkCodeAndSlug}__${unique_id}`);
                 $(openButtonTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}`);
@@ -136,7 +136,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(lightBoxTag).addClass('amp-hc');
                 $(lightBoxTag).attr('id', `hvrblb-${linkCodeAndSlug}__${unique_id}`);
                 $(lightBoxTag).attr('role', 'button');
-                $(lightBoxTag).attr('tabindex', 0);
+                $(lightBoxTag).attr('tabindex', '0');
                 $(lightBoxTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}.close`);
                 $(lightBoxTag).attr('layout', 'nodisplay');
 
@@ -144,7 +144,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let iframeTag = $('<amp-iframe />');
                 $(iframeTag).addClass('amp-hc');
                 $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
-                $(iframeTag).attr('frameborder', 0);
+                $(iframeTag).attr('frameborder', '0');
                 $(iframeTag).attr('scrolling', 'no');
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
@@ -187,7 +187,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
                 // Load the HTML into cheerio for parsing
-                let $ = cheerio.load(dom);
+                let $ = cheerio.load(dom as any);
                 const unique_id = crypto.randomBytes(5).toString('hex');
 
                 const nextLetter = text.charAt(end);
@@ -205,8 +205,8 @@ export const CheckForLinksOrCitationsAMP = (
                 let openButtonTag = $('<button />');
                 $(openButtonTag).addClass('tooltippableCarat');
                 $(openButtonTag).attr('role', 'button');
-                $(openButtonTag).attr('tabindex', 0);
-                $(openButtonTag).attr('aria-label', citationIndex);
+                $(openButtonTag).attr('tabindex', "0");
+                $(openButtonTag).attr('aria-label', citationIndex.toString());
                 $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
                 $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
                 $(openButtonTag).text(`[${citationIndex}]`);
@@ -219,7 +219,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(lightBoxTag).addClass('amp-hc');
                 $(lightBoxTag).attr('id', `hvrlnk-${unique_id}`);
                 $(lightBoxTag).attr('role', 'button');
-                $(lightBoxTag).attr('tabindex', 0);
+                $(lightBoxTag).attr('tabindex', "0");
                 $(lightBoxTag).attr('on', `tap:hvrlnk-${unique_id}.close`);
                 $(lightBoxTag).attr('layout', 'nodisplay');
 
@@ -228,7 +228,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(iframeTag).addClass('amp-hc');
                 $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
                 $(iframeTag).attr('height', '275');
-                $(iframeTag).attr('frameborder', 0);
+                $(iframeTag).attr('frameborder', "0");
                 $(iframeTag).attr('scrolling', 'no');
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
@@ -266,7 +266,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let dom = htmlparser2.parseDOM('<img />', { decodeEntities: true });
 
                 // Load the HTML into cheerio for parsing
-                let $ = cheerio.load(dom);
+                let $ = cheerio.load(dom as any);
                 const unique_id = crypto.randomBytes(5).toString('hex');
 
                 let result = CAPTURE_REGEXES.inline_image_match.exec(text);
@@ -459,7 +459,7 @@ export const blobBoxPreSanitize = (passedBlobBox: string): string => {
     const dom = htmlparser2.parseDOM(sanitizedBlobBox, { decodeEntities: true });
 
     // Load the HTML into cheerio for parsing
-    const $ = cheerio.load(dom);
+    const $ = cheerio.load(dom as any);
 
     // Replace tags <font> with <span>
     const replacementTags = [['font', 'span']];

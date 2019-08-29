@@ -182,7 +182,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     // Load the HTML into htmlparser2 beforehand since it is more forgiving
     // Then load the HTML into cheerio for parsing
     let dom = htmlparser2.parseDOM(oldHTML, { decodeEntities: true });
-    let $ = cheerio.load(dom);
+    let $ = cheerio.load(dom as any);
 
     // Need to extract citations before sanitizing so the citation ID can be marked
     const citations = extractCitations($);
@@ -202,7 +202,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     });
 
     dom = htmlparser2.parseDOM(quickHTML, { decodeEntities: true });
-    $ = cheerio.load(dom);
+    $ = cheerio.load(dom as any);
 
     const metadata = extractMetadata($);
 

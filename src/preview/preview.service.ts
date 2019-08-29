@@ -267,7 +267,6 @@ export class PreviewService {
             // Get the main photo category
             preview.main_photo_category = linkCategorizer(preview.main_photo);
 
-            console.log(preview)
             return preview;
         });
 
