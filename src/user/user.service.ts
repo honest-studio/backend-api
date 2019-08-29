@@ -14,7 +14,7 @@ export class UserService {
     constructor(
         private mongo: MongoDbService, 
         private redis: RedisService,
-        private previewService: PreviewService,
+        // private previewService: PreviewService,
         private chain: ChainService
     ) {}
 

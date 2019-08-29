@@ -54,7 +54,7 @@ export class WikiService {
         private mysql: MysqlService,
         private mongo: MongoDbService,
         private redis: RedisService,
-        // @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
+        // @Inject(forwardRef(() => PreviewService)) private previewService2: PreviewService,
         private mediaUploadService: MediaUploadService,
         private elasticSearch: ElasticsearchService,
         private config: ConfigService,
