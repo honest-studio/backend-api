@@ -40,7 +40,8 @@ export class UserService {
             "index_position": "secondary",
             "key_type": "name",
             "upper_bound": account_name,
-            "lower_bound": account_name
+            "lower_bound": account_name,
+            "json": true
         };
     }
 

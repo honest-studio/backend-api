@@ -269,30 +269,22 @@ export class WikiService {
 
     async getBoostsByWikiID(wiki_id: string) {
         // TODO: Needs to be implemented using ChainService
-        let theBody = {
+        let theBoostsBody = {
             "code": "eparticlectr",
             "table": "booststbl",
             "scope": "eparticlectr",
             "index_position": "tertiary",
             "key_type": "i64",
             "upper_bound": wiki_id,
-            "lower_bound": wiki_id
+            "lower_bound": wiki_id,
+            "json": true
         };
+
+        // Get all of the boosts for the wiki using the wiki_id
+        let boostResults = await this.chain.getTableRows(theBoostsBody);
+        let theBoosts = boostResults.rows;
+        return theBoosts;
     }
-
-
-    // static fixed_bytes<32> sha256_slug_lang(std::string slug, std::string lang_code) {
-    //     eosio::check(slug.size() <= MAX_SLUG_SIZE, "slug max size is 32 bytes");
-    //     eosio::check(lang_code.size() <= MAX_LANG_CODE_SIZE, "lang_code max size is 8 bytes");
-    //     std::string padded_slug = slug;
-    //     std::string padded_lang_code = lang_code;
-    //     while (padded_slug.size() < MAX_SLUG_SIZE)
-    //         padded_slug.append(" ");
-    //     while (padded_lang_code.size() < MAX_LANG_CODE_SIZE)
-    //         padded_lang_code.append(" ");
-    //     std::string combined = padded_slug + padded_lang_code;
-    //     return sha256(combined.c_str(), combined.size());
-    // }
 
     async getBoostsByWikiLangSlug(lang_code: string, slug: string) {
         let padded_slug = slug;
@@ -306,9 +298,8 @@ export class WikiService {
         }
         combined = padded_slug + padded_lang_code;
 
-        var sha256ed_wiki_id = sha256(combined);
-
-        sha256ToChecksum256EndianSwapper(sha256ed_wiki_id);
+        // See https://eosio.stackexchange.com/questions/4116/how-to-use-checksum256-secondary-index-to-get-table-rows/4344
+        var checksum256ed_wiki_id = sha256ToChecksum256EndianSwapper(sha256(combined));
 
         // TODO: Needs to be implemented using ChainService
         let theWikiBody = {
@@ -317,11 +308,31 @@ export class WikiService {
             "scope": "eparticlectr",
             "index_position": "secondary",
             "key_type": "sha256",
-            "upper_bound": sha256ed_wiki_id,
-            "lower_bound": sha256ed_wiki_id
+            "upper_bound": checksum256ed_wiki_id,
+            "lower_bound": checksum256ed_wiki_id,
+            "json": true
         };
 
-        console.log(theWikiBody);
+        // Get the wiki_id from the slug and lang_code
+        let wikiResult = await this.chain.getTableRows(theWikiBody);
+        let wiki_obj = wikiResult.rows[0];
+        let theWikiId = wiki_obj.wiki_obj;
+
+        let theBoostsBody = {
+            "code": "eparticlectr",
+            "table": "booststbl",
+            "scope": "eparticlectr",
+            "index_position": "tertiary",
+            "key_type": "i64",
+            "upper_bound": theWikiId,
+            "lower_bound": theWikiId,
+            "json": true
+        };
+
+        // Get all of the boosts for the wiki now that you have the wiki_id
+        let boostResults = await this.chain.getTableRows(theBoostsBody);
+        let theBoosts = boostResults.rows;
+        return theBoosts;
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {

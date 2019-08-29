@@ -8,7 +8,7 @@ import decode from 'unescape';
 import { BrowserInfo } from 'detect-browser';
 import urlSlug from 'url-slug';
 import * as axios from 'axios';
-const bytes = require('bytes.js');
+const conv = require('binstring');
 import endianness from 'endianness';
 
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
@@ -957,16 +957,24 @@ export const PhotoToUse = (inputPhoto: Media, browser: BrowserInfo['name']): Pho
 	return photoReturnPack;
 }
 
-export const sha256ToChecksum256EndianSwapper = (inputHash: string) => {
-    let hashToUse = '7af12386a82b6337d6b1e4c6a1119e29bb03e6209aa03c70ed3efbb9b74a290c';
+export const sha256ToChecksum256EndianSwapper = (input_sha256: string) => {
+    // https://eosio.stackexchange.com/questions/4116/how-to-use-checksum256-secondary-index-to-get-table-rows/4344
+    let hashToUse = input_sha256; //'7af12386a82b6337d6b1e4c6a1119e29bb03e6209aa03c70ed3efbb9b74a290c';
     let slice1 = hashToUse.slice(0, 32);
     let slice2 = hashToUse.slice(32);
-    console.log(slice1);
-    console.log(slice2);
-    let bytes1 = bytes.fromString(slice1);
-    let bytes2 = bytes.fromString(slice2);
-    endianness(bytes1, 8);
-    endianness(bytes2, 8);
-    let comboString = bytes.toString(bytes1) + bytes.toString(bytes2);
-    console.log(comboString);
+    let bytes1 = conv(slice1, { in:'hex', out: 'bytes' });
+    let bytes2 = conv(slice2, { in:'hex', out: 'bytes' });
+    // console.log("----------sha256ToChecksum256EndianSwapper--------------");
+    // console.log("---PART 1---");
+    // console.log(slice1);
+    // console.log(bytes1);
+    // console.log("---PART 2---");
+    // console.log(slice2);
+    // console.log(bytes2);
+    // console.log("--------------------------------------------------------");
+    endianness(bytes1, 16);
+    endianness(bytes2, 16);
+    let comboString = conv(bytes1, { in:'bytes', out: 'hex' }) + conv(bytes2, { in:'bytes', out: 'hex' });
+    // console.log(comboString);
+    return comboString;
 }

@@ -48,6 +48,7 @@
     "@types/ws": "^6.0.3",
     "aws-sdk": "^2.517.0",
     "azure-storage": "^2.10.3",
+    "binstring": "^0.2.1",
     "boolean": "^1.0.0",
     "buffer-image-size": "^0.6.4",
     "bytes.js": "0.0.2",
