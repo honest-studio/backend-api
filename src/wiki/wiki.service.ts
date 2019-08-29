@@ -316,7 +316,7 @@ export class WikiService {
         // Get the wiki_id from the slug and lang_code
         let wikiResult = await this.chain.getTableRows(theWikiBody);
         let wiki_obj = wikiResult.rows[0];
-        let theWikiId = wiki_obj.wiki_obj;
+        let theWikiId = wiki_obj.wiki_id;
 
         let theBoostsBody = {
             "code": "eparticlectr",
