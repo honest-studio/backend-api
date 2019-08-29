@@ -54,7 +54,7 @@ export class WikiService {
         private mysql: MysqlService,
         private mongo: MongoDbService,
         private redis: RedisService,
-        // @Inject(forwardRef(() => PreviewService)) private previewService2: PreviewService,
+        @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         private mediaUploadService: MediaUploadService,
         private elasticSearch: ElasticsearchService,
         private config: ConfigService,
@@ -361,17 +361,16 @@ export class WikiService {
         let theBoosts = boostResults.rows;
 
         // Prepare the BoostReturnPacks
-        return null
-        // let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(theWikiId);
-        // let returnPack: BoostsByWikiReturnPack = 
-        // {
-        //     preview: await this.previewService.getPreviewsBySlug([{
-        //         lang_code: wikiInfo.lang_code,
-        //         slug: wikiInfo.slug
-        //     }], null)[0],
-        //     boosts: theBoosts
-        // }
-        // return returnPack;
+        let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(theWikiId);
+        let returnPack: BoostsByWikiReturnPack = 
+        {
+            preview: await this.previewService.getPreviewsBySlug([{
+                lang_code: wikiInfo.lang_code,
+                slug: wikiInfo.slug
+            }], null)[0],
+            boosts: theBoosts
+        }
+        return returnPack;
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, forwardRef, Inject } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
 import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
@@ -11,7 +11,7 @@ import { PreviewResult } from '../types/api';
 export class PreviewController {
     constructor(
         private readonly previewService: PreviewService,
-        private wikiService: WikiService
+        @Inject(forwardRef(() => WikiService)) private wikiService: WikiService
     ) {}
 
     @Get('hash/:ipfs_hashes')

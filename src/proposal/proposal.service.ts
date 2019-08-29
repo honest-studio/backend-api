@@ -24,7 +24,7 @@ export class ProposalService {
     constructor(
         private mongo: MongoDbService,
         private mysql: MysqlService,
-        private previewService: PreviewService,
+        @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         private redis: RedisService,
         @Inject(forwardRef(() => DiffService)) private diffService: DiffService
     ) {}
