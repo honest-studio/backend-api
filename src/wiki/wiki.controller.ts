@@ -41,7 +41,7 @@ export class WikiController {
         description: `returns an array of boosts`
     })
     async getBoostsByWikiID(@Param('wiki_id') wiki_id): Promise<BoostsByWikiReturnPack> {
-        return this.wikiService.getBoostsByWikiID(wiki_id);
+        return this.wikiService.getBoostsByWikiID(parseInt(wiki_id));
     }
 
     @Get('boosts_by_langslug/lang_:lang_code/:slug')

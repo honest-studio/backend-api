@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack } from '../types/api';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
 import { MongoDbService, RedisService } from '../feature-modules/database';
 import { PreviewService } from '../preview';
+import { WikiService } from '../wiki/';
 import { ChainService } from '../chain';
 
 export interface UserServiceOptions {
@@ -14,7 +15,8 @@ export class UserService {
     constructor(
         private mongo: MongoDbService, 
         private redis: RedisService,
-        // private previewService: PreviewService,
+        @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
+        @Inject(forwardRef(() => WikiService)) private wikiService: WikiService,
         private chain: ChainService
     ) {}
 
@@ -49,18 +51,25 @@ export class UserService {
 
         // Get all of the boosts for the user
         let boostResults = await this.chain.getTableRows(theBoostsBody);
-        let theBoosts = boostResults.rows;
+        let theBoosts: Boost[] = boostResults.rows;
+
+        // Get the previews
+        let theWikis: BoostsByWikiReturnPack[] = await Promise.all(theBoosts.map(async (boost) => {
+            let wikiInfo: Wikistbl2Item = await this.wikiService.getWikiByWikiID(boost.wiki_id);
+            let thePreview = await this.previewService.getPreviewsBySlug([{
+                lang_code: wikiInfo.lang_code,
+                slug: wikiInfo.slug
+            }], "safari")[0];
+            return {
+                boosts: [boost],
+                preview: thePreview,
+            }
+        }))
 
         // Prepare the BoostsByUserReturnPack
-        let returnPack: BoostsByUserReturnPack = 
-        {
-            user: null,
-            wikis: theBoosts.map(boost => {
-                return {
-                    ...boost,
-                    preview: null,
-                }
-            })
+        let returnPack: BoostsByUserReturnPack = {
+            user: account_name,
+            wikis: theWikis
         }
         return returnPack;
     }

@@ -267,7 +267,7 @@ export class WikiService {
         return schema;
     }
 
-    async getBoostsByWikiID(wiki_id: string): Promise<BoostsByWikiReturnPack> {
+    async getBoostsByWikiID(wiki_id: number): Promise<BoostsByWikiReturnPack> {
         // TODO: Needs to be implemented using ChainService
         let theBoostsBody = {
             "code": "eparticlectr",
@@ -282,18 +282,25 @@ export class WikiService {
 
         // Get all of the boosts for the wiki using the wiki_id
         let boostResults = await this.chain.getTableRows(theBoostsBody);
-        let theBoosts = boostResults.rows;
+        let theBoosts: Boost[] = boostResults.rows;
+
+        // Get the previews
+        let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(wiki_id);
+        let thePreview = await this.previewService.getPreviewsBySlug([{
+            lang_code: wikiInfo.lang_code,
+            slug: wikiInfo.slug
+        }], "safari")[0];
 
         // Prepare the BoostReturnPacks
         let returnPack: BoostsByWikiReturnPack = 
         {
-            preview: null,
+            preview: thePreview,
             boosts: theBoosts
         }
         return returnPack;
     }
 
-    async getWikiByWikiID(wiki_id: string): Promise<Wikistbl2Item> {
+    async getWikiByWikiID(wiki_id: number): Promise<Wikistbl2Item> {
         // TODO: Needs to be implemented using ChainService
         let theWikiBody = {
             "code": "eparticlectr",
@@ -357,7 +364,7 @@ export class WikiService {
 
         // Get all of the boosts for the wiki now that you have the wiki_id
         let boostResults = await this.chain.getTableRows(theBoostsBody);
-        let theBoosts = boostResults.rows;
+        let theBoosts: Boost[] = boostResults.rows;
 
         // Prepare the BoostReturnPacks
         let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(theWikiId);
