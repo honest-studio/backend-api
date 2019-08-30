@@ -67,7 +67,12 @@ export class WikiService {
                 // Check for a merge
                 const theComment = message.trace.act.data.comment;
                 const theMemo = message.trace.act.data.memo;
-                if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
+                const approved = message.trace.act.data.approved;
+                if(
+                    (theComment && theComment.indexOf("MERGE_FROM|") >= 0) 
+                    && (theMemo && theMemo.indexOf("Merge") >= 0) 
+                    && (approved !== undefined && !approved)
+                ){
                     await this.unmergeProposal(message);
                 } 
                 return;
