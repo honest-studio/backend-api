@@ -17,7 +17,7 @@ export class HistoryController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiImplicitQuery({
         name: 'diff',

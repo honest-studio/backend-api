@@ -49,6 +49,8 @@ export class UserService {
             "json": true
         };
 
+        USE slug AND lang_code INSTEAD OF WIKI_ID
+
         // Get all of the boosts for the user
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;

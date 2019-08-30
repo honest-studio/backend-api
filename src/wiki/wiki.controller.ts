@@ -29,21 +29,6 @@ export class WikiController {
         return this.wikiService.getWikisByHash(ipfs_hashes);
     }
 
-    @Get('boosts_by_wiki_id/:wiki_id')
-    @ApiOperation({ title: 'Get boosts for a given wiki_id' })
-    @ApiImplicitParam({
-        name: 'wiki_id',
-        description: `ID of the wiki in the wikistbl2
-            Example: 123`
-    })
-    @ApiResponse({
-        status: 200,
-        description: `returns an array of boosts`
-    })
-    async getBoostsByWikiID(@Param('wiki_id') wiki_id): Promise<BoostsByWikiReturnPack> {
-        return this.wikiService.getBoostsByWikiID(parseInt(wiki_id));
-    }
-
     @Get('boosts_by_langslug/lang_:lang_code/:slug')
     @ApiOperation({ title: 'Get boosts for a given langslug' })
     @ApiImplicitParam({
@@ -52,7 +37,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiResponse({
         status: 200,
@@ -70,7 +55,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiImplicitQuery({
         name: 'cache',
@@ -96,7 +81,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiResponse({
         status: 200,
@@ -114,7 +99,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiImplicitQuery({
         name: 'cache',
@@ -136,7 +121,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiResponse({
         status: 200,
@@ -154,7 +139,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiResponse({
         status: 200,

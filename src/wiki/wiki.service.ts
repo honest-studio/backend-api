@@ -280,6 +280,8 @@ export class WikiService {
             "json": true
         };
 
+        USE slug AND lang_code INSTEAD OF WIKI_ID
+
         // Get all of the boosts for the wiki using the wiki_id
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;

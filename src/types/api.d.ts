@@ -80,7 +80,9 @@ export interface Wikistbl2Item {
 
 export interface Boost {
     id: number,
-    wiki_id: number,
+    slug: string,
+    lang_code: string,
+    booster: string;
     amount: number,
     timestamp: number,
 }

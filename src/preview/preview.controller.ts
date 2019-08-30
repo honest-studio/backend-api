@@ -79,7 +79,7 @@ export class PreviewController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiResponse({
         status: 200,
