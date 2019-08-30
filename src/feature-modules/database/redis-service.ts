@@ -10,6 +10,9 @@ export class RedisService {
     constructor() { 
         this.redis = new Redis();
         this.subscribe_conn = new Redis();
+
+        // make sure there's only one subscriber per cluster so our cluster
+        // doesn't end up having 32 subscribers
         (this.redis as any).pubsub("numsub", "action:logpropres", (err, values) => {
             if (values[1]  === 0) this.subscribe_conn.subscribe("action:logpropres");
         })
