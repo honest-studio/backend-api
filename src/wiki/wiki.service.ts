@@ -267,41 +267,6 @@ export class WikiService {
         return schema;
     }
 
-    async getBoostsByWikiID(wiki_id: number): Promise<BoostsByWikiReturnPack> {
-        // TODO: Needs to be implemented using ChainService
-        let theBoostsBody = {
-            "code": "eparticlectr",
-            "table": "booststbl",
-            "scope": "eparticlectr",
-            "index_position": "tertiary",
-            "key_type": "i64",
-            "upper_bound": wiki_id,
-            "lower_bound": wiki_id,
-            "json": true
-        };
-
-        USE slug AND lang_code INSTEAD OF WIKI_ID
-
-        // Get all of the boosts for the wiki using the wiki_id
-        let boostResults = await this.chain.getTableRows(theBoostsBody);
-        let theBoosts: Boost[] = boostResults.rows;
-
-        // Get the previews
-        let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(wiki_id);
-        let thePreview = await this.previewService.getPreviewsBySlug([{
-            lang_code: wikiInfo.lang_code,
-            slug: wikiInfo.slug
-        }], "safari")[0];
-
-        // Prepare the BoostReturnPacks
-        let returnPack: BoostsByWikiReturnPack = 
-        {
-            preview: thePreview,
-            boosts: theBoosts
-        }
-        return returnPack;
-    }
-
     async getBoostsByWikiLangSlug(lang_code: string, slug: string): Promise<Boost[]> {
         let padded_slug = slug;
         let padded_lang_code = lang_code;
