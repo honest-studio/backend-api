@@ -8,20 +8,25 @@ import * as SqlString from 'sqlstring';
 import { URL } from 'url';
 import * as fs from 'fs';
 import * as path from 'path';
+import { sha256 } from 'js-sha256';
 import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
-import { ProposalService } from '../proposal';
+import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media } from '../types/article';
-import { MergeResult, MergeProposalParsePack } from '../types/api';
+import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
-import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
 import { mergeWikis, parseMergeInfoFromProposal } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
 var colors = require('colors');
 import FormData from 'form-data';
+
+const MAX_SLUG_SIZE = 256;
+const MAX_LANG_CODE_SIZE = 7;
 
 export interface MergeInputPack {
     source: {
@@ -35,6 +40,11 @@ export interface MergeInputPack {
     }
 }
 
+export interface UserServiceOptions {
+    limit: number;
+    offset: number;
+}
+
 @Injectable()
 export class WikiService {
     private updateWikiIntervals;
@@ -44,10 +54,11 @@ export class WikiService {
         private mysql: MysqlService,
         private mongo: MongoDbService,
         private redis: RedisService,
+        @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         private mediaUploadService: MediaUploadService,
-        @Inject(forwardRef(() => ProposalService)) private proposalService: ProposalService,
         private elasticSearch: ElasticsearchService,
-        private config: ConfigService
+        private config: ConfigService,
+        private chain: ChainService
     ) {
         this.updateWikiIntervals = {};
     }
@@ -254,6 +265,39 @@ export class WikiService {
         const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
         const schema = renderSchema(wiki, 'html');
         return schema;
+    }
+
+    async getBoostsByWikiLangSlug(lang_code: string, slug: string): Promise<Boost[]> {
+        let padded_slug = slug;
+        let padded_lang_code = lang_code;
+        let combined = "";
+        while (padded_slug.length < MAX_SLUG_SIZE){
+            padded_slug = padded_slug + " ";
+        }
+        while (padded_lang_code.length < MAX_LANG_CODE_SIZE){
+            padded_lang_code = padded_lang_code + " ";
+        }
+        combined = padded_slug + padded_lang_code;
+
+        // See https://eosio.stackexchange.com/questions/4116/how-to-use-checksum256-secondary-index-to-get-table-rows/4344
+        var checksum256ed_wikilangslug = sha256ToChecksum256EndianSwapper(sha256(combined));
+
+        let theBoostsBody = {
+            "code": "eparticlectr",
+            "table": "booststbl",
+            "scope": "eparticlectr",
+            "index_position": "tertiary",
+            "key_type": "sha256",
+            "upper_bound": checksum256ed_wikilangslug,
+            "lower_bound": checksum256ed_wikilangslug,
+            "json": true
+        };
+
+        // Get all of the boosts for the wiki now that you have the wiki_id
+        let boostResults = await this.chain.getTableRows(theBoostsBody);
+        let theBoosts: Boost[] = boostResults.rows;
+
+        return theBoosts;
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {

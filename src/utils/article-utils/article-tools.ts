@@ -8,6 +8,9 @@ import decode from 'unescape';
 import { BrowserInfo } from 'detect-browser';
 import urlSlug from 'url-slug';
 import * as axios from 'axios';
+const conv = require('binstring');
+import endianness from 'endianness';
+
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
@@ -113,13 +116,13 @@ export const CheckForLinksOrCitationsAMP = (
                 let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
                 // Load the HTML into cheerio for parsing
-                let $ = cheerio.load(dom);
+                let $ = cheerio.load(dom as any);
 
                 // Create the button that will be substituted
                 let openButtonTag = $('<button />');
                 $(openButtonTag).addClass('tooltippable');
                 $(openButtonTag).attr('role', 'button');
-                $(openButtonTag).attr('tabindex', 0);
+                $(openButtonTag).attr('tabindex', "0");
                 $(openButtonTag).attr('aria-label', linkCodeAndSlug);
                 $(openButtonTag).attr('aria-labelledby', `${linkCodeAndSlug}__${unique_id}`);
                 $(openButtonTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}`);
@@ -133,7 +136,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(lightBoxTag).addClass('amp-hc');
                 $(lightBoxTag).attr('id', `hvrblb-${linkCodeAndSlug}__${unique_id}`);
                 $(lightBoxTag).attr('role', 'button');
-                $(lightBoxTag).attr('tabindex', 0);
+                $(lightBoxTag).attr('tabindex', '0');
                 $(lightBoxTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}.close`);
                 $(lightBoxTag).attr('layout', 'nodisplay');
 
@@ -141,7 +144,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let iframeTag = $('<amp-iframe />');
                 $(iframeTag).addClass('amp-hc');
                 $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
-                $(iframeTag).attr('frameborder', 0);
+                $(iframeTag).attr('frameborder', '0');
                 $(iframeTag).attr('scrolling', 'no');
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
@@ -184,7 +187,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });
 
                 // Load the HTML into cheerio for parsing
-                let $ = cheerio.load(dom);
+                let $ = cheerio.load(dom as any);
                 const unique_id = crypto.randomBytes(5).toString('hex');
 
                 const nextLetter = text.charAt(end);
@@ -202,8 +205,8 @@ export const CheckForLinksOrCitationsAMP = (
                 let openButtonTag = $('<button />');
                 $(openButtonTag).addClass('tooltippableCarat');
                 $(openButtonTag).attr('role', 'button');
-                $(openButtonTag).attr('tabindex', 0);
-                $(openButtonTag).attr('aria-label', citationIndex);
+                $(openButtonTag).attr('tabindex', "0");
+                $(openButtonTag).attr('aria-label', citationIndex.toString());
                 $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
                 $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
                 $(openButtonTag).text(`[${citationIndex}]`);
@@ -216,7 +219,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(lightBoxTag).addClass('amp-hc');
                 $(lightBoxTag).attr('id', `hvrlnk-${unique_id}`);
                 $(lightBoxTag).attr('role', 'button');
-                $(lightBoxTag).attr('tabindex', 0);
+                $(lightBoxTag).attr('tabindex', "0");
                 $(lightBoxTag).attr('on', `tap:hvrlnk-${unique_id}.close`);
                 $(lightBoxTag).attr('layout', 'nodisplay');
 
@@ -225,7 +228,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(iframeTag).addClass('amp-hc');
                 $(iframeTag).attr('sandbox', 'allow-same-origin allow-scripts allow-top-navigation');
                 $(iframeTag).attr('height', '275');
-                $(iframeTag).attr('frameborder', 0);
+                $(iframeTag).attr('frameborder', "0");
                 $(iframeTag).attr('scrolling', 'no');
                 $(iframeTag).attr('layout', 'fill');
                 $(iframeTag).attr(
@@ -263,7 +266,7 @@ export const CheckForLinksOrCitationsAMP = (
                 let dom = htmlparser2.parseDOM('<img />', { decodeEntities: true });
 
                 // Load the HTML into cheerio for parsing
-                let $ = cheerio.load(dom);
+                let $ = cheerio.load(dom as any);
                 const unique_id = crypto.randomBytes(5).toString('hex');
 
                 let result = CAPTURE_REGEXES.inline_image_match.exec(text);
@@ -456,7 +459,7 @@ export const blobBoxPreSanitize = (passedBlobBox: string): string => {
     const dom = htmlparser2.parseDOM(sanitizedBlobBox, { decodeEntities: true });
 
     // Load the HTML into cheerio for parsing
-    const $ = cheerio.load(dom);
+    const $ = cheerio.load(dom as any);
 
     // Replace tags <font> with <span>
     const replacementTags = [['font', 'span']];
@@ -952,4 +955,26 @@ export const PhotoToUse = (inputPhoto: Media, browser: BrowserInfo['name']): Pho
 		}
 	}
 	return photoReturnPack;
+}
+
+export const sha256ToChecksum256EndianSwapper = (input_sha256: string) => {
+    // https://eosio.stackexchange.com/questions/4116/how-to-use-checksum256-secondary-index-to-get-table-rows/4344
+    let hashToUse = input_sha256; //'7af12386a82b6337d6b1e4c6a1119e29bb03e6209aa03c70ed3efbb9b74a290c';
+    let slice1 = hashToUse.slice(0, 32);
+    let slice2 = hashToUse.slice(32);
+    let bytes1 = conv(slice1, { in:'hex', out: 'bytes' });
+    let bytes2 = conv(slice2, { in:'hex', out: 'bytes' });
+    // console.log("----------sha256ToChecksum256EndianSwapper--------------");
+    // console.log("---PART 1---");
+    // console.log(slice1);
+    // console.log(bytes1);
+    // console.log("---PART 2---");
+    // console.log(slice2);
+    // console.log(bytes2);
+    // console.log("--------------------------------------------------------");
+    endianness(bytes1, 16);
+    endianness(bytes2, 16);
+    let comboString = conv(bytes1, { in:'bytes', out: 'hex' }) + conv(bytes2, { in:'bytes', out: 'hex' });
+    // console.log(comboString);
+    return comboString;
 }

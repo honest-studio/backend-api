@@ -1,5 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
 import { MongoDbService, RedisService } from '../feature-modules/database';
+import { PreviewService } from '../preview';
+import { WikiService } from '../wiki/';
+import { ChainService } from '../chain';
 
 export interface UserServiceOptions {
     limit: number;
@@ -8,7 +12,13 @@ export interface UserServiceOptions {
 
 @Injectable()
 export class UserService {
-    constructor(private mongo: MongoDbService, private redis: RedisService) {}
+    constructor(
+        private mongo: MongoDbService, 
+        private redis: RedisService,
+        @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
+        @Inject(forwardRef(() => WikiService)) private wikiService: WikiService,
+        private chain: ChainService
+    ) {}
 
     async getStakes(account_name: string, options: UserServiceOptions) {
         const pipeline = this.redis.connection().pipeline();
@@ -24,6 +34,43 @@ export class UserService {
             sum_stakes: Number(values[2][1]),
             sum_refunds: Number(values[3][1])
         };
+    }
+
+    async getBoostsByUser(account_name: string): Promise<BoostsByUserReturnPack> {
+        // TODO: Needs to be implemented using ChainService
+        let theBoostsBody = {
+            "code": "eparticlectr",
+            "table": "booststbl",
+            "scope": "eparticlectr",
+            "index_position": "secondary",
+            "key_type": "name",
+            "upper_bound": account_name,
+            "lower_bound": account_name,
+            "json": true
+        };
+
+        // Get all of the boosts for the user
+        let boostResults = await this.chain.getTableRows(theBoostsBody);
+        let theBoosts: Boost[] = boostResults.rows;
+
+        // Get the previews
+        let theWikis: BoostsByWikiReturnPack[] = await Promise.all(theBoosts.map(async (boost) => {
+            let thePreview = await this.previewService.getPreviewsBySlug([{
+                lang_code: boost.lang_code,
+                slug: boost.slug
+            }], "safari")[0];
+            return {
+                boosts: [boost],
+                preview: thePreview,
+            }
+        }))
+
+        // Prepare the BoostsByUserReturnPack
+        let returnPack: BoostsByUserReturnPack = {
+            user: account_name,
+            wikis: theWikis
+        }
+        return returnPack;
     }
 
     async getRewards(account_name: string, options: UserServiceOptions) {

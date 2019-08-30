@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, forwardRef, Inject } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
 import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
@@ -11,7 +11,7 @@ import { PreviewResult } from '../types/api';
 export class PreviewController {
     constructor(
         private readonly previewService: PreviewService,
-        private wikiService: WikiService
+        @Inject(forwardRef(() => WikiService)) private wikiService: WikiService
     ) {}
 
     @Get('hash/:ipfs_hashes')
@@ -79,7 +79,7 @@ export class PreviewController {
     })
     @ApiImplicitParam({
         name: 'slug',
-        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travis-moore'
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
     @ApiResponse({
         status: 200,

@@ -14,7 +14,6 @@ export class RecentActivityService {
         private redis: RedisService,
         private proposalService: ProposalService,
         private mysql: MysqlService,
-        private previewService: PreviewService,
     ) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {

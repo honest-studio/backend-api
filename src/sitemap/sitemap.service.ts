@@ -59,15 +59,17 @@ export class SitemapService {
             urls: urlPacks
         });
 
-        theMap.toXML( function(err, xml){ 
-            if (err){ 
-                console.log(err) 
-            }
-            else{
-                res.header('Content-Type', 'application/xml');
-                res.send(xml);
-            }
-        });
+        // theMap.toXML( function(err, xml){ 
+        //     if (err){ 
+        //         console.log(err) 
+        //     }
+        //     else{
+
+        //     }
+        // });
+
+        res.header('Content-Type', 'application/xml');
+        // res.send(xml);
 
         return theMap.toString();
     }

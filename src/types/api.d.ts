@@ -70,6 +70,33 @@ export interface MergeProposalParsePack {
     final_hash: string;
 }
 
+export interface Wikistbl2Item {
+    id: number,
+    slug: string,
+    group_id: number,
+    lang_code: string,
+    ipfs_hash: string,
+}
+
+export interface Boost {
+    id: number,
+    slug: string,
+    lang_code: string,
+    booster: string;
+    amount: number,
+    timestamp: number,
+}
+
+export interface BoostsByWikiReturnPack {
+    boosts: Boost[];
+    preview: PreviewResult,
+}
+
+export interface BoostsByUserReturnPack {
+    user: string;
+    wikis: BoostsByWikiReturnPack[]
+}
+
 /**
  * Describe a successful response to a media upload
  */

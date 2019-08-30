@@ -30,6 +30,17 @@ export class ChainController {
         return this.chainService.pushTransaction(transaction);
     }
 
+    @Post('get_table_rows')
+    @ApiOperation({
+        title: 'Get table rows',
+        description: `
+            Returns an object containing rows from the specified table.
+            Details for using the endpoint can be found at https://developers.eos.io/eosio-nodeos/reference#get_table_rows.`
+    })
+    async getTableRows(@Body() body): Promise<any> {
+        return this.chainService.getTableRows(body);
+    }
+
     @Post(':eos_api_endpoint')
     @ApiOperation({
         title: 'EOS Chain API',

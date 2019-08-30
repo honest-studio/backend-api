@@ -446,7 +446,7 @@ describe('Backend API', () => {
 
   it('Sitemap: Recent', () => {
     return request(app.getHttpServer())
-        .get('/v2/sitemap/recent/en')
+        .get('/v2/sitemap/recent/en.xml')
         .expect(200)
   });
 
