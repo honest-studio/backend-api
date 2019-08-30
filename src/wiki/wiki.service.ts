@@ -61,76 +61,22 @@ export class WikiService {
         private chain: ChainService
     ) {
         this.updateWikiIntervals = {};
-        this.redis.subscriber().on("message", (channel, message) => {
+        this.redis.subscriber().on("message", async (channel, message) => {
             console.log(channel, message);
-            if (channel == "action:logpropres") return;
-
-// v1 results are done based on proposal hash
-            // v2 results are done based on proposal ID
-            const approved = action.trace.act.data.approved;
-            const proposal_id = action.trace.act.data.proposal_id;
-            const proposal = action.trace.act.data.proposal;
-            const key = proposal_id ? proposal_id : proposal;
-            pipeline.set(`proposal:${key}:result`, JSON.stringify(action));
-
-            if (proposal_id && approved === 1) {
-                const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
-                try {
-                    const ipfs_hash = info.trace.act.data.ipfs_hash;
-                    const lang_code = info.trace.act.data.lang_code;
-                    const slug = info.trace.act.data.slug;
-                    const endtime = info.trace.act.data.endtime;
-                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
-                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_updated`, endtime);
-
-                    const removal = info.trace.act.data.comment.includes("PAGE_REMOVAL");
-                    if (removal)
-                        pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, "removed");
-                } catch {
-                    // some proposals dont have info strangely enough
-                    // mark as unprocessed and continue
-                    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
-                    await redis.del(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
-                    continue;
-                }
-            }
-        });
-
-
-
-        dfuse.on('message', async (msg_str) => {
-            lastMessageReceived = Date.now();
-            const msg = JSON.parse(msg_str);
-            if (msg.type != 'action_trace') {
-                if (DFUSE_ACTION_LOGGING) console.log(msg);
+            if (channel == "action:logpropres"){
+                // Check for a merge
+                const theComment = message.trace.act.data.comment;
+                const theMemo = message.trace.act.data.memo;
+                if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
+                    await this.unmergeProposal(message);
+                } 
                 return;
             }
-            const mongo_actions = await mongo_actions_promise;
-            mongo_actions.insertOne(msg.data)
-                .then(() => {
-                    const block_num = msg.data.block_num;
-                    const account = msg.data.trace.act.account;
-                    const name = msg.data.trace.act.name;
-                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
-                })
-                .catch((err) => {
-                    if (err.code == 11000) {
-                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
-                    }
-                    else {
-                        if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', msg, ' \n Error message on insert: ', err);
-                        throw err;
-                    }
-                });
-            redis_process_actions([msg.data])
-    
-            // publish proposal results
-            if (msg.data.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(msg.data));
+
+        });
+    };
 
 
-
-
-    }
 
     async unmergeProposal(rejected_merge_proposal: any){
         let parsedMergeInfo: MergeProposalParsePack = parseMergeInfoFromProposal(rejected_merge_proposal);
@@ -834,9 +780,9 @@ export class WikiService {
             if(theComment.indexOf("MERGE_FROM|") >= 0 && theMemo.indexOf("Merge") >= 0) {
                 await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
             }
-            else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
-                await this.unmergeProposal(submitted_proposal);
-            } 
+            // else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
+            //     await this.unmergeProposal(submitted_proposal);
+            // } 
             // else if(theComment.indexOf("UNDO_REMOVAL|") >= 0 && theMemo.indexOf("Undo Removal") >= 0 ) {
             //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
             // } 
