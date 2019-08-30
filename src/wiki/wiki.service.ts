@@ -302,26 +302,7 @@ export class WikiService {
         return returnPack;
     }
 
-    async getWikiByWikiID(wiki_id: number): Promise<Wikistbl2Item> {
-        // TODO: Needs to be implemented using ChainService
-        let theWikiBody = {
-            "code": "eparticlectr",
-            "table": "wikistbl2",
-            "scope": "eparticlectr",
-            "index_position": "primary",
-            "key_type": "i64",
-            "upper_bound": wiki_id,
-            "lower_bound": wiki_id,
-            "json": true
-        };
-
-        // Get the wiki_id from the slug and lang_code
-        let wikiResult = await this.chain.getTableRows(theWikiBody);
-        let wiki_obj = wikiResult.rows[0];
-        return wiki_obj;
-    }
-
-    async getBoostsByWikiLangSlug(lang_code: string, slug: string): Promise<BoostsByWikiReturnPack> {
+    async getBoostsByWikiLangSlug(lang_code: string, slug: string): Promise<Boost[]> {
         let padded_slug = slug;
         let padded_lang_code = lang_code;
         let combined = "";
@@ -334,33 +315,16 @@ export class WikiService {
         combined = padded_slug + padded_lang_code;
 
         // See https://eosio.stackexchange.com/questions/4116/how-to-use-checksum256-secondary-index-to-get-table-rows/4344
-        var checksum256ed_wiki_id = sha256ToChecksum256EndianSwapper(sha256(combined));
-
-        // TODO: Needs to be implemented using ChainService
-        let theWikiBody = {
-            "code": "eparticlectr",
-            "table": "wikistbl2",
-            "scope": "eparticlectr",
-            "index_position": "secondary",
-            "key_type": "sha256",
-            "upper_bound": checksum256ed_wiki_id,
-            "lower_bound": checksum256ed_wiki_id,
-            "json": true
-        };
-
-        // Get the wiki_id from the slug and lang_code
-        let wikiResult = await this.chain.getTableRows(theWikiBody);
-        let wiki_obj = wikiResult.rows[0];
-        let theWikiId = wiki_obj.id;
+        var checksum256ed_wikilangslug = sha256ToChecksum256EndianSwapper(sha256(combined));
 
         let theBoostsBody = {
             "code": "eparticlectr",
             "table": "booststbl",
             "scope": "eparticlectr",
             "index_position": "tertiary",
-            "key_type": "i64",
-            "upper_bound": theWikiId,
-            "lower_bound": theWikiId,
+            "key_type": "sha256",
+            "upper_bound": checksum256ed_wikilangslug,
+            "lower_bound": checksum256ed_wikilangslug,
             "json": true
         };
 
@@ -368,18 +332,7 @@ export class WikiService {
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;
 
-        // Prepare the BoostReturnPacks
-        let wikiInfo: Wikistbl2Item = await this.getWikiByWikiID(theWikiId);
-        let thePreview = await this.previewService.getPreviewsBySlug([{
-            lang_code: wikiInfo.lang_code,
-            slug: wikiInfo.slug
-        }], "safari")[0];
-        let returnPack: BoostsByWikiReturnPack = 
-        {
-            preview: thePreview,
-            boosts: theBoosts
-        }
-        return returnPack;
+        return theBoosts;
     }
 
     async getWikisByHash(ipfs_hashes: string[]): Promise<ArticleJson[]> {

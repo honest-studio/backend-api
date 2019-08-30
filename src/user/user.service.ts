@@ -49,18 +49,15 @@ export class UserService {
             "json": true
         };
 
-        USE slug AND lang_code INSTEAD OF WIKI_ID
-
         // Get all of the boosts for the user
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;
 
         // Get the previews
         let theWikis: BoostsByWikiReturnPack[] = await Promise.all(theBoosts.map(async (boost) => {
-            let wikiInfo: Wikistbl2Item = await this.wikiService.getWikiByWikiID(boost.wiki_id);
             let thePreview = await this.previewService.getPreviewsBySlug([{
-                lang_code: wikiInfo.lang_code,
-                slug: wikiInfo.slug
+                lang_code: boost.lang_code,
+                slug: boost.slug
             }], "safari")[0];
             return {
                 boosts: [boost],
