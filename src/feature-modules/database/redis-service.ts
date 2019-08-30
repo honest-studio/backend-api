@@ -4,16 +4,23 @@ import Redis from 'ioredis';
 
 @Injectable()
 export class RedisService {
-    private subscriber: Redis.Redis;
+    private subscribe_conn: Redis.Redis;
     private redis: Redis.Redis;
-    private subscribed: Promise<boolean>;
 
     constructor() { 
         this.redis = new Redis();
+        this.subscribe_conn = new Redis();
+        this.subscribe_conn.subscribe("action:logpropres");
+    }
+
+    subscriber() {
+        return this.subscribe_conn;
     }
 
     connection() {
         return this.redis;
     }
+
+
     
 }
