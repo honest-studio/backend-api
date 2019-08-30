@@ -61,6 +61,11 @@ export class WikiService {
         private chain: ChainService
     ) {
         this.updateWikiIntervals = {};
+        this.redis.subscriber().on("message", (channel, message) => {
+            console.log(channel, message);
+            if (channel == "action:logpropres") return;
+        });
+
     }
 
     async unmergeProposal(rejected_merge_proposal: any){

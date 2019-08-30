@@ -113,6 +113,9 @@ async function start() {
                 }
             });
         redis_process_actions([msg.data])
+
+        // publish proposal results
+        if (msg.data.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(msg.data));
     });
     dfuse.on('error', (e) => {
         console.log('DFUSE: ERROR: ', e);
