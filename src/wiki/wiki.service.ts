@@ -62,19 +62,25 @@ export class WikiService {
     ) {
         this.updateWikiIntervals = {};
         this.redis.subscriber().on("message", async (channel, message) => {
-            console.log(channel, message);
+            // console.log(channel, message);
             if (channel == "action:logpropres"){
-                // Check for a merge
-                const theComment = message.trace.act.data.comment;
-                const theMemo = message.trace.act.data.memo;
-                const approved = message.trace.act.data.approved;
-                if(
-                    (theComment && theComment.indexOf("MERGE_FROM|") >= 0) 
-                    && (theMemo && theMemo.indexOf("Merge") >= 0) 
-                    && (approved !== undefined && !approved)
-                ){
-                    await this.unmergeProposal(message);
-                } 
+                // Extract some info from the message
+                let parsedMessage = JSON.parse(message);
+                const theProposalID = parsedMessage.trace.act.data.proposal_id;
+                const approved = parsedMessage.trace.act.data.approved;
+                if(!approved){
+                    // Get the proposal details
+                    const propInfo = JSON.parse(await this.redis.connection().get(`proposal:${theProposalID}:info`));
+                    // Check for a merge
+                    const theComment = propInfo.trace.act.data.comment;
+                    const theMemo = propInfo.trace.act.data.memo;
+                    if(
+                        (theComment && theComment.indexOf("MERGE_FROM|") >= 0) 
+                        && (theMemo && theMemo.indexOf("Merge") >= 0)
+                    ){
+                        await this.unmergeProposal(propInfo);
+                    } 
+                }
                 return;
             }
 
