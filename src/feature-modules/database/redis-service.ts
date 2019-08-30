@@ -10,7 +10,9 @@ export class RedisService {
     constructor() { 
         this.redis = new Redis();
         this.subscribe_conn = new Redis();
-        this.subscribe_conn.subscribe("action:logpropres");
+        (this.redis as any).pubsub("numsub", "action:logpropres", (err, values) => {
+            if (values[1]  === 0) this.subscribe_conn.subscribe("action:logpropres");
+        })
     }
 
     subscriber() {
