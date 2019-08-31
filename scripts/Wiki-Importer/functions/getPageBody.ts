@@ -1,12 +1,13 @@
-import { cheerio } from 'cheerio';
-import { textParser } from './pagebodyfunctionalities/textParser';
+import * as cheerio from 'cheerio';
+import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getImage } from './pagebodyfunctionalities/getImage';
 import { getCategory } from './pagebodyfunctionalities/getCategory';
 import { getList } from './pagebodyfunctionalities/getList';
 import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
-import { getAttributes } from './pagebodyfunctionalities/getAttributes';
+import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
+import { Citation } from '../../../src/types/article';
 
 //input: page html, url
 //output sections[] 
@@ -35,12 +36,12 @@ export const getPageBody = (html, url) => {
 		let $el = $(el);
 		let tag = $el[0].name;
 		if (tag == 'p') { 
-			let sentenceItems = textParser(el, $, internalCitations); //returns sentence[]
+			let sentenceItems = accumulateText(el, $, internalCitations); //returns sentence[]
 			paragraphs.push({  
 				index: paragraphIndex,
 				items: sentenceItems,
 				tag_type: 'p',
-				attrs: getAttributes(el.attrs)
+				attrs: cleanAttrs(el.attribs)
 			})
 			paragraphIndex++;
 		}
@@ -61,7 +62,7 @@ export const getPageBody = (html, url) => {
 				index: paragraphIndex,
 				items: getCategory(el, $),
 				tag_type: $el[0].name, 
-				attrs: getAttributes(el.attrs)
+				attrs: cleanAttrs(el.attribs)
 			});
 			paragraphIndex++;
 		}
@@ -81,7 +82,7 @@ export const getPageBody = (html, url) => {
 					index: paragraphIndex,
 					items: table,
 					tag_type: 'table',
-					attrs: getAttributes(el.attrs)
+					attrs: cleanAttrs(el.attribs)
 				})
 				paragraphIndex++;
 			}
@@ -98,18 +99,18 @@ export const getPageBody = (html, url) => {
 					index: paragraphIndex,
 					items: table,
 					tag_type: 'table',
-					attrs: getAttributes(childTable[0].attribs)
+					attrs: cleanAttrs(childTable[0].attribs)
 				})
 				paragraphIndex++;
 			}
 		}
 		else if ($el[0].name == 'ul') {
-			let items = getList(el, $); //returns array of li elements
+			let items = getList(el, $, internalCitations); //returns array of li elements
 			paragraphs.push({
 				index: paragraphIndex,
 				items: items,
 				tag_type: 'ul',
-				attrs: getAttributes(el.attrs)
+				attrs: cleanAttrs(el.attribs)
 			})
 			paragraphIndex++;	
 		}
@@ -119,7 +120,7 @@ export const getPageBody = (html, url) => {
 				index: paragraphIndex,
 				items: items,
 				tag_type: 'dl',
-				attrs: getAttributes(el.attrs)
+				attrs: cleanAttrs(el.attribs)
 			})
 			paragraphIndex++;
 		}

@@ -1,6 +1,8 @@
-const cheerio = require('cheerio');
-const textParser = require('./pagebodyfunctionalities/textParser');
-const getTimeStamp = require('./pagebodyfunctionalities/getTimeStamp');
+import * as cheerio from 'cheerio';
+import { textParser } from './pagebodyfunctionalities/textParser';
+import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
+
+import { Citation } from '../../../src/types/article';
 
 const wikipedia = 'https://en.wikipedia.org/wiki/';
 let defaultDescription = [
