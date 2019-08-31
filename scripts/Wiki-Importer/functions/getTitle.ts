@@ -5,7 +5,7 @@ const format = 'format=json';
 const wikiMedia = 'https://en.wikipedia.org/w/api.php?' //Default wikiMedia format
 
 //make call to wikipedia API
-const getTitle = async (page) => {
+export const getTitle = async (page) => {
 	const format = 'format=json';
 	const wikiMedia = 'https://en.wikipedia.org/w/api.php?' //Default wikiMedia format
 	const action = 'action=parse';
@@ -17,6 +17,4 @@ const getTitle = async (page) => {
 	return [{type: 'sentence', index: 0, text: title}];
 }
 
-
-module.exports = getTitle;
 

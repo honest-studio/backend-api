@@ -4,12 +4,13 @@ import { getTagClass } from '../getTagClass';
 import { getImage } from '../getImage';
 import { parseAnchorTag } from '../parseAnchorTag';
 import { parseInternalCitation } from '../parseInternalCitation';
+import { NestedContentItem, NestedTextItem, NestedTagItem, TableCell } from '../../../../../src/types/article';
 
 //global variables  
-let nestedContentItems = []; 
+let nestedContentItems: NestedContentItem[] = []; 
 let accumulator = '';
 
-export const getParsedCellContent = (cell, $) => {
+export const getParsedCellContent = (cell: TableCell, $): NestedContentItem[] => {
 	nestedContentItems = []; //for each cell reset content [] 
 	accumulator = ''; //reset for each cell 
 	cellParser(cell, $);
@@ -24,7 +25,7 @@ export const getParsedCellContent = (cell, $) => {
      	content: [{type: 'sentence', index: 0, text: accumulator}] });
 	} else {
 		if (nestedContentItems[tempLength - 1].type == 'text') {
-			if (nestedContentItems[tempLength - 1].content[0].content != accumulator) {
+			if ((nestedContentItems[tempLength - 1] as NestedTextItem).content[0].text != accumulator) {
 				nestedContentItems.push({ 
 			   	  	type: 'text', 
 			     	content: [{type: 'sentence', index: 0, text: accumulator}] });
@@ -38,7 +39,7 @@ export const getParsedCellContent = (cell, $) => {
 			}
 		}	
 	}
-	return nestedContentItems
+	return nestedContentItems;
 }
 
 //traverse through each cell content item and accumulate text

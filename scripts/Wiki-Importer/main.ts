@@ -1,12 +1,12 @@
 //http request package of choice
-const rp = require('request-promise');
+import { rp } from 'request-promise';
 
 //functions 
-const getTitle = require('./functions/getTitle');
-const getPageBody = require('./functions/getPageBody');
-const getInfoBox = require('./functions/getInfobox_html');
-const getMetaData = require('./functions/getMetaData');
-const getMainPhoto = require('./functions/getMainPhoto');
+import { getTitle } from './functions/getTitle';
+import { getPageBody } from './functions/getPageBody';
+import { getInfoBox } from './functions/getInfobox_html';
+import { getMetaData } from './functions/getMetaData';
+import { getMainPhoto } from './functions/getMainPhoto';
 
 //variable to build request endpoint 
 const wikipedia = 'https://en.wikipedia.org/wiki/';

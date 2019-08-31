@@ -1,7 +1,8 @@
 //old sentenceParser 
 //new sentenceParser is called textParser
+import { Sentence } from '../../../../src/types/article';
 
-export const getSentences = (element, $) => {
+export const getSentences = (element, $): Sentence[] => {
 	let $el = $(element);
 	if ($el.html() == null) { //edge case for naiveGetTable
 		return
@@ -15,7 +16,7 @@ export const getSentences = (element, $) => {
 	let flagOne = false;
 	let flagTwo = false;
 	let sentenceIndex = 0;
-	sentences = [];
+	let sentences: Sentence[] = [];
 	let i = 0; //integer to keep track of array position
 	
 	// populate sentences array 
@@ -75,7 +76,7 @@ export const getSentences = (element, $) => {
 	//Now format each sentence in ArticleJson
 	//Sentences are the same, simply replace anchor tags with [[ LINK|${lang_code}|${slug}|${text} ]]
 
-	const output = sentences.map ((sentence, index) => {
+	const output = sentences.map((sentence, index) => {
 		let text = '';
 		let lang = 'lang_en'; //for now 
 		let isLinkText = false; 
