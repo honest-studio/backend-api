@@ -41,8 +41,8 @@ export const getImage = (element, $) => {
 			type: 'section_image',
 			url: url,
 			caption: getSentences($thumbcaption, $),
-			mime: attributes.mime,
-			category: attributes.citationcategorytype,
+			mime: (attributes as any).mime,
+			category: (attributes as any).citationcategorytype,
 			timestamp: getTimeStamp(),
 		}
 	}

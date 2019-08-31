@@ -1,4 +1,4 @@
-export const parseInternalCitation = (el, $) => {
+export const parseInternalCitation = (el, $, internalCitations) => {
 	if (internalCitations == undefined) {
 		return ''
 	}

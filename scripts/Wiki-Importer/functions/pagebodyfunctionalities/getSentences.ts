@@ -81,39 +81,40 @@ export const getSentences = (element, $): Sentence[] => {
 		let lang = 'lang_en'; //for now 
 		let isLinkText = false; 
 		let j = 0;
-		while (j < sentence.length) {
-			let char = sentence.charAt(j);
+		let theSentenceText = sentence.text;
+		while (j < theSentenceText.length) {
+			let char = theSentenceText.charAt(j);
 			//Check for anchor tags to create wiki links 
 			if (char == '<') {
-				if(sentence.charAt(j + 1) == 'a' && sentence.charAt(j + 9) !== '#') { //anchor tag is reached 
-					slug = '';
+				if(theSentenceText.charAt(j + 1) == 'a' && theSentenceText.charAt(j + 9) !== '#') { //anchor tag is reached 
+					let slug = '';
 					let linkText = '';
 					let wikiLink = '';
 					j += 15;					//a href="/wiki/*slug*"
-					while (sentence.charAt(j) !== '"' ) {
-						if (j+2 > sentence.length) {
+					while (theSentenceText.charAt(j) !== '"' ) {
+						if (j+2 > theSentenceText.length) {
 							break;
 						}
-						slug += sentence.charAt(j);
+						slug += theSentenceText.charAt(j);
 						j++;
 					}
-					while(sentence.charAt(j) !== '>') { //increment to position past tag
-						if (j+2 > sentence.length) {
+					while(theSentenceText.charAt(j) !== '>') { //increment to position past tag
+						if (j+2 > theSentenceText.length) {
 							break;
 						}
 						j++;
 					}
 					j++;
 
-					while(sentence.charAt(j) !== '<') {
-						if (j+2 > sentence.length) {
+					while(theSentenceText.charAt(j) !== '<') {
+						if (j+2 > theSentenceText.length) {
 							break;
 						}
-						linkText += sentence.charAt(j);
+						linkText += theSentenceText.charAt(j);
 						j++;
 					}
-					while (sentence.charAt(j) !== '>') {
-						if (j+2 > sentence.length) {
+					while (theSentenceText.charAt(j) !== '>') {
+						if (j+2 > theSentenceText.length) {
 							break;
 						}
 						j++;
@@ -124,8 +125,8 @@ export const getSentences = (element, $): Sentence[] => {
 					text += wikiLink;
 				}
 				else {
-					while (sentence.charAt(j) !== '>') { //increment to position past tag
-						if (j+2 > sentence.length) {
+					while (theSentenceText.charAt(j) !== '>') { //increment to position past tag
+						if (j+2 > theSentenceText.length) {
 							break;
 						}
 						j++;
@@ -135,13 +136,13 @@ export const getSentences = (element, $): Sentence[] => {
 				}
 			} else { //regular text 
 				// [2]
-				if (sentence.charAt(j) == '[' && sentence.charAt(j+2) == ']') {
+				if (theSentenceText.charAt(j) == '[' && theSentenceText.charAt(j+2) == ']') {
 					j +=3;
 				}
-				else if (sentence.charAt(j) == '[' && sentence.charAt(j+3) == ']') {
+				else if (theSentenceText.charAt(j) == '[' && theSentenceText.charAt(j+3) == ']') {
 					j +=4;
 				}
-				else if (sentence.charAt(j) == '[' && sentence.charAt(j+4) == ']') {
+				else if (theSentenceText.charAt(j) == '[' && theSentenceText.charAt(j+4) == ']') {
 					j +=5;
 				}
 				else {

@@ -11,10 +11,10 @@ import { getMainPhoto } from './functions/getMainPhoto';
 //variable to build request endpoint 
 const wikipedia = 'https://en.wikipedia.org/wiki/';
 
-const newImport = async (input_slug: string) => { 
-	let page_title = await getTitle(input_slug); //getTitle returns a promise -- await that promise 
-	let metadata = await getMetaData(input_slug);
-	const url = `${wikipedia}${input_slug}`;
+const newImport = async (lang_code: string, slug: string) => { 
+	let page_title = await getTitle(lang_code, slug); //getTitle returns a promise -- await that promise 
+	let metadata = await getMetaData(lang_code, slug);
+	const url = `${wikipedia}${slug}`;
 	let articlejson = rp(url)
 	.then(body => {
 		//note that page_body and citations are computed together to account for internal citations 

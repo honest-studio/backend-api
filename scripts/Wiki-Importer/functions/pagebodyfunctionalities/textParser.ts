@@ -15,7 +15,7 @@ import { parseInternalCitation } from './parseInternalCitation';
 //Second, this code can convert wikis of any language without worrying about syntactical differences
 
 let accumulator = ''; //global textAccumulator
-let interalCitations = {};
+let internalCitations = {};
 
 export const accumulateText = (element, $, citations) => {
 	if (element.type == 'text') { //quick return if element is text
@@ -36,7 +36,7 @@ export const accumulateText = (element, $, citations) => {
 }
 
 //parse all but table contentItems (my code for that is in ./tablefunctionalities folder)
-export const textParser = (element, $) => {
+export const textParser = (element, $, internalCitations) => {
 	let $element = $(element); 
 	$element.contents().each((i, el) => {
 		let $el = $(el); 
@@ -54,7 +54,7 @@ export const textParser = (element, $) => {
 				accumulator += parseAnchorTag(el, $);
 			}
 			else if (tag == 'sup') { //internal citation reached
-				accumulator += parseInternalCitation($el.find('a'), $);
+				accumulator += parseInternalCitation($el.find('a'), $, internalCitations);
 			}
 			else {
 				textParser(el, $);

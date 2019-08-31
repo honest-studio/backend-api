@@ -1,6 +1,7 @@
-const request = require('request');
-let encodeUrl = require('encodeurl'); 
-const getTimeStamp = require('./pagebodyfunctionalities/getTimeStamp');
+import { request } from 'request';
+import { encodeUrl } from 'encodeurl'; 
+import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
+import { Metadata } from '../../../src/types/article';
 
 export const doRequest = (MediaWiki): Promise<any> => {
  	return new Promise(function (resolve, reject) {
@@ -14,66 +15,73 @@ export const doRequest = (MediaWiki): Promise<any> => {
   });
 }
 
-let metaData = 
+let metaData: Metadata[] = 
 [ 
-{
-	key: "page_type",
-	value: 'Thing'
-},
-{
-	key: "is_removed",
-	value: false
-},
-{
-	key: "is_adult_content",
-	value: false
-},
-{
-	key: "sub_page_type",
-	value: null
-},
-{
-	key:"is_wikipedia_import",
-	value: true
-},
-{
-	key:"is_indexed",
-	value: false
-},
-{
-	key:"bing_index_override",
-	value: true
-},
-{
-	key:"is_locked",
-	value: false
-}
+	{
+		key: "page_type",
+		value: 'Thing'
+	},
+	{
+		key: "is_removed",
+		value: false
+	},
+	{
+		key: "is_adult_content",
+		value: false
+	},
+	{
+		key: "sub_page_type",
+		value: null
+	},
+	{
+		key:"is_wikipedia_import",
+		value: true
+	},
+	{
+		key:"is_indexed",
+		value: false
+	},
+	{
+		key:"bing_index_override",
+		value: true
+	},
+	{
+		key:"is_locked",
+		value: false
+	}
 ];
 
-export async function getMetaData(input_slug: string) {
-	//Create and append creation_timestamp
+export async function getMetaData(lang_code: string, slug: string) {
+	// Create and append creation_timestamp
 	let creationtime = getTimeStamp();
 	metaData.push({key: 'creation_timestamp', value: creationtime});
-	metaData.push({key:'last_modified', value: null}); //null because it was just created 
-	//get and append url_slug
-	let titles = '&titles=' + input_slug;
-	let MediaWiki = "https://en.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json" + titles;
+	metaData.push({key:'last_modified', value: null}); // null because it was just created 
+
+	// Get and append url_slug
+	let titles = '&titles=' + slug;
+	let MediaWiki = `https://${lang_code}.wikipedia.org/w/api.php?action=query&prop=info&inprop=url&format=json${titles}`;
 	let data = await doRequest(MediaWiki);
 
+	// Get the page language
 	let page_lang = (Object.values(data.query.pages)[0] as any).pagelanguage;
-	//append page_lang;
+
+	// Append page_lang;
 	metaData.push({key: 'page_lang', value: page_lang});
-	//compute and append slug and url_slug_alternate
+
+	// Compute and append slug and url_slug_alternate
 	let url = (Object.values(data.query.pages)[0] as any).fullurl;
-	let slug = '';
-	//compute slug from url
+	let slugToUse = '';
+
+	// Compute slug from url
 	let i = 30;
 	while (i < url.length) {
-		slug += url.charAt(i);
+		slugToUse += url.charAt(i);
 		i++;
 	}
-	metaData.push({key: 'slug', value: slug});
-	metaData.push({key:'url_slug_alternate', value: encodeUrl(slug)});
-	return metaData
+
+	// Add the slug and the alternate slug to metadata list
+	metaData.push({key: 'url_slug', value: slugToUse});
+	metaData.push({key: 'url_slug_alternate', value: encodeUrl(slugToUse)});
+	return metaData;
 }
 

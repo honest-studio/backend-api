@@ -88,7 +88,7 @@ export const cellParser = (element, $) => {
 			accumulator += parseAnchorTag(el, $);
   		}
   		else if ($(el)[0].name == 'sup') { 
-  			accumulator += parseInternalCitation($(el).find('a'), $);
+  			accumulator += parseInternalCitation($(el).find('a'), $, internalCitations);
   		}
   		else if ($(el)[0].name == 'ul') { //edge case for infobox_html
   			let listElements = $(el).children('li');
@@ -101,7 +101,7 @@ export const cellParser = (element, $) => {
   					attrs: cleanAttrs(listElements[i].attribs),
   					content: { 
   						type: 'text',
-  						content: textParser(listElements[i], $)
+  						content: textParser(listElements[i], $, internalCitations)
   					} 
   				}) 
   			} 
