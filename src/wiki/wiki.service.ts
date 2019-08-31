@@ -61,12 +61,33 @@ export class WikiService {
         private chain: ChainService
     ) {
         this.updateWikiIntervals = {};
-        this.redis.subscriber().on("message", (channel, message) => {
-            console.log(channel, message);
-            if (channel == "action:logpropres") return;
-        });
+        this.redis.subscriber().on("message", async (channel, message) => {
+            // console.log(channel, message);
+            if (channel == "action:logpropres"){
+                // Extract some info from the message
+                let parsedMessage = JSON.parse(message);
+                const theProposalID = parsedMessage.trace.act.data.proposal_id;
+                const approved = parsedMessage.trace.act.data.approved;
+                if(!approved){
+                    // Get the proposal details
+                    const propInfo = JSON.parse(await this.redis.connection().get(`proposal:${theProposalID}:info`));
+                    // Check for a merge
+                    const theComment = propInfo.trace.act.data.comment;
+                    const theMemo = propInfo.trace.act.data.memo;
+                    if(
+                        (theComment && theComment.indexOf("MERGE_FROM|") >= 0) 
+                        && (theMemo && theMemo.indexOf("Merge") >= 0)
+                    ){
+                        await this.unmergeProposal(propInfo);
+                    } 
+                }
+                return;
+            }
 
-    }
+        });
+    };
+
+
 
     async unmergeProposal(rejected_merge_proposal: any){
         let parsedMergeInfo: MergeProposalParsePack = parseMergeInfoFromProposal(rejected_merge_proposal);
@@ -770,9 +791,9 @@ export class WikiService {
             if(theComment.indexOf("MERGE_FROM|") >= 0 && theMemo.indexOf("Merge") >= 0) {
                 await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
             }
-            else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
-                await this.unmergeProposal(submitted_proposal);
-            } 
+            // else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
+            //     await this.unmergeProposal(submitted_proposal);
+            // } 
             // else if(theComment.indexOf("UNDO_REMOVAL|") >= 0 && theMemo.indexOf("Undo Removal") >= 0 ) {
             //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
             // } 
