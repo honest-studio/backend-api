@@ -3,6 +3,7 @@ import * as cheerio from 'cheerio';
 import { getSentences } from './getSentences'; //need to patch getSentences for this code 
 import { getMediaAttributes } from './mediafunctions.js';
 import { getTimeStamp } from './getTimeStamp';
+import { Media } from '../../../../src/types/article';
 
 const wikipedia = 'https://en.wikipedia.org/wiki/';    
 // important global variable
@@ -25,7 +26,7 @@ export const cleanURL = (string) => {
 	return url; 
 }
 
-export const getImage = (element, $) => { 
+export const getImage = (element, $): Media | string => { 
 	let $el = $(element);
 	let $thumbinner = $el.find('.thumbinner');
 	let $img = $thumbinner.find('img'); 
@@ -40,10 +41,11 @@ export const getImage = (element, $) => {
 		return {
 			type: 'section_image',
 			url: url,
+			thumb: null,
 			caption: getSentences($thumbcaption, $),
 			mime: (attributes as any).mime,
 			category: (attributes as any).citationcategorytype,
-			timestamp: getTimeStamp(),
+			timestamp: getTimeStamp() as any,
 		}
 	}
 		src = $el.attr('src');

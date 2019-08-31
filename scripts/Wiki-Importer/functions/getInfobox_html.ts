@@ -8,7 +8,7 @@ export const getInfoBox = (html) => {
 	const $content = $('div.mw-parser-output');
 	const $table = $content.find('.infobox');
 	if ($table.length > 0) {
-		return getTable($table, $)[0];
+		return getTable($table, $);
 	}
 	return null
 }

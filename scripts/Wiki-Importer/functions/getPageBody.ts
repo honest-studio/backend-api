@@ -7,7 +7,7 @@ import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
 import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
-import { Section, Citation, Paragraph, Media } from '../../../src/types/article';
+import { Section, Citation, Paragraph, Media, Sentence, Table } from '../../../src/types/article';
 
 // input: page html, url
 // output sections[] 
@@ -40,15 +40,18 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 	let images: Media[] = [];
 	let paragraphIndex = 0; // Keep track of current paragraph
 
-	// Initiate Cheerio
+	// Parse the dom
 	const $ = cheerio.load(html, {decodeEntities: false});
 	const $content = $('div.mw-parser-output');
 
+	// Loop through the children
 	$content.children('p, h1, h2, h3, h4, h5, h6, div, table, ul, dl, center').each((i, el) => { 
 		let $el = $(el);
 		let tag = $el[0].name;
+
+		// Process normal paragraphs
 		if (tag == 'p') { 
-			let sentenceItems = accumulateText(el, $, internalCitations); //returns sentence[]
+			let sentenceItems = accumulateText(el, $, internalCitations); // Returns sentence[]
 			paragraphs.push({  
 				index: paragraphIndex,
 				items: sentenceItems,
@@ -57,32 +60,45 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 			})
 			paragraphIndex++;
 		}
-		else if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ //create new section when h tag is reached
+		// Process headlines / headers
+		// Create new section when h tag is reached
+		else if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
+			// Terminate loop once references are reached (they've already been computed)
 			if ( $el.attr('id') == 'References' ) {
-				return false //terminate loop once references are reached (they've already been computed)
+				return false;
 			}
-			sections.push({ //push current section
+
+			// Push current section
+			sections.push({ 
 				paragraphs: paragraphs,
 				images: images
 			})
-			paragraphs = []; //reset paragraphs array 
-			paragraphIndex = 0; //reset paragraphIndex
-			images = [] //reset images array 
-			section = {} //instantiate new empty section with first paragraph being an h tag
-			// create a new paragraph with h tag 
+			paragraphs = []; // Reset paragraphs array 
+			paragraphIndex = 0; // Reset paragraphIndex
+			images = [] // Reset images array
+			  
+			// Instantiate new empty section with first paragraph being an h tag
+			section = { 
+				paragraphs: [] as Paragraph[], 
+				images: [] as Media[]
+			};
+
+			// Create a new paragraph with h tag 
 			paragraphs.push({ 
 				index: paragraphIndex,
-				items: getCategory(el, $),
+				items: [getCategory(el, $)] as Sentence[],
 				tag_type: $el[0].name, 
 				attrs: cleanAttrs(el.attribs)
 			});
 			paragraphIndex++;
 		}
-		else if (tag == 'div') { //potentially a section image
+		// Potentially a section image
+		else if (tag == 'div') {
 			let divClass = $el.attr('class');
 			if (divClass !== undefined) {
-				if (divClass.includes("thumb")) { //section image found
-					images.push(getImage(el, $));
+				// If section image found
+				if (divClass.includes("thumb")) {
+					images.push(getImage(el, $) as Media);
 				}
 			}
 		}
@@ -92,7 +108,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 				let table = getTable(el, $);
 				paragraphs.push({
 					index: paragraphIndex,
-					items: table,
+					items: [table] as Table[],
 					tag_type: 'table',
 					attrs: cleanAttrs(el.attribs)
 				})
@@ -109,7 +125,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 				let table = getTable(childTable, $);
 				paragraphs.push({
 					index: paragraphIndex,
-					items: table,
+					items: [table] as Table[],
 					tag_type: 'table',
 					attrs: cleanAttrs(childTable[0].attribs)
 				})
