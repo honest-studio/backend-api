@@ -7,7 +7,7 @@ import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
 import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
-import { Citation } from '../../../src/types/article';
+import { Section, Citation, Paragraph, Media } from '../../../src/types/article';
 
 // input: page html, url
 // output sections[] 
@@ -17,18 +17,30 @@ import { Citation } from '../../../src/types/article';
 // Create and push a new paragraph into paragraphs []
 // Whenever an <h1>, ..., <h6> tag is reached, create and push a new section
 
-export const getPageBody = (html, url) => {
+export interface PageBodyPack {
+	sections: Section[],
+	citations: Citation[]
+}
+
+export const getPageBodyPack = (html, url): PageBodyPack => {
 	// Compute citations first to be able to implement internal citations
 	// When parsing the page body
 	let citations = getCitations(html, url);
 	let internalCitations = citations.internalCitations;
 
-	const sections = []; //return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
-	let section = {};  //current section
-	let paragraphs = [];
-	let images = [];
-	let paragraphIndex = 0; //keep track of current paragraph
+	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
+	// Current section
+	let section: Section = { 
+		paragraphs: [] as Paragraph[], 
+		images: [] as Media[]
+	}; 
+
+	let paragraphs: Paragraph[] = [];
+	let images: Media[] = [];
+	let paragraphIndex = 0; // Keep track of current paragraph
+
+	// Initiate Cheerio
 	const $ = cheerio.load(html, {decodeEntities: false});
 	const $content = $('div.mw-parser-output');
 

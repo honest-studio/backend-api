@@ -35,6 +35,7 @@ let defaultDescription: Sentence[] = [
 export const getCitations = (html, url) => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
+	
 	// Store {key, value} pair objects for O(1) access to determine internal citations
 	// Where key == citationId, and value == url   
 	let internalCitations = {};  

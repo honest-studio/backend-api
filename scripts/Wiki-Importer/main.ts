@@ -1,27 +1,27 @@
 import { rp } from 'request-promise';
 import { getTitle } from './functions/getTitle';
-import { getPageBody } from './functions/getPageBody';
+import { getPageBodyPack } from './functions/getPageBody';
 import { getInfoBox } from './functions/getInfobox_html';
 import { getMetaData } from './functions/getMetaData';
 import { getMainPhoto } from './functions/getMainPhoto';
 import { ArticleJson } from '../../src/types/article';
 import { calcIPFSHash } from '../../src/utils/article-utils/article-tools';
 
-const newImport = async (lang_code: string, slug: string) => { 
+export const newImport = async (lang_code: string, slug: string) => { 
 	let page_title = await getTitle(lang_code, slug);
 	let metadata = await getMetaData(lang_code, slug);
 	const url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
 	let articlejson: ArticleJson = rp(url)
 	.then(body => {
 		//note that page_body and citations are computed together to account for internal citations 
-		const pagebody = getPageBody(body, url); 
+		const page_body_pack = getPageBodyPack(body, url); 
 		return {
 			page_title: page_title, 
 			main_photo: [getMainPhoto(body)],
 			infobox_html: getInfoBox(body) as any,
-			page_body: pagebody.sections,
+			page_body: page_body_pack.sections,
 			infoboxes: [],
-			citations: pagebody.citations,
+			citations: page_body_pack.citations,
 			media_gallery: [],
 			metadata: metadata,
 			amp_info: { 
@@ -40,8 +40,8 @@ const newImport = async (lang_code: string, slug: string) => {
 	return articlejson; //return promise 
 }
 
-const main = async (page) => {
-	let articlejson = await newImport(page); //wait for promise to resolve 
+const main = async (lang_code: string, slug: string) => {
+	let articlejson = await newImport(lang_code, slug); //wait for promise to resolve 
 }
 
 module.exports = main; 
