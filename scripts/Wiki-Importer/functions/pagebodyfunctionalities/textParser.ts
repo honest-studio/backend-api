@@ -17,7 +17,7 @@ const parseInternalCitation = require('./parseInternalCitation');
 let accumulator = ''; //global textAccumulator
 let interalCitations = {};
 
-const accumulateText = (element, $, citations) => {
+export const accumulateText = (element, $, citations) => {
 	if (element.type == 'text') { //quick return if element is text
 		return [{
 			type: 'sentence',
@@ -36,7 +36,7 @@ const accumulateText = (element, $, citations) => {
 }
 
 //parse all but table contentItems (my code for that is in ./tablefunctionalities folder)
-const textParser = (element, $) => {
+export const textParser = (element, $) => {
 	let $element = $(element); 
 	$element.contents().each((i, el) => {
 		let $el = $(el); 
@@ -63,5 +63,3 @@ const textParser = (element, $) => {
 	})
 }
 
-
-module.exports = accumulateText;

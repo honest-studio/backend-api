@@ -30,7 +30,7 @@ let defaultDescription = [
 			type: "sentence"
 			}]
 
-const getCitations = (html, url) => { 
+export const getCitations = (html, url) => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
 	let citations = []; //instatiate return object - stores all citation objects 
 	//store {key, value} pair objects for O(1) access to determine internal citations
@@ -122,7 +122,6 @@ const getCitations = (html, url) => {
 	}; 
 }
 
-module.exports = getCitations;
 
 //Note, I've now accounted for all types of citations (e.g., urls, books, journals etc.) 
 //you can implement a getCategoryCitationType function for the return citations

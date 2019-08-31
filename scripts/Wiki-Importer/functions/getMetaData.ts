@@ -2,7 +2,7 @@ const request = require('request');
 let encodeUrl = require('encodeurl'); 
 const getTimeStamp = require('./pagebodyfunctionalities/getTimeStamp');
 
-const doRequest = (MediaWiki) => {
+export const doRequest = (MediaWiki) => {
  	return new Promise(function (resolve, reject) {
     	request(MediaWiki, function (error, res, body) {
       	if (!error && res.statusCode == 200) {
@@ -50,7 +50,7 @@ let metaData =
 }
 ];
 
-async function getMetaData(page) {
+export async function getMetaData(page) {
 	//Create and append creation_timestamp
 	let creationtime = getTimeStamp();
 	metaData.push({key: 'creation_timestamp', value: creationtime});
@@ -77,4 +77,3 @@ async function getMetaData(page) {
 	return metaData
 }
 
-module.exports = getMetaData;

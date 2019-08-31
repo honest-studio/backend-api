@@ -1,9 +1,9 @@
-const cleanAttributes = require('../getAttributes');
-const parseText = require('../textParser'); 
-const getTagClass = require('../getTagClass');
-const getImage = require('../getImage');
-const parseAnchorTag = require('../parseAnchorTag');
-const parseInternalCitation = require('../parseInternalCitation');
+import { cleanAttrs } from '../getAttributes';
+import { parseText } from '../textParser'; 
+import { getTagClass } from '../getTagClass';
+import { getImage } from '../getImage';
+import { parseAnchorTag } from '../parseAnchorTag';
+import { parseInternalCitation } from '../parseInternalCitation';
 
 //global variables  
 let nestedContentItems = []; 

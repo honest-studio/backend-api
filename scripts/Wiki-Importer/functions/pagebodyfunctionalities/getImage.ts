@@ -1,13 +1,14 @@
-const request = require('request');
-const cheerio = require('cheerio');
-const getSentences = require('./getSentences'); //need to patch getSentences for this code 
-const getMediaAttributes = require('./mediafunctions.js');
-const getTimeStamp = require('./getTimeStamp');
+import { request } from 'request';
+import { cheerio } from 'cheerio';
+import { getSentences } from './getSentences'; //need to patch getSentences for this code 
+import { getMediaAttributes } from './mediafunctions.js';
+import { getTimeStamp } from './getTimeStamp';
+
 const wikipedia = 'https://en.wikipedia.org/wiki/';    
 // important global variable
 let url = '';
 
-const cleanURL = (string) => {
+export const cleanURL = (string) => {
 	//need to add https: 
 	//need to remove text after last '/' character 
 	//need to remove '/thumb'
@@ -24,7 +25,7 @@ const cleanURL = (string) => {
 	return url; 
 }
 
-const getImage = (element, $) => { 
+export const getImage = (element, $) => { 
 	let $el = $(element);
 	let $thumbinner = $el.find('.thumbinner');
 	let $img = $thumbinner.find('img'); 
@@ -52,6 +53,3 @@ const getImage = (element, $) => {
 		}
 		return url;
 }
-
-
-module.exports = getImage;

@@ -3,7 +3,7 @@ const getTable = require('./pagebodyfunctionalities/tablefunctionalities/getTabl
 const wikipedia = 'https://en.wikipedia.org/wiki/';
 const Table = {}; // array of {paragraphs: , images: } objects 
 
-const getInfoBox = (html) => { 
+export const getInfoBox = (html) => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
 	const $content = $('div.mw-parser-output');
 	const $table = $content.find('.infobox');
@@ -13,5 +13,4 @@ const getInfoBox = (html) => {
 	return null
 }
 
-module.exports = getInfoBox;
 

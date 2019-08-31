@@ -1,6 +1,6 @@
 // return timestamp in UTC format 
 
-const getTimeStamp = () => { 
+export const getTimeStamp = () => { 
 	let d = new Date();
 	let month = d.getUTCMonth();
 	let day = d.getUTCDate();
@@ -14,5 +14,3 @@ const getTimeStamp = () => {
 	}
 	return (month + '/' + day + '/' + year + ' ' + hour + ':' + minutes + ':' + seconds + ' ' + term + ' ' + 'UTC');
 }
-
-module.exports = getTimeStamp;

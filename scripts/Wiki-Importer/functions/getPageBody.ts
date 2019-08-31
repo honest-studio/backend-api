@@ -1,12 +1,12 @@
-const cheerio = require('cheerio');
-const parseText = require('./pagebodyfunctionalities/textParser');
-const getImage = require('./pagebodyfunctionalities/getImage');
-const getCategory = require('./pagebodyfunctionalities/getCategory');
-const getList = require('./pagebodyfunctionalities/getList');
-const getDescList = require('./pagebodyfunctionalities/getDescList');
-const getTable = require('./pagebodyfunctionalities/tablefunctionalities/getTable');
-const getAttributes = require('./pagebodyfunctionalities/getAttributes');
-const getCitations = require('./getCitations');
+import { cheerio } from 'cheerio';
+import { parseText } from './pagebodyfunctionalities/textParser';
+import { getImage } from './pagebodyfunctionalities/getImage';
+import { getCategory } from './pagebodyfunctionalities/getCategory';
+import { getList } from './pagebodyfunctionalities/getList';
+import { getDescList } from './pagebodyfunctionalities/getDescList';
+import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
+import { getAttributes } from './pagebodyfunctionalities/getAttributes';
+import { getCitations } from './getCitations';
 
 //input: page html, url
 //output sections[] 
@@ -16,7 +16,7 @@ const getCitations = require('./getCitations');
 //Create and push a new paragraph into paragraphs []
 //Whenever an <h1>, ..., <h6> tag is reached, create and push a new section
 
-const getPageBody = (html, url) => {
+export const getPageBody = (html, url) => {
 	//compute citations first to be able to implement internal citations
 	//when parsing the page body
 	let citations = getCitations(html, url);
@@ -129,5 +129,3 @@ const getPageBody = (html, url) => {
 		citations: citations.citations
 	}
 }
-
-module.exports = getPageBody;

@@ -1,4 +1,4 @@
-const getCategory = (element, $) => {	
+export const getCategory = (element, $) => {	
 	let $el = $(element);
 	let text = $el.find('.mw-headline').text();
 	return {
@@ -8,4 +8,3 @@ const getCategory = (element, $) => {
 	}
 }
 
-module.exports = getCategory;

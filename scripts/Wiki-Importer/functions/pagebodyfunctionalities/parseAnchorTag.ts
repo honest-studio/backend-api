@@ -1,6 +1,6 @@
 //input: anchor tag 
 //output: string of LINK or INLINE-IMG
-const parseAnchorTag = (element, $) => {
+export const parseAnchorTag = (element, $) => {
 	let $element = $(element);
 	if ($element.children().length == 0) { //resolve anchor tags that only contains text 
 	  return parseLink(element, $);
@@ -17,7 +17,7 @@ const parseAnchorTag = (element, $) => {
   	}
 }
 
-const parseLink = (anchorTagElement, $) => { //LINK
+export const parseLink = (anchorTagElement, $) => { //LINK
   let $element = $(anchorTagElement);
   let wikiLink = '';
   const linkText = $element.text(); 
@@ -37,7 +37,7 @@ const parseLink = (anchorTagElement, $) => { //LINK
 }
 
 //[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]] 
-const parseInlineImage = (img, $) => {
+export const parseInlineImage = (img, $) => {
 	let $img = $(img);
 	let src = $img.attr('src');
 	let srcset = $img.attr('srcset');
@@ -50,5 +50,4 @@ const parseInlineImage = (img, $) => {
 	return '[[' + 'INLINE_IMAGE' + '|' + src + '|' + srcset + '|' + alt + '|' + 'h' + height + '|' + 'w' + width + ']]'
 }
 
-module.exports = parseAnchorTag;
 

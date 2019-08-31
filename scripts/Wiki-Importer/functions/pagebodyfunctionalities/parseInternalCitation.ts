@@ -1,4 +1,4 @@
-parseInternalCitation = (el, $) => {
+export const parseInternalCitation = (el, $) => {
 	if (internalCitations == undefined) {
 		return ''
 	}
@@ -19,6 +19,3 @@ parseInternalCitation = (el, $) => {
 	}
 	return ' ' + '[[CITE|' + cleanText + '|' + internalCitations[cleanText] + ']]' + ' ';
 }
-
-
-module.exports = parseInternalCitation;

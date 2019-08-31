@@ -22,10 +22,10 @@ const VALID_VIDEO_EXTENSIONS = [
 
 const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 
-const mime = require('mime'); 
+import mime from 'mime'; 
 // mime.getType and mime.getExtension are the functions we will use 
 
-const getMediaAttributes = (url) => {
+export const getMediaAttributes = (url) => {
 	//get mime and extension types 
 	let theMIME = mime.getType(url);
 	let theExtension = mime.getExtension(theMIME);
@@ -53,7 +53,7 @@ const getMediaAttributes = (url) => {
     }
 }
 
-function getYouTubeID(url) {
+export function getYouTubeID(url) {
     if (!/youtu\.?be/.test(url)) return false;
 
     // Look first for known patterns
@@ -75,7 +75,7 @@ function getYouTubeID(url) {
 }
 
 // Get the YouTube ID from a URL
-const getYouTubeIdIfPresent = (inputURL) => {
+export const getYouTubeIdIfPresent = (inputURL) => {
     try {
         // Also handle image URLs
         inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
@@ -90,6 +90,5 @@ const getYouTubeIdIfPresent = (inputURL) => {
     }
 }
 
-module.exports = getMediaAttributes;
 
 

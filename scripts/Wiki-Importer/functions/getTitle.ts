@@ -1,4 +1,4 @@
-const rp = require('request-promise');
+import rp from 'request-promise';
 
 //Commonly used variables
 const format = 'format=json';

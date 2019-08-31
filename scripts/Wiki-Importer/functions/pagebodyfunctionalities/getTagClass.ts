@@ -1,4 +1,4 @@
-const htmlVoidElements = require('html-void-elements');
+import htmlVoidElements from 'html-void-elements';
 
 const BLOCK_ELEMENTS = [ 
     "address",
@@ -42,7 +42,7 @@ const BLOCK_ELEMENTS = [
     "video"
 ];
 
-const getTagClass = (tag) => {
+export const getTagClass = (tag) => {
   if (BLOCK_ELEMENTS.indexOf(tag) !== -1) {
     return 'block'
   }
@@ -53,5 +53,3 @@ const getTagClass = (tag) => {
     return 'inline'
   }
 }
-
-module.exports = getTagClass;

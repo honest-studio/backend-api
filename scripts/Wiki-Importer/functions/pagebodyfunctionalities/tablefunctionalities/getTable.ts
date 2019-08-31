@@ -1,6 +1,6 @@
-const cleanAttributes = require('../getAttributes');
-const getTagClass = require('../getTagClass');
-const getParsedCellContent = require('./cellParser'); 
+import { cleanAttributes } from '../getAttributes';
+import { getTagClass } from '../getTagClass';
+import { getParsedCellContent } from './cellParser'; 
 
 const getTable = (element, $) => {
     let $table = $(element);

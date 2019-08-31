@@ -1,7 +1,7 @@
 const getImage = require('./pagebodyfunctionalities/getImage');
 
 
-const getMainPhoto = (html) => {
+export const getMainPhoto = (html) => {
 
 	//No main photo was found. 
 	//return place holder:
@@ -13,6 +13,4 @@ const getMainPhoto = (html) => {
 	}
 }
 
-
-module.exports = getMainPhoto;
 

@@ -1,11 +1,11 @@
-const cleanAttributes = require('./getAttributes');
-const getTagClass = require('./getTagClass');
-const getParsedCellContent = require('./tablefunctionalities/cellParser');
+import { cleanAttributes } from './getAttributes';
+import { getTagClass } from './getTagClass';
+import { getParsedCellContent } from './tablefunctionalities/cellParser';
 
 //input: <dl> element
 //output: array of formatted dt && dd elements 
 
-const getDescList = (element, $) => {
+export const getDescList = (element, $) => {
 	let $desclist = $(element); 
 	let items = []; //instantiate return array
 	$desclist.children('dt, dd').each((i, el) => { //for each DescListItem
@@ -24,6 +24,3 @@ const getDescList = (element, $) => {
 	})
 	return items;
 }
-
-
-module.exports = getDescList; 

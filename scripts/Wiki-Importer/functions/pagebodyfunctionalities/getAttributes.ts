@@ -3,7 +3,7 @@
 const convert = require('react-attr-converter'); //convert attributes to React format 
 
 
-const cleanAttrs = (attributes) => {
+export const cleanAttrs = (attributes) => {
 	if (attributes === undefined || attributes === null) { //prevent error for empty inputs
 		return {}
 	}
@@ -20,7 +20,7 @@ const cleanAttrs = (attributes) => {
     return cleanedAttrs;
 }
 
-const parseStyles = (styles) => {
+export const parseStyles = (styles) => {
     return styles
     .split(';')
     .filter(style => style.split(':')[0] && style.split(':')[1])
@@ -33,5 +33,3 @@ const parseStyles = (styles) => {
         [style[0]]: style[1],
     }), {});
 }
-
-module.exports = cleanAttrs;

@@ -1,7 +1,7 @@
 //old sentenceParser 
 //new sentenceParser is called textParser
 
-const getSentences = (element, $) => {
+export const getSentences = (element, $) => {
 	let $el = $(element);
 	if ($el.html() == null) { //edge case for naiveGetTable
 		return
@@ -157,5 +157,3 @@ const getSentences = (element, $) => {
 	})
 	return output;
 }
-
-module.exports = getSentences;
