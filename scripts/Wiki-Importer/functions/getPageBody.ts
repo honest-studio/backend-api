@@ -2,12 +2,12 @@ import * as cheerio from 'cheerio';
 import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getImage } from './pagebodyfunctionalities/getImage';
 import { getHeadlineSentence } from './pagebodyfunctionalities/getHeadlineSentence';
-import { getList } from './pagebodyfunctionalities/getList';
+import { getListItems } from './pagebodyfunctionalities/getListItems';
 import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
 import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
-import { Section, Citation, Paragraph, Media, Sentence, Table } from '../../../src/types/article';
+import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '../../../src/types/article';
 
 // input: page html, url
 // output sections[] 
@@ -47,10 +47,10 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 	// Loop through the children
 	$content.children('p, h1, h2, h3, h4, h5, h6, div, table, ul, dl, center').each((i, el) => { 
 		let $el = $(el);
-		let tag = $el[0].name;
+		let tag_name = $el[0].name;
 
 		// Process normal paragraphs
-		if (tag == 'p') { 
+		if (tag_name == 'p') { 
 			let sentenceItems = accumulateText(el, $, internalCitations); // Returns sentence[]
 			paragraphs.push({  
 				index: paragraphIndex,
@@ -93,7 +93,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 			paragraphIndex++;
 		}
 		// Potentially a section image
-		else if (tag == 'div') {
+		else if (tag_name == 'div') {
 			let divClass = $el.attr('class');
 			if (divClass !== undefined) {
 				// If section image found
@@ -102,7 +102,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 				}
 			}
 		}
-		else if (tag == 'table') {
+		else if (tag_name == 'table') {
 			let tableclass = $el.attr('class');
 			if (tableclass === "wikitable" || tableclass === "body-table") {
 				let table = getTable(el, $);
@@ -116,7 +116,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 			}
 		}
 		//sometimes pagebody tables are nested in center tags
-		else if (tag == 'center' && $el.children('table').length > 0) { 
+		else if (tag_name == 'center' && $el.children('table').length > 0) { 
 			console.log('ATTRIBS')
 			let childTable = $el.find('table');
 			console.log(childTable[0].attribs);
@@ -132,21 +132,21 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 				paragraphIndex++;
 			}
 		}
-		else if ($el[0].name == 'ul') {
-			let items = getList(el, $, internalCitations); //returns array of li elements
+		else if (tag_name == 'ul' || tag_name == 'ol') {
+			let items = getListItems(el, $, internalCitations); // Returns array of li elements
 			paragraphs.push({
 				index: paragraphIndex,
 				items: items,
-				tag_type: 'ul',
+				tag_type: tag_name,
 				attrs: cleanAttrs(el.attribs)
 			})
 			paragraphIndex++;	
 		}
-		else if($el[0].name == 'dl') { //DescList
-			let items = getDescList(el, $); //returns array of dl | dt items
+		else if(tag_name == 'dl') { // DescList
+			let item = getDescList(el, $); // returns array of dl | dt items
 			paragraphs.push({
 				index: paragraphIndex,
-				items: items,
+				items: [item] as DescList[],
 				tag_type: 'dl',
 				attrs: cleanAttrs(el.attribs)
 			})

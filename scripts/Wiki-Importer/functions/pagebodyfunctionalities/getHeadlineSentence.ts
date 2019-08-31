@@ -8,6 +8,6 @@ export const getHeadlineSentence = (element, $): Sentence => {
 		type: 'sentence',
 		index: 0,
 		text: text
-	}
+	} as Sentence
 }
 

@@ -5,20 +5,16 @@ import { getMediaAttributes } from './mediafunctions.js';
 import { getTimeStamp } from './getTimeStamp';
 import { Media } from '../../../../src/types/article';
 
-const wikipedia = 'https://en.wikipedia.org/wiki/';    
-// important global variable
-let url = '';
-
-export const cleanURL = (string) => {
-	//need to add https: 
-	//need to remove text after last '/' character 
-	//need to remove '/thumb'
-	let url = 'https:' + string; //create image url 
-	url = url.replace('thumb/', '');
+// Clean the URL
+export const cleanURL = (string): string => {
+	let url = 'https:' + string; // Need to add https: 
+	url = url.replace('thumb/', ''); // Need to remove '/thumb'
 	let i = (url.length - 1); 
+
+	// Need to remove text after last '/' character 
 	while(url.charAt(i) !== '/') {
 		if (i == 0) {
-			return string; // safety if cleaning fucntion dosent work 
+			return string; // Safety if cleaning fucntion dosent work 
 		}
 		i--;
 	}
@@ -26,7 +22,11 @@ export const cleanURL = (string) => {
 	return url; 
 }
 
+// Get a Media object from an image
 export const getImage = (element, $): Media | string => { 
+	let url: string;
+
+	// Detect the image using Cheerio
 	let $el = $(element);
 	let $thumbinner = $el.find('.thumbinner');
 	let $img = $thumbinner.find('img'); 
@@ -37,6 +37,8 @@ export const getImage = (element, $): Media | string => {
 		if (!url.includes('.jpg') && !url.includes('.png')) { //prevent edge case
 			url = 'https:' + src;
 		}
+
+		// Get media attributes
 		let attributes = getMediaAttributes(url);
 		return {
 			type: 'section_image',

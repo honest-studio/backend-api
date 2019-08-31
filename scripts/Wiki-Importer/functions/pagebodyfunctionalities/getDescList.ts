@@ -28,7 +28,7 @@ export const getDescList = (element, $): DescList => {
 	})
 
 	// Return the DescList
-	return {
+	return { 
 		type: 'dl',
 		attrs: {},
 		items: inner_items

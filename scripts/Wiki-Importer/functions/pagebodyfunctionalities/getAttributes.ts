@@ -1,7 +1,5 @@
 // Travis Moore and Kedar Iyer's code to clean attributes to fit front-end requirements
-
 import { convert } from 'react-attr-converter'; //convert attributes to React format 
-
 
 export const cleanAttrs = (attributes) => {
 	if (attributes === undefined || attributes === null) { //prevent error for empty inputs
