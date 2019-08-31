@@ -15,6 +15,7 @@ export type Proposal = {
 
 export type ProposalOptions = {
     preview: boolean;
+    cache: boolean;
     diff: 'full' | 'metadata' | 'none';
     user_agent: string;
 };
