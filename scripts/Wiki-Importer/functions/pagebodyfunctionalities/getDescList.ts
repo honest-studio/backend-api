@@ -20,6 +20,7 @@ export const getDescList = (element, $): DescList => {
 			attrs: cleanAttrs(el.attrs),
 			content: []
 		}
+		
 		// Compute DescListItem.content
 		let content = getParsedCellContent(el, $);
 		DescListItem.content = content;
