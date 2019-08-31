@@ -1,12 +1,12 @@
-import { cleanAttributes } from '../getAttributes';
+import { cleanAttrs } from '../getAttributes';
 import { getTagClass } from '../getTagClass';
 import { getParsedCellContent } from './cellParser'; 
 
-const getTable = (element, $) => {
+export const getTable = (element, $) => {
     let $table = $(element);
     let table = { //instantiate return object
       type: $table.attr('class'),
-      attrs: cleanAttributes($table[0].attribs), 
+      attrs: cleanAttrs($table[0].attribs), 
       caption: {rows: [], attrs: {}}, 
       thead: {rows: [], attrs: {}},
       tbody: {},
@@ -21,7 +21,7 @@ const getTable = (element, $) => {
       let $row = $(el);
       let row = {
         index: i,
-        attrs: cleanAttributes(el.attribs),
+        attrs: cleanAttrs(el.attribs),
         tag_type: 'tr',
         tag_class: 'block', 
         cells: []
@@ -32,7 +32,7 @@ const getTable = (element, $) => {
         if (content != [] && content != undefined) {
           let cell = {
             index: i2,
-            attrs: cleanAttributes(el2.attribs),
+            attrs: cleanAttrs(el2.attribs),
             tag_type: $cell[0].name,
             tag_class: 'block', 
             content: content
@@ -44,11 +44,9 @@ const getTable = (element, $) => {
       rows.push(row)
     })
   let tbody = {
-    attrs: cleanAttributes($table.find('tbody')[0].attribs),
+    attrs: cleanAttrs($table.find('tbody')[0].attribs),
     rows: rows
   }
   table.tbody = tbody;
   return [table];
 }
-
-module.exports = getTable;

@@ -1,5 +1,5 @@
 const cheerio = require('cheerio');
-const parseText = require('./pagebodyfunctionalities/textParser');
+const textParser = require('./pagebodyfunctionalities/textParser');
 const getTimeStamp = require('./pagebodyfunctionalities/getTimeStamp');
 
 const wikipedia = 'https://en.wikipedia.org/wiki/';
@@ -56,7 +56,7 @@ export const getCitations = (html, url) => {
 		let $citation = $reference.find('.citation'); //specific citation
 		
 		if ($citation.length > 0) { //if the citation is immediately present
-			let description = parseText($citation, $);
+			let description = textParser($citation, $);
 			let cur = { //current citation
 				url: $citation.find('a').attr('href'),
 				attribution: 'rel=nofollow',
@@ -80,7 +80,7 @@ export const getCitations = (html, url) => {
 				let a = $reference.find('a').attr('href')
 				$(el3).find('cite').each( (i4, el4) => { //for each citation
 					if (a == '#' + $(el4).attr('id')) { //citation found in biography
-						let description = parseText(el4, $);
+						let description = textParser(el4, $);
 						//type of citation = $(el4).attr('class'); (e.g, journal, book etc..)
 						let url = '';
 						$(el4).find('a').each((i5, el5) => {

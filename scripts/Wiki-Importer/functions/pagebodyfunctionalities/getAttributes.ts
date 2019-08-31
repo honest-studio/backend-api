@@ -1,6 +1,6 @@
 // Travis Moore and Kedar Iyer's code to clean attributes to fit front-end requirements
 
-const convert = require('react-attr-converter'); //convert attributes to React format 
+import { convert } from 'react-attr-converter'; //convert attributes to React format 
 
 
 export const cleanAttrs = (attributes) => {

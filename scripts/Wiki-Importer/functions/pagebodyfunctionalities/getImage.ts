@@ -1,5 +1,5 @@
 import { request } from 'request';
-import { cheerio } from 'cheerio';
+import * as cheerio from 'cheerio';
 import { getSentences } from './getSentences'; //need to patch getSentences for this code 
 import { getMediaAttributes } from './mediafunctions.js';
 import { getTimeStamp } from './getTimeStamp';

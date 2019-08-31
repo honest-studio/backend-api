@@ -12,8 +12,8 @@ export const getSentences = (element, $) => {
 	let end = 0; //Ending index of sentence
 	let Abrevflag = false; //Abrevflag to keep track of abreviations that might end sentences early
 	//Note that sentence can't end inside of a tag 
-	flagOne = false;
-	flagTwo = false;
+	let flagOne = false;
+	let flagTwo = false;
 	let sentenceIndex = 0;
 	sentences = [];
 	let i = 0; //integer to keep track of array position

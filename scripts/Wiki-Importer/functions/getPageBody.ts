@@ -1,5 +1,5 @@
 import { cheerio } from 'cheerio';
-import { parseText } from './pagebodyfunctionalities/textParser';
+import { textParser } from './pagebodyfunctionalities/textParser';
 import { getImage } from './pagebodyfunctionalities/getImage';
 import { getCategory } from './pagebodyfunctionalities/getCategory';
 import { getList } from './pagebodyfunctionalities/getList';
@@ -35,7 +35,7 @@ export const getPageBody = (html, url) => {
 		let $el = $(el);
 		let tag = $el[0].name;
 		if (tag == 'p') { 
-			let sentenceItems = parseText(el, $, internalCitations); //returns sentence[]
+			let sentenceItems = textParser(el, $, internalCitations); //returns sentence[]
 			paragraphs.push({  
 				index: paragraphIndex,
 				items: sentenceItems,

@@ -1,5 +1,5 @@
-const parseAnchorTag = require('./parseAnchorTag');
-const parseInternalCitation = require('./parseInternalCitation');
+import { parseAnchorTag } from './parseAnchorTag';
+import { parseInternalCitation } from './parseInternalCitation';
 //elegant text Parser (for paragraphs, list items, citations etc.) 
 //recurse through tags and append text to accumulator
 //If you hit an anchor tag, simply call parseAnchorTag to

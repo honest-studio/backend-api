@@ -1,4 +1,4 @@
-import { cleanAttributes } from './getAttributes';
+import { cleanAttrs } from './getAttributes';
 import { getTagClass } from './getTagClass';
 import { getParsedCellContent } from './tablefunctionalities/cellParser';
 
@@ -14,7 +14,7 @@ export const getDescList = (element, $) => {
 			index: i,
 			tag_type: $item[0].name,
 			tag_class: getTagClass($item[0].name),
-			attrs: cleanAttributes(el.attrs),
+			attrs: cleanAttrs(el.attrs),
 			content: [] //nestedContentItem 
 		}
 		//Compute DescListItem.content

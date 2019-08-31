@@ -1,5 +1,5 @@
 import { cleanAttrs } from '../getAttributes';
-import { parseText } from '../textParser'; 
+import { textParser, accumulateText } from '../textParser'; 
 import { getTagClass } from '../getTagClass';
 import { getImage } from '../getImage';
 import { parseAnchorTag } from '../parseAnchorTag';
@@ -9,7 +9,7 @@ import { parseInternalCitation } from '../parseInternalCitation';
 let nestedContentItems = []; 
 let accumulator = '';
 
-const getParsedCellContent = (cell, $) => {
+export const getParsedCellContent = (cell, $) => {
 	nestedContentItems = []; //for each cell reset content [] 
 	accumulator = ''; //reset for each cell 
 	cellParser(cell, $);
@@ -44,7 +44,7 @@ const getParsedCellContent = (cell, $) => {
 //traverse through each cell content item and accumulate text
 //Create a new sentence at each br tag 
 //hit br tag or end of cell and push sentence 
-const cellParser = (element, $) => {
+export const cellParser = (element, $) => {
 	if (element == undefined) {
 		return 
 	}
@@ -74,7 +74,7 @@ const cellParser = (element, $) => {
       		}
       		//push br tag 
       		nestedContentItems.push({
-	        attrs: cleanAttributes(el.attrs),
+	        attrs: cleanAttrs(el.attrs),
 	        content: [], 
 	        tag_class: "void",
 	        tag_type: 'br',
@@ -97,10 +97,10 @@ const cellParser = (element, $) => {
   					type: 'tag', 
   					tag_type: 'li',
   					tag_class: getTagClass($(listElements[i])[0].name), 
-  					attrs: cleanAttributes(listElements[i].attribs),
+  					attrs: cleanAttrs(listElements[i].attribs),
   					content: { 
   						type: 'text',
-  						content: parseText(listElements[i], $, {})
+  						content: textParser(listElements[i], $)
   					} 
   				}) 
   			} 
@@ -108,7 +108,7 @@ const cellParser = (element, $) => {
   				type: 'tag', 
   				tag_type: 'ul', 
   				tag_class: getTagClass($(el)[0].name), 
-  				attrs: cleanAttributes(el.attribs), 
+  				attrs: cleanAttrs(el.attribs), 
   				content: listContent 
   			}) 
   			return 
@@ -119,5 +119,3 @@ const cellParser = (element, $) => {
 	})
 }
 
-
-module.exports = getParsedCellContent; 
