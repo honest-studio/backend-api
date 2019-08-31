@@ -10,6 +10,7 @@ import urlSlug from 'url-slug';
 import * as axios from 'axios';
 const conv = require('binstring');
 import endianness from 'endianness';
+import bs58 from 'bs58';
 
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
@@ -977,4 +978,14 @@ export const sha256ToChecksum256EndianSwapper = (input_sha256: string) => {
     let comboString = conv(bytes1, { in:'bytes', out: 'hex' }) + conv(bytes2, { in:'bytes', out: 'hex' });
     // console.log(comboString);
     return comboString;
+}
+
+export const calcIPFSHash = (inputString: string): string => {
+    const data = inputString;
+    const hashFunction = Buffer.from('12', 'hex');
+    const digest = crypto.createHash('sha256').update(data).digest();
+    const digestSize = Buffer.from(digest.byteLength.toString(16), 'hex');
+    const combined = Buffer.concat([hashFunction, digestSize, digest]);
+    const multihash = bs58.encode(combined);
+    return multihash.toString();
 }

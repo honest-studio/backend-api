@@ -1,71 +1,77 @@
 import * as cheerio from 'cheerio';
-import { textParser } from './pagebodyfunctionalities/textParser';
+import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
+import { Citation, Sentence } from '../../../src/types/article';
+import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 
-import { Citation } from '../../../src/types/article';
-
-const wikipedia = 'https://en.wikipedia.org/wiki/';
-let defaultDescription = [
-			{
-			index: 0,
-			text: "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia.",
-			type: "sentence"
-			}, 
-			{
-			index: 1,
-			text: "Text is available under the Creative Commons Attribution-ShareAlike License.",
-			type: "sentence"
-			},
-			{
-			index: 2,
-			text: "Additional terms may apply.",
-			type: "sentence"
-			},
-			{
-			index: 3,
-			text: "See everipedia.org/everipedia-termsfor further details.",
-			type: "sentence"
-			},
-			{
-			index: 4,
-			text: "Images/media credited individually (click the icon for details).",
-			type: "sentence"
-			}]
+let defaultDescription: Sentence[] = [
+	{
+		index: 0,
+		text: "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia.",
+		type: "sentence"
+	}, 
+	{
+		index: 1,
+		text: "Text is available under the Creative Commons Attribution-ShareAlike License.",
+		type: "sentence"
+	},
+	{
+		index: 2,
+		text: "Additional terms may apply.",
+		type: "sentence"
+	},
+	{
+		index: 3,
+		text: "See everipedia.org/everipedia-termsfor further details.",
+		type: "sentence"
+	},
+	{
+		index: 4,
+		text: "Images/media credited individually (click the icon for details).",
+		type: "sentence"
+	}
+]
 
 export const getCitations = (html, url) => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
-	let citations = []; //instatiate return object - stores all citation objects 
+	let citations: Citation[] = []; //instatiate return object - stores all citation objects 
 	//store {key, value} pair objects for O(1) access to determine internal citations
 	//where key == citationId, and value == url   
 	let internalCitations = {};  
 	//default push 
 	citations.push({
 		url: url, //references the specific wikipedia page 
+		thumb: null,
 		category: "NONE",
 		citation_id: 0,
 		description: defaultDescription,
 		social_type: null,
 	 	attribution: 'rel=nofollow',
-	 	timestamp: getTimeStamp(), 
+	 	timestamp: getTimeStamp() as any, 
 	 	mime: 'None'
 	})
 
-	const $content = $('div.mw-parser-output'); //page content
-	const $refList = $content.find('.reflist').last().find('ol'); //get the list of references
+	const $content = $('div.mw-parser-output'); // Page content
+	const $refList = $content.find('.reflist').last().find('ol'); // Get the list of references
 	
-	$refList.children('li').each( (i, el) => { //for each reference
+	 // Loop through the references
+	$refList.children('li').each( (i, el) => {
+
+		// Get a specific citation
 		let $reference = $(el).find('.reference-text'); 
-		let $citation = $reference.find('.citation'); //specific citation
+		let $citation = $reference.find('.citation');
 		
-		if ($citation.length > 0) { //if the citation is immediately present
-			let description = textParser($citation, $);
-			let cur = { //current citation
-				url: $citation.find('a').attr('href'),
+		// If the citation is immediately present, process it
+		if ($citation.length > 0) {
+			let description = accumulateText($citation, $, internalCitations);
+			let urlToUse = $citation.find('a').attr('href');
+			let cur: Citation = { //current citation
+				url: urlToUse,
 				attribution: 'rel=nofollow',
-				category: "NONE",
-				citation_id: i + 1, //i + 1 because default push is 0
+				category: linkCategorizer(urlToUse),
+				citation_id: i + 1, // i + 1 because default push is 0
 				description: description,
-				social_type: null,
+				social_type: socialURLType(urlToUse),
 				attribution: 'rel=nofollow',
 				timestamp: getTimeStamp(),
 				mime: 'None'

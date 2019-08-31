@@ -1,16 +1,15 @@
-const getImage = require('./pagebodyfunctionalities/getImage');
+import { getImage } from './pagebodyfunctionalities/getImage';
+import { Media } from '../../../src/types/article';
 
+export const getMainPhoto = (html): Media => {
 
-export const getMainPhoto = (html) => {
-
-	//No main photo was found. 
-	//return place holder:
+	// No main photo was found. 
+	// Return place holder:
 	return {
 		url: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png',
-		captions: null,
 		thumb:'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png',
-		type: 'main_photo' 
+		caption: null,
+		type: 'main_photo',
+		attribution_url: null
 	}
 }
-
-

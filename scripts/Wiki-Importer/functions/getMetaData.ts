@@ -51,7 +51,7 @@ let metaData: Metadata[] =
 	}
 ];
 
-export async function getMetaData(lang_code: string, slug: string) {
+export async function getMetaData(lang_code: string, slug: string): Promise<Metadata[]> {
 	// Create and append creation_timestamp
 	let creationtime = getTimeStamp();
 	metaData.push({key: 'creation_timestamp', value: creationtime});

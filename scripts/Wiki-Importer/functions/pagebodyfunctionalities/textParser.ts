@@ -1,5 +1,6 @@
 import { parseAnchorTag } from './parseAnchorTag';
 import { parseInternalCitation } from './parseInternalCitation';
+import { Sentence } from '../../../../src/types/article';
 //elegant text Parser (for paragraphs, list items, citations etc.) 
 //recurse through tags and append text to accumulator
 //If you hit an anchor tag, simply call parseAnchorTag to
@@ -17,7 +18,7 @@ import { parseInternalCitation } from './parseInternalCitation';
 let accumulator = ''; //global textAccumulator
 let internalCitations = {};
 
-export const accumulateText = (element, $, citations) => {
+export const accumulateText = (element, $, citations): Sentence[] => {
 	if (element.type == 'text') { //quick return if element is text
 		return [{
 			type: 'sentence',
@@ -27,7 +28,7 @@ export const accumulateText = (element, $, citations) => {
 	}
 	accumulator = ''; //reset accumulator for each element
 	internalCitations = citations;
-	textParser(element, $);
+	textParser(element, $, citations);
 	return [{
 		type: 'sentence',
 		index: 0,
@@ -57,7 +58,7 @@ export const textParser = (element, $, internalCitations) => {
 				accumulator += parseInternalCitation($el.find('a'), $, internalCitations);
 			}
 			else {
-				textParser(el, $);
+				textParser(el, $, internalCitations);
 			}
 		}
 	})

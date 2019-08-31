@@ -9,17 +9,17 @@ import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
 import { Citation } from '../../../src/types/article';
 
-//input: page html, url
-//output sections[] 
+// input: page html, url
+// output sections[] 
 
-//Logic: 
-//Whenever <p>, <ul>, <dl>, <table>, <div> tags are reached
-//Create and push a new paragraph into paragraphs []
-//Whenever an <h1>, ..., <h6> tag is reached, create and push a new section
+// Logic: 
+// Whenever <p>, <ul>, <dl>, <table>, <div> tags are reached
+// Create and push a new paragraph into paragraphs []
+// Whenever an <h1>, ..., <h6> tag is reached, create and push a new section
 
 export const getPageBody = (html, url) => {
-	//compute citations first to be able to implement internal citations
-	//when parsing the page body
+	// Compute citations first to be able to implement internal citations
+	// When parsing the page body
 	let citations = getCitations(html, url);
 	let internalCitations = citations.internalCitations;
 
