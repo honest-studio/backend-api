@@ -34,13 +34,14 @@ let defaultDescription: Sentence[] = [
 
 export const getCitations = (html, url) => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
-	let citations: Citation[] = []; //instatiate return object - stores all citation objects 
-	//store {key, value} pair objects for O(1) access to determine internal citations
-	//where key == citationId, and value == url   
+	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
+	// Store {key, value} pair objects for O(1) access to determine internal citations
+	// Where key == citationId, and value == url   
 	let internalCitations = {};  
-	//default push 
+
+	// Default push 
 	citations.push({
-		url: url, //references the specific wikipedia page 
+		url: url, // References the specific wikipedia page 
 		thumb: null,
 		category: "NONE",
 		citation_id: 0,
@@ -48,7 +49,7 @@ export const getCitations = (html, url) => {
 		social_type: null,
 	 	attribution: 'rel=nofollow',
 	 	timestamp: getTimeStamp() as any, 
-	 	mime: 'None'
+	 	mime: null
 	})
 
 	const $content = $('div.mw-parser-output'); // Page content
@@ -56,40 +57,46 @@ export const getCitations = (html, url) => {
 	
 	 // Loop through the references
 	$refList.children('li').each( (i, el) => {
-
 		// Get a specific citation
 		let $reference = $(el).find('.reference-text'); 
 		let $citation = $reference.find('.citation');
 		
 		// If the citation is immediately present, process it
+		// TODO: Deal with media uploads, thumbs, etc
 		if ($citation.length > 0) {
 			let description = accumulateText($citation, $, internalCitations);
 			let urlToUse = $citation.find('a').attr('href');
-			let cur: Citation = { //current citation
+
+			// Current citation
+			let cur: Citation = {
 				url: urlToUse,
-				attribution: 'rel=nofollow',
+				thumb: null,
 				category: linkCategorizer(urlToUse),
 				citation_id: i + 1, // i + 1 because default push is 0
 				description: description,
 				social_type: socialURLType(urlToUse),
 				attribution: 'rel=nofollow',
-				timestamp: getTimeStamp(),
-				mime: 'None'
+				timestamp: getTimeStamp() as any,
+				mime: null
 			}
 			let key = i+1;
 			internalCitations[key] = cur.url;
 			citations.push(cur);
 			
 		} 
-		else { //else traverse biography (primary, secondary, tertiary sources to find citation)
-			//and compare citations to identifiers to identify the citation in the biography
+		else { 
+			// Else traverse biography (primary, secondary, tertiary sources to find citation)
+			// and compare citations to identifiers to identify the citation in the biography
 			let found = false; 
-			$content.find('div .refbegin').each((i3, el3) => { //for each biography (i.e., primary, secondary, tertiary)  
-				let a = $reference.find('a').attr('href')
-				$(el3).find('cite').each( (i4, el4) => { //for each citation
-					if (a == '#' + $(el4).attr('id')) { //citation found in biography
-						let description = textParser(el4, $);
-						//type of citation = $(el4).attr('class'); (e.g, journal, book etc..)
+			$content.find('div .refbegin').each((i3, el3) => { // For each biography (i.e., primary, secondary, tertiary)  
+				let a = $reference.find('a').attr('href');
+
+				// Loop through the citations
+				$(el3).find('cite').each( (i4, el4) => {
+					if (a == '#' + $(el4).attr('id')) { // Citation found in biography
+						let description = accumulateText(el4, $, internalCitations);
+
+						// Type of citation = $(el4).attr('class'); (e.g, journal, book etc..)
 						let url = '';
 						$(el4).find('a').each((i5, el5) => {
 							let $el5 = $(el5);
@@ -100,24 +107,23 @@ export const getCitations = (html, url) => {
 						if ( url == undefined ) {
 							url == '';
 						}
-						let cur = {
-							url: url, //leave blank for now
-							//don't know if you want to store ISBN in url attribute
-							attribution: 'rel=nofollow',
-							category: "NONE",
+						let cur: Citation = {
+							url: url,
+							thumb: null,
+							category: linkCategorizer(url),
 							citation_id: i + 1, 
 							description: description,
 							social_type: null,
 							attribution: 'rel=nofollow',
-							timestamp: getTimeStamp(),
-							mime: 'None'
+							timestamp: getTimeStamp() as any,
+							mime: null
 						}
 						citations.push(cur);
 						internalCitations[i+1] = cur.url;
 						found = !found;
 						return
 					}
-					if (found) { //quick break to stop iterating if citation has been found in biography
+					if (found) { // Quick break to stop iterating if citation has been found in biography
 						return
 					}
 				}) 
@@ -129,9 +135,4 @@ export const getCitations = (html, url) => {
 		internalCitations: internalCitations //map passed to textParser for instant internal citation lookup
 	}; 
 }
-
-
-//Note, I've now accounted for all types of citations (e.g., urls, books, journals etc.) 
-//you can implement a getCategoryCitationType function for the return citations
-//As of now I simply leave CategoryCitationType as "NONE"
 
