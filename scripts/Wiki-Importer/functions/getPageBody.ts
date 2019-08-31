@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getImage } from './pagebodyfunctionalities/getImage';
-import { getCategory } from './pagebodyfunctionalities/getCategory';
+import { getHeadlineSentence } from './pagebodyfunctionalities/getHeadlineSentence';
 import { getList } from './pagebodyfunctionalities/getList';
 import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
@@ -86,7 +86,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 			// Create a new paragraph with h tag 
 			paragraphs.push({ 
 				index: paragraphIndex,
-				items: [getCategory(el, $)] as Sentence[],
+				items: [getHeadlineSentence(el, $)] as Sentence[],
 				tag_type: $el[0].name, 
 				attrs: cleanAttrs(el.attribs)
 			});

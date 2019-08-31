@@ -1,7 +1,7 @@
 import { rp } from 'request-promise';
 import { getTitle } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
-import { getInfoBox } from './functions/getInfobox_html';
+import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox_html';
 import { getMetaData } from './functions/getMetaData';
 import { getMainPhoto } from './functions/getMainPhoto';
 import { ArticleJson } from '../../src/types/article';
@@ -18,7 +18,7 @@ export const newImport = async (lang_code: string, slug: string) => {
 		return {
 			page_title: page_title, 
 			main_photo: [getMainPhoto(body)],
-			infobox_html: getInfoBox(body) as any,
+			infobox_html: getWikipediaStyleInfoBox(body) as any,
 			page_body: page_body_pack.sections,
 			infoboxes: [],
 			citations: page_body_pack.citations,
