@@ -8,26 +8,33 @@ import { WikiService } from '../wiki';
 export class DiffService {
     constructor(private wikiService: WikiService, private mongo: MongoDbService, private redis: RedisService) {}
 
-    async getDiffsByProposal(proposal_ids: Array<number>, metadata_only: boolean = false): Promise<Array<ArticleJson>> {
+    async getDiffsByProposal(proposal_ids: Array<number>, metadata_only: boolean = false, cache: boolean = true): Promise<Array<ArticleJson>> {
 
         // Redis cache get
-        const pipeline = this.redis.connection().pipeline();
-        for (let proposal_id of proposal_ids) {
-            if (metadata_only)
-                pipeline.get(`proposal:${proposal_id}:diff:metadata`);
-            else
-                pipeline.get(`proposal:${proposal_id}:diff`);
-        }
-        const values = await pipeline.exec();
-
         const diffs = [];
         const uncached_proposals = [];
-        for (let i in values) {
-            if (values[i][1])
-                diffs.push(JSON.parse(values[i][1]));
-            else
-                uncached_proposals.push(proposal_ids[i]);
+
+        if (cache) {
+            const pipeline = this.redis.connection().pipeline();
+            for (let proposal_id of proposal_ids) {
+                if (metadata_only)
+                    pipeline.get(`proposal:${proposal_id}:diff:metadata`);
+                else
+                    pipeline.get(`proposal:${proposal_id}:diff`);
+            }
+            const values = await pipeline.exec();
+
+            for (let i in values) {
+                if (values[i][1])
+                    diffs.push(JSON.parse(values[i][1]));
+                else
+                    uncached_proposals.push(proposal_ids[i]);
+            }
         }
+        else {
+            uncached_proposals.push(...proposal_ids);
+        }
+        if (uncached_proposals.length == 0) return diffs;
 
         // get proposal info 
         const pipeline2 = this.redis.connection().pipeline();
@@ -61,9 +68,11 @@ export class DiffService {
                 pipeline4.get(`proposal:${Number(value[1][1])}:info`);
         }
         const values4 = await pipeline4.exec();
-        const extended_infos = values2
+        const extended_infos = values4
             .filter(v => v[1])
             .map(v => JSON.parse(v[1]));
+
+        console.log(extended_infos.map(e => e.trace.act.data.proposal_id));
 
         // add old_hash to proposal_hashes
         for (let obj of proposal_hashes) {

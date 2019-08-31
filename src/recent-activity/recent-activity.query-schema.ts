@@ -13,6 +13,7 @@ const RecentActivityQuerySchema = {
         .optional()
         .default(10),
     preview: Joi.boolean().default(false),
+    cache: Joi.boolean().default(true),
     diff: Joi.string()
         .valid('metadata', 'full', 'none')
         .default('none'),

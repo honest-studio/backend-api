@@ -100,6 +100,12 @@ export class RecentActivityController {
         type: Number
     })
     @ApiImplicitQuery({
+        name: 'cache',
+        type: 'boolean',
+        required: false,
+        description: 'set false to bypass cache. default: true'
+    })
+    @ApiImplicitQuery({
         name: 'preview',
         description: `Include page title, main photo, thumbnail, and text preview for each proposal.`,
         required: false,

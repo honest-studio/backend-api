@@ -34,6 +34,12 @@ export class ProposalController {
         required: false,
         description: 'returns wiki preview if set true'
     })
+    @ApiImplicitQuery({
+        name: 'cache',
+        type: 'boolean',
+        required: false,
+        description: 'set false to bypass cache. default: true'
+    })
     @ApiResponse({
         status: 200,
         description: `returns an array of proposal objects: 

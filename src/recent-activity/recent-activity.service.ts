@@ -91,7 +91,8 @@ export class RecentActivityService {
         const proposal_options = {
             preview: query.preview,
             diff: query.diff,
-            user_agent: query.user_agent
+            user_agent: query.user_agent,
+            cache: query.cache
         };
 
         return this.proposalService.getProposals(proposal_ids, proposal_options);

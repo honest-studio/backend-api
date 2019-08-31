@@ -86,7 +86,7 @@ export class ProposalService {
 
         if (options.diff != 'none') {
             const metadata_only = (options.diff == "metadata");
-            const diffs = await this.diffService.getDiffsByProposal(proposal_ids, metadata_only);
+            const diffs = await this.diffService.getDiffsByProposal(proposal_ids, metadata_only, options.cache );
             diffs.forEach(diff => {
                 const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
                 const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
