@@ -9,6 +9,7 @@ import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
 import { ArticleJson } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
+import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -56,13 +57,16 @@ export const WikiImport = async (inputString: string) => {
 	let metadata = await getMetaData(lang_code, slug);
 	
 	let articlejson: ArticleJson = await rp(url)
-	.then(body => {
-		//note that page_body and citations are computed together to account for internal citations 
-		const page_body_pack = getPageBodyPack(body, url); 
+	.then(page => {
+        // Precleaning
+        let precleaned_html = preCleanHTML(page);
+
+		// Note that page_body and citations are computed together to account for internal citations 
+		const page_body_pack = getPageBodyPack(precleaned_html, url); 
 		return {
 			page_title: page_title, 
-			main_photo: [getMainPhoto(body)],
-			infobox_html: getWikipediaStyleInfoBox(body, page_body_pack.internal_citations) as any,
+			main_photo: [getMainPhoto(precleaned_html)],
+			infobox_html: getWikipediaStyleInfoBox(precleaned_html, page_body_pack.internal_citations) as any,
 			page_body: page_body_pack.sections,
 			infoboxes: [],
 			citations: page_body_pack.citations,

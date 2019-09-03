@@ -34,8 +34,8 @@ let defaultDescription: Sentence[] = [
 ]
 
 // Parse out the citations from Wikipedia
-export const getCitations = (html, url) => { 
-	const $ = cheerio.load(html, {decodeEntities: false});
+export const getCitations = (input_html: string, url) => { 
+	const $: CheerioStatic = cheerio.load(input_html, {decodeEntities: false});
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
 	
 	// Store {key, value} pair objects for O(1) access to determine internal citations

@@ -23,10 +23,10 @@ export interface PageBodyPack {
 	internal_citations: any
 }
 
-export const getPageBodyPack = (html, url): PageBodyPack => {
+export const getPageBodyPack = (input_html: string, url): PageBodyPack => {
 	// Compute citations first to be able to implement internal citations
 	// When parsing the page body
-	let citations = getCitations(html, url);
+	let citations = getCitations(input_html, url);
 	let internalCitations = citations.internalCitations;
 
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
@@ -42,7 +42,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 	let paragraphIndex = 0; // Keep track of current paragraph
 
 	// Parse the dom
-	const $ = cheerio.load(html, {decodeEntities: false});
+	const $ = cheerio.load(input_html, {decodeEntities: false});
 	const $content = $('div.mw-parser-output');
 
 	// Loop through the children

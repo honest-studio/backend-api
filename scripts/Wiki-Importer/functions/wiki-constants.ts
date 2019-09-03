@@ -146,7 +146,7 @@ export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 // Add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
 // use this list to add format removal exception tags to make the scrape look nicer over time
-POSTCLEAN_BAD_ELEMENTS = [
+export const PRECLEAN_BAD_ELEMENTS = [
     { tag: "div", id: null, class: "notice plainlinks" }, // Any notices at the top of the page
     { tag: "div", id: "toc", class: "toc" }, // Table of contents, the content table at the beginning of articles
     { tag: "span", id: null, class: "mw-editsection" }, // Edit buttons next to headings
@@ -160,7 +160,7 @@ POSTCLEAN_BAD_ELEMENTS = [
     { tag: "div", id: "mw-indicator-featured-star", class: "mw-indicator" }, // For featured star instead of + sign up ^
     { tag: "div", id: "mw-indicator-spoken-icon", class: "mw-indicator" }, // Speaker icon for top right of articles
     { tag: "div", id: "mw-indicator-pp-default", class: "mw-indicator" }, // Lock icon for top right of article
-    { tag: "span", id: null, class: "noprint" },
+    { tag: "span", id: null, class: "noprint" }, 
     { tag: "div", id: null, class: "mw-indicators" }, // The entire parent div of the indicator icons ^
     { tag: "div", id: null, class: "mw-authority-control" }, 
     { tag: "h1", id: "firstHeading", class: "firstHeading" }, // Main title of the entire page
@@ -170,28 +170,25 @@ POSTCLEAN_BAD_ELEMENTS = [
     { tag: "div", id: null, class: "noprint portal tright" }, // Div for right aligned portals
     { tag: "div", id: null, class: "hatnote" }, // The note at the top of an article before it starts
     { tag: "div", id: null, class: "dablink" }, // Another redirector notice
-
-
-    '<div class="dabhide"></div>',  # another redirector notice
-    '<div class="visualClear"></div>',  # random crap in the footer area
-    '<div id="mw-navigation"></div>',  # footer section that houses nav options
-    '<span title="This claim needs references to reliable sources."></span>',  # the citation needed span
-    '<table class="vertical-navbox nowraplinks plainlist"></table>',
-    '<table class="navbox"></table>',  # another variation of a navbox
-    '<table class="toccolours"></table>',  # jank table of contents
-    '<table class="vertical-navbox nowraplinks nowraplinks hlist"></table>',
-    '<table class="vertical-navbox nowraplinks vcard hlist"></table>',  # another variation of the series tables above ^
-    '<table class="metadata plainlinks ambox ambox-style ambox-citation_style"></table>',
-    '<table class="metadata plainlinks ambox ambox-content ambox-Refimprove"></table>',
-    '<table class="vertical-navbox vcard plainlist"></table>',
-    '<table class="mbox-small plainlinks sistersitebox"></table>',  # table for sistersite like "check out wikinews" bs
-    '<table class="navbox"></table>',  # portal navigation tables
-    '<table class="metadata mbox-small noprint selfref"></table>',  # notice for rendering warning emoji page etc
-    '<div class="toclimit-3"></div>', #weird whitespace after the table of contents on big articles like /wikipeida/
-    '<div class="toclimit-2"></div>',
-    '<div class="toclimit-1"></div>',
-    '<div class="printfooter"></div>', #retrieved from bullshit at the end of blurbs
-    '<div class="mw-empty-li-1"></div>', #empty lines in blob boxes
-    '<span id="coordinates"></span>',
-    '<div class="mw-references-wrap"></div>'
+    { tag: "div", id: null, class: "dabhide" }, // Another redirector notice
+    { tag: "div", id: null, class: "visualClear" }, // Random crap in the footer area
+    { tag: "div", id: "mw-navigation", class: null }, // Footer section that houses nav options
+    { tag: "table", id: null, class: "vertical-navbox nowraplinks plainlist" }, 
+    { tag: "table", id: null, class: "navbox" }, // Another variation of a navbox
+    { tag: "table", id: null, class: "toccolours" }, // Jank table of contents
+    { tag: "table", id: null, class: "vertical-navbox nowraplinks nowraplinks hlist" },
+    { tag: "table", id: null, class: "vertical-navbox nowraplinks vcard hlist" }, // Another variation of the series tables above ^
+    { tag: "table", id: null, class: "metadata plainlinks ambox ambox-style ambox-citation_style" },
+    { tag: "table", id: null, class: "metadata plainlinks ambox ambox-content ambox-Refimprove" },
+    { tag: "table", id: null, class: "vertical-navbox vcard plainlist" }, 
+    { tag: "table", id: null, class: "mbox-small plainlinks sistersitebox" }, // Table for sistersite like "check out wikinews" bs
+    { tag: "table", id: null, class: "navbox" }, // Portal navigation tables
+    { tag: "table", id: null, class: "metadata mbox-small noprint selfref" }, // Notice for rendering warning emoji page etc
+    { tag: "div", id: null, class: "toclimit-3" }, // Weird whitespace after the table of contents on big articles like /wikipedia/
+    { tag: "div", id: null, class: "toclimit-2" }, 
+    { tag: "div", id: null, class: "toclimit-1" }, 
+    { tag: "div", id: null, class: "printfooter" }, // Retrieved from bullshit at the end of blurbs
+    { tag: "div", id: null, class: "mw-empty-li-1" }, // Empty lines in blob boxes
+    { tag: "span", id: "coordinates", class: null }, 
+    { tag: "div", id: null, class: "mw-references-wrap" }, 
 ]
