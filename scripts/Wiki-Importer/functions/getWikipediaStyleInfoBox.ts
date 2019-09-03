@@ -1,16 +1,16 @@
 const cheerio = require('cheerio');
-const getTable = require('./pagebodyfunctionalities/tablefunctionalities/getTable');
+import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
 const wikipedia = 'https://en.wikipedia.org/wiki/';
 const Table = {}; // Array of {paragraphs: , images: } objects 
 import { Table } from '../../../src/types/article';
 
 // Get the Wikipedia infobox
-export const getWikipediaStyleInfoBox = (html): Table => { 
+export const getWikipediaStyleInfoBox = (html, internal_citations): Table => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
 	const $content = $('div.mw-parser-output');
 	const $table = $content.find('.infobox');
 	if ($table.length > 0) {
-		return getTable($table, $);
+		return getTable($table, $, internal_citations);
 	}
 	return null;
 };

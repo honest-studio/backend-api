@@ -19,7 +19,8 @@ import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '
 
 export interface PageBodyPack {
 	sections: Section[],
-	citations: Citation[]
+	citations: Citation[],
+	internal_citations: any
 }
 
 export const getPageBodyPack = (html, url): PageBodyPack => {
@@ -105,7 +106,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 		else if (tag_name == 'table') {
 			let tableclass = $el.attr('class');
 			if (tableclass === "wikitable" || tableclass === "body-table") {
-				let table = getTable(el, $);
+				let table = getTable(el, $, internalCitations);
 				paragraphs.push({
 					index: paragraphIndex,
 					items: [table] as Table[],
@@ -155,6 +156,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 	})
 	return {
 		sections: sections,
-		citations: citations.citations
+		citations: citations.citations,
+		internal_citations: internalCitations
 	}
 }

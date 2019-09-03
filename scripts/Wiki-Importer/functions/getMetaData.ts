@@ -1,5 +1,5 @@
-import { request } from 'request';
-import { encodeUrl } from 'encodeurl'; 
+const request = require('request');
+const encodeUrl = require('encodeurl'); 
 import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
 import { Metadata } from '../../../src/types/article';
 

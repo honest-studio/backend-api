@@ -4,6 +4,7 @@ import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
 import { Citation, Sentence } from '../../../src/types/article';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 
+// Default description for the Wikipedia citation
 let defaultDescription: Sentence[] = [
 	{
 		index: 0,
@@ -32,6 +33,7 @@ let defaultDescription: Sentence[] = [
 	}
 ]
 
+// Parse out the citations from Wikipedia
 export const getCitations = (html, url) => { 
 	const $ = cheerio.load(html, {decodeEntities: false});
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 

@@ -76,13 +76,13 @@ export const getSentences = (element, $): Sentence[] => {
 	//Now format each sentence in ArticleJson
 	//Sentences are the same, simply replace anchor tags with [[ LINK|${lang_code}|${slug}|${text} ]]
 
-	const output = sentences.map((sentence, index) => {
+	const output = sentences && sentences.map((sentence, index) => {
 		let text = '';
 		let lang = 'lang_en'; //for now 
 		let isLinkText = false; 
 		let j = 0;
-		let theSentenceText = sentence.text;
-		while (j < theSentenceText.length) {
+		let theSentenceText = sentence && sentence.text;
+		while (theSentenceText && j < theSentenceText.length) {
 			let char = theSentenceText.charAt(j);
 			//Check for anchor tags to create wiki links 
 			if (char == '<') {
