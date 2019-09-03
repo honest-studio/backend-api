@@ -25,7 +25,7 @@ import { fetchUrl } from './fetch-favicon';
 import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
-import { BookInfoPack } from '../types/api';
+import { BookInfoPack, PeriodicalInfoPack } from '../types/api';
 import * as sharp from 'sharp';
 import * as axios from 'axios';
 const isSvg = require('is-svg');
@@ -163,6 +163,78 @@ export class MediaUploadService {
         
         return initialPack;
     }
+
+    async getPeriodicalInfoFromISSN(inputISSN: string): Promise<PeriodicalInfoPack> {
+        let initialPack: PeriodicalInfoPack = {
+            title: "<TITLE>",
+            thumb: null,
+            url: `https://portal.issn.org/resource/ISSN/${inputISSN}`,
+            issn: "<ISSN>",
+            author: "<AUTHOR>",
+            publisher: "<PUBLISHER>",
+            published: "<PUBLISHED DATE>",
+            description: []
+        };
+        
+        // // Fetch the url
+        // let response = await rp.default({
+        //     uri: `https://portal.issn.org/resource/ISSN/${inputISSN}?format=json`,
+        //     headers: UNIVERSAL_HEADERS,
+        //     resolveWithFullResponse: true,
+        //     // gzip: true
+        // }).then((response) => {
+        //     return response;
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
+        
+        // let bookJSON = JSON.parse(response.body);
+        // let theKey = Object.keys(bookJSON)[0];
+        // bookJSON = bookJSON[theKey];
+
+        // if(bookJSON && bookJSON.title){
+        //     initialPack.title = `${bookJSON.title}${bookJSON.subtitle ? ": " + bookJSON.subtitle : ""}`;
+        //     initialPack.thumb = bookJSON.cover && bookJSON.cover.medium;
+        //     initialPack.url = bookJSON.url;
+        //     initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
+        //     initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
+        //     initialPack.author = bookJSON.authors && bookJSON.authors.map(author => author.name).join(", ");
+        //     initialPack.publisher = bookJSON.publishers && bookJSON.publishers.map(publisher => publisher.name).join(", ");
+        //     initialPack.published = bookJSON.publish_date;
+        // }
+
+        // let availableIndex = 1;
+        // initialPack.description = [
+        //     {
+        //         index: 0,
+        //         type: 'sentence',
+        //         text: `${initialPack.author ? initialPack.author + '. ' : ''}***${initialPack.title}***, ${initialPack.publisher}, ${initialPack.published}.`
+        //     },
+        // ]
+        // if (initialPack.isbn_10) {
+        //     initialPack.description.push(
+        //         {
+        //             index: availableIndex,
+        //             type: 'sentence',
+        //             text: `\nISBN-10: ${initialPack.isbn_10}`
+        //         }
+        //     );
+        //     availableIndex = availableIndex + 1;
+        // }
+        // if (initialPack.isbn_13) {
+        //     initialPack.description.push(
+        //         {
+        //             index: availableIndex,
+        //             type: 'sentence',
+        //             text: `\nISBN-13: ${initialPack.isbn_13}`
+        //         }
+        //     );
+        //     availableIndex = availableIndex + 1;
+        // }
+        
+        return initialPack;
+    }
+
 
     // Fetch a file from an external URL
     getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {

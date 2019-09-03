@@ -194,7 +194,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.459Z"
+          "timestamp": "2019-09-03T22:49:48.763Z"
         },
         {
           "type": "section_image",
@@ -209,7 +209,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.460Z"
+          "timestamp": "2019-09-03T22:49:48.764Z"
         }
       ]
     },
@@ -242,7 +242,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.463Z"
+          "timestamp": "2019-09-03T22:49:48.769Z"
         },
         {
           "type": "section_image",
@@ -257,7 +257,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.463Z"
+          "timestamp": "2019-09-03T22:49:48.769Z"
         }
       ]
     },
@@ -350,7 +350,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.468Z"
+          "timestamp": "2019-09-03T22:49:48.772Z"
         }
       ]
     },
@@ -448,7 +448,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.470Z"
+          "timestamp": "2019-09-03T22:49:48.775Z"
         }
       ]
     },
@@ -601,7 +601,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T20:56:19.473Z"
+          "timestamp": "2019-09-03T22:49:48.779Z"
         }
       ]
     },
@@ -815,31 +815,116 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T20:56:19.421Z",
+      "timestamp": "2019-09-03T22:49:48.491Z",
       "mime": null
     },
     {
-      "url": "//www.worldcat.org/issn/2160-3049",
+      "url": "https://portal.issn.org/resource/ISSN/2160-3049",
       "thumb": null,
-      "category": "NONE",
+      "category": "PERIODICAL",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "2160-3049"
+          "text": "Pini, G (December 1939). \"La rete stradale dell'Impero\". *Africa Italiana* (12)."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T20:56:19.435Z",
+      "timestamp": "2019-09-03T22:49:48.504Z",
+      "mime": null
+    },
+    {
+      "url": "https://openlibrary.org/search?q=Tarikh%20Libia%20men%20Nehayat%20al%20Qarn%20at%20Tasi'%20Ashar%20ha",
+      "thumb": null,
+      "category": "BOOK",
+      "citation_id": 3,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Tarikh Libia men Nehayat al Qarn at Tasi' Ashar hatta Amm 1969, N.E. Prushin, Trans. by Dr. Imad Hatem, Markaz Jihad al Libiyeen lid Dirast at Tarikhiya,  2nd ed., 2005, p.235."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-03T22:49:48.504Z",
+      "mime": null
+    },
+    {
+      "url": "https://openlibrary.org/search?q=Doxiadis%20Associates%2C%20%22Transport%20in%20Libya%22%2C%20Vol.%201%2C",
+      "thumb": null,
+      "category": "BOOK",
+      "citation_id": 4,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Doxiadis Associates, \"Transport in Libya\", Vol. 1, prepared for the government of the Kingdom of Libya, March 20, 1965, pp. 96, 123-124."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-03T22:49:48.504Z",
+      "mime": null
+    },
+    {
+      "url": "https://openlibrary.org/api/books?bibkeys=ISBN:1-13524-501-0&jscmd=data&format=json",
+      "thumb": null,
+      "category": "BOOK",
+      "citation_id": 5,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Baldinetti, Anna (2014). *The Origins of the Libyan Nation: Colonial Legacy, Exile and the Emergence of a New Nation-State*. Routledge Studies in Middle Eastern History. New York: Routledge. p. 50."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-03T22:49:48.504Z",
+      "mime": null
+    },
+    {
+      "url": "https://openlibrary.org/search?q=El%20Hadi%20Mustapha%20Bulegma%2C%20p.487.",
+      "thumb": null,
+      "category": "BOOK",
+      "citation_id": 6,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "El Hadi Mustapha Bulegma, p.487."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-03T22:49:48.505Z",
+      "mime": null
+    },
+    {
+      "url": null,
+      "thumb": null,
+      "category": null,
+      "citation_id": 7,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": null
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-03T22:49:48.505Z",
       "mime": null
     },
     {
       "url": "https://web.archive.org/web/20150402123125/http://media.tecnici.it/file/novecento/la_litoranea_libica.pdf",
       "thumb": null,
       "category": "FILE",
-      "citation_id": 3,
+      "citation_id": 8,
       "description": [
         {
           "type": "sentence",
@@ -849,14 +934,14 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T20:56:19.435Z",
+      "timestamp": "2019-09-03T22:49:48.712Z",
       "mime": "application/pdf"
     },
     {
       "url": "http://www.qattara.it/balbia_files/Opere%20italiane%20in%20Africa.pdf",
       "thumb": null,
       "category": "FILE",
-      "citation_id": 4,
+      "citation_id": 9,
       "description": [
         {
           "type": "sentence",
@@ -866,7 +951,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T20:56:19.435Z",
+      "timestamp": "2019-09-03T22:49:48.713Z",
       "mime": "application/pdf"
     }
   ],
@@ -906,7 +991,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/3/2019 20:56:18 PM UTC"
+      "value": "8/3/2019 22:49:47 PM UTC"
     },
     {
       "key": "last_modified",
@@ -931,5 +1016,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmYDh8MhScxB7ZBsoKTwQHiQAmH5qBSu2X1MxgfP7DT487"
+  "ipfs_hash": "QmYQL8yyHN1Qeq2DHHYCs7JDZrEfuhfUrtKUaAFhKLfx7k"
 }

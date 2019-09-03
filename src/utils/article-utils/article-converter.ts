@@ -1179,7 +1179,7 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
-    } else if (inputString.indexOf('https://openlibrary.org/books/') == 0) {
+    } else if (inputString.indexOf('https://openlibrary.org/books/') == 0 || inputString.indexOf('https://openlibrary.org/search') == 0) {
         return 'BOOK';
     } else if (inputString.indexOf('https://portal.issn.org/resource/ISSN/') == 0) {
         return 'PERIODICAL';

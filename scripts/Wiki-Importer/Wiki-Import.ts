@@ -4,12 +4,13 @@ import { getTitle } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
 import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox';
 import { getMetaData } from './functions/getMetaData';
-import { MysqlService } from '../../src/feature-modules/database';
+import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
 import { ArticleJson } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
+import { MediaUploadService, UrlPack } from '../../src/media-upload';
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -17,6 +18,9 @@ const path = require('path');
 
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
+const theAWSS3 = new AWSS3Service(theConfig);
+const theBucket = theAWSS3.getBucket();
+const theMediaUploadService = new MediaUploadService(theAWSS3);
 
 commander
   .version('1.0.0', '-v, --version')
@@ -55,32 +59,31 @@ export const WikiImport = async (inputString: string) => {
 	const url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
 	let page_title = await getTitle(lang_code, slug);
 	let metadata = await getMetaData(lang_code, slug);
-	
-	let articlejson: ArticleJson = await rp(url)
-	.then(page => {
-        // Precleaning
-        let precleaned_html = preCleanHTML(page);
+    
+    let page = await rp(url);
+    
+    // Precleaning
+    let precleaned_html = preCleanHTML(page);
 
-		// Note that page_body and citations are computed together to account for internal citations 
-		const page_body_pack = getPageBodyPack(precleaned_html, url); 
-		return {
-			page_title: page_title, 
-			main_photo: [getMainPhoto(precleaned_html)],
-			infobox_html: getWikipediaStyleInfoBox(precleaned_html, page_body_pack.internal_citations) as any,
-			page_body: page_body_pack.sections,
-			infoboxes: [],
-			citations: page_body_pack.citations,
-			media_gallery: [],
-			metadata: metadata,
-			amp_info: { 
-				load_youtube_js: false,
-				load_audio_js: false,
-				load_video_js: false,
-				lightboxes: []
-			},
-			ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
-		} as ArticleJson
-	})
+    // Note that page_body and citations are computed together to account for internal citations 
+    const page_body_pack = await getPageBodyPack(precleaned_html, url, theMediaUploadService); 
+    let articlejson: ArticleJson = {
+        page_title: page_title, 
+        main_photo: [getMainPhoto(precleaned_html)],
+        infobox_html: getWikipediaStyleInfoBox(precleaned_html, page_body_pack.internal_citations) as any,
+        page_body: page_body_pack.sections,
+        infoboxes: [],
+        citations: page_body_pack.citations,
+        media_gallery: [],
+        metadata: metadata,
+        amp_info: { 
+            load_youtube_js: false,
+            load_audio_js: false,
+            load_video_js: false,
+            lightboxes: []
+        },
+        ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
+    } as ArticleJson
 
     // Calculate what the IPFS hash would be
     let newHash = calcIPFSHash(JSON.stringify(articlejson));

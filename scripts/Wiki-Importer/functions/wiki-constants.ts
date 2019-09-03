@@ -203,6 +203,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: null, class: "printfooter" }, // Retrieved from bullshit at the end of blurbs
     { tag: "div", id: null, class: "mw-empty-li-1" }, // Empty lines in blob boxes
     { tag: "span", id: "coordinates", class: null }, 
+    { tag: "span", id: null, class: 'mw-cite-backlink' }, // Citations
     { tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
     { parent: { class: 'thumbcaption'}, tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
     // { tag: "div", id: null, class: "mw-references-wrap" }, 

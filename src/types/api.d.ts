@@ -38,6 +38,18 @@ export interface BookInfoPack {
     description: Sentence[];
 }
 
+export interface PeriodicalInfoPack {
+    title: string;
+    thumb: string;
+    url: string;
+    issn: string;
+    author: string;
+    publisher: string;
+    published: string;
+    description: Sentence[];
+}
+
+
 export interface FileFetchResult {
     file_buffer: Buffer,
     mime_pack: MimePack;

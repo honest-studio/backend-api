@@ -8,7 +8,7 @@ import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTabl
 import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
 import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '../../../src/types/article';
-
+import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 // input: page html, url
 // output sections[] 
 
@@ -23,10 +23,10 @@ export interface PageBodyPack {
 	internal_citations: any
 }
 
-export const getPageBodyPack = (input_html: string, url): PageBodyPack => {
+export const getPageBodyPack = async (input_html: string, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
 	// Compute citations first to be able to implement internal citations
 	// When parsing the page body
-	let citations = getCitations(input_html, url);
+	let citations = await getCitations(input_html, url, theMediaUploadService);
 	let internalCitations = citations.internalCitations;
 
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects

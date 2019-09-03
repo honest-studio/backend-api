@@ -1,9 +1,11 @@
 import * as cheerio from 'cheerio';
+const _ = require('lodash');
 import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
 import { Citation, Sentence, CitationCategoryType } from '../../../src/types/article';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { getFirstAvailableCitationIndex } from '../../../src/utils/article-utils/article-tools';
+import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 const util = require('util');
 import * as mimePackage from 'mime';
 
@@ -11,9 +13,12 @@ export interface RawCitation {
 	id: string,
 	id_ref: string,
 	id_note: string,
+	url?: string,
+	isbn?: string,
+	issn?: string,
 	category: CitationCategoryType,
 	text: string,
-	note_element: CheerioElement,
+	note_element: CheerioElement
 }
 
 
@@ -47,26 +52,29 @@ let defaultDescription: Sentence[] = [
 ]
 
 // Parse out the citations from Wikipedia
-export const getCitations = (input_html: string, url) => { 
+export const getCitations = async (input_html: string, url, theMediaUploadService: MediaUploadService) => { 
 	const $: CheerioStatic = cheerio.load(input_html, {decodeEntities: false});
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
 	
 	// Store {key, value} pair objects for O(1) access to determine internal citations
 	// Where key == citationId, and value == url   
 	let internalCitations = {};  
+	let available_citation_id = 1;
+
 
 	// Default push 
 	citations.push({
 		url: url, // References the specific wikipedia page 
 		thumb: null,
 		category: "NONE",
-		citation_id: getFirstAvailableCitationIndex(citations),
+		citation_id: available_citation_id,
 		description: defaultDescription,
 		social_type: null,
 	 	attribution: 'rel=nofollow',
 	 	timestamp: new Date(), 
 	 	mime: null
-	})
+	});
+	available_citation_id = available_citation_id + 1;
 
 	// Page content
 	const $content = $('div.mw-parser-output');
@@ -117,7 +125,7 @@ export const getCitations = (input_html: string, url) => {
 	});
 
 	// Start classifying the citations
-	rawCitations.forEach((raw_citn, idx) => {
+	rawCitations = rawCitations.map((raw_citn, idx) => {
 		// console.log($(raw_citn.note_element).html())
 
 		// First look for any <a href='#ABC123' ></a> and pull in that ID as the text.
@@ -132,21 +140,79 @@ export const getCitations = (input_html: string, url) => {
 						if(inner_href){
 							// Look for an ISBN
 							if(inner_href.search(/Special:BookSources/gimu) >= 0){
-								console.log($(inner_anchor).text());
+								raw_citn.category = 'BOOK';
+								raw_citn.isbn = $(inner_anchor).text().trim();
 							}
 							// Look for an ISSN
 							else if(inner_href.search(/issn/gimu) >= 0){
-								console.log($(inner_anchor).text());
+								raw_citn.category = 'PERIODICAL';
+								raw_citn.issn = $(inner_anchor).text().trim();
 							}
 						}
+						$(inner_anchor).remove();
 					})
 				}
-
-				console.log($(linked_id).html());
+				$(possible_anchor).replaceWith($(linked_id).contents()); 
+				raw_citn.text = $(raw_citn.note_element)
+										.text()
+										.trim()
+										.replace("  .,", "")
+										.replace("  ..", "");
 			}
 		}
-
+		// Otherwise, assume a book and put the URL as a search query
+		else {
+			raw_citn.category = 'BOOK';
+			raw_citn.text = $(raw_citn.note_element)
+									.text()
+									.trim();
+			raw_citn.url = `https://openlibrary.org/search?q=${encodeURIComponent(raw_citn.text.substr(0, 50))}`;
+		}
+		return raw_citn;
 	})
+
+	// Convert the raw citations into real ones
+	await Promise.all(
+		rawCitations.map(async (raw_citn, idx) => {
+			let workingCitation: Citation = {
+				url: raw_citn.url || null,
+				thumb: null,
+				category: raw_citn.category,
+				citation_id: available_citation_id,
+				description: [{ type: 'sentence', index: 0, text: raw_citn.text }],
+				social_type: null,
+				attribution: 'rel=nofollow',
+				timestamp: new Date(), 
+				mime: null
+			};
+			available_citation_id = available_citation_id + 1;
+			switch(raw_citn.category){
+				case 'BOOK': {
+					if (raw_citn.isbn){
+						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn);
+						workingCitation.url = bookInfo.url;
+						workingCitation.thumb = bookInfo.thumb;
+					};
+					break;
+				}
+				case 'PERIODICAL': {
+					if (raw_citn.issn){
+						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn);
+						workingCitation.url = periodicalInfo.url;
+						workingCitation.thumb = periodicalInfo.thumb;
+					};
+					break;
+				}
+				case 'FILE': {
+					break;
+				}
+				case 'NONE': {
+					break;
+				}
+			}
+			citations.push(workingCitation);
+		})
+	)
 
 	// Loop through all of the <a> tags and find the external links
 	$content.find("ul li a").each((idx, anchor) => {
@@ -157,7 +223,7 @@ export const getCitations = (input_html: string, url) => {
 				url: theWorkingURL,
 				thumb: null,
 				category: linkCategorizer(theWorkingURL),
-				citation_id: getFirstAvailableCitationIndex(citations),
+				citation_id: available_citation_id,
 				description: accumulateText(anchor, $, citations),
 				social_type: socialURLType(theWorkingURL),
 				attribution: 'rel=nofollow',
@@ -166,14 +232,19 @@ export const getCitations = (input_html: string, url) => {
 			};
 
 			citations.push(workingCitation);
+			available_citation_id = available_citation_id + 1;
 		};
 	});
 
-	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+	// Sort the citations properly
+	citations = _.sortBy(citations, ctn => ctn.citation_id);
+
+
+	console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
 	return {
 		citations: citations,
-		internalCitations: internalCitations //map passed to textParser for instant internal citation lookup
+		internalCitations: internalCitations // Map passed to textParser for instant internal citation lookup
 	}; 
 }
 
