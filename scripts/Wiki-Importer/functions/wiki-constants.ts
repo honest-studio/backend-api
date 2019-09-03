@@ -147,53 +147,43 @@ export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
 // use this list to add format removal exception tags to make the scrape look nicer over time
 POSTCLEAN_BAD_ELEMENTS = [
-    '<div class="notice plainlinks"></div>',  # any notices at the top of the page
-    '<div id="toc" class="toc"> </div>',  # table of contents, the content table at the beginning of articles
-    '<span class="mw-editsection"></span>',  # edit buttons next to headings
-    '<div id="jump-to-nav" class="mw-jump"></div>',  # nav heading at the top of article
-    '<div id="catlinks" class="catlinks" data-mw="interface"></div>',  # bottom footer sectional links
-    '<span id="coordinates"></span>',  # rando coordinates at the top of many pages
-    '<div id="siteSub"></div>',  # stupid motto "From Wikipedia, the Free Encyclopedia"
-    '<div id="jump-to-nav" class="mw-jump"></div>',  # more variation for the top of wikipedia
-    '<div id="contentSub"></div>',  # more varition of wikipedia top banner
-    '<div id="mw-indicator-good-star" class="mw-indicator"></div>',
-    # for the star or + sign at the top of articles for marking them
-    '<div id="mw-indicator-featured-star" class="mw-indicator"></div>',  # for featured star instead of + sign up ^
-    '<div id="mw-indicator-spoken-icon" class="mw-indicator"></div>',  # speaker icon for top right of articles
-    '<div id="mw-indicator-pp-default" class="mw-indicator"></div>',  # lock icon for top right of article
-    '<span class="noprint">',
-    '<div class="mw-indicators"></div>',  # the entire parent div of the indicator icons ^
-    '<div class="mw-authority-control"></div>',
-    '<h1 id="firstHeading" class="firstHeading" lang="en"></h1>',  # main title of the entire page
-    '<div id="footer"></div>',  # footer of the entire page
-    # '<ul class="gallery mw-gallery-packed"></ul>',
-    '<div id="siteNotice"</div>' #big notice on top of the page 
-    # an unordered list of strage ass looking gallery like the black sea page
-    '<div class="printfooter"></div>',  # another variation of footer above
-    '<div class="noprint portal tright"></div>',  # div for right aligned portals
-    #'<span id="See_also" class="mw-headline"></span>',  # see also span column
-    '<div role="note" class="hatnote"></div>',  # the note at the top of an article before it starts
-    '<div class="dablink"></div>',  # another redirector notice
+    { tag: "div", id: null, class: "notice plainlinks" }, // Any notices at the top of the page
+    { tag: "div", id: "toc", class: "toc" }, // Table of contents, the content table at the beginning of articles
+    { tag: "span", id: null, class: "mw-editsection" }, // Edit buttons next to headings
+    { tag: "div", id: "jump-to-nav", class: "mw-jump" }, // Nav heading at the top of article
+    { tag: "div", id: "catlinks", class: "catlinks" }, // Bottom footer sectional links
+    { tag: "span", id: "coordinates", class: null }, // Rando coordinates at the top of many pages
+    { tag: "div", id: "siteSub", class: null }, // Motto "From Wikipedia, the Free Encyclopedia"
+    { tag: "div", id: "jump-to-nav", class: "mw-jump" }, // More variation for the top of wikipedia
+    { tag: "div", id: "contentSub", class: null }, // More varition of wikipedia top banner
+    { tag: "div", id: "mw-indicator-good-star", class: "mw-indicator" }, // For the star or + sign at the top of articles for marking them
+    { tag: "div", id: "mw-indicator-featured-star", class: "mw-indicator" }, // For featured star instead of + sign up ^
+    { tag: "div", id: "mw-indicator-spoken-icon", class: "mw-indicator" }, // Speaker icon for top right of articles
+    { tag: "div", id: "mw-indicator-pp-default", class: "mw-indicator" }, // Lock icon for top right of article
+    { tag: "span", id: null, class: "noprint" },
+    { tag: "div", id: null, class: "mw-indicators" }, // The entire parent div of the indicator icons ^
+    { tag: "div", id: null, class: "mw-authority-control" }, 
+    { tag: "h1", id: "firstHeading", class: "firstHeading" }, // Main title of the entire page
+    { tag: "div", id: "footer", class: null }, // Footer of the entire page
+    { tag: "div", id: "siteNotice", class: null }, // Big notice on top of the page
+    { tag: "div", id: null, class: "printfooter" }, // Another variation of footer above
+    { tag: "div", id: null, class: "noprint portal tright" }, // Div for right aligned portals
+    { tag: "div", id: null, class: "hatnote" }, // The note at the top of an article before it starts
+    { tag: "div", id: null, class: "dablink" }, // Another redirector notice
+
+
     '<div class="dabhide"></div>',  # another redirector notice
     '<div class="visualClear"></div>',  # random crap in the footer area
     '<div id="mw-navigation"></div>',  # footer section that houses nav options
     '<span title="This claim needs references to reliable sources."></span>',  # the citation needed span
     '<table class="vertical-navbox nowraplinks plainlist"></table>',
-    # table for "a series in" type navboxes, these navboxes seem to have small variations in class name for some reason
     '<table class="navbox"></table>',  # another variation of a navbox
     '<table class="toccolours"></table>',  # jank table of contents
     '<table class="vertical-navbox nowraplinks nowraplinks hlist"></table>',
-    # a second variation type of the above table ^
-    #'<div class="gallery mw-gallery-traditional center"></ul>',  # weird gallery shit need to be excised
-    #'<div class="gallery mw-gallery-packed-hover"</div>', #another type of gallery that needs to be excised,
-    #'<div class="gallerybox"</div>', #another type of gallery that needs to be excised,
     '<table class="vertical-navbox nowraplinks vcard hlist"></table>',  # another variation of the series tables above ^
     '<table class="metadata plainlinks ambox ambox-style ambox-citation_style"></table>',
-    # "This article has an unclear citation style" notice at the top of article
     '<table class="metadata plainlinks ambox ambox-content ambox-Refimprove"></table>',
-    # variation of the above table ^
     '<table class="vertical-navbox vcard plainlist"></table>',
-    # vcard infobox style but without infobox, usually for "history of (some country)
     '<table class="mbox-small plainlinks sistersitebox"></table>',  # table for sistersite like "check out wikinews" bs
     '<table class="navbox"></table>',  # portal navigation tables
     '<table class="metadata mbox-small noprint selfref"></table>',  # notice for rendering warning emoji page etc
@@ -204,8 +194,4 @@ POSTCLEAN_BAD_ELEMENTS = [
     '<div class="mw-empty-li-1"></div>', #empty lines in blob boxes
     '<span id="coordinates"></span>',
     '<div class="mw-references-wrap"></div>'
-    # '<div class="plainlinks"></a>'
-    #'<div class="navbox-abovebelow"</div>',#things that make messy tables like the New York Jets AFC side table that gets fucked up on displays in Everipedia
-    #'<div class="hlist"</div>' #same as above, the jets bullshit
-    #'<div style="clear:both;"></div>' #this is a weird esoteric piece of colored space that appears in all wikiscrapes that should be removed
 ]
