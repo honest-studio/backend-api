@@ -38,6 +38,7 @@ export const getImage = (element, $): Media | string => {
 
 		// Get media attributes
 		let attributes = getMediaAttributes(url);
+
 		return {
 			type: 'section_image',
 			url: url,

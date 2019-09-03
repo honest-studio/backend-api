@@ -21,8 +21,6 @@ export const getSentences = (element, $): Sentence[] => {
 	}
 	const chars = $el.html().split(''); // Character array of paragraph
 
-
-
 	let start = 0; // Starting index of sentence
 	let end = 0; // Ending index of sentence
 	let Abrevflag = false; // Abrevflag to keep track of abreviations that might end sentences early
@@ -91,7 +89,6 @@ export const getSentences = (element, $): Sentence[] => {
 	// Sentences are the same, simply replace anchor tags with [[ LINK|${lang_code}|${slug}|${text} ]]
 
 	const output = sentences && sentences.map((sentence, index) => {
-		console.log(sentence)
 		let text = '';
 		let lang = 'lang_en'; // for now 
 		let isLinkText = false; 

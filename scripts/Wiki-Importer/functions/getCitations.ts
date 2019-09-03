@@ -1,8 +1,18 @@
 import * as cheerio from 'cheerio';
 import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
-import { Citation, Sentence } from '../../../src/types/article';
+import { Citation, Sentence, CitationCategoryType } from '../../../src/types/article';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
+
+export interface RawCitation {
+	id: string,
+	id_ref: string,
+	id_note: string,
+	category: CitationCategoryType,
+	text: string,
+	note_element: CheerioElement,
+}
+
 
 // Default description for the Wikipedia citation
 let defaultDescription: Sentence[] = [
@@ -55,84 +65,159 @@ export const getCitations = (input_html: string, url) => {
 	 	mime: null
 	})
 
-	const $content = $('div.mw-parser-output'); // Page content
-	const $refList = $content.find('.reflist').last().find('ol'); // Get the list of references
-	
-	 // Loop through the references
-	$refList.children('li').each( (i, el) => {
-		// Get a specific citation
-		let $reference = $(el).find('.reference-text'); 
-		let $citation = $reference.find('.citation');
-		
-		// If the citation is immediately present, process it
-		// TODO: Deal with media uploads, thumbs, etc
-		if ($citation.length > 0) {
-			let description = accumulateText($citation, $, internalCitations);
-			let urlToUse = $citation.find('a').attr('href');
+	// Page content
+	const $content = $('div.mw-parser-output');
 
-			// Current citation
-			let cur: Citation = {
-				url: urlToUse,
-				thumb: null,
-				category: linkCategorizer(urlToUse),
-				citation_id: i + 1, // i + 1 because default push is 0
-				description: description,
-				social_type: socialURLType(urlToUse),
-				attribution: 'rel=nofollow',
-				timestamp: getTimeStamp() as any,
-				mime: null
-			}
-			let key = i+1;
-			internalCitations[key] = cur.url;
-			citations.push(cur);
+	// Loop through all of the <sup> tags and find the citation references
+	let cite_refs: CheerioElement[] = [];
+	$content.find("sup").each((idx, sup) => {
+		// Find the citation references
+		if (sup.attribs['id'] && sup.attribs['id'].search(/cite_ref/gimu) >= 0){
+			cite_refs.push(sup);
+		};
+	});
+
+	// Loop through all of the <a> tags and find the external links
+	let external_links: CheerioElement[] = [];
+	$content.find("a").each((idx, anchor) => {
+		// Find the external links
+		if (anchor.attribs['class'] && anchor.attribs['class'].search(/external/gimu) >= 0){
+			external_links.push(anchor);
+		};
+	});
+
+	// Find the citation notes
+	let rawCitations: RawCitation[] = [];
+	$content.find("li").each((idx, list_item) => {
+		// Find the citation notes
+		if (list_item.attribs['id'] && list_item.attribs['id'].search(/cite_note/gimu) >= 0){
+			let note_index_splits = list_item.attribs['id'].split("-");
+			let note_index = note_index_splits[note_index_splits.length - 1];
+
+			let workingRawCitation = {
+				id: note_index,
+				id_ref: null,
+				id_note: list_item.attribs['id'],
+				category: null,
+				text: null,
+				note_element: list_item,
+			};
+
+			// Find the ref that corresponds to the note
+			cite_refs.forEach((ref_elem, idx) => {
+				let ref_index_splits = ref_elem.attribs['id'].split("-");
+				let ref_index = ref_index_splits[ref_index_splits.length - 1];
+
+				if (note_index == ref_index){
+					workingRawCitation.id_ref = ref_elem.attribs['id'];
+				}
+			})
+
+			if (!workingRawCitation.id_ref) NEED TO DO SOMETHING!!!
+
+			// Add the ref and note information to the list of raw citations
+			rawCitations.push(workingRawCitation)
 			
-		} 
-		else { 
-			// Else traverse biography (primary, secondary, tertiary sources to find citation)
-			// and compare citations to identifiers to identify the citation in the biography
-			let found = false; 
-			$content.find('div .refbegin').each((i3, el3) => { // For each biography (i.e., primary, secondary, tertiary)  
-				let a = $reference.find('a').attr('href');
+		};
+	});
 
-				// Loop through the citations
-				$(el3).find('cite').each( (i4, el4) => {
-					if (a == '#' + $(el4).attr('id')) { // Citation found in biography
-						let description = accumulateText(el4, $, internalCitations);
+	console.log(rawCitations)
 
-						// Type of citation = $(el4).attr('class'); (e.g, journal, book etc..)
-						let url = '';
-						$(el4).find('a').each((i5, el5) => {
-							let $el5 = $(el5);
-							if ($el5.attr('class') == "external text") {
-								url = $el5.attr('href');
-							}
-						})
-						if ( url == undefined ) {
-							url == '';
-						}
-						let cur: Citation = {
-							url: url,
-							thumb: null,
-							category: linkCategorizer(url),
-							citation_id: i + 1, 
-							description: description,
-							social_type: null,
-							attribution: 'rel=nofollow',
-							timestamp: getTimeStamp() as any,
-							mime: null
-						}
-						citations.push(cur);
-						internalCitations[i+1] = cur.url;
-						found = !found;
-						return
-					}
-					if (found) { // Quick break to stop iterating if citation has been found in biography
-						return
-					}
-				}) 
-			}) 
-		}
-	}) 
+	// // Start matching refs to notes
+	// let rawCitations: RawCitation[] = [];
+	// cite_refs.forEach((idx, elem) => {
+	// 	let note_index = $(elem).a
+	// })
+
+
+	// console.log(cite_refs);
+	// console.log(cite_notes);
+	// console.log(external_links);
+
+	// let cite_refs = $($content).find('a', href=re.compile('#cite_ref'))
+	// let cite_notes = $content.find_all('a', href=re.compile('#cite_note'))
+
+
+
+	// const $refList = $content.find('.reflist').last().find('ol'); // Get the list of references
+
+	//  // Loop through the references
+	// $refList.children('li').each( (i, el) => {
+		
+
+	// 	// Get a specific citation
+	// 	let $reference = $(el).find('.reference-text'); 
+	// 	let $citation = $reference.find('.citation');
+		
+	// 	// If the citation is immediately present, process it
+	// 	// TODO: Deal with media uploads, thumbs, etc
+	// 	if ($citation.length > 0) {
+	// 		let description = accumulateText($citation, $, internalCitations);
+	// 		let urlToUse = $citation.find('a').attr('href');
+
+	// 		// Current citation
+	// 		let cur: Citation = {
+	// 			url: urlToUse,
+	// 			thumb: null,
+	// 			category: linkCategorizer(urlToUse),
+	// 			citation_id: i + 1, // i + 1 because default push is 0
+	// 			description: description,
+	// 			social_type: socialURLType(urlToUse),
+	// 			attribution: 'rel=nofollow',
+	// 			timestamp: getTimeStamp() as any,
+	// 			mime: null
+	// 		}
+	// 		let key = i+1;
+	// 		internalCitations[key] = cur.url;
+	// 		citations.push(cur);
+			
+	// 	} 
+	// 	else { 
+	// 		// Else traverse biography (primary, secondary, tertiary sources to find citation)
+	// 		// and compare citations to identifiers to identify the citation in the biography
+	// 		let found = false; 
+	// 		$content.find('div .refbegin').each((i3, el3) => { // For each biography (i.e., primary, secondary, tertiary)  
+	// 			let a = $reference.find('a').attr('href');
+
+	// 			// Loop through the citations
+	// 			$(el3).find('cite').each( (i4, el4) => {
+	// 				if (a == '#' + $(el4).attr('id')) { // Citation found in biography
+	// 					let description = accumulateText(el4, $, internalCitations);
+
+	// 					// Type of citation = $(el4).attr('class'); (e.g, journal, book etc..)
+	// 					let url = '';
+	// 					$(el4).find('a').each((i5, el5) => {
+	// 						let $el5 = $(el5);
+	// 						if ($el5.attr('class') == "external text") {
+	// 							url = $el5.attr('href');
+	// 						}
+	// 					})
+	// 					if ( url == undefined ) {
+	// 						url == '';
+	// 					}
+	// 					let cur: Citation = {
+	// 						url: url,
+	// 						thumb: null,
+	// 						category: linkCategorizer(url),
+	// 						citation_id: i + 1, 
+	// 						description: description,
+	// 						social_type: null,
+	// 						attribution: 'rel=nofollow',
+	// 						timestamp: getTimeStamp() as any,
+	// 						mime: null
+	// 					}
+	// 					citations.push(cur);
+	// 					internalCitations[i+1] = cur.url;
+	// 					found = !found;
+	// 					return
+	// 				}
+	// 				if (found) { // Quick break to stop iterating if citation has been found in biography
+	// 					return
+	// 				}
+	// 			}) 
+	// 		}) 
+	// 	}
+	// }) 
 	return {
 		citations: citations,
 		internalCitations: internalCitations //map passed to textParser for instant internal citation lookup
