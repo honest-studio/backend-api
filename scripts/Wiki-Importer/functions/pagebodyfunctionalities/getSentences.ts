@@ -77,6 +77,7 @@ export const getSentences = (element, $): Sentence[] => {
 	// Sentences are the same, simply replace anchor tags with [[ LINK|${lang_code}|${slug}|${text} ]]
 
 	const output = sentences && sentences.map((sentence, index) => {
+		console.log(sentence)
 		let text = '';
 		let lang = 'lang_en'; // for now 
 		let isLinkText = false; 
