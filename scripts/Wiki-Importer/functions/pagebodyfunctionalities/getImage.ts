@@ -32,7 +32,7 @@ export const getImage = (element, $): Media | string => {
 	let $thumbcaption = $el.find('.thumbcaption');
 	if ($thumbinner.length > 0 && $thumbcaption.length > 0) { 
 		url = cleanURL(src);
-		if (!url.includes('.jpg') && !url.includes('.png')) { //prevent edge case
+		if (!url.includes('.jpg') && !url.includes('.png')) { // Prevent edge case
 			url = 'https:' + src;
 		}
 
