@@ -143,10 +143,20 @@ export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 
+export interface ElementCleaningPack {
+    parent?: {
+        id?: string
+        class?: string,
+    },
+    tag: string,
+    id: string,
+    class: string
+}
+
 // Add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
 // use this list to add format removal exception tags to make the scrape look nicer over time
-export const PRECLEAN_BAD_ELEMENTS = [
+export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: null, class: "notice plainlinks" }, // Any notices at the top of the page
     { tag: "div", id: "toc", class: "toc" }, // Table of contents, the content table at the beginning of articles
     { tag: "span", id: null, class: "mw-editsection" }, // Edit buttons next to headings
@@ -190,5 +200,12 @@ export const PRECLEAN_BAD_ELEMENTS = [
     { tag: "div", id: null, class: "printfooter" }, // Retrieved from bullshit at the end of blurbs
     { tag: "div", id: null, class: "mw-empty-li-1" }, // Empty lines in blob boxes
     { tag: "span", id: "coordinates", class: null }, 
-    { tag: "div", id: null, class: "mw-references-wrap" }, 
+    { tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
+    { parent: { class: 'thumbcaption'}, tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
+    // { tag: "div", id: null, class: "mw-references-wrap" }, 
+]
+
+// Some elements need to be unwrapped
+export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
+    { parent: { class: 'thumbcaption'}, tag: "center", id: null, class: null }, // Shows up in captions sometimes
 ]
