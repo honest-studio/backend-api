@@ -194,7 +194,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.763Z"
+          "timestamp": "2019-09-03T23:13:12.666Z"
         },
         {
           "type": "section_image",
@@ -209,7 +209,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.764Z"
+          "timestamp": "2019-09-03T23:13:12.668Z"
         }
       ]
     },
@@ -242,7 +242,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.769Z"
+          "timestamp": "2019-09-03T23:13:12.672Z"
         },
         {
           "type": "section_image",
@@ -257,7 +257,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.769Z"
+          "timestamp": "2019-09-03T23:13:12.673Z"
         }
       ]
     },
@@ -281,7 +281,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "In March 1937, Italian dictator Benito Mussolini made a state visit to Italian Libya to open this new military and civilian highway, built by governor-general [[LINK|lang_en|Italo_Balbo|Italo Balbo]]. [[CITE|1|undefined]]  When Balbo died in 1940 in a plane crash, the Italian government named the 1822 kilometer road **Via Balbia** in his honour. It was used to improve the economy and viability of the Italian colony of Libya."
+              "text": "In March 1937, Italian dictator Benito Mussolini made a state visit to Italian Libya to open this new military and civilian highway, built by governor-general [[LINK|lang_en|Italo_Balbo|Italo Balbo]].[[CITE|2|https://portal.issn.org/resource/ISSN/2160-3049]] When Balbo died in 1940 in a plane crash, the Italian government named the 1822 kilometer road **Via Balbia** in his honour. It was used to improve the economy and viability of the Italian colony of Libya."
             }
           ],
           "tag_type": "p",
@@ -293,7 +293,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The Italians also constructed a minor road parallel to the coastal road, starting from [[LINK|lang_en|Marj,_Libya|Marj]] through [[LINK|lang_en|Marawa,_Libya|Marawa]], to [[LINK|lang_en|Lamluda|Lamluda]] which is 143 km (89 mi) long. [[CITE|2|undefined]]  [[CITE|3|undefined]]"
+              "text": "The Italians also constructed a minor road parallel to the coastal road, starting from [[LINK|lang_en|Marj,_Libya|Marj]] through [[LINK|lang_en|Marawa,_Libya|Marawa]], to [[LINK|lang_en|Lamluda|Lamluda]] which is 143 km (89 mi) long.[[CITE|3|https://openlibrary.org/search?q=Tarikh%20Libia%20men%20Nehayat%20al%20Qarn%20at%20Tasi'%20Ashar%20ha]][[CITE|4|https://openlibrary.org/search?q=Doxiadis%20Associates%2C%20%22Transport%20in%20Libya%22%2C%20Vol.%201%2C]]"
             }
           ],
           "tag_type": "p",
@@ -305,7 +305,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The road was built from the [[LINK|lang_en|Tunisia|Tunisian]] border to the Egyptian border and was extended in 1940 by the [[LINK|lang_en|Via_della_Vittoria|Via della Vittoria]] inside western Egypt. According to historian Baldinetti the construction was done to give work to more than 10,000 Libyan Arabs. [[CITE|4|undefined]]"
+              "text": "The road was built from the [[LINK|lang_en|Tunisia|Tunisian]] border to the Egyptian border and was extended in 1940 by the [[LINK|lang_en|Via_della_Vittoria|Via della Vittoria]] inside western Egypt. According to historian Baldinetti the construction was done to give work to more than 10,000 Libyan Arabs.[[CITE|5|https://openlibrary.org/api/books?bibkeys=ISBN:1-13524-501-0&jscmd=data&format=json]]"
             }
           ],
           "tag_type": "p",
@@ -350,7 +350,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.772Z"
+          "timestamp": "2019-09-03T23:13:12.678Z"
         }
       ]
     },
@@ -403,7 +403,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The road was renamed Libyan Coastal Highway after the country gained independence and was improved with enlargements. It was fully repaved in 1967. [[CITE|5|undefined]]  According to [[LINK|lang_en|Hussein_Maziq|Hussein Maziq]], prime minister of [[LINK|lang_en|Libya|Libya]] (1965–1967) under [[LINK|lang_en|King_Idris|King Idris]], there had been plans to make this road a dual carriageway road. [[CITE|6|undefined]]   Two parts were built: the [[LINK|lang_en|Sabratha|Sabratha]]—[[LINK|lang_en|Tripoli|Tripoli]]—[[LINK|lang_en|Misrata|Misrata]] section; and the [[LINK|lang_en|Ajdabiya|Ajdabiya]]—[[LINK|lang_en|Benghazi|Benghazi]]—[[LINK|lang_en|Taucheira|Taucheira]] section. The entire construction did not occur because of the coup d'état political change by Muammar Gaddafi on 1 September 1969. The \"Arch of Fileni\" was demolished in 1973 by the new revolutionary regime of dictator [[LINK|lang_en|Muammar_Gaddafi|Muammar Gaddafi]]."
+              "text": "The road was renamed Libyan Coastal Highway after the country gained independence and was improved with enlargements. It was fully repaved in 1967.[[CITE|6|https://openlibrary.org/search?q=El%20Hadi%20Mustapha%20Bulegma%2C%20p.487.]] According to [[LINK|lang_en|Hussein_Maziq|Hussein Maziq]], prime minister of [[LINK|lang_en|Libya|Libya]] (1965–1967) under [[LINK|lang_en|King_Idris|King Idris]], there had been plans to make this road a dual carriageway road.[[CITE|7|null]]  Two parts were built: the [[LINK|lang_en|Sabratha|Sabratha]]—[[LINK|lang_en|Tripoli|Tripoli]]—[[LINK|lang_en|Misrata|Misrata]] section; and the [[LINK|lang_en|Ajdabiya|Ajdabiya]]—[[LINK|lang_en|Benghazi|Benghazi]]—[[LINK|lang_en|Taucheira|Taucheira]] section. The entire construction did not occur because of the coup d'état political change by Muammar Gaddafi on 1 September 1969. The \"Arch of Fileni\" was demolished in 1973 by the new revolutionary regime of dictator [[LINK|lang_en|Muammar_Gaddafi|Muammar Gaddafi]]."
             }
           ],
           "tag_type": "p",
@@ -448,7 +448,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.775Z"
+          "timestamp": "2019-09-03T23:13:12.680Z"
         }
       ]
     },
@@ -601,7 +601,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T22:49:48.779Z"
+          "timestamp": "2019-09-03T23:13:12.684Z"
         }
       ]
     },
@@ -754,7 +754,7 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "Baldinetti, Anna (2014). *The Origins of the Libyan Nation: Colonial Legacy, Exile and the Emergence of a New Nation-State*. Routledge Studies in Middle Eastern History. New York: Routledge. [[LINK|lang_en|International_Standard_Book_Number|ISBN]] ."
+                  "text": ""
                 }
               ],
               "tag_type": "li"
@@ -766,7 +766,7 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "Pini, G (December 1939). \"La rete stradale dell'Impero\". *Africa Italiana* (12). [[LINK|lang_en|International_Standard_Serial_Number|ISSN]] [[LINK|lang_en|worldcat.org/issn/2160-3049|2160-3049]]."
+                  "text": ""
                 }
               ],
               "tag_type": "li"
@@ -815,7 +815,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.491Z",
+      "timestamp": "2019-09-03T23:13:12.411Z",
       "mime": null
     },
     {
@@ -832,7 +832,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.504Z",
+      "timestamp": "2019-09-03T23:13:12.424Z",
       "mime": null
     },
     {
@@ -849,7 +849,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.504Z",
+      "timestamp": "2019-09-03T23:13:12.424Z",
       "mime": null
     },
     {
@@ -866,7 +866,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.504Z",
+      "timestamp": "2019-09-03T23:13:12.425Z",
       "mime": null
     },
     {
@@ -883,7 +883,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.504Z",
+      "timestamp": "2019-09-03T23:13:12.425Z",
       "mime": null
     },
     {
@@ -900,7 +900,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.505Z",
+      "timestamp": "2019-09-03T23:13:12.426Z",
       "mime": null
     },
     {
@@ -917,7 +917,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.505Z",
+      "timestamp": "2019-09-03T23:13:12.427Z",
       "mime": null
     },
     {
@@ -934,7 +934,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.712Z",
+      "timestamp": "2019-09-03T23:13:12.621Z",
       "mime": "application/pdf"
     },
     {
@@ -951,7 +951,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T22:49:48.713Z",
+      "timestamp": "2019-09-03T23:13:12.622Z",
       "mime": "application/pdf"
     }
   ],
@@ -991,7 +991,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/3/2019 22:49:47 PM UTC"
+      "value": "8/3/2019 23:13:11 PM UTC"
     },
     {
       "key": "last_modified",
@@ -1016,5 +1016,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmYQL8yyHN1Qeq2DHHYCs7JDZrEfuhfUrtKUaAFhKLfx7k"
+  "ipfs_hash": "QmQJY84rWFk7eqqti65Q48f5Qekw9kjuHN5APR2hAtdxp5"
 }

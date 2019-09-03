@@ -42,7 +42,7 @@ export const getPageBodyPack = async (input_html: string, url, theMediaUploadSer
 	let paragraphIndex = 0; // Keep track of current paragraph
 
 	// Parse the dom
-	const $ = cheerio.load(input_html, {decodeEntities: false});
+	const $ = cheerio.load(citations.altered_body, {decodeEntities: false});
 	const $content = $('div.mw-parser-output');
 
 	// Loop through the children

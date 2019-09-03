@@ -13,6 +13,7 @@ export interface RawCitation {
 	id: string,
 	id_ref: string,
 	id_note: string,
+	index_to_use: number,
 	url?: string,
 	isbn?: string,
 	issn?: string,
@@ -100,10 +101,12 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 				id: note_index,
 				id_ref: null,
 				id_note: list_item.attribs['id'],
+				index_to_use: available_citation_id,
 				category: null,
 				text: null,
 				note_element: list_item,
 			};
+			available_citation_id = available_citation_id + 1;
 
 			// Find the ref that corresponds to the note
 			cite_refs.forEach((ref_elem, idx) => {
@@ -172,20 +175,20 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 	})
 
 	// Convert the raw citations into real ones
+	// Also replace the <sup> tags with markdown
 	await Promise.all(
 		rawCitations.map(async (raw_citn, idx) => {
 			let workingCitation: Citation = {
 				url: raw_citn.url || null,
 				thumb: null,
 				category: raw_citn.category,
-				citation_id: available_citation_id,
+				citation_id: raw_citn.index_to_use,
 				description: [{ type: 'sentence', index: 0, text: raw_citn.text }],
 				social_type: null,
 				attribution: 'rel=nofollow',
 				timestamp: new Date(), 
 				mime: null
 			};
-			available_citation_id = available_citation_id + 1;
 			switch(raw_citn.category){
 				case 'BOOK': {
 					if (raw_citn.isbn){
@@ -210,7 +213,14 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 					break;
 				}
 			}
+
+			// Replace the <sup> with the markdown citation notation
+			console.log($(`#${raw_citn.id_ref}`).html())
+			$(`#${raw_citn.id_ref}`).replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`)
+
+			// Add the citation to the list
 			citations.push(workingCitation);
+			
 		})
 	)
 
@@ -240,11 +250,12 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 	citations = _.sortBy(citations, ctn => ctn.citation_id);
 
 
-	console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
 	return {
 		citations: citations,
-		internalCitations: internalCitations // Map passed to textParser for instant internal citation lookup
+		internalCitations: internalCitations, // Map passed to textParser for instant internal citation lookup
+		altered_body: $.html()
 	}; 
 }
 
