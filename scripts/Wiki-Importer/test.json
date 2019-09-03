@@ -189,12 +189,12 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": ""
+              "text": "Map of the [[LINK|lang_en|Cairo%E2%80%93Dakar_Highway|Cairo–Dakar Highway]] #1, with the Libyan Coastal Highway section, in the [[LINK|lang_en|Trans-African_Highway|Trans-African Highway]] system."
             }
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         },
         {
           "type": "section_image",
@@ -204,12 +204,12 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": ""
+              "text": "[[LINK|lang_en|Tripoli|Tripoli]]—[[LINK|lang_en|Misrata|Misrata]] double-highway section of the highway (2004)"
             }
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         }
       ]
     },
@@ -237,12 +237,12 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": ""
+              "text": "The Via Balbia at the [[LINK|lang_en|Marble_Arch_(Libya)|Marble Arch]] with German [[LINK|lang_en|Panzer_III|Panzer III tanks]] (1941)"
             }
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         },
         {
           "type": "section_image",
@@ -252,12 +252,12 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": ""
+              "text": "The Arch of the Philaeni, March 1937"
             }
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         }
       ]
     },
@@ -345,12 +345,12 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": ""
+              "text": "Course of the Litoranea Balbo and Libyan railways"
             }
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         }
       ]
     },
@@ -443,12 +443,12 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": ""
+              "text": "Highway with bridge overpass entrance to the east of Bayda (2010)"
             }
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         }
       ]
     },
@@ -592,10 +592,16 @@
           "type": "section_image",
           "url": "https://upload.wikimedia.org/wikipedia/commons/1/19/Fezzan_road2.png",
           "thumb": null,
-          "caption": [],
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Map of the central section of the highway in the [[LINK|lang_en|Misrata|Misrata]]—[[LINK|lang_en|Sirte|Sirte]] region of [[LINK|lang_en|Tripolitania|Tripolitania]], and its junction with the northern end of [[LINK|lang_en|Fezzan_Road|Fezzan Road]]."
+            }
+          ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 17:24:12 PM UTC"
+          "timestamp": "8/3/2019 20:41:1 PM UTC"
         }
       ]
     },
@@ -779,7 +785,7 @@
       "url": "https://en.wikipedia.org/wiki/Libyan_Coastal_Highway",
       "thumb": null,
       "category": "NONE",
-      "citation_id": 0,
+      "citation_id": 1,
       "description": [
         {
           "index": 0,
@@ -809,8 +815,59 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "8/3/2019 17:24:12 PM UTC",
+      "timestamp": "8/3/2019 20:41:1 PM UTC",
       "mime": null
+    },
+    {
+      "url": "//www.worldcat.org/issn/2160-3049",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 2,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "2160-3049"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "mime": null
+    },
+    {
+      "url": "https://web.archive.org/web/20150402123125/http://media.tecnici.it/file/novecento/la_litoranea_libica.pdf",
+      "thumb": null,
+      "category": "FILE",
+      "citation_id": 3,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "La Litoranea Libica (in Italian)"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "mime": "application/pdf"
+    },
+    {
+      "url": "http://www.qattara.it/balbia_files/Opere%20italiane%20in%20Africa.pdf",
+      "thumb": null,
+      "category": "FILE",
+      "citation_id": 4,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Where there was nothing but wood, we left asphalt and marble (in Italian)"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "mime": "application/pdf"
     }
   ],
   "media_gallery": [],
@@ -849,7 +906,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/3/2019 17:24:11 PM UTC"
+      "value": "8/3/2019 20:41:0 PM UTC"
     },
     {
       "key": "last_modified",
@@ -874,5 +931,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmduTX1rSEuqXtZbmNz6G2dSRGpTeSaX5EmrYkA2ky6D3y"
+  "ipfs_hash": "Qmb7gFWXBVTUj6R6H74HMMAzG4UiCHGXCkW3inVNSp96Uu"
 }

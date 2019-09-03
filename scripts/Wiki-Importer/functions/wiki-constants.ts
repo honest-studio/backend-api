@@ -197,6 +197,9 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: null, class: "toclimit-3" }, // Weird whitespace after the table of contents on big articles like /wikipedia/
     { tag: "div", id: null, class: "toclimit-2" }, 
     { tag: "div", id: null, class: "toclimit-1" }, 
+    { tag: "li", id: null, class: "nv-view" }, // Navbar mini
+    { tag: "li", id: null, class: "nv-talk" }, // Navbar mini
+    { tag: "li", id: null, class: "nv-edit" }, // Navbar mini
     { tag: "div", id: null, class: "printfooter" }, // Retrieved from bullshit at the end of blurbs
     { tag: "div", id: null, class: "mw-empty-li-1" }, // Empty lines in blob boxes
     { tag: "span", id: "coordinates", class: null }, 

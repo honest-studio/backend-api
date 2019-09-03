@@ -3,6 +3,9 @@ import { textParser, accumulateText } from './pagebodyfunctionalities/textParser
 import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
 import { Citation, Sentence, CitationCategoryType } from '../../../src/types/article';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
+import { getFirstAvailableCitationIndex } from '../../../src/utils/article-utils/article-tools';
+const util = require('util');
+import * as mimePackage from 'mime';
 
 export interface RawCitation {
 	id: string,
@@ -57,7 +60,7 @@ export const getCitations = (input_html: string, url) => {
 		url: url, // References the specific wikipedia page 
 		thumb: null,
 		category: "NONE",
-		citation_id: 0,
+		citation_id: getFirstAvailableCitationIndex(citations),
 		description: defaultDescription,
 		social_type: null,
 	 	attribution: 'rel=nofollow',
@@ -77,14 +80,6 @@ export const getCitations = (input_html: string, url) => {
 		};
 	});
 
-	// Loop through all of the <a> tags and find the external links
-	let external_links: CheerioElement[] = [];
-	$content.find("a").each((idx, anchor) => {
-		// Find the external links
-		if (anchor.attribs['class'] && anchor.attribs['class'].search(/external/gimu) >= 0){
-			external_links.push(anchor);
-		};
-	});
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
@@ -105,7 +100,8 @@ export const getCitations = (input_html: string, url) => {
 
 			// Find the ref that corresponds to the note
 			cite_refs.forEach((ref_elem, idx) => {
-				let ref_index_splits = ref_elem.attribs['id'].split("-");
+				// console.log($(ref_elem).find("a").attr("href"))
+				let ref_index_splits = $(ref_elem).find("a").attr("href").split("-");
 				let ref_index = ref_index_splits[ref_index_splits.length - 1];
 
 				if (note_index == ref_index){
@@ -113,7 +109,7 @@ export const getCitations = (input_html: string, url) => {
 				}
 			})
 
-			if (!workingRawCitation.id_ref) NEED TO DO SOMETHING!!!
+			// if (!workingRawCitation.id_ref) NEED TO DO SOMETHING!!!
 
 			// Add the ref and note information to the list of raw citations
 			rawCitations.push(workingRawCitation)
@@ -121,23 +117,48 @@ export const getCitations = (input_html: string, url) => {
 		};
 	});
 
-	console.log(rawCitations)
+	// console.log(rawCitations)
 
-	// // Start matching refs to notes
-	// let rawCitations: RawCitation[] = [];
-	// cite_refs.forEach((idx, elem) => {
-	// 	let note_index = $(elem).a
-	// })
+	// Start classifying the citations
+	rawCitations.forEach((raw_citn, idx) => {
+		// console.log($(raw_citn.note_element).html())
+
+		// First look for any <a href='#ABC123' ></a> and pull in that ID as the text.
+		let possible_anchor = $(raw_citn.note_element).find("a").eq(0)[0];
+		if (possible_anchor && possible_anchor.attribs['href']){
+			if(possible_anchor && possible_anchor.attribs['href'] && possible_anchor.attribs['href'][0] == "#"){
+				let linked_id = possible_anchor.attribs['href'];
+				console.log($(linked_id).html());
+			}
+		}
+
+	})
 
 
-	// console.log(cite_refs);
-	// console.log(cite_notes);
-	// console.log(external_links);
 
-	// let cite_refs = $($content).find('a', href=re.compile('#cite_ref'))
-	// let cite_notes = $content.find_all('a', href=re.compile('#cite_note'))
+	// Loop through all of the <a> tags and find the external links
+	$content.find("ul li a").each((idx, anchor) => {
+		// Find the external links
+		if (anchor.attribs['class'] && anchor.attribs['class'].search(/external/gimu) >= 0){
+			let theWorkingURL = anchor.attribs['href'];
+			let workingCitation: Citation = {
+				url: theWorkingURL,
+				thumb: null,
+				category: linkCategorizer(theWorkingURL),
+				citation_id: getFirstAvailableCitationIndex(citations),
+				description: accumulateText(anchor, $, citations),
+				social_type: socialURLType(theWorkingURL),
+				attribution: 'rel=nofollow',
+				timestamp: getTimeStamp() as any, 
+				mime: mimePackage.getType(theWorkingURL)
+			};
 
+			citations.push(workingCitation);
+		};
+	});
 
+	console.log(citations)
+	console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
 	// const $refList = $content.find('.reflist').last().find('ol'); // Get the list of references
 

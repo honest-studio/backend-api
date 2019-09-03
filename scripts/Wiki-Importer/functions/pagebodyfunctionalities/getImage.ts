@@ -1,4 +1,4 @@
-import { getSentences } from './getSentences'; //need to patch getSentences for this code 
+import { accumulateText } from './textParser'; //need to patch getSentences for this code 
 import { getMediaAttributes } from './mediafunctions.js';
 import { getTimeStamp } from './getTimeStamp';
 import { Media } from '../../../../src/types/article';
@@ -21,7 +21,7 @@ export const cleanURL = (string): string => {
 }
 
 // Get a Media object from an image
-export const getImage = (element, $): Media | string => { 
+export const getImage = (element, $, internal_citations): Media | string => { 
 	let url: string;
 
 	// Detect the image using Cheerio
@@ -43,7 +43,7 @@ export const getImage = (element, $): Media | string => {
 			type: 'section_image',
 			url: url,
 			thumb: null,
-			caption: getSentences($thumbcaption, $),
+			caption: accumulateText($thumbcaption, $, internal_citations),
 			mime: (attributes as any).mime,
 			category: (attributes as any).citationcategorytype,
 			timestamp: getTimeStamp() as any,

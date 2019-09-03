@@ -99,7 +99,7 @@ export const getPageBodyPack = (input_html: string, url): PageBodyPack => {
 			if (divClass !== undefined) {
 				// If section image found
 				if (divClass.includes("thumb")) {
-					images.push(getImage(el, $) as Media);
+					images.push(getImage(el, $, internalCitations) as Media);
 				}
 			}
 		}
