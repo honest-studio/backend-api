@@ -12,7 +12,7 @@ export interface WikiLink {
 
 export type DiffType = 'add' | 'delete' | 'none';
 
-export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO' | 'BOOK' | 'FILE';
+export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO' | 'BOOK' | 'PERIODICAL' | 'FILE';
 
 export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
 

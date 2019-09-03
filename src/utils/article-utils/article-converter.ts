@@ -1181,6 +1181,8 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
         return 'GIF';
     } else if (inputString.indexOf('https://openlibrary.org/books/') == 0) {
         return 'BOOK';
+    } else if (inputString.indexOf('https://portal.issn.org/resource/ISSN/') == 0) {
+        return 'PERIODICAL';
     } else if (theMIME && theMIME.indexOf('image') >= 0) {
         return 'PICTURE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {

@@ -342,6 +342,7 @@ export const MakeWebPImages = async (inputString: string, processMediaGallery: b
             || ctn.category == 'AUDIO' 
             || ctn.category == 'NONE'
             || ctn.category == 'BOOK'
+            || ctn.category == 'PERIODICAL' 
             || ctn.category == 'FILE'
             ) return ctn;
             else {
