@@ -138,10 +138,10 @@ export const REPLACE_CLASSES_PREPARSE_UNIVERSAL = [["infobox_v3", "infobox", "ta
 export const PRECLEAN_BAD_FILE_REGEXES = /.*Picto_infobox.*|.*Crystal_Clear_action_info.*|.*Blue_pencil.*|.*CentralAutoLogin.*|.*Twemoji.*|.*Gtk-dialog.*|.*Info_Simple.*/gimu;
 export const PRECLEAN_IMG_FIX_REGEXES = /^\/w\/extensions.*/gimu;
 export const PRECLEAN_BAD_CLASSES = [/mw-authority-control/gimu, /sisterlinks/gimu, /commonscat/gimu, /navigation-only/gimu, /bandeau/gimu, /homonymie/gimu, /magnify/gimu];
-export const PRECLEAN_BAD_IDS = [/footer/gimu, /mw-navigation/gimu, /catlinks/gimu];
 export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
+export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo', 'mtd', 'mrow', 'mspace', 'mtext', 'msub', 'msup', 'mstyle', 'semantics', 'usemap', 'xml', 'worddocument', 'mathpr', 'mathfont'];
 
 export interface ElementCleaningPack {
     parent?: {
@@ -208,4 +208,5 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
 // Some elements need to be unwrapped
 export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { parent: { class: 'thumbcaption'}, tag: "center", id: null, class: null }, // Shows up in captions sometimes
+    { tag: "small", id: null, class: null }, 
 ]

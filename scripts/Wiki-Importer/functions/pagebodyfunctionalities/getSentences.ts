@@ -2,12 +2,26 @@
 //new sentenceParser is called textParser
 import { Sentence } from '../../../../src/types/article';
 
+export const getSentencesNew = (element, $): Sentence[] => {
+	let $el = $(element);
+	if ($el.html() == null) { // Edge case for naiveGetTable
+		return
+	}
+	const chars = $el.html(); // Character array of paragraph
+
+	return null;
+}
+
+
+
 export const getSentences = (element, $): Sentence[] => {
 	let $el = $(element);
 	if ($el.html() == null) { // Edge case for naiveGetTable
 		return
 	}
 	const chars = $el.html().split(''); // Character array of paragraph
+
+
 
 	let start = 0; // Starting index of sentence
 	let end = 0; // Ending index of sentence
@@ -47,7 +61,7 @@ export const getSentences = (element, $): Sentence[] => {
 				sentenceIndex++; 
 				start = end; 
 			}
-			else { // Make sure its not an abbreheviation 
+			else { // Make sure its not an abbreviation 
 				let a = (i - 1);
 				while(chars[a] !== ' ') {
 					// Break if the abbreviations starts the sentence (e.g., U.S.) 
