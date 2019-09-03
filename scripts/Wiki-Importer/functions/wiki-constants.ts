@@ -8,7 +8,7 @@ export const WIKI_LANG_PACKAGES = {
         WIKI_TITLE_SLICE: " - ويكيبيديا، الموسوعة الحرة",
         WIKI_FILE_UNICODE: "ملف:",
         WIKI_LINK_COMMENT: "الإصدار الأصلي من هذه الصفحة هو ويكيبيديا ، يمكنك تحرير الصفحة هنا على Everipedia.",
-        WIKI_REMOVE_CLASSES_PREPARSE: [/bandeau-portail/],
+        WIKI_REMOVE_CLASSES_PREPARSE: [/bandeau-portail/gimu],
         WIKI_REPLACE_CLASSES_PREPARSE: []
     },
     de: {
@@ -74,7 +74,7 @@ export const WIKI_LANG_PACKAGES = {
         WIKI_TITLE_SLICE: " — Wikipedia",
         WIKI_FILE_UNICODE: "File:",
         WIKI_LINK_COMMENT: "La versione originale di questa pagina è di Wikipedia, puoi modificare la pagina qui su Everipedia.",
-        WIKI_REMOVE_CLASSES_PREPARSE: [/avviso-disambigua/],
+        WIKI_REMOVE_CLASSES_PREPARSE: [/avviso-disambigua/gimu],
         WIKI_REPLACE_CLASSES_PREPARSE: [["sinottico_testo_centrale", "switcher-container", ''], ["sinottico", "infobox", '']]
     },
     ko: {
@@ -132,29 +132,20 @@ export const WIKI_LANG_PACKAGES = {
         WIKI_REMOVE_CLASSES_PREPARSE: [],
         WIKI_REPLACE_CLASSES_PREPARSE: []
     }
-}
+};
 
-REPLACE_CLASSES_PREPARSE_UNIVERSAL = [[u"infobox_v3", u"infobox", u"table"], [u"infobox_v2", u"infobox", u"table"]]
+export const REPLACE_CLASSES_PREPARSE_UNIVERSAL = [["infobox_v3", "infobox", "table"], ["infobox_v2", "infobox", "table"]];
+export const PRECLEAN_BAD_FILE_REGEXES = /.*Picto_infobox.*|.*Crystal_Clear_action_info.*|.*Blue_pencil.*|.*CentralAutoLogin.*|.*Twemoji.*|.*Gtk-dialog.*|.*Info_Simple.*/gimu;
+export const PRECLEAN_IMG_FIX_REGEXES = /^\/w\/extensions.*/gimu;
+export const PRECLEAN_BAD_CLASSES = [/mw-authority-control/gimu, /sisterlinks/gimu, /commonscat/gimu, /navigation-only/gimu, /bandeau/gimu, /homonymie/gimu, /magnify/gimu];
+export const PRECLEAN_BAD_IDS = [/footer/gimu, /mw-navigation/gimu, /catlinks/gimu];
+export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
+export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
+export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 
-PRECLEAN_BAD_FILE_REGEXES = ur".*Picto_infobox.*|.*Crystal_Clear_action_info.*|.*Blue_pencil.*|.*CentralAutoLogin.*|.*Twemoji.*|.*Gtk-dialog.*|.*Info_Simple.*"
-
-PRECLEAN_IMG_FIX_REGEXES = ur'^/w/extensions.*'
-
-PRECLEAN_BAD_CLASSES = [ur'mw-authority-control', ur'sisterlinks', ur'commonscat', ur'navigation-only', ur'bandeau', ur'homonymie', ur'magnify']
-
-PRECLEAN_BAD_IDS = [ur'footer', ur'mw-navigation', ur'catlinks']
-
-PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [(ur'extiw', u'wikidata')]
-
-POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [(u'id', ur'Note'), (u'id', ur'مراجع')]
-
-POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [
-'<div class="mw-parser-output"></div>'
-]
-
-# add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
-# ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
-# use this list to add format removal exception tags to make the scrape look nicer over time
+// Add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
+// ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
+// use this list to add format removal exception tags to make the scrape look nicer over time
 POSTCLEAN_BAD_ELEMENTS = [
     '<div class="notice plainlinks"></div>',  # any notices at the top of the page
     '<div id="toc" class="toc"> </div>',  # table of contents, the content table at the beginning of articles
