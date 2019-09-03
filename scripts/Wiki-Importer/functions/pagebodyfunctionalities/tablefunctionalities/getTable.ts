@@ -3,7 +3,7 @@ import { getTagClass } from '../getTagClass';
 import { getParsedCellContent } from './cellParser'; 
 import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem } from '../../../../../src/types/article';
 
-export const getTable = (element, $): Table => {
+export const getTable = (element, $, internal_citations): Table => {
 	let $table = $(element);
 
  	// Instantiate return object
@@ -37,7 +37,7 @@ export const getTable = (element, $): Table => {
 		 // Loop through each cell
 		$row.find('td, th').each((i2, el2) => {
 			let $cell = $(el2);
-			let content = getParsedCellContent(el2, $);
+			let content = getParsedCellContent(el2, $, [], "", internal_citations);
 			if (content != [] && content != undefined) {
 				let cell: TableCell = {
 					index: i2,

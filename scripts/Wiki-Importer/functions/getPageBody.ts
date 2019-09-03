@@ -122,7 +122,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 			console.log(childTable[0].attribs);
 			let tableclass = childTable.attr('class');
 			if (tableclass === "wikitable" || tableclass === "body-table") {
-				let table = getTable(childTable, $);
+				let table = getTable(childTable, $, internalCitations);
 				paragraphs.push({
 					index: paragraphIndex,
 					items: [table] as Table[],
@@ -143,7 +143,7 @@ export const getPageBodyPack = (html, url): PageBodyPack => {
 			paragraphIndex++;	
 		}
 		else if(tag_name == 'dl') { // DescList
-			let item = getDescList(el, $); // returns array of dl | dt items
+			let item = getDescList(el, $, internalCitations); // returns array of dl | dt items
 			paragraphs.push({
 				index: paragraphIndex,
 				items: [item] as DescList[],

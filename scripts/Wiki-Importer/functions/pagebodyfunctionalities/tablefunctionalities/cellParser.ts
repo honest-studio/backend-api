@@ -6,89 +6,63 @@ import { parseAnchorTag } from '../parseAnchorTag';
 import { parseInternalCitation } from '../parseInternalCitation';
 import { NestedContentItem, NestedTextItem, NestedTagItem, TableCell } from '../../../../../src/types/article';
 
-//global variables  
-let nestedContentItems: NestedContentItem[] = []; 
-let accumulator = '';
+export const getParsedCellContent = (cell, $, nestedContentItems, accumulator, internalCitations): NestedContentItem[] => {
+	let localNestedContentItems = nestedContentItems;
+	let localAccumulator = accumulator; 
 
-export const getParsedCellContent = (cell: TableCell, $): NestedContentItem[] => {
-	nestedContentItems = []; //for each cell reset content [] 
-	accumulator = ''; //reset for each cell 
-	cellParser(cell, $);
-	accumulator = accumulator.trim(); 
-	let tempLength = nestedContentItems.length;
-	//Since the code pushes nestedContentItems only when br tags are reached
-	//The following conditional code will push the remaining code after the br tag is reached 
-	//within a cell (as it was not pushed yet since a br tag was never reached)
-	if (tempLength == 0) {	
-	nestedContentItems.push({ 
-   	  	type: 'text', 
-     	content: [{type: 'sentence', index: 0, text: accumulator}] });
-	} else {
-		if (nestedContentItems[tempLength - 1].type == 'text') {
-			if ((nestedContentItems[tempLength - 1] as NestedTextItem).content[0].text != accumulator) {
-				nestedContentItems.push({ 
-			   	  	type: 'text', 
-			     	content: [{type: 'sentence', index: 0, text: accumulator}] });
-			}
-		}
-		else {
-			if (accumulator != '') {
-				nestedContentItems.push({ 
-			   	  	type: 'text', 
-			     	content: [{type: 'sentence', index: 0, text: accumulator}] });
-			}
-		}	
+	console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
+	console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
+	console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
+	console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
+
+	// Skip undefined elements
+	if (cell == undefined) {
+		return ;
 	}
-	return nestedContentItems;
-}
 
-//traverse through each cell content item and accumulate text
-//Create a new sentence at each br tag 
-//hit br tag or end of cell and push sentence 
-export const cellParser = (element, $) => {
-	if (element == undefined) {
-		return 
-	}
-	const $element = $(element);
+	// Initialize the element
+	const $element = $(cell);
 
-	//do not display html that wikipedia doesn't display
+	// Do not display html that wikipedia doesn't display
 	if ($element.attr('style') == 'display: none;') { 
-      return
+      	return;
   	}
 
-	//else element is nested   
+	// Else element is nested   
 	$element.contents().each( (i, el) => {
 		if ( el.type == 'text' ) {
 			let text = $(el).text();
 			if (text !== undefined && text !== '') {
 				accumulator += text;
-				return
+				return;
 			}
-			return
+			return;
 		} 
 		else if ($(el)[0].name == 'br') {
-			if( accumulator != undefined && accumulator != '' ) {
-				//sentence is completed 
-				nestedContentItems.push({
-	        	type: 'text', 
-	        	content: [{type: 'sentence', index: 0, text: accumulator}] });
+			if( localAccumulator != undefined && localAccumulator != '' ) {
+				// Sentence is completed 
+				localNestedContentItems.push({
+					type: 'text', 
+					content: [{type: 'sentence', index: 0, text: localAccumulator}] 
+				});
       		}
-      		//push br tag 
-      		nestedContentItems.push({
-	        attrs: cleanAttrs(el.attrs),
-	        content: [], 
-	        tag_class: "void",
-	        tag_type: 'br',
-	        type: "tag" });
+      		// Push br tag 
+      		localNestedContentItems.push({
+				attrs: cleanAttrs(el.attrs),
+				content: [], 
+				tag_class: "void",
+				tag_type: 'br',
+				type: "tag" 
+			});
 
-	        accumulator = ''; //reset accumulator
+	        localAccumulator = ''; //reset localAccumulator
 	        return 
 		}
 		else if ($(el)[0].name == 'a') {
-			accumulator += parseAnchorTag(el, $);
+			localAccumulator += parseAnchorTag(el, $);
   		}
   		else if ($(el)[0].name == 'sup') { 
-  			accumulator += parseInternalCitation($(el).find('a'), $, internalCitations);
+  			localAccumulator += parseInternalCitation($(el).find('a'), $, internalCitations);
   		}
   		else if ($(el)[0].name == 'ul') { //edge case for infobox_html
   			let listElements = $(el).children('li');
@@ -105,18 +79,46 @@ export const cellParser = (element, $) => {
   					} 
   				}) 
   			} 
-  			nestedContentItems.push({ //push UL element 
+  			localNestedContentItems.push({ //push UL element 
   				type: 'tag', 
   				tag_type: 'ul', 
   				tag_class: getTagClass($(el)[0].name), 
   				attrs: cleanAttrs(el.attribs), 
   				content: listContent 
   			}) 
-  			return 
+  			return;
   		}
-  		else { //nested tag is reached 
-	  		cellParser(el , $);
+  		else { 
+			// Nested tag is reached 
+			localNestedContentItems.push(...getParsedCellContent(el , $, [], "", internalCitations));
   		}
 	})
-}
 
+	localAccumulator = localAccumulator.trim(); 
+	let tempLength = localNestedContentItems.length;
+
+	// Since the code pushes localNestedContentItems only when br tags are reached
+	// The following conditional code will push the remaining code after the br tag is reached 
+	// Within a cell (as it was not pushed yet since a br tag was never reached)
+	if (tempLength == 0) {	
+	localNestedContentItems.push({ 
+   	  	type: 'text', 
+     	content: [{type: 'sentence', index: 0, text: localAccumulator}] });
+	} else {
+		if (localNestedContentItems[tempLength - 1].type == 'text') {
+			if ((localNestedContentItems[tempLength - 1] as NestedTextItem).content[0].text != localAccumulator) {
+				localNestedContentItems.push({ 
+			   	  	type: 'text', 
+			     	content: [{type: 'sentence', index: 0, text: localAccumulator}] });
+			}
+		}
+		else {
+			if (localAccumulator != '') {
+				localNestedContentItems.push({ 
+			   	  	type: 'text', 
+			     	content: [{type: 'sentence', index: 0, text: localAccumulator}] });
+			}
+		}	
+	}
+	return localNestedContentItems;
+}

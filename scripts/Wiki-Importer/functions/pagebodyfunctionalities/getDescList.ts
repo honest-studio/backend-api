@@ -6,7 +6,7 @@ import { DescList, DescListItem } from '../../../../src/types/article';
 // Input: <dl> element
 // Output: array of formatted dt && dd elements 
 
-export const getDescList = (element, $): DescList => {
+export const getDescList = (element, $, internal_citations): DescList => {
 	let $desclist = $(element); 
 	let inner_items: DescListItem[] = []; // Instantiate return array
 
@@ -22,7 +22,8 @@ export const getDescList = (element, $): DescList => {
 		}
 		
 		// Compute DescListItem.content
-		let content = getParsedCellContent(el, $);
+		let content = getParsedCellContent(el, $, [], "", internal_citations);
+
 		DescListItem.content = content;
 		inner_items.push(DescListItem);
 	})
