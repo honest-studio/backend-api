@@ -46,7 +46,7 @@ export const getImage = (element, $, internal_citations): Media | string => {
 			caption: accumulateText($thumbcaption, $, internal_citations),
 			mime: (attributes as any).mime,
 			category: (attributes as any).citationcategorytype,
-			timestamp: getTimeStamp() as any,
+			timestamp: new Date(),
 		}
 	}
 		src = $el.attr('src');

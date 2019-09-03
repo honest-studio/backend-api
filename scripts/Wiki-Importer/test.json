@@ -194,7 +194,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.459Z"
         },
         {
           "type": "section_image",
@@ -209,7 +209,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.460Z"
         }
       ]
     },
@@ -242,7 +242,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.463Z"
         },
         {
           "type": "section_image",
@@ -257,7 +257,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.463Z"
         }
       ]
     },
@@ -350,7 +350,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.468Z"
         }
       ]
     },
@@ -448,7 +448,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.470Z"
         }
       ]
     },
@@ -601,7 +601,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "8/3/2019 20:41:1 PM UTC"
+          "timestamp": "2019-09-03T20:56:19.473Z"
         }
       ]
     },
@@ -815,7 +815,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "timestamp": "2019-09-03T20:56:19.421Z",
       "mime": null
     },
     {
@@ -832,7 +832,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "timestamp": "2019-09-03T20:56:19.435Z",
       "mime": null
     },
     {
@@ -849,7 +849,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "timestamp": "2019-09-03T20:56:19.435Z",
       "mime": "application/pdf"
     },
     {
@@ -866,7 +866,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "8/3/2019 20:41:1 PM UTC",
+      "timestamp": "2019-09-03T20:56:19.435Z",
       "mime": "application/pdf"
     }
   ],
@@ -906,7 +906,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/3/2019 20:41:0 PM UTC"
+      "value": "8/3/2019 20:56:18 PM UTC"
     },
     {
       "key": "last_modified",
@@ -931,5 +931,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "Qmb7gFWXBVTUj6R6H74HMMAzG4UiCHGXCkW3inVNSp96Uu"
+  "ipfs_hash": "QmYDh8MhScxB7ZBsoKTwQHiQAmH5qBSu2X1MxgfP7DT487"
 }

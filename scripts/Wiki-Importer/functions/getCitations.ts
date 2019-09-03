@@ -64,7 +64,7 @@ export const getCitations = (input_html: string, url) => {
 		description: defaultDescription,
 		social_type: null,
 	 	attribution: 'rel=nofollow',
-	 	timestamp: getTimeStamp() as any, 
+	 	timestamp: new Date(), 
 	 	mime: null
 	})
 
@@ -79,7 +79,6 @@ export const getCitations = (input_html: string, url) => {
 			cite_refs.push(sup);
 		};
 	});
-
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
@@ -117,8 +116,6 @@ export const getCitations = (input_html: string, url) => {
 		};
 	});
 
-	// console.log(rawCitations)
-
 	// Start classifying the citations
 	rawCitations.forEach((raw_citn, idx) => {
 		// console.log($(raw_citn.note_element).html())
@@ -128,13 +125,28 @@ export const getCitations = (input_html: string, url) => {
 		if (possible_anchor && possible_anchor.attribs['href']){
 			if(possible_anchor && possible_anchor.attribs['href'] && possible_anchor.attribs['href'][0] == "#"){
 				let linked_id = possible_anchor.attribs['href'];
+
+				if (linked_id){
+					$(`${linked_id} a`).each((idx, inner_anchor) => {
+						let inner_href = inner_anchor.attribs['href'];
+						if(inner_href){
+							// Look for an ISBN
+							if(inner_href.search(/Special:BookSources/gimu) >= 0){
+								console.log($(inner_anchor).text());
+							}
+							// Look for an ISSN
+							else if(inner_href.search(/issn/gimu) >= 0){
+								console.log($(inner_anchor).text());
+							}
+						}
+					})
+				}
+
 				console.log($(linked_id).html());
 			}
 		}
 
 	})
-
-
 
 	// Loop through all of the <a> tags and find the external links
 	$content.find("ul li a").each((idx, anchor) => {
@@ -149,7 +161,7 @@ export const getCitations = (input_html: string, url) => {
 				description: accumulateText(anchor, $, citations),
 				social_type: socialURLType(theWorkingURL),
 				attribution: 'rel=nofollow',
-				timestamp: getTimeStamp() as any, 
+				timestamp: new Date(), 
 				mime: mimePackage.getType(theWorkingURL)
 			};
 
@@ -157,88 +169,8 @@ export const getCitations = (input_html: string, url) => {
 		};
 	});
 
-	console.log(citations)
-	console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
-	// const $refList = $content.find('.reflist').last().find('ol'); // Get the list of references
-
-	//  // Loop through the references
-	// $refList.children('li').each( (i, el) => {
-		
-
-	// 	// Get a specific citation
-	// 	let $reference = $(el).find('.reference-text'); 
-	// 	let $citation = $reference.find('.citation');
-		
-	// 	// If the citation is immediately present, process it
-	// 	// TODO: Deal with media uploads, thumbs, etc
-	// 	if ($citation.length > 0) {
-	// 		let description = accumulateText($citation, $, internalCitations);
-	// 		let urlToUse = $citation.find('a').attr('href');
-
-	// 		// Current citation
-	// 		let cur: Citation = {
-	// 			url: urlToUse,
-	// 			thumb: null,
-	// 			category: linkCategorizer(urlToUse),
-	// 			citation_id: i + 1, // i + 1 because default push is 0
-	// 			description: description,
-	// 			social_type: socialURLType(urlToUse),
-	// 			attribution: 'rel=nofollow',
-	// 			timestamp: getTimeStamp() as any,
-	// 			mime: null
-	// 		}
-	// 		let key = i+1;
-	// 		internalCitations[key] = cur.url;
-	// 		citations.push(cur);
-			
-	// 	} 
-	// 	else { 
-	// 		// Else traverse biography (primary, secondary, tertiary sources to find citation)
-	// 		// and compare citations to identifiers to identify the citation in the biography
-	// 		let found = false; 
-	// 		$content.find('div .refbegin').each((i3, el3) => { // For each biography (i.e., primary, secondary, tertiary)  
-	// 			let a = $reference.find('a').attr('href');
-
-	// 			// Loop through the citations
-	// 			$(el3).find('cite').each( (i4, el4) => {
-	// 				if (a == '#' + $(el4).attr('id')) { // Citation found in biography
-	// 					let description = accumulateText(el4, $, internalCitations);
-
-	// 					// Type of citation = $(el4).attr('class'); (e.g, journal, book etc..)
-	// 					let url = '';
-	// 					$(el4).find('a').each((i5, el5) => {
-	// 						let $el5 = $(el5);
-	// 						if ($el5.attr('class') == "external text") {
-	// 							url = $el5.attr('href');
-	// 						}
-	// 					})
-	// 					if ( url == undefined ) {
-	// 						url == '';
-	// 					}
-	// 					let cur: Citation = {
-	// 						url: url,
-	// 						thumb: null,
-	// 						category: linkCategorizer(url),
-	// 						citation_id: i + 1, 
-	// 						description: description,
-	// 						social_type: null,
-	// 						attribution: 'rel=nofollow',
-	// 						timestamp: getTimeStamp() as any,
-	// 						mime: null
-	// 					}
-	// 					citations.push(cur);
-	// 					internalCitations[i+1] = cur.url;
-	// 					found = !found;
-	// 					return
-	// 				}
-	// 				if (found) { // Quick break to stop iterating if citation has been found in biography
-	// 					return
-	// 				}
-	// 			}) 
-	// 		}) 
-	// 	}
-	// }) 
 	return {
 		citations: citations,
 		internalCitations: internalCitations //map passed to textParser for instant internal citation lookup
