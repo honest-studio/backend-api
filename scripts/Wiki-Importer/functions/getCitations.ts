@@ -13,7 +13,6 @@ const getYouTubeID = require('get-youtube-id');
 
 export interface RawCitation {
 	id: string,
-	id_ref: string,
 	id_note: string,
 	index_to_use: number,
 	url?: string,
@@ -106,7 +105,6 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 			let workingRawCitation = {
 				id: note_index,
-				id_ref: null,
 				id_note: list_item.attribs['id'],
 				index_to_use: available_citation_id,
 				category: null,
@@ -114,19 +112,6 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				note_element: list_item,
 			};
 			available_citation_id = available_citation_id + 1;
-
-			// Find the ref that corresponds to the note
-			cite_refs.forEach((ref_elem, idx) => {
-				// console.log($(ref_elem).find("a").attr("href"))
-				let ref_index_splits = $(ref_elem).find("a").attr("href").split("-");
-				let ref_index = ref_index_splits[ref_index_splits.length - 1];
-
-				if (note_index == ref_index){
-					workingRawCitation.id_ref = ref_elem.attribs['id'];
-				}
-			})
-
-			// if (!workingRawCitation.id_ref) NEED TO DO SOMETHING!!!
 
 			// Add the ref and note information to the list of raw citations
 			rawCitations.push(workingRawCitation)
@@ -238,9 +223,9 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			}
 
 			// Replace the <sup> with the markdown citation notation
-			// console.log($(`#${raw_citn.id_ref}`).html())
-			$(`#${raw_citn.id_ref}`).replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`);
-
+			$(`[href='#${raw_citn.id_note}']`).each((idx, elem) => {
+				$(elem).parent("sup").replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`);
+			})
 
 			// Handle thumbnails that don't require an upload
 			switch(workingCitation.category){
@@ -252,7 +237,6 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 			// Add the citation to the list
 			citations.push(workingCitation);
-			
 		})
 	)
 
