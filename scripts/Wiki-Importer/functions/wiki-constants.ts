@@ -221,5 +221,7 @@ export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
 export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "Notes", class: null }, // Notes section
     { parent: { tag: 'h2'}, tag: "span", id: "References", class: null }, // References section
+    { parent: { tag: 'h2'}, tag: "span", id: "Bibliography", class: null }, // References section
+    { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]

@@ -1219,7 +1219,7 @@ var circularObj = {} as any;
 circularObj.circularRef = circularObj;
 circularObj.list = [ circularObj, circularObj ];
 
-function nestedContentParser($contents: CheerioElement[], nestedContents: NestedContentItem[] = []) {
+export function nestedContentParser($contents: CheerioElement[], nestedContents: NestedContentItem[] = []) {
     $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':

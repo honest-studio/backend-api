@@ -1,6 +1,6 @@
 import { cleanAttrs } from './getAttributes';
 import { getTagClass } from './getTagClass';
-import { getParsedCellContent } from './tablefunctionalities/cellParser';
+import { nestedContentParser } from '../../../../src/utils/article-utils/article-converter';
 import { DescList, DescListItem } from '../../../../src/types/article';
 
 // Input: <dl> element
@@ -22,7 +22,7 @@ export const getDescList = (element, $, internal_citations): DescList => {
 		}
 		
 		// Compute DescListItem.content
-		let content = getParsedCellContent(el, $, [], "", internal_citations);
+		let content = nestedContentParser(el.children, []);
 
 		DescListItem.content = content;
 		inner_items.push(DescListItem);

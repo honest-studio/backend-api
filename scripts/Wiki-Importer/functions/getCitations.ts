@@ -281,11 +281,11 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 		$(selector).each((idx, $elem) => {
 			if (!pack.parent) {
 				$($elem).remove();
-				console.log(chalk.red(`${selector} removed...`));	
+				// console.log(chalk.red(`${selector} removed...`));	
 			}
 			else{
 				$($elem).parent(parent_selector).nextAll().remove();
-				console.log(chalk.red(`${parent_selector}removed...`));	
+				// console.log(chalk.red(`${parent_selector}removed...`));	
 			}
 		});
 	});

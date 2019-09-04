@@ -1,14 +1,14 @@
-//input: anchor tag 
-//output: string of LINK or INLINE-IMG
+// Input: anchor tag 
+// Output: string of LINK or INLINE-IMG
 export const parseAnchorTag = (element, $) => {
 	let $element = $(element);
-	if ($element.children().length == 0) { //resolve anchor tags that only contains text 
+	if ($element.children().length == 0) { // Resolve anchor tags that only contains text 
 	  return parseLink(element, $);
 	}
-    else if ($element.attr('class') == 'image') { //inline-image 
+    else if ($element.attr('class') == 'image') { // Inline-image 
     	return parseInlineImage($element.find('img'), $);
     }
-    else if ($element.html().includes('<br>')) {  //anchor tag has inner br tag edge case
+    else if ($element.html().includes('<br>')) {  // Anchor tag has inner br tag edge case
 		let a = ($.html($element)).replace('<br>', '\n');
   		return parseAnchorTag(a, $);
   	}
@@ -21,7 +21,7 @@ export const parseLink = (anchorTagElement, $) => { //LINK
   let $element = $(anchorTagElement);
   let wikiLink = '';
   const linkText = $element.text(); 
-  //get slug 
+  // Get slug 
   const hrefAttr = $element.attr('href');
   let index = 6; 
   let slug = ''; 

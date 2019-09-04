@@ -19,7 +19,7 @@ export const preCleanHTML = (input_html: string): string => {
         let selector = `${parent_selector}${pack.tag}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
         $(selector).each((idx, $elem) => {
             $($elem).remove();
-            console.log(chalk.red(`${selector} removed...`));
+            // console.log(chalk.red(`${selector} removed...`));
         });
     });
     
@@ -31,7 +31,7 @@ export const preCleanHTML = (input_html: string): string => {
         let selector = `${parent_selector}${pack.tag}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
         $(selector).each((idx, $elem) => {
             $($elem).replaceWith($($elem).contents());
-            console.log(chalk.red(`${selector} unwrapped...`));
+            // console.log(chalk.red(`${selector} unwrapped...`));
         });
     });
 
