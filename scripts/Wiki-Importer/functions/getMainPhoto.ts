@@ -20,15 +20,15 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// console.log($infobox.html());
 
 	let workingMainPhoto: Media = {
-		url: null, //'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png',
-		thumb: null, //'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png',
-		caption: null,
-		type: 'main_photo',
-		attribution_url: null,
+		url: null,
+		thumb: null, 
+		caption: null, 
+		type: 'main_photo', 
+		attribution_url: null, 
 		media_props: {
-			type: 'main_photo',
-			height: null,
-			width: null,
+			type: 'main_photo', 
+			height: null, 
+			width: null, 
 			srcSet: null
 		},
 		timestamp: new Date()
@@ -98,11 +98,6 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-	console.log(workingMainPhoto)
-
-	// blobBoxSoup.findAll("a", {"class": "image", "href": re.compile(r"File", re.UNICODE)})
-
-
 	// # Try method 1
 	// firstImageAnchor = blobBoxSoup.findAll("a", {"class": "image", "href": re.compile(r"File", re.UNICODE)})
 	// if (len(blobBoxSoup) == 0):
@@ -130,8 +125,13 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// 	pass
 
 
-	// No main photo was found. 
-	// Return place holder:
+	// If no main photo was found. 
+	if (!workingMainPhoto.url) workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+
+	console.log(workingMainPhoto)
+
+	// Return main photo:
 	return {
 		main_photo: workingMainPhoto,
 		cheerio_pack: {

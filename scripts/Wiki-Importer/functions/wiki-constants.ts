@@ -1,5 +1,29 @@
 import { PageType } from '../../../src/types/article';
 
+export interface ReplaceClassPack {
+    target_tag: string,
+    target_class: string,
+    replacement_tag: string
+    replacement_class: string
+}
+
+export interface ElementCleaningPack {
+    parent?: {
+        tag?: string
+        id?: string
+        class?: string,
+    },
+    tag: string,
+    id: string,
+    class: string
+}
+
+export interface PageTypeCluePack {
+    id: string,
+    class: string
+    page_type: PageType
+}
+
 export const WIKI_LANG_PACKAGES = {
     ar: {
         WIKI_LANG_CODE: "ar",
@@ -101,7 +125,7 @@ export const WIKI_LANG_PACKAGES = {
         WIKI_REPLACE_CLASSES_PREPARSE: []
     },
     ru: {
-        WIKI_LANG_CODE: "r",
+        WIKI_LANG_CODE: "ru",
         WIKI_ROOT_URL: "https://ru.wikipedia.org",
         WIKI_FACEBOOKID_PREFIX: "6966",
         WIKI_ADDITIONAL_SLICE_TERMS: ['Ссылки', 'Примечания', 'См. также', 'Литература', 'Комментарии', 'навигация'],
@@ -135,30 +159,31 @@ export const WIKI_LANG_PACKAGES = {
     }
 };
 
-export const REPLACE_CLASSES_PREPARSE_UNIVERSAL = [["infobox_v3", "infobox", "table"], ["infobox_v2", "infobox", "table"]];
+// Replace tags with certain classes
+export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
+    { target_tag: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
+    { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" }
+];
+
+// Strip out these crappy images because they look ugly and also mess up the profile-picture-finding algorithm
 export const PRECLEAN_BAD_FILE_REGEXES = /.*Picto_infobox.*|.*Crystal_Clear_action_info.*|.*Blue_pencil.*|.*CentralAutoLogin.*|.*Twemoji.*|.*Gtk-dialog.*|.*Info_Simple.*/gimu;
+
 export const PRECLEAN_IMG_FIX_REGEXES = /^\/w\/extensions.*/gimu;
-export const PRECLEAN_BAD_CLASSES = [/mw-authority-control/gimu, /sisterlinks/gimu, /commonscat/gimu, /navigation-only/gimu, /bandeau/gimu, /homonymie/gimu, /magnify/gimu];
 export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo', 'mtd', 'mrow', 'mspace', 'mtext', 'msub', 'msup', 'mstyle', 'semantics', 'usemap', 'xml', 'worddocument', 'mathpr', 'mathfont'];
 
-export interface ElementCleaningPack {
-    parent?: {
-        tag?: string
-        id?: string
-        class?: string,
-    },
-    tag: string,
-    id: string,
-    class: string
-}
-
 // Add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
 // use this list to add format removal exception tags to make the scrape look nicer over time
 export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
+    { tag: null, id: null, class: "mw-authority-control" }, 
+    { tag: null, id: null, class: "sisterlinks" }, 
+    { tag: null, id: null, class: "commonscat" }, 
+    { tag: null, id: null, class: "navigation-only" }, 
+    { tag: null, id: null, class: "bandeau" }, 
+    { tag: null, id: null, class: "homonymie" }, 
     { tag: "div", id: null, class: "notice plainlinks" }, // Any notices at the top of the page
     { tag: "div", id: "toc", class: "toc" }, // Table of contents, the content table at the beginning of articles
     { tag: "span", id: null, class: "mw-editsection" }, // Edit buttons next to headings
@@ -174,7 +199,6 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: "mw-indicator-pp-default", class: "mw-indicator" }, // Lock icon for top right of article
     { tag: "span", id: null, class: "noprint" }, 
     { tag: "div", id: null, class: "mw-indicators" }, // The entire parent div of the indicator icons ^
-    { tag: "div", id: null, class: "mw-authority-control" }, 
     { tag: "h1", id: "firstHeading", class: "firstHeading" }, // Main title of the entire page
     { tag: "div", id: "footer", class: null }, // Footer of the entire page
     { tag: "div", id: "siteNotice", class: null }, // Big notice on top of the page
@@ -227,12 +251,6 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
-
-export interface PageTypeCluePack {
-    id: string,
-    class: string
-    page_type: PageType
-}
 
 // Clues in the infobox to help determine the page type
 export const INFOBOX_PAGE_TYPE_CLUES: PageTypeCluePack[] = [

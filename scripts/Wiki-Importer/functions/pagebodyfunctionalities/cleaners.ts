@@ -1,5 +1,11 @@
 import * as cheerio from 'cheerio';
-import { PRECLEAN_BAD_ELEMENTS, PRECLEAN_UNWRAP_ELEMENTS, ElementCleaningPack, NON_AMP_BAD_TAGS } from '../wiki-constants';
+import { PRECLEAN_BAD_ELEMENTS, 
+    PRECLEAN_UNWRAP_ELEMENTS, 
+    ElementCleaningPack, 
+    NON_AMP_BAD_TAGS, 
+    REPLACE_CLASSES_PREPARSE_UNIVERSAL,
+    PRECLEAN_BAD_FILE_REGEXES
+} from '../wiki-constants';
 const chalk = require('chalk');
 
 export interface CheerioPack {
@@ -15,12 +21,31 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     // Remove style sections
     $('style').remove();
 
+    // Replace certain classes
+    REPLACE_CLASSES_PREPARSE_UNIVERSAL.forEach(pack => {
+        let selector = `${pack.target_tag}.${pack.target_class}`;
+        $(selector).each((idx, $elem) => {
+            $($elem).eq(0)[0].tagName = pack.replacement_tag;
+            $($elem).eq(0)[0].attribs['class'].replace(pack.target_class, pack.replacement_class);
+            // console.log(chalk.red(`${selector} replaced with ${pack.replacement_tag}.${pack.replacement_class}`));
+        });
+    });
+
+    // Remove crappy images that mess up the infobox
+    $("img").each((idx, img_elem) => {
+        let theSrc = $(img_elem).eq(0)[0].attribs['src'];
+        if (theSrc.search(PRECLEAN_BAD_FILE_REGEXES) >= 0) {
+            $(img_elem).remove();
+            // console.log(chalk.red(`Pictobox found and removed`));
+        }
+    })
+
     // Remove certain elements
     PRECLEAN_BAD_ELEMENTS.forEach(pack => {
         let parent_selector = pack.parent ? 
                             `${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
                             : "" ;
-        let selector = `${parent_selector}${pack.tag}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
+        let selector = `${parent_selector}${pack.tag ? pack.tag : ""}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
         $(selector).each((idx, $elem) => {
             $($elem).remove();
             // console.log(chalk.red(`${selector} removed...`));
@@ -32,12 +57,13 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         let parent_selector = pack.parent ? 
                             `${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
                             : "" ;
-        let selector = `${parent_selector}${pack.tag}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
+        let selector = `${parent_selector}${pack.tag ? pack.tag : ""}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
         $(selector).each((idx, $elem) => {
             $($elem).replaceWith($($elem).contents());
             // console.log(chalk.red(`${selector} unwrapped...`));
         });
     });
+
 
 
     // Convert <strong> and <b> tags to **text** (Markdown)
