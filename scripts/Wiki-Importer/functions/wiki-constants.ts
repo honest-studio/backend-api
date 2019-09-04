@@ -214,6 +214,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
 export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { parent: { class: 'thumbcaption'}, tag: "center", id: null, class: null }, // Shows up in captions sometimes
     { tag: "small", id: null, class: null }, 
+    { tag: "a", id: null, class: 'new' }, // Redlinks
 ]
 
 // Clean these up after the citations are parsed out

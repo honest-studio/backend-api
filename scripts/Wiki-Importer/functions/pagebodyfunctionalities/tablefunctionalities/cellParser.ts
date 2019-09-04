@@ -10,9 +10,6 @@ export const getParsedCellContent = (cell, $, nestedContentItems, accumulator, i
 	let localNestedContentItems = nestedContentItems;
 	let localAccumulator = accumulator; 
 
-	console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
-	// console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
-	// console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
 	// console.log("CELL PARSER IS MESSED UP. NEED TO TEST LIVE. JUST MIMIC THE LOGIC OF nestedContentParser in article-converter.ts")
 
 	// Skip undefined elements

@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio';
-const _ = require('lodash');
+import * as mimePackage from 'mime';
 import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
 import { Citation, Sentence, CitationCategoryType } from '../../../src/types/article';
@@ -9,7 +9,8 @@ import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
 const util = require('util');
 const chalk = require('chalk');
-import * as mimePackage from 'mime';
+const _ = require('lodash');
+const getYouTubeID = require('get-youtube-id');
 
 export interface RawCitation {
 	id: string,
@@ -136,8 +137,9 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 		// First look for any <a href='#ABC123' ></a> and pull in that ID as the text.
 		let possible_anchor = $(raw_citn.note_element).find("a").eq(0)[0];
 		if (possible_anchor && possible_anchor.attribs['href']){
-			if(possible_anchor && possible_anchor.attribs['href'] && possible_anchor.attribs['href'][0] == "#"){
-				let linked_id = possible_anchor.attribs['href'];
+			let theInnerURL = possible_anchor.attribs['href'];
+			if(theInnerURL[0] == "#"){
+				let linked_id = theInnerURL;
 
 				if (linked_id){
 					$(`${linked_id} a`).each((idx, inner_anchor) => {
@@ -164,13 +166,20 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 										.replace("  .,", "")
 										.replace("  ..", "");
 			}
+			else{
+				raw_citn.category = linkCategorizer(theInnerURL);
+				raw_citn.text = $(raw_citn.note_element)
+									.text()
+									.trim();
+				raw_citn.url = theInnerURL;
+			}
 		}
 		// Otherwise, assume a book and put the URL as a search query
 		else {
 			raw_citn.category = 'BOOK';
 			raw_citn.text = $(raw_citn.note_element)
-									.text()
-									.trim();
+								.text()
+								.trim();
 			raw_citn.url = `https://openlibrary.org/search?q=${encodeURIComponent(raw_citn.text.substr(0, 50))}`;
 		}
 		return raw_citn;
@@ -189,7 +198,7 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 				social_type: null,
 				attribution: 'rel=nofollow',
 				timestamp: new Date(), 
-				mime: null
+				mime: mimePackage.getType(raw_citn.url)
 			};
 			switch(raw_citn.category){
 				case 'BOOK': {
@@ -208,6 +217,9 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 					};
 					break;
 				}
+				case 'YOUTUBE': {
+					break;
+				}
 				case 'FILE': {
 					break;
 				}
@@ -217,8 +229,17 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 			}
 
 			// Replace the <sup> with the markdown citation notation
-			console.log($(`#${raw_citn.id_ref}`).html())
-			$(`#${raw_citn.id_ref}`).replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`)
+			// console.log($(`#${raw_citn.id_ref}`).html())
+			$(`#${raw_citn.id_ref}`).replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`);
+
+
+			// Handle thumbnails that don't require an upload
+			switch(workingCitation.category){
+				case 'YOUTUBE': {
+					workingCitation.thumb = `https://i.ytimg.com/vi/${getYouTubeID(workingCitation.url)}/hqdefault.jpg`
+					break;
+				}
+			}
 
 			// Add the citation to the list
 			citations.push(workingCitation);
@@ -271,6 +292,17 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 
 
 	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+
+
+	// // OPTIONAL: Add thumbnails
+	// citations = citations.map(ctn => {
+	// 	switch(ctn.category){
+	// 		case 'NONE': {
+	// 			break;
+	// 		}
+	// 	}
+	// 	return ctn;
+	// })
 
 	return {
 		citations: citations,

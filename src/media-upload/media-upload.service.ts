@@ -22,7 +22,6 @@ import { StringDecoder } from 'string_decoder';
 import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
-import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
 import { BookInfoPack, PeriodicalInfoPack } from '../types/api';

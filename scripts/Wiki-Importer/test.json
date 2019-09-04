@@ -3,7 +3,7 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Libyan Coastal Highway"
+      "text": "Italian Tripolitania"
     }
   ],
   "main_photo": [
@@ -16,13 +16,12 @@
     }
   ],
   "infobox_html": {
-    "type": "infobox",
+    "type": "infobox geography vcard",
     "attrs": {
-      "className": "infobox",
+      "className": "infobox geography vcard",
       "style": {
-        "width": "300px",
-        "fontSize": "90%",
-        "padding": "0"
+        "width": "22em",
+        "fontSize": "88%"
       }
     },
     "caption": {
@@ -46,15 +45,35 @@
               "index": 0,
               "attrs": {
                 "colSpan": "2",
+                "className": "adr",
                 "style": {
                   "textAlign": "center",
-                  "fontSize": "125%",
-                  "fontWeight": "bold"
+                  "fontSize": "1.25em",
+                  "fontWeight": "bold",
+                  "padding": "0.25em 0.33em 0.33em",
+                  "lineHeight": "1.2em"
                 }
               },
               "tag_type": "th",
               "tag_class": "block",
               "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "attrs": {},
+                  "content": [],
+                  "tag_class": "void",
+                  "tag_type": "br",
+                  "type": "tag"
+                },
                 {
                   "type": "text",
                   "content": [
@@ -80,11 +99,10 @@
               "attrs": {
                 "colSpan": "2",
                 "style": {
-                  "textAlign": "center",
-                  "background": "#cedff2"
+                  "textAlign": "center"
                 }
               },
-              "tag_type": "th",
+              "tag_type": "td",
               "tag_class": "block",
               "content": [
                 {
@@ -111,9 +129,1174 @@
               "index": 0,
               "attrs": {
                 "colSpan": "2",
-                "className": "hlist",
+                "style": {
+                  "textAlign": "center",
+                  "padding": "0.5em 0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Italy_%281861-1946%29_crowned.svg/125px-Flag_of_Italy_%281861-1946%29_crowned.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Italy_%281861-1946%29_crowned.svg/188px-Flag_of_Italy_%281861-1946%29_crowned.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Flag_of_Italy_%281861-1946%29_crowned.svg/250px-Flag_of_Italy_%281861-1946%29_crowned.svg.png 2x|Flag of Tripolitania|h83|w125]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Tripolitana_COA.svg/85px-Tripolitana_COA.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Tripolitana_COA.svg/128px-Tripolitana_COA.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Tripolitana_COA.svg/170px-Tripolitana_COA.svg.png 2x|{{{coat_alt}}}|h145|w85]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
                 "style": {
                   "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tripolitania.jpg/250px-Tripolitania.jpg|//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tripolitania.jpg/375px-Tripolitania.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Tripolitania.jpg/500px-Tripolitania.jpg 2x|A 1913 map of Italian Tripolitania; green indicates agricultural areas|h191|w250]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Tripoli|Tripoli]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_language|Italian]]"
+                    }
+                  ]
+                },
+                {
+                  "attrs": {},
+                  "content": [],
+                  "tag_class": "void",
+                  "tag_type": "br",
+                  "type": "tag"
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Arabic_language|Arabic]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Islam|Islam]]"
+                    }
+                  ]
+                },
+                {
+                  "attrs": {},
+                  "content": [],
+                  "tag_class": "void",
+                  "tag_type": "br",
+                  "type": "tag"
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Roman_Catholicism|Roman Catholicism]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Interwar_period|Interwar period]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {
+            "style": {
+              "display": "none"
+            }
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2"
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "textAlign": "center",
+                  "border": "0",
+                  "paddingBottom": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "attrs": {
+                "style": {
+                  "textAlign": "center",
+                  "border": "0",
+                  "paddingBottom": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "attrs": {
+                "style": {
+                  "verticalAlign": "top",
+                  "textAlign": "center",
+                  "border": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle",
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 6,
+              "attrs": {
+                "style": {
+                  "verticalAlign": "top",
+                  "textAlign": "center",
+                  "border": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 7,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle",
+                  "textAlign": "right"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 8,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {
+                  "textAlign": "center",
+                  "border": "0",
+                  "paddingBottom": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "textAlign": "center",
+                  "border": "0",
+                  "paddingBottom": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {
+                  "verticalAlign": "top",
+                  "textAlign": "center",
+                  "border": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 2,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle",
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 3,
+              "attrs": {
+                "style": {
+                  "verticalAlign": "top",
+                  "textAlign": "center",
+                  "border": "0"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 4,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle",
+                  "textAlign": "right"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 5,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ""
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle",
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle",
+                  "textAlign": "right"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "border": "0",
+                  "padding": "0",
+                  "verticalAlign": "middle"
                 }
               },
               "tag_type": "td",
@@ -149,69 +1332,14 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The **Libyan Coastal Highway** ([[LINK|lang_en|Arabic_language|Arabic]]: الطريق الساحلي الليبي‎), formerly the **Litoranea Balbo**, is a highway that is the only major road that runs along the entire east-west length of the [[LINK|lang_en|Libya|Libyan]] [[LINK|lang_en|Mediterranean|Mediterranean]] coastline. It is a section in the [[LINK|lang_en|Cairo%E2%80%93Dakar_Highway|Cairo–Dakar Highway]] #1 in the [[LINK|lang_en|Trans-African_Highway|Trans-African Highway]] system of the [[LINK|lang_en|African_Union|African Union]], [[LINK|lang_en|Arab_Maghreb_Union|Arab Maghreb Union]] and others."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Built under the rule of the Italian dictator [[LINK|lang_en|Benito_Mussolini|Benito Mussolini]] in colonial [[LINK|lang_en|Italian_Libya|Italian Libya]] in the 1930s, it was named *Via Balbia'* (or *Litoranea Balbo*) in honour of governor-general [[LINK|lang_en|Italo_Balbo|Italo Balbo]], but renamed to \"Libyan Coastal Highway\" after independence and enlarged."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 2,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In the [[LINK|lang_en|2011_Libyan_civil_war|2011 Libyan civil war]] the highway was a strategic and symbolic element, as the main route through the contested coastal region between [[LINK|lang_en|Sirte|Sirte]] and [[LINK|lang_en|Benghazi|Benghazi]]."
+              "text": "**Italian Tripolitania** was an [[LINK|lang_en|Kingdom_of_Italy_(1861%E2%80%931946)|Italian]] colony, located in present-day western [[LINK|lang_en|Libya|Libya]], that existed from 1911 to 1934. It was part of the territory conquered from the [[LINK|lang_en|Ottoman_Empire|Ottoman Empire]] after the [[LINK|lang_en|Italo-Turkish_War|Italo-Turkish War]] in 1911. Italian [[LINK|lang_en|Tripolitania|Tripolitania]] included the western northern half of Libya, with [[LINK|lang_en|Tripoli|Tripoli]][[CITE|2|https://dadfeatured.blogspot.com/2018/10/was-capital-of-italian-libya.html]] as its main city. In 1934, it was unified with [[LINK|lang_en|Italian_Cyrenaica|Cyrenaica]] in the colony of [[LINK|lang_en|Italian_Libya|Italian Libya]]."
             }
           ],
           "tag_type": "p",
           "attrs": {}
         }
       ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Cairo-Dakar_Highway_map.PNG/300px-Cairo-Dakar_Highway_map.PNG",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Map of the [[LINK|lang_en|Cairo%E2%80%93Dakar_Highway|Cairo–Dakar Highway]] #1, with the Libyan Coastal Highway section, in the [[LINK|lang_en|Trans-African_Highway|Trans-African Highway]] system."
-            }
-          ],
-          "mime": "image/png",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.791Z"
-        },
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Road_from_Tripoli_to_Misrata%2C_Libya.jpeg/220px-Road_from_Tripoli_to_Misrata%2C_Libya.jpeg",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "[[LINK|lang_en|Tripoli|Tripoli]]—[[LINK|lang_en|Misrata|Misrata]] double-highway section of the highway (2004)"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.793Z"
-        }
-      ]
+      "images": []
     },
     {
       "paragraphs": [
@@ -226,54 +1354,6 @@
           ],
           "tag_type": "h2",
           "attrs": {}
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/5/59/Bundesarchiv_Bild_101I-782-0009-01A%2C_Nordafrika%2C_Panzer_III.jpg",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Via Balbia at the [[LINK|lang_en|Marble_Arch_(Libya)|Marble Arch]] with German [[LINK|lang_en|Panzer_III|Panzer III tanks]] (1941)"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.799Z"
-        },
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/39/Arch_of_the_Philaeni_01.jpg",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Arch of the Philaeni, March 1937"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.799Z"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Italian Libya"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
         },
         {
           "index": 1,
@@ -281,7 +1361,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "In March 1937, Italian dictator Benito Mussolini made a state visit to Italian Libya to open this new military and civilian highway, built by governor-general [[LINK|lang_en|Italo_Balbo|Italo Balbo]].[[CITE|2|https://portal.issn.org/resource/ISSN/2160-3049]] When Balbo died in 1940 in a plane crash, the Italian government named the 1822 kilometer road **Via Balbia** in his honour. It was used to improve the economy and viability of the Italian colony of Libya."
+              "text": "Italian Tripolitania and [[LINK|lang_en|Italian_Cyrenaica|Italian Cyrenaica]] were formed in 1912, after the conquest of [[LINK|lang_en|Ottoman_Tripolitania|Ottoman Tripolitania]] in the [[LINK|lang_en|Italo-Turkish_War|Italo-Turkish War]]. In 1934, Italian Tripolitania became part of [[LINK|lang_en|Italian_Libya|Italian Libya]]."
             }
           ],
           "tag_type": "p",
@@ -293,7 +1373,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The Italians also constructed a minor road parallel to the coastal road, starting from [[LINK|lang_en|Marj,_Libya|Marj]] through [[LINK|lang_en|Marawa,_Libya|Marawa]], to [[LINK|lang_en|Lamluda|Lamluda]] which is 143 km (89 mi) long.[[CITE|3|https://openlibrary.org/search?q=Tarikh%20Libia%20men%20Nehayat%20al%20Qarn%20at%20Tasi'%20Ashar%20ha]][[CITE|4|https://openlibrary.org/search?q=Doxiadis%20Associates%2C%20%22Transport%20in%20Libya%22%2C%20Vol.%201%2C]]"
+              "text": "A large number of Italian colonists moved to Tripolitania in the late 1930s. These settlers went primarily to the area of Sahel al-Jefara, in Tripolitania, and to the capital Tripoli. In 1939 there were in all Tripolitania nearly 60,000 Italians, most living in Tripoli (whose population was nearly 45% Italian).[[CITE|3|https://www.youtube.com/watch?v=5s5AW_DQhVw&feature=fvw]] As a consequence, huge economic improvements arose in all coastal Tripolitania. For example, Italians created the [[LINK|lang_en|Tripoli_Grand_Prix|Tripoli Grand Prix]], an internationally renowned automobile race.[[CITE|4|https://www.youtube.com/watch?v=KMuFUccc-B0]]"
             }
           ],
           "tag_type": "p",
@@ -305,7 +1385,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The road was built from the [[LINK|lang_en|Tunisia|Tunisian]] border to the Egyptian border and was extended in 1940 by the [[LINK|lang_en|Via_della_Vittoria|Via della Vittoria]] inside western Egypt. According to historian Baldinetti the construction was done to give work to more than 10,000 Libyan Arabs.[[CITE|5|https://openlibrary.org/api/books?bibkeys=ISBN:1-13524-501-0&jscmd=data&format=json]]"
+              "text": "In December 1934, certain rights were guaranteed to autochthonous [[LINK|lang_en|Libyans|Libyans]] (later called by [[LINK|lang_en|Benito_Mussolini|Benito Mussolini]] \"Moslem Italians\"[[CITE|5|https://openlibrary.org/search?q=Sarti.%20*The%20Ax%20within*%20p%20190]]) including individual freedom, inviolability of home and property, the right to join the military or civil administrations, and the right to freely pursue a career or employment."
             }
           ],
           "tag_type": "p",
@@ -317,7 +1397,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Near the middle of the road, the border of [[LINK|lang_en|Italian_Tripolitania|Italian Tripolitania]] and [[LINK|lang_en|Italian_Cyrenaica|Italian Cyrenaica]] was marked by a [[LINK|lang_en|Marble_Arch_(Libya)|Marble Arch]], named *Arch of Fileni*. It was created by the Italian architect [[LINK|lang_en|Florestano_Di_Fausto|Florestano Di Fausto]].  There was an inscription at the top of the arch which read: *Alme Sol, possis nihil urbe Roma visere maius* (Latin for \"Oh kind Sun, may you never look upon a city greater than Rome\"). The \"Arch of Fileni\" was demolished in 1970 by the new coup d'état revolutionary regime of [[LINK|lang_en|Muammar_Gaddafi|Muammar Gaddafi]]."
+              "text": "In 1937, northern Tripolitania was split into [[LINK|lang_en|Tripoli_Province|Tripoli Province]] and [[LINK|lang_en|Misrata_Province|Misrata Province]]. In 1939 Tripolitania was included in the [[LINK|lang_en|4th_Shore|4th Shore]] of the Kingdom of Italy."
             }
           ],
           "tag_type": "p",
@@ -329,186 +1409,14 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "A railway was planned for the central section of the Litoranea Balbo parallel to the road, to connect [[LINK|lang_en|Tripoli|Tripoli]] and [[LINK|lang_en|Benghazi|Benghazi]] but little had been built before the outbreak of the [[LINK|lang_en|World_War_II|Second World War]] stopped construction."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/Reteferroviariaconviabalbia.png",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Course of the Litoranea Balbo and Libyan railways"
-            }
-          ],
-          "mime": "image/png",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.803Z"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "World War II"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The highway was fully paved. However, in [[LINK|lang_en|World_War_II|World War II]], during the [[LINK|lang_en|Western_Desert_Campaign|Western Desert Campaign]] of the Allies [[LINK|lang_en|North_African_Campaign|North African Campaign]], the road was heavily used in fighting the Axis forces, and remained damaged for decades. After the war the \"Litoranea Balbo\" was partially destroyed but in the 1960s it was improved and enlarged to four lanes in many sections with a new name, the Libyan Coastal Highway."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Independent Libya"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The road was renamed Libyan Coastal Highway after the country gained independence and was improved with enlargements. It was fully repaved in 1967.[[CITE|6|https://openlibrary.org/search?q=El%20Hadi%20Mustapha%20Bulegma%2C%20p.487.]] According to [[LINK|lang_en|Hussein_Maziq|Hussein Maziq]], prime minister of [[LINK|lang_en|Libya|Libya]] (1965–1967) under [[LINK|lang_en|King_Idris|King Idris]], there had been plans to make this road a dual carriageway road.[[CITE|7|null]]  Two parts were built: the [[LINK|lang_en|Sabratha|Sabratha]]—[[LINK|lang_en|Tripoli|Tripoli]]—[[LINK|lang_en|Misrata|Misrata]] section; and the [[LINK|lang_en|Ajdabiya|Ajdabiya]]—[[LINK|lang_en|Benghazi|Benghazi]]—[[LINK|lang_en|Taucheira|Taucheira]] section. The entire construction did not occur because of the coup d'état political change by Muammar Gaddafi on 1 September 1969. The \"Arch of Fileni\" was demolished in 1973 by the new revolutionary regime of dictator [[LINK|lang_en|Muammar_Gaddafi|Muammar Gaddafi]]."
+              "text": "The Province of Tripoli (the most important in all Italian Libya) was subdivided into:"
             }
           ],
           "tag_type": "p",
           "attrs": {}
         },
         {
-          "index": 2,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Before the 2011 Libyan civil war, the [[LINK|lang_en|General_People%27s_Committee_of_Libya|General People's Committee of Libya]] had issued an order for the [[LINK|lang_en|Ras_Ajdir|Ras Ajdir]]—[[LINK|lang_en|Sabratha|Sabratha]] section to be a dual carriageway road."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 3,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "It's to be noted that some other roads in northern Cyrenaica are *more Coastal*, or closer to the coast, than the coastal highway itself, like [[LINK|lang_en|Tolmeita|Tolmeita]]-[[LINK|lang_en|Tauchira|Tauchira]] road, and [[LINK|lang_en|Derna,_Libya|Derna]]-[[LINK|lang_en|Susa,_Libya|Susa]] road."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Bridge_entrance_to_the_east_of_Al_Bayda.jpg",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Highway with bridge overpass entrance to the east of Bayda (2010)"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.805Z"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "2011 civil war"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In the [[LINK|lang_en|2011_Libyan_civil_war|2011 Libyan civil war]] the highway was an active component for combat movement and skirmishes, and when a section's access and transit is under control - a strategic and symbolic element."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Junctions"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The highway has become a junction for new southbound roads into the [[LINK|lang_en|Fezzan|Fezzan]] region and [[LINK|lang_en|Sahara|Sahara]], and new east-west shortcut highways in [[LINK|lang_en|Cyrenaica|Cyrenaica]] and [[LINK|lang_en|Tripolitania|Tripolitania]]. They include:"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 2,
+          "index": 6,
           "items": [
             {
               "type": "list_item",
@@ -517,7 +1425,7 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Ajdabiya%E2%80%93Kufra_Road|Ajdabiya–Kufra Road]]"
+                  "text": "[[LINK|lang_en|Tripoli|Tripoli]]"
                 }
               ],
               "tag_type": "li"
@@ -529,7 +1437,7 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Charruba%E2%80%93Timimi_Road|Charruba–Timimi Road]]"
+                  "text": "[[LINK|lang_en|Zawiya,_Libya|Zawiya]]"
                 }
               ],
               "tag_type": "li"
@@ -541,7 +1449,7 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Fezzan_Road|Fezzan Road]]"
+                  "text": "Sugh el Giumaa"
                 }
               ],
               "tag_type": "li"
@@ -553,7 +1461,7 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Tobruk%E2%80%93Ajdabiya_Road|Tobruk–Ajdabiya Road]]"
+                  "text": "[[LINK|lang_en|Nalut|Nalut]]"
                 }
               ],
               "tag_type": "li"
@@ -565,7 +1473,187 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Tripoli_%E2%80%93_Cape_Town_Highway|Tripoli – Cape Town Highway]]"
+                  "text": "[[LINK|lang_en|Gharyan|Gharyan]]"
+                }
+              ],
+              "tag_type": "li"
+            }
+          ],
+          "tag_type": "ul",
+          "attrs": {}
+        },
+        {
+          "index": 7,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "In early 1943 the region was invaded and occupied by the [[LINK|lang_en|Allies_of_World_War_II|Allies]]; this was the end of the Italian colonial presence."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 8,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Italy tried unsuccessfully to maintain the colony of Tripolitania after [[LINK|lang_en|World_War_II|World War II]], but in February 1947 relinquished all Italian colonies in a Peace Treaty."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": [
+        {
+          "type": "section_image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/4/45/Stamp_Tripolitania_1931_1lire_air.jpg",
+          "thumb": null,
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "This 1-lire airmail stamp, depicting an Arab horseman pointing to an airplane passing overhead, was used in 1931."
+            }
+          ],
+          "mime": "image/jpeg",
+          "category": "PICTURE",
+          "timestamp": "2019-09-04T00:54:36.370Z"
+        },
+        {
+          "type": "section_image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Libia-Tripoli-1935-lungomare-Conte-Volpi.jpg",
+          "thumb": null,
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Postcard of [[LINK|lang_en|Tripoli|Tripoli]] in 1934."
+            }
+          ],
+          "mime": "image/jpeg",
+          "category": "PICTURE",
+          "timestamp": "2019-09-04T00:54:36.372Z"
+        }
+      ]
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Infrastructure"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "In Italian Tripolitania, the Italians made many improvements to the physical infrastructure: The most important were the coastal road between Tripoli and [[LINK|lang_en|Benghazi|Benghazi]] and the [[LINK|lang_en|Italian_Libya_Railways|railways Tripoli-Zuara, Tripoli-Garian and Tripoli-Tagiura]]. Other important infrastructure improvements were the enlargement of the port of Tripoli and the creation of the Tripoli airport."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "A group of villages for Italians and Libyans was created on coastal Tripolitania during the 1930s.[[CITE|6|http://www.fedoa.unina.it/1881/01/Santoianni_Progettazione_Architettonica.pdf]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Main military and political developments"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "list_item",
+              "index": 0,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1911: Beginning of the [[LINK|lang_en|Italo-Turkish_War|Italo-Turkish War]]. Italian conquest of [[LINK|lang_en|Tripoli|Tripoli]], and [[LINK|lang_en|Al_Khums|Al Khums]]. [[CITE|6|undefined]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 1,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1912: Treaty of Lausanne [[CITE|it|undefined]]  ends the Italo-Turkish war. [[LINK|lang_en|Tripolitania|Tripolitania]] and [[LINK|lang_en|Cyrenaica|Cyrenaica]] were ceded to Italy. [[CITE|6|undefined]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 2,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1914: Italian advance to [[LINK|lang_en|Ghat|Ghat]] (August) makes Tripolitania (including [[LINK|lang_en|Fezzan|Fezzan]]) initially under Italian suzerainty, but because of the recapture of [[LINK|lang_en|Sabha,_Libya|Sabha]] (November) by Libyan resistance men, the advance turns into retreat. [[CITE|6|undefined]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 3,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1915: Italian reverses at the battles of Wadi Marsit, and Al Gardabiya, forced them to withdraw and eventually to retire to [[LINK|lang_en|Tripoli|Tripoli]], [[LINK|lang_en|Zuwara|Zuwara]], and [[LINK|lang_en|Al_Khums|Al Khums]]. [[CITE|6|undefined]] [[CITE|8|https://openlibrary.org/search?q=Habib%20W.%20El-Hesnawi%2C%20%22The%20Story%20of%20the%20Libyans'%20Ji]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 4,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1922:Italian forces occupy [[LINK|lang_en|Misrata|Misrata]], launching the reconquest of Tripolitania. [[CITE|6|undefined]]"
                 }
               ],
               "tag_type": "li"
@@ -577,107 +1665,67 @@
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Via_della_Vittoria|Via della Vittoria]]"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {}
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/1/19/Fezzan_road2.png",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Map of the central section of the highway in the [[LINK|lang_en|Misrata|Misrata]]—[[LINK|lang_en|Sirte|Sirte]] region of [[LINK|lang_en|Tripolitania|Tripolitania]], and its junction with the northern end of [[LINK|lang_en|Fezzan_Road|Fezzan Road]]."
-            }
-          ],
-          "mime": "image/png",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T00:24:47.809Z"
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "See also"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Transport_in_Libya|Transport in Libya]]"
+                  "text": "1924: With the conquest of [[LINK|lang_en|Sirte|Sirt]], most of Tripolitania (except the Sirt desert) is in Italian hands. [[CITE|6|undefined]]"
                 }
               ],
               "tag_type": "li"
             },
             {
               "type": "list_item",
-              "index": 1,
+              "index": 6,
               "sentences": [
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Via_della_Vittoria|Via della Vittoria]]"
+                  "text": "Winter 1927-8: Launching the \"29th Parallel line operations\", as a result of coordination between the governments of Tripolitania and Cyrenaica, led to the conquest of [[LINK|lang_en|Gulf_of_Sidra|gulf of Sidra]], and linking the two colonies.[[CITE|9|https://openlibrary.org/search?q=Attilio%20Teruzzi%2C%20%22Cirenaica%20Verdi%22%2C%20translated%20by%20]]"
                 }
               ],
               "tag_type": "li"
             },
             {
               "type": "list_item",
-              "index": 2,
+              "index": 7,
               "sentences": [
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Italian_Libya|Italian Libya]]"
+                  "text": "1929: [[LINK|lang_en|Pietro_Badoglio|Pietro Badoglio]] becomes a unique governor of Tripolitania and Cyrenaica. [[CITE|6|undefined]]"
                 }
               ],
               "tag_type": "li"
             },
             {
               "type": "list_item",
-              "index": 3,
+              "index": 8,
               "sentences": [
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Marble_Arch_(Libya)|Marble Arch (Libya)]]"
+                  "text": "1929-1930: Conquest of Fezzan.[[CITE|7|https://openlibrary.org/search?q=%D8%AE%D9%84%D9%8A%D9%81%D8%A9%20Kalifa%20Tillisi%2C%20%E2%80%9CMu%E2%80%99jam%20Ma%E2%80%99arik%20Al%20Jihad%20fi%20]]"
                 }
               ],
               "tag_type": "li"
             },
             {
               "type": "list_item",
-              "index": 4,
+              "index": 9,
               "sentences": [
                 {
                   "type": "sentence",
                   "index": 0,
-                  "text": "[[LINK|lang_en|Italo_Balbo|Italo Balbo]]"
+                  "text": "1934:  Tripolitania is incorporated into the [[LINK|lang_en|Italian_Libya|Colony of Libya]]."
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 10,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1939: Tripolitania is made part of the [[LINK|lang_en|4th_Shore|4th Shore]] of the Kingdom of Italy."
                 }
               ],
               "tag_type": "li"
@@ -693,7 +1741,7 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "https://en.wikipedia.org/wiki/Libyan_Coastal_Highway",
+      "url": "https://en.wikipedia.org/wiki/Italian_Tripolitania",
       "thumb": null,
       "category": "NONE",
       "citation_id": 1,
@@ -726,62 +1774,62 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.486Z",
+      "timestamp": "2019-09-04T00:54:36.319Z",
       "mime": null
     },
     {
-      "url": "https://portal.issn.org/resource/ISSN/2160-3049",
+      "url": "https://dadfeatured.blogspot.com/2018/10/was-capital-of-italian-libya.html",
       "thumb": null,
-      "category": "PERIODICAL",
+      "category": "FILE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Pini, G (December 1939). \"La rete stradale dell'Impero\". *Africa Italiana* (12)."
+          "text": "Italian Tripoli"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.498Z",
-      "mime": null
+      "timestamp": "2019-09-04T00:54:36.349Z",
+      "mime": "text/html"
     },
     {
-      "url": "https://openlibrary.org/search?q=Tarikh%20Libia%20men%20Nehayat%20al%20Qarn%20at%20Tasi'%20Ashar%20ha",
-      "thumb": null,
-      "category": "BOOK",
+      "url": "https://www.youtube.com/watch?v=5s5AW_DQhVw&feature=fvw",
+      "thumb": "https://i.ytimg.com/vi/5s5AW_DQhVw/hqdefault.jpg",
+      "category": "YOUTUBE",
       "citation_id": 3,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Tarikh Libia men Nehayat al Qarn at Tasi' Ashar hatta Amm 1969, N.E. Prushin, Trans. by Dr. Imad Hatem, Markaz Jihad al Libiyeen lid Dirast at Tarikhiya,  2nd ed., 2005, p.235."
+          "text": "Images of old Tripoli"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.498Z",
+      "timestamp": "2019-09-04T00:54:36.350Z",
       "mime": null
     },
     {
-      "url": "https://openlibrary.org/search?q=Doxiadis%20Associates%2C%20%22Transport%20in%20Libya%22%2C%20Vol.%201%2C",
-      "thumb": null,
-      "category": "BOOK",
+      "url": "https://www.youtube.com/watch?v=KMuFUccc-B0",
+      "thumb": "https://i.ytimg.com/vi/KMuFUccc-B0/hqdefault.jpg",
+      "category": "YOUTUBE",
       "citation_id": 4,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Doxiadis Associates, \"Transport in Libya\", Vol. 1, prepared for the government of the Kingdom of Libya, March 20, 1965, pp. 96, 123-124."
+          "text": "Video of Tripoli Grand Prix"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.499Z",
+      "timestamp": "2019-09-04T00:54:36.350Z",
       "mime": null
     },
     {
-      "url": "https://openlibrary.org/api/books?bibkeys=ISBN:1-13524-501-0&jscmd=data&format=json",
+      "url": "https://openlibrary.org/search?q=Sarti.%20*The%20Ax%20within*%20p%20190",
       "thumb": null,
       "category": "BOOK",
       "citation_id": 5,
@@ -789,81 +1837,81 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "Baldinetti, Anna (2014). *The Origins of the Libyan Nation: Colonial Legacy, Exile and the Emergence of a New Nation-State*. Routledge Studies in Middle Eastern History. New York: Routledge. p. 50."
+          "text": "Sarti. *The Ax within* p 190"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.499Z",
+      "timestamp": "2019-09-04T00:54:36.351Z",
       "mime": null
     },
     {
-      "url": "https://openlibrary.org/search?q=El%20Hadi%20Mustapha%20Bulegma%2C%20p.487.",
+      "url": "http://www.fedoa.unina.it/1881/01/Santoianni_Progettazione_Architettonica.pdf",
       "thumb": null,
-      "category": "BOOK",
+      "category": "FILE",
       "citation_id": 6,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "El Hadi Mustapha Bulegma, p.487."
+          "text": "Chapter Libya-Tripolitania (in Italian)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.500Z",
-      "mime": null
+      "timestamp": "2019-09-04T00:54:36.351Z",
+      "mime": "application/pdf"
     },
     {
-      "url": null,
+      "url": "https://openlibrary.org/search?q=%D8%AE%D9%84%D9%8A%D9%81%D8%A9%20Kalifa%20Tillisi%2C%20%E2%80%9CMu%E2%80%99jam%20Ma%E2%80%99arik%20Al%20Jihad%20fi%20",
       "thumb": null,
-      "category": null,
+      "category": "BOOK",
       "citation_id": 7,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": null
+          "text": "خليفة Kalifa Tillisi, “Mu’jam Ma’arik Al Jihad fi Libia1911-1931”, Dar Ath Thaqafa, Beirut, Lebanon, 1973."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.501Z",
+      "timestamp": "2019-09-04T00:54:36.352Z",
       "mime": null
     },
     {
-      "url": "https://web.archive.org/web/20150402123125/http://media.tecnici.it/file/novecento/la_litoranea_libica.pdf",
+      "url": "https://openlibrary.org/search?q=Habib%20W.%20El-Hesnawi%2C%20%22The%20Story%20of%20the%20Libyans'%20Ji",
       "thumb": null,
-      "category": "FILE",
+      "category": "BOOK",
       "citation_id": 8,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "La Litoranea Libica (in Italian)"
+          "text": "Habib W. El-Hesnawi, \"The Story of the Libyans' Jihad (Resistance) Against Italian Colonialism 1911-1943\", Markaz Jihad al Libiyeen dhid al Ghazw al Itali, 1988."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.778Z",
-      "mime": "application/pdf"
+      "timestamp": "2019-09-04T00:54:36.352Z",
+      "mime": null
     },
     {
-      "url": "http://www.qattara.it/balbia_files/Opere%20italiane%20in%20Africa.pdf",
+      "url": "https://openlibrary.org/search?q=Attilio%20Teruzzi%2C%20%22Cirenaica%20Verdi%22%2C%20translated%20by%20",
       "thumb": null,
-      "category": "FILE",
+      "category": "BOOK",
       "citation_id": 9,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Where there was nothing but wood, we left asphalt and marble (in Italian)"
+          "text": "Attilio Teruzzi, \"Cirenaica Verdi\", translated by Kalifa Tillisi, ad Dar al Arabiya lil Kitab, 1991."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T00:24:47.778Z",
-      "mime": "application/pdf"
+      "timestamp": "2019-09-04T00:54:36.353Z",
+      "mime": null
     }
   ],
   "media_gallery": [],
@@ -902,7 +1950,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/4/2019 0:24:46 AM UTC"
+      "value": "8/4/2019 0:54:35 AM UTC"
     },
     {
       "key": "last_modified",
@@ -914,11 +1962,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Libyan_Coastal_Highway"
+      "value": "Italian_Tripolitania"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Libyan_Coastal_Highway"
+      "value": "Italian_Tripolitania"
     }
   ],
   "amp_info": {
@@ -927,5 +1975,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmRMGJMZH3dbezeqQ3RwjbES2uk3ht1qfBEECGWvaLtMxp"
+  "ipfs_hash": "QmWuoGmq7mSsWgAcgBsyLTJWz371QaCL2egvyQt8v8rGAB"
 }
