@@ -1265,10 +1265,10 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 break;
         }
     })
-    console.log("------------------")
-    // Make sure the sentences are spaced
-    console.log(util.inspect(nestedContents, {showHidden: false, depth: null, chalk: true}));
-    console.log(nestedContents)
+    // console.log("------------------")
+    // // Make sure the sentences are spaced
+    // console.log(util.inspect(nestedContents, {showHidden: false, depth: null, chalk: true}));
+    // console.log(nestedContents)
     return nestedContents;
 }
 

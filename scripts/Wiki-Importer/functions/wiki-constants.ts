@@ -208,6 +208,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
     { parent: { class: 'thumbcaption'}, tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
     // { tag: "div", id: null, class: "mw-references-wrap" }, 
+    { tag: "div", id: null, class: "navbox" }, // Various navboxes
 ]
 
 // Some elements need to be unwrapped

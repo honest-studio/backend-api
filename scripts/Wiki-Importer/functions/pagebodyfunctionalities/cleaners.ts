@@ -44,13 +44,13 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     $('strong, b').each(function() {
         // Get the string
         let theString = '';
-        theString = $(this).text().trim() || '';
+        theString = $(this).html().trim() || '';
 
         // Create the string
-        let plaintextString = `**${theString}**`;
+        let htmlString = `**${theString}**`;
 
         // Replace the tag with the string
-        $(this).replaceWith(plaintextString);
+        $(this).replaceWith(htmlString);
     });
 
     
@@ -58,13 +58,13 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     $('em, i').each(function() {
         // Get the string
         let theString = '';
-        theString = $(this).text().trim() || '';
+        theString = $(this).html().trim() || '';
 
         // Create the string
-        let plaintextString = `*${theString}*`;
+        let htmlString = `*${theString}*`;
 
         // Replace the tag with the string
-        $(this).replaceWith(plaintextString);
+        $(this).replaceWith(htmlString);
     });
 
     return {

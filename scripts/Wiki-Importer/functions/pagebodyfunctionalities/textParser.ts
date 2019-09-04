@@ -49,7 +49,7 @@ export const textParser = (element, $, internalCitations) => {
 			}
 			return
 		}
-		else { // element is a tag
+		else { // Element is a tag
 			let tag = $el[0].name;
 			if ( tag == 'a') {
 				accumulator += parseAnchorTag(el, $);
