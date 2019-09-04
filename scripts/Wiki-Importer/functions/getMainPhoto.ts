@@ -1,15 +1,18 @@
 import * as cheerio from 'cheerio';
 import { getImage } from './pagebodyfunctionalities/getImage';
 import { Media } from '../../../src/types/article';
+import { linkCategorizer } from '../../../src/utils/article-utils/article-converter';
+import { CheerioPack } from './pagebodyfunctionalities/cleaners';
+import * as mimePackage from 'mime';
 
 export interface GetMainPhotoReturnPack {
 	main_photo: Media,
-	altered_html: string
+	cheerio_pack: CheerioPack
 }
 
-export const getMainPhoto = (html): GetMainPhotoReturnPack => {
+export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack => {
 	// Parse the dom
-	const $ = cheerio.load(html, {decodeEntities: false});
+	const $ = input_pack.cheerio_static;
 	const $content = $('div.mw-parser-output');
 
 	// Look at the infobox first
@@ -36,6 +39,9 @@ export const getMainPhoto = (html): GetMainPhotoReturnPack => {
 	$($infobox).find("a.image").each((idx, img_anchor) => {
 		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
 		if(inner_href.search(/File/gimu) >= 0){
+			// Set the attribution url
+			workingMainPhoto.attribution_url = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
+
 			let inner_img = $(img_anchor).find("img");
 			let inner_img_elem = inner_img.eq(0)[0];
 			let theAttribs = inner_img_elem.attribs;
@@ -61,7 +67,7 @@ export const getMainPhoto = (html): GetMainPhotoReturnPack => {
 				let srcsetString = theAttribs.srcset;
 
 				// Fix upload.wikimedia.org 
-				srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+				srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
 				
 				// Add the srcset
 				workingMainPhoto.media_props.srcSet = srcsetString;
@@ -76,13 +82,15 @@ export const getMainPhoto = (html): GetMainPhotoReturnPack => {
 				workingMainPhoto.media_props.height = parseInt(theAttribs.height);
 				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
 			}
-
-			console.log(workingMainPhoto)
-
-		}
+			$(img_anchor).remove();
+		};
 	})
 	
-	
+	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
+	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
+
+	console.log(workingMainPhoto)
+
 	// blobBoxSoup.findAll("a", {"class": "image", "href": re.compile(r"File", re.UNICODE)})
 
 
@@ -117,6 +125,8 @@ export const getMainPhoto = (html): GetMainPhotoReturnPack => {
 	// Return place holder:
 	return {
 		main_photo: workingMainPhoto,
-		altered_html: html
+		cheerio_pack: {
+			cheerio_static: $
+		}
 	}
 };

@@ -5,6 +5,7 @@ import { Citation, CitationCategoryType, Sentence } from '../../../src/types/art
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { accumulateText } from './pagebodyfunctionalities/textParser';
 import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
+import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 const util = require('util');
 const chalk = require('chalk');
 const _ = require('lodash');
@@ -23,6 +24,11 @@ export interface RawCitation {
 	note_element: CheerioElement
 }
 
+export interface CitationReturnPack {
+	citations: Citation[],
+	internalCitations: any,
+	cheerio_pack: CheerioPack
+}
 
 // Default description for the Wikipedia citation
 let defaultDescription: Sentence[] = [
@@ -54,8 +60,8 @@ let defaultDescription: Sentence[] = [
 ]
 
 // Parse out the citations from Wikipedia
-export const getCitations = async (input_html: string, url, theMediaUploadService: MediaUploadService) => { 
-	const $: CheerioStatic = cheerio.load(input_html, {decodeEntities: false});
+export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<CitationReturnPack> => { 
+	const $: CheerioStatic = input_pack.cheerio_static;
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
 	
 	// Store {key, value} pair objects for O(1) access to determine internal citations
@@ -319,7 +325,9 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 	return {
 		citations: citations,
 		internalCitations: internalCitations, // Map passed to textParser for instant internal citation lookup
-		altered_body: $.html()
+		cheerio_pack:  {
+			cheerio_static: $
+		}
 	}; 
 }
 

@@ -9,6 +9,7 @@ import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
 import { getCitations } from './getCitations';
 import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '../../../src/types/article';
 import { MediaUploadService, UrlPack } from '../../../src/media-upload';
+import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 // input: page html, url
 // output sections[] 
 
@@ -23,11 +24,11 @@ export interface PageBodyPack {
 	internal_citations: any
 }
 
-export const getPageBodyPack = async (input_html: string, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
+export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
 	// Compute citations first to be able to implement internal citations
 	// When parsing the page body
-	let citations = await getCitations(input_html, url, theMediaUploadService);
-	let internalCitations = citations.internalCitations;
+	let ctn_return_pack = await getCitations(input_pack, url, theMediaUploadService);
+	let internalCitations = ctn_return_pack.internalCitations;
 
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
@@ -42,7 +43,7 @@ export const getPageBodyPack = async (input_html: string, url, theMediaUploadSer
 	let paragraphIndex = 0; // Keep track of current paragraph
 
 	// Parse the dom
-	const $ = cheerio.load(citations.altered_body, {decodeEntities: false});
+	const $ = ctn_return_pack.cheerio_pack.cheerio_static;
 	const $content = $('div.mw-parser-output');
 
 	// Loop through the children
@@ -156,7 +157,7 @@ export const getPageBodyPack = async (input_html: string, url, theMediaUploadSer
 	})
 	return {
 		sections: sections,
-		citations: citations.citations,
+		citations: ctn_return_pack.citations,
 		internal_citations: internalCitations
 	}
 }

@@ -2,7 +2,11 @@ import * as cheerio from 'cheerio';
 import { PRECLEAN_BAD_ELEMENTS, PRECLEAN_UNWRAP_ELEMENTS, ElementCleaningPack, NON_AMP_BAD_TAGS } from '../wiki-constants';
 const chalk = require('chalk');
 
-export const preCleanHTML = (input_html: string): string => {
+export interface CheerioPack {
+    cheerio_static: CheerioStatic
+}
+
+export const preCleanHTML = (input_html: string): CheerioPack => {
     const $ = cheerio.load(input_html, {decodeEntities: false});
     
     // Remove certain tags that mess with AMP
@@ -63,5 +67,7 @@ export const preCleanHTML = (input_html: string): string => {
         $(this).replaceWith(plaintextString);
     });
 
-    return $.html();
+    return {
+        cheerio_static: $
+    }
 }
