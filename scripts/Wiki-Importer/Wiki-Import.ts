@@ -7,7 +7,7 @@ import { getMetaData } from './functions/getMetaData';
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
-import { ArticleJson } from '../../src/types/article';
+import { ArticleJson, Sentence } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
@@ -112,16 +112,28 @@ export const WikiImport = async (inputString: string) => {
         else throw e;
     }
 
+    // Get the blurb snippet
+    let text_preview;
+    try {
+        const first_para = articlejson.page_body[0].paragraphs[0];
+        text_preview = (first_para.items[0] as Sentence).text;
+        if (first_para.items.length > 1)
+            text_preview += (first_para.items[1] as Sentence).text;
+    } catch (e) {
+        text_preview = "";
+    }
+
     try {
         const article_update = await theMysql.TryQuery(
             `
                 UPDATE enterlink_articletable 
                 SET lastmod_timestamp = NOW(),
                     desktop_cache_timestamp = NULL,
-                    mobile_cache_timestamp = NULL
+                    mobile_cache_timestamp = NULL,
+                    blurb_snippet = ?
                 WHERE ipfs_hash_current = ? 
             `,
-            [inputIPFS]
+            [text_preview, inputIPFS]
         );
     } catch (e) {
         if (e.message.includes("ER_DUP_ENTRY")){

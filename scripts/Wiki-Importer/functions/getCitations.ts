@@ -86,14 +86,6 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	// Page content
 	const $content = $('div.mw-parser-output');
 
-	// Loop through all of the <sup> tags and find the citation references
-	let cite_refs: CheerioElement[] = [];
-	$content.find("sup").each((idx, sup) => {
-		// Find the citation references
-		if (sup.attribs['id'] && sup.attribs['id'].search(/cite_ref/gimu) >= 0){
-			cite_refs.push(sup);
-		};
-	});
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
