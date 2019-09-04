@@ -1,11 +1,9 @@
 import * as cheerio from 'cheerio';
 import * as mimePackage from 'mime';
-import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
-import { getTimeStamp } from './pagebodyfunctionalities/getTimeStamp';
-import { Citation, Sentence, CitationCategoryType } from '../../../src/types/article';
+import { MediaUploadService } from '../../../src/media-upload';
+import { Citation, CitationCategoryType, Sentence } from '../../../src/types/article';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
-import { getFirstAvailableCitationIndex } from '../../../src/utils/article-utils/article-tools';
-import { MediaUploadService, UrlPack } from '../../../src/media-upload';
+import { accumulateText } from './pagebodyfunctionalities/textParser';
 import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
 const util = require('util');
 const chalk = require('chalk');

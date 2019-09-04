@@ -106,7 +106,7 @@ export const getPageBodyPack = async (input_html: string, url, theMediaUploadSer
 		else if (tag_name == 'table') {
 			let tableclass = $el.attr('class');
 			if (tableclass === "wikitable" || tableclass === "body-table") {
-				let table = getTable(el, $, internalCitations);
+				let table = getTable(el, $, internalCitations, "body-table");
 				paragraphs.push({
 					index: paragraphIndex,
 					items: [table] as Table[],
@@ -123,7 +123,7 @@ export const getPageBodyPack = async (input_html: string, url, theMediaUploadSer
 			console.log(childTable[0].attribs);
 			let tableclass = childTable.attr('class');
 			if (tableclass === "wikitable" || tableclass === "body-table") {
-				let table = getTable(childTable, $, internalCitations);
+				let table = getTable(childTable, $, internalCitations, "body-table");
 				paragraphs.push({
 					index: paragraphIndex,
 					items: [table] as Table[],

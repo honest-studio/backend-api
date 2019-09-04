@@ -10,7 +10,7 @@ export const getWikipediaStyleInfoBox = (html, internal_citations): Table => {
 	const $content = $('div.mw-parser-output');
 	const $table = $content.find('.infobox');
 	if ($table.length > 0) {
-		return getTable($table, $, internal_citations);
+		return getTable($table, $, internal_citations, "wikitable");
 	}
 	return null;
 };

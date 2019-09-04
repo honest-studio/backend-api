@@ -3,12 +3,12 @@ import { getTagClass } from '../getTagClass';
 import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem } from '../../../../../src/types/article';
 import { nestedContentParser } from '../../../../../src/utils/article-utils/article-converter';
 
-export const getTable = (element, $, internal_citations): Table => {
+export const getTable = (element, $, internal_citations, table_type: 'wikitable' | 'body-table'): Table => {
 	let $table = $(element);
 
  	// Instantiate return object
 	let table: Table = {
-		type: $table.attr('class'),
+		type: table_type,
 		attrs: cleanAttrs($table[0].attribs), 
 		caption: { attrs: {}, sentences: [] }, 
 		thead: { rows: [], attrs: {} },

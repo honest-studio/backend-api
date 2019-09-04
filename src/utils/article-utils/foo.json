@@ -9,21 +9,13 @@
 			},
 			{
 				"index": 1,
-				"tag_type": "div",
-				"attrs": {
-					"className": "thumb tright"
-				},
-				"items": []
-			},
-			{
-				"index": 2,
 				"tag_type": "p",
 				"attrs": {},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The **Coppa Ciano** was an automobile race held in [[LINK|lang_en|Italy|Italy]]. Originally referred to as **Coppa Montenero** or **Circuito Montenero**, the Coppa Ciano name was officially in use between 1927 and 1939."
+						"text": "**[[LINK|lang_en|Albania|Albania]] ** competed at the [[LINK|lang_en|2014_Winter_Olympics|2014 Winter Olympics]] in [[LINK|lang_en|Sochi|Sochi]], [[LINK|lang_en|Russia|Russia]] from 7 to 23 February 2014. The team consisted of two athletes competing in [[LINK|lang_en|Alpine_skiing|alpine skiing]] and for the first time a female athlete. [[CITE|5|http://shqiptarja.com/sport/2726/soci-2014-shqiperia-perfaqesohet-nga-erjon-tola-dhe-suela-mehilli-197437.html]]"
 					}
 				]
 			}
@@ -36,110 +28,13 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "history"
+					"id": "competitors"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "History"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "div",
-				"attrs": {
-					"className": "thumb tleft"
-				},
-				"items": []
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "During the years immediately following [[LINK|lang_en|World_War_I|World War I]] several road circuits were created in Italy. These included the [[LINK|lang_en|Circuito_del_Montenero|Montenero Circuit]] at [[LINK|lang_en|Livorno|Livorno]], which became home for the annual Coppa Montenero from its inauguration in 1921. In the beginning it was only a local affair and the organizers quickly found themselves in financial troubles. In 1923 the event was taken over by the [[LINK|lang_en|Automobile_Club_of_Italy|Automobile Club of Italy]] and the future was secured."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In 1927, the Livorno-born politician [[LINK|lang_en|Costanzo_Ciano|Costanzo Ciano]] donated a victory trophy: the Coppa Ciano. At first, this was awarded to the victor in a separate [[LINK|lang_en|Sports_car_racing|sports car]] race, run within a week of the Coppa Montenero. In 1929, however, the Coppa Ciano was merged into the main event and at the same time became the name most often used."
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The driver [[LINK|lang_en|Emilio_Materassi|Emilio Materassi]] won 4 years in a row 1925-1928 and earned the nickname \"King of Montenero\"."
-					}
-				]
-			},
-			{
-				"index": 5,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In the 1930s, Italian [[LINK|lang_en|International_Motorsports_Hall_of_Fame|Hall of Fame]] driver [[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]] won this race five times, more than any other driver. In his 1936 victory he made his way through the field, beating the otherwise superior German cars. This victory was one of the reasons leading to the [[LINK|lang_en|Italian_Grand_Prix|Italian Grand Prix]] being held at the Montenero circuit in 1937, instead of the usual venue, [[LINK|lang_en|Autodromo_Nazionale_Monza|Monza]]."
-					}
-				]
-			},
-			{
-				"index": 6,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The 1939 race was run to [[LINK|lang_en|Voiturette|Voiturette]] regulations and became the last before World War II stopped all racing for many years. In 1947 the 20th and final edition of the Coppa Montenero was run, with 1500 cc unsupercharged cars. At that point, due to Costanzo Ciano's connections with the now abolished Fascist regime, it was no longer called Coppa Ciano."
-					}
-				]
-			},
-			{
-				"index": 7,
-				"tag_type": "div",
-				"attrs": {
-					"style": {
-						"clear": "both"
-					}
-				},
-				"items": []
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "coppa-ciano-by-year"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Coppa Ciano by year"
+						"text": "Competitors"
 					}
 				]
 			},
@@ -149,6 +44,7 @@
 				"attrs": {
 					"className": "ep-table wikitable",
 					"style": {
+						"textAlign": "center",
 						"fontSize": "95%"
 					}
 				},
@@ -158,6 +54,7 @@
 						"attrs": {
 							"className": "ep-table wikitable",
 							"style": {
+								"textAlign": "center",
 								"fontSize": "95%"
 							}
 						},
@@ -180,9 +77,7 @@
 										{
 											"index": 0,
 											"attrs": {
-												"style": {
-													"width": "34px"
-												}
+												"width": "200"
 											},
 											"tag_type": "th",
 											"tag_class": "block",
@@ -193,7 +88,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Year"
+															"text": "Sport"
 														}
 													]
 												}
@@ -202,9 +97,7 @@
 										{
 											"index": 1,
 											"attrs": {
-												"style": {
-													"width": "250px"
-												}
+												"width": "60"
 											},
 											"tag_type": "th",
 											"tag_class": "block",
@@ -215,7 +108,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Race Name"
+															"text": "Men"
 														}
 													]
 												}
@@ -224,9 +117,7 @@
 										{
 											"index": 2,
 											"attrs": {
-												"style": {
-													"width": "66px"
-												}
+												"width": "60"
 											},
 											"tag_type": "th",
 											"tag_class": "block",
@@ -237,7 +128,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Dist."
+															"text": "Women"
 														}
 													]
 												}
@@ -246,9 +137,7 @@
 										{
 											"index": 3,
 											"attrs": {
-												"style": {
-													"width": "60px"
-												}
+												"width": "60"
 											},
 											"tag_type": "th",
 											"tag_class": "block",
@@ -259,117 +148,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Circuit"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {
-												"style": {
-													"width": "90px"
-												}
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Formula"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {
-												"style": {
-													"width": "160px"
-												}
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Driver"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {
-												"style": {
-													"width": "180px"
-												}
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Manufacturer"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {
-												"style": {
-													"width": "60px"
-												}
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Time"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {
-												"style": {
-													"width": "44px"
-												}
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
+															"text": "Total"
 														}
 													]
 												}
@@ -381,18 +160,14 @@
 									"index": 1,
 									"tag_type": "tr",
 									"tag_class": "block",
-									"attrs": {
-										"style": {
-											"background": "#ffebeb"
-										}
-									},
+									"attrs": {},
 									"cells": [
 										{
 											"index": 0,
 											"attrs": {
-												"rowSpan": "2"
+												"align": "left"
 											},
-											"tag_type": "th",
+											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
 												{
@@ -401,7 +176,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "1927"
+															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics|Alpine skiing]]"
 														}
 													]
 												}
@@ -419,7 +194,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "VII Circuito Montenero"
+															"text": "1"
 														}
 													]
 												}
@@ -437,7 +212,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "225 km"
+															"text": "1"
 														}
 													]
 												}
@@ -455,263 +230,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "22.5 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Formula_Libre|Formula Libre]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "table",
-													"tag_class": "block",
-													"attrs": {
-														"className": "blurb-inline-image-container"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": " "
-																}
-															]
-														},
-														{
-															"type": "tag",
-															"tag_type": "tbody",
-															"tag_class": "inline",
-															"attrs": {},
-															"content": [
-																{
-																	"type": "text",
-																	"content": [
-																		{
-																			"type": "sentence",
-																			"index": 0,
-																			"text": " "
-																		}
-																	]
-																},
-																{
-																	"type": "tag",
-																	"tag_type": "tr",
-																	"tag_class": "block",
-																	"attrs": {},
-																	"content": [
-																		{
-																			"type": "text",
-																			"content": [
-																				{
-																					"type": "sentence",
-																					"index": 0,
-																					"text": " "
-																				}
-																			]
-																		},
-																		{
-																			"type": "tag",
-																			"tag_type": "td",
-																			"tag_class": "block",
-																			"attrs": {},
-																			"content": [
-																				{
-																					"type": "text",
-																					"content": [
-																						{
-																							"type": "sentence",
-																							"index": 0,
-																							"text": " "
-																						}
-																					]
-																				},
-																				{
-																					"type": "tag",
-																					"tag_type": "a",
-																					"tag_class": "inline",
-																					"attrs": {
-																						"className": "tooltippableImage",
-																						"href": "https://upload.wikimedia.org/wikipedia/en/8/82/Coppa_Ciano.png",
-																						"rel": "nofollow"
-																					},
-																					"content": [
-																						{
-																							"type": "text",
-																							"content": [
-																								{
-																									"type": "sentence",
-																									"index": 0,
-																									"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/en/8/82/Coppa_Ciano.png|//upload.wikimedia.org/wikipedia/en/8/82/Coppa_Ciano.png 1.5x|Image|h284|w220]]"
-																								}
-																							]
-																						}
-																					]
-																				}
-																			]
-																		},
-																		{
-																			"type": "text",
-																			"content": [
-																				{
-																					"type": "sentence",
-																					"index": 0,
-																					"text": " "
-																				}
-																			]
-																		}
-																	]
-																},
-																{
-																	"type": "text",
-																	"content": [
-																		{
-																			"type": "sentence",
-																			"index": 0,
-																			"text": " "
-																		}
-																	]
-																}
-															]
-														},
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": " "
-																}
-															]
-														},
-														{
-															"type": "tag",
-															"tag_type": "caption",
-															"tag_class": "inline",
-															"attrs": {
-																"className": "blurbimage-caption"
-															},
-															"content": [
-																{
-																	"type": "text",
-																	"content": [
-																		{
-																			"type": "sentence",
-																			"index": 0,
-																			"text": "Coppa Ciano poster, 1931."
-																		}
-																	]
-																}
-															]
-														},
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": " "
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Emilio_Materassi|Emilio Materassi]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Bugatti_T35C|Bugatti T35C]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:45:18"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
+															"text": "2"
 														}
 													]
 												}
@@ -728,7 +247,7 @@
 										{
 											"index": 0,
 											"attrs": {},
-											"tag_type": "td",
+											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
 												{
@@ -737,7 +256,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "I Coppa Ciano (Sport)"
+															"text": "Total"
 														}
 													]
 												}
@@ -746,7 +265,7 @@
 										{
 											"index": 1,
 											"attrs": {},
-											"tag_type": "td",
+											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
 												{
@@ -755,7 +274,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "225 km"
+															"text": "1"
 														}
 													]
 												}
@@ -764,7 +283,7 @@
 										{
 											"index": 2,
 											"attrs": {},
-											"tag_type": "td",
+											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
 												{
@@ -773,7 +292,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "22.5 km"
+															"text": "1"
 														}
 													]
 												}
@@ -782,6 +301,351 @@
 										{
 											"index": 3,
 											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "2"
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							],
+							"attrs": {}
+						},
+						"tfoot": {
+							"rows": [],
+							"attrs": {}
+						}
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "alpine-skiing"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Alpine skiing"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "According to the final quota allocation released on January 20, 2014, Albania had two athletes in qualification position. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[CITE|6|http://data.fis-ski.com/media/olympic-games/quota-20-01-2014-6.pdf]] [[LINK|lang_en|Erjon_Tola|Erjon Tola]] was scheduled to compete in his third consecutive games, but had to withdraw because he broke his arm in training. [[CITE|7|http://sportekspres.com/?p=36080]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "On February 18, [[LINK|lang_en|Suela_Mëhilli|Suela Mëhilli]] finished the giant slalom race in 60th position (out of 74 competitors who finished). She did not finish the slalom race after starting the first run."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "table",
+				"attrs": {
+					"className": "ep-table wikitable",
+					"style": {
+						"fontSize": "90%"
+					}
+				},
+				"items": [
+					{
+						"type": "body-table",
+						"attrs": {
+							"className": "ep-table wikitable",
+							"style": {
+								"fontSize": "90%"
+							}
+						},
+						"caption": {
+							"attrs": {},
+							"sentences": []
+						},
+						"thead": {
+							"rows": [],
+							"attrs": {}
+						},
+						"tbody": {
+							"rows": [
+								{
+									"index": 0,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"rowSpan": "2"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Athlete"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"rowSpan": "2"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Event"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"colSpan": "2"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Run 1"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"colSpan": "2"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Run 2"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {
+												"colSpan": "2"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Total"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 1,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {
+										"style": {
+											"fontSize": "95%"
+										}
+									},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Time"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Rank"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Time"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Rank"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Time"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 5,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Rank"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 2,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {
+										"align": "center"
+									},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"align": "left",
+												"rowSpan": "2"
+											},
 											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
@@ -791,15 +655,68 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Sports_car_racing|Sports car]]"
+															"text": "[[LINK|lang_en|Erjon_Tola|Erjon Tola]]"
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-a_4-1"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"type": "sentence",
+																	"index": 0,
+																	"text": "[[CITE|5|http://shqiptarja.com/sport/2726/soci-2014-shqiperia-perfaqesohet-nga-erjon-tola-dhe-suela-mehilli-197437.html]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": " "
 														}
 													]
 												}
 											]
 										},
 										{
-											"index": 4,
-											"attrs": {},
+											"index": 1,
+											"attrs": {
+												"align": "left"
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Men's_giant_slalom|Men's giant slalom]]"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"colSpan": "6"
+											},
 											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
@@ -815,10 +732,10 @@
 												},
 												{
 													"type": "tag",
-													"tag_type": "span",
+													"tag_type": "abbr",
 													"tag_class": "inline",
 													"attrs": {
-														"className": "flagicon"
+														"title": "Did not start"
 													},
 													"content": [
 														{
@@ -827,7 +744,7 @@
 																{
 																	"type": "sentence",
 																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
+																	"text": "DNS"
 																}
 															]
 														}
@@ -839,61 +756,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Attilio_Marinoni|Attilio Marinoni]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_6C|Alfa Romeo 6C-1500]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:52:42"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
+															"text": " "
 														}
 													]
 												}
@@ -906,17 +769,15 @@
 									"tag_type": "tr",
 									"tag_class": "block",
 									"attrs": {
-										"style": {
-											"background": "#ffebeb"
-										}
+										"align": "center"
 									},
 									"cells": [
 										{
 											"index": 0,
 											"attrs": {
-												"rowSpan": "2"
+												"align": "left"
 											},
-											"tag_type": "th",
+											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
 												{
@@ -925,7 +786,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "1928"
+															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Men's_slalom|Men's slalom]]"
 														}
 													]
 												}
@@ -933,79 +794,9 @@
 										},
 										{
 											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "VIII Circuito Montenero"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "225 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "22.5 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
+											"attrs": {
+												"colSpan": "6"
+											},
 											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
@@ -1021,10 +812,10 @@
 												},
 												{
 													"type": "tag",
-													"tag_type": "span",
+													"tag_type": "abbr",
 													"tag_class": "inline",
 													"attrs": {
-														"className": "flagicon"
+														"title": "Did not start"
 													},
 													"content": [
 														{
@@ -1033,7 +824,7 @@
 																{
 																	"type": "sentence",
 																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
+																	"text": "DNS"
 																}
 															]
 														}
@@ -1045,61 +836,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Emilio_Materassi|Emilio Materassi]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Talbot|Talbot]] 700"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:38:57"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
+															"text": " "
 														}
 													]
 												}
@@ -1111,11 +848,16 @@
 									"index": 4,
 									"tag_type": "tr",
 									"tag_class": "block",
-									"attrs": {},
+									"attrs": {
+										"align": "center"
+									},
 									"cells": [
 										{
 											"index": 0,
-											"attrs": {},
+											"attrs": {
+												"align": "left",
+												"rowSpan": "2"
+											},
 											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
@@ -1125,7 +867,38 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "II Coppa Ciano (Sport)"
+															"text": "[[LINK|lang_en|Suela_Mëhilli|Suela Mëhilli]]"
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-a_4-2"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"type": "sentence",
+																	"index": 0,
+																	"text": "[[CITE|5|http://shqiptarja.com/sport/2726/soci-2014-shqiperia-perfaqesohet-nga-erjon-tola-dhe-suela-mehilli-197437.html]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": " "
 														}
 													]
 												}
@@ -1133,7 +906,9 @@
 										},
 										{
 											"index": 1,
-											"attrs": {},
+											"attrs": {
+												"align": "left"
+											},
 											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
@@ -1143,7 +918,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "225 km"
+															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Women's_giant_slalom|Women's giant slalom]]"
 														}
 													]
 												}
@@ -1161,7 +936,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "22.5 km"
+															"text": "1:33.55"
 														}
 													]
 												}
@@ -1179,7 +954,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Sports_car_racing|Sports car]]"
+															"text": "65"
 														}
 													]
 												}
@@ -1197,37 +972,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Mario Razzauti"
+															"text": "1:34.36"
 														}
 													]
 												}
@@ -1245,7 +990,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_6C|Alfa Romeo 6C-1500]]"
+															"text": "60"
 														}
 													]
 												}
@@ -1263,7 +1008,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "2:52:42"
+															"text": "3:07.91"
 														}
 													]
 												}
@@ -1272,7 +1017,7 @@
 										{
 											"index": 7,
 											"attrs": {},
-											"tag_type": "th",
+											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
 												{
@@ -1281,7 +1026,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Report"
+															"text": "60"
 														}
 													]
 												}
@@ -1293,2403 +1038,14 @@
 									"index": 5,
 									"tag_type": "tr",
 									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1929"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "III Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "225 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "22.5 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Achille_Varzi|Achille Varzi]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_P2|Alfa Romeo P2]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:38:51"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 6,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1930"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "IV Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "225 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "22.5 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Luigi_Fagioli|Luigi Fagioli]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Maserati_26M|Maserati 26M]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:33:50"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 7,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1931"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "V Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "200 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "20.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_8C|Alfa Romeo 8C 2300 Monza]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:23:40"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 8,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1932"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "VI Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "200 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "20.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_P3|Alfa Romeo Tipo-B 'P3']]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:18:19"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 9,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1933"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "VII Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "240 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "20.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Maserati_8CM|Maserati 8CM]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:45:08"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 10,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1934"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "VIII Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "240 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "20.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Achille_Varzi|Achille Varzi]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_P3|Alfa Romeo Tipo-B 'P3']]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:49:52"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 11,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1935"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "IX Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "240 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "20.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_P3|Alfa Romeo Tipo-B 'P3']]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:42:08"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 12,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1936"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "X Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "216.5 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "7.218 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Tazio_Nuvolari|Nuvolari]] / [[LINK|lang_en|Carlo_Pintacuda|Pintacuda]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_8C|Alfa Romeo 8C-35]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1:44:54.4"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 13,
-									"tag_type": "tr",
-									"tag_class": "block",
 									"attrs": {
-										"style": {
-											"background": "#fef3d4"
-										}
+										"align": "center"
 									},
 									"cells": [
 										{
 											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1937"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "XI Coppa Ciano (Gran Premio d'Italia) *"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "360.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "7.218 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Germany|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Rudolf_Caracciola|Rudolf Caracciola]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Mercedes-Benz_W125|Mercedes-Benz W125]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:44:54.4"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|1937_Italian_Grand_Prix|Report]]"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 14,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
 											"attrs": {
-												"rowSpan": "2"
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1938"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "XII Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "232.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "5.80 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Germany|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Hermann_Lang|Hermann Lang]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Mercedes-Benz_W154|Mercedes-Benz W154]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1:00:35.2"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 15,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "XII Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "145.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "5.80 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Voiturette|Voiturette]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Emilio_Villoresi|Emilio Villoresi]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Maserati_6CM|Maserati 6CM]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1:05:21.6"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 16,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1939"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "XIII Coppa Ciano (Circuito Montenero)"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "348.0 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "5.80 km"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "span",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "flagicon"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[LINK|lang_en|Italy|]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Giuseppe_Farina|Giuseppe Farina]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alfa_Romeo_158|Alfa Romeo 158]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2:30:10.4"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 8,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Report"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 17,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {
-												"colSpan": "9",
-												"style": {
-													"textAlign": "center"
-												}
+												"align": "left"
 											},
 											"tag_type": "td",
 											"tag_class": "block",
@@ -3700,62 +1056,20 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "* (AIACR European Driver Championship round)"
+															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Women's_slalom|Women's slalom]]"
 														}
 													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-1"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "- Sources:"
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-2"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|2|http://teamdan.com/archive/gen/1924.html#mon]]"
-																}
-															]
-														}
-													]
-												},
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"colSpan": "6"
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
 												{
 													"type": "text",
 													"content": [
@@ -3768,11 +1082,10 @@
 												},
 												{
 													"type": "tag",
-													"tag_type": "sup",
+													"tag_type": "abbr",
 													"tag_class": "inline",
 													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-3"
+														"title": "Disqualified"
 													},
 													"content": [
 														{
@@ -3781,410 +1094,7 @@
 																{
 																	"type": "sentence",
 																	"index": 0,
-																	"text": "[[CITE|3|http://teamdan.com/archive/gen/1927.html#monten]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-4"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|5|http://teamdan.com/archive/gen/1928.html#monten]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-5"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|6|http://kolumbus.fi/leif.snellman/gp2905.htm#16]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-6"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|7|http://kolumbus.fi/leif.snellman/gp3008.htm]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-7"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|8|http://kolumbus.fi/leif.snellman/gp3111.htm#38]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-8"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|10|http://kolumbus.fi/leif.snellman/gp3212.htm#50]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-9"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|11|http://kolumbus.fi/leif.snellman/gp3311.htm#46]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-10"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-11"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-12"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-13"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-14"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-15"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-16"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|1|http://www.dlg.speedfreaks.org/archive/gen/oldgp.html]]"
+																	"text": "DSQ"
 																}
 															]
 														}
@@ -4213,66 +1123,9 @@
 						}
 					}
 				]
-			}
-		],
-		"images": [
-			{
-				"type": "inline_image",
-				"url": "https://upload.wikimedia.org/wikipedia/en/8/82/Coppa_Ciano.png",
-				"thumb": null,
-				"caption": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Coppa Ciano poster, 1931."
-					}
-				],
-				"category": "PICTURE",
-				"srcSet": "//upload.wikimedia.org/wikipedia/en/8/82/Coppa_Ciano.png 1.5x",
-				"alt": "Image",
-				"height": 284,
-				"width": 220,
-				"attribution_url": "https://en.wikipedia.org/wiki/File:Coppa_Ciano.png"
-			}
-		]
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "see-also"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "See also"
-					}
-				]
 			},
 			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Coppa_Acerbo|Coppa Acerbo]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			},
-			{
-				"index": 2,
+				"index": 4,
 				"tag_type": "p",
 				"attrs": {},
 				"items": []
