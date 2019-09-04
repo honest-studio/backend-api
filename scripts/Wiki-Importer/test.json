@@ -194,7 +194,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.666Z"
+          "timestamp": "2019-09-04T00:24:47.791Z"
         },
         {
           "type": "section_image",
@@ -209,7 +209,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.668Z"
+          "timestamp": "2019-09-04T00:24:47.793Z"
         }
       ]
     },
@@ -242,7 +242,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.672Z"
+          "timestamp": "2019-09-04T00:24:47.799Z"
         },
         {
           "type": "section_image",
@@ -257,7 +257,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.673Z"
+          "timestamp": "2019-09-04T00:24:47.799Z"
         }
       ]
     },
@@ -350,7 +350,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.678Z"
+          "timestamp": "2019-09-04T00:24:47.803Z"
         }
       ]
     },
@@ -448,7 +448,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.680Z"
+          "timestamp": "2019-09-04T00:24:47.805Z"
         }
       ]
     },
@@ -601,7 +601,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-03T23:13:12.684Z"
+          "timestamp": "2019-09-04T00:24:47.809Z"
         }
       ]
     },
@@ -688,95 +688,6 @@
         }
       ],
       "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Notes"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "References"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "El Hadi Mustapha Bulegma, & Saad Khalil Kezeiri (ed.), \" Al Jamahiriya: Dirasa fil Jughrafia\", Ad Dar al Jamahiriya lil nashr wa tawzee wa e'lan, Surt, [[LINK|lang_en|Libya|Libya]], 1995."
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "G. Pini, *La rete stradale dell’Impero* in “Africa Italiana”, dicembre 1939, n. 12 (in Italian)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 2,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": ""
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 3,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": ""
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {}
-        }
-      ],
-      "images": []
     }
   ],
   "infoboxes": [],
@@ -815,7 +726,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.411Z",
+      "timestamp": "2019-09-04T00:24:47.486Z",
       "mime": null
     },
     {
@@ -832,7 +743,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.424Z",
+      "timestamp": "2019-09-04T00:24:47.498Z",
       "mime": null
     },
     {
@@ -849,7 +760,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.424Z",
+      "timestamp": "2019-09-04T00:24:47.498Z",
       "mime": null
     },
     {
@@ -866,7 +777,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.425Z",
+      "timestamp": "2019-09-04T00:24:47.499Z",
       "mime": null
     },
     {
@@ -883,7 +794,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.425Z",
+      "timestamp": "2019-09-04T00:24:47.499Z",
       "mime": null
     },
     {
@@ -900,7 +811,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.426Z",
+      "timestamp": "2019-09-04T00:24:47.500Z",
       "mime": null
     },
     {
@@ -917,7 +828,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.427Z",
+      "timestamp": "2019-09-04T00:24:47.501Z",
       "mime": null
     },
     {
@@ -934,7 +845,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.621Z",
+      "timestamp": "2019-09-04T00:24:47.778Z",
       "mime": "application/pdf"
     },
     {
@@ -951,7 +862,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-03T23:13:12.622Z",
+      "timestamp": "2019-09-04T00:24:47.778Z",
       "mime": "application/pdf"
     }
   ],
@@ -991,7 +902,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/3/2019 23:13:11 PM UTC"
+      "value": "8/4/2019 0:24:46 AM UTC"
     },
     {
       "key": "last_modified",
@@ -1016,5 +927,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmQJY84rWFk7eqqti65Q48f5Qekw9kjuHN5APR2hAtdxp5"
+  "ipfs_hash": "QmRMGJMZH3dbezeqQ3RwjbES2uk3ht1qfBEECGWvaLtMxp"
 }

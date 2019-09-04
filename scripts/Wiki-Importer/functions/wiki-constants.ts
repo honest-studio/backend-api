@@ -145,6 +145,7 @@ export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo',
 
 export interface ElementCleaningPack {
     parent?: {
+        tag?: string
         id?: string
         class?: string,
     },
@@ -213,4 +214,11 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
 export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { parent: { class: 'thumbcaption'}, tag: "center", id: null, class: null }, // Shows up in captions sometimes
     { tag: "small", id: null, class: null }, 
+]
+
+// Clean these up after the citations are parsed out
+export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
+    { parent: { tag: 'h2'}, tag: "span", id: "Notes", class: null }, // Notes section
+    { parent: { tag: 'h2'}, tag: "span", id: "References", class: null }, // References section
+    { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]

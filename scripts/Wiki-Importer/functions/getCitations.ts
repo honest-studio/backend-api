@@ -6,7 +6,9 @@ import { Citation, Sentence, CitationCategoryType } from '../../../src/types/art
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { getFirstAvailableCitationIndex } from '../../../src/utils/article-utils/article-tools';
 import { MediaUploadService, UrlPack } from '../../../src/media-upload';
+import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
 const util = require('util');
+const chalk = require('chalk');
 import * as mimePackage from 'mime';
 
 export interface RawCitation {
@@ -248,6 +250,24 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 
 	// Sort the citations properly
 	citations = _.sortBy(citations, ctn => ctn.citation_id);
+
+	// Chop off the area below certain elements
+	POST_CITATION_CHOP_BELOW.forEach(pack => {
+		let parent_selector = pack.parent ? 
+							`${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
+							: "" ;
+		let selector = `${parent_selector}${pack.tag}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
+		$(selector).each((idx, $elem) => {
+			if (!pack.parent) {
+				$($elem).remove();
+				console.log(chalk.red(`${selector} removed...`));	
+			}
+			else{
+				$($elem).parent(parent_selector).nextAll().remove();
+				console.log(chalk.red(`${parent_selector}removed...`));	
+			}
+		});
+	});
 
 
 	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
