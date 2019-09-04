@@ -89,7 +89,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-	console.log(workingMainPhoto)
+	// console.log(workingMainPhoto)
 
 	// blobBoxSoup.findAll("a", {"class": "image", "href": re.compile(r"File", re.UNICODE)})
 

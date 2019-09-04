@@ -7,6 +7,8 @@ import * as tokenizer from 'sbd';
 import { ArticleJson, Citation, CitationCategoryType, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
 import { urlCleaner, getYouTubeIdIfPresent } from './article-tools';
 import * as JSONCycleCustom from './json-cycle-custom';
+const util = require('util');
+const chalk = require('chalk');
 var colors = require('colors');
 const voidElements = require('html-void-elements');
 const decode = require('unescape');
@@ -964,7 +966,7 @@ function sanitizeText($: CheerioStatic) {
 }
 
 // Convert the plaintext strings for links and citations to the Markdown format
-export function parseSentences(inputString: string): Sentence[] {
+export function parseSentences(inputString: string, bypass_trim?: boolean): Sentence[] {
     if (!inputString) return [];
     if (inputString == " ") return [{ type: 'sentence', index: 0, text: ' ' }];
 
@@ -987,10 +989,10 @@ export function parseSentences(inputString: string): Sentence[] {
 
 
         // Make sure that no sentences start with a space
-        if (sentence.text.charAt(0) == " ") sentence.text = sentence.text.slice(1);
+        if (sentence.text.charAt(0) == " " && !bypass_trim) sentence.text = sentence.text.slice(1);
 
         // If there is only one sentence, trim it
-        if (index == 0 && sentenceTokens.length == 1) sentence.text = sentence.text.trim();
+        if (index == 0 && sentenceTokens.length == 1 && !bypass_trim) sentence.text = sentence.text.trim();
 
         if (sentenceTokens.length > 2 && index < sentenceTokens.length - 1){
             // FIX THIS TO MAKE SURE THAT SENTENCES DO NOT START WITH SPACES, and INSTEAD END WITH THEM
@@ -1005,7 +1007,7 @@ export function parseSentences(inputString: string): Sentence[] {
         }
 
         // If it is the last sentence, trim it
-        if (index == sentenceTokens.length - 1) sentence.text = sentence.text.trim();
+        if (index == sentenceTokens.length - 1 && !bypass_trim) sentence.text = sentence.text.trim();
 
         // console.log(sentence)
 
@@ -1231,7 +1233,7 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
     $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':
-                let theSentences: Sentence[] = parseSentences(element.data);
+                let theSentences: Sentence[] = parseSentences(element.data, true);
                 if (theSentences.length) {
                     nestedContents.push({
                         type: 'text',
@@ -1263,6 +1265,10 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 break;
         }
     })
+    console.log("------------------")
+    // Make sure the sentences are spaced
+    console.log(util.inspect(nestedContents, {showHidden: false, depth: null, chalk: true}));
+    console.log(nestedContents)
     return nestedContents;
 }
 

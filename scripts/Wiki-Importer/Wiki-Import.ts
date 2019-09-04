@@ -74,7 +74,7 @@ export const WikiImport = async (inputString: string) => {
     let articlejson: ArticleJson = {
         page_title: page_title, 
         main_photo: [photo_result.main_photo],
-        infobox_html: getWikipediaStyleInfoBox(photoless_cheerio_pack, page_body_pack.internal_citations) as any,
+        infobox_html: getWikipediaStyleInfoBox(page_body_pack.cheerio_pack, page_body_pack.internal_citations) as any,
         page_body: page_body_pack.sections,
         infoboxes: [],
         citations: page_body_pack.citations,

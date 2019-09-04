@@ -21,7 +21,8 @@ import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 export interface PageBodyPack {
 	sections: Section[],
 	citations: Citation[],
-	internal_citations: any
+	internal_citations: any,
+	cheerio_pack: CheerioPack
 }
 
 export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
@@ -158,6 +159,9 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	return {
 		sections: sections,
 		citations: ctn_return_pack.citations,
-		internal_citations: internalCitations
+		internal_citations: internalCitations,
+		cheerio_pack: {
+			cheerio_static: $
+		}
 	}
 }
