@@ -1175,7 +1175,7 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
     // Test for different categories
     if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
-    } else if (theMIME == '' || theMIME == null) {
+    } else if (theMIME == '' || theMIME == null || theMIME == 'text/html') {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';

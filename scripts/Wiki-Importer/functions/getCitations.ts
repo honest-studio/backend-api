@@ -196,7 +196,7 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 				social_type: null,
 				attribution: 'rel=nofollow',
 				timestamp: new Date(), 
-				mime: mimePackage.getType(raw_citn.url)
+				mime: null
 			};
 			switch(raw_citn.category){
 				case 'BOOK': {
@@ -218,7 +218,12 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 				case 'YOUTUBE': {
 					break;
 				}
+				case 'AUDIO':
+				case 'GIF':
+				case 'PICTURE':
+				case 'NORMAL_VIDEO':
 				case 'FILE': {
+					workingCitation.mime = mimePackage.getType(raw_citn.url);
 					break;
 				}
 				case 'NONE': {
@@ -259,9 +264,18 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 				social_type: socialURLType(theWorkingURL),
 				attribution: 'rel=nofollow',
 				timestamp: new Date(), 
-				mime: mimePackage.getType(theWorkingURL)
+				mime: null
 			};
-
+			switch(workingCitation.category){
+				case 'AUDIO':
+				case 'GIF':
+				case 'PICTURE':
+				case 'NORMAL_VIDEO':
+				case 'FILE': {
+					workingCitation.mime = mimePackage.getType(workingCitation.url);
+					break;
+				}
+			}
 			citations.push(workingCitation);
 			available_citation_id = available_citation_id + 1;
 		};
@@ -289,7 +303,7 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 	});
 
 
-	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+	console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
 
 	// // OPTIONAL: Add thumbnails

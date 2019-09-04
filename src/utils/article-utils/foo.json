@@ -15,7 +15,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**[[LINK|lang_en|Albania|Albania]] ** competed at the [[LINK|lang_en|2014_Winter_Olympics|2014 Winter Olympics]] in [[LINK|lang_en|Sochi|Sochi]], [[LINK|lang_en|Russia|Russia]] from 7 to 23 February 2014. The team consisted of two athletes competing in [[LINK|lang_en|Alpine_skiing|alpine skiing]] and for the first time a female athlete. [[CITE|5|http://shqiptarja.com/sport/2726/soci-2014-shqiperia-perfaqesohet-nga-erjon-tola-dhe-suela-mehilli-197437.html]]"
+						"text": "The **Coppa Acerbo** was an automobile race held in [[LINK|lang_en|Italy|Italy]], named after Tito Acerbo, the brother of [[LINK|lang_en|Giacomo_Acerbo|Giacomo Acerbo]], a prominent fascist politician. Following Italy's defeat in [[LINK|lang_en|World_War_II|World War II]], and the consequent demise of [[LINK|lang_en|Fascism|fascism]], the race was renamed the **Circuito di Pescara**, and in some years was also referred to as the **Pescara Grand Prix** (*Gran Premio di Pescara*). The race was run between 1924 and 1961 and over the years was held to a variety of vehicle class regulations and durations. In [[LINK|lang_en|1957_Formula_One_season|1957]] the Pescara Grand Prix formed a round of the [[LINK|lang_en|Formula_One|Formula One]] World Championship, a race which still holds the record as having the longest circuit length ever used for a Championship event."
 					}
 				]
 			}
@@ -28,23 +28,216 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "competitors"
+					"id": "pescara-circuit"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Competitors"
+						"text": "Pescara Circuit"
 					}
 				]
 			},
 			{
 				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The Coppa Acerbo races were held over a 24–26 km (15–16 mi) circuit, beginning and ending at [[LINK|lang_en|Pescara|Pescara]], on the [[LINK|lang_en|Adriatic_Sea|Adriatic]] coast. The course layout featured an inland route through the [[LINK|lang_en|Abruzzo|Abruzzo]] hills, that passed through several villages, followed by a long, straight descent back to the coast, where a tight right-hand corner led on to a four-mile (6 km) long straight running next to the sea. The pit and paddock complex was located at the end of this straight. In an effort to slow competitor speeds past these pits the Pescara circuit became one of the first to have an artificial chicane installed, just before the pit lane. The Pescara circuit layout holds the record as the longest circuit to ever to host a Formula One World Championship event, with the [[LINK|lang_en|Nürburgring|Nürburgring]] Nordschleife coming second at about 23 km."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "pre-war-races"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Pre-war races"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright"
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The first Coppa Acerbo was staged in 1924 and was won by a then-unknown junior driver by the name of [[LINK|lang_en|Enzo_Ferrari|Enzo Ferrari]], later to find fame as the creator of [[LINK|lang_en|Ferrari|Ferrari]] and head of the Formula One team [[LINK|lang_en|Scuderia_Ferrari|Scuderia Ferrari]]. The race was run for the top class of international competition, the only real limiting factor on vehicle specifications being the cars' ability to transmit power through the inadequate tyres of the day. Although never itself a [[LINK|lang_en|Grande_Epreuve|Grande Epreuve]], or later a constituent of the [[LINK|lang_en|European_Championship_(auto_racing)|European Championship]], the Coppa Acerbo was considered one of the most prestigious races of its day. These early races were dominated by home-grown cars and drivers, and [[LINK|lang_en|Alfa_Romeo|Alfa Romeo]] in particular was almost unbeatable. The Milanese manufacturer won seven of the first nine races; only in 1926 were they beaten by the legendary [[LINK|lang_en|Bugatti_Type_35|Bugatti T35]], and again in 1930 by Italian star-driver [[LINK|lang_en|Achille_Varzi|Achille Varzi]] driving a [[LINK|lang_en|Maserati|Maserati]]."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Alfa's domination of the race came to an end with the introduction of the 750 kg Grand Prix regulations in 1934, a race that was also marked by tragedy when [[LINK|lang_en|Guy_Moll|Guy Moll]], one of the most promising young drivers of the day, was killed. Germany's state-funded [[LINK|lang_en|Silver_Arrows|Silver Arrows]] of [[LINK|lang_en|Mercedes-Benz|Mercedes-Benz]] and [[LINK|lang_en|Auto_Union|Auto Union]] would come to eclipse all their rivals for the subsequent five years. Although the race was again won by two Italian drivers during this time, including a second victory for Varzi, it was only when the organisers decided to run the Coppa to the 1.5 litre [[LINK|lang_en|Voiturette|voiturette]] formula in 1939 that any other manufacturer could stand a realistic chance of winning. Perhaps fittingly it was Alfa Romeo, with their new [[LINK|lang_en|Alfa_Romeo_158|158 Alfetta]] car, that took the honours in this last competition before the outbreak of [[LINK|lang_en|World_War_II|World War II]]. In 1939 a \"Coppa Acerbo Song\" (with music by maestro Ignazio Civera and lyrics by Franzi) was published. [[CITE|2|http://kutmusic.com/la-canzone-della-coppa-acerbo-song-lyrics-about-a-classic-road-race.html]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "post-war-races"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Post-war races"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "After WWII the race remained suspended for a year during post-war rebuilding. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "When it was finally run again in 1947 the name of the race was changed, because of its fascist connections, and it became known as the *Circuito di Pescara*. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "For the first three years the race was run for two-seater sports cars and was a fairly minor constituent in the European racing calendar. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "However, in common with many race organisers around the continent, with the introduction of the [[LINK|lang_en|Formula_One|Formula One]] World Championship in 1950 the race organisers saw their chance to return the Pescara event to its former position of prominence. Although, once again, not a World Championship event the race did attract many top-name teams and drivers over the following two years. Despite it being an Italian event, and himself a former winner, Ferrari decided to withdraw his team from the 1950 event, but the Alfa Romeo, Maserati and [[LINK|lang_en|Talbot-Lago|Talbot-Lago]] works teams did attend, along with many privateer and amateur racers. The 1950 race was won by future World Champion [[LINK|lang_en|Juan_Manuel_Fangio|Juan Manuel Fangio]] driving for Alfa Romeo. The following year Ferrari did attend, and the race was won by Fangio's Argentinian compatriot [[LINK|lang_en|José_Froilán_González|José Froilán González]] driving one of their [[LINK|lang_en|Ferrari_375|375]] cars."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright"
+				},
+				"items": []
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "When the World Championship switched to the slower [[LINK|lang_en|Formula_Two|Formula Two]] regulations, the organisers decided to abandon formula racing in favour of further sportscar events. During this period endurance sportscar racing was almost as prestigious as the top open-wheel series, and for 1952 the organisers changed the race's name, once again, to the *12 Ore di Pescara* (12 Hours of Pescara). The change of format did not hinder Ferrari's chances of victory, however, and their cars and drivers took wins in both 1952 and 1953. Despite the success of the endurance format, though, when the Formula One engine capacity limit was raised to 2.5 litres from 1954 the Circuito di Pescara was quickly switched back to single-seat rules. The 1954 event was won by one of the most iconic Formula One cars of all time, a [[LINK|lang_en|Maserati_250F|Maserati 250F]], driven by [[LINK|lang_en|Luigi_Musso|Luigi Musso]]. This was to be the last race for two years, as in 1955, as a result of the disaster at the [[LINK|lang_en|24_hours_of_Le_Mans|24 hours of Le Mans]], the race was cancelled."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Sportscars returned once more in 1956. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The [[LINK|lang_en|1957_Pescara_Grand_Prix|1957 Pescara Grand Prix]] was a [[LINK|lang_en|Formula_One|Formula One]] [[LINK|lang_en|Motor_race|motor race]], held on 18 August 1957, at the [[LINK|lang_en|Pescara_Circuit|Pescara Circuit]]. The race was the seventh, and penultimate round of the [[LINK|lang_en|1957_Formula_One_season|1957 World Drivers' Championship]]. The race, which was the only Formula One World Championship race at the track, is best remembered for being held at the longest ever circuit to stage a Formula One World Championship Grand Prix. It was also the first of the two consecutive Italian races, and after the subsequent [[LINK|lang_en|1957_Italian_Grand_Prix|race at Monza]] was complete, it became the first time that two Formula One races had been held in the same country in the same year. In a field dominated by numerous Maserati 250F cars, reigning World Champion Fangio used his example to set a pole position time of 9 minutes 44.6 seconds, at an average speed of over 157 km/h (98 mph). In the race, however, it was second-placed starter [[LINK|lang_en|Stirling_Moss|Stirling Moss]] in his [[LINK|lang_en|Vanwall|Vanwall]] who took the initiative and victory. He led all but one of the race's 18 laps and finished over three minutes clear of Fangio in second place."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "By the early 1960s, safety issues had become a major concern and the Pescara racecourse was seen as too dangerous for major international events. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "After a two-year break the race was downgraded to Formula Two status for 1960, a race won by future World Champion [[LINK|lang_en|Denny_Hulme|Denny Hulme]] in his first year racing in Europe. For its 1961 swansong once again, for only the second time in its history, the Pescara race was raised to World Championship status, this time in the [[LINK|lang_en|World_Sportscar_Championship|World Sportscar Championship]]. Appropriately, for a race subtitled the 4h Testa Rosa, the final Gran Premio di Pescara was won by a [[LINK|lang_en|Ferrari_TR|Ferrari Testa Rossa]], driven by [[LINK|lang_en|Lorenzo_Bandini|Lorenzo Bandini]] and [[LINK|lang_en|Giorgio_Scarlatti|Giorgio Scarlatti]] and entered by [[LINK|lang_en|Scuderia_Centro_Sud|Scuderia Centro Sud]]; an Italian team, with an Italian car and two Italian drivers, won the final iteration of this famous Italian event. With ever-increasing speeds and the fragile build-quality of most cars of the time, the race was discontinued after the 1961 event."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "race-winners"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Race winners"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Bernd_Rosemeyer|Bernd Rosemeyer]], [[LINK|lang_en|Luigi_Fagioli|Luigi Fagioli]], and [[LINK|lang_en|Achille_Varzi|Achille Varzi]] all won the race twice but [[LINK|lang_en|Giuseppe_Campari|Giuseppe Campari]] is the only driver to win it on three occasions."
+					}
+				]
+			},
+			{
+				"index": 2,
 				"tag_type": "table",
 				"attrs": {
 					"className": "ep-table wikitable",
 					"style": {
-						"textAlign": "center",
 						"fontSize": "95%"
 					}
 				},
@@ -54,7 +247,6 @@
 						"attrs": {
 							"className": "ep-table wikitable",
 							"style": {
-								"textAlign": "center",
 								"fontSize": "95%"
 							}
 						},
@@ -76,9 +268,7 @@
 									"cells": [
 										{
 											"index": 0,
-											"attrs": {
-												"width": "200"
-											},
+											"attrs": {},
 											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
@@ -88,7 +278,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Sport"
+															"text": "Year"
 														}
 													]
 												}
@@ -96,9 +286,7 @@
 										},
 										{
 											"index": 1,
-											"attrs": {
-												"width": "60"
-											},
+											"attrs": {},
 											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
@@ -108,7 +296,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Men"
+															"text": "Driver/s"
 														}
 													]
 												}
@@ -116,9 +304,7 @@
 										},
 										{
 											"index": 2,
-											"attrs": {
-												"width": "60"
-											},
+											"attrs": {},
 											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
@@ -128,7 +314,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Women"
+															"text": "Class"
 														}
 													]
 												}
@@ -136,9 +322,7 @@
 										},
 										{
 											"index": 3,
-											"attrs": {
-												"width": "60"
-											},
+											"attrs": {},
 											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
@@ -148,7 +332,25 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Total"
+															"text": "Vehicle"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "Race title"
 														}
 													]
 												}
@@ -164,10 +366,8 @@
 									"cells": [
 										{
 											"index": 0,
-											"attrs": {
-												"align": "left"
-											},
-											"tag_type": "td",
+											"attrs": {},
+											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
 												{
@@ -176,7 +376,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics|Alpine skiing]]"
+															"text": "[[LINK|lang_en|1961_World_Sportscar_Championship_season|1961]]"
 														}
 													]
 												}
@@ -194,7 +394,203 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "1"
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "table",
+													"tag_class": "block",
+													"attrs": {
+														"className": "blurb-inline-image-container"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"type": "sentence",
+																	"index": 0,
+																	"text": " "
+																}
+															]
+														},
+														{
+															"type": "tag",
+															"tag_type": "tbody",
+															"tag_class": "inline",
+															"attrs": {},
+															"content": [
+																{
+																	"type": "text",
+																	"content": [
+																		{
+																			"type": "sentence",
+																			"index": 0,
+																			"text": " "
+																		}
+																	]
+																},
+																{
+																	"type": "tag",
+																	"tag_type": "tr",
+																	"tag_class": "block",
+																	"attrs": {},
+																	"content": [
+																		{
+																			"type": "text",
+																			"content": [
+																				{
+																					"type": "sentence",
+																					"index": 0,
+																					"text": " "
+																				}
+																			]
+																		},
+																		{
+																			"type": "tag",
+																			"tag_type": "td",
+																			"tag_class": "block",
+																			"attrs": {},
+																			"content": [
+																				{
+																					"type": "text",
+																					"content": [
+																						{
+																							"type": "sentence",
+																							"index": 0,
+																							"text": " "
+																						}
+																					]
+																				},
+																				{
+																					"type": "tag",
+																					"tag_type": "a",
+																					"tag_class": "inline",
+																					"attrs": {
+																						"className": "tooltippableImage",
+																						"href": "https://upload.wikimedia.org/wikipedia/commons/9/99/Ferrari-340-375-mm-berlinetta-competizione-by-pinin-farina_0320AM_0-100_75-Pescara1953b.jpg",
+																						"rel": "nofollow"
+																					},
+																					"content": [
+																						{
+																							"type": "text",
+																							"content": [
+																								{
+																									"type": "sentence",
+																									"index": 0,
+																									"text": " "
+																								}
+																							]
+																						}
+																					]
+																				}
+																			]
+																		},
+																		{
+																			"type": "text",
+																			"content": [
+																				{
+																					"type": "sentence",
+																					"index": 0,
+																					"text": " "
+																				}
+																			]
+																		}
+																	]
+																},
+																{
+																	"type": "text",
+																	"content": [
+																		{
+																			"type": "sentence",
+																			"index": 0,
+																			"text": " "
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"type": "text",
+															"content": [
+																{
+																	"type": "sentence",
+																	"index": 0,
+																	"text": " "
+																}
+															]
+														},
+														{
+															"type": "tag",
+															"tag_type": "caption",
+															"tag_class": "inline",
+															"attrs": {
+																"className": "blurbimage-caption"
+															},
+															"content": [
+																{
+																	"type": "text",
+																	"content": [
+																		{
+																			"type": "sentence",
+																			"index": 0,
+																			"text": " "
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"type": "text",
+															"content": [
+																{
+																	"type": "sentence",
+																	"index": 0,
+																	"text": " "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "[[LINK|lang_en|Lorenzo_Bandini|Lorenzo Bandini]]"
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "span",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "flagicon"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"type": "sentence",
+																	"index": 0,
+																	"text": "[[LINK|lang_en|Italy|]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "[[LINK|lang_en|Giorgio_Scarlatti|Giorgio Scarlatti]]"
 														}
 													]
 												}
@@ -212,7 +608,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "1"
+															"text": "[[LINK|lang_en|Sports_car_racing|Sports car]]"
 														}
 													]
 												}
@@ -230,7 +626,25 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "2"
+															"text": "[[LINK|lang_en|Ferrari|Ferrari]] [[LINK|lang_en|Ferrari_TR|250TRI]]"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "1961 4h Testa Rosa"
 														}
 													]
 												}
@@ -256,7 +670,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "Total"
+															"text": "1960"
 														}
 													]
 												}
@@ -265,458 +679,6 @@
 										{
 											"index": 1,
 											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "2"
-														}
-													]
-												}
-											]
-										}
-									]
-								}
-							],
-							"attrs": {}
-						},
-						"tfoot": {
-							"rows": [],
-							"attrs": {}
-						}
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "alpine-skiing"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Alpine skiing"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "According to the final quota allocation released on January 20, 2014, Albania had two athletes in qualification position. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "[[CITE|6|http://data.fis-ski.com/media/olympic-games/quota-20-01-2014-6.pdf]] [[LINK|lang_en|Erjon_Tola|Erjon Tola]] was scheduled to compete in his third consecutive games, but had to withdraw because he broke his arm in training. [[CITE|7|http://sportekspres.com/?p=36080]]"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On February 18, [[LINK|lang_en|Suela_Mëhilli|Suela Mëhilli]] finished the giant slalom race in 60th position (out of 74 competitors who finished). She did not finish the slalom race after starting the first run."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "table",
-				"attrs": {
-					"className": "ep-table wikitable",
-					"style": {
-						"fontSize": "90%"
-					}
-				},
-				"items": [
-					{
-						"type": "body-table",
-						"attrs": {
-							"className": "ep-table wikitable",
-							"style": {
-								"fontSize": "90%"
-							}
-						},
-						"caption": {
-							"attrs": {},
-							"sentences": []
-						},
-						"thead": {
-							"rows": [],
-							"attrs": {}
-						},
-						"tbody": {
-							"rows": [
-								{
-									"index": 0,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {
-												"rowSpan": "2"
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Athlete"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {
-												"rowSpan": "2"
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Event"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {
-												"colSpan": "2"
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Run 1"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {
-												"colSpan": "2"
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Run 2"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {
-												"colSpan": "2"
-											},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Total"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 1,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {
-										"style": {
-											"fontSize": "95%"
-										}
-									},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Time"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Rank"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Time"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Rank"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Time"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "th",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "Rank"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 2,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {
-										"align": "center"
-									},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {
-												"align": "left",
-												"rowSpan": "2"
-											},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Erjon_Tola|Erjon Tola]]"
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-a_4-1"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|5|http://shqiptarja.com/sport/2726/soci-2014-shqiperia-perfaqesohet-nga-erjon-tola-dhe-suela-mehilli-197437.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {
-												"align": "left"
-											},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Men's_giant_slalom|Men's giant slalom]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
-											"attrs": {
-												"colSpan": "6"
-											},
 											"tag_type": "td",
 											"tag_class": "block",
 											"content": [
@@ -732,10 +694,10 @@
 												},
 												{
 													"type": "tag",
-													"tag_type": "abbr",
+													"tag_type": "span",
 													"tag_class": "inline",
 													"attrs": {
-														"title": "Did not start"
+														"className": "flagicon"
 													},
 													"content": [
 														{
@@ -744,7 +706,7 @@
 																{
 																	"type": "sentence",
 																	"index": 0,
-																	"text": "DNS"
+																	"text": "[[LINK|lang_en|New_Zealand|]]"
 																}
 															]
 														}
@@ -756,7 +718,61 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": " "
+															"text": "[[LINK|lang_en|Denny_Hulme|Denny Hulme]]"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "[[LINK|lang_en|Formula_Two|Formula Two]]"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "[[LINK|lang_en|Cooper_Car_Company|Cooper]] [[LINK|lang_en|Cooper_T52|T52]]-[[LINK|lang_en|British_Motor_Corporation|BMC]]"
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"type": "sentence",
+															"index": 0,
+															"text": "XXVI Gran Premio di Pescara"
 														}
 													]
 												}
@@ -769,15 +785,15 @@
 									"tag_type": "tr",
 									"tag_class": "block",
 									"attrs": {
-										"align": "center"
+										"style": {
+											"background": "#DDDDDD"
+										}
 									},
 									"cells": [
 										{
 											"index": 0,
-											"attrs": {
-												"align": "left"
-											},
-											"tag_type": "td",
+											"attrs": {},
+											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
 												{
@@ -786,7 +802,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Men's_slalom|Men's slalom]]"
+															"text": "1959 – 1958"
 														}
 													]
 												}
@@ -795,7 +811,8 @@
 										{
 											"index": 1,
 											"attrs": {
-												"colSpan": "6"
+												"align": "center",
+												"colSpan": "4"
 											},
 											"tag_type": "td",
 											"tag_class": "block",
@@ -806,37 +823,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "abbr",
-													"tag_class": "inline",
-													"attrs": {
-														"title": "Did not start"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "DNS"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
+															"text": "*Not held*"
 														}
 													]
 												}
@@ -848,86 +835,12 @@
 									"index": 4,
 									"tag_type": "tr",
 									"tag_class": "block",
-									"attrs": {
-										"align": "center"
-									},
+									"attrs": {},
 									"cells": [
 										{
 											"index": 0,
-											"attrs": {
-												"align": "left",
-												"rowSpan": "2"
-											},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Suela_Mëhilli|Suela Mëhilli]]"
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "sup",
-													"tag_class": "inline",
-													"attrs": {
-														"className": "reference",
-														"id": "cite_ref-a_4-2"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "[[CITE|5|http://shqiptarja.com/sport/2726/soci-2014-shqiperia-perfaqesohet-nga-erjon-tola-dhe-suela-mehilli-197437.html]]"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {
-												"align": "left"
-											},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Women's_giant_slalom|Women's giant slalom]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 2,
 											"attrs": {},
-											"tag_type": "td",
+											"tag_type": "th",
 											"tag_class": "block",
 											"content": [
 												{
@@ -936,177 +849,7 @@
 														{
 															"type": "sentence",
 															"index": 0,
-															"text": "1:33.55"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 3,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "65"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 4,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "1:34.36"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 5,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "60"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 6,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "3:07.91"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 7,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "60"
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 5,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {
-										"align": "center"
-									},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {
-												"align": "left"
-											},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": "[[LINK|lang_en|Alpine_skiing_at_the_2014_Winter_Olympics_–_Women's_slalom|Women's slalom]]"
-														}
-													]
-												}
-											]
-										},
-										{
-											"index": 1,
-											"attrs": {
-												"colSpan": "6"
-											},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
-														}
-													]
-												},
-												{
-													"type": "tag",
-													"tag_type": "abbr",
-													"tag_class": "inline",
-													"attrs": {
-														"title": "Disqualified"
-													},
-													"content": [
-														{
-															"type": "text",
-															"content": [
-																{
-																	"type": "sentence",
-																	"index": 0,
-																	"text": "DSQ"
-																}
-															]
-														}
-													]
-												},
-												{
-													"type": "text",
-													"content": [
-														{
-															"type": "sentence",
-															"index": 0,
-															"text": " "
+															"text": "[[LINK|lang_en|1957_Formula_One_season|1957]]"
 														}
 													]
 												}
@@ -1126,6 +869,294 @@
 			},
 			{
 				"index": 4,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 5,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 6,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 7,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 8,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 9,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 10,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 11,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 12,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 13,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 14,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 15,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 16,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 17,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 18,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 19,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 20,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 21,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 22,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 23,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 24,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 25,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 26,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 27,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 28,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 29,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			},
+			{
+				"index": 30,
+				"tag_type": "span",
+				"attrs": {
+					"className": "flagicon"
+				},
+				"items": []
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"thumb": null,
+				"caption": [],
+				"category": "NONE"
+			},
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/9/99/Ferrari-340-375-mm-berlinetta-competizione-by-pinin-farina_0320AM_0-100_75-Pescara1953b.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Mike_Hawthorn|Mike Hawthorn]] and [[LINK|lang_en|Umberto_Maglioli|Umberto Maglioli]] won the 1953 race in [[LINK|lang_en|Ferrari_375_MM|Ferrari 375 MM]] #0320AM."
+					}
+				],
+				"category": "PICTURE",
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Ferrari-340-375-mm-berlinetta-competizione-by-pinin-farina_0320AM_0-100_75-Pescara1953b.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "see-also"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "See also"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Coppa_Ciano|Coppa Ciano]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|List_of_major_automobile_races_in_Italy|List of major automobile races in Italy]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			},
+			{
+				"index": 2,
 				"tag_type": "p",
 				"attrs": {},
 				"items": []
