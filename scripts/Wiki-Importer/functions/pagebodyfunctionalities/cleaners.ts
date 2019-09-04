@@ -67,6 +67,28 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         $(this).replaceWith(htmlString);
     });
 
+    // try:
+    //     # Search for geography red dots and other jank
+    //     geoTable = boobSoup.findAll("table", {"class": re.compile("infobox")})
+    //     dotImages = geoTable[0].findAll("img", {"src": re.compile("Red_pog|triangle_with_thick|Airplane_silhouette")})
+    //     for geoDot in dotImages:
+    //         print("FOUND GEODOT")
+    //         dotNugget = geoDot.parent.parent.parent
+    //         try:
+    //             assert (dotNugget['class'])
+    //             dotNugget['class'] = dotNugget['class'] + " geonugget"
+    //         except:
+    //             dotNugget['class'] = "geonugget"
+
+    //         try:
+    //             assert (geoDot['class'])
+    //             geoDot['class'] = geoDot['class'] + " geodot"
+    //         except:
+    //             geoDot['class'] = "geodot"
+
+    // except:
+    //     pass
+
     return {
         cheerio_static: $
     }

@@ -1,3 +1,4 @@
+import { PageType } from '../../../src/types/article';
 
 export const WIKI_LANG_PACKAGES = {
     ar: {
@@ -226,3 +227,19 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
+
+export interface PageTypeCluePack {
+    id: string,
+    class: string
+    page_type: PageType
+}
+
+// Clues in the infobox to help determine the page type
+export const INFOBOX_PAGE_TYPE_CLUES: PageTypeCluePack[] = [
+    { id: null, class: 'biota', page_type: 'Thing'},
+    { id: null, class: 'biography', page_type: 'Person'},
+    { id: null, class: 'geography', page_type: 'Place'},
+    { id: null, class: 'haudio', page_type: 'CreativeWork'},
+    { id: null, class: 'hmedia', page_type: 'CreativeWork'},
+    { id: null, class: 'hproduct', page_type: 'Product'},
+];

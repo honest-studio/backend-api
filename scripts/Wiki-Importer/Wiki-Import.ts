@@ -7,6 +7,7 @@ import { getMetaData } from './functions/getMetaData';
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
+import lodashSet from 'lodash/fp/set';
 import { ArticleJson, Sentence } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
@@ -71,10 +72,22 @@ export const WikiImport = async (inputString: string) => {
 
     // Note that page_body and citations are computed together to account for internal citations 
     const page_body_pack = await getPageBodyPack(photoless_cheerio_pack, url, theMediaUploadService); 
+    
+    // Process the wikipedia-style infobox
+    const wiki_infobox_pack = getWikipediaStyleInfoBox(page_body_pack.cheerio_pack, page_body_pack.internal_citations);
+    
+    // Handle the parsed page_type, if present
+    if (wiki_infobox_pack.page_type){
+        metadata = metadata.map(meta => {
+            if (meta.key == 'page_type') return { key: 'page_type', value: wiki_infobox_pack.page_type }
+            else return meta;
+        })
+    }
+
     let articlejson: ArticleJson = {
         page_title: page_title, 
         main_photo: [photo_result.main_photo],
-        infobox_html: getWikipediaStyleInfoBox(page_body_pack.cheerio_pack, page_body_pack.internal_citations) as any,
+        infobox_html: wiki_infobox_pack.table,
         page_body: page_body_pack.sections,
         infoboxes: [],
         citations: page_body_pack.citations,

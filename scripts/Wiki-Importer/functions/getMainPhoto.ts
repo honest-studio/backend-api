@@ -20,8 +20,8 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// console.log($infobox.html());
 
 	let workingMainPhoto: Media = {
-		url: 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png',
-		thumb:'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png',
+		url: null, //'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png',
+		thumb: null, //'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png',
 		caption: null,
 		type: 'main_photo',
 		attribution_url: null,
@@ -38,7 +38,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// Try method 1 first (infobox)
 	$($infobox).find("a.image").each((idx, img_anchor) => {
 		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
-		if(inner_href.search(/File/gimu) >= 0){
+
+		if($(img_anchor).parent().attr('class').search(/geonugget/gimu) >= 0) {
+			console.log("Geodot found in first image. Will not add it.")
+		}
+		else if(inner_href.search(/File/gimu) >= 0){
 			// Set the attribution url
 			workingMainPhoto.attribution_url = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
 
@@ -85,11 +89,16 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			$(img_anchor).remove();
 		};
 	})
+
+	// Try method 2 next
+	if (!workingMainPhoto.url){
+
+	}
 	
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-	// console.log(workingMainPhoto)
+	console.log(workingMainPhoto)
 
 	// blobBoxSoup.findAll("a", {"class": "image", "href": re.compile(r"File", re.UNICODE)})
 

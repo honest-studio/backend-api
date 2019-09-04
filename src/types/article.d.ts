@@ -209,6 +209,17 @@ export interface TableCell {
     content: NestedContentItem[];
 }
 
+export type PageType =
+    | 'CreativeWork'
+    | 'Event'
+    | 'List'
+    | 'MedicalEntity'
+    | 'Organization'
+    | 'Person'
+    | 'Place'
+    | 'Product'
+    | 'Thing';
+
 export interface ArticleJson {
     page_title: Sentence[];
     main_photo: Media[];
