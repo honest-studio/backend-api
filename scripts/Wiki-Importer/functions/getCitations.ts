@@ -303,7 +303,7 @@ export const getCitations = async (input_html: string, url, theMediaUploadServic
 	});
 
 
-	console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
 
 	// // OPTIONAL: Add thumbnails

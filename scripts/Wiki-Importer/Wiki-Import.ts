@@ -65,12 +65,16 @@ export const WikiImport = async (inputString: string) => {
     // Precleaning
     let precleaned_html = preCleanHTML(page);
 
+    // Try extracting a main photo
+    let photo_result = getMainPhoto(precleaned_html);
+    let photoless_precleaned_html = photo_result.altered_html;
+
     // Note that page_body and citations are computed together to account for internal citations 
-    const page_body_pack = await getPageBodyPack(precleaned_html, url, theMediaUploadService); 
+    const page_body_pack = await getPageBodyPack(photoless_precleaned_html, url, theMediaUploadService); 
     let articlejson: ArticleJson = {
         page_title: page_title, 
-        main_photo: [getMainPhoto(precleaned_html)],
-        infobox_html: getWikipediaStyleInfoBox(precleaned_html, page_body_pack.internal_citations) as any,
+        main_photo: [photo_result.main_photo],
+        infobox_html: getWikipediaStyleInfoBox(photoless_precleaned_html, page_body_pack.internal_citations) as any,
         page_body: page_body_pack.sections,
         infoboxes: [],
         citations: page_body_pack.citations,
@@ -84,6 +88,8 @@ export const WikiImport = async (inputString: string) => {
         },
         ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
     } as ArticleJson
+
+    console.log("THIS SCRIPT COULD BE MADE MORE EFFICIENT BY PASSING BACK cheerio.load()'ed stuff instead of keep having to do it over and over again")
 
     // Calculate what the IPFS hash would be
     let newHash = calcIPFSHash(JSON.stringify(articlejson));

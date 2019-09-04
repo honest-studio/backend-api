@@ -692,7 +692,6 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number, media
     if (inputMedia.diff) newCitation.diff = inputMedia.diff;
     if (inputMedia.height) newCitation.media_props.height = inputMedia.height;
     if (inputMedia.width) newCitation.media_props.width = inputMedia.width;
-    if (inputMedia.srcSet) newCitation.media_props.srcSet = inputMedia.srcSet;
 
     return newCitation;
 }

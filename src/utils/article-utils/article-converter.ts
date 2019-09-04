@@ -678,7 +678,10 @@ function parseSection($section: Cheerio): Section {
             mime: theImgNode.attr('data-mimetype'),
             thumb: null,
             caption: null,
-            category: linkCategorizer(theImgNode.attr('src')) || null
+            category: linkCategorizer(theImgNode.attr('src')) || null,
+            media_props: {
+                type: 'section_image'
+            }
         };
 
         // Deal with images in tables
@@ -687,7 +690,12 @@ function parseSection($section: Cheerio): Section {
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
                 image.url = urlCleaner(parts[1]);
-                image.srcSet = parts[2];
+                image.media_props = {
+                    type: 'inline_image',
+                    srcSet: parts[2],
+                    height: Number(parts[4].substring(1)),
+                    width: Number(parts[5].substring(1))
+                };
                 image.alt = parts[3];
                 image.height = Number(parts[4].substring(1));
                 image.width = Number(parts[5].substring(1));
