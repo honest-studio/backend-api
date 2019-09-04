@@ -46,7 +46,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-04T01:54:46.976Z"
+          "timestamp": "2019-09-04T02:17:56.493Z"
         }
       ]
     },
@@ -139,7 +139,7 @@
           ],
           "mime": "image/png",
           "category": "PICTURE",
-          "timestamp": "2019-09-04T01:54:46.979Z"
+          "timestamp": "2019-09-04T02:17:56.495Z"
         }
       ]
     },
@@ -476,23 +476,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Formula_Libre",
-                              "title": "Formula Libre"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Formula Libre"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Formula_Libre|Formula Libre]]"
                               }
                             ]
                           }
@@ -511,55 +500,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Emilio_Materassi",
-                              "title": "Emilio Materassi"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Emilio Materassi"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Emilio_Materassi|Emilio Materassi]]"
                               }
                             ]
                           }
@@ -572,24 +521,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Bugatti_T35C",
-                              "className": "mw-redirect",
-                              "title": "Bugatti T35C"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Bugatti T35C"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Bugatti_T35C|Bugatti T35C]]"
                               }
                             ]
                           }
@@ -700,23 +637,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Sports_car_racing",
-                              "title": "Sports car racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Sports car"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Sports_car_racing|Sports car]]"
                               }
                             ]
                           }
@@ -735,55 +661,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Attilio_Marinoni",
-                              "title": "Attilio Marinoni"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Attilio Marinoni"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Attilio_Marinoni|Attilio Marinoni]]"
                               }
                             ]
                           }
@@ -796,23 +682,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_6C",
-                              "title": "Alfa Romeo 6C"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo 6C-1500"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_6C|Alfa Romeo 6C-1500]]"
                               }
                             ]
                           }
@@ -947,23 +822,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -982,55 +846,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Emilio_Materassi",
-                              "title": "Emilio Materassi"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Emilio Materassi"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Emilio_Materassi|Emilio Materassi]]"
                               }
                             ]
                           }
@@ -1043,23 +867,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Talbot",
-                              "title": "Talbot"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Talbot"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Talbot|Talbot]]"
                               }
                             ]
                           },
@@ -1180,23 +993,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Sports_car_racing",
-                              "title": "Sports car racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Sports car"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Sports_car_racing|Sports car]]"
                               }
                             ]
                           }
@@ -1215,36 +1017,7 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
                             "type": "text",
@@ -1265,23 +1038,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_6C",
-                              "title": "Alfa Romeo 6C"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo 6C-1500"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_6C|Alfa Romeo 6C-1500]]"
                               }
                             ]
                           }
@@ -1410,23 +1172,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -1445,55 +1196,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Achille_Varzi",
-                              "title": "Achille Varzi"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Achille Varzi"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Achille_Varzi|Achille Varzi]]"
                               }
                             ]
                           }
@@ -1506,23 +1217,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_P2",
-                              "title": "Alfa Romeo P2"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo P2"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_P2|Alfa Romeo P2]]"
                               }
                             ]
                           }
@@ -1651,23 +1351,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -1686,55 +1375,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Luigi_Fagioli",
-                              "title": "Luigi Fagioli"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Luigi Fagioli"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Luigi_Fagioli|Luigi Fagioli]]"
                               }
                             ]
                           }
@@ -1747,24 +1396,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Maserati_26M",
-                              "className": "mw-redirect",
-                              "title": "Maserati 26M"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Maserati 26M"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Maserati_26M|Maserati 26M]]"
                               }
                             ]
                           }
@@ -1893,23 +1530,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -1928,55 +1554,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Tazio_Nuvolari",
-                              "title": "Tazio Nuvolari"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Tazio Nuvolari"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
                               }
                             ]
                           }
@@ -1989,23 +1575,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_8C",
-                              "title": "Alfa Romeo 8C"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo 8C 2300 Monza"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_8C|Alfa Romeo 8C 2300 Monza]]"
                               }
                             ]
                           }
@@ -2134,23 +1709,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -2169,55 +1733,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Tazio_Nuvolari",
-                              "title": "Tazio Nuvolari"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Tazio Nuvolari"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
                               }
                             ]
                           }
@@ -2230,23 +1754,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_P3",
-                              "title": "Alfa Romeo P3"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo Tipo-B 'P3'"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_P3|Alfa Romeo Tipo-B 'P3']]"
                               }
                             ]
                           }
@@ -2375,23 +1888,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -2410,55 +1912,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Tazio_Nuvolari",
-                              "title": "Tazio Nuvolari"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Tazio Nuvolari"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
                               }
                             ]
                           }
@@ -2471,23 +1933,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Maserati_8CM",
-                              "title": "Maserati 8CM"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Maserati 8CM"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Maserati_8CM|Maserati 8CM]]"
                               }
                             ]
                           }
@@ -2616,23 +2067,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -2651,55 +2091,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Achille_Varzi",
-                              "title": "Achille Varzi"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Achille Varzi"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Achille_Varzi|Achille Varzi]]"
                               }
                             ]
                           }
@@ -2712,23 +2112,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_P3",
-                              "title": "Alfa Romeo P3"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo Tipo-B 'P3'"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_P3|Alfa Romeo Tipo-B 'P3']]"
                               }
                             ]
                           }
@@ -2857,23 +2246,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -2892,55 +2270,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Tazio_Nuvolari",
-                              "title": "Tazio Nuvolari"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Tazio Nuvolari"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Tazio_Nuvolari|Tazio Nuvolari]]"
                               }
                             ]
                           }
@@ -2953,23 +2291,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_P3",
-                              "title": "Alfa Romeo P3"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo Tipo-B 'P3'"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_P3|Alfa Romeo Tipo-B 'P3']]"
                               }
                             ]
                           }
@@ -3098,23 +2425,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -3133,55 +2449,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Tazio_Nuvolari",
-                              "title": "Tazio Nuvolari"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Nuvolari"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Tazio_Nuvolari|Nuvolari]]"
                               }
                             ]
                           },
@@ -3196,24 +2472,12 @@
                             ]
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Carlo_Pintacuda",
-                              "className": "mw-redirect",
-                              "title": "Carlo Pintacuda"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Pintacuda"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Carlo_Pintacuda|Pintacuda]]"
                               }
                             ]
                           }
@@ -3226,23 +2490,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_8C",
-                              "title": "Alfa Romeo 8C"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo 8C-35"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_8C|Alfa Romeo 8C-35]]"
                               }
                             ]
                           }
@@ -3375,23 +2628,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -3410,36 +2652,7 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Germany",
-                                  "title": "Germany"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Germany",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Germany_%281935%E2%80%931945%29.svg/23px-Flag_of_Germany_%281935%E2%80%931945%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "14",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Germany_%281935%E2%80%931945%29.svg/35px-Flag_of_Germany_%281935%E2%80%931945%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Germany_%281935%E2%80%931945%29.svg/46px-Flag_of_Germany_%281935%E2%80%931945%29.svg.png 2x",
-                                      "data-file-width": "1000",
-                                      "data-file-height": "600"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
                             "type": "text",
@@ -3452,23 +2665,12 @@
                             ]
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Rudolf_Caracciola",
-                              "title": "Rudolf Caracciola"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Rudolf Caracciola"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Rudolf_Caracciola|Rudolf Caracciola]]"
                               }
                             ]
                           }
@@ -3481,23 +2683,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Mercedes-Benz_W125",
-                              "title": "Mercedes-Benz W125"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Mercedes-Benz W125"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Mercedes-Benz_W125|Mercedes-Benz W125]]"
                               }
                             ]
                           }
@@ -3528,23 +2719,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/1937_Italian_Grand_Prix",
-                              "title": "1937 Italian Grand Prix"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Report"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|1937_Italian_Grand_Prix|Report]]"
                               }
                             ]
                           }
@@ -3639,23 +2819,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -3674,55 +2843,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Germany",
-                                  "title": "Germany"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Germany",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Germany_%281935%E2%80%931945%29.svg/23px-Flag_of_Germany_%281935%E2%80%931945%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "14",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Germany_%281935%E2%80%931945%29.svg/35px-Flag_of_Germany_%281935%E2%80%931945%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Germany_%281935%E2%80%931945%29.svg/46px-Flag_of_Germany_%281935%E2%80%931945%29.svg.png 2x",
-                                      "data-file-width": "1000",
-                                      "data-file-height": "600"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Hermann_Lang",
-                              "title": "Hermann Lang"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Hermann Lang"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Hermann_Lang|Hermann Lang]]"
                               }
                             ]
                           }
@@ -3735,23 +2864,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Mercedes-Benz_W154",
-                              "title": "Mercedes-Benz W154"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Mercedes-Benz W154"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Mercedes-Benz_W154|Mercedes-Benz W154]]"
                               }
                             ]
                           }
@@ -3862,23 +2980,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Voiturette",
-                              "title": "Voiturette"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Voiturette"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Voiturette|Voiturette]]"
                               }
                             ]
                           }
@@ -3897,55 +3004,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Emilio_Villoresi",
-                              "title": "Emilio Villoresi"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Emilio Villoresi"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Emilio_Villoresi|Emilio Villoresi]]"
                               }
                             ]
                           }
@@ -3958,23 +3025,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Maserati_6CM",
-                              "title": "Maserati 6CM"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Maserati 6CM"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Maserati_6CM|Maserati 6CM]]"
                               }
                             ]
                           }
@@ -4103,23 +3159,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Grand_Prix_motor_racing",
-                              "title": "Grand Prix motor racing"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Grand Prix"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Grand_Prix_motor_racing|Grand Prix]]"
                               }
                             ]
                           }
@@ -4138,55 +3183,15 @@
                             "attrs": {
                               "className": "flagicon"
                             },
-                            "content": [
-                              {
-                                "type": "tag",
-                                "tag_type": "a",
-                                "tag_class": "inline",
-                                "attrs": {
-                                  "href": "/wiki/Italy",
-                                  "title": "Italy"
-                                },
-                                "content": [
-                                  {
-                                    "type": "tag",
-                                    "tag_type": "img",
-                                    "tag_class": "void",
-                                    "attrs": {
-                                      "alt": "Italy",
-                                      "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/23px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png",
-                                      "decoding": "async",
-                                      "width": "23",
-                                      "height": "15",
-                                      "className": "thumbborder",
-                                      "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/35px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Italy_%281861%E2%80%931946%29.svg/45px-Flag_of_Italy_%281861%E2%80%931946%29.svg.png 2x",
-                                      "data-file-width": "1500",
-                                      "data-file-height": "1000"
-                                    },
-                                    "content": []
-                                  }
-                                ]
-                              }
-                            ]
+                            "content": []
                           },
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Giuseppe_Farina",
-                              "title": "Giuseppe Farina"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Giuseppe Farina"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Giuseppe_Farina|Giuseppe Farina]]"
                               }
                             ]
                           }
@@ -4199,24 +3204,12 @@
                         "tag_class": "block",
                         "content": [
                           {
-                            "type": "tag",
-                            "tag_type": "a",
-                            "tag_class": "inline",
-                            "attrs": {
-                              "href": "/wiki/Alfa_Romeo_158",
-                              "className": "mw-redirect",
-                              "title": "Alfa Romeo 158"
-                            },
+                            "type": "text",
                             "content": [
                               {
-                                "type": "text",
-                                "content": [
-                                  {
-                                    "type": "sentence",
-                                    "index": 0,
-                                    "text": "Alfa Romeo 158"
-                                  }
-                                ]
+                                "type": "sentence",
+                                "index": 0,
+                                "text": "[[LINK|lang_en|Alfa_Romeo_158|Alfa Romeo 158]]"
                               }
                             ]
                           }
@@ -4383,7 +3376,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.915Z",
+      "timestamp": "2019-09-04T02:17:56.427Z",
       "mime": null
     },
     {
@@ -4400,7 +3393,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.954Z",
+      "timestamp": "2019-09-04T02:17:56.467Z",
       "mime": "text/html"
     },
     {
@@ -4417,7 +3410,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.954Z",
+      "timestamp": "2019-09-04T02:17:56.468Z",
       "mime": null
     },
     {
@@ -4434,7 +3427,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.955Z",
+      "timestamp": "2019-09-04T02:17:56.468Z",
       "mime": null
     },
     {
@@ -4451,7 +3444,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.955Z",
+      "timestamp": "2019-09-04T02:17:56.469Z",
       "mime": null
     },
     {
@@ -4468,7 +3461,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.955Z",
+      "timestamp": "2019-09-04T02:17:56.469Z",
       "mime": null
     },
     {
@@ -4485,7 +3478,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.956Z",
+      "timestamp": "2019-09-04T02:17:56.469Z",
       "mime": "text/html"
     },
     {
@@ -4502,7 +3495,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.956Z",
+      "timestamp": "2019-09-04T02:17:56.470Z",
       "mime": null
     },
     {
@@ -4519,7 +3512,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.956Z",
+      "timestamp": "2019-09-04T02:17:56.470Z",
       "mime": null
     },
     {
@@ -4536,7 +3529,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.957Z",
+      "timestamp": "2019-09-04T02:17:56.470Z",
       "mime": null
     },
     {
@@ -4553,7 +3546,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.957Z",
+      "timestamp": "2019-09-04T02:17:56.471Z",
       "mime": null
     },
     {
@@ -4570,7 +3563,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.957Z",
+      "timestamp": "2019-09-04T02:17:56.471Z",
       "mime": null
     },
     {
@@ -4587,7 +3580,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.958Z",
+      "timestamp": "2019-09-04T02:17:56.471Z",
       "mime": null
     },
     {
@@ -4604,7 +3597,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.958Z",
+      "timestamp": "2019-09-04T02:17:56.472Z",
       "mime": null
     },
     {
@@ -4621,7 +3614,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.958Z",
+      "timestamp": "2019-09-04T02:17:56.472Z",
       "mime": null
     },
     {
@@ -4638,7 +3631,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.959Z",
+      "timestamp": "2019-09-04T02:17:56.473Z",
       "mime": null
     },
     {
@@ -4655,7 +3648,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.959Z",
+      "timestamp": "2019-09-04T02:17:56.473Z",
       "mime": "text/html"
     },
     {
@@ -4672,7 +3665,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.961Z",
+      "timestamp": "2019-09-04T02:17:56.475Z",
       "mime": "application/x-httpd-php"
     },
     {
@@ -4689,7 +3682,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.961Z",
+      "timestamp": "2019-09-04T02:17:56.476Z",
       "mime": "text/html"
     },
     {
@@ -4706,7 +3699,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.961Z",
+      "timestamp": "2019-09-04T02:17:56.476Z",
       "mime": "text/html"
     },
     {
@@ -4723,7 +3716,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.961Z",
+      "timestamp": "2019-09-04T02:17:56.476Z",
       "mime": "text/html"
     },
     {
@@ -4740,7 +3733,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T01:54:46.962Z",
+      "timestamp": "2019-09-04T02:17:56.476Z",
       "mime": "text/html"
     }
   ],
@@ -4780,7 +3773,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/4/2019 1:54:46 AM UTC"
+      "value": "8/4/2019 2:17:55 AM UTC"
     },
     {
       "key": "last_modified",
@@ -4805,5 +3798,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmYCASaAXBbisjhmKjFxNRB6EfqVDkchB3GGjEmFGgQZoB"
+  "ipfs_hash": "QmUxNox3dj7SYFZYF4hd3DbgqaeChkntoxViWbwpnhY8mK"
 }

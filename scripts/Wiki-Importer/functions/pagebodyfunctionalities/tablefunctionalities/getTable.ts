@@ -1,10 +1,19 @@
 import { cleanAttrs } from '../getAttributes';
 import { getTagClass } from '../getTagClass';
+import { parseAnchorTag } from '../parseAnchorTag';
 import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem } from '../../../../../src/types/article';
 import { nestedContentParser } from '../../../../../src/utils/article-utils/article-converter';
 
-export const getTable = (element, $, internal_citations, table_type: 'wikitable' | 'body-table'): Table => {
+export const getTable = (element, $: CheerioStatic, internal_citations, table_type: 'wikitable' | 'body-table'): Table => {
 	let $table = $(element);
+
+	// Fix /wiki links first
+	$($table).find("a").each((idx, anchor) => {
+		// console.log($(anchor).html())
+		$(anchor).replaceWith(parseAnchorTag(anchor, $));
+		// console.log(parseAnchorTag(anchor, $));
+	})
+	
 
  	// Instantiate return object
 	let table: Table = {
@@ -43,7 +52,7 @@ export const getTable = (element, $, internal_citations, table_type: 'wikitable'
 				let cell: TableCell = {
 					index: i2,
 					attrs: cleanAttrs(el2.attribs),
-					tag_type: $cell[0].name,
+					tag_type: $cell[0].name as any,
 					tag_class: 'block', 
 					content: content
 				}
