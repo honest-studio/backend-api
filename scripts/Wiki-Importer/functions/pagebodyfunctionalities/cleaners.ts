@@ -98,6 +98,19 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         $(this).replaceWith(htmlString);
     });
 
+    // Convert latitude / longitude to plaintext
+    $('.geo-default').each((idx, $lat_long_elem) => {
+        let $theParent = $($lat_long_elem).parent();
+        let parentAttribs = $theParent.eq(0)[0].attribs;
+        if(parentAttribs && parentAttribs['class'].search(/external/gimu) >= 0) {
+            $($theParent).replaceWith($($theParent).find('.geo-dms').text());
+        }
+        else {
+            $($lat_long_elem).replaceWith($($theParent).find('.geo-dms').text());
+        }
+            
+    })
+
     // try:
     //     # Search for geography red dots and other jank
     //     geoTable = boobSoup.findAll("table", {"class": re.compile("infobox")})

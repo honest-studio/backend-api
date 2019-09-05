@@ -3,33 +3,662 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Silverstein Peak"
+      "text": "Bay of All Saints"
     }
   ],
   "main_photo": [
     {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/250px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg",
+      "caption": null,
       "type": "main_photo",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Sentinel-Range-location-map.png",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Sentinel-Range-location-map.png",
-      "caption": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Location of Sentinel Range in Western Antarctica."
-        }
-      ],
-      "mime": "image/png",
-      "category": "PICTURE",
-      "timestamp": "2019-09-05T03:56:37.832Z",
+      "attribution_url": "https://en.wikipedia.org/wiki/File:Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg",
       "media_props": {
         "type": "main_photo",
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Sentinel-Range-location-map.png/330px-Sentinel-Range-location-map.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Sentinel-Range-location-map.png/440px-Sentinel-Range-location-map.png 2x",
-        "height": 1260,
-        "width": 1600
-      }
+        "height": 640,
+        "width": 640,
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/375px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/500px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg 2x"
+      },
+      "timestamp": "2019-09-05T19:13:03.279Z",
+      "category": "PICTURE",
+      "mime": "image/jpeg"
     }
   ],
-  "infobox_html": null,
+  "infobox_html": {
+    "type": "wikitable",
+    "attrs": {
+      "className": "infobox vcard",
+      "style": {
+        "width": "22em"
+      }
+    },
+    "caption": {
+      "attrs": {},
+      "sentences": []
+    },
+    "thead": {
+      "rows": [],
+      "attrs": {}
+    },
+    "tbody": {
+      "attrs": {},
+      "rows": [
+        {
+          "index": 0,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "className": "fn org",
+                "style": {
+                  "textAlign": "center",
+                  "fontSize": "125%",
+                  "fontWeight": "bold",
+                  "backgroundColor": "#cedeff"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Baía de Todos os Santos"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "All Saints' Bay"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": []
+        },
+        {
+          "index": 2,
+          "attrs": {
+            "className": "adr"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Location"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "className": "region"
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Bahia|Bahia]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ", Brazil"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "title": "Geographical coordinates"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "Coordinates"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "plainlinks nourlexpansion"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "12°48′S 38°38′W"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "River sources"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Paragua%C3%A7u_River|Paraguaçu River]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Suba%C3%A9_River|Subaé River]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Jaguaripe River"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "title": "Primary outflows: oceans, seas, straights"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "Ocean/sea sources"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Atlantic_Ocean|Atlantic Ocean]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Drainage_basin|Basin]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " countries"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Brazil|Brazil]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "borderBottom": "#cedeff 1px solid"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": []
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {
+            "className": "note"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Surface area"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "1,223 square kilometers (472 sq mi)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {
+            "className": "note"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Average depth"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "9.8 meters (32 ft)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "borderBottom": "#cedeff 1px solid"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": []
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Settlements"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Salvador,_Bahia|Salvador]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "References"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "className": "note"
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tfoot": {
+      "rows": [],
+      "attrs": {}
+    }
+  },
   "page_body": [
     {
       "paragraphs": [
@@ -39,7 +668,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**Silverstein Peak** is a prominent, 4,790-metre-high (15,720 ft) peak on the west edge of the ice-covered [[LINK|lang_en|Vinson_Plateau|Vinson Plateau]] in the [[LINK|lang_en|Sentinel_Range|Sentinel Range]] of [[LINK|lang_en|Ellsworth_Mountains|Ellsworth Mountains]], [[LINK|lang_en|Antarctica|Antarctica]]. It surmounts [[LINK|lang_en|Roch%C3%A9_Glacier|Roché Glacier]] to the north and [[LINK|lang_en|Zapol_Glacier|Zapol Glacier]] to the southwest."
+              "text": "**The Bay of All Saints** ([[LINK|lang_en|Portuguese_language|Portuguese]]: *Baía de Todos os Santos*), also known as **All Saints' Bay** and **Todos os Santos Bay**, is the principal [[LINK|lang_en|Headlands_and_bays|bay]] of the [[LINK|lang_en|Brazilian_state|Brazilian state]] of [[LINK|lang_en|Bahia|Bahia]],[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]][[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]] to which it gave its name.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]][[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]] It sits on the [[LINK|lang_en|Brazilian_coast|eastern coast]] of Brazil, surrounding part of Bahia's capital [[LINK|lang_en|Salvador,_Bahia|Salvador]] and opening to the [[LINK|lang_en|Atlantic_Ocean|Atlantic Ocean]]. It covers 1,223 square kilometers (472 sq mi), making it the largest bay in Brazil."
             }
           ],
           "tag_type": "p",
@@ -51,7 +680,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The peak was named by [[LINK|lang_en|US-ACAN|US-ACAN]] in 2006 after [[LINK|lang_en|/www.physiology.columbia.edu/SamuelCSilverstein.html|Dr. Samuel C. Silverstein]], member of the 1966-67 American Antarctic Mountaineering Expedition that made the first ascent of [[LINK|lang_en|Vinson_Massif|Vinson Massif]] and other high mountains in the Sentinel Range."
+              "text": "Farol da Barra (Barra Lighthouse), on the site of a historic fort, stands at the entrance of the bay.[[CITE|3|http://www.museunauticodabahia.org.br/]] The Bay of All Saints is shallow along much of its area with an average depth of 9.8 meters (32 ft). The [[LINK|lang_en|Paragua%C3%A7u_River|Paraguaçu River]] travels 500 kilometers (310 mi) to empty into the bay and the coastal lowlands of the Reconcavo Basin are at its mouth.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]][[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]] It contains 91 islands, the largest being [[LINK|lang_en|Itaparica_Island|Itaparica Island]] at its entrance. Other important islands include the [[LINK|lang_en|Ilha_dos_Frades|Ilha dos Frades]], ilha de Maré, ilha de Bom Jesus, and the small Ilha do Medo.[[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]]"
             }
           ],
           "tag_type": "p",
@@ -61,23 +690,23 @@
       "images": [
         {
           "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Vinson-Map.jpg",
-          "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Vinson-Map.jpg",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg",
+          "thumb": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg",
           "caption": [
             {
               "type": "sentence",
               "index": 0,
-              "text": "Sentinel Range map."
+              "text": "Baía de Todos os Santos"
             }
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-05T03:56:37.857Z",
+          "timestamp": "2019-09-05T19:13:06.951Z",
           "media_props": {
             "type": "section_image",
-            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Vinson-Map.jpg/330px-Vinson-Map.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Vinson-Map.jpg/440px-Vinson-Map.jpg 2x",
-            "height": 3070,
-            "width": 3207
+            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg/413px-Ba%C3%ADa_de_Todos_os_Santos.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg/550px-Ba%C3%ADa_de_Todos_os_Santos.jpg 2x",
+            "height": 1417,
+            "width": 2126
           }
         }
       ]
@@ -90,7 +719,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Location"
+              "text": "History"
             }
           ],
           "tag_type": "h2",
@@ -102,70 +731,46 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Silverstein Peak is located at , which is 2.56 kilometres (1.59 mi) south-southwest of the summit [[LINK|lang_en|Mount_Vinson|Mount Vinson]], 1.37 kilometres (0.85 mi) west by south of [[LINK|lang_en|Hollister_Peak_(Antarctica)|Hollister Peak]], 2.66 kilometres (1.65 mi) north-northwest of [[LINK|lang_en|Opalchenie_Peak|Opalchenie Peak]] and 1.32 kilometres (0.82 mi) east of [[LINK|lang_en|Pr%C3%ADncipe_de_Asturias_Peak|Príncipe de Asturias Peak]]. [[LINK|lang_en|USGS|USGS]] mapping in 1961, updated in 1988."
+              "text": "The [[LINK|lang_en|Italians|Italian]] [[LINK|lang_en|Portuguese_explorer|explorer]] [[LINK|lang_en|Amerigo_Vespucci|Amerigo Vespucci]] was the first [[LINK|lang_en|Europeans|European]] to visit the bay, during [[LINK|lang_en|Second_voyage_of_Amerigo_Vespucci|his second expedition]] to the [[LINK|lang_en|Americas|Americas]]. He entered the bay on [[LINK|lang_en|All_Saints%27_Day|All Saints' Day]] (November 1), 1501.[[CITE|4|http://educacao.uol.com.br/biografias/americo-vespucio.jhtm]] He named the Bay of the Holy Savior of All the Saints after the date and his [[LINK|lang_en|Parish_church|parish church]] in [[LINK|lang_en|Florence|Florence]], [[LINK|lang_en|San_Salvatore_di_Ognissanti|San Salvatore di Ognissanti]].[[CITE|5|null]] Initially, the bay, [[LINK|lang_en|Salvador,_Bahia|its principal settlement]], and the [[LINK|lang_en|Captaincy_of_Bahia|captaincy]] around it all shared the same name, but they were eventually distinguished, the state becoming simply Bahia, the bay becoming the Bay of All Saints, and the city becoming first Bahia and now (usually) Salvador."
             }
           ],
           "tag_type": "p",
           "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
+        },
         {
-          "index": 0,
+          "index": 2,
           "items": [
             {
               "type": "sentence",
               "index": 0,
-              "text": "Maps"
+              "text": "In 1501, one year after the arrival of [[LINK|lang_en|Pedro_%C3%81lvares_Cabral|Pedro Álvares Cabral]]'s fleet in [[LINK|lang_en|Porto_Seguro|Porto Seguro]], [[LINK|lang_en|Gaspar_de_Lemos|Gaspar de Lemos]] arrived at the Bay of All Saints and sailed most of the Bahia coast. The first European to disembark in Morro de São Paulo was [[LINK|lang_en|Martim_Afonso_de_Sousa|Martim Afonso de Sousa]] in 1531, while he was leading an expedition charged with exploring the coast of the new continent."
             }
           ],
-          "tag_type": "h2",
+          "tag_type": "p",
           "attrs": {}
         },
         {
-          "index": 1,
+          "index": 3,
           "items": [
             {
-              "type": "list_item",
+              "type": "sentence",
               "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|//commons.wikimedia.org/wiki/File:Vinson-Map.jpg|Vinson Massif.]]  Scale 1:250 000 topographic map.  Reston, Virginia: US Geological Survey, 1988."
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "D. Gildea and C. Rada.  Vinson Massif and the Sentinel Range.  Scale 1:50 000 topographic map.  Omega Foundation, 2007."
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 2,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|/www.add.scar.org|Antarctic Digital Database (ADD).]] Scale 1:250000 topographic map of Antarctica. Scientific Committee on Antarctic Research (SCAR). Since 1993, regularly updated."
-                }
-              ],
-              "tag_type": "li"
+              "text": "Salvador was a major [[LINK|lang_en|Slavery_in_Brazil|slave port]] for the [[LINK|lang_en|Sugarcane|sugarcane]] fields of Brazil by the early 18th century.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]] In [[LINK|lang_en|History_of_whaling|the whaling days]], it was also a popular spot, since the bay was a mating ground for [[LINK|lang_en|Whale|whales]]."
             }
           ],
-          "tag_type": "ul",
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 4,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The northeast shore of the Bay of All Saints is home to [[LINK|lang_en|Petroleum_industry_in_Brazil|Brazil's first active oil fields]]. The municipality of [[LINK|lang_en|S%C3%A3o_Francisco_do_Conde|São Francisco do Conde]], at the north of the bay, remains a port that serves the oil refineries at Mataripe. The bay is dredged from the port to the Atlantic Ocean to remain open to shipping.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]]"
+            }
+          ],
+          "tag_type": "p",
           "attrs": {}
         }
       ],
@@ -175,24 +780,24 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "https://commons.wikimedia.org/wiki/File:Vinson-Map.jpg",
+      "url": "http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf",
       "thumb": null,
-      "category": "PICTURE",
+      "category": "FILE",
       "citation_id": 1,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Vinson Massif."
+          "text": "Cirano, Mauro; Lessa, Guilherme Camargo (2007). \"Oceanographic Characteristics Of Baía De Todos Os Santos, Brazil\" (PDF). *Revista Brasileira de Geofísica*. Sociedade Brasileira de Geofísica. **25** (4): 363–387."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:56:37.852Z",
-      "mime": "image/jpeg"
+      "timestamp": "2019-09-05T19:13:03.301Z",
+      "mime": "application/pdf"
     },
     {
-      "url": "http://www.add.scar.org",
+      "url": "http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay",
       "thumb": null,
       "category": "NONE",
       "citation_id": 2,
@@ -200,16 +805,16 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "Antarctic Digital Database (ADD)."
+          "text": "\"Todos os Santos Bay\". *Encyclopædia Britannica*. Encyclopædia Britannica. 2014. Retrieved 15 December 2014."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:56:37.852Z",
+      "timestamp": "2019-09-05T19:13:03.303Z",
       "mime": null
     },
     {
-      "url": "http://data.aad.gov.au/aadc/gaz/scar/",
+      "url": "http://www.museunauticodabahia.org.br/",
       "thumb": null,
       "category": "NONE",
       "citation_id": 3,
@@ -217,19 +822,70 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "SCAR Composite Gazetteer of Antarctica"
+          "text": "\"Histórico\" [History] (in Portuguese). Barra, Salvador: Museu Náutico da Bahia. 2014. Retrieved 15 December 2014. Cite web requires |website= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:56:37.853Z",
+      "timestamp": "2019-09-05T19:13:03.305Z",
       "mime": null
     },
     {
-      "url": "https://en.wikipedia.org/wiki/Silverstein_Peak",
-      "thumb": null,
+      "url": "http://educacao.uol.com.br/biografias/americo-vespucio.jhtm",
+      "thumb": "http://h.imguol.com/favicon.ico",
       "category": "NONE",
       "citation_id": 4,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"Américo Vespúcio\" (in Portuguese). UOL Educaçao. 2014. Retrieved 15 December 2014. Cite web requires |website= (help)"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T19:13:03.306Z",
+      "mime": null
+    },
+    {
+      "url": null,
+      "thumb": null,
+      "category": null,
+      "citation_id": 5,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Bargellini, Piero;  et al. (1977), *Le Strade di Firenze,*Vol. II**, Florence: Bonechi, pp. 337-340."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T19:13:03.307Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.wdl.org/en/item/1177",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 6,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"*Plano de la Bahia de todos Santos situada en la costa meridional del Brasil*\""
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T19:13:06.940Z",
+      "mime": null
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Bay_of_All_Saints",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 7,
       "description": [
         {
           "index": 0,
@@ -259,7 +915,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:56:37.855Z",
+      "timestamp": "2019-09-05T19:13:06.945Z",
       "mime": null
     }
   ],
@@ -299,7 +955,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/5/2019 3:56:37 AM UTC"
+      "value": "8/5/2019 19:13:2 PM UTC"
     },
     {
       "key": "last_modified",
@@ -311,11 +967,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Silverstein_Peak"
+      "value": "Bay_of_All_Saints"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Silverstein_Peak"
+      "value": "Bay_of_All_Saints"
     }
   ],
   "amp_info": {
@@ -324,5 +980,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmRcecJ7zoEE2U8ouzK4qPkM3ScBUusg4ncvHv57EDthJZ"
+  "ipfs_hash": "QmQEHEmchwBasvnFyj3N33pJ2EtRty8UydRmnzxWcKtf5n"
 }

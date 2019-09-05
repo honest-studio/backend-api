@@ -2,6 +2,7 @@ import * as cheerio from 'cheerio';
 import * as mimePackage from 'mime';
 import { MediaUploadService } from '../../../src/media-upload';
 import { Citation, CitationCategoryType, Sentence } from '../../../src/types/article';
+import { cheerio_css_cleaner } from '../../../src/utils/article-utils/article-tools';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { accumulateText } from './pagebodyfunctionalities/textParser';
 import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
@@ -9,6 +10,7 @@ import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 const util = require('util');
 const chalk = require('chalk');
 const _ = require('lodash');
+const sleep = require('sleep');
 const getYouTubeID = require('get-youtube-id');
 
 export interface RawCitation {
@@ -105,9 +107,9 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			let theInnerURL = possible_anchor.attribs['href'];
 			if(theInnerURL[0] == "#"){
 				let linked_id = theInnerURL;
-
+				let linked_id_escaped = cheerio_css_cleaner(linked_id);
 				if (linked_id){
-					$(`${linked_id} a`).each((idx, inner_anchor) => {
+					$(`${linked_id_escaped} a`).each((idx, inner_anchor) => {
 						let inner_href = inner_anchor.attribs['href'];
 						if(inner_href){
 							// Look for an ISBN
@@ -124,12 +126,17 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 						$(inner_anchor).remove();
 					})
 				}
-				$(possible_anchor).replaceWith($(linked_id).contents()); 
+				$(possible_anchor).replaceWith($(linked_id_escaped).contents()); 
 				raw_citn.text = $(raw_citn.note_element)
 										.text()
 										.trim()
 										.replace("  .,", "")
 										.replace("  ..", "");
+
+				// If the raw citation does not have a category, see if it is a book or periodical
+				if(!raw_citn.category){
+					console.log(linkCategoryFromText(raw_citn.text))
+				}
 			}
 			else{
 				raw_citn.category = linkCategorizer(theInnerURL);
@@ -152,6 +159,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 	// Convert the raw citations into real ones
 	// Also replace the <sup> tags with markdown
+	let await_done = false, await_counter = 0;
 	await Promise.all(
 		rawCitations.map(async (raw_citn, idx) => {
 			let workingCitation: Citation = {
@@ -166,23 +174,24 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				mime: null
 			};
 			switch(raw_citn.category){
+				case 'PERIODICAL':
 				case 'BOOK': {
 					if (raw_citn.isbn){
 						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn);
 						workingCitation.url = bookInfo.url;
 						workingCitation.thumb = bookInfo.thumb;
-					};
-					break;
-				}
-				case 'PERIODICAL': {
-					if (raw_citn.issn){
+					}
+					else if (raw_citn.issn){
 						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn);
 						workingCitation.url = periodicalInfo.url;
 						workingCitation.thumb = periodicalInfo.thumb;
 					};
+
+					await_done = true;
 					break;
 				}
 				case 'YOUTUBE': {
+					await_done = true;
 					break;
 				}
 				case 'AUDIO':
@@ -190,40 +199,52 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'PICTURE':
 				case 'NORMAL_VIDEO':
 				case 'FILE': {
+					await_done = true;
 					workingCitation.mime = mimePackage.getType(raw_citn.url);
 					break;
 				}
 				case 'NONE': {
+					await_done = true;
 					break;
 				}
 			}
 
-			// Replace the <sup> with the markdown citation notation
-			$(`[href='#${raw_citn.id_note}']`).each((idx, elem) => {
-				$(elem).parent("sup").replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`);
-			})
-
-			// Handle thumbnails that don't require an upload
-			switch(workingCitation.category){
-				case 'YOUTUBE': {
-					workingCitation.thumb = `https://i.ytimg.com/vi/${getYouTubeID(workingCitation.url)}/hqdefault.jpg`
-					break;
-				}
-				case 'NONE': {
-					try{
-						let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 3000);
-						if (fetched_favicon != "") workingCitation.thumb = fetched_favicon;
-					}
-					catch (err){
-						// console.log(err);
-					}
-					
-					break;
-				}
+			while(!await_done && await_counter <= 20){
+				console.log("Sleeping");
+				await_counter = await_counter + 1;
+				sleep.msleep(100);
 			}
 
-			// Add the citation to the list
-			citations.push(workingCitation);
+			if(await_done){
+				// Replace the <sup> with the markdown citation notation
+				let id_note_escaped = cheerio_css_cleaner(raw_citn.id_note);
+				$(`[href='#${id_note_escaped}']`).each((idx, elem) => {
+					$(elem).parent("sup").replaceWith(`[[CITE|${workingCitation.citation_id}|${workingCitation.url}]]`);
+				})
+
+				// Handle thumbnails that don't require an upload
+				switch(workingCitation.category){
+					case 'YOUTUBE': {
+						workingCitation.thumb = `https://i.ytimg.com/vi/${getYouTubeID(workingCitation.url)}/hqdefault.jpg`
+						break;
+					}
+					case 'NONE': {
+						try{
+							let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 3000);
+							if (fetched_favicon != "") workingCitation.thumb = fetched_favicon;
+						}
+						catch (err){
+							// console.log(err);
+						}
+						
+						break;
+					}
+				}
+
+				// Add the citation to the list
+				citations.push(workingCitation);
+			}
+			
 		})
 	)
 

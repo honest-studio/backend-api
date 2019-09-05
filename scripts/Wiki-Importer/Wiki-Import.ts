@@ -170,7 +170,8 @@ export const WikiImport = async (inputString: string) => {
                     mobile_cache_timestamp=NULL, 
                     webp_large=?, 
                     webp_medium=?, 
-                    webp_small=? 
+                    webp_small=?, 
+                    is_indexed=0
                 WHERE ipfs_hash_current = ? 
             `,
             [   

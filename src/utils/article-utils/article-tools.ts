@@ -11,8 +11,9 @@ import * as axios from 'axios';
 const conv = require('binstring');
 import endianness from 'endianness';
 import bs58 from 'bs58';
+const css_escape = require('css.escape');
 
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
@@ -987,4 +988,26 @@ export const calcIPFSHash = (inputString: string): string => {
     const combined = Buffer.concat([hashFunction, digestSize, digest]);
     const multihash = bs58.encode(combined);
     return multihash.toString();
+}
+
+export function cheerio_css_cleaner(input_css: string): string{
+    let cleaned_css = input_css;
+    cleaned_css = css_escape(cleaned_css).replace("\\#", "#");
+    return cleaned_css;
+}
+
+export function linkCategoryFromText(input_text: string): CitationCategoryType{
+    let working_category: CitationCategoryType = 'NONE';
+
+    // Look for book-related stuff first
+    if(input_text.search(/pp\.|p\. [0-9]+|book/gimu) >= 0) {
+        working_category = 'BOOK';
+    }
+    // Look for periodical-related stuff next
+    else if(input_text.search(/magazine|picayune|tribune|gazette|journal|herald|sentinel|courier|newspaper/gimu) >= 0) {
+        working_category = 'PERIODICAL';
+    }
+
+
+    return working_category;
 }

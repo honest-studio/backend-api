@@ -1375,3 +1375,4 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
     return decycledTable as Table;
 }
+
