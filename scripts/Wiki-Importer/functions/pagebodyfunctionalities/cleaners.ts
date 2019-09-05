@@ -111,27 +111,31 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             
     })
 
-    // try:
-    //     # Search for geography red dots and other jank
-    //     geoTable = boobSoup.findAll("table", {"class": re.compile("infobox")})
-    //     dotImages = geoTable[0].findAll("img", {"src": re.compile("Red_pog|triangle_with_thick|Airplane_silhouette")})
-    //     for geoDot in dotImages:
-    //         print("FOUND GEODOT")
-    //         dotNugget = geoDot.parent.parent.parent
-    //         try:
-    //             assert (dotNugget['class'])
-    //             dotNugget['class'] = dotNugget['class'] + " geonugget"
-    //         except:
-    //             dotNugget['class'] = "geonugget"
+    // Search for geography red dots and other jank
+    const $table = $('.infobox');
+    if ($table.length > 0) {
+        $($table).find("img").each((idx, img_elem) => {
+            let theSrc = img_elem.attribs && img_elem.attribs['src'];
+            if (theSrc && theSrc.search(/Red_pog|triangle_with_thick|Airplane_silhouette/gimu) >= 0){
+                console.log(chalk.yellow("Found geodot. Converting it..."));
+                // Get the class of the geodot
+                let theDotClass = img_elem.attribs && img_elem.attribs['class'];
 
-    //         try:
-    //             assert (geoDot['class'])
-    //             geoDot['class'] = geoDot['class'] + " geodot"
-    //         except:
-    //             geoDot['class'] = "geodot"
+                // Mark the image as a geodot
+                $(img_elem).attr('class', theDotClass ? theDotClass + " geodot" : "geodot");
 
-    // except:
-    //     pass
+                // Get the wrapping parent / map area
+                let $dot_nugget = $(img_elem).parent().parent().parent().eq(0)[0];
+
+                // Get the class of the parent
+                let theParentClass = $dot_nugget.attribs && $dot_nugget.attribs['class'];
+
+                // Mark the parent as a geonugget
+                $($dot_nugget).attr('class', theParentClass ? theParentClass + " geonugget" : "geonugget");
+            }
+        })
+
+	}
 
     return {
         cheerio_static: $

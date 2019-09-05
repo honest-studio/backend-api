@@ -48,34 +48,48 @@ export const logYlw = (inputString: string) => {
 
 export const WikiImport = async (inputString: string) => { 
     let quickSplit = inputString.split("|");
-	let wikiLangSlug = quickSplit[0];
-    let inputIPFS = quickSplit[1];
-    let pageTitle = quickSplit[2].trim();
-    let pageID = quickSplit[3];
-    let redirectPageID = quickSplit[4];
+    let wikiLangSlug = quickSplit[0];
+	let wikiLangSlug_alt = quickSplit[1];
+    let inputIPFS = quickSplit[2];
+    let pageTitle = quickSplit[3].trim();
+    let pageID = quickSplit[4];
+    let redirectPageID = quickSplit[5];
     if (redirectPageID == "") redirectPageID = null;
 
-    let lang_code, slug;
+    let lang_code, slug, slug_alt;
     if (wikiLangSlug.includes('lang_')) {
         lang_code = wikiLangSlug.split('/')[0].substring(5); // ignore the lang_ at the start
         slug = wikiLangSlug.split('/')[1];
+        slug_alt = wikiLangSlug_alt.split('/')[1];
     } else {
         lang_code = 'en';
         slug = wikiLangSlug;
+        slug_alt = wikiLangSlug_alt;
     }
 
     console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
-    console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`))
-    console.log(chalk.blue.bold(`Page Slug: |${slug}|`))
-	
-	const url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
-	let page_title = await getTitle(lang_code, slug);
-	let metadata = await getMetaData(lang_code, slug);
+    console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
+    console.log(chalk.blue.bold(`Page Slug: |${slug}| alt: |${slug_alt}|`));
     
-    let page = await rp(url);
-    
+    let url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
+
+    // Fetch the page title, metadata, and page
+    let page_title, metadata, page;
+    try{
+        page_title = await getTitle(lang_code, slug);
+        metadata = await getMetaData(lang_code, slug);
+        page = await rp(url);
+    }
+    catch(err){
+        console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
+        page_title = await getTitle(lang_code, slug_alt);
+        metadata = await getMetaData(lang_code, slug_alt);
+        page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+    }
+
     // Precleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
+
 
     // Try extracting a main photo
     let photo_result = getMainPhoto(precleaned_cheerio_pack);
@@ -241,7 +255,7 @@ export const WikiImport = async (inputString: string) => {
 
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, "") ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, "") ) as concatted
                 FROM enterlink_articletable art
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0

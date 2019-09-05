@@ -3,33 +3,33 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Bay of All Saints"
+      "text": "Hayden, Idaho"
     }
   ],
   "main_photo": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/250px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/dc/Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg/250px-Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg.png",
       "caption": null,
       "type": "main_photo",
-      "attribution_url": "https://en.wikipedia.org/wiki/File:Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg",
+      "attribution_url": "https://en.wikipedia.org/wiki/File:Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg",
       "media_props": {
         "type": "main_photo",
-        "height": 640,
-        "width": 640,
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/375px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/500px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg 2x"
+        "height": 460,
+        "width": 502,
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg/375px-Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg/500px-Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg.png 2x"
       },
-      "timestamp": "2019-09-05T20:10:34.930Z",
+      "timestamp": "2019-09-05T21:32:05.680Z",
       "category": "PICTURE",
-      "mime": "image/jpeg"
+      "mime": "image/svg+xml"
     }
   ],
   "infobox_html": {
     "type": "wikitable",
     "attrs": {
-      "className": "infobox vcard",
+      "className": "infobox geography vcard",
       "style": {
-        "width": "22em"
+        "width": "23em"
       }
     },
     "caption": {
@@ -53,41 +53,36 @@
               "index": 0,
               "attrs": {
                 "colSpan": "2",
-                "className": "fn org",
                 "style": {
                   "textAlign": "center",
-                  "fontSize": "125%",
+                  "fontSize": "1.25em",
                   "fontWeight": "bold",
-                  "backgroundColor": "#cedeff"
+                  "whiteSpace": "nowrap"
                 }
               },
               "tag_type": "th",
               "tag_class": "block",
               "content": [
                 {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Baía de Todos os Santos"
-                    }
-                  ]
-                },
-                {
                   "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "display": "inline"
+                    },
+                    "className": "fn org"
+                  },
                   "content": [
                     {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "All Saints' Bay"
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "Hayden, Idaho"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -100,88 +95,26 @@
           "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
-          "cells": []
-        },
-        {
-          "index": 2,
-          "attrs": {
-            "className": "adr"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
           "cells": [
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Location"
-                    }
-                  ]
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "#cddeff",
+                  "fontWeight": "bold"
                 }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "className": "region"
               },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
                 {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Bahia|Bahia]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": ", Brazil"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
                   "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
+                  "tag_type": "div",
+                  "tag_class": "block",
                   "attrs": {
-                    "title": "Geographical coordinates"
+                    "className": "category"
                   },
                   "content": [
                     {
@@ -190,20 +123,247 @@
                         {
                           "type": "sentence",
                           "index": 0,
-                          "text": "Coordinates"
+                          "text": "[[LINK|lang_en|City|City]]"
                         }
                       ]
                     }
                   ]
                 }
               ]
-            },
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": []
+        },
+        {
+          "index": 3,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
             {
-              "index": 1,
-              "attrs": {},
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "className": "center"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "div",
+                      "tag_class": "block",
+                      "attrs": {
+                        "style": {
+                          "width": "250px",
+                          "float": "none",
+                          "clear": "both",
+                          "marginLeft": "auto",
+                          "marginRight": "auto"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "div",
+                          "tag_class": "block",
+                          "attrs": {
+                            "style": {
+                              "width": "250px",
+                              "padding": "0"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "div",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "position": "relative",
+                                  "width": "250px"
+                                },
+                                "className": "geonugget"
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "type": "sentence",
+                                      "index": 0,
+                                      "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/2/20/Usa_edcp_location_map.svg/250px-Usa_edcp_location_map.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/2/20/Usa_edcp_location_map.svg/375px-Usa_edcp_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/20/Usa_edcp_location_map.svg/500px-Usa_edcp_location_map.svg.png 2x|Hayden, Idaho is located in the United States|h155|w250]]"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "tag",
+                                  "tag_type": "div",
+                                  "tag_class": "block",
+                                  "attrs": {
+                                    "style": {
+                                      "position": "absolute",
+                                      "top": "12.223%",
+                                      "left": "19.517%"
+                                    }
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "div",
+                                      "tag_class": "block",
+                                      "attrs": {
+                                        "style": {
+                                          "position": "absolute",
+                                          "left": "-3px",
+                                          "top": "-3px",
+                                          "lineHeight": "0"
+                                        }
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "tag",
+                                          "tag_type": "img",
+                                          "tag_class": "void",
+                                          "attrs": {
+                                            "alt": "Hayden, Idaho",
+                                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png",
+                                            "decoding": "async",
+                                            "title": "Hayden, Idaho",
+                                            "width": "6",
+                                            "height": "6",
+                                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x",
+                                            "data-file-width": "64",
+                                            "data-file-height": "64",
+                                            "className": "geodot"
+                                          },
+                                          "content": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "div",
+                                      "tag_class": "block",
+                                      "attrs": {
+                                        "style": {
+                                          "fontSize": "90%",
+                                          "lineHeight": "110%",
+                                          "position": "absolute",
+                                          "width": "6em",
+                                          "top": "-0.75em",
+                                          "left": "4px",
+                                          "textAlign": "left"
+                                        }
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "tag",
+                                          "tag_type": "div",
+                                          "tag_class": "block",
+                                          "attrs": {
+                                            "style": {
+                                              "display": "inline",
+                                              "padding": "1px",
+                                              "float": "left"
+                                            }
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "text",
+                                              "content": [
+                                                {
+                                                  "type": "sentence",
+                                                  "index": 0,
+                                                  "text": "Hayden, Idaho"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "div",
+                              "tag_class": "block",
+                              "attrs": {},
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "type": "sentence",
+                                      "index": 0,
+                                      "text": "Location in the United States"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {
+            "className": "mergedbottomrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Coordinates: "
+                    }
+                  ]
+                },
                 {
                   "type": "tag",
                   "tag_type": "span",
@@ -218,19 +378,32 @@
                         {
                           "type": "sentence",
                           "index": 0,
-                          "text": "12°48′S 38°38′W"
+                          "text": "47°45′26″N 116°47′20″W"
                         }
                       ]
                     }
                   ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontSize": "small"
+                    }
+                  },
+                  "content": []
                 }
               ]
             }
           ]
         },
         {
-          "index": 4,
-          "attrs": {},
+          "index": 5,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
@@ -248,7 +421,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "River sources"
+                      "text": "Country"
                     }
                   ]
                 }
@@ -266,41 +439,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|Paragua%C3%A7u_River|Paraguaçu River]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Suba%C3%A9_River|Subaé River]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Jaguaripe River"
+                      "text": "United States"
                     }
                   ]
                 }
@@ -309,8 +448,828 @@
           ]
         },
         {
-          "index": 5,
-          "attrs": {},
+          "index": 6,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|U.S._state|State]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Idaho|Idaho]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|List_of_counties_in_Idaho|County]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Kootenai_County,_Idaho|Kootenai]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Area"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "[[CITE|1|https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2016_Gazetteer/2016_gaz_place_16.txt]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " • Total"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "10.39 sq mi (26.90 km"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "sup",
+                  "tag_class": "inline",
+                  "attrs": {},
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ")"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " • Land"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "10.37 sq mi (26.86 km"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "sup",
+                  "tag_class": "inline",
+                  "attrs": {},
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ")"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " • Water"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "0.01 sq mi (0.04 km"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "sup",
+                  "tag_class": "inline",
+                  "attrs": {},
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ")"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Elevation"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": []
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "2,287 ft (697 m)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Population"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "span",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "className": "nowrap"
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "("
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "[[LINK|lang_en|2010_United_States_Census|2010]]"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": ")"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "[[CITE|2|http://factfinder2.census.gov/faces/nav/jsf/pages/index.xhtml]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " • Total"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "13,294"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " • Estimate "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "(2018)"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "[[CITE|3|https://www.census.gov/programs-surveys/popest/data/tables.2018.html]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "15,166"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "attrs": {
+            "className": "mergedrow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " • Density"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "1,383.09/sq mi (534.01/km"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "sup",
+                  "tag_class": "inline",
+                  "attrs": {},
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "2"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ")"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Time_zone|Time zone]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|UTC%E2%88%928|UTC−8]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " ("
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "[[LINK|lang_en|Pacific_Time_Zone|Pacific (PST)]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": ")"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "attrs": {
+            "className": "mergedrow"
+          },
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
@@ -327,7 +1286,9 @@
                   "tag_type": "span",
                   "tag_class": "inline",
                   "attrs": {
-                    "title": "Primary outflows: oceans, seas, straights"
+                    "style": {
+                      "whiteSpace": "nowrap"
+                    }
                   },
                   "content": [
                     {
@@ -336,7 +1297,27 @@
                         {
                           "type": "sentence",
                           "index": 0,
-                          "text": "Ocean/sea sources"
+                          "text": " • Summer ("
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "[[LINK|lang_en|Daylight_saving_time|DST]]"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": ")"
                         }
                       ]
                     }
@@ -356,35 +1337,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|Atlantic_Ocean|Atlantic Ocean]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Drainage_basin|Basin]]"
+                      "text": "[[LINK|lang_en|UTC%E2%88%927|UTC−7]]"
                     }
                   ]
                 },
@@ -394,25 +1347,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": " countries"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Brazil|Brazil]]"
+                      "text": " (PDT)"
                     }
                   ]
                 }
@@ -421,30 +1356,9 @@
           ]
         },
         {
-          "index": 7,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "borderBottom": "#cedeff 1px solid"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": []
-            }
-          ]
-        },
-        {
-          "index": 8,
+          "index": 19,
           "attrs": {
-            "className": "note"
+            "className": "mergedtoprow"
           },
           "tag_type": "tr",
           "tag_class": "block",
@@ -463,7 +1377,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Surface area"
+                      "text": "[[LINK|lang_en|ZIP_code|ZIP code]]"
                     }
                   ]
                 }
@@ -471,17 +1385,29 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "className": "adr"
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
                 {
-                  "type": "text",
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "className": "postal-code"
+                  },
                   "content": [
                     {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "1,223 square kilometers (472 sq mi)"
+                      "type": "text",
+                      "content": [
+                        {
+                          "type": "sentence",
+                          "index": 0,
+                          "text": "83835"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -490,9 +1416,9 @@
           ]
         },
         {
-          "index": 9,
+          "index": 20,
           "attrs": {
-            "className": "note"
+            "className": "mergedrow"
           },
           "tag_type": "tr",
           "tag_class": "block",
@@ -511,7 +1437,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Average depth"
+                      "text": "[[LINK|lang_en|Telephone_numbering_plan|Area code(s)]]"
                     }
                   ]
                 }
@@ -529,7 +1455,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "9.8 meters (32 ft)"
+                      "text": "[[LINK|lang_en|Area_code_208|208]]"
                     }
                   ]
                 }
@@ -538,29 +1464,10 @@
           ]
         },
         {
-          "index": 10,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "borderBottom": "#cedeff 1px solid"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": []
-            }
-          ]
-        },
-        {
-          "index": 11,
-          "attrs": {},
+          "index": 21,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
@@ -578,7 +1485,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "Settlements"
+                      "text": "[[LINK|lang_en|Federal_Information_Processing_Standard|FIPS code]]"
                     }
                   ]
                 }
@@ -596,7 +1503,7 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[LINK|lang_en|Salvador,_Bahia|Salvador]]"
+                      "text": "16-36370"
                     }
                   ]
                 }
@@ -605,8 +1512,10 @@
           ]
         },
         {
-          "index": 12,
-          "attrs": {},
+          "index": 22,
+          "attrs": {
+            "className": "mergedrow"
+          },
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
@@ -624,7 +1533,17 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "References"
+                      "text": "[[LINK|lang_en|Geographic_Names_Information_System|GNIS]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": " feature ID"
                     }
                   ]
                 }
@@ -632,9 +1551,7 @@
             },
             {
               "index": 1,
-              "attrs": {
-                "className": "note"
-              },
+              "attrs": {},
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -644,9 +1561,56 @@
                     {
                       "type": "sentence",
                       "index": 0,
-                      "text": "[[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]]"
+                      "text": "0396630"
                     }
                   ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 23,
+          "attrs": {
+            "className": "mergedtoprow"
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "type": "sentence",
+                      "index": 0,
+                      "text": "Website"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "url"
+                  },
+                  "content": []
                 }
               ]
             }
@@ -668,48 +1632,14 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**The Bay of All Saints** ([[LINK|lang_en|Portuguese_language|Portuguese]]: *Baía de Todos os Santos*), also known as **All Saints' Bay** and **Todos os Santos Bay**, is the principal [[LINK|lang_en|Headlands_and_bays|bay]] of the [[LINK|lang_en|Brazilian_state|Brazilian state]] of [[LINK|lang_en|Bahia|Bahia]],[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]][[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]] to which it gave its name.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]][[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]] It sits on the [[LINK|lang_en|Brazilian_coast|eastern coast]] of Brazil, surrounding part of Bahia's capital [[LINK|lang_en|Salvador,_Bahia|Salvador]] and opening to the [[LINK|lang_en|Atlantic_Ocean|Atlantic Ocean]]. It covers 1,223 square kilometers (472 sq mi), making it the largest bay in Brazil."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Farol da Barra (Barra Lighthouse), on the site of a historic fort, stands at the entrance of the bay.[[CITE|3|http://www.museunauticodabahia.org.br/]] The Bay of All Saints is shallow along much of its area with an average depth of 9.8 meters (32 ft). The [[LINK|lang_en|Paragua%C3%A7u_River|Paraguaçu River]] travels 500 kilometers (310 mi) to empty into the bay and the coastal lowlands of the Reconcavo Basin are at its mouth.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]][[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]] It contains 91 islands, the largest being [[LINK|lang_en|Itaparica_Island|Itaparica Island]] at its entrance. Other important islands include the [[LINK|lang_en|Ilha_dos_Frades|Ilha dos Frades]], ilha de Maré, ilha de Bom Jesus, and the small Ilha do Medo.[[CITE|1|http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf]]"
+              "text": "**Hayden** is a city in [[LINK|lang_en|Kootenai_County,_Idaho|Kootenai County]], [[LINK|lang_en|Idaho|Idaho]], United States. Located in the [[LINK|lang_en|Idaho_Panhandle|northern]] portion of the state, it is a suburb of nearby [[LINK|lang_en|Coeur_d%27_Alene,_Idaho|Coeur d'Alene]] and its population was 13,294 at the [[LINK|lang_en|United_States_Census,_2010|2010 census]]."
             }
           ],
           "tag_type": "p",
           "attrs": {}
         }
       ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg",
-          "thumb": "https://upload.wikimedia.org/wikipedia/commons/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg",
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Baía de Todos os Santos"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-05T20:10:36.944Z",
-          "media_props": {
-            "type": "section_image",
-            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg/413px-Ba%C3%ADa_de_Todos_os_Santos.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg/550px-Ba%C3%ADa_de_Todos_os_Santos.jpg 2x",
-            "height": 1417,
-            "width": 2126
-          }
-        }
-      ]
+      "images": []
     },
     {
       "paragraphs": [
@@ -731,7 +1661,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The [[LINK|lang_en|Italians|Italian]] [[LINK|lang_en|Portuguese_explorer|explorer]] [[LINK|lang_en|Amerigo_Vespucci|Amerigo Vespucci]] was the first [[LINK|lang_en|Europeans|European]] to visit the bay, during [[LINK|lang_en|Second_voyage_of_Amerigo_Vespucci|his second expedition]] to the [[LINK|lang_en|Americas|Americas]]. He entered the bay on [[LINK|lang_en|All_Saints%27_Day|All Saints' Day]] (November 1), 1501.[[CITE|4|http://educacao.uol.com.br/biografias/americo-vespucio.jhtm]] He named the Bay of the Holy Savior of All the Saints after the date and his [[LINK|lang_en|Parish_church|parish church]] in [[LINK|lang_en|Florence|Florence]], [[LINK|lang_en|San_Salvatore_di_Ognissanti|San Salvatore di Ognissanti]].[[CITE|5|null]] Initially, the bay, [[LINK|lang_en|Salvador,_Bahia|its principal settlement]], and the [[LINK|lang_en|Captaincy_of_Bahia|captaincy]] around it all shared the same name, but they were eventually distinguished, the state becoming simply Bahia, the bay becoming the Bay of All Saints, and the city becoming first Bahia and now (usually) Salvador."
+              "text": "The Village of Hayden was incorporated in 1955 with a total of 440 acres with a population of around 700 people.[[CITE|4|http://www.cityofhaydenid.us/community_history.php]]"
             }
           ],
           "tag_type": "p",
@@ -743,7 +1673,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "In 1501, one year after the arrival of [[LINK|lang_en|Pedro_%C3%81lvares_Cabral|Pedro Álvares Cabral]]'s fleet in [[LINK|lang_en|Porto_Seguro|Porto Seguro]], [[LINK|lang_en|Gaspar_de_Lemos|Gaspar de Lemos]] arrived at the Bay of All Saints and sailed most of the Bahia coast. The first European to disembark in Morro de São Paulo was [[LINK|lang_en|Martim_Afonso_de_Sousa|Martim Afonso de Sousa]] in 1531, while he was leading an expedition charged with exploring the coast of the new continent."
+              "text": "According to legend, the name Hayden comes from a man named Matt Heyden, a pioneer who won the rights to name the lake, and therefore the city, by winning a game of “seven-up” against John Hager and John Hickey in 1878. The lake became known as Heyden’s Lake, which was altered over time before eventually officially becoming Hayden Lake."
             }
           ],
           "tag_type": "p",
@@ -755,7 +1685,200 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Salvador was a major [[LINK|lang_en|Slavery_in_Brazil|slave port]] for the [[LINK|lang_en|Sugarcane|sugarcane]] fields of Brazil by the early 18th century.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]] In [[LINK|lang_en|History_of_whaling|the whaling days]], it was also a popular spot, since the bay was a mating ground for [[LINK|lang_en|Whale|whales]]."
+              "text": "It is often confused as the former location of a 20-acre (8.1 ha) compound for the [[LINK|lang_en|Aryan_Nations|Aryan Nations]], a neo-Nazi white supremacist group, whose compound was located just North in [[LINK|lang_en|Kootenai_County,_Idaho|Kootenai County]]."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Geography"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Hayden is located at 47°45′26″N 116°47′20″W (47.757112, -116.788877).[[CITE|5|https://www.census.gov/geo/www/gazetteer/gazette.html]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "According to the [[LINK|lang_en|United_States_Census_Bureau|United States Census Bureau]], the city has a total area of 9.61 square miles (24.89 km [[CITE||undefined]] ), of which 9.60 square miles (24.86 km [[CITE||undefined]] ) is land and 0.01 square miles (0.03 km [[CITE||undefined]] ) is water.[[CITE|6|https://www.census.gov/geo/www/gazetteer/files/Gaz_places_national.txt]] It lies at the southwestern end of Hayden Lake, and the elevation of the city is 2,287 feet (697 m) [[LINK|lang_en|AMSL|above sea level]]."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Transportation"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Hayden is located on [[LINK|lang_en|U.S._Route_95_in_Idaho|U.S. Route 95]] at the junction of [[LINK|lang_en|Idaho_State_Highway_41|Route 41]].  It is also four miles (6 km) north of [[LINK|lang_en|Interstate_90_in_Idaho|Interstate 90]] and [[LINK|lang_en|Coeur_d%27Alene,_Idaho|Coeur d'Alene]].  The Coeur d'Alene airport is northwest of Hayden."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Demographics"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "2010 census"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "As of the [[LINK|lang_en|Census|census]][[CITE|2|http://factfinder2.census.gov/faces/nav/jsf/pages/index.xhtml]] of 2010, there were 13,294 people, 5,212 households, and 3,645 families residing in the city. The [[LINK|lang_en|Population_density|population density]] was 1,384.8 inhabitants per square mile (534.7/km [[CITE||undefined]] ). There were 5,563 housing units at an average density of 579.5 per square mile (223.7/km [[CITE||undefined]] ). The racial makeup of the city was 95.1% [[LINK|lang_en|White_(U.S._Census)|White]], 0.2% [[LINK|lang_en|African_American_(U.S._Census)|African American]], 0.9% [[LINK|lang_en|Native_American_(U.S._Census)|Native American]], 0.9% [[LINK|lang_en|Asian_(U.S._Census)|Asian]], 0.1% [[LINK|lang_en|Race_(U.S._Census)|Pacific Islander]], 0.7% from [[LINK|lang_en|Race_(U.S._Census)|other races]], and 2.1% from two or more races. [[LINK|lang_en|Hispanic_(U.S._Census)|Hispanic]] or [[LINK|lang_en|Latino_(U.S._Census)|Latino]] of any race were 4.2% of the population."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "There were 5,212 households of which 33.6% had children under the age of 18 living with them, 55.6% were [[LINK|lang_en|Marriage|married couples]] living together, 9.5% had a female householder with no husband present, 4.8% had a male householder with no wife present, and 30.1% were non-families. 24.9% of all households were made up of individuals and 12.8% had someone living alone who was 65 years of age or older. The average household size was 2.54 and the average family size was 3.01."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 3,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The median age in the city was 39.4 years. 25.6% of residents were under the age of 18; 7.1% were between the ages of 18 and 24; 25% were from 25 to 44; 25.1% were from 45 to 64; and 17.2% were 65 years of age or older. The gender makeup of the city was 48.3% male and 51.7% female."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "2000 census"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "As of the [[LINK|lang_en|Census|census]][[CITE|8|http://factfinder2.census.gov]] of 2000, there were 9,159 people, 3,501 households, and 2,562 families residing in the city.  The [[LINK|lang_en|Population_density|population density]] was 1,167.5 people per square mile (450.5/km²).  There were 3,714 housing units at an average density of 473.4 per square mile (182.7/km²).  The racial makeup of the city was 96.09% [[LINK|lang_en|White_(U.S._Census)|White]], 0.19% [[LINK|lang_en|African_American_(U.S._Census)|African American]], 0.76% [[LINK|lang_en|Native_American_(U.S._Census)|Native American]], 0.55% [[LINK|lang_en|Asian_(U.S._Census)|Asian]], 0.08% [[LINK|lang_en|Pacific_Islander_(U.S._Census)|Pacific Islander]], 0.94% from [[LINK|lang_en|Race_(United_States_Census)|other races]], and 1.40% from two or more races. [[LINK|lang_en|Hispanic_(U.S._Census)|Hispanic]] or [[LINK|lang_en|Latino_(U.S._Census)|Latino]] of any race were 2.43% of the population."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "There were 3,501 households out of which 36.9% had children under the age of 18 living with them, 60.3% were [[LINK|lang_en|Marriage|married couples]] living together, 9.1% had a female householder with no husband present, and 26.8% were non-families. 21.6% of all households were made up of individuals and 9.5% had someone living alone who was 65 years of age or older.  The average household size was 2.60 and the average family size was 3.04."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 3,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "In the city, the population was spread out with 27.6% under the age of 18, 7.4% from 18 to 24, 30.3% from 25 to 44, 21.2% from 45 to 64, and 13.5% who were 65 years of age or older.  The median age was 35 years. For every 100 females, there were 94.9 males.  For every 100 females age 18 and over, there were 91.9 males."
             }
           ],
           "tag_type": "p",
@@ -767,10 +1890,87 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The northeast shore of the Bay of All Saints is home to [[LINK|lang_en|Petroleum_industry_in_Brazil|Brazil's first active oil fields]]. The municipality of [[LINK|lang_en|S%C3%A3o_Francisco_do_Conde|São Francisco do Conde]], at the north of the bay, remains a port that serves the oil refineries at Mataripe. The bay is dredged from the port to the Atlantic Ocean to remain open to shipping.[[CITE|2|http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay]]"
+              "text": "The median income for a household in the city was $37,097, and the median income for a family was $40,875. Males had a median income of $35,339 versus $21,388 for females. The [[LINK|lang_en|Per_capita_income|per capita income]] for the city was $16,387.  About 5.8% of families and 9.2% of the population were below the [[LINK|lang_en|Poverty_line|poverty line]], including 13.5% of those under age 18 and 4.5% of those age 65 or over."
             }
           ],
           "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Economy"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[LINK|lang_en|Empire_Airlines|Empire Airlines]] has its headquarters in Hayden.[[CITE|9|http://www.empireairlines.com/contacts.htm]] Rollercoaster designer [[LINK|lang_en|Rocky_Mountain_Construction|Rocky Mountain Construction]] is also headquartered in Hayden."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Notable people"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "list_item",
+              "index": 0,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[LINK|lang_en|Matthew_Inman|Matthew Inman]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 1,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[LINK|lang_en|Marshall_Savage|Marshall Savage]]"
+                }
+              ],
+              "tag_type": "li"
+            }
+          ],
+          "tag_type": "ul",
           "attrs": {}
         }
       ],
@@ -780,112 +1980,180 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "http://www.scielo.br/pdf/rbg/v25n4/a02v25n4.pdf",
+      "url": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2016_Gazetteer/2016_gaz_place_16.txt",
       "thumb": null,
-      "category": "FILE",
+      "category": "PERIODICAL",
       "citation_id": 1,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Cirano, Mauro; Lessa, Guilherme Camargo (2007). \"Oceanographic Characteristics Of Baía De Todos Os Santos, Brazil\" (PDF). *Revista Brasileira de Geofísica*. Sociedade Brasileira de Geofísica. **25** (4): 363–387."
+          "text": "\"2016 U.S. Gazetteer Files\". United States Census Bureau. Retrieved Jul 26, 2017. Cite web requires |website= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:34.950Z",
-      "mime": "application/pdf"
+      "timestamp": "2019-09-05T21:32:05.703Z",
+      "mime": null
     },
     {
-      "url": "http://www.britannica.com/EBchecked/topic/597943/Todos-os-Santos-Bay",
-      "thumb": null,
+      "url": "http://factfinder2.census.gov/faces/nav/jsf/pages/index.xhtml",
+      "thumb": "http://factfinder2.census.gov//apple-touch-icon.png",
       "category": "NONE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Todos os Santos Bay\". *Encyclopædia Britannica*. Encyclopædia Britannica. 2014. Retrieved 15 December 2014."
+          "text": "\"American FactFinder\". United States Census Bureau. Retrieved 2012-12-18. Cite web requires |website= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:34.951Z",
+      "timestamp": "2019-09-05T21:32:05.704Z",
       "mime": null
     },
     {
-      "url": "http://www.museunauticodabahia.org.br/",
-      "thumb": null,
+      "url": "https://www.census.gov/programs-surveys/popest/data/tables.2018.html",
+      "thumb": "https://www.census.gov//etc/designs/census/images/icons/android-chrome-256x256.png",
       "category": "NONE",
       "citation_id": 3,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Histórico\" [History] (in Portuguese). Barra, Salvador: Museu Náutico da Bahia. 2014. Retrieved 15 December 2014. Cite web requires |website= (help)"
+          "text": "\"Population and Housing Unit Estimates\". Retrieved August 5, 2019. Cite web requires |website= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:34.954Z",
+      "timestamp": "2019-09-05T21:32:05.705Z",
       "mime": null
     },
     {
-      "url": "http://educacao.uol.com.br/biografias/americo-vespucio.jhtm",
-      "thumb": "http://h.imguol.com/favicon.ico",
+      "url": "http://www.cityofhaydenid.us/community_history.php",
+      "thumb": null,
       "category": "NONE",
       "citation_id": 4,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Américo Vespúcio\" (in Portuguese). UOL Educaçao. 2014. Retrieved 15 December 2014. Cite web requires |website= (help)"
+          "text": "http://www.cityofhaydenid.us/community_history.php"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:34.955Z",
+      "timestamp": "2019-09-05T21:32:05.706Z",
       "mime": null
     },
     {
-      "url": null,
+      "url": "https://www.census.gov/geo/www/gazetteer/gazette.html",
       "thumb": null,
-      "category": "BOOK",
+      "category": "PERIODICAL",
       "citation_id": 5,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Bargellini, Piero;  et al. (1977), *Le Strade di Firenze,*Vol. II**, Florence: Bonechi, pp. 337-340."
+          "text": "\"US Gazetteer files: 2010, 2000, and 1990\". United States Census Bureau. 2011-02-12. Retrieved 2011-04-23. Cite web requires |website= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:34.955Z",
+      "timestamp": "2019-09-05T21:32:05.707Z",
       "mime": null
     },
     {
-      "url": "http://www.wdl.org/en/item/1177",
+      "url": "https://www.census.gov/geo/www/gazetteer/files/Gaz_places_national.txt",
       "thumb": null,
-      "category": "NONE",
+      "category": "PERIODICAL",
       "citation_id": 6,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"*Plano de la Bahia de todos Santos situada en la costa meridional del Brasil*\""
+          "text": "\"US Gazetteer files 2010\". United States Census Bureau. Retrieved 2012-12-18. Cite web requires |website= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:36.933Z",
+      "timestamp": "2019-09-05T21:32:05.707Z",
       "mime": null
     },
     {
-      "url": "https://en.wikipedia.org/wiki/Bay_of_All_Saints",
+      "url": "https://www.census.gov/prod/www/decennial.html",
       "thumb": null,
       "category": "NONE",
       "citation_id": 7,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"Census of Population and Housing\". Census.gov. Retrieved June 4, 2015. Cite web requires |website= (help)"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T21:32:05.707Z",
+      "mime": null
+    },
+    {
+      "url": "http://factfinder2.census.gov",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 8,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"American FactFinder\". United States Census Bureau. Retrieved 2008-01-31. Cite web requires |website= (help)"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T21:32:05.708Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.empireairlines.com/contacts.htm",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 9,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"Contact Us Archived 2012-02-09 at the Wayback Machine.\" Empire Airlines. Retrieved on December 30, 2012. \"11559 N Atlas Road Hayden, ID 83835\""
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T21:32:05.708Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.cityofhaydenid.us",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 10,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "City website"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-05T21:32:08.678Z",
+      "mime": null
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Hayden%2C_Idaho",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 11,
       "description": [
         {
           "index": 0,
@@ -915,7 +2183,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T20:10:36.938Z",
+      "timestamp": "2019-09-05T21:32:08.680Z",
       "mime": null
     }
   ],
@@ -923,7 +2191,7 @@
   "metadata": [
     {
       "key": "page_type",
-      "value": "Thing"
+      "value": "Place"
     },
     {
       "key": "is_removed",
@@ -955,7 +2223,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/5/2019 20:10:34 PM UTC"
+      "value": "8/5/2019 21:32:5 PM UTC"
     },
     {
       "key": "last_modified",
@@ -967,11 +2235,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Bay_of_All_Saints"
+      "value": "Hayden,_Idaho"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Bay_of_All_Saints"
+      "value": "Hayden,_Idaho"
     }
   ],
   "amp_info": {
@@ -980,5 +2248,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmbmCQqD8sQA5YUvF2hnh9L77iUj2rsaZPV5qN14JHcHh6"
+  "ipfs_hash": "QmX5VTxRm5HAccG1Qgu3WzUyD7RHyCpMzrxG4exeY9m3qX"
 }

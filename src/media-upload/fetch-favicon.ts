@@ -37,7 +37,7 @@ export function fetchUrl(siteUrl, timeout?: number) {
         })
         .catch(rej => {
             // console.log(rej);
-            console.log("Axios failed in fetch-favicon");
+            // console.log("Axios failed in fetch-favicon");
             resolve("");
         });
     });
