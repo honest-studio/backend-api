@@ -3,973 +3,33 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Barbara M. Lynn"
+      "text": "Silverstein Peak"
     }
   ],
   "main_photo": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/c/c6/BarbaraLynn.JPG",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/BarbaraLynn.JPG/220px-BarbaraLynn.JPG",
-      "caption": null,
       "type": "main_photo",
-      "attribution_url": "https://en.wikipedia.org/wiki/File:BarbaraLynn.JPG",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Sentinel-Range-location-map.png",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Sentinel-Range-location-map.png",
+      "caption": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Location of Sentinel Range in Western Antarctica."
+        }
+      ],
+      "mime": "image/png",
+      "category": "PICTURE",
+      "timestamp": "2019-09-05T03:56:37.832Z",
       "media_props": {
         "type": "main_photo",
-        "height": 410,
-        "width": 303,
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/c/c6/BarbaraLynn.JPG 1.5x"
-      },
-      "timestamp": "2019-09-05T03:09:21.213Z",
-      "category": "PICTURE",
-      "mime": "image/jpeg"
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Sentinel-Range-location-map.png/330px-Sentinel-Range-location-map.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Sentinel-Range-location-map.png/440px-Sentinel-Range-location-map.png 2x",
+        "height": 1260,
+        "width": 1600
+      }
     }
   ],
-  "infobox_html": {
-    "type": "wikitable",
-    "attrs": {
-      "className": "infobox vcard",
-      "style": {
-        "width": "22em"
-      }
-    },
-    "caption": {
-      "attrs": {},
-      "sentences": []
-    },
-    "thead": {
-      "rows": [],
-      "attrs": {}
-    },
-    "tbody": {
-      "attrs": {},
-      "rows": [
-        {
-          "index": 0,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "fontSize": "100%",
-                  "fontWeight": "bold"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "display": "inline-block",
-                      "fontSize": "130%"
-                    },
-                    "className": "fn"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "Barbara M. G. Lynn"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": []
-        },
-        {
-          "index": 2,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": []
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "background": "lavender",
-                  "lineHeight": "normal",
-                  "padding": "0.2em 0.2em"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Chief Judge of the "
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|United_States_District_Court_for_the_Northern_District_of_Texas|United States District Court for the Northern District of Texas]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "borderBottom": "none"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "width": "100%",
-                      "margin": "0",
-                      "backgroundColor": "lavender"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "**"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "[[LINK|lang_en|Incumbent|Incumbent]]"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "**"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "borderBottom": "none"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "nowrap"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "**Assumed office**"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": " "
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "May 1, 2016"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "nowrap"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "Preceded by"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Jorge_Antonio_Solis|Jorge Antonio Solis]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 7,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "background": "lavender",
-                  "lineHeight": "normal",
-                  "padding": "0.2em 0.2em"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Judge of the "
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|United_States_District_Court_for_the_Northern_District_of_Texas|United States District Court for the Northern District of Texas]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 8,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "borderBottom": "none"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "width": "100%",
-                      "margin": "0",
-                      "backgroundColor": "lavender"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "**"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "[[LINK|lang_en|Incumbent|Incumbent]]"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "**"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 9,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "borderBottom": "none"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "nowrap"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "**Assumed office**"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": " "
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "November 22, 1999"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 10,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "nowrap"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "Appointed by"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|List_of_federal_judges_appointed_by_Bill_Clinton|Bill Clinton]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 11,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "nowrap"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "Preceded by"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Harry_Barefoot_Sanders,_Jr.|Harry Barefoot Sanders, Jr.]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 12,
-          "attrs": {
-            "style": {
-              "display": "none"
-            }
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2"
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": []
-            }
-          ]
-        },
-        {
-          "index": 13,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "background": "lavender"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Personal details"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 14,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Born"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "display": "none"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": " ("
-                        }
-                      ]
-                    },
-                    {
-                      "type": "tag",
-                      "tag_type": "span",
-                      "tag_class": "inline",
-                      "attrs": {
-                        "className": "bday"
-                      },
-                      "content": [
-                        {
-                          "type": "text",
-                          "content": [
-                            {
-                              "type": "sentence",
-                              "index": 0,
-                              "text": "1952-09-19"
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": ") "
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "September 19, 1952"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Binghamton,_New_York|Binghamton]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": ", "
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|New_York_(state)|New York]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 15,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "Education"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|University_of_Virginia|University of Virginia]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": " ("
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Bachelor_of_Arts|B.A.]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": ")"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Dedman_School_of_Law|Dedman School of Law]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": " ("
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": "[[LINK|lang_en|Juris_Doctor|J.D.]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "type": "sentence",
-                      "index": 0,
-                      "text": ")"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "tfoot": {
-      "rows": [],
-      "attrs": {}
-    }
-  },
+  "infobox_html": null,
   "page_body": [
     {
       "paragraphs": [
@@ -979,14 +39,48 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**Barbara M. G. Lynn** (born September 19, 1952)[[CITE|1|https://www.fjc.gov/history/judges/lynn-barbara-m.]][[CITE|2|http://www.txnd.uscourts.gov/judges/lynn.html]] is the [[LINK|lang_en|United_States_federal_judge|Chief United States District Judge]] of the [[LINK|lang_en|United_States_District_Court_for_the_Northern_District_of_Texas|United States District Court for the Northern District of Texas]], with chambers in [[LINK|lang_en|Dallas|Dallas]], [[LINK|lang_en|Texas|Texas]].[[CITE|1|https://www.fjc.gov/history/judges/lynn-barbara-m.]]"
+              "text": "**Silverstein Peak** is a prominent, 4,790-metre-high (15,720 ft) peak on the west edge of the ice-covered [[LINK|lang_en|Vinson_Plateau|Vinson Plateau]] in the [[LINK|lang_en|Sentinel_Range|Sentinel Range]] of [[LINK|lang_en|Ellsworth_Mountains|Ellsworth Mountains]], [[LINK|lang_en|Antarctica|Antarctica]]. It surmounts [[LINK|lang_en|Roch%C3%A9_Glacier|Roché Glacier]] to the north and [[LINK|lang_en|Zapol_Glacier|Zapol Glacier]] to the southwest."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The peak was named by [[LINK|lang_en|US-ACAN|US-ACAN]] in 2006 after [[LINK|lang_en|/www.physiology.columbia.edu/SamuelCSilverstein.html|Dr. Samuel C. Silverstein]], member of the 1966-67 American Antarctic Mountaineering Expedition that made the first ascent of [[LINK|lang_en|Vinson_Massif|Vinson Massif]] and other high mountains in the Sentinel Range."
             }
           ],
           "tag_type": "p",
           "attrs": {}
         }
       ],
-      "images": []
+      "images": [
+        {
+          "type": "section_image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Vinson-Map.jpg",
+          "thumb": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Vinson-Map.jpg",
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Sentinel Range map."
+            }
+          ],
+          "mime": "image/jpeg",
+          "category": "PICTURE",
+          "timestamp": "2019-09-05T03:56:37.857Z",
+          "media_props": {
+            "type": "section_image",
+            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Vinson-Map.jpg/330px-Vinson-Map.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Vinson-Map.jpg/440px-Vinson-Map.jpg 2x",
+            "height": 3070,
+            "width": 3207
+          }
+        }
+      ]
     },
     {
       "paragraphs": [
@@ -996,7 +90,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Early life and education"
+              "text": "Location"
             }
           ],
           "tag_type": "h2",
@@ -1008,7 +102,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Born in [[LINK|lang_en|Binghamton,_New_York|Binghamton]], [[LINK|lang_en|New_York_(state)|New York]], Lynn received a [[LINK|lang_en|Bachelor_of_Arts|Bachelor of Arts]] degree from [[LINK|lang_en|University_of_Virginia|University of Virginia]] in 1973. She received a [[LINK|lang_en|Juris_Doctor|Juris Doctor]] from [[LINK|lang_en|Southern_Methodist_University|Southern Methodist University]] [[LINK|lang_en|Dedman_School_of_Law|Dedman School of Law]] in 1976.[[CITE|1|https://www.fjc.gov/history/judges/lynn-barbara-m.]]"
+              "text": "Silverstein Peak is located at , which is 2.56 kilometres (1.59 mi) south-southwest of the summit [[LINK|lang_en|Mount_Vinson|Mount Vinson]], 1.37 kilometres (0.85 mi) west by south of [[LINK|lang_en|Hollister_Peak_(Antarctica)|Hollister Peak]], 2.66 kilometres (1.65 mi) north-northwest of [[LINK|lang_en|Opalchenie_Peak|Opalchenie Peak]] and 1.32 kilometres (0.82 mi) east of [[LINK|lang_en|Pr%C3%ADncipe_de_Asturias_Peak|Príncipe de Asturias Peak]]. [[LINK|lang_en|USGS|USGS]] mapping in 1961, updated in 1988."
             }
           ],
           "tag_type": "p",
@@ -1025,7 +119,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Professional career"
+              "text": "Maps"
             }
           ],
           "tag_type": "h2",
@@ -1035,128 +129,43 @@
           "index": 1,
           "items": [
             {
-              "type": "sentence",
+              "type": "list_item",
               "index": 0,
-              "text": "Lynn was in private practice from 1976 to 1999[[CITE|1|https://www.fjc.gov/history/judges/lynn-barbara-m.]] at the law firm Carrington Coleman in Dallas.[[CITE|2|http://www.txnd.uscourts.gov/judges/lynn.html]] Lynn was the firm's first female associate (1976 - 1982) and then became the firm's first female partner (1983 - 1999) prior to joining the bench.[[CITE|2|http://www.txnd.uscourts.gov/judges/lynn.html]][[CITE|3|https://web.archive.org/web/20120306034433/http://www.dmagazine.com/Home/2005/05/01/The_Best_Lawyers_in_Dallas.aspx]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[LINK|lang_en|//commons.wikimedia.org/wiki/File:Vinson-Map.jpg|Vinson Massif.]]  Scale 1:250 000 topographic map.  Reston, Virginia: US Geological Survey, 1988."
+                }
+              ],
+              "tag_type": "li"
+            },
             {
-              "type": "sentence",
-              "index": 0,
-              "text": "Federal judicial service"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
+              "type": "list_item",
+              "index": 1,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "D. Gildea and C. Rada.  Vinson Massif and the Sentinel Range.  Scale 1:50 000 topographic map.  Omega Foundation, 2007."
+                }
+              ],
+              "tag_type": "li"
+            },
             {
-              "type": "sentence",
-              "index": 0,
-              "text": "On March 25, 1999, Lynn was nominated by President [[LINK|lang_en|Bill_Clinton|Bill Clinton]] to a seat on the [[LINK|lang_en|United_States_District_Court_for_the_Northern_District_of_Texas|United States District Court for the Northern District of Texas]] vacated by [[LINK|lang_en|Harry_Barefoot_Sanders,_Jr.|Harry Barefoot Sanders, Jr.]] She was confirmed by the [[LINK|lang_en|United_States_Senate|United States Senate]] on November 17, 1999 and received her commission on November 22, 1999.[[CITE|1|https://www.fjc.gov/history/judges/lynn-barbara-m.]] On May 1, 2016, she became the Chief Judge of the Northern District of Texas, the first woman to hold the position.[[CITE|4|http://www.dallasnews.com/news/local-news/20160419-lynn-to-replace-solis-as-next-chief-judge-on-may-1.ece]]"
+              "type": "list_item",
+              "index": 2,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[LINK|lang_en|/www.add.scar.org|Antarctic Digital Database (ADD).]] Scale 1:250000 topographic map of Antarctica. Scientific Committee on Antarctic Research (SCAR). Since 1993, regularly updated."
+                }
+              ],
+              "tag_type": "li"
             }
           ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Notable cases"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Dallas Mayor corruption"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Lynn was the presiding judge in the case of former Dallas Mayor [[LINK|lang_en|Pro_tempore#Mayor_pro_tem|Pro-Tempore]] Don Hill. Hill, and his wife Sheila Farrington Hill were sentenced on February 26, 2010 after being convicted on [[LINK|lang_en|Bribery|bribery]] and [[LINK|lang_en|Money_laundering|money laundering]] charges. Don Hill was sentenced to eighteen years in prison while his wife was sentenced to nine years in prison. The judge called the actions \"a betrayal to our city\".[[CITE|5|http://www.dallasnews.com/news/crime/headlines/20100227-Three-in-Dallas-City-Hall-case-2499.ece]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Lyrick Studios vs. Big Idea Productions"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "In 2001, film studio [[LINK|lang_en|Lyrick_Studios|Lyrick Studios]] filed a lawsuit against [[LINK|lang_en|Big_Idea_Productions|Big Idea Productions]], creator of the Christian show [[LINK|lang_en|VeggieTales|VeggieTales]], for \"breach of contract.\" The judge assigned to the case was Lynn, who denied Big Idea's request for [[LINK|lang_en|Summary_judgement|summary judgement]], thereby allowing the case to go to trial in April of 2003. Lyrick argued that they had a binding though unsigned agreement with Big Idea to distribute VeggieTales for the company, and that Big Idea had breached the deal by moving to [[LINK|lang_en|Warner_Music|Warner Music]] at the end of 2001."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 2,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "A jury ruled against Big Idea Productions and Lynn awarded Lyrick $11M as well as legal fees, causing Big Idea to file for bankruptcy. Big Idea appealed Lynn's ruling, and the court-of-appeals for Dallas, Texas, overturned the judgement in August of 2005, ruling that faxes and mentos set out by Lyrick, were not sufficient under the law; therefore, Lynn should have granted Big Idea's request for summary judgement."
-            }
-          ],
-          "tag_type": "p",
+          "tag_type": "ul",
           "attrs": {}
         }
       ],
@@ -1166,112 +175,61 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "https://www.fjc.gov/history/judges/lynn-barbara-m.",
-      "thumb": "",
-      "category": "NONE",
+      "url": "https://commons.wikimedia.org/wiki/File:Vinson-Map.jpg",
+      "thumb": null,
+      "category": "PICTURE",
       "citation_id": 1,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Lynn, Barbara M. - Federal Judicial Center\". *www.fjc.gov*."
+          "text": "Vinson Massif."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:21.232Z",
-      "mime": null
+      "timestamp": "2019-09-05T03:56:37.852Z",
+      "mime": "image/jpeg"
     },
     {
-      "url": "http://www.txnd.uscourts.gov/judges/lynn.html",
-      "thumb": "http://www.txnd.uscourts.gov/sites/all/themes/us_courts_district/apple-touch-icon-144x144.png",
+      "url": "http://www.add.scar.org",
+      "thumb": null,
       "category": "NONE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"District Judge Barbara M.G. Lynn\". United States District Court for the Northern District of Texas. Retrieved February 29, 2012. Cite web requires |website= (help)"
+          "text": "Antarctic Digital Database (ADD)."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:21.234Z",
+      "timestamp": "2019-09-05T03:56:37.852Z",
       "mime": null
     },
     {
-      "url": "https://web.archive.org/web/20120306034433/http://www.dmagazine.com/Home/2005/05/01/The_Best_Lawyers_in_Dallas.aspx",
-      "thumb": "",
+      "url": "http://data.aad.gov.au/aadc/gaz/scar/",
+      "thumb": null,
       "category": "NONE",
       "citation_id": 3,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Rogers, Tim (May 1, 2005). \"The Gentlemen's Lawyer\". *D Magazine*. Archived from the original on March 6, 2012. Retrieved February 29, 2012. Cite uses deprecated parameter |deadurl= (help)"
+          "text": "SCAR Composite Gazetteer of Antarctica"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:21.235Z",
+      "timestamp": "2019-09-05T03:56:37.853Z",
       "mime": null
     },
     {
-      "url": "http://www.dallasnews.com/news/local-news/20160419-lynn-to-replace-solis-as-next-chief-judge-on-may-1.ece",
-      "thumb": "",
+      "url": "https://en.wikipedia.org/wiki/Silverstein_Peak",
+      "thumb": null,
       "category": "NONE",
       "citation_id": 4,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Lynn to replace Solis as next chief judge on May 1\". *www.dallasnews.com*. Retrieved 2016-04-23."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:21.236Z",
-      "mime": null
-    },
-    {
-      "url": "http://www.dallasnews.com/news/crime/headlines/20100227-Three-in-Dallas-City-Hall-case-2499.ece",
-      "thumb": "",
-      "category": "NONE",
-      "citation_id": 5,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Three in Dallas City Hall case sentenced in a 'betrayal of our city'\". *Dallas Morning News*. February 27, 2010. Retrieved February 29, 2012."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:21.237Z",
-      "mime": null
-    },
-    {
-      "url": "https://www.fjc.gov/node/1391081",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 6,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Barbara M. Lynn"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:22.337Z",
-      "mime": null
-    },
-    {
-      "url": "https://en.wikipedia.org/wiki/Barbara_M._Lynn",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 7,
       "description": [
         {
           "index": 0,
@@ -1301,7 +259,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T03:09:22.339Z",
+      "timestamp": "2019-09-05T03:56:37.855Z",
       "mime": null
     }
   ],
@@ -1341,7 +299,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/5/2019 3:9:19 AM UTC"
+      "value": "8/5/2019 3:56:37 AM UTC"
     },
     {
       "key": "last_modified",
@@ -1353,11 +311,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Barbara_M._Lynn"
+      "value": "Silverstein_Peak"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Barbara_M._Lynn"
+      "value": "Silverstein_Peak"
     }
   ],
   "amp_info": {
@@ -1366,5 +324,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmXJPiVfSsN1AgKfrxkC6RxmYqSb74XW6JbjxEySrjM7Y3"
+  "ipfs_hash": "QmRcecJ7zoEE2U8ouzK4qPkM3ScBUusg4ncvHv57EDthJZ"
 }

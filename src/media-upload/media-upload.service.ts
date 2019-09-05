@@ -87,8 +87,10 @@ export class MediaUploadService {
     constructor(private awsS3Service: AWSS3Service) {}
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
-    getFavicon(inputPack: UrlPack): Promise<any> {
-        return fetchUrl(inputPack.url);
+    getFavicon(inputPack: UrlPack, timeout?: number): Promise<any> {
+        let timeoutToUse = undefined;
+        if (timeout) timeoutToUse = timeout;
+        return fetchUrl(inputPack.url, timeoutToUse);
     }
 
     async getBookInfoFromISBN(inputISBN: string): Promise<BookInfoPack> {

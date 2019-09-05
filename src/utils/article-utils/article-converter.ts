@@ -121,6 +121,7 @@ export const VALID_VIDEO_EXTENSIONS = [
 ];
 export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
+export const VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.pps', '.ppsx', '.odt', '.ods', '.key', '.csv', '.txt', '.rtf'];
 
 // Convert False/True into false/true and None into null
 function pyToJS(inputItem: any) {
@@ -1185,7 +1186,7 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
     // Test for different categories
     if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
-    } else if (theMIME == '' || theMIME == null || theMIME == 'text/html') {
+    } else if (theMIME == '' || theMIME == null || theMIME.search(/^text/gimu) >= 0) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
@@ -1199,7 +1200,9 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
         return 'NORMAL_VIDEO';
     } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
-    } else return 'FILE'
+    } else if (VALID_FILE_EXTENSIONS.includes(theExtension) || VALID_FILE_EXTENSIONS.includes('.' + theExtension)) {
+        return 'FILE';
+    } else return 'NONE';
 }
 
 // Copied with light modifications from NPM package get-youtube-id

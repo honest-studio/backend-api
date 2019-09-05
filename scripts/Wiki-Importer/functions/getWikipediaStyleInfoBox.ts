@@ -18,24 +18,23 @@ export const getWikipediaStyleInfoBox = (input_pack: CheerioPack, internal_citat
 	const $table = $content.find('.infobox');
 	let pageTypeToUse: PageType = "Thing";
 
-	let ibox_class = $table.eq(0)[0].attribs['class'];
+	if ($table.length == 0) {
+		return {
+			table: null,
+			page_type: null
+		}
+	}
+
+	let theAttribs = $table.eq(0)[0] && $table.eq(0)[0].attribs;
+	let ibox_class = theAttribs && theAttribs['class'];
 	INFOBOX_PAGE_TYPE_CLUES.forEach(clue => {
         if (ibox_class.indexOf(clue.class) >= 0) {
 			pageTypeToUse = clue.page_type;
 			console.log(chalk.green(`Page type found from infobox!: ${pageTypeToUse}`));
 		}
     });
-
-	if ($table.length > 0) {
-		return {
-			table: getTable($table, $, internal_citations, "wikitable"),
-			page_type: pageTypeToUse
-		}
-	}
-	else{
-		return {
-			table: null,
-			page_type: pageTypeToUse
-		}
+	return {
+		table: getTable($table, $, internal_citations, "wikitable"),
+		page_type: pageTypeToUse
 	}
 };

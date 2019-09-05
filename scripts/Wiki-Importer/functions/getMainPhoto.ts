@@ -67,7 +67,10 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			// Get the full size image
 			theWorkingURL = theWorkingURL.replace("/thumb", "");
 			let quickSplit = theWorkingURL.split("/");
-			if (quickSplit[quickSplit.length - 1] && quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0){
+			if (quickSplit[quickSplit.length - 1] 
+				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0
+				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0
+			){
 				theWorkingURL = quickSplit.slice(0, -1).join("/");
 			}
 			workingMainPhoto.url = theWorkingURL;
@@ -98,7 +101,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			let theHeight = workingMainPhoto.media_props.height;
 			let theWidth = workingMainPhoto.media_props.width;
 			if (theHeight * theWidth >= 5000){
-				console.log(`Found a prospective ${theWidth}x${theHeight}: |${workingMainPhoto.url}|`);
+				console.log(`Found a prospective ${theWidth}x${theHeight} image: |${workingMainPhoto.url}|`);
 				// 	print("Now trying to find a bigger one from the srcset")
 				// 	try:
 				// 		theSrcSet = testImage['srcset']
@@ -168,10 +171,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-
 	// If no main photo was found. 
 	if (!workingMainPhoto.url) workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
 	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+
+	console.log(workingMainPhoto)
 
 	// Return main photo:
 	return {

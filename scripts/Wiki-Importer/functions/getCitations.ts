@@ -211,7 +211,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				}
 				case 'NONE': {
 					try{
-						workingCitation.thumb = await theMediaUploadService.getFavicon({ url: raw_citn.url });
+						let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 3000);
+						if (fetched_favicon != "") workingCitation.thumb = fetched_favicon;
 					}
 					catch (err){
 						// console.log(err);
