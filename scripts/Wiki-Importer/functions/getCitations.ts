@@ -2,7 +2,7 @@ import * as cheerio from 'cheerio';
 import * as mimePackage from 'mime';
 import { MediaUploadService } from '../../../src/media-upload';
 import { Citation, CitationCategoryType, Sentence } from '../../../src/types/article';
-import { cheerio_css_cleaner } from '../../../src/utils/article-utils/article-tools';
+import { cheerio_css_cleaner, linkCategoryFromText } from '../../../src/utils/article-utils/article-tools';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { accumulateText } from './pagebodyfunctionalities/textParser';
 import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
@@ -135,7 +135,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 				// If the raw citation does not have a category, see if it is a book or periodical
 				if(!raw_citn.category){
-					console.log(linkCategoryFromText(raw_citn.text))
+					raw_citn.category = linkCategoryFromText(raw_citn.text);
 				}
 			}
 			else{
@@ -143,6 +143,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				raw_citn.text = $(raw_citn.note_element)
 									.text()
 									.trim();
+				
+				if(!raw_citn.category || raw_citn.category == 'NONE') raw_citn.category = linkCategoryFromText(raw_citn.text);
 				raw_citn.url = theInnerURL;
 			}
 		}

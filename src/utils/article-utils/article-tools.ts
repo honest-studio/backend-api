@@ -998,16 +998,15 @@ export function cheerio_css_cleaner(input_css: string): string{
 
 export function linkCategoryFromText(input_text: string): CitationCategoryType{
     let working_category: CitationCategoryType = 'NONE';
-
-    // Look for book-related stuff first
-    if(input_text.search(/pp\.|p\. [0-9]+|book/gimu) >= 0) {
-        working_category = 'BOOK';
-    }
-    // Look for periodical-related stuff next
-    else if(input_text.search(/magazine|picayune|tribune|gazette|journal|herald|sentinel|courier|newspaper/gimu) >= 0) {
+    // Look for periodical-related stuff first
+    if(input_text.search(/magazine|picayune|tribune|gazette|journal|herald|sentinel|courier|newspaper/gimu) >= 0) {
         working_category = 'PERIODICAL';
     }
+    // Look for book-related stuff next
+    else if(input_text.search(/pp\.|p\. [0-9]+|book|publishing/gimu) >= 0) {
+        working_category = 'BOOK';
+    }
 
-
+    // Return the result
     return working_category;
 }

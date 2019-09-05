@@ -175,7 +175,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	if (!workingMainPhoto.url) workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
 	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
-	console.log(workingMainPhoto)
+	// console.log(workingMainPhoto)
 
 	// Return main photo:
 	return {

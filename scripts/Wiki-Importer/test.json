@@ -19,7 +19,7 @@
         "width": 640,
         "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/375px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg/500px-Salvador_e_Ba%C3%ADa_de_Todos_os_Santos.jpg 2x"
       },
-      "timestamp": "2019-09-05T19:13:03.279Z",
+      "timestamp": "2019-09-05T20:10:34.930Z",
       "category": "PICTURE",
       "mime": "image/jpeg"
     }
@@ -701,7 +701,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-05T19:13:06.951Z",
+          "timestamp": "2019-09-05T20:10:36.944Z",
           "media_props": {
             "type": "section_image",
             "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg/413px-Ba%C3%ADa_de_Todos_os_Santos.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ba%C3%ADa_de_Todos_os_Santos.jpg/550px-Ba%C3%ADa_de_Todos_os_Santos.jpg 2x",
@@ -793,7 +793,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:03.301Z",
+      "timestamp": "2019-09-05T20:10:34.950Z",
       "mime": "application/pdf"
     },
     {
@@ -810,7 +810,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:03.303Z",
+      "timestamp": "2019-09-05T20:10:34.951Z",
       "mime": null
     },
     {
@@ -827,7 +827,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:03.305Z",
+      "timestamp": "2019-09-05T20:10:34.954Z",
       "mime": null
     },
     {
@@ -844,13 +844,13 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:03.306Z",
+      "timestamp": "2019-09-05T20:10:34.955Z",
       "mime": null
     },
     {
       "url": null,
       "thumb": null,
-      "category": null,
+      "category": "BOOK",
       "citation_id": 5,
       "description": [
         {
@@ -861,7 +861,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:03.307Z",
+      "timestamp": "2019-09-05T20:10:34.955Z",
       "mime": null
     },
     {
@@ -878,7 +878,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:06.940Z",
+      "timestamp": "2019-09-05T20:10:36.933Z",
       "mime": null
     },
     {
@@ -915,7 +915,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T19:13:06.945Z",
+      "timestamp": "2019-09-05T20:10:36.938Z",
       "mime": null
     }
   ],
@@ -955,7 +955,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/5/2019 19:13:2 PM UTC"
+      "value": "8/5/2019 20:10:34 PM UTC"
     },
     {
       "key": "last_modified",
@@ -980,5 +980,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmQEHEmchwBasvnFyj3N33pJ2EtRty8UydRmnzxWcKtf5n"
+  "ipfs_hash": "QmbmCQqD8sQA5YUvF2hnh9L77iUj2rsaZPV5qN14JHcHh6"
 }
