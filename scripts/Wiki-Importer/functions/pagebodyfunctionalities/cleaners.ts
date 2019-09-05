@@ -4,7 +4,8 @@ import { PRECLEAN_BAD_ELEMENTS,
     ElementCleaningPack, 
     NON_AMP_BAD_TAGS, 
     REPLACE_CLASSES_PREPARSE_UNIVERSAL,
-    PRECLEAN_BAD_FILE_REGEXES
+    PRECLEAN_BAD_FILE_REGEXES,
+    PRECLEAN_IMG_FIX_REGEXES
 } from '../wiki-constants';
 const chalk = require('chalk');
 
@@ -16,7 +17,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     const $ = cheerio.load(input_html, {decodeEntities: false});
     
     // Remove certain tags that mess with AMP
-    $(NON_AMP_BAD_TAGS.join(", ")).remove()
+    $(NON_AMP_BAD_TAGS.join(", ")).remove();
 
     // Remove style sections
     $('style').remove();
@@ -32,12 +33,18 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     });
 
     // Remove crappy images that mess up the infobox
+    // Also fix the hrefs for some images
     $("img").each((idx, img_elem) => {
         let theSrc = $(img_elem).eq(0)[0].attribs['src'];
         if (theSrc.search(PRECLEAN_BAD_FILE_REGEXES) >= 0) {
             $(img_elem).remove();
             // console.log(chalk.red(`Pictobox found and removed`));
         }
+        else if (theSrc.search(PRECLEAN_IMG_FIX_REGEXES) >= 0) {
+            $(img_elem).attr("src", `https://en.wikipedia.org${theSrc}`);
+            // console.log(chalk.red(`Image src fixed`));
+        }
+
     })
 
     // Remove certain elements
@@ -63,8 +70,6 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             // console.log(chalk.red(`${selector} unwrapped...`));
         });
     });
-
-
 
     // Convert <strong> and <b> tags to **text** (Markdown)
     $('strong, b').each(function() {

@@ -8,20 +8,25 @@
   ],
   "main_photo": [
     {
-      "url": null,
-      "thumb": null,
-      "caption": null,
       "type": "main_photo",
-      "attribution_url": null,
+      "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/The_property_located_at_316_Main_Street_Station_once_owner_and_operated_by_the_late_Bill_France_Sr-%2C_founder_of_NASCAR%2C_still_operating_today_as_an_event_and_entertainment_venue-_2014-06-21_10-39.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/a/a2/The_property_located_at_316_Main_Street_Station_once_owner_and_operated_by_the_late_Bill_France_Sr-%2C_founder_of_NASCAR%2C_still_operating_today_as_an_event_and_entertainment_venue-_2014-06-21_10-39.jpg",
+      "caption": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "The property located at 316 Main Street Station once owned and operated by France, which is still operating today as an event and entertainment venue."
+        }
+      ],
+      "mime": "image/jpeg",
+      "category": "PICTURE",
+      "timestamp": "2019-09-05T00:45:37.372Z",
       "media_props": {
         "type": "main_photo",
-        "height": null,
-        "width": null,
-        "srcSet": null
-      },
-      "timestamp": "2019-09-04T23:28:32.711Z",
-      "category": "NONE",
-      "mime": null
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/The_property_located_at_316_Main_Street_Station_once_owner_and_operated_by_the_late_Bill_France_Sr-%2C_founder_of_NASCAR%2C_still_operating_today_as_an_event_and_entertainment_venue-_2014-06-21_10-39.jpg/330px-thumbnail.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/The_property_located_at_316_Main_Street_Station_once_owner_and_operated_by_the_late_Bill_France_Sr-%2C_founder_of_NASCAR%2C_still_operating_today_as_an_event_and_entertainment_venue-_2014-06-21_10-39.jpg/440px-thumbnail.jpg 2x",
+        "height": 764,
+        "width": 1024
+      }
     }
   ],
   "infobox_html": {
@@ -984,23 +989,7 @@
           "attrs": {}
         }
       ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/a/a2/The_property_located_at_316_Main_Street_Station_once_owner_and_operated_by_the_late_Bill_France_Sr-%2C_founder_of_NASCAR%2C_still_operating_today_as_an_event_and_entertainment_venue-_2014-06-21_10-39.jpg",
-          "thumb": null,
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The property located at 316 Main Street Station once owned and operated by France, which is still operating today as an event and entertainment venue."
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-04T23:28:32.742Z"
-        }
-      ]
+      "images": []
     },
     {
       "paragraphs": [
@@ -1164,7 +1153,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.714Z",
+      "timestamp": "2019-09-05T00:45:37.386Z",
       "mime": null
     },
     {
@@ -1181,7 +1170,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.719Z",
+      "timestamp": "2019-09-05T00:45:37.389Z",
       "mime": null
     },
     {
@@ -1198,7 +1187,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.721Z",
+      "timestamp": "2019-09-05T00:45:37.391Z",
       "mime": null
     },
     {
@@ -1215,7 +1204,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.721Z",
+      "timestamp": "2019-09-05T00:45:37.391Z",
       "mime": null
     },
     {
@@ -1232,7 +1221,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.723Z",
+      "timestamp": "2019-09-05T00:45:37.392Z",
       "mime": null
     },
     {
@@ -1249,7 +1238,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.723Z",
+      "timestamp": "2019-09-05T00:45:37.393Z",
       "mime": null
     },
     {
@@ -1266,7 +1255,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.724Z",
+      "timestamp": "2019-09-05T00:45:37.394Z",
       "mime": null
     },
     {
@@ -1283,7 +1272,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.725Z",
+      "timestamp": "2019-09-05T00:45:37.395Z",
       "mime": null
     },
     {
@@ -1300,7 +1289,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.725Z",
+      "timestamp": "2019-09-05T00:45:37.395Z",
       "mime": null
     },
     {
@@ -1317,7 +1306,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.727Z",
+      "timestamp": "2019-09-05T00:45:37.397Z",
       "mime": null
     },
     {
@@ -1334,7 +1323,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.728Z",
+      "timestamp": "2019-09-05T00:45:37.397Z",
       "mime": null
     },
     {
@@ -1351,7 +1340,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-04T23:28:32.728Z",
+      "timestamp": "2019-09-05T00:45:37.397Z",
       "mime": null
     }
   ],
@@ -1391,7 +1380,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/4/2019 23:28:32 PM UTC"
+      "value": "8/5/2019 0:45:36 AM UTC"
     },
     {
       "key": "last_modified",
@@ -1416,5 +1405,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmUnPcqY5ALRz5JXibz1HU6pifhC6eKqS9k4oA8Qrb5A8k"
+  "ipfs_hash": "QmUszU7CVJFpicQMof6w8PcUReisbr1mypdMkpncJPmhME"
 }

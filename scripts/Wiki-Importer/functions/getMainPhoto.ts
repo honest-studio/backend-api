@@ -4,6 +4,7 @@ import { Media } from '../../../src/types/article';
 import { linkCategorizer } from '../../../src/utils/article-utils/article-converter';
 import { CheerioPack } from './pagebodyfunctionalities/cleaners';
 import * as mimePackage from 'mime';
+const chalk = require('chalk');
 
 export interface GetMainPhotoReturnPack {
 	main_photo: Media,
@@ -35,13 +36,16 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	};
 
 
-	// Try method 1 first (infobox)
+	// Try method 1 first
+	// Extract an image from the infobox
 	$($infobox).find("a.image").each((idx, img_anchor) => {
 		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
 
 		if($(img_anchor).parent().attr('class').search(/geonugget/gimu) >= 0) {
-			console.log("Geodot found in first image. Will not add it.")
+			// REMEMBER THAT "GEONUGGET" IS A CONSTRUCTED NAME!!!
+			console.log("Geodot found in first image. Will not add it.");
 		}
+
 		else if(inner_href.search(/File/gimu) >= 0){
 			// Set the attribution url
 			workingMainPhoto.attribution_url = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
@@ -59,10 +63,10 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 
 			// Get the full size image
 			theWorkingURL = theWorkingURL
-							.split("/")
-							.slice(0, -1)
-							.join("/")
-							.replace("/thumb", "");
+							// .split("/")
+							// .slice(0, -1)
+							// .join("/")
+							// .replace("/thumb", "");
 			workingMainPhoto.url = theWorkingURL;
 
 
@@ -86,50 +90,37 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				workingMainPhoto.media_props.height = parseInt(theAttribs.height);
 				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
 			}
+
+			console.log(chalk.green("Found a main image from the infobox"));
 			$(img_anchor).remove();
 		};
 	})
 
 	// Try method 2 next
+	// Extract a section image
 	if (!workingMainPhoto.url){
+		$content.find('div.thumb').each((idx, sect_img) => {
+			let parsed_section_img = getImage(sect_img, $, [], true);
 
+			// Make sure a full Media was returned and not just a string
+			if ((parsed_section_img as Media).url) {
+				workingMainPhoto = parsed_section_img as Media;
+				workingMainPhoto.media_props.type = 'main_photo';
+				workingMainPhoto.type = 'main_photo';
+
+				console.log(chalk.green("Found a main image from the body"));
+			}
+		});
 	}
 	
+	// Categorize and get the MIME types
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
-
-	// # Try method 1
-	// firstImageAnchor = blobBoxSoup.findAll("a", {"class": "image", "href": re.compile(r"File", re.UNICODE)})
-	// if (len(blobBoxSoup) == 0):
-	// 	print("No class=image found, trying alternate selector")
-	// 	firstImageAnchor = blobBoxSoup.findAll("a", {"href": re.compile(r"File", re.UNICODE)})
-	// 	if (len(firstImageAnchor) == 0):
-	// 		print("No class=image found, trying alternate selector without File: prefix")
-	// 		firstImageAnchor = blobBoxSoup.findAll("a", class_="image")
-
-	// # Prevents extracting red dot pictures as profile pics
-	// try:
-	// 	if "geonugget" in firstImageAnchor[0].parent['class']:
-	// 		print("Geodot found in first image. Will not add a profile pic for now.")
-	// 		raise
-	// except:
-	// 	pass
-
-	// # If the firstimage is in a maptable, collect it, but dont extract it
-	// try:
-	// 	if "maptable" in firstImageAnchor[0].parent.parent.parent.parent.parent['class']:
-	// 		skipExtract = True
-	// 		print("Maptable found. Harvesting image, but not extracting it.")
-	// 		raise
-	// except:
-	// 	pass
 
 
 	// If no main photo was found. 
 	if (!workingMainPhoto.url) workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
 	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
-
-	console.log(workingMainPhoto)
 
 	// Return main photo:
 	return {

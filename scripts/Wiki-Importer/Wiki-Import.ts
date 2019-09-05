@@ -1,5 +1,6 @@
 const rp = require('request-promise');
 const commander = require('commander');
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { getTitle } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
 import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox';
@@ -20,6 +21,7 @@ const path = require('path');
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
+const theElasticSearch = new ElasticsearchService(theConfig);
 const theBucket = theAWSS3.getBucket();
 const theMediaUploadService = new MediaUploadService(theAWSS3);
 
@@ -84,6 +86,7 @@ export const WikiImport = async (inputString: string) => {
         })
     }
 
+    // Assemble the wiki
     let articlejson: ArticleJson = {
         page_title: page_title, 
         main_photo: [photo_result.main_photo],
@@ -125,7 +128,7 @@ export const WikiImport = async (inputString: string) => {
         else throw e;
     }
 
-    // Get the blurb snippet
+    const cleanedSlug = theMysql.cleanSlugForMysql(slug);
     let text_preview;
     try {
         const first_para = articlejson.page_body[0].paragraphs[0];
@@ -135,18 +138,39 @@ export const WikiImport = async (inputString: string) => {
     } catch (e) {
         text_preview = "";
     }
+    const photo_url = articlejson.main_photo[0].url;
+    const photo_thumb_url = articlejson.main_photo[0].thumb;
+    const media_props = articlejson.main_photo[0].media_props || null;
+    const webp_large = media_props && media_props.webp_original || null;
+    const webp_medium = media_props && media_props.webp_medium || null;
+    const webp_small =  media_props && media_props.webp_thumb || null;
+    const page_type = articlejson.metadata.find((m) => m.key == 'page_type').value;
 
     try {
         const article_update = await theMysql.TryQuery(
             `
                 UPDATE enterlink_articletable 
                 SET lastmod_timestamp = NOW(),
-                    desktop_cache_timestamp = NULL,
-                    mobile_cache_timestamp = NULL,
-                    blurb_snippet = ?
+                    blurb_snippet = ?,
+                    photo_url=?, 
+                    photo_thumb_url=?, 
+                    page_type=?, 
+                    desktop_cache_timestamp=NULL, 
+                    mobile_cache_timestamp=NULL, 
+                    webp_large=?, 
+                    webp_medium=?, 
+                    webp_small=? 
                 WHERE ipfs_hash_current = ? 
             `,
-            [text_preview, inputIPFS]
+            [   text_preview, 
+                photo_url,
+                photo_thumb_url,
+                page_type,
+                webp_large,
+                webp_medium,
+                webp_small,
+                inputIPFS
+            ]
         );
     } catch (e) {
         if (e.message.includes("ER_DUP_ENTRY")){
@@ -154,6 +178,10 @@ export const WikiImport = async (inputString: string) => {
         }
         else throw e;
     }
+
+
+    NEED TO DO ELASTICSEARCH HERE. JUST MANUALLY INSTANTIATE IT IF YOU NEED TO USING THE NON-NODEJS ONE
+
 
     // Flush the prerenders
     const prerenderToken = theConfig.get('PRERENDER_TOKEN');
