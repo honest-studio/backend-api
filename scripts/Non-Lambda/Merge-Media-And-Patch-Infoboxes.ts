@@ -100,20 +100,6 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
         }
         else throw e;
     }
-
-    // const data: Response = await fetch(`${'https://api.everipedia.org/v2/'}wiki/bot-submit?token=HmMhOCDZTspmAfNugg8AZPBnxN2DZ4ZCaivyvCKMdK2MomxJx56M9SdsmAK&bypass_ipfs=1`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(wiki)
-    // });
-    // let theResult = await data.json();
-    // if ((theResult as any).status == 'Success'){
-    //     return theResult;
-    // }
-    // else{
-    //     console.log(util.inspect(theResult, {showHidden: false, depth: null, chalk: true}));
-    //     throw new Error((theResult as any).status) as any;
-    // }
     
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;

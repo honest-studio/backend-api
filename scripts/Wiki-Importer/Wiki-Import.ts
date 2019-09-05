@@ -1,6 +1,6 @@
 const rp = require('request-promise');
 const commander = require('commander');
-import { ElasticsearchService } from '@nestjs/elasticsearch';
+import * as elasticsearch from 'elasticsearch';
 import { getTitle } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
 import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox';
@@ -13,6 +13,7 @@ import { ArticleJson, Sentence } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
+import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -21,7 +22,11 @@ const path = require('path');
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
-const theElasticSearch = new ElasticsearchService(theConfig);
+const theElasticSearch = new elasticsearch.Client({
+    host: `${theConfig.get('ELASTICSEARCH_PROTOCOL')}://${theConfig.get('ELASTICSEARCH_HOST')}:${theConfig.get('ELASTICSEARCH_PORT')}${theConfig.get('ELASTICSEARCH_URL_PREFIX')}`,
+    httpAuth: `${theConfig.get('ELASTICSEARCH_USERNAME')}:${theConfig.get('ELASTICSEARCH_PASSWORD')}`,
+    apiVersion: '7.1'
+});
 const theBucket = theAWSS3.getBucket();
 const theMediaUploadService = new MediaUploadService(theAWSS3);
 
@@ -42,9 +47,13 @@ export const logYlw = (inputString: string) => {
 }
 
 export const WikiImport = async (inputString: string) => { 
-	let wikiLangSlug = inputString.split("|")[0];
-    let inputIPFS = inputString.split("|")[1];
-    let pageTitle = inputString.split("|")[2].trim();
+    let quickSplit = inputString.split("|");
+	let wikiLangSlug = quickSplit[0];
+    let inputIPFS = quickSplit[1];
+    let pageTitle = quickSplit[2].trim();
+    let pageID = quickSplit[3];
+    let redirectPageID = quickSplit[4];
+    if (redirectPageID == "") redirectPageID = null;
 
     let lang_code, slug;
     if (wikiLangSlug.includes('lang_')) {
@@ -138,6 +147,7 @@ export const WikiImport = async (inputString: string) => {
     } catch (e) {
         text_preview = "";
     }
+    const title_to_use = page_title.map(sent => sent.text).join();
     const photo_url = articlejson.main_photo[0].url;
     const photo_thumb_url = articlejson.main_photo[0].thumb;
     const media_props = articlejson.main_photo[0].media_props || null;
@@ -151,7 +161,8 @@ export const WikiImport = async (inputString: string) => {
             `
                 UPDATE enterlink_articletable 
                 SET lastmod_timestamp = NOW(),
-                    blurb_snippet = ?,
+                    page_title=?,     
+                    blurb_snippet=?,
                     photo_url=?, 
                     photo_thumb_url=?, 
                     page_type=?, 
@@ -162,7 +173,9 @@ export const WikiImport = async (inputString: string) => {
                     webp_small=? 
                 WHERE ipfs_hash_current = ? 
             `,
-            [   text_preview, 
+            [   
+                title_to_use,
+                text_preview, 
                 photo_url,
                 photo_thumb_url,
                 page_type,
@@ -179,28 +192,25 @@ export const WikiImport = async (inputString: string) => {
         else throw e;
     }
 
+    // Update ElasticSearch
+    // Prepare the JSON request
+    let jsonRequest = {
+        "id": pageID,
+        "page_title": title_to_use,
+        "canonical_id": redirectPageID ? redirectPageID : pageID,    
+        "lang": lang_code
+    }
 
-    NEED TO DO ELASTICSEARCH HERE. JUST MANUALLY INSTANTIATE IT IF YOU NEED TO USING THE NON-NODEJS ONE
-
+    const response = await theElasticSearch.index({
+        index: `${ELASTICSEARCH_INDEX_NAME}`,
+        type: ELASTICSEARCH_DOCUMENT_TYPE,
+        id: pageID,
+        body: jsonRequest
+    })
 
     // Flush the prerenders
     const prerenderToken = theConfig.get('PRERENDER_TOKEN');
     flushPrerenders(lang_code, slug, prerenderToken);
-
-    // const data: Response = await fetch(`${'https://api.everipedia.org/v2/'}wiki/bot-submit?token=HmMhOCDZTspmAfNugg8AZPBnxN2DZ4ZCaivyvCKMdK2MomxJx56M9SdsmAK&bypass_ipfs=1`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(wiki)
-    // });
-    // let theResult = await data.json();
-    // if ((theResult as any).status == 'Success'){
-    //     return theResult;
-    // }
-    // else{
-    //     console.log(util.inspect(theResult, {showHidden: false, depth: null, chalk: true}));
-    //     throw new Error((theResult as any).status) as any;
-    // }
-
 
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));
@@ -230,11 +240,11 @@ export const WikiImport = async (inputString: string) => {
 
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title)) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, "") ) as concatted
                 FROM enterlink_articletable art
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0
-                AND redirect_page_id IS NULL
+                AND art.redirect_page_id IS NULL
 				AND art.is_indexed = 0
 				AND art.page_note = ?
             `,
@@ -243,6 +253,7 @@ export const WikiImport = async (inputString: string) => {
 
         for await (const artResult of fetchedArticles) {
             try{
+                console.log(artResult.concatted)
                 await WikiImport(artResult.concatted);
             }
             catch (err){
