@@ -38,8 +38,9 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 
 	// Try method 1 first
 	// Extract an image from the infobox
+	let main_photo_found = false;
 	$($infobox).find("a.image").each((idx, img_anchor) => {
-		if (workingMainPhoto.url) return;
+		if (main_photo_found) return;
 		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
 
 		let parent_class = $(img_anchor).parent().attr('class');
@@ -93,8 +94,55 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
 			}
 
-			console.log(chalk.green("Found a main image from the infobox"));
-			$(img_anchor).remove();
+			// Check the size to max sure it isn't a crappy flagicon or something
+			let theHeight = workingMainPhoto.media_props.height;
+			let theWidth = workingMainPhoto.media_props.width;
+			if (theHeight * theWidth >= 5000){
+				console.log(`Found a prospective ${theWidth}x${theHeight}: |${workingMainPhoto.url}|`);
+				// 	print("Now trying to find a bigger one from the srcset")
+				// 	try:
+				// 		theSrcSet = testImage['srcset']
+				// 		quickSplit = theSrcSet.split(" ")
+				// 		lastPhoto = ""
+				// 		for item in quickSplit:
+				// 			if "wikimedia" in item:
+				// 				lastPhoto = item
+				// 				if lastPhoto[0] == "/":
+				// 					lastPhoto = "https:" + lastPhoto
+				// 		if lastPhoto != "":
+				// 			thePhotoUrl = lastPhoto
+				// 			print("Found a bigger image: |%s|" % thePhotoUrl)
+				// 	except:
+				// 		pass
+
+				// 	if (skipExtract):
+				// 		extractTag = None
+				// 	else:
+				// If there is more than one image in the nearest tr, do not extract
+				let $extractTD = $(img_anchor).closest("td");
+				let $extractTR = $($extractTD).closest("tr");
+
+				// Look for multiple images within the td
+				let rowImages = $($extractTR).children('img');
+				if (rowImages.length > 1){
+					console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
+				}
+				else {
+					$($extractTD).remove();
+				}
+				
+				main_photo_found = true;
+				console.log(chalk.green("Found a main image from the infobox"));
+			}
+			else{
+				console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
+				// Do nothing
+			}
+
+
+
+
+
 		};
 	})
 
@@ -102,6 +150,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// Extract a section image
 	if (!workingMainPhoto.url){
 		$content.find('div.thumb').each((idx, sect_img) => {
+			if (main_photo_found) return;
 			let parsed_section_img = getImage(sect_img, $, [], true);
 
 			// Make sure a full Media was returned and not just a string
@@ -109,7 +158,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				workingMainPhoto = parsed_section_img as Media;
 				workingMainPhoto.media_props.type = 'main_photo';
 				workingMainPhoto.type = 'main_photo';
-
+				main_photo_found = true;
 				console.log(chalk.green("Found a main image from the body"));
 			}
 		});

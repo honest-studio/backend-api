@@ -68,24 +68,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	let internalCitations = {};  
 	let available_citation_id = 1;
 
-
-	// Default push 
-	citations.push({
-		url: url, // References the specific wikipedia page 
-		thumb: null,
-		category: "NONE",
-		citation_id: available_citation_id,
-		description: defaultDescription,
-		social_type: null,
-	 	attribution: 'rel=nofollow',
-	 	timestamp: new Date(), 
-	 	mime: null
-	});
-	available_citation_id = available_citation_id + 1;
-
 	// Page content
 	const $content = $('div.mw-parser-output');
-
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
@@ -225,6 +209,16 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					workingCitation.thumb = `https://i.ytimg.com/vi/${getYouTubeID(workingCitation.url)}/hqdefault.jpg`
 					break;
 				}
+				case 'NONE': {
+					try{
+						workingCitation.thumb = await theMediaUploadService.getFavicon({ url: raw_citn.url });
+					}
+					catch (err){
+						// console.log(err);
+					}
+					
+					break;
+				}
 			}
 
 			// Add the citation to the list
@@ -297,6 +291,20 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	// 	}
 	// 	return ctn;
 	// })
+
+	// Default push 
+	citations.push({
+		url: url, // References the specific wikipedia page 
+		thumb: null,
+		category: "NONE",
+		citation_id: available_citation_id,
+		description: defaultDescription,
+		social_type: null,
+			attribution: 'rel=nofollow',
+			timestamp: new Date(), 
+			mime: null
+	});
+	available_citation_id = available_citation_id + 1;
 
 	return {
 		citations: citations,
