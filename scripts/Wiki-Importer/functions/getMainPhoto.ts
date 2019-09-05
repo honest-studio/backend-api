@@ -39,9 +39,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// Try method 1 first
 	// Extract an image from the infobox
 	$($infobox).find("a.image").each((idx, img_anchor) => {
+		if (workingMainPhoto.url) return;
 		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
 
-		if($(img_anchor).parent().attr('class').search(/geonugget/gimu) >= 0) {
+		let parent_class = $(img_anchor).parent().attr('class');
+		if(parent_class && parent_class.search(/geonugget/gimu) >= 0) {
 			// REMEMBER THAT "GEONUGGET" IS A CONSTRUCTED NAME!!!
 			console.log("Geodot found in first image. Will not add it.");
 		}
@@ -62,11 +64,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			workingMainPhoto.thumb = theWorkingURL;
 
 			// Get the full size image
-			theWorkingURL = theWorkingURL
-							// .split("/")
-							// .slice(0, -1)
-							// .join("/")
-							// .replace("/thumb", "");
+			theWorkingURL = theWorkingURL.replace("/thumb", "");
+			let quickSplit = theWorkingURL.split("/");
+			if (quickSplit[quickSplit.length - 1] && quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0){
+				theWorkingURL = quickSplit.slice(0, -1).join("/");
+			}
 			workingMainPhoto.url = theWorkingURL;
 
 

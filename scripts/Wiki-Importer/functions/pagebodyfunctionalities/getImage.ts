@@ -56,11 +56,11 @@ export const getImage = (element, $: CheerioStatic, internal_citations, delete_w
 		workingImage.thumb = url;
 
 		// Get the full size image
-		url = url
-			// .split("/")
-			// .slice(0, -1)
-			// .join("/")
-			// .replace("/thumb", "");
+		url = url.replace("/thumb", "");
+		let quickSplit = url.split("/");
+		if (quickSplit[quickSplit.length - 1] && quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0){
+			url = quickSplit.slice(0, -1).join("/");
+		}
 		workingImage.url = url;
 
 		let image_attributes = $($img).eq(0)[0].attribs;

@@ -253,7 +253,7 @@ export const WikiImport = async (inputString: string) => {
 
         for await (const artResult of fetchedArticles) {
             try{
-                console.log(artResult.concatted)
+                // console.log(artResult.concatted)
                 await WikiImport(artResult.concatted);
             }
             catch (err){
