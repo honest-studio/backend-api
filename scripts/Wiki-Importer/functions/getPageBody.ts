@@ -48,34 +48,25 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	const $content = $('div.mw-parser-output');
 
 	// Loop through the children
-	$content.children('p, h1, h2, h3, h4, h5, h6, div, table, ul, dl, center').each((i, el) => { 
+	$content.children('h1, h2, h3, h4, h5, h6, p, div, table, ul, ol, dl, center').each((i, el) => { 
 		let $el = $(el);
 		let tag_name = $el[0].name;
 
-		// Process normal paragraphs
-		if (tag_name == 'p') { 
-			let sentenceItems = accumulateText(el, $, internalCitations); // Returns sentence[]
-			paragraphs.push({  
-				index: paragraphIndex,
-				items: sentenceItems,
-				tag_type: 'p',
-				attrs: cleanAttrs(el.attribs)
-			})
-			paragraphIndex++;
-		}
 		// Process headlines / headers
 		// Create new section when h tag is reached
-		else if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
+		if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
 			// Terminate loop once references are reached (they've already been computed)
 			if ( $el.attr('id') == 'References' ) {
 				return false;
 			}
 
-			// Push current section
-			sections.push({ 
+			// Assemble current section
+			section = { 
 				paragraphs: paragraphs,
 				images: images
-			})
+			}
+			// console.log(section)
+			sections.push(section); // Push current section
 			paragraphs = []; // Reset paragraphs array 
 			paragraphIndex = 0; // Reset paragraphIndex
 			images = [] // Reset images array
@@ -87,12 +78,25 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 			};
 
 			// Create a new paragraph with h tag 
+			let headline = getHeadlineSentence(el, $);
+			// console.log(headline.text)
 			paragraphs.push({ 
 				index: paragraphIndex,
-				items: [getHeadlineSentence(el, $)] as Sentence[],
+				items: [headline] as Sentence[],
 				tag_type: $el[0].name, 
 				attrs: cleanAttrs(el.attribs)
 			});
+			paragraphIndex++;
+		}
+		// Process normal paragraphs
+		else if (tag_name == 'p') { 
+			let sentenceItems = accumulateText(el, $, internalCitations); // Returns sentence[]
+			paragraphs.push({  
+				index: paragraphIndex,
+				items: sentenceItems,
+				tag_type: 'p',
+				attrs: cleanAttrs(el.attribs)
+			})
 			paragraphIndex++;
 		}
 		// Potentially a section image
@@ -107,28 +111,27 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 		}
 		else if (tag_name == 'table') {
 			let tableclass = $el.attr('class');
-			if (tableclass === "wikitable" || tableclass === "body-table") {
-				let table = getTable(el, $, internalCitations, "body-table");
+			if (tableclass.search(/wikitable/gimu) >= 0 || tableclass.search(/body-table/gimu) >= 0) {
+				let parsed_table = getTable(el, $, internalCitations, "body-table");
 				paragraphs.push({
 					index: paragraphIndex,
-					items: [table] as Table[],
+					items: [parsed_table] as Table[],
 					tag_type: 'table',
 					attrs: cleanAttrs(el.attribs)
 				})
 				paragraphIndex++;
 			}
+			
 		}
-		//sometimes pagebody tables are nested in center tags
+		// Sometimes pagebody tables are nested in center tags
 		else if (tag_name == 'center' && $el.children('table').length > 0) { 
-			console.log('ATTRIBS')
 			let childTable = $el.find('table');
-			console.log(childTable[0].attribs);
 			let tableclass = childTable.attr('class');
-			if (tableclass === "wikitable" || tableclass === "body-table") {
-				let table = getTable(childTable, $, internalCitations, "body-table");
+			if (tableclass.search(/wikitable/gimu) >= 0 || tableclass.search(/body-table/gimu) >= 0) {
+				let parsed_table = getTable(childTable, $, internalCitations, "body-table");
 				paragraphs.push({
 					index: paragraphIndex,
-					items: [table] as Table[],
+					items: [parsed_table] as Table[],
 					tag_type: 'table',
 					attrs: cleanAttrs(childTable[0].attribs)
 				})

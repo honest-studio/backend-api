@@ -162,7 +162,8 @@ export const WIKI_LANG_PACKAGES = {
 // Replace tags with certain classes
 export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
     { target_tag: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
-    { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" }
+    { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" },
+    { target_tag: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" }
 ];
 
 // Strip out these crappy images because they look ugly and also mess up the profile-picture-finding algorithm
@@ -211,7 +212,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: "mw-navigation", class: null }, // Footer section that houses nav options
     { tag: "table", id: null, class: "vertical-navbox nowraplinks plainlist" }, 
     { tag: "table", id: null, class: "navbox" }, // Another variation of a navbox
-    { tag: "table", id: null, class: "toccolours" }, // Jank table of contents
+    // { tag: "table", id: null, class: "toccolours" }, // Jank table of contents
     { tag: "table", id: null, class: "vertical-navbox nowraplinks nowraplinks hlist" },
     { tag: "table", id: null, class: "vertical-navbox nowraplinks vcard hlist" }, // Another variation of the series tables above ^
     { tag: "table", id: null, class: "metadata plainlinks ambox ambox-style ambox-citation_style" },

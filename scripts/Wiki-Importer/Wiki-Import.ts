@@ -90,7 +90,6 @@ export const WikiImport = async (inputString: string) => {
     // Precleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
 
-
     // Try extracting a main photo
     let photo_result = getMainPhoto(precleaned_cheerio_pack);
     let photoless_cheerio_pack = photo_result.cheerio_pack;

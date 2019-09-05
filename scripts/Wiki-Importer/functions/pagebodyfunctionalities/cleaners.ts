@@ -26,8 +26,9 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     REPLACE_CLASSES_PREPARSE_UNIVERSAL.forEach(pack => {
         let selector = `${pack.target_tag}.${pack.target_class}`;
         $(selector).each((idx, $elem) => {
-            $($elem).eq(0)[0].tagName = pack.replacement_tag;
-            $($elem).eq(0)[0].attribs['class'].replace(pack.target_class, pack.replacement_class);
+            $($elem).prop('tagName', pack.replacement_tag);
+            let tempClass = $($elem).attr('class').replace(pack.target_class, pack.replacement_class);
+            $($elem).attr('class', tempClass);
             // console.log(chalk.red(`${selector} replaced with ${pack.replacement_tag}.${pack.replacement_class}`));
         });
     });
@@ -112,6 +113,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     })
 
     // Search for geography red dots and other jank
+    // Doing this makes sure infobox maps for places / airports / etc show up correctly
     const $table = $('.infobox');
     if ($table.length > 0) {
         $($table).find("img").each((idx, img_elem) => {

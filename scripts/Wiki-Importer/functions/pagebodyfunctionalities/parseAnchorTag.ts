@@ -5,6 +5,9 @@ export const parseAnchorTag = (element, $) => {
 	if ($element.children().length == 0) { // Resolve anchor tags that only contains text 
 	  return parseLink(element, $);
 	}
+	else if ($element.attr('class').search(/external/gimu) >= 0) { // External link
+    	return $(element).text();
+    }
     else if ($element.attr('class') == 'image') { // Inline-image 
     	return parseInlineImage($element.find('img'), $);
     }
