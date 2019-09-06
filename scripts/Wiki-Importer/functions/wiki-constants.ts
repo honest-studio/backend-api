@@ -241,6 +241,9 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
 export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { parent: { class: 'thumbcaption'}, tag: "center", id: null, class: null }, // Shows up in captions sometimes
     { tag: "small", id: null, class: null }, 
+    { tag: null, id: null, class: 'mw-collapsible'}, // Collapsible stuff should be expanded by default
+    { tag: null, id: null, class: 'mw-collapsible-content'}, // Collapsible stuff should be expanded by default
+    { tag: null, id: null, class: 'div-col'}, // Some ul's and ol's get wrapped by divs
     { tag: "a", id: null, class: 'new' }, // Redlinks
 ]
 
@@ -250,6 +253,7 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "References", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "Bibliography", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
+    { parent: { tag: 'h2'}, tag: "span", id: "Footnotes", class: null }, // References section
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
 

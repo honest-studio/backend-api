@@ -1,7 +1,7 @@
 import { cleanAttrs } from '../getAttributes';
 import { getTagClass } from '../getTagClass';
 import { parseAnchorTag } from '../parseAnchorTag';
-import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem } from '../../../../../src/types/article';
+import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem, NestedTextItem, NestedTagItem } from '../../../../../src/types/article';
 import { nestedContentParser } from '../../../../../src/utils/article-utils/article-converter';
 
 export const getTable = (element, $: CheerioStatic, internal_citations, table_type: 'wikitable' | 'body-table'): Table => {
@@ -46,33 +46,14 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 		 // Loop through each cell
 		$row.find('td, th').each((i2, el2) => {
 			let $cell = $(el2);
-
 			let content = nestedContentParser(el2.children, []);
-
-			// Combine adjacent text 
-			let local_accumulator = "", merged_content: NestedContentItem[] = [];
-			let content_idx = 0;
-			while(content_idx < content.length){
-				let item: NestedContentItem = content[content_idx]
-				switch(item.type){
-					case 'text': {
-						break;
-					}
-					case 'tag': {
-						break;
-					}
-				}
-				content_idx++;
-			}
-
-
-			if (merged_content != [] && merged_content != undefined) {
+			if (content != [] && content != undefined) {
 				let cell: TableCell = {
 					index: i2,
 					attrs: cleanAttrs(el2.attribs),
 					tag_type: $cell[0].name as any,
 					tag_class: 'block', 
-					content: merged_content
+					content: content
 				}
 				cells.push(cell); 
 			}

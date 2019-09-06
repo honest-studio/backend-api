@@ -111,7 +111,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 		}
 		else if (tag_name == 'table') {
 			let tableclass = $el.attr('class');
-			if (tableclass.search(/wikitable/gimu) >= 0 || tableclass.search(/body-table/gimu) >= 0) {
+			if (tableclass === undefined || tableclass.search(/wikitable/gimu) >= 0 || tableclass.search(/body-table/gimu) >= 0) {
 				let parsed_table = getTable(el, $, internalCitations, "body-table");
 				paragraphs.push({
 					index: paragraphIndex,

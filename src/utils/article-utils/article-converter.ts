@@ -1268,11 +1268,41 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 break;
         }
     })
-    // console.log("------------------")
-    // // Make sure the sentences are spaced
-    // console.log(util.inspect(nestedContents, {showHidden: false, depth: null, chalk: true}));
-    // console.log(nestedContents)
-    return nestedContents;
+
+    // Combine adjacent text 
+    let accumulated_text = "", merged_content: NestedContentItem[] = [];
+    let content_idx = 0;
+    while(content_idx < nestedContents.length){
+        let item: NestedContentItem = nestedContents[content_idx];
+        switch(item.type){
+            case 'text': {
+                accumulated_text += (item as NestedTextItem).content.map(sent => sent.text).join("");
+                
+                // If the next item is a tag, or the end, push the current accumulated text
+                if (content_idx == nestedContents.length - 1 || nestedContents[content_idx + 1].type == 'tag'){
+                    merged_content.push({
+                        type: 'text',
+                        content: [{
+                            index: 0,
+                            type: 'sentence',
+                            text: accumulated_text
+                        }]
+                    });
+                    accumulated_text = "";
+                }
+
+                break;
+            }
+            // Push a tag regardless
+            case 'tag': {
+                merged_content.push(item);
+                break;
+            }
+        }
+        content_idx++;
+    }
+
+    return merged_content;
 }
 
 function parseDescriptionList($dlist: Cheerio): DescList {

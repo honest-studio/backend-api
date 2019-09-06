@@ -10,11 +10,11 @@ export const getListItems = (element, $, internalCitations): ListItem[] => {
 
 	// Loop
 	$element.children().each((i, el) => {
-		let sentence = accumulateText(el, $, internalCitations);
+		let sentences = accumulateText(el, $, internalCitations);
 		listItems.push({
 			type: 'list_item',
 			index: i,
-			sentences: sentence,
+			sentences: sentences,
 			tag_type: 'li'
 		});
 	})

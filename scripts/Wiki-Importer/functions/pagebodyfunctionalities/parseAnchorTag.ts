@@ -2,14 +2,15 @@
 // Output: string of LINK or INLINE-IMG
 export const parseAnchorTag = (element, $) => {
 	let $element = $(element);
+	let theClass = $element.attr('class');
 	if ($element.children().length == 0) { // Resolve anchor tags that only contains text 
 	  return parseLink(element, $);
 	}
-	else if ($element.attr('class').search(/external/gimu) >= 0) { // External link
+	else if (theClass && theClass.search(/external/gimu) >= 0) { // External link
 		// return $(element).text();
 		return element;
     }
-    else if ($element.attr('class') == 'image') { // Inline-image 
+    else if (theClass && theClass.search(/image/gimu) >= 0) { // Inline-image 
     	return parseInlineImage($element.find('img'), $);
     }
     else if ($element.html().includes('<br>')) {  // Anchor tag has inner br tag edge case
