@@ -61,7 +61,15 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
                 if (theClass && theClass.search(/flagicon/gu) == -1) $(theParent).attr('class', theClass + " flagicon");
                 else if (!theClass) $(theParent).attr('class', "flagicon");
             }
-            // $(img_elem).replaceWith(parseInlineImage(img_elem, $))
+
+
+        }
+
+        // Try find medals
+        if (theSrc.search(/medal_icon/gu) >= 0){
+            let theMedalClass = $(img_elem).eq(0)[0].attribs['class'];
+            if (theMedalClass && theMedalClass.search(/medalicon/gu) == -1) $(img_elem).attr('class', theMedalClass + " medalicon");
+            else if (!theMedalClass) $(img_elem).attr('class', "medalicon");
         }
 
         

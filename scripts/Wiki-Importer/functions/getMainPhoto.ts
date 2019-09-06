@@ -111,7 +111,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				let $extractTR = $($extractTD).closest("tr");
 
 				// Look for multiple images within the td
-				let rowImages = $($extractTR).children('img');
+				let rowImages = $($extractTR).find('img');
 				if (rowImages.length > 1){
 					console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
 				}

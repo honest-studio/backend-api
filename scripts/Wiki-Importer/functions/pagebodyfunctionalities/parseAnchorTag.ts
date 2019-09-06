@@ -35,15 +35,20 @@ export const parseLink = (anchorTagElement, $) => { //LINK
   const hrefAttr = $element.attr('href');
   let index = 6; 
   let slug = ''; 
-  while(index < hrefAttr.length) { 
-    slug += hrefAttr.charAt(index); 
-    index++; 
+  if(hrefAttr){
+    while(index < hrefAttr.length) { 
+      slug += hrefAttr.charAt(index); 
+      index++; 
+    }
+    wikiLink = '[[LINK|lang_en|' + slug + '|' + linkText + ']]';
+    if (wikiLink == undefined || anchorTagElement == undefined) {
+      return ''
+    }
+    return wikiLink
   }
-  wikiLink = '[[LINK|lang_en|' + slug + '|' + linkText + ']]';
-  if (wikiLink == undefined || anchorTagElement == undefined) {
-  	return ''
-  }
-  return wikiLink
+  else return '';
+
+
 }
 
 
