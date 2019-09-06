@@ -22,7 +22,7 @@ const path = require('path');
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
-const theElasticSearch = new elasticsearch.Client({
+const theElasticsearch = new elasticsearch.Client({
     host: `${theConfig.get('ELASTICSEARCH_PROTOCOL')}://${theConfig.get('ELASTICSEARCH_HOST')}:${theConfig.get('ELASTICSEARCH_PORT')}${theConfig.get('ELASTICSEARCH_URL_PREFIX')}`,
     httpAuth: `${theConfig.get('ELASTICSEARCH_USERNAME')}:${theConfig.get('ELASTICSEARCH_PASSWORD')}`,
     apiVersion: '7.1'
@@ -108,7 +108,9 @@ export const WikiImport = async (inputString: string) => {
         })
     }
 
+    logYlw("===========⚙️  ASSEMBLE THE ARTICLEJSON ⚙️ ============");
     // Assemble the wiki
+    process.stdout.write(chalk.yellow(`Creating the ArticleJson object...`));
     let articlejson: ArticleJson = {
         page_title: page_title, 
         main_photo: [photo_result.main_photo],
@@ -125,14 +127,20 @@ export const WikiImport = async (inputString: string) => {
             lightboxes: []
         },
         ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
-    } as ArticleJson
+    } as ArticleJson;
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Calculate what the IPFS hash would be
+    process.stdout.write(chalk.yellow(`Generating the IPFS hash...`));
     let newHash = calcIPFSHash(JSON.stringify(articlejson));
     articlejson.ipfs_hash = newHash;
+    process.stdout.write(chalk.yellow(` DONE [${newHash}]\n`));
 
-    logYlw("=================MAIN UPLOAD=================");
+    console.log(chalk.bold.green(`DONE`));
+    logYlw("==================📡 MAIN UPLOAD 📡==================");
 
+    // Update the hash cache
+    process.stdout.write(chalk.yellow(`Updating the hash cache...`));
     try {
         const json_insertion = await theMysql.TryQuery(
             `
@@ -149,7 +157,10 @@ export const WikiImport = async (inputString: string) => {
         }
         else throw e;
     }
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
+    // Update the article cache
+    process.stdout.write(chalk.yellow(`Updating the article cache...`));
     const cleanedSlug = theMysql.cleanSlugForMysql(slug);
     let text_preview;
     try {
@@ -205,9 +216,11 @@ export const WikiImport = async (inputString: string) => {
         }
         else throw e;
     }
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
-    // Update ElasticSearch
+    // Update Elasticsearch
     // Prepare the JSON request
+    process.stdout.write(chalk.yellow(`Updating Elasticsearch...`));
     let jsonRequest = {
         "id": pageID,
         "page_title": title_to_use,
@@ -215,16 +228,19 @@ export const WikiImport = async (inputString: string) => {
         "lang": lang_code
     }
 
-    const response = await theElasticSearch.index({
+    const response = await theElasticsearch.index({
         index: `${ELASTICSEARCH_INDEX_NAME}`,
         type: ELASTICSEARCH_DOCUMENT_TYPE,
         id: pageID,
         body: jsonRequest
     })
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Flush the prerenders
+    console.log(chalk.yellow.bold(`---Flushing prerenders---`));
     const prerenderToken = theConfig.get('PRERENDER_TOKEN');
-    flushPrerenders(lang_code, slug, prerenderToken);
+    await flushPrerenders(lang_code, slug, prerenderToken);
+    console.log(chalk.yellow.bold(`------Flush complete-----`));
 
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));

@@ -13,7 +13,7 @@ export interface WikipediaInfoboxResultPack {
 
 // Get the Wikipedia infobox
 export const getWikipediaStyleInfoBox = (input_pack: CheerioPack, internal_citations): WikipediaInfoboxResultPack => { 
-	console.log(chalk.yellow.bold("===================🖼️  INFOBOX 🖼️===================="));
+	console.log(chalk.yellow.bold("====================🖼️  INFOBOX 🖼️====================="));
 	const $ = input_pack.cheerio_static;
 	const $content = $('div.mw-parser-output');
 	const $table = $content.find('.infobox');

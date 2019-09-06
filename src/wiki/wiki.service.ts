@@ -762,7 +762,7 @@ export class WikiService {
             pipeline.exec();
 
             console.log(colors.green('========================================'));
-            console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
+            console.log(colors.green(`MySQL and Elasticsearch updated. Terminating loop...`));
             console.log(colors.green('========================================'));
 
         }
