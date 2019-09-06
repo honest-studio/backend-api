@@ -3,101 +3,44 @@
 		"paragraphs": [
 			{
 				"index": 0,
-				"tag_type": "table",
-				"attrs": {
-					"className": "mw-stack mobile-float-reset",
-					"role": "presentation",
-					"style": {
-						"float": "right",
-						"clear": "right",
-						"background": "transparent",
-						"margin": "0",
-						"padding": "0"
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "***Mississippi Mermaid*** ([[LINK|lang_en|French_language|French]] : *La sirène du Mississipi*) is a 1969 French [[LINK|lang_en|Romance_film|romantic drama]] film directed by [[LINK|lang_en|François_Truffaut|François Truffaut]] and starring [[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]] and [[LINK|lang_en|Jean-Paul_Belmondo|Jean-Paul Belmondo]]. Adapted from the 1947 novel *Waltz into Darkness* by [[LINK|lang_en|Cornell_Woolrich|Cornell Woolrich]], the film is about a tobacco planter on [[LINK|lang_en|Réunion|Réunion]] island in the Indian Ocean who becomes engaged through correspondence to a woman he does not know. When she arrives it is not the same woman in the photo, but he marries her anyway. Filmed in southern France and Réunion island, [[CITE|10|http://imdb.com/title/tt0064990/locations]] *Mississippi Mermaid* was the 17th highest-grossing film of the year in France with a total of 1,221,027 admissions. [[CITE|11|http://jpbox-office.com/fichfilm.php?affich=france&id=9033]] It was remade in 2001 as *[[LINK|lang_en|Original_Sin_(2001_film)|Original Sin]] *, directed by [[LINK|lang_en|Michael_Cristofer|Michael Cristofer]] and starring [[LINK|lang_en|Angelina_Jolie|Angelina Jolie]] and [[LINK|lang_en|Antonio_Banderas|Antonio Banderas]]."
 					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "plot"
 				},
 				"items": [
 					{
-						"type": "body-table",
-						"attrs": {
-							"className": "mw-stack mobile-float-reset",
-							"role": "presentation",
-							"style": {
-								"float": "right",
-								"clear": "right",
-								"background": "transparent",
-								"margin": "0",
-								"padding": "0"
-							}
-						},
-						"caption": {
-							"attrs": {},
-							"sentences": []
-						},
-						"thead": {
-							"rows": [],
-							"attrs": {}
-						},
-						"tbody": {
-							"rows": [
-								{
-									"index": 0,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"index": 0,
-															"type": "sentence",
-															"text": " "
-														}
-													]
-												}
-											]
-										}
-									]
-								},
-								{
-									"index": 1,
-									"tag_type": "tr",
-									"tag_class": "block",
-									"attrs": {},
-									"cells": [
-										{
-											"index": 0,
-											"attrs": {},
-											"tag_type": "td",
-											"tag_class": "block",
-											"content": [
-												{
-													"type": "text",
-													"content": [
-														{
-															"index": 0,
-															"type": "sentence",
-															"text": " "
-														}
-													]
-												}
-											]
-										}
-									]
-								}
-							],
-							"attrs": {}
-						},
-						"tfoot": {
-							"rows": [],
-							"attrs": {}
-						}
+						"type": "sentence",
+						"index": 0,
+						"text": "Plot"
 					}
 				]
 			},
@@ -109,7 +52,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The **Battle of Battle Mountain** was an engagement between [[LINK|lang_en|United_Nations|United Nations]] (UN) and [[LINK|lang_en|North_Korea|North Korean]] (NK) forces early in the [[LINK|lang_en|Korean_War|Korean War]] from August 15 to September 19, 1950, on and around the [[LINK|lang_en|Sobuk-san|Sobuk-san]] mountain area in [[LINK|lang_en|South_Korea|South Korea]]. It was one of several large engagements fought simultaneously during the [[LINK|lang_en|Battle_of_Pusan_Perimeter|Battle of Pusan Perimeter]]. The battle ended in a victory for the UN after large numbers of [[LINK|lang_en|United_States|United States]] (US) and [[LINK|lang_en|Republic_of_Korea|Republic of Korea]] (ROK) troops were able to prevent a North Korean division from capturing the mountain area."
+						"text": "Louis Mahé ([[LINK|lang_en|Jean-Paul_Belmondo|Jean-Paul Belmondo]]), a wealthy tobacco plantation owner on Réunion island in the Indian Ocean, is awaiting the arrival of his bride to be, Julie Roussel ([[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]]), whom he has never met. They became acquainted through the personals column of a French newspaper and have been corresponding by mail. At the Hotel Mascarin he meets his partner Jardine who accompanies him to pick up the ring. Louis drives to the dock to greet Julie who is arriving on the steamer *Mississipi* (spelled with one p according to the French spelling of the river at the time) [[CITE|12|http://frenchlines.com/presse/2011_chantiers_ateliers_provence/dossier_presse_chantiers_ateliers_provence.pdf]] from [[LINK|lang_en|Nouméa|Nouméa]], the capital of [[LINK|lang_en|New_Caledonia|New Caledonia]]. When they meet he is surprised by her beauty and does not recognize her; she is not the woman in the photo that she had sent him. She explains that she sent the photo of a neighbor to assure the sincerity of his intentions. He confesses that he too has not told the complete truth, having hidden the fact that he was wealthy."
 					}
 				]
 			},
@@ -121,7 +64,27 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Operating in [[LINK|lang_en|Battle_of_Masan|defense of Masan]], the [[LINK|lang_en|US_Army|US Army]]'s [[LINK|lang_en|US_25th_Infantry_Division|25th Infantry Division]] placed its [[LINK|lang_en|US_24th_Infantry_Regiment|24th Infantry Regiment]] and [[LINK|lang_en|US_5th_Infantry_Regiment|5th Infantry Regiment]] on Sobuk-san to defend its two peaks, P'il-bong and Hill 665, which would later be known as \"Battle Mountain.\" What followed was a month-long struggle with the [[LINK|lang_en|North_Korean_People's_Army|North Korean People's Army]]'s [[LINK|lang_en|NK_6th_Division|6th Division]], in which Battle Mountain changed hands 20 times."
+						"text": "Louis and Julie quickly marry, and his adoration of his new bride makes him overlook inconsistencies with what she wrote in her letters. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "He gives Julie access to his bank accounts and prints her image on the cigarette packs his company manufactures. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "After receiving an angry letter from Julie's sister, Berthe Roussel (Nelly Borgeaud), demanding to know the whereabouts of Julie, Louis returns home to find that Julie is gone, and that she has absconded with nearly 28 million francs, all but emptying his bank accounts. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Soon after, Julie's sister Berthe arrives and informs him that the woman he married was not Julie and that she saw her sister board the *Mississipi*. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "They hire a private detective, Comolli, to track down the impostor and bring her to justice."
 					}
 				]
 			},
@@ -133,7 +96,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "During the deadlock, neither side was able to secure a definite victory in capturing the mountaintop, but the US forces succeeded in their mission of preventing the North Koreans from advancing beyond Battle Mountain, paving the way for the North Koreans' eventual defeat and withdrawal from the area after the [[LINK|lang_en|Battle_of_Inchon|Battle of Inchon]]."
+						"text": "On a flight to [[LINK|lang_en|Nice|Nice]], [[LINK|lang_en|France|France]], Louis suddenly collapses from exhaustion. While recuperating in the Clinique Heurtebise sanitarium, he sees Julie('s impostor) on television, dancing at a nightclub in [[LINK|lang_en|Antibes|Antibes]]. He buys a gun and travels to Antibes where he breaks into her room at the Hotel Monorail, intent on killing her. When she returns and is confronted by Louis, she offers no resistance. Explaining that her real name is Marion Vergano, she tells him of her sordid past; of the years she spent in prison; and of her association with a heartless gangster, Richard, who was with her on the *Mississipi*. She recounts that when they met Julie Roussel and learned of her forthcoming marriage, Richard fabricated a plot to kill Julie and send Marion in her place to rob Louis. Afterwards Richard forced her to go through with the robbery and then abandoned her. She tells Louis that she still loves him, and Louis forgives her."
 					}
 				]
 			},
@@ -141,1210 +104,68 @@
 				"index": 4,
 				"tag_type": "p",
 				"attrs": {},
-				"items": []
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Louis and Marion buy a red convertible and drive to [[LINK|lang_en|Aix-en-Provence|Aix-en-Provence]] where they move into a house together and spend their days traveling the region and making love. Their happiness is interrupted, however, by Comolli, who has arrived in Aix on the trail of the impostor. After trying in vain to bribe the detective to drop the case, Louis shoots him dead and buries him in the wine cellar of the house. Louis and Marion flee to [[LINK|lang_en|Lyon|Lyon]], but she grows increasingly dissatisfied with their fugitive existence and longs for a life of luxury in Paris. Louis returns briefly to Réunion and sells his share in the plantation to his partner Jardine. Upon his return he finds the police are on their trail. Again they are forced to flee, leaving most of his money behind."
+					}
+				]
 			},
 			{
 				"index": 5,
 				"tag_type": "p",
 				"attrs": {},
-				"items": []
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "background"
-				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Background"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "outbreak-of-war"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Outbreak of war"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Following the June 25, 1950, outbreak of the Korean War as a result of the invasion of the [[LINK|lang_en|Republic_of_Korea|Republic of Korea]] (South Korea) by its northern neighbor, the [[LINK|lang_en|Democratic_People's_Republic_of_Korea|Democratic People's Republic of Korea]] (North Korea), the [[LINK|lang_en|United_Nations|United Nations]] committed troops to the conflict in support of South Korea. The United States, a member of the UN, subsequently dispatched ground forces to the Korean peninsula with the goal of pushing back the North Korean invasion and preventing South Korea from collapsing. However, the number of US forces in the [[LINK|lang_en|Far_East|Far East]] had been steadily decreasing since the end of [[LINK|lang_en|World_War_II|World War II]], five years earlier, and at the time the closest forces were the [[LINK|lang_en|US_24th_Infantry_Division|24th Infantry Division]], headquartered in [[LINK|lang_en|Japan|Japan]]. The division was understrength however, and most of its equipment was antiquated due to reductions in military spending. Regardless, the 24th was ordered to South Korea."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The 24th Infantry Division was the first US unit sent into Korea with the mission to take the initial \"shock\" of North Korean advances, delaying the much larger North Korean units to buy time to allow reinforcements to arrive. "
+						"text": "They head into the mountains where they find an isolated cabin in which to hide. "
 					},
 					{
 						"type": "sentence",
 						"index": 1,
-						"text": "The division was consequently alone for several weeks while the [[LINK|lang_en|1st_Cavalry_Division_(United_States)|1st Cavalry Division]] and the [[LINK|lang_en|7th_Infantry_Division_(United_States)|7th]] and [[LINK|lang_en|25th_Infantry_Division_(United_States)|25th Infantry Divisions]] moved into position, along with other [[LINK|lang_en|Eighth_United_States_Army|Eighth United States Army]] supporting units. Advance elements of the 24th Infantry were badly defeated in the [[LINK|lang_en|Battle_of_Osan|Battle of Osan]] on July 5, the first encounter between American and North Korean forces. For the first month after the defeat at Osan, 24th Infantry was repeatedly defeated and forced south by superior North Korean numbers and equipment. The regiments of the 24th Infantry were systematically pushed south in engagements around [[LINK|lang_en|Battle_of_Chochiwon|Chochiwon]], [[LINK|lang_en|Battle_of_Chonan|Chonan]], and [[LINK|lang_en|Battle_of_Pyongtaek|Pyongtaek]]. The 24th made a final stand in the [[LINK|lang_en|Battle_of_Taejon|Battle of Taejon]], where it was almost completely destroyed but delayed North Korean forces from advancing until July 20. By that time, the Eighth Army's force of combat troops were roughly equal to North Korean forces attacking the region, with new UN units arriving every day."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "north-korean-advance"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "North Korean advance"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "With Taejon captured, North Korean forces attempted to envelop the [[LINK|lang_en|Pusan_Perimeter|Pusan Perimeter]]. The [[LINK|lang_en|4th_Division_(North_Korea)|4th]] and [[LINK|lang_en|6th_Division_(North_Korea)|6th]] North Korean (NK) Infantry Divisions advanced south in a wide [[LINK|lang_en|Flanking_maneuver|flanking maneuver]]. The two divisions were forced to spread their units along a thin line, but managed to penetrate the UN's left flank with armor and superior numbers, repeatedly pushing back US and South Korean forces. American forces were pushed back repeatedly before finally halting the North Korean advance in a series of engagements in the southern section of the country. The 3rd Battalion, [[LINK|lang_en|29th_Infantry_Regiment_(United_States)|29th Infantry Regiment]], newly arrived in the country, sustained massive casualties at [[LINK|lang_en|Hadong|Hadong]] in a [[LINK|lang_en|Hadong_Ambush|coordinated ambush]] on July 27 that opened a pass to the Pusan area. Soon after, North Korean forces took Chinju to the west, pushing back the US 19th Infantry Regiment and leaving routes to the Pusan area open for more North Korean attacks. US formations were subsequently able to defeat and push back the North Koreans on the flank in the [[LINK|lang_en|Battle_of_the_Notch|Battle of the Notch]] on August 2. Suffering mounting losses, the KPA force in the west withdrew for several days to re-equip and receive reinforcements. This granted both sides a reprieve to prepare for the attack on the Pusan Perimeter."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "emplacement-of-the-25th-infantry-division"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Emplacement of the 25th Infantry Division"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The Eighth Army commander, [[LINK|lang_en|US_Lieutenant_General|Lieutenant General]] [[LINK|lang_en|Walton_Walker|Walton Walker]], then ordered the US 25th Infantry Division, under [[LINK|lang_en|US_Major_General|Major General]] [[LINK|lang_en|William_B._Kean|William B. Kean]], to take up defensive positions on the Pusan Perimeter's southern flank west of [[LINK|lang_en|Masan|Masan]]. By August 15, the 25th Infantry Division had moved into the line, but rough terrain west of Masan limited the choice of its positions. The mountain group west of Masan was the first readily defensible ground east of the Chinju pass. The 2,000-foot (610 m) mountain ridges of [[LINK|lang_en|Sobuk-san|Sobuk-san]] dominated the area and protected the road from Komam-ni to [[LINK|lang_en|Haman_County|Haman]] to Chindong-ni, the only means of north–south communication west of Masan."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Northwest of Komam-ni was the broken [[LINK|lang_en|Spur_ridge|spur ridge]] of P'il-bong, dominated by 900 feet (270 m) Sibidang-san, along the [[LINK|lang_en|Nam_River_(Korea)|Nam River]]. Sibidang provided an excellent observation point for the surrounding area, and US artillery emplaced in the Komam-ni area could interdict the road junction at Chungam-ni. The [[LINK|lang_en|US_35th_Infantry_Regiment|US 35th Infantry Regiment]] set up positions at Sibidang-Komam-ni, in the northern part of the 25th Infantry Division defense line. The 35th Regiment line extended from a point 2 miles (3.2 km) west of Komam-ni to the Nam River and then turned east along that stream to its confluence with the [[LINK|lang_en|Naktong_River|Naktong River]]. It was a long [[LINK|lang_en|Regiment|regimental]] line, about 26,000 yards (24,000 m), twice the length a regiment was typically assigned."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The 1st Battalion, 35th Infantry, held the regiment's left flank west of Komam-ni, and the 2nd Battalion held the regimental right along the Nam River. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Meanwhile, the 3rd Battalion, redesignated from the 1st Battalion, 29th Infantry, was in reserve on the road south of [[LINK|lang_en|Chirwon|Chirwon]], with quick access to any part of the line. To the south was the [[LINK|lang_en|US_24th_Infantry_Regiment|US 24th Infantry Regiment]]; west of Chindong-ni, the 5th Regimental Combat Team (RCT) was on the division's left flank. On division orders, 5th RCT first held the ground above the Chindong-ni coastal road only as far as Yaban-san, but Kean soon ordered them to close the gap with the 24th Infantry northward. When the 5th sent a South Korean unit of 100 men under American officers to the higher slope of Sobuk-san, North Korean troops already there drove them back. Kean then ordered the 5th Regimental Combat Team to take this ground, but it was too late; the ground was firmly in North Korean hands."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "prelude"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Prelude"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The NK 6th Division and [[LINK|lang_en|NK_7th_Division|NK 7th Division]] closed on Masan, attacking the US 25th Infantry Division on multiple fronts, with the main efforts aimed at the 24th and 35th Infantry regiments. At the same time that the North Korean 7th Division was trying to penetrate the 35th Infantry positions around Sibidang and Komam-ni, the 6th Division also sent strong patrols and probing attacks against the mountainous middle part of the 25th Infantry Division line. When the division issued orders to its subordinate units to take up defensive positions west of Masan, the 2nd Battalion, 24th Infantry was still trying to seize Obong-san, the mountain ridge just west of Battle Mountain and P'il-bong, and across a gorge-like valley from them. At daybreak on August 15, the 2nd Battalion broke contact with the North Koreans and withdrew to Sobuk-san and the ridge west of Haman. The 3rd Battalion, 24th Infantry now came to the Haman area to help in the regimental defense of the sector."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "battle-mountain"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Battle Mountain"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The high ground west of Haman on which the 24th Infantry established its defensive line was part of the Sobuk-san mountain mass. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Sobuk-san reaches its 2,400 feet (730 m) peak at P'il-bong, also called Hill 743, 8 miles (13 km) northwest of Chindong-ni and 3 miles (4.8 km) southwest of Haman. "
+						"text": "They hope to cross over into Switzerland, but Marion is restless and unhappy with their life on the run. "
 					},
 					{
 						"type": "sentence",
 						"index": 2,
-						"text": "From P'il-bong, the crest of the ridge line curves northwestward, to rise again 1 mile (1.6 km) away in the bald peak designated Hill 665, which became known as Battle Mountain. "
+						"text": "Louis becomes increasingly ill, and after nearly collapsing, he suspects that Marion has been putting rat poison in his coffee. "
 					},
 					{
 						"type": "sentence",
 						"index": 3,
-						"text": "US troops also occasionally called it \"Napalm Hill,\" \"Old Baldy,\" and \"Bloody Knob.\" "
+						"text": "He attempts to escape, but Marion brings him back to the cabin. "
 					},
 					{
 						"type": "sentence",
 						"index": 4,
-						"text": "Between P'il-bong and Battle Mountain the ridge line narrows to a rocky ledge which the troops called the \"Rocky Crags.\" "
+						"text": "As she pours him another glass of coffee, he reveals his knowledge of her plan, accepts his fate with no regrets, and expresses his overwhelming love for her. "
 					},
 					{
 						"type": "sentence",
 						"index": 5,
-						"text": "Northward from Battle Mountain toward the Nam River, the ground drops sharply in two long [[LINK|lang_en|Spur_(mountain)|spur ridges]]. US troops who fought there called the eastern one Green Peak."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "At the western, North Korean–held base of Battle Mountain and P'il-bong were the villages of Ogok and Tundok, 1.25 miles (2.01 km) from the crest. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "A north–south mountain trail crossed a high [[LINK|lang_en|Mountain_pass|saddle]] just north of these villages and up the west slope about halfway to the top of Battle Mountain. This road gave the North Koreans an advantage in mounting and supplying their attacks in the area. A trail system ran from Ogok and Tundok to the crests of Battle Mountain and P'il-bong. From the top of Battle Mountain, an observer could look directly down into the North Korean–held valley. At the same time, from Battle Mountain the North Koreans could look down into the Haman valley eastward and observe the US 24th Infantry command post, supply road, artillery positions, and approach trails. Whichever side held the crest of Battle Mountain could observe the rear areas of the other. Both forces, seeing the advantages of holding the crest of Battle Mountain, fought relentlessly to capture it in a six-week-long battle."
-					}
-				]
-			}
-		],
-		"images": [
-			{
-				"type": "section_image",
-				"url": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Chaffees_at_Masan.jpg",
-				"mime": "image/png",
-				"thumb": null,
-				"caption": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "M24 Chaffee light tanks wait for a North Korean attack near Masan"
-					}
-				],
-				"category": "PICTURE",
-				"media_props": {
-					"type": "section_image"
-				},
-				"attribution_url": "https://en.wikipedia.org/wiki/File:Chaffees_at_Masan.jpg"
-			}
-		]
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "logistics"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Logistics"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The approach to Battle Mountain and P'il-bong was much more difficult from the east, the American-held side, than from the west, the North Korean side. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "On the east side there was no road climbing halfway to the top; from the base of the mountain at the edge of the Haman valley the only way to make the ascent was by foot trail. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Climbers took two to three hours to reach the top of P'il-bong from the reservoir area, and required from three to four hours to get on top of Battle Mountain from the valley floor. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "The turnaround time for [[LINK|lang_en|Train_(military)|supply trains]] to Battle Mountain was six hours. Often a dispatch runner required eight hours to go up Battle Mountain and come back down. In some places the trail was so steep that climbers had to set up ropes to hold along the side of the trail. North Korean night patrols constantly cut [[LINK|lang_en|Telephone|telephone]] lines. The wire men had a difficult and dangerous job trying to maintain wire communication with units on the mountain. Food, water and ammunition were frequently short for the units at the tops of the peaks."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Bringing dead and seriously wounded down from the top was difficult for both sides. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "UN [[LINK|lang_en|Litter_(rescue_basket)|litter]]-bearing teams of six men had to carry each wounded man on a stretcher down the mountain. A medical aide was also needed to administer care during the trip if the man was critically wounded, and riflemen often accompanied the groups to protect them from North Korean [[LINK|lang_en|Sniper|snipers]] along the trail. Critically wounded men often died before reaching the bottom where full medical care could be administered. This possibility was one of the factors that lowered morale in the 24th Infantry units fighting on Battle Mountain. Many men were afraid that if they were wounded there they would die before reaching adequate medical care. North Korean troops often did not have time to move dead and wounded from the peak at all, forcing both sides to bury casualties in shallow graves along the peak."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The 24th Infantry's supporting artillery, the 159th Field Artillery Battalion, emplaced in the valley south of Haman. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "On August 19, the artillery moved farther to the rear, except for C Battery, which remained in a creek bed north of Haman. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Regimental engineers worked to improve a trail running from Haman northeast to the main Komam-ni-Masan road. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "The engineers intended to use it as an evacuation road for the artillery, if that became necessary, and to improve the road net of the regimental sector for better movement of troops and supplies. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "This road became known as the \"Engineer Road\"."
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On August 15, there was a gap 4,000 yards (3,700 m) wide in the P'il-bong area between the 24th Infantry and the [[LINK|lang_en|US_5th_Infantry_Regimental_Combat_Team|US 5th Infantry Regimental Combat Team]] to the south. The 24th Infantry had not performed well during previous engagements, so Kean sent 432 [[LINK|lang_en|ROK_National_Police|ROK National Police]] to the area the next day and placed them in this gap, ensuring the North Koreans would not be able to exploit any holes in the line."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "battle"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Battle"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Opposing the US 24th Infantry at Battle Mountain was the NK 6th Division, which had been engaging [[LINK|lang_en|Task_Force_Kean|Task Force Kean]] since August 5. The division, which had originally numbered 10,000, had suffered 4,000 casualties thus far fighting at the Pusan Perimeter. However it brought in 3,100 South Koreans forcibly conscripted from neighboring towns to replenish its ranks. The South Koreans fought as ordered, though the North Koreans dispatched rearguard soldiers with them to shoot any who attempted to desert, defect, or surrender."
-					}
-				]
-			}
-		],
-		"images": [
-			{
-				"type": "section_image",
-				"url": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Enemy_Side_of_the_Rocky_Crags.jpg",
-				"mime": "image/png",
-				"thumb": null,
-				"caption": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The \"rocky crags\" position, which remained in North Korean hands during most of the battle."
-					}
-				],
-				"category": "PICTURE",
-				"media_props": {
-					"type": "section_image"
-				},
-				"attribution_url": "https://en.wikipedia.org/wiki/File:Enemy_Side_of_the_Rocky_Crags.jpg"
-			}
-		]
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "us-24th-infantry-repulsed"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "US 24th Infantry repulsed"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The first attack against the mountain line of the 24th Infantry came on the morning of August 18, when the North Koreans overran several E Company positions on the northern spur of Battle Mountain and killed the [[LINK|lang_en|Company_commander|company commander]]. During the day, [[LINK|lang_en|US_Lieutenant_Colonel|Lieutenant Colonel]] Paul F. Roberts succeeded Lieutenant Colonel George R. Cole in command of the 2nd Battalion, 24th Infantry there. The next day, the North Koreans attacked C Company on Battle Mountain and routed it. Officers could collect only 40 men to bring them back into position. Many ROK police on P'il-bong also ran from the fight, and only 56 of them remained in their defensive positions. American officers used threats and physical force to get others back into position. A 1 mile (1.6 km) gap in the line north of P'il-bong existed in the 24th Infantry lines at the close of the day, and an unknown number of North Koreans were moving into it."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On August 20, the NK 6th Division intensified its efforts to capture Battle Mountain, and began sending stronger attacks to capture the two peaks. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "In the face of attack, all of C Company except the company commander and about 25 men abandoned their position on Battle Mountain. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Upon reaching the bottom of the mountain those who had fled reported erroneously that the company commander had been killed and their position surrounded, then overrun by the North Koreans. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "On the basis of this misinformation, American artillery and mortars fired concentrations on the position, and fighter-bombers, in 38 sorties, attacked the crest of Battle Mountain, using [[LINK|lang_en|Napalm|napalm]], fragmentation bombs, rockets, and machine guns, forcing the 26 remaining men off Battle Mountain after they had held it for 20 hours. In this time they had declined an offer from the North Koreans to surrender. A platoon of E Company, except for about 10 men, also left its position on the mountain as soon as the attack progressed. On the regimental left, an ROK patrol from K Company's position on Sobuk-san captured the commanding officer of the NK 15th Regiment, but he was killed a few minutes later while trying to escape. The patrol removed several intelligence reports from his body. During the day of fighting at Battle Mountain and P'il-bong, the North Koreans drove off the ROK police from the 24th Infantry's left flank on Sobuk-san. 24th Infantry troops continued to straggle from their positions, ignoring commands from officers to stay in place. Both African American and white officers, infuriated by the disobedience, wrote sworn statements implicating the deserters. The situation was so severe that those who stayed in their positions were often given [[LINK|lang_en|Bronze_Star_Medals|Bronze Star Medals]] with [[LINK|lang_en|Valor_Device|Valor Devices]] because they were so far outnumbered in the fighting."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "us-5th-rct-enters-the-fight"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "US 5th RCT enters the fight"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Kean then alerted 5th Regimental Combat Team commander [[LINK|lang_en|US_Colonel|Colonel]] [[LINK|lang_en|John_L._Throckmorton|John L. Throckmorton]] to prepare a force from the 5th Infantry to attack Sobuk-san and retake it. On the morning of August 21, the 1st Battalion, 5th Regimental Combat Team, attacked across the 24th Infantry's boundary and secured the southernmost ridges of the mountain against light North Korean resistance. That evening a strong force of North Koreans counterattacked and drove the 1st Battalion, 5th Infantry off the mountain. At 12:00 on August 22, the 1st Battalion, 5th Infantry again attacked the heights, and five hours later B Company seized the highest ridges. Kean now changed the boundary line between the 5th Regimental Combat Team and the 24th Infantry, giving responsibility for the southern ridges to the 5th, and Battle Mountain and P'il-bong to the 24th. During the night, the North Koreans launched counterattacks against the 1st Battalion, 5th Regimental Combat Team, and prevented it from consolidating its position. On the morning of August 23, A Company tried to secure the high ground 1,000 yards (910 m) southwest of the peak and link up with B Company, but was unable to do so. The North Koreans considered the Sobuk-san ridges so important that they committed substantial resources to defending them, and attacked the nearby 5th Regimental Combat Team daily."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "North of B Company's position on Sobuk, the battle situation was similar. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "North Korean troops in the Rocky Crags, which extended from Sobuk-san toward P'il-bong, took cover during [[LINK|lang_en|Air_strike|air strikes]]. Napalm, 500 pounds (230 kg) bombs, and strafing had little effect. Every time the UN aircraft departed, the North Koreans reoccupied their battle positions. Elements of the 24th Infantry were not able to extend southward and join with B Company of the 5th Regimental Combat Team because of stubborn North Korean resistance."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "august-2126-attack"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "August 21–26 attack"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Still farther north along the mountain ridge, in the Battle Mountain area, the battle was going poorly for the 24th Infantry. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "After C Company lost Battle Mountain, heavy UN airstrikes and artillery fire struck its crest in preparation for an infantry counterattack planned to regain the mountain from the North Koreans. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "The hot and sultry weather made climbing the steep slope difficult, but L Company was on top by 12:00 on August 21. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "North Korean troops had left the summit under fire from the UN aircraft, artillery, and mortars. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "The North Koreans placed their own mortar fire on the crest and prevented L Company from consolidating its position. "
-					},
-					{
-						"type": "sentence",
-						"index": 5,
-						"text": "This situation continued until mid afternoon when a North Korean [[LINK|lang_en|Platoon|platoon]] came out of the trenches on the eastern slope of the mountain and surprised a platoon of L Company with an attack from behind. The other two platoons of L Company, upon hearing firing, started to leave their positions and drift down the hill. The North Koreans swiftly reoccupied the peak while officers tried to assemble L and I Companies on the eastern slope. Elements of E Company also left their position during the day."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "American air, artillery, mortar, and tank fire now concentrated on Battle Mountain, and I and L Companies prepared another counterattack to retake it. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "This attack launched soon after, but made slow progress and at midnight it halted to wait for daylight. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Shortly after dawn on August 22, I and L Companies resumed the attack. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "L Company moved up the mountain, with I Company supplying a [[LINK|lang_en|Base_of_fire|base of fire]]. Three North Korean grenades wounded six of the troops, causing the rest to retreat without orders from their frustrated commander. They were eventually returned to the hill with some coercion. A few hours later, when a small North Korean force worked around its right flank, the [[LINK|lang_en|Company_(military)|company]] again withdrew back down the hill to I Company's position without orders."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Fighting continued on Battle Mountain the next day, August 23, with more ROK police units arriving to reinforce I and L Companies. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The American and South Korean troops finally secured precarious possession of Battle Mountain, mainly because the supporting fire of US mortars targeting the North Korean avenues of approach on the western slope. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "During the day the North Koreans counterattacked the hill six times, but were repulsed each time. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "The 3rd Battalion, 24th Infantry units continued to come apart under fire, so much that the [[LINK|lang_en|Battalion|battalion]] commander complained to Kean that he needed more officers to keep the men in line. The situation in the Haman area caused Walker to alert the [[LINK|lang_en|1st_Provisional_Marine_Brigade|1st Provisional Marine Brigade]], a reserve unit, for possible movement to this part of the front. However, it was never dispatched. On August 24, I and L Companies had been so racked by deserters and casualties that they withdrew from the hill. They had suffered 120 casualties during the fight. C Company, along with the ROK police, took charge of the peak."
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "North Korean troops continued attacking the 24th Infantry all across its line, probing for weaknesses. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "On August 25 and 26, C Company beat off several more North Korean attacks on Battle Mountain coming along the long ridge extending from Tundok. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "At one point in these fights, a flight of [[LINK|lang_en|US_Air_Force|US Air Force]] aircraft caught about 100 North Korean soldiers in the open and immediately napalmed, bombed, and strafed them. The North Korean force was destroyed with few survivors. Task Force Baker, comprising C Company and a platoon of E Company, 24th Infantry with an ROK police company, defended Battle Mountain at this time. The special command was established because of the isolated Battle Mountain area and the extended regimental battle front. For the next two days, air strikes continued to rack North Korean counterattacks and to prevent them from forming into any serious attack on Battle Mountain."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "august-2829-attack"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "August 28–29 attack"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The 3rd Battalion, 24th Infantry relieved the 1st Battalion in the Battle Mountain area on August 27, and 1st Battalion withdrew to reserve, except for C Company which remained on Battle Mountain as a part of Task Force Baker. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The next day, August 28, North Korean attacks continued. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "That day, a North Korean company-sized attack struck between C and I Companies before dawn. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "That night, North Korean mortar fire fell on C Company on Battle Mountain. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "After midnight, a North Korean infantry force appeared in the rear area and captured the command post. "
-					},
-					{
-						"type": "sentence",
-						"index": 5,
-						"text": "Some men of C Company left their positions on Battle Mountain without firing when the attack began at 02:45 the next morning, August 29. "
+						"text": "Ashamed at her actions, Marion knocks the glass from Louis' hand and vows to make amends. "
 					},
 					{
 						"type": "sentence",
 						"index": 6,
-						"text": "The North Koreans then directed their attack toward E Company and overran part of its positions. "
+						"text": "She acknowledges that no woman deserves to be loved like this, but she assures him that she loves him and that they can still go away together. "
 					},
 					{
 						"type": "sentence",
 						"index": 7,
-						"text": "Airdrops after daylight kept C Company supplied with ammunition, and a curtain of artillery fire, sealing off approaches from the North Koreans' main positions prevented substantial reinforcements from entering the fight. "
+						"text": "Crying in his arms, Marion tells him, \"I'm learning what love is, Louis. "
 					},
 					{
 						"type": "sentence",
 						"index": 8,
-						"text": "All day on August 29, artillery fire and air strikes racked the North Koreans occupying E Company's old positions. "
+						"text": "It's painful.\" "
 					},
 					{
 						"type": "sentence",
 						"index": 9,
-						"text": "Then, in the evening, E Company counterattacked and reoccupied the lost ground."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "At 23:00 on August 29, the North Koreans attacked C Company again. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Men on the left flank of the company position quickly abandoned their positions and soon the entire company was retreating, leaving the North Koreans in possession of the mountain again. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "[[LINK|lang_en|US_Captain|Captain]] Lawrence M. Corcoran, the company commander, was left with only the 17 men in his command post, which included several wounded. All of those who stayed were later given Bronze Star Medals. After daylight on August 30, UN air strikes again came in on Battle Mountain, and US artillery, mortar, and tank fire from the valley concentrated on the North Korean-held peak. A wounded US soldier came down off the mountain where he had hidden for several hours while cut off from escape. He reported that the main body of the North Koreans had withdrawn to the wooded ridges west of the peak for better cover from the airstrikes, leaving only a small covering force on the mountain itself. At 11:00, B Company, which had to this point been the reserve unit, with the 3rd Battalion in support, attacked toward the heights and retook the top by 13:00. The poor defensive positions were repaired but logistical difficulties continued for the US troops at the top."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The 24th Infantry consistently captured Battle Mountain in the same way. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Artillery, mortar, and tank fire raked the crest and air strikes employing napalm blanketed the top of the peak. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Then, the infantry attacked from the hill beneath the east slope of the summit. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "Supporting mortars would set up a base of fire and would keep the heights under barrage until the infantry had arrived at a point just short of the crest. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "The mortar fire then lifted and the infantry moved rapidly up the last stretch to the top, usually to find it abandoned by the North Koreans."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "stalemate"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Stalemate"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Battle Mountain changed hands so often during August that there is no agreement on the exact number of times. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The intelligence sergeant of the 1st Battalion, 24th Infantry estimated the peak changed hands 19 times. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Subsequent research suggests the actual number was 20. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "From August 18 to the end of the month, North Korean troops attacked the mountain every night. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "The peak often changed hands two or three times in a 24-hour period. "
-					},
-					{
-						"type": "sentence",
-						"index": 5,
-						"text": "The usual pattern was for the North Koreans to take it at night and the US 24th Infantry to recapture it the next day. "
-					},
-					{
-						"type": "sentence",
-						"index": 6,
-						"text": "This type of fluctuating battle resulted in relatively high losses among artillery [[LINK|lang_en|Forward_observer|forward observers]] and their equipment. During the period of August 15–31, seven forward observers and eight other members of the Observer and Liaison Section of the 159th Field Artillery Battalion were casualties, and they lost eight radios, 11 telephones, and two vehicles in the process."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In its defense of that part of Sobuk-san south of Battle Mountain and P'ilbong, the 1st Battalion, 5th Regimental Combat Team, also had nearly continuous action in the last week of the month. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "During this time, [[LINK|lang_en|Master_Sergeant|Master Sergeant]] [[LINK|lang_en|Melvin_O._Handrich|Melvin O. Handrich]] of C Company, 5th Regimental Combat Team [[LINK|lang_en|Posthumous_recognition|posthumously]] won the [[LINK|lang_en|Medal_of_Honor|Medal of Honor]] for actions on August 25 and 26. From a forward position he directed artillery fire on an attacking North Korean force and at one point personally kept part of the company from abandoning its positions. Although wounded, Handrich returned to his forward position, to continue directing artillery fire, and engaged North Korean troops alone until he was killed. When the 5th Regimental Combat Team regained the area, it counted over 70 dead North Koreans in the vicinity, all likely killed by Handrich. By the end of August, the fighting in the mountains west of Masan remained a stalemate. Neither side had secured a definite advantage."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "september-push"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "September push"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Although the NK 6th and 7th Divisions had massed their troops primarily for the attempted breakthrough of the US 25th Infantry Division positions along the Nam and Naktong Rivers during their [[LINK|lang_en|The_Great_Naktong_Offensive|September offensive]], the NK 6th Division continued its attacks on the area. North Korean artillery and mortar fire fell on Battle Mountain, P'il-bong and Sobuk-san, and during the period of September 1–6 there were strong local attacks and patrols by North Korean troops. The 1st Battalion, 5th Infantry, never succeeded in gaining complete possession of the southern parts of Sobuk-san, which would have given observation into the valley below and into the North Koreans' rear areas. The instability of the 24th Infantry made it necessary for Kean to order Throckmorton to send his only regimental reserve, E Company, north into the 24th Infantry sector along the Haman road to protect the right flank of the 5th Regimental Combat Team. In this position, E Company collected stragglers from the 24th Infantry every night and the next morning sent them back to their units. The [[LINK|lang_en|US_Navy|US Navy]] then entered the battle in this part of the line, its destroyers standing off the south coast gave illumination at night by directing their searchlights against low-hanging clouds on Sobuk-san. One destroyer was on station almost continuously, supporting the ground action with the fire of six 5-inch guns. An artillery aerial observer directed this naval gunfire through the [[LINK|lang_en|Fire_direction_center|fire direction center]]."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On September 7, a North Korean attack succeeded once again in driving ROK and American troops from Battle Mountain. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The 25th Division ordered Lieutenant Colonel George H. DeChow's 3rd Battalion, [[LINK|lang_en|US_27th_Infantry_Regiment|US 27th Infantry Regiment]] to retake the peak. DeChow had just counterattacked through the rear areas of the 24th Infantry to the vicinity of Haman. K and B Companies of the 24th Infantry were to follow him and secure the crest if he regained it. From September 7–9, the 3rd Battalion counterattacked up Battle Mountain. On September 9, I Company reached the top and engaged in [[LINK|lang_en|Hand-to-hand_combat|hand-to-hand combat]] with the North Koreans. L Company followed to the crest but the dug-in North Koreans drove both companies off and back down the slope. An estimated two companies of North Korean troops held the crest of Battle Mountain and two more companies protected their flanks. DeChow's 3rd Battalion suffered heavy casualties in these three days of fighting. On the afternoon of September 9, the American counterattack force dropped back to the high ground which it had recaptured on September 7, 1,000 yards (910 m) east of Battle Mountain. Artillery, mortars, and air strikes pounded the North Korean position on Battle Mountain. During this stalemate, word came from the 25th Division for the 3rd Battalion, 27th Infantry to move to the vicinity of Masan. It was needed elsewhere along the Pusan Perimeter front."
-					}
-				]
-			}
-		],
-		"images": [
-			{
-				"type": "section_image",
-				"url": "https://upload.wikimedia.org/wikipedia/commons/9/91/2d_Battalion,_27th_Infantry.jpg",
-				"mime": "image/png",
-				"thumb": null,
-				"caption": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "US Troops traverse the Engineer Road."
-					}
-				],
-				"category": "PICTURE",
-				"media_props": {
-					"type": "section_image"
-				},
-				"attribution_url": "https://en.wikipedia.org/wiki/File:2d_Battalion,_27th_Infantry.jpg"
-			}
-		]
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "containment-action"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Containment action"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "With the failure of the 3rd Battalion, 27th Infantry, to hold the high knob on Battle Mountain after its attacks on September 8 and 9, the 24th Infantry stopped trying to retake Battle Mountain. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "K Company, 24th Infantry, and C Company, 65th Engineer Combat Battalion, dug in on the hill east of and beneath Battle Mountain, fortified their position with barbed wire and mine fields, and placed registered artillery and mortar fires on all approaches to the position. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "The regimental commander planned to contain the North Koreans on Battle Mountain by artillery and mortar fire. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "The North Koreans on Battle Mountain attacked the lower American defensive position many times on subsequent nights, but all their attacks were driven off. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "After a month of almost constant battle the North Koreans gained and held possession of the crest of Battle Mountain. "
-					},
-					{
-						"type": "sentence",
-						"index": 5,
-						"text": "The defensive fires of the 24th Regiment and attached artillery, however, contained them there and they were unable to exploit the possession on the peak or attack further."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "With Battle Mountain in their possession, the North Koreans set out to gain control of P'il-bong to the southeast. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "In the predawn hours of September 14 a force of 400 to 500 North Korean men attacked I and L Companies, 24th Infantry, on P'ilbong. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Several attacks were repulsed, but because of men leaving their positions L Company's strength dwindled from 100 to 40 men. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "The remnant of L Company withdrew toward I Company's position on the crest of P'il-bong, only to find that this company under a relatively minor attack had left the hill. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "They could not hold P'il-bong with the handful of men remaining and it was also lost."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "As soon as the heaviest attacks subsided against the 25th Division, Walker ordered it to release the 5th Regimental Combat Team on September 7 to move to other engagements along the Pusan Perimeter. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The continuing fighting north of Taegu made it necessary to move reserves there. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "That evening the 1st and 2nd Battalions, 27th Infantry, moved from the Nam River battlefield to relieve the 5th Regimental Combat Team on the Masan front. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "27th commander Colonel [[LINK|lang_en|John_H._Michaelis|John H. Michaelis]] assumed command of the regimental zone at 15:00 on September 9. The 3rd Battalion, 27th Infantry, broke off its counterattacks on Battle Mountain that day, rejoined the regiment, and took its place in the southern end of the line on September 11. Meanwhile, the 5th Regimental Combat Team began moving to Samnangjin on the September 10. Upon arrival at Samnangjin, it passed to Eighth Army reserve."
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "At mid-September the Eighth Army and the ROK Army were still engaged with North Korean forces at nearly all points of the Pusan Perimeter. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "After two weeks of the heaviest fighting of the war they had just barely turned back the North Korean Great Naktong Offensive on the main axes of the attack around the approaches to Masan."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "inchon-landing"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Inchon landing"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The UN [[LINK|lang_en|Battle_of_Inchon|counterattack at Inchon]] collapsed the North Korean line and forced them back on all fronts. On 16 September, however, 25th Infantry Division was still fighting North Korean forces behind its lines, and North Korean strong points existed on the heights of Battle Mountain, P'il-bong, and Sobuk-san. Kean felt that the division could advance along the roads toward Chinju only when the mountainous center of the division front was clear. He therefore believed that the key to the advance of the 25th Division lay in its center where the North Koreans held the heights and kept the 24th Infantry Regiment under daily attack. The 27th Infantry on the left and the 35th Infantry on the right, astride the roads between Chinju and Masan held their positions and could not advance until the situation in front of the 24th Infantry improved."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "To carry out his plan, Kean organized a composite battalion-sized task force on September 16 under command of [[LINK|lang_en|US_Major|Major]] Robert L. Woolfolk, commanding officer of the 3rd Battalion, 35th Infantry, and ordered it to attack Battle Mountain and P'il-bong the next day, with the mission of restoring the 24th Infantry positions there. On September 17–18 the task force repeatedly attacked these heights, heavily supported by artillery fire from the 8th and 90th Field Artillery Battalions and by numerous air strikes, but North Korean automatic fire from the heights drove back the assaulting troops every time with heavy casualties. Within one day, A Company, 27th Infantry, alone suffered 57 casualties. The 24th Infantry bogged down behind Battle Mountain. Woolfolk's force abandoned its effort to drive the North Korean from the peaks after its failure on September 18, and the task group was dissolved the next day."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "north-korean-withdrawal"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "North Korean withdrawal"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On September 19 the UN discovered the North Koreans had abandoned of Battle Mountain during the night, and the 1st Battalion, 24th Infantry, moved up and occupied it. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "On the right, the 35th Infantry began moving forward. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "There was only light resistance until it reached the high ground in front of Chungam-ni where hidden North Korean soldiers in [[LINK|lang_en|Spider_hole|spider holes]] shot at 1st Battalion soldiers from the rear. The next day the 1st Battalion captured Chungam-ni, and the 2nd Battalion captured the long ridge line running northwest from it to the Nam River. Meanwhile, the North Koreans still held strongly against the division left where the 27th Infantry had heavy fighting in trying to move forward."
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The North Koreans withdrew from the Masan area the night of September 18–19. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The NK 7th Division withdrew from south of the Nam River while the 6th Division sideslipped elements to cover the entire front. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Covered by the 6th Division, the 7th had crossed to the north side of the Nam River by the morning of September 19. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "Then the NK 6th Division withdrew from its positions on Sobuk-san. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "The US units rapidly pursued them north, passing over the Battle Mountain positions, which were no longer of strategic importance."
+						"text": "After Louis regains his strength, they leave the cabin behind them in a snow storm and head off together toward the border."
 					}
 				]
 			}
@@ -1357,13 +178,307 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "aftermath"
+					"id": "cast"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Aftermath"
+						"text": "Cast"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Jean-Paul_Belmondo|Jean-Paul Belmondo]] as Louis Mahé"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]] as Julie Roussel / Marion Vergano"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Michel_Bouquet|Michel Bouquet]] as Comolli"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Nelly Borgeaud as Berthe Roussel"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Marcel Berbert as Jardine"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Martine Ferrière as the Landlady"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Yves Drouhet as the Detective"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Roland Thénot as Richard [[CITE|13|https://worldcat.org/oclc/12613514]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "production"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Production"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "filming-locations"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Filming locations"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Aix-en-Provence|Aix-en-Provence]], Bouches-du-Rhône, France"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Antibes|Antibes]], Alpes-Maritimes, France"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Grenoble|Grenoble]], Isère, France"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Le_Tampon|Le Tampon]], [[LINK|lang_en|Réunion|Réunion]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Lyon|Lyon]], Rhône, Rhône-Alpes, France"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nice|Nice]], Alpes-Maritimes, France"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Saint-Denis,_Réunion|Saint-Denis, Réunion]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Sainte-Anne,_Réunion|Sainte-Anne, Réunion]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Sainte-Suzanne,_Réunion|Sainte-Suzanne, Réunion]] [[CITE|10|http://imdb.com/title/tt0064990/locations]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "reception"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Reception"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "box-office"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Box Office"
 					}
 				]
 			},
@@ -1375,49 +490,72 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The US 5th Regimental Combat Team suffered 269 killed, 573 wounded and four missing during its battles at the Pusan Perimeter, most of these at Masan. "
-					},
+						"text": "The film was the 16th most popular movie at the French box office in 1969."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "critical"
+				},
+				"items": [
 					{
 						"type": "sentence",
-						"index": 1,
-						"text": "The 24th Infantry suffered 267 killed, 796 wounded, one captured and two missing during its time at Pusan Perimeter, however these figures are split between the portions of the regiment which fought at Battle Mountain, which accounted for about 450 of those wounded and 150 of those killed, and those which fought in Haman after August 31. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "The 65th Engineer Battalion, supporting the 24th Infantry, suffered 27 killed, 75 wounded."
+						"index": 0,
+						"text": "Critical"
 					}
 				]
 			},
 			{
-				"index": 2,
+				"index": 1,
 				"tag_type": "p",
 				"attrs": {},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The North Korean troops suffered heavily in the fight, and most became casualties in the attack. "
+						"text": "In his review in *The New York Times*, Vincent Canby wrote that the film \"defies easy definition and blithely triumphs over what initially appears to be structural schizophrenia.\" "
 					},
 					{
 						"type": "sentence",
 						"index": 1,
-						"text": "By mid-September, the NK 7th Division was reduced to just 4,000 men, a loss of 6,000 from when it was committed to the perimeter. "
+						"text": "[[CITE|14|https://movies.nytimes.com/movie/review?res=9E01E5D71E39E136A05752C1A9629C946190D6CF]] Canby noted the performances of Belmondo, Deneuve, and Bouquet, which were \"played with marvelous style.\" "
 					},
 					{
 						"type": "sentence",
 						"index": 2,
-						"text": "Only 2,000 from the NK 6th Division returned to North Korea, a loss of 80 percent of its strength. "
+						"text": "[[CITE|14|https://movies.nytimes.com/movie/review?res=9E01E5D71E39E136A05752C1A9629C946190D6CF]] Canby concluded:"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "blockquote",
+				"attrs": {
+					"className": "templatequote"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In *Mississippi Mermaid*, as in all of Truffaut's films, love leads only to an uncertain future that, at best, may contain some joy along with the inevitable misery. "
 					},
 					{
 						"type": "sentence",
-						"index": 3,
-						"text": "Large groups of troops from the divisions were captured as they attempted to return to North Korea, including up to 3,000 North Korean troops. "
+						"index": 1,
+						"text": "Truffaut's special talent, however, is for communicating a sense of the value of that joy. "
 					},
 					{
 						"type": "sentence",
-						"index": 4,
-						"text": "The attacking force of over 20,000 had been reduced to only 6,000 by the end of the fights at Masan."
+						"index": 2,
+						"text": "[[CITE|14|https://movies.nytimes.com/movie/review?res=9E01E5D71E39E136A05752C1A9629C946190D6CF]]"
 					}
 				]
 			},
@@ -1429,7 +567,84 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Desertion had continued to be a problem for the 24th Infantry, a *de facto* [[LINK|lang_en|Segregation_in_the_United_States|segregated]] unit. Statistics compiled by the Eighth Army found the 25th Infantry Division had to detain 116 deserters from the 25th Infantry throughout August, compared to 15 from the 27th Infantry and 12 from the 35th Infantry. The regiment had already been criticized for its poor performance at the [[LINK|lang_en|Battle_of_Sangju_(1950)|Battle of Sangju]] several weeks earlier. In late August, Kean began investigating the unit's behavior, and found its poor performance was starting to bring other units of the division down as well. Kean considered the regiment a weak link in the chain, and after its poor performance at the battles of Battle Mountain and Haman, he suggested to Walker that the regiment be disbanded and its troops used as replacements for other units in the field. Virtually all of the officers and enlisted men in the regiment were supportive of this idea, but Walker declined, feeling he could not afford to lose a regiment."
+						"text": "In his review in the *San Francisco Chronicle* in 1999, film critic Edward Guthmann praised the film, writing:"
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "blockquote",
+				"attrs": {
+					"className": "templatequote"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Truffaut tells his story with terrific dispatch, as if he was thrilled by its possibilities and couldn't wait to share his enthusiasm... the result is a cool combo of [[LINK|lang_en|Film_noir|film noir]], star vehicle and picaresque romance. It's vintage Truffaut, and a great way to get acquainted or reacquainted with one of cinema's true masters. [[CITE|15|http://sfgate.com/cgi-bin/article.cgi?f=%2Fc%2Fa%2F1999%2F05%2F14%2FDD71410.DTL]]"
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The film, however, had many detractors. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Dennis Schwartz, for example, wrote:"
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "blockquote",
+				"attrs": {
+					"className": "templatequote"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "This perverse love story just doesn't fly. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The two leads play unsympathetic characters and instead of getting into their character's heads they both play it as a game. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "It comes off as a disturbing film that seems pointless and has questionable entertainment value. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "It's one of the few misfires from the talented Truffaut, even with the restored 13 minutes missing from its American release that supposedly makes the film more lucid. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "[[CITE|16|http://homepages.sover.net/~ozus/mississippimermaid.htm]]"
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "On the review aggregator web site *Rotten Tomatoes*, the film holds an 85% positive rating from top film critics based on 13 reviews, and a 71% positive audience rating based on 2,387 user ratings."
 					}
 				]
 			}

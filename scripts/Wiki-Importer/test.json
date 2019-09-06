@@ -3,887 +3,33 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Battle of Las Carreras"
+      "text": "Film Society of Lincoln Center"
     }
   ],
   "main_photo": [
     {
       "type": "main_photo",
-      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Pedro_Santana_cph.3a03390.jpg",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Pedro_Santana_cph.3a03390.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/en/7/77/Film_Society_of_Lincoln_Center_logo.svg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/en/7/77/Film_Society_of_Lincoln_Center_logo.svg",
       "caption": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Pedro Santana"
+          "text": "FSLC logo"
         }
       ],
-      "mime": "image/jpeg",
+      "mime": "image/svg+xml",
       "category": "PICTURE",
-      "timestamp": "2019-09-06T03:35:18.464Z",
+      "timestamp": "2019-09-06T03:54:18.615Z",
       "media_props": {
         "type": "main_photo",
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pedro_Santana_cph.3a03390.jpg/263px-Pedro_Santana_cph.3a03390.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pedro_Santana_cph.3a03390.jpg/350px-Pedro_Santana_cph.3a03390.jpg 2x",
-        "height": 1398,
-        "width": 1038
+        "srcSet": "https://upload.wikimedia.org/wikipedia/en/thumb/7/77/Film_Society_of_Lincoln_Center_logo.svg/330px-Film_Society_of_Lincoln_Center_logo.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/en/thumb/7/77/Film_Society_of_Lincoln_Center_logo.svg/440px-Film_Society_of_Lincoln_Center_logo.svg.png 2x",
+        "height": 512,
+        "width": 512
       }
     }
   ],
-  "infobox_html": {
-    "type": "wikitable",
-    "attrs": {
-      "className": "infobox vevent",
-      "style": {
-        "width": "25.5em",
-        "borderSpacing": "2px"
-      }
-    },
-    "caption": {
-      "attrs": {},
-      "sentences": []
-    },
-    "thead": {
-      "rows": [],
-      "attrs": {}
-    },
-    "tbody": {
-      "attrs": {},
-      "rows": [
-        {
-          "index": 0,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "className": "summary",
-                "colSpan": "2",
-                "style": {
-                  "backgroundColor": "#C3D6EF",
-                  "textAlign": "center",
-                  "verticalAlign": "middle",
-                  "fontSize": "110%"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Battle of Las Carreras"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "backgroundColor": "#DCDCDC",
-                  "textAlign": "center",
-                  "verticalAlign": "middle"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Part of the [[LINK|lang_en|Dominican_War_of_Independence|Dominican War of Independence]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2"
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "table",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "width": "100%",
-                      "margin": "0",
-                      "padding": "0",
-                      "border": "0"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "tbody",
-                      "tag_class": "inline",
-                      "attrs": {},
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "tr",
-                          "tag_class": "block",
-                          "attrs": {},
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "th",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {
-                                  "paddingRight": "1em"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Date"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "td",
-                              "tag_class": "block",
-                              "attrs": {},
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "21-22 April 1849"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "tr",
-                          "tag_class": "block",
-                          "attrs": {},
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "th",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {
-                                  "paddingRight": "1em"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Location"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "td",
-                              "tag_class": "block",
-                              "attrs": {},
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {
-                                    "className": "location"
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "Nearby [[LINK|lang_en|Ban%C3%AD|Baní]], [[LINK|lang_en|Peravia_Province|Peravia Province]]"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "tr",
-                          "tag_class": "block",
-                          "attrs": {},
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "th",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {
-                                  "paddingRight": "1em"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Result"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "td",
-                              "tag_class": "block",
-                              "attrs": {},
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "\nDecisive Dominican victory"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "backgroundColor": "#C3D6EF",
-                  "textAlign": "center",
-                  "verticalAlign": "middle",
-                  "fontSize": "110%"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Belligerents"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "borderRight": "1px dotted #aaa"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "a",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "href": "/wiki/File:Flag_of_the_Dominican_Republic_(up_to_1844).svg",
-                    "className": "image flagicon"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "img",
-                      "tag_class": "void",
-                      "attrs": {
-                        "alt": "Flag of the Dominican Republic (up to 1844).svg",
-                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/22px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png",
-                        "decoding": "async",
-                        "width": "22",
-                        "height": "15",
-                        "className": "thumbborder",
-                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/33px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/44px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 2x",
-                        "data-file-width": "750",
-                        "data-file-height": "500"
-                      },
-                      "content": []
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " [[LINK|lang_en|Dominican_Republic|Dominican Republic]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "paddingLeft": "0.25em"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "flagicon"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "a",
-                      "tag_class": "inline",
-                      "attrs": {
-                        "href": "/wiki/Haiti",
-                        "title": "Haiti",
-                        "className": "flagicon flagicon"
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "img",
-                          "tag_class": "void",
-                          "attrs": {
-                            "alt": "Haiti",
-                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/23px-Flag_of_Haiti_%28civil%29.svg.png",
-                            "decoding": "async",
-                            "width": "23",
-                            "height": "14",
-                            "className": "thumbborder",
-                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/35px-Flag_of_Haiti_%28civil%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/46px-Flag_of_Haiti_%28civil%29.svg.png 2x",
-                            "data-file-width": "1000",
-                            "data-file-height": "600"
-                          },
-                          "content": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " [[LINK|lang_en|Haiti|Haiti]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "backgroundColor": "#C3D6EF",
-                  "textAlign": "center",
-                  "verticalAlign": "middle",
-                  "fontSize": "110%"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Commanders and leaders"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "borderRight": "1px dotted #aaa"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "a",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "href": "/wiki/File:Flag_of_the_Dominican_Republic_(up_to_1844).svg",
-                    "className": "image flagicon"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "img",
-                      "tag_class": "void",
-                      "attrs": {
-                        "alt": "Flag of the Dominican Republic (up to 1844).svg",
-                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/22px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png",
-                        "decoding": "async",
-                        "width": "22",
-                        "height": "15",
-                        "className": "thumbborder",
-                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/33px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/44px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 2x",
-                        "data-file-width": "750",
-                        "data-file-height": "500"
-                      },
-                      "content": []
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " Gen. [[LINK|lang_en|Pedro_Santana|Pedro Santana]] "
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "a",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "href": "/wiki/File:Flag_of_the_Dominican_Republic_(up_to_1844).svg",
-                    "className": "image flagicon"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "img",
-                      "tag_class": "void",
-                      "attrs": {
-                        "alt": "Flag of the Dominican Republic (up to 1844).svg",
-                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/22px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png",
-                        "decoding": "async",
-                        "width": "22",
-                        "height": "15",
-                        "className": "thumbborder",
-                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/33px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/44px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 2x",
-                        "data-file-width": "750",
-                        "data-file-height": "500"
-                      },
-                      "content": []
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " Gen. [[LINK|lang_en|Antonio_Duverg%C3%A9|Antonio Duvergé]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "paddingLeft": "0.25em"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "flagicon"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "a",
-                      "tag_class": "inline",
-                      "attrs": {
-                        "href": "/wiki/Haiti",
-                        "title": "Haiti",
-                        "className": "flagicon flagicon"
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "img",
-                          "tag_class": "void",
-                          "attrs": {
-                            "alt": "Haiti",
-                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/23px-Flag_of_Haiti_%28civil%29.svg.png",
-                            "decoding": "async",
-                            "width": "23",
-                            "height": "14",
-                            "className": "thumbborder",
-                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/35px-Flag_of_Haiti_%28civil%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/46px-Flag_of_Haiti_%28civil%29.svg.png 2x",
-                            "data-file-width": "1000",
-                            "data-file-height": "600"
-                          },
-                          "content": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " [[LINK|lang_en|Soulouque|Faustin Soulouque]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 7,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "backgroundColor": "#C3D6EF",
-                  "textAlign": "center",
-                  "verticalAlign": "middle",
-                  "fontSize": "110%"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Strength"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 8,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "borderRight": "1px dotted #aaa"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "\n800 militia[[CITE|2|null]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "paddingLeft": "0.25em"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "\n10,000 regulars"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "7 artillery pieces"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 9,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "backgroundColor": "#C3D6EF",
-                  "textAlign": "center",
-                  "verticalAlign": "middle",
-                  "fontSize": "110%"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Casualties and losses"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 10,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "borderRight": "1px dotted #aaa"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "\nminimal"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {
-                  "width": "50%",
-                  "paddingLeft": "0.25em"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "\n500+ killed[[CITE|1|null]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "7 artillery pieces captured"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "tfoot": {
-      "rows": [],
-      "attrs": {}
-    }
-  },
+  "infobox_html": null,
   "page_body": [
     {
       "paragraphs": [
@@ -891,16 +37,1261 @@
           "index": 0,
           "items": [
             {
+              "type": "body-table",
+              "attrs": {
+                "className": "wikitable floatright",
+                "style": {
+                  "margin": "0.5em 0 1.3em 1.4em",
+                  "border": "1px solid darkgray"
+                }
+              },
+              "caption": {
+                "attrs": {},
+                "sentences": []
+              },
+              "thead": {
+                "rows": [],
+                "attrs": {}
+              },
+              "tbody": {
+                "attrs": {},
+                "rows": [
+                  {
+                    "index": 0,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {
+                          "style": {
+                            "width": "300px",
+                            "textAlign": "center",
+                            "fontWeight": "bold"
+                          }
+                        },
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "Buildings of [[LINK|lang_en|Lincoln_Center|Lincoln Center]]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 1,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {
+                          "style": {
+                            "width": "300px"
+                          }
+                        },
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "className": "mw-graph",
+                              "style": {
+                                "minWidth": "300px",
+                                "minHeight": "400px"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "className": "mw-graph-img",
+                                  "src": "https://en.wikipedia.org/api/rest_v1/page/graph/png/Film_Society_of_Lincoln_Center/0/32011e8d305baf8011c30f328ceea7968cdf7657.png"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "textAlign": "left",
+                                "direction": "ltr",
+                                "fontSize": "70%",
+                                "color": "grey"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "text",
+                                "content": [
+                                  {
+                                    "index": 0,
+                                    "type": "sentence",
+                                    "text": "[[LINK|lang_en|Special:Map/17/40.771/-73.983/en|[Full screen]]]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 2,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {
+                          "style": {
+                            "width": "300px",
+                            "fontSize": "90%"
+                          }
+                        },
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "className": "plainlinks hlist navbar"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "ul",
+                                "tag_class": "block",
+                                "attrs": {},
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "Buildings and structures in Lincoln Center:"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#000000"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "1"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " Clark Studio Theater; Samuel B. and David Rose Building; Stanley H. Kaplan Penthouse; [[LINK|lang_en|Walter_Reade_Theater|Walter Reade Theater]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "2"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|Juilliard_School|Juilliard School]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "3"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|Alice_Tully_Hall|Alice Tully Hall]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "4"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " Claire Tow Theater; Lincoln Center Theater; LCT3 Theater; Mitzi E. Newhouse Theater; [[LINK|lang_en|Vivian_Beaumont_Theater|Vivian Beaumont Theater]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "5"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " Elinor Bunin Monroe Film Center"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "6"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|David_Geffen_Hall|David Geffen Hall]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "7"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " Bruno Walter Auditorium; [[LINK|lang_en|New_York_Public_Library_for_the_Performing_Arts|New York Public Library for the Performing Arts]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "8"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|Metropolitan_Opera_House_(Lincoln_Center)|Metropolitan Opera House]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 4px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "9"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " Josie Robertson Plaza; [[LINK|lang_en|Revson_Fountain|Revson Fountain]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 2px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "10"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|Damrosch_Park|Damrosch Park]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 2px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "11"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|David_H._Koch_Theater|David H. Koch Theater]]"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 2px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "12"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " David Rubenstein Atrium"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "br",
+                            "tag_class": "void",
+                            "attrs": {},
+                            "content": []
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "div",
+                            "tag_class": "block",
+                            "attrs": {
+                              "style": {
+                                "display": "inline-block",
+                                "lineHeight": "95%"
+                              }
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "div",
+                                "tag_class": "block",
+                                "attrs": {
+                                  "style": {
+                                    "display": "inline-block",
+                                    "width": "auto",
+                                    "height": "auto",
+                                    "textAlign": "center",
+                                    "padding": "0px 2px",
+                                    "verticalAlign": "middle",
+                                    "borderRadius": "3px",
+                                    "backgroundColor": "#5581A9"
+                                  }
+                                },
+                                "content": [
+                                  {
+                                    "type": "tag",
+                                    "tag_type": "span",
+                                    "tag_class": "inline",
+                                    "attrs": {
+                                      "style": {
+                                        "color": "white",
+                                        "fontSize": "88%",
+                                        "fontWeight": "bold"
+                                      }
+                                    },
+                                    "content": [
+                                      {
+                                        "type": "text",
+                                        "content": [
+                                          {
+                                            "index": 0,
+                                            "type": "sentence",
+                                            "text": "13"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": " [[LINK|lang_en|Jazz_at_Lincoln_Center|Jazz at Lincoln Center]]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "tfoot": {
+                "rows": [],
+                "attrs": {}
+              }
+            }
+          ],
+          "tag_type": "table",
+          "attrs": {
+            "className": "wikitable floatright",
+            "style": {
+              "margin": "0.5em 0 1.3em 1.4em",
+              "border": "1px solid darkgray"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
               "type": "sentence",
               "index": 0,
-              "text": "The **Battle of Las Carreras**, was a major battle during the years after the [[LINK|lang_en|Dominican_War_of_Independence|Dominican War of Independence]] and was fought on the 21-22 April 1849, nearby [[LINK|lang_en|Ban%C3%AD|Baní]], [[LINK|lang_en|Peravia_Province|Peravia Province]]. A force of 800 Dominican troops, a portion of the Army of the South, led by General [[LINK|lang_en|Pedro_Santana|Pedro Santana]], defeated an outnumbering force of 10,000 troops of the Haitian Army led by [[LINK|lang_en|Soulouque|Faustin Soulouque]].[[CITE|4|null]]"
+              "text": "The **Film Society of Lincoln Center**, known since April 29, 2019 as **Film at Lincoln Center**,[[CITE|1|https://www.nytimes.com/2019/04/28/movies/film-society-lincoln-center.html]] is a film presentation organization based in [[LINK|lang_en|New_York_City|New York City]], [[LINK|lang_en|United_States|United States]]. Founded in 1969 by three [[LINK|lang_en|Lincoln_Center|Lincoln Center]] executives—[[LINK|lang_en|William_F._May|William F. May]], [[LINK|lang_en|Martin_E._Segal|Martin E. Segal]] and [[LINK|lang_en|Schuyler_G._Chapin|Schuyler G. Chapin]][[CITE|2|https://www.nytimes.com/2011/09/21/business/william-f-may-95-dies-helped-found-lincoln-center-film-society.html?_r=1]]—the film society spotlights American independent cinema and world cinema, and recognizes and supports new filmmakers.[[CITE|3|https://www.filmlinc.org/about-us/]] The Film Society of Lincoln Center is one of the eleven resident organizations at the [[LINK|lang_en|Lincoln_Center_for_the_Performing_Arts|Lincoln Center for the Performing Arts]]."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Over the last four decades, the [[LINK|lang_en|Film_society|film society]] has introduced to American audiences the works of many of the world's most acclaimed filmmakers, including [[LINK|lang_en|Fran%C3%A7ois_Truffaut|François Truffaut]], [[LINK|lang_en|Rainer_Werner_Fassbinder|Rainer Werner Fassbinder]], [[LINK|lang_en|Jean-Luc_Godard|Jean-Luc Godard]], [[LINK|lang_en|Pedro_Almod%C3%B3var|Pedro Almodóvar]] and [[LINK|lang_en|Martin_Scorsese|Martin Scorsese]]."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 3,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Each year the organization presents its annual Gala Tribute, honoring legendary stars and industry leaders at Lincoln Center’s [[LINK|lang_en|David_Geffen_Hall|David Geffen Hall]], formerly known as [[LINK|lang_en|Avery_Fisher_Hall|Avery Fisher Hall]]."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 4,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The Film Society of Lincoln Center also hosts the annual [[LINK|lang_en|New_York_Film_Festival|New York Film Festival]] and is a co-presenter (with [[LINK|lang_en|The_Museum_of_Modern_Art|the Museum of Modern Art]]) of the [[LINK|lang_en|New_Directors/New_Films_Festival|New Directors/New Films Festival]]. The Film Society also publishes the bi-monthly film journal *[[LINK|lang_en|Film_Comment|Film Comment]]*."
             }
           ],
           "tag_type": "p",
           "attrs": {}
         }
       ],
-      "images": []
+      "images": [
+        {
+          "type": "section_image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Film_at_Lincoln_Center_-_Elinor_Bunin_Munroe_Film_Center_%2848269670827%29.jpg",
+          "thumb": "https://upload.wikimedia.org/wikipedia/commons/8/81/Film_at_Lincoln_Center_-_Elinor_Bunin_Munroe_Film_Center_%2848269670827%29.jpg",
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Elinor Bunin Munroe Film Center"
+            }
+          ],
+          "mime": "image/jpeg",
+          "category": "PICTURE",
+          "timestamp": "2019-09-06T03:54:19.494Z",
+          "media_props": {
+            "type": "section_image",
+            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Film_at_Lincoln_Center_-_Elinor_Bunin_Munroe_Film_Center_%2848269670827%29.jpg/330px-Film_at_Lincoln_Center_-_Elinor_Bunin_Munroe_Film_Center_%2848269670827%29.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Film_at_Lincoln_Center_-_Elinor_Bunin_Munroe_Film_Center_%2848269670827%29.jpg/440px-Film_at_Lincoln_Center_-_Elinor_Bunin_Munroe_Film_Center_%2848269670827%29.jpg 2x",
+            "height": 2592,
+            "width": 4608
+          }
+        },
+        {
+          "type": "section_image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Lincoln_Center_Main.jpg",
+          "thumb": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Lincoln_Center_Main.jpg",
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The Film Society of Lincoln Center is located at Lincoln Center for the Performing Arts in New York City"
+            }
+          ],
+          "mime": "image/jpeg",
+          "category": "PICTURE",
+          "timestamp": "2019-09-06T03:54:19.496Z",
+          "media_props": {
+            "type": "section_image",
+            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Lincoln_Center_Main.jpg/330px-Lincoln_Center_Main.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Lincoln_Center_Main.jpg/440px-Lincoln_Center_Main.jpg 2x",
+            "height": 2516,
+            "width": 3786
+          }
+        },
+        {
+          "type": "section_image",
+          "url": "https://upload.wikimedia.org/wikipedia/commons/f/f9/David_Geffen_Hall.jpg",
+          "thumb": "https://upload.wikimedia.org/wikipedia/commons/f/f9/David_Geffen_Hall.jpg",
+          "caption": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[LINK|lang_en|Avery_Fisher_Hall|Avery Fisher Hall]], now called [[LINK|lang_en|David_Geffen_Hall|David Geffen Hall]] since September 2015, at Lincoln Center, where the Film Society annually held its Gala Tribute."
+            }
+          ],
+          "mime": "image/jpeg",
+          "category": "PICTURE",
+          "timestamp": "2019-09-06T03:54:19.498Z",
+          "media_props": {
+            "type": "section_image",
+            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/David_Geffen_Hall.jpg/330px-David_Geffen_Hall.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/David_Geffen_Hall.jpg/440px-David_Geffen_Hall.jpg 2x",
+            "height": 3166,
+            "width": 4545
+          }
+        }
+      ]
     },
     {
       "paragraphs": [
@@ -910,7 +1301,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Battle"
+              "text": "Past honorees of Gala Tribute"
             }
           ],
           "tag_type": "h2",
@@ -920,12 +1311,559 @@
           "index": 1,
           "items": [
             {
-              "type": "sentence",
+              "type": "list_item",
               "index": 0,
-              "text": "The battle opened with a cannon barrage and devolved into hand-to-hand combat.[[CITE|2|null]] As the remnants of the Haitian army retreated along the southern coastal road, they were under fire from a small Dominican squadron.[[CITE|2|null]]"
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1972: [[LINK|lang_en|Charlie_Chaplin|Charlie Chaplin]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 1,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1973: [[LINK|lang_en|Fred_Astaire|Fred Astaire]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 2,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1974: [[LINK|lang_en|Alfred_Hitchcock|Alfred Hitchcock]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 3,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1975: [[LINK|lang_en|Joanne_Woodward|Joanne Woodward]] and [[LINK|lang_en|Paul_Newman|Paul Newman]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 4,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1978: [[LINK|lang_en|George_Cukor|George Cukor]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 5,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1979: [[LINK|lang_en|Bob_Hope|Bob Hope]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 6,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1980: [[LINK|lang_en|John_Huston|John Huston]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 7,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1981: [[LINK|lang_en|Barbara_Stanwyck|Barbara Stanwyck]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 8,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1982: [[LINK|lang_en|Billy_Wilder|Billy Wilder]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 9,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1983: [[LINK|lang_en|Laurence_Olivier|Laurence Olivier]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 10,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1984: [[LINK|lang_en|Claudette_Colbert|Claudette Colbert]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 11,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1985: [[LINK|lang_en|Federico_Fellini|Federico Fellini]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 12,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1986: [[LINK|lang_en|Elizabeth_Taylor|Elizabeth Taylor]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 13,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1987: [[LINK|lang_en|Alec_Guinness|Alec Guinness]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 14,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1988: [[LINK|lang_en|Yves_Montand|Yves Montand]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 15,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1989: [[LINK|lang_en|Bette_Davis|Bette Davis]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 16,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1990: [[LINK|lang_en|James_Stewart|James Stewart]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 17,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1991: [[LINK|lang_en|Audrey_Hepburn|Audrey Hepburn]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 18,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1992: [[LINK|lang_en|Gregory_Peck|Gregory Peck]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 19,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1993: [[LINK|lang_en|Jack_Lemmon|Jack Lemmon]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 20,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1994: [[LINK|lang_en|Robert_Altman|Robert Altman]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 21,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1995: [[LINK|lang_en|Shirley_MacLaine|Shirley MacLaine]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 22,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1996: [[LINK|lang_en|Clint_Eastwood|Clint Eastwood]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 23,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1997: [[LINK|lang_en|Sean_Connery|Sean Connery]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 24,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1998: [[LINK|lang_en|Martin_Scorsese|Martin Scorsese]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 25,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "1999: [[LINK|lang_en|Mike_Nichols|Mike Nichols]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 26,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2000: [[LINK|lang_en|Al_Pacino|Al Pacino]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 27,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2001: [[LINK|lang_en|Jane_Fonda|Jane Fonda]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 28,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2002: [[LINK|lang_en|Francis_Ford_Coppola|Francis Ford Coppola]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 29,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2003: [[LINK|lang_en|Susan_Sarandon|Susan Sarandon]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 30,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2004: [[LINK|lang_en|Michael_Caine|Michael Caine]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 31,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2005: [[LINK|lang_en|Dustin_Hoffman|Dustin Hoffman]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 32,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2006: [[LINK|lang_en|Jessica_Lange|Jessica Lange]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 33,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2007: [[LINK|lang_en|Diane_Keaton|Diane Keaton]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 34,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2008: [[LINK|lang_en|Meryl_Streep|Meryl Streep]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 35,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2009: [[LINK|lang_en|Tom_Hanks|Tom Hanks]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 36,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2010: [[LINK|lang_en|Michael_Douglas|Michael Douglas]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 37,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2011: [[LINK|lang_en|Sidney_Poitier|Sidney Poitier]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 38,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2012: [[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 39,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2013: [[LINK|lang_en|Barbra_Streisand|Barbra Streisand]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 40,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2014: [[LINK|lang_en|Rob_Reiner|Rob Reiner]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 41,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2015: [[LINK|lang_en|Robert_Redford|Robert Redford]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 42,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2016: [[LINK|lang_en|Morgan_Freeman|Morgan Freeman]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 43,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2017: [[LINK|lang_en|Robert_De_Niro|Robert De Niro]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 44,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2018: [[LINK|lang_en|Helen_Mirren|Helen Mirren]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 45,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "2019: 50th Anniversary Gala Event"
+                }
+              ],
+              "tag_type": "li"
             }
           ],
-          "tag_type": "p",
+          "tag_type": "ul",
           "attrs": {}
         }
       ],
@@ -935,58 +1873,58 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": null,
-      "thumb": null,
+      "url": "https://www.nytimes.com/2019/04/28/movies/film-society-lincoln-center.html",
+      "thumb": "https://www.nytimes.com//vi-assets/static-assets/apple-touch-icon-319373aaf4524d94d38aa599c56b8655.png",
       "category": "NONE",
       "citation_id": 1,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Over 500 Haitians were killed in the battles of El Número and Las Carreras. , p. 302."
+          "text": "Aridi, Sara (April 28, 2019). \"After 50 Years, Film Society of Lincoln Center Is a ‘Society’ No More\". *New York Times*. nytimes.com. Retrieved 2019-04-22."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T03:35:18.469Z",
+      "timestamp": "2019-09-06T03:54:18.635Z",
       "mime": null
     },
     {
-      "url": null,
-      "thumb": null,
-      "category": "BOOK",
+      "url": "https://www.nytimes.com/2011/09/21/business/william-f-may-95-dies-helped-found-lincoln-center-film-society.html?_r=1",
+      "thumb": "https://static01.nyt.com/images/icons/ios-default-homescreen-57x57.png",
+      "category": "NONE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Scheina, Robert L. (2003). *Latin America's Wars*. Potomac Books.."
+          "text": "Grimes, William (September 20, 2011). \"William F. May, 95, Dies; Helped Found Film Society\". *New York Times*. Retrieved 2011-09-22."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T03:35:18.471Z",
+      "timestamp": "2019-09-06T03:54:18.637Z",
       "mime": null
     },
     {
-      "url": "https://openlibrary.org/search?q=",
-      "thumb": null,
-      "category": "BOOK",
+      "url": "https://www.filmlinc.org/about-us/",
+      "thumb": "https://jojud265nia2bj9sy4ah9b61-wpengine.netdna-ssl.com/wp-content/themes/filmlinc/dist/img/favicon.ico?cb=1",
+      "category": "NONE",
       "citation_id": 3,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": ""
+          "text": "\"About Us\". Film at Lincoln Center. filmlinc.org. Retrieved 2019-04-29."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T03:35:18.471Z",
+      "timestamp": "2019-09-06T03:54:18.638Z",
       "mime": null
     },
     {
-      "url": null,
+      "url": "http://www.filmlinc.com/",
       "thumb": null,
       "category": "NONE",
       "citation_id": 4,
@@ -994,36 +1932,19 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "."
+          "text": "Official website"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T03:35:18.472Z",
+      "timestamp": "2019-09-06T03:54:19.486Z",
       "mime": null
     },
     {
-      "url": "https://books.google.com/books?id=AvKxAgAAQBAJ&pg=PT133&dq=#v=onepage&q&f=false",
+      "url": "https://en.wikipedia.org/wiki/Film_Society_of_Lincoln_Center",
       "thumb": null,
       "category": "NONE",
       "citation_id": 5,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "*Imperial Wars 1815–1914*"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T03:35:18.476Z",
-      "mime": null
-    },
-    {
-      "url": "https://en.wikipedia.org/wiki/Battle_of_Las_Carreras",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 6,
       "description": [
         {
           "index": 0,
@@ -1053,7 +1974,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T03:35:18.478Z",
+      "timestamp": "2019-09-06T03:54:19.491Z",
       "mime": null
     }
   ],
@@ -1093,7 +2014,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/6/2019 3:35:17 AM UTC"
+      "value": "8/6/2019 3:54:17 AM UTC"
     },
     {
       "key": "last_modified",
@@ -1105,11 +2026,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Battle_of_Las_Carreras"
+      "value": "Film_Society_of_Lincoln_Center"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Battle_of_Las_Carreras"
+      "value": "Film_Society_of_Lincoln_Center"
     }
   ],
   "amp_info": {
@@ -1118,5 +2039,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmaNwcyTrzDPSQ8ebnbqyJPuaJVtQzvxUzsQC1zyEA51dK"
+  "ipfs_hash": "QmZp3om3seW9EmC8NkdxgqEQFGiTvTDRi2XiwLAJBkWSjn"
 }

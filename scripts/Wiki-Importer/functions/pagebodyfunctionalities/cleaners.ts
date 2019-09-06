@@ -55,7 +55,6 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         if(theParent.eq(0)[0].name == 'a'){
 
             if (theSrc.search(/Flag_of/gu) >= 0){
-                console.log("BEEE")
                 let theClass = $(theParent).eq(0)[0].attribs['class'];
                 if (theClass) $(theParent).attr('class', theClass + " flagicon");
                 else $(theParent).attr('class', "flagicon");

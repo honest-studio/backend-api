@@ -169,7 +169,7 @@ export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
 // Strip out these crappy images because they look ugly and also mess up the profile-picture-finding algorithm
 export const PRECLEAN_BAD_FILE_REGEXES = /.*Picto_infobox.*|.*Crystal_Clear_action_info.*|.*Blue_pencil.*|.*CentralAutoLogin.*|.*Twemoji.*|.*Gtk-dialog.*|.*Info_Simple.*/gimu;
 
-export const PRECLEAN_IMG_FIX_REGEXES = /^\/w\/extensions.*/gimu;
+export const PRECLEAN_IMG_FIX_REGEXES = /^\/w\/extensions.*|^\/api\/rest_v1/gimu;
 export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
@@ -246,6 +246,8 @@ export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { tag: null, id: null, class: 'div-col'}, // Some ul's and ol's get wrapped by divs
     { tag: "a", id: null, class: 'new' }, // Redlinks
 ]
+
+
 
 // Clean these up after the citations are parsed out
 export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
