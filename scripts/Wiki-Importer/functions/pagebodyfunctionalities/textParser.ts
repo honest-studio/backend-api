@@ -19,16 +19,17 @@ let accumulator = ''; //global textAccumulator
 let internalCitations = {};
 
 export const accumulateText = (element, $, citations): Sentence[] => {
-	if (element.type == 'text') { //quick return if element is text
+	if (element.type == 'text') { // Quick return if element is text
 		return [{
 			type: 'sentence',
 			index: 0,
 			text: $(element).text()
 		}]
 	}
-	accumulator = ''; //reset accumulator for each element
+	accumulator = ''; // Reset accumulator for each element
 	internalCitations = citations;
 	textParser(element, $, citations);
+
 	return [{
 		type: 'sentence',
 		index: 0,
@@ -40,6 +41,7 @@ export const accumulateText = (element, $, citations): Sentence[] => {
 export const textParser = (element, $, internalCitations) => {
 	let $element = $(element); 
 	$element.contents().each((i, el) => {
+		// console.log($.html(el));
 		let $el = $(el); 
 		if (el.type == 'text') {
 			let text = $el.text();

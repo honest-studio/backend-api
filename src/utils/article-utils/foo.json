@@ -5,25 +5,19 @@
 				"index": 0,
 				"tag_type": "p",
 				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "***Mississippi Mermaid*** ([[LINK|lang_en|French_language|French]] : *La sirène du Mississipi*) is a 1969 French [[LINK|lang_en|Romance_film|romantic drama]] film directed by [[LINK|lang_en|François_Truffaut|François Truffaut]] and starring [[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]] and [[LINK|lang_en|Jean-Paul_Belmondo|Jean-Paul Belmondo]]. Adapted from the 1947 novel *Waltz into Darkness* by [[LINK|lang_en|Cornell_Woolrich|Cornell Woolrich]], the film is about a tobacco planter on [[LINK|lang_en|Réunion|Réunion]] island in the Indian Ocean who becomes engaged through correspondence to a woman he does not know. When she arrives it is not the same woman in the photo, but he marries her anyway. Filmed in southern France and Réunion island, [[CITE|10|http://imdb.com/title/tt0064990/locations]] *Mississippi Mermaid* was the 17th highest-grossing film of the year in France with a total of 1,221,027 admissions. [[CITE|11|http://jpbox-office.com/fichfilm.php?affich=france&id=9033]] It was remade in 2001 as *[[LINK|lang_en|Original_Sin_(2001_film)|Original Sin]] *, directed by [[LINK|lang_en|Michael_Cristofer|Michael Cristofer]] and starring [[LINK|lang_en|Angelina_Jolie|Angelina Jolie]] and [[LINK|lang_en|Antonio_Banderas|Antonio Banderas]]."
-					}
-				]
+				"items": []
 			},
 			{
 				"index": 1,
 				"tag_type": "p",
 				"attrs": {},
-				"items": []
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": []
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "**\"Church Key\"** is a classic instrumental single that was released by [[LINK|lang_en|California|California]] surf group [[LINK|lang_en|The_Revels|The Revels]] on [[LINK|lang_en|Tony_Hilder|Tony Hilder]]'s [[LINK|lang_en|Impact_Records_(California)|Impact Records]] label in 1960."
+					}
+				]
 			}
 		],
 		"images": []
@@ -34,13 +28,32 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "plot"
+					"id": "background"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Plot"
+						"text": "Background"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "the-track"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The track"
 					}
 				]
 			},
@@ -52,7 +65,32 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Louis Mahé ([[LINK|lang_en|Jean-Paul_Belmondo|Jean-Paul Belmondo]]), a wealthy tobacco plantation owner on Réunion island in the Indian Ocean, is awaiting the arrival of his bride to be, Julie Roussel ([[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]]), whom he has never met. They became acquainted through the personals column of a French newspaper and have been corresponding by mail. At the Hotel Mascarin he meets his partner Jardine who accompanies him to pick up the ring. Louis drives to the dock to greet Julie who is arriving on the steamer *Mississipi* (spelled with one p according to the French spelling of the river at the time) [[CITE|12|http://frenchlines.com/presse/2011_chantiers_ateliers_provence/dossier_presse_chantiers_ateliers_provence.pdf]] from [[LINK|lang_en|Nouméa|Nouméa]], the capital of [[LINK|lang_en|New_Caledonia|New Caledonia]]. When they meet he is surprised by her beauty and does not recognize her; she is not the woman in the photo that she had sent him. She explains that she sent the photo of a neighbor to assure the sincerity of his intentions. He confesses that he too has not told the complete truth, having hidden the fact that he was wealthy."
+						"text": "The track starts off with a guitar intro, following with the main theme of the number is handled by the guitar in a 12 bar blues progression. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "There is a party atmosphere in the track. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The title of the track is spoken. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "There is the sound of a beer can being opened as well as a voice of giggling female. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]] The A side which was credited to The Revels with Barbara Adkins was written by Dan Darnold. "
+					},
+					{
+						"type": "sentence",
+						"index": 5,
+						"text": "The B side to the single was \"Vesuvius which was written by [[LINK|lang_en|Robert_Hafner|Robert J. Hafner]] [[CITE|8|http://45cat.com/record/1im]] This was the first release on Hilders Impact Records label. [[CITE|-1|https://books.google.com/books?dq=the+revels+Church+Key+IMpaCT&ei=xzcyVcWeM-S3mAWxtYBg&hl=en&id=iEUEAAAAMBAJ&lpg=PA22&ots=PnGMv2n1Ye&pg=PA22&sa=X&sig=KlbPF8NUXkyVNa9dYX1pwatgFLk&source=bl&ved=0CDIQ6AEwBDgK#v=onepage&q=therevels%20Church%20Key%20IMpaCT&f=false]] It was also released on the CT label which was another record label of Hilders. [[CITE|10|http://popsike.com/Rare-Surf-45-The-Revels-Church-Key-on-CT-from-1960/261583424535.html]] [[CITE|11|http://allmusic.com/artist/tony-hilder-mn0000005010]]"
 					}
 				]
 			},
@@ -64,27 +102,1686 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Louis and Julie quickly marry, and his adoration of his new bride makes him overlook inconsistencies with what she wrote in her letters. "
+						"text": "It appears on The Revels 1964 album *Revels on a Rampage*, *Intoxica!!! "
 					},
 					{
 						"type": "sentence",
 						"index": 1,
-						"text": "He gives Julie access to his bank accounts and prints her image on the cigarette packs his company manufactures. "
+						"text": "The Best of the Revels* in 1995 and various artist compilations *Kahuna Classics: Surf Music*, *Surf Wax: Songs of the Beach* and *Instro Poker of Aces*. "
 					},
 					{
 						"type": "sentence",
 						"index": 2,
-						"text": "After receiving an angry letter from Julie's sister, Berthe Roussel (Nelly Borgeaud), demanding to know the whereabouts of Julie, Louis returns home to find that Julie is gone, and that she has absconded with nearly 28 million francs, all but emptying his bank accounts. "
+						"text": "[[CITE|12|http://allmusic.com/song/church-key-mt0002602054]] A version of the song by The Biscaynes appears on the *[[LINK|lang_en|Surf's_Up!_At_Banzai_Pipeline|Surf's Up! At Banzai Pipeline]] * compilation album. [[CITE|1|http://artistdirect.com/nad/store/artist/album/0,,171261,00.html]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "the-group"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The group"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "\"Church Key\" and \"Comanche\" were the tracks The Revels were best known for. "
 					},
 					{
 						"type": "sentence",
-						"index": 3,
-						"text": "Soon after, Julie's sister Berthe arrives and informs him that the woman he married was not Julie and that she saw her sister board the *Mississipi*. "
+						"index": 1,
+						"text": "[[CITE|13|http://waybackattack.com/revels.html]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The band's next single was \"Intoxica\" / \"tequila\" which was released in 1961. "
 					},
 					{
 						"type": "sentence",
-						"index": 4,
-						"text": "They hire a private detective, Comolli, to track down the impostor and bring her to justice."
+						"index": 1,
+						"text": "[[CITE|-1|https://books.google.com/books?dq=cHURCH+kEY+vESUVIUS&ei=JzgyVYz6K4POmAXCx4HwDw&hl=en&id=Dm3zZZeBWGQC&pg=PA567&sa=X&ved=0CBwQ6AEwAA#v=onepage&q=cHURCHkEY%20vESUVIUS&f=false]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "label-and-distribution"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Label and distribution"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The single was picked up by [[LINK|lang_en|Liberty_Records|Liberty Records]] for national distribution. The banner that it was released under was that of Impact. This was to retain the identity of Tony Hilder's label. [[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "other-versions"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other versions"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "table",
+				"attrs": {
+					"className": "ep-table wikitable plainrowheaders sortable"
+				},
+				"items": [
+					{
+						"type": "body-table",
+						"attrs": {
+							"className": "ep-table wikitable plainrowheaders sortable"
+						},
+						"caption": {
+							"attrs": {},
+							"sentences": [
+								{
+									"type": "sentence",
+									"index": 0,
+									"text": "List of singles"
+								}
+							]
+						},
+						"thead": {
+							"rows": [],
+							"attrs": {}
+						},
+						"tbody": {
+							"rows": [
+								{
+									"index": 0,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Act "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Title "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Catalogue "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Year "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {
+												"className": "unsortable",
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Notes "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 1,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " The Gonzos "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " \"Church Key\" / \"Very Muddy Waters\" "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Donna 1330 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1960 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-11"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 2,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " [[LINK|lang_en|The_Original_Surfaris|The Surfaris]] * The Biscaynes "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " \"Moment Of Truth\" / *\"Church Key\" "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Northridge 1001 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1963 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-12"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 3,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Jim Waller And The Deltas "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " \"Surfin' Wild\" / \"Church Key\" "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Arvee A-5072 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1963 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-13"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-14"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 4,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " [[LINK|lang_en|Dave_Myers_and_The_Surftones|Dave Myers and his Surf-Tones]] "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " \"Church Key\" / \"Passion\" "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " [[LINK|lang_en|Impact_Records_(California)|Impact]] 27-IMX "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1963 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-15"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 5,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " * The Trashmen The Wailers "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " *\"Church Key\" / \"Wailin'\" "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " [[LINK|lang_en|Sundazed_Records|Sundazed]] / Norton LV-1 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1999 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-16"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							],
+							"attrs": {}
+						},
+						"tfoot": {
+							"rows": [],
+							"attrs": {}
+						}
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "table",
+				"attrs": {
+					"className": "ep-table wikitable plainrowheaders sortable"
+				},
+				"items": [
+					{
+						"type": "body-table",
+						"attrs": {
+							"className": "ep-table wikitable plainrowheaders sortable"
+						},
+						"caption": {
+							"attrs": {},
+							"sentences": [
+								{
+									"type": "sentence",
+									"index": 0,
+									"text": "Appears on album"
+								}
+							]
+						},
+						"thead": {
+							"rows": [],
+							"attrs": {}
+						},
+						"tbody": {
+							"rows": [
+								{
+									"index": 0,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Act "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Title "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Catalogue "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Year "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {
+												"className": "unsortable",
+												"scope": "col"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Notes "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 1,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Centurians "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Surfers' Pajama Party "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " [[LINK|lang_en|Del-Fi_Records|Del-Fi Records]] DFLP 1228 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1963 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-17"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 2,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " The Impacts "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " *Wipe Out!* "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Del-Fi Records DFLP 1234 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1963 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-18"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-19"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|-1|https://books.google.com/books?dq=%22Church+Key%22Instrumental&ei=vz8yVcjXB-TlmAWppoCYAg&hl=en&id=3sGoAwAAQBAJ&pg=PA61&sa=X&ved=0CCMQ6AEwAQ#v=onepage&q=%22ChurchKey%22Instrumental&f=false]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 3,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " [[LINK|lang_en|The_Rivieras|The Rivieras]] "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " *[[LINK|lang_en|Let's_Have_a_Party_(album)|Let's Have a Party]] * "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " U.S.A. 102 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1964 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-20"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|8|http://45cat.com/record/1im]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 4,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"scope": "row"
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Detroit Bros. "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " *Murdered by the Surf Music* "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " PPDET-0004 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 2000 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 4,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-21"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|8|http://45cat.com/record/1im]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-22"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": "[[CITE|8|http://45cat.com/record/1im]]"
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							],
+							"attrs": {}
+						},
+						"tfoot": {
+							"rows": [],
+							"attrs": {}
+						}
 					}
 				]
 			},
@@ -96,7 +1793,12 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "On a flight to [[LINK|lang_en|Nice|Nice]], [[LINK|lang_en|France|France]], Louis suddenly collapses from exhaustion. While recuperating in the Clinique Heurtebise sanitarium, he sees Julie('s impostor) on television, dancing at a nightclub in [[LINK|lang_en|Antibes|Antibes]]. He buys a gun and travels to Antibes where he breaks into her room at the Hotel Monorail, intent on killing her. When she returns and is confronted by Louis, she offers no resistance. Explaining that her real name is Marion Vergano, she tells him of her sordid past; of the years she spent in prison; and of her association with a heartless gangster, Richard, who was with her on the *Mississipi*. She recounts that when they met Julie Roussel and learned of her forthcoming marriage, Richard fabricated a plot to kill Julie and send Marion in her place to rob Louis. Afterwards Richard forced her to go through with the robbery and then abandoned her. She tells Louis that she still loves him, and Louis forgives her."
+						"text": "Note: \"Church Key\" by The Fabulous Pharaohs released in 1966 is a different track all together and was credited to Fisher-Stevenson. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[CITE|8|http://45cat.com/record/1im]]"
 					}
 				]
 			},
@@ -104,549 +1806,7 @@
 				"index": 4,
 				"tag_type": "p",
 				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Louis and Marion buy a red convertible and drive to [[LINK|lang_en|Aix-en-Provence|Aix-en-Provence]] where they move into a house together and spend their days traveling the region and making love. Their happiness is interrupted, however, by Comolli, who has arrived in Aix on the trail of the impostor. After trying in vain to bribe the detective to drop the case, Louis shoots him dead and buries him in the wine cellar of the house. Louis and Marion flee to [[LINK|lang_en|Lyon|Lyon]], but she grows increasingly dissatisfied with their fugitive existence and longs for a life of luxury in Paris. Louis returns briefly to Réunion and sells his share in the plantation to his partner Jardine. Upon his return he finds the police are on their trail. Again they are forced to flee, leaving most of his money behind."
-					}
-				]
-			},
-			{
-				"index": 5,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "They head into the mountains where they find an isolated cabin in which to hide. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "They hope to cross over into Switzerland, but Marion is restless and unhappy with their life on the run. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Louis becomes increasingly ill, and after nearly collapsing, he suspects that Marion has been putting rat poison in his coffee. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "He attempts to escape, but Marion brings him back to the cabin. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "As she pours him another glass of coffee, he reveals his knowledge of her plan, accepts his fate with no regrets, and expresses his overwhelming love for her. "
-					},
-					{
-						"type": "sentence",
-						"index": 5,
-						"text": "Ashamed at her actions, Marion knocks the glass from Louis' hand and vows to make amends. "
-					},
-					{
-						"type": "sentence",
-						"index": 6,
-						"text": "She acknowledges that no woman deserves to be loved like this, but she assures him that she loves him and that they can still go away together. "
-					},
-					{
-						"type": "sentence",
-						"index": 7,
-						"text": "Crying in his arms, Marion tells him, \"I'm learning what love is, Louis. "
-					},
-					{
-						"type": "sentence",
-						"index": 8,
-						"text": "It's painful.\" "
-					},
-					{
-						"type": "sentence",
-						"index": 9,
-						"text": "After Louis regains his strength, they leave the cabin behind them in a snow storm and head off together toward the border."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "cast"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Cast"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Jean-Paul_Belmondo|Jean-Paul Belmondo]] as Louis Mahé"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Catherine_Deneuve|Catherine Deneuve]] as Julie Roussel / Marion Vergano"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Michel_Bouquet|Michel Bouquet]] as Comolli"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Nelly Borgeaud as Berthe Roussel"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Marcel Berbert as Jardine"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Martine Ferrière as the Landlady"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 6,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Yves Drouhet as the Detective"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 7,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Roland Thénot as Richard [[CITE|13|https://worldcat.org/oclc/12613514]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "production"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Production"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "filming-locations"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Filming locations"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Aix-en-Provence|Aix-en-Provence]], Bouches-du-Rhône, France"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Antibes|Antibes]], Alpes-Maritimes, France"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Grenoble|Grenoble]], Isère, France"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Le_Tampon|Le Tampon]], [[LINK|lang_en|Réunion|Réunion]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Lyon|Lyon]], Rhône, Rhône-Alpes, France"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nice|Nice]], Alpes-Maritimes, France"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 6,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Saint-Denis,_Réunion|Saint-Denis, Réunion]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 7,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Sainte-Anne,_Réunion|Sainte-Anne, Réunion]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 8,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Sainte-Suzanne,_Réunion|Sainte-Suzanne, Réunion]] [[CITE|10|http://imdb.com/title/tt0064990/locations]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "reception"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Reception"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "box-office"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Box Office"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The film was the 16th most popular movie at the French box office in 1969."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "critical"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Critical"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In his review in *The New York Times*, Vincent Canby wrote that the film \"defies easy definition and blithely triumphs over what initially appears to be structural schizophrenia.\" "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "[[CITE|14|https://movies.nytimes.com/movie/review?res=9E01E5D71E39E136A05752C1A9629C946190D6CF]] Canby noted the performances of Belmondo, Deneuve, and Bouquet, which were \"played with marvelous style.\" "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "[[CITE|14|https://movies.nytimes.com/movie/review?res=9E01E5D71E39E136A05752C1A9629C946190D6CF]] Canby concluded:"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "blockquote",
-				"attrs": {
-					"className": "templatequote"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In *Mississippi Mermaid*, as in all of Truffaut's films, love leads only to an uncertain future that, at best, may contain some joy along with the inevitable misery. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Truffaut's special talent, however, is for communicating a sense of the value of that joy. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "[[CITE|14|https://movies.nytimes.com/movie/review?res=9E01E5D71E39E136A05752C1A9629C946190D6CF]]"
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In his review in the *San Francisco Chronicle* in 1999, film critic Edward Guthmann praised the film, writing:"
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "blockquote",
-				"attrs": {
-					"className": "templatequote"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Truffaut tells his story with terrific dispatch, as if he was thrilled by its possibilities and couldn't wait to share his enthusiasm... the result is a cool combo of [[LINK|lang_en|Film_noir|film noir]], star vehicle and picaresque romance. It's vintage Truffaut, and a great way to get acquainted or reacquainted with one of cinema's true masters. [[CITE|15|http://sfgate.com/cgi-bin/article.cgi?f=%2Fc%2Fa%2F1999%2F05%2F14%2FDD71410.DTL]]"
-					}
-				]
-			},
-			{
-				"index": 5,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The film, however, had many detractors. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Dennis Schwartz, for example, wrote:"
-					}
-				]
-			},
-			{
-				"index": 6,
-				"tag_type": "blockquote",
-				"attrs": {
-					"className": "templatequote"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "This perverse love story just doesn't fly. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "The two leads play unsympathetic characters and instead of getting into their character's heads they both play it as a game. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "It comes off as a disturbing film that seems pointless and has questionable entertainment value. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "It's one of the few misfires from the talented Truffaut, even with the restored 13 minutes missing from its American release that supposedly makes the film more lucid. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "[[CITE|16|http://homepages.sover.net/~ozus/mississippimermaid.htm]]"
-					}
-				]
-			},
-			{
-				"index": 7,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On the review aggregator web site *Rotten Tomatoes*, the film holds an 85% positive rating from top film critics based on 13 reviews, and a 71% positive audience rating based on 2,387 user ratings."
-					}
-				]
+				"items": []
 			}
 		],
 		"images": []

@@ -1,25 +1,30 @@
+import { parseInlineImage } from '../../../../src/utils/article-utils/article-converter';
+
 // Input: anchor tag 
 // Output: string of LINK or INLINE-IMG
-export const parseAnchorTag = (element, $) => {
+export const parseAnchorTag = (element, $: CheerioStatic) => {
 	let $element = $(element);
 	let theClass = $element.attr('class');
-	if ($element.children().length == 0) { // Resolve anchor tags that only contains text 
+  if ($element.children().length == 0) { // Resolve anchor tags that only contains text 
 	  return parseLink(element, $);
 	}
 	else if (theClass && theClass.search(/external/gimu) >= 0) { // External link
 		// return $(element).text();
 		return element;
-    }
-    else if (theClass && theClass.search(/image/gimu) >= 0) { // Inline-image 
-    	return parseInlineImage($element.find('img'), $);
-    }
-    else if ($element.html().includes('<br>')) {  // Anchor tag has inner br tag edge case
-		let a = ($.html($element)).replace('<br>', '\n');
-  		return parseAnchorTag(a, $);
-  	}
-  	else {
-  		return ''
-  	}
+  }
+  else if (theClass && theClass.search(/image|flagicon/gimu) >= 0) { // Inline-image 
+  	return parseInlineImage($element.children('img'), $);
+  }
+  // else if ($element.children('img').length && theClass.search(/image|flagicon/gimu) >= 0) { // Inline-image 
+  //   return parseInlineImage($element.children('img'), $);
+  // }
+  else if ($element.html().includes('<br>')) {  // Anchor tag has inner br tag edge case
+    let a = ($.html($element)).replace('<br>', '\n');
+    return parseAnchorTag(a, $);
+  }
+  else {
+    return ''
+  }
 }
 
 export const parseLink = (anchorTagElement, $) => { //LINK
@@ -41,18 +46,6 @@ export const parseLink = (anchorTagElement, $) => { //LINK
   return wikiLink
 }
 
-//[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]] 
-export const parseInlineImage = (img, $) => {
-	let $img = $(img);
-	let src = $img.attr('src');
-	let srcset = $img.attr('srcset');
-	let alt = $img.attr('alt');
-	if (alt == undefined) {
-		alt = '';
-	}
-	let height = $img.attr('height');
-	let width = $img.attr('width'); 
-	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
-}
+
 
 

@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import { parseInlineImage } from '../../../../src/utils/article-utils/article-converter';
 import { PRECLEAN_BAD_ELEMENTS, 
     PRECLEAN_UNWRAP_ELEMENTS, 
     ElementCleaningPack, 
@@ -7,6 +8,7 @@ import { PRECLEAN_BAD_ELEMENTS,
     PRECLEAN_BAD_FILE_REGEXES,
     PRECLEAN_IMG_FIX_REGEXES
 } from '../wiki-constants';
+
 const chalk = require('chalk');
 
 export interface CheerioPack {
@@ -54,12 +56,12 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         // Try find flagicons
         let theParent = $(img_elem).parent();
         if(theParent.eq(0)[0].name == 'a'){
-
             if (theSrc.search(/Flag_of/gu) >= 0){
                 let theClass = $(theParent).eq(0)[0].attribs['class'];
-                if (theClass) $(theParent).attr('class', theClass + " flagicon");
-                else $(theParent).attr('class', "flagicon");
+                if (theClass && theClass.search(/flagicon/gu) == -1) $(theParent).attr('class', theClass + " flagicon");
+                else if (!theClass) $(theParent).attr('class', "flagicon");
             }
+            // $(img_elem).replaceWith(parseInlineImage(img_elem, $))
         }
 
         

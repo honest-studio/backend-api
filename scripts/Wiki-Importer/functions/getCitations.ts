@@ -166,8 +166,9 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 	// Convert the raw citations into real ones
 	// Also replace the <sup> tags with markdown
-	process.stdout.write(chalk.yellow(`Converting real citations to real ones...`));
+	console.log(chalk.yellow.bold(`---Converting raw citations---`));
 	let await_done = false, await_counter = 0;
+
 	await Promise.all(
 		
 		rawCitations.map(async (raw_citn, idx) => {
@@ -186,13 +187,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'PERIODICAL':
 				case 'BOOK': {
 					if (raw_citn.isbn){
-						process.stdout.write(chalk.yellow(`\t Fetching book info\n`));
+						process.stdout.write(chalk.yellow(`\tFetching book info\n`));
 						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn);
 						workingCitation.url = bookInfo.url;
 						workingCitation.thumb = bookInfo.thumb;
 					}
 					else if (raw_citn.issn){
-						process.stdout.write(chalk.yellow(`\t Fetching periodical info\n`));
+						process.stdout.write(chalk.yellow(`\tFetching periodical info\n`));
 						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn);
 						workingCitation.url = periodicalInfo.url;
 						workingCitation.thumb = periodicalInfo.thumb;
@@ -259,7 +260,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			
 		})
 	)
-	process.stdout.write(chalk.yellow(` DONE\n`));
+	console.log(chalk.yellow.bold(`-------------DONE-------------`));
 
 	// Loop through all of the <a> tags and find the external links
 	process.stdout.write(chalk.yellow(`Finding external link citations...`));

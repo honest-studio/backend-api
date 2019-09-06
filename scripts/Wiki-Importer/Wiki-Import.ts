@@ -108,7 +108,7 @@ export const WikiImport = async (inputString: string) => {
         })
     }
 
-    logYlw("===========⚙️  ASSEMBLE THE ARTICLEJSON ⚙️ ============");
+    logYlw("==============⚙️  ARTICLEJSON ASSEMBLY ⚙️ =============");
     // Assemble the wiki
     process.stdout.write(chalk.yellow(`Creating the ArticleJson object...`));
     let articlejson: ArticleJson = {
@@ -265,7 +265,7 @@ export const WikiImport = async (inputString: string) => {
         console.log("\n");
         logYlw("---------------------------------------------------------------------------------------");
         logYlw("---------------------------------------------------------------------------------------");
-        logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
+        logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
         console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`));
 
         const fetchedArticles: any[] = await theMysql.TryQuery(

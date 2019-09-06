@@ -1245,7 +1245,7 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 }
                 break;
             case 'tag':
-                let newElement: NestedTagItem;
+                let newElement: NestedTagItem | NestedTextItem;
                 let tagClass = BLOCK_ELEMENTS.indexOf(element.name) !== -1 
                 ? 'block'   
                 : voidElements.indexOf(element.name) !== -1 
@@ -1257,13 +1257,26 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 if (element.children.length) {
                     parsedChildrenContent = nestedContentParser(element.children, [])
                 }
-                newElement = {
-                    type: 'tag',
-                    tag_type: element.name,
-                    tag_class: tagClass,
-                    attrs: cleanAttributes(element.attribs),
-                    content: parsedChildrenContent
-                } as NestedTagItem;
+                let cleanedAttributes = cleanAttributes(element.attribs);
+
+                // Handle <img>'s inside of cells as INLINE_IMAGES
+                if( false && element.name == 'img' ){
+                    newElement = {
+                        type: 'text',
+                        content: [{ index: 0, type: 'sentence', text: parseInlineImageCheerioElement(element) }] 
+                    } as NestedTextItem;
+                } 
+                // Otherwise, process normally
+                else {
+                    newElement = {
+                        type: 'tag',
+                        tag_type: element.name,
+                        tag_class: tagClass,
+                        attrs: cleanedAttributes,
+                        content: parsedChildrenContent
+                    } as NestedTagItem;
+                }
+
                 nestedContents.push(newElement);
                 break;
         }
@@ -1406,3 +1419,29 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     return decycledTable as Table;
 }
 
+//[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]] 
+export const parseInlineImage = (img, $) => {
+	let $img = $(img);
+	let src = $img.attr('src');
+	let srcset = $img.attr('srcset');
+	let alt = $img.attr('alt');
+	if (alt == undefined) {
+		alt = '';
+	}
+	let height = $img.attr('height');
+	let width = $img.attr('width'); 
+	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
+}
+
+export const parseInlineImageCheerioElement = (img: CheerioElement) => {
+	let theAttribs = img.attribs;
+	let src = theAttribs['src'];
+	let srcset = theAttribs['srcset'];
+	let alt = theAttribs['alt'];
+	if (alt == undefined) {
+		alt = '';
+	}
+	let height = theAttribs['height'];
+    let width = theAttribs['width'];
+	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
+}

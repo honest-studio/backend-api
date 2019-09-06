@@ -217,6 +217,8 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "table", id: null, class: "vertical-navbox nowraplinks vcard hlist" }, // Another variation of the series tables above ^
     { tag: "table", id: null, class: "metadata plainlinks ambox ambox-style ambox-citation_style" },
     { tag: "table", id: null, class: "metadata plainlinks ambox ambox-content ambox-Refimprove" },
+    { tag: "table", id: null, class: "box-Empty_section" },
+    { tag: "table", id: null, class: "ambox-content" },
     { tag: "table", id: null, class: "vertical-navbox vcard plainlist" }, 
     { tag: "table", id: null, class: "mbox-small plainlinks sistersitebox" }, // Table for sistersite like "check out wikinews" bs
     { tag: "table", id: null, class: "navbox" }, // Portal navigation tables
@@ -235,6 +237,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { parent: { class: 'thumbcaption'}, tag: "div", id: null, class: "magnify" }, // Shows up in captions sometimes
     // { tag: "div", id: null, class: "mw-references-wrap" }, 
     { tag: "div", id: null, class: "navbox" }, // Various navboxes
+    { tag: "table", id: null, class: "stub" }, // Stub notice
 ]
 
 // Some elements need to be unwrapped
@@ -245,6 +248,7 @@ export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { tag: null, id: null, class: 'mw-collapsible-content'}, // Collapsible stuff should be expanded by default
     { tag: null, id: null, class: 'div-col'}, // Some ul's and ol's get wrapped by divs
     { tag: "a", id: null, class: 'new' }, // Redlinks
+    { tag: "span", id: null, class: 'binomial' }, // Animal species binomial
 ]
 
 
