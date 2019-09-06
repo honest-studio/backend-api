@@ -62,8 +62,7 @@ let defaultDescription: Sentence[] = [
 
 // Parse out the citations from Wikipedia
 export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<CitationReturnPack> => { 
-	console.log(chalk.yellow.bold("=================CITATIONS================="));
-
+	console.log(chalk.yellow.bold("===================📚 CITATIONS 📚===================="));
 	const $: CheerioStatic = input_pack.cheerio_static;
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
 	
@@ -99,7 +98,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			
 		};
 	});
-	process.stdout.write(chalk.yellow(`DONE\n`));
+	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// Start classifying the citations
 	process.stdout.write(chalk.yellow(`Classifying the citations...`));
@@ -163,7 +162,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 		}
 		return raw_citn;
 	})
-	process.stdout.write(chalk.yellow(`DONE\n`));
+	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// Convert the raw citations into real ones
 	// Also replace the <sup> tags with markdown
@@ -242,6 +241,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					}
 					case 'NONE': {
 						try{
+
 							let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 2000);
 							if (fetched_favicon != "") workingCitation.thumb = fetched_favicon;
 						}
@@ -259,7 +259,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			
 		})
 	)
-	process.stdout.write(chalk.yellow(`DONE\n`));
+	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// Loop through all of the <a> tags and find the external links
 	process.stdout.write(chalk.yellow(`Finding external link citations...`));
@@ -292,12 +292,12 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			available_citation_id++;
 		};
 	});
-	process.stdout.write(chalk.yellow(`DONE\n`));
+	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// Sort the citations properly
 	process.stdout.write(chalk.yellow(`Sorting the citations...`));
 	citations = _.sortBy(citations, ctn => ctn.citation_id);
-	process.stdout.write(chalk.yellow(`DONE\n`));
+	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// Chop off the area below certain elements
 	process.stdout.write(chalk.yellow(`Removing stuff below the citations...`));
@@ -317,7 +317,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			}
 		});
 	});
-	process.stdout.write(chalk.yellow(`DONE\n`));
+	process.stdout.write(chalk.yellow(` DONE\n`));
 
 
 	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
@@ -347,6 +347,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	});
 	available_citation_id++;
 
+	console.log(chalk.bold.green(`DONE`));
 	return {
 		citations: citations,
 		internalCitations: internalCitations, // Map passed to textParser for instant internal citation lookup

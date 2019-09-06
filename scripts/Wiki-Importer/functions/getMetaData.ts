@@ -53,7 +53,7 @@ let metaData: Metadata[] =
 ];
 
 export async function getMetaData(lang_code: string, slug: string): Promise<Metadata[]> {
-	process.stdout.write(chalk.bold.cyan(`Getting the metadata...`));
+	process.stdout.write(chalk.bold.green(`Getting the metadata 🗄️ ...`));
 	// Create and append creation_timestamp
 	let creationtime = getTimeStamp();
 	metaData.push({key: 'creation_timestamp', value: creationtime});
@@ -84,7 +84,7 @@ export async function getMetaData(lang_code: string, slug: string): Promise<Meta
 	// Add the slug and the alternate slug to metadata list
 	metaData.push({key: 'url_slug', value: slugToUse});
 	metaData.push({key: 'url_slug_alternate', value: encodeUrl(slugToUse)});
-	process.stdout.write(chalk.bold.cyan(`DONE\n`));
+	process.stdout.write(chalk.bold.green(` DONE\n`));
 	return metaData;
 }
 

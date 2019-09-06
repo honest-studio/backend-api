@@ -13,7 +13,7 @@ export interface GetMainPhotoReturnPack {
 }
 
 export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack => {
-	console.log(chalk.yellow.bold("=================MAIN PHOTO================="));
+	console.log(chalk.yellow.bold("===================📷 MAIN PHOTO 📷==================="));
 
 	// Parse the dom
 	const $ = input_pack.cheerio_static;
@@ -249,7 +249,8 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
 
-	// Return main photo:chalk.bold.cyan
+	// Return main photo
+	console.log(chalk.bold.green(`DONE`));
 	return {
 		main_photo: workingMainPhoto,
 		cheerio_pack: {

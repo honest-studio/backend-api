@@ -28,14 +28,12 @@ export interface PageBodyPack {
 }
 
 export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
-	console.log(chalk.yellow.bold("=================PAGE BODY================="));
-
 	// Compute citations first to be able to implement internal citations
 	// When parsing the page body
 	let ctn_return_pack = await getCitations(input_pack, url, theMediaUploadService);
 	let internalCitations = ctn_return_pack.internalCitations;
 
-	console.log(chalk.yellow.bold("=================SECTIONS================="));
+	console.log(chalk.yellow.bold("====================📰 SECTIONS 📰===================="));
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
 	// Current section
@@ -165,8 +163,9 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 			})
 			paragraphIndex++;
 		}
-		process.stdout.write(chalk.yellow(`DONE\n`));
+		process.stdout.write(chalk.yellow(` DONE\n`));
 	})
+	console.log(chalk.bold.green(`DONE`));
 	return {
 		sections: sections,
 		citations: ctn_return_pack.citations,
