@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getImage } from './pagebodyfunctionalities/getImage';
 import { Media } from '../../../src/types/article';
 import { linkCategorizer } from '../../../src/utils/article-utils/article-converter';
@@ -131,6 +132,13 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 					console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
 				}
 				else {
+					// Remove the img's parent <a> first
+					$(img_anchor).remove();
+
+					// Try to get a caption
+					workingMainPhoto.caption = accumulateText($extractTD, $, []);
+
+					// Remove the surrounding <td>
 					$($extractTD).remove();
 				}
 				
