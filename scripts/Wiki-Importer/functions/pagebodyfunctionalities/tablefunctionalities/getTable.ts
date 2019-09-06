@@ -11,8 +11,15 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 
 	// Fix /wiki links first
 	$($table).find("a").each((idx, anchor) => {
-		// console.log($(anchor).html())
-		$(anchor).replaceWith(parseAnchorTag(anchor, $));
+		let theClass = anchor.attribs && anchor.attribs.class;
+		if (theClass && theClass.search(/flagicon|image/gimu) >= 0){
+			// Do nothing
+		}
+		else{
+			$(anchor).replaceWith(parseAnchorTag(anchor, $));
+		}
+		// console.log($.html(anchor))
+		
 		// console.log(parseAnchorTag(anchor, $));
 	})
 	

@@ -37,17 +37,32 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     // Also fix the hrefs for some images
     $("img").each((idx, img_elem) => {
         let theSrc = $(img_elem).eq(0)[0].attribs['src'];
+
+        // Remove crappy images that mess up the infobox
         if (theSrc.search(PRECLEAN_BAD_FILE_REGEXES) >= 0) {
             $(img_elem).remove();
             // console.log(chalk.red(`Pictobox found and removed`));
         }
-        else if (theSrc.search(PRECLEAN_IMG_FIX_REGEXES) >= 0) {
+
+        // Fix the hrefs for some images
+        if (theSrc.search(PRECLEAN_IMG_FIX_REGEXES) >= 0) {
             $(img_elem).attr("src", `https://en.wikipedia.org${theSrc}`);
             // console.log(chalk.red(`Image src fixed`));
         }
 
-        // // Fix the //upload.wikimedia.org issue
-        // $(img_elem).attr("src", theSrc.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org"));
+        // Try find flagicons
+        let theParent = $(img_elem).parent();
+        if(theParent.eq(0)[0].name == 'a'){
+
+            if (theSrc.search(/Flag_of/gu) >= 0){
+                console.log("BEEE")
+                let theClass = $(theParent).eq(0)[0].attribs['class'];
+                if (theClass) $(theParent).attr('class', theClass + " flagicon");
+                else $(theParent).attr('class', "flagicon");
+            }
+        }
+
+        
     })
 
     // Remove certain elements
@@ -139,7 +154,14 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             }
         })
 
-	}
+    }
+    
+    // Try to find flagicons and mark them
+    $(".flagicon a").each((idx, flag_anchor_elem) => {
+        let theClass = $(flag_anchor_elem).eq(0)[0].attribs['class'];
+        if (theClass) $(flag_anchor_elem).attr('class', theClass + " flagicon");
+        else $(flag_anchor_elem).attr('class', "flagicon");
+    })
 
     return {
         cheerio_static: $

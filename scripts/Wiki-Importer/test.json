@@ -3,39 +3,39 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Colville National Forest"
+      "text": "Battle of Las Carreras"
     }
   ],
   "main_photo": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f3/ISL_Motorcycles.jpg",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/ISL_Motorcycles.jpg/284px-ISL_Motorcycles.jpg",
+      "type": "main_photo",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Pedro_Santana_cph.3a03390.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Pedro_Santana_cph.3a03390.jpg",
       "caption": [
         {
           "type": "sentence",
           "index": 0,
-          "text": ""
+          "text": "Pedro Santana"
         }
       ],
-      "type": "main_photo",
-      "attribution_url": "https://en.wikipedia.org/wiki/File:ISL_Motorcycles.jpg",
+      "mime": "image/jpeg",
+      "category": "PICTURE",
+      "timestamp": "2019-09-06T03:35:18.464Z",
       "media_props": {
         "type": "main_photo",
-        "height": 2118,
-        "width": 1400,
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/ISL_Motorcycles.jpg/426px-ISL_Motorcycles.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/ISL_Motorcycles.jpg/568px-ISL_Motorcycles.jpg 2x"
-      },
-      "timestamp": "2019-09-06T02:31:51.513Z",
-      "category": "PICTURE",
-      "mime": "image/jpeg"
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pedro_Santana_cph.3a03390.jpg/263px-Pedro_Santana_cph.3a03390.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pedro_Santana_cph.3a03390.jpg/350px-Pedro_Santana_cph.3a03390.jpg 2x",
+        "height": 1398,
+        "width": 1038
+      }
     }
   ],
   "infobox_html": {
     "type": "wikitable",
     "attrs": {
-      "className": "infobox vcard",
+      "className": "infobox vevent",
       "style": {
-        "width": "22em"
+        "width": "25.5em",
+        "borderSpacing": "2px"
       }
     },
     "caption": {
@@ -58,12 +58,13 @@
             {
               "index": 0,
               "attrs": {
+                "className": "summary",
                 "colSpan": "2",
-                "className": "fn org",
                 "style": {
+                  "backgroundColor": "#C3D6EF",
                   "textAlign": "center",
-                  "fontSize": "125%",
-                  "fontWeight": "bold"
+                  "verticalAlign": "middle",
+                  "fontSize": "110%"
                 }
               },
               "tag_type": "th",
@@ -75,7 +76,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Colville National Forest"
+                      "text": "Battle of Las Carreras"
                     }
                   ]
                 }
@@ -88,7 +89,33 @@
           "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
-          "cells": []
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "backgroundColor": "#DCDCDC",
+                  "textAlign": "center",
+                  "verticalAlign": "middle"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Part of the [[LINK|lang_en|Dominican_War_of_Independence|Dominican War of Independence]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         },
         {
           "index": 2,
@@ -99,65 +126,118 @@
             {
               "index": 0,
               "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
+                "colSpan": "2"
               },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
                 {
                   "type": "tag",
-                  "tag_type": "div",
+                  "tag_type": "table",
                   "tag_class": "block",
                   "attrs": {
-                    "className": "switcher-container"
+                    "style": {
+                      "width": "100%",
+                      "margin": "0",
+                      "padding": "0",
+                      "border": "0"
+                    }
                   },
                   "content": [
                     {
                       "type": "tag",
-                      "tag_type": "div",
-                      "tag_class": "block",
-                      "attrs": {
-                        "className": "center"
-                      },
+                      "tag_type": "tbody",
+                      "tag_class": "inline",
+                      "attrs": {},
                       "content": [
                         {
                           "type": "tag",
-                          "tag_type": "div",
+                          "tag_type": "tr",
                           "tag_class": "block",
-                          "attrs": {
-                            "style": {
-                              "width": "284px",
-                              "float": "none",
-                              "clear": "both",
-                              "marginLeft": "auto",
-                              "marginRight": "auto"
-                            }
-                          },
+                          "attrs": {},
                           "content": [
                             {
                               "type": "tag",
-                              "tag_type": "div",
+                              "tag_type": "th",
                               "tag_class": "block",
                               "attrs": {
                                 "style": {
-                                  "width": "284px",
-                                  "padding": "0"
+                                  "paddingRight": "1em"
                                 }
                               },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "Date"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {},
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "21-22 April 1849"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "tr",
+                          "tag_class": "block",
+                          "attrs": {},
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "th",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "paddingRight": "1em"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "Location"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {},
                               "content": [
                                 {
                                   "type": "tag",
                                   "tag_type": "div",
                                   "tag_class": "block",
                                   "attrs": {
-                                    "style": {
-                                      "position": "relative",
-                                      "width": "284px"
-                                    },
-                                    "className": "geonugget"
+                                    "className": "location"
                                   },
                                   "content": [
                                     {
@@ -166,84 +246,7 @@
                                         {
                                           "index": 0,
                                           "type": "sentence",
-                                          "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/3/36/USA_Washington_relief_location_map.jpg/284px-USA_Washington_relief_location_map.jpg|//upload.wikimedia.org/wikipedia/commons/thumb/3/36/USA_Washington_relief_location_map.jpg/426px-USA_Washington_relief_location_map.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/3/36/USA_Washington_relief_location_map.jpg/568px-USA_Washington_relief_location_map.jpg 2x|Map showing the location of Colville National Forest|h200|w284]]"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "position": "absolute",
-                                          "top": "13.128%",
-                                          "left": "88.855%"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "div",
-                                          "tag_class": "block",
-                                          "attrs": {
-                                            "style": {
-                                              "position": "absolute",
-                                              "left": "-4px",
-                                              "top": "-4px",
-                                              "lineHeight": "0"
-                                            }
-                                          },
-                                          "content": [
-                                            {
-                                              "type": "tag",
-                                              "tag_type": "img",
-                                              "tag_class": "void",
-                                              "attrs": {
-                                                "alt": "Map showing the location of Colville National Forest",
-                                                "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/8px-Red_pog.svg.png",
-                                                "decoding": "async",
-                                                "title": "Colville National Forest",
-                                                "width": "8",
-                                                "height": "8",
-                                                "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/16px-Red_pog.svg.png 2x",
-                                                "data-file-width": "64",
-                                                "data-file-height": "64",
-                                                "className": "geodot"
-                                              },
-                                              "content": []
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {},
-                                  "content": []
-                                },
-                                {
-                                  "type": "tag",
-                                  "tag_type": "span",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "className": "switcher-label",
-                                    "style": {
-                                      "display": "none"
-                                    }
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "Show map of Washington (state)"
+                                          "text": "Nearby [[LINK|lang_en|Ban%C3%AD|Baní]], [[LINK|lang_en|Peravia_Province|Peravia Province]]"
                                         }
                                       ]
                                     }
@@ -252,140 +255,48 @@
                               ]
                             }
                           ]
-                        }
-                      ]
-                    },
-                    {
-                      "type": "tag",
-                      "tag_type": "div",
-                      "tag_class": "block",
-                      "attrs": {
-                        "className": "center"
-                      },
-                      "content": [
+                        },
                         {
                           "type": "tag",
-                          "tag_type": "div",
+                          "tag_type": "tr",
                           "tag_class": "block",
-                          "attrs": {
-                            "style": {
-                              "width": "284px",
-                              "float": "none",
-                              "clear": "both",
-                              "marginLeft": "auto",
-                              "marginRight": "auto"
-                            }
-                          },
+                          "attrs": {},
                           "content": [
                             {
                               "type": "tag",
-                              "tag_type": "div",
+                              "tag_type": "th",
                               "tag_class": "block",
                               "attrs": {
                                 "style": {
-                                  "width": "284px",
-                                  "padding": "0"
+                                  "paddingRight": "1em"
                                 }
                               },
                               "content": [
                                 {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {
-                                    "style": {
-                                      "position": "relative",
-                                      "width": "284px"
-                                    },
-                                    "className": "geonugget"
-                                  },
+                                  "type": "text",
                                   "content": [
                                     {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Usa_edcp_relief_location_map.png/284px-Usa_edcp_relief_location_map.png|//upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Usa_edcp_relief_location_map.png/426px-Usa_edcp_relief_location_map.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Usa_edcp_relief_location_map.png/568px-Usa_edcp_relief_location_map.png 2x|Map showing the location of Colville National Forest|h176|w284]]"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "position": "absolute",
-                                          "top": "8.611%",
-                                          "left": "18.765%"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "div",
-                                          "tag_class": "block",
-                                          "attrs": {
-                                            "style": {
-                                              "position": "absolute",
-                                              "left": "-4px",
-                                              "top": "-4px",
-                                              "lineHeight": "0"
-                                            }
-                                          },
-                                          "content": [
-                                            {
-                                              "type": "tag",
-                                              "tag_type": "img",
-                                              "tag_class": "void",
-                                              "attrs": {
-                                                "alt": "Map showing the location of Colville National Forest",
-                                                "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/8px-Red_pog.svg.png",
-                                                "decoding": "async",
-                                                "title": "Colville National Forest",
-                                                "width": "8",
-                                                "height": "8",
-                                                "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/16px-Red_pog.svg.png 2x",
-                                                "data-file-width": "64",
-                                                "data-file-height": "64",
-                                                "className": "geodot"
-                                              },
-                                              "content": []
-                                            }
-                                          ]
-                                        }
-                                      ]
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "Result"
                                     }
                                   ]
-                                },
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {},
+                              "content": [
                                 {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {},
-                                  "content": []
-                                },
-                                {
-                                  "type": "tag",
-                                  "tag_type": "span",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "className": "switcher-label",
-                                    "style": {
-                                      "display": "none"
-                                    }
-                                  },
+                                  "type": "text",
                                   "content": [
                                     {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "Show map of the United States"
-                                        }
-                                      ]
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "\nDecisive Dominican victory"
                                     }
                                   ]
                                 }
@@ -403,16 +314,20 @@
         },
         {
           "index": 3,
-          "attrs": {
-            "className": "locality"
-          },
+          "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
+                "colSpan": "2",
+                "style": {
+                  "backgroundColor": "#C3D6EF",
+                  "textAlign": "center",
+                  "verticalAlign": "middle",
+                  "fontSize": "110%"
+                }
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -423,25 +338,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Location"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Washington_(U.S._state)|Washington]], United States"
+                      "text": "Belligerents"
                     }
                   ]
                 }
@@ -451,27 +348,56 @@
         },
         {
           "index": 4,
-          "attrs": {
-            "className": "note"
-          },
+          "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
+                "style": {
+                  "width": "50%",
+                  "borderRight": "1px dotted #aaa"
+                }
               },
-              "tag_type": "th",
+              "tag_type": "td",
               "tag_class": "block",
               "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "a",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "href": "/wiki/File:Flag_of_the_Dominican_Republic_(up_to_1844).svg",
+                    "className": "image flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "alt": "Flag of the Dominican Republic (up to 1844).svg",
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/22px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png",
+                        "decoding": "async",
+                        "width": "22",
+                        "height": "15",
+                        "className": "thumbborder",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/33px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/44px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 2x",
+                        "data-file-width": "750",
+                        "data-file-height": "500"
+                      },
+                      "content": []
+                    }
+                  ]
+                },
                 {
                   "type": "text",
                   "content": [
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Nearest city"
+                      "text": " [[LINK|lang_en|Dominican_Republic|Dominican Republic]]"
                     }
                   ]
                 }
@@ -479,17 +405,61 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "style": {
+                  "width": "50%",
+                  "paddingLeft": "0.25em"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "a",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "href": "/wiki/Haiti",
+                        "title": "Haiti",
+                        "className": "flagicon flagicon"
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "img",
+                          "tag_class": "void",
+                          "attrs": {
+                            "alt": "Haiti",
+                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/23px-Flag_of_Haiti_%28civil%29.svg.png",
+                            "decoding": "async",
+                            "width": "23",
+                            "height": "14",
+                            "className": "thumbborder",
+                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/35px-Flag_of_Haiti_%28civil%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/46px-Flag_of_Haiti_%28civil%29.svg.png 2x",
+                            "data-file-width": "1000",
+                            "data-file-height": "600"
+                          },
+                          "content": []
+                        }
+                      ]
+                    }
+                  ]
+                },
                 {
                   "type": "text",
                   "content": [
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "[[LINK|lang_en|Colville,_WA|Colville, WA]]"
+                      "text": " [[LINK|lang_en|Haiti|Haiti]]"
                     }
                   ]
                 }
@@ -506,7 +476,13 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
+                "colSpan": "2",
+                "style": {
+                  "backgroundColor": "#C3D6EF",
+                  "textAlign": "center",
+                  "verticalAlign": "middle",
+                  "fontSize": "110%"
+                }
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -517,48 +493,9 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Coordinates"
+                      "text": "Commanders and leaders"
                     }
                   ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "plainlinks nourlexpansion"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "48°41′17″N 117°37′30″W"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "fontSize": "small"
-                    }
-                  },
-                  "content": []
                 }
               ]
             }
@@ -573,18 +510,94 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
+                "style": {
+                  "width": "50%",
+                  "borderRight": "1px dotted #aaa"
+                }
               },
-              "tag_type": "th",
+              "tag_type": "td",
               "tag_class": "block",
               "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "a",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "href": "/wiki/File:Flag_of_the_Dominican_Republic_(up_to_1844).svg",
+                    "className": "image flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "alt": "Flag of the Dominican Republic (up to 1844).svg",
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/22px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png",
+                        "decoding": "async",
+                        "width": "22",
+                        "height": "15",
+                        "className": "thumbborder",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/33px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/44px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 2x",
+                        "data-file-width": "750",
+                        "data-file-height": "500"
+                      },
+                      "content": []
+                    }
+                  ]
+                },
                 {
                   "type": "text",
                   "content": [
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Area"
+                      "text": " Gen. [[LINK|lang_en|Pedro_Santana|Pedro Santana]] "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "a",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "href": "/wiki/File:Flag_of_the_Dominican_Republic_(up_to_1844).svg",
+                    "className": "image flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "alt": "Flag of the Dominican Republic (up to 1844).svg",
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/22px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png",
+                        "decoding": "async",
+                        "width": "22",
+                        "height": "15",
+                        "className": "thumbborder",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/33px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/59/Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg/44px-Flag_of_the_Dominican_Republic_%28up_to_1844%29.svg.png 2x",
+                        "data-file-width": "750",
+                        "data-file-height": "500"
+                      },
+                      "content": []
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": " Gen. [[LINK|lang_en|Antonio_Duverg%C3%A9|Antonio Duvergé]]"
                     }
                   ]
                 }
@@ -592,33 +605,49 @@
             },
             {
               "index": 1,
-              "attrs": {},
+              "attrs": {
+                "style": {
+                  "width": "50%",
+                  "paddingLeft": "0.25em"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
                 {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "954,409 acres (3,862.36 km"
-                    }
-                  ]
-                },
-                {
                   "type": "tag",
-                  "tag_type": "sup",
+                  "tag_type": "span",
                   "tag_class": "inline",
-                  "attrs": {},
+                  "attrs": {
+                    "className": "flagicon"
+                  },
                   "content": [
                     {
-                      "type": "text",
+                      "type": "tag",
+                      "tag_type": "a",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "href": "/wiki/Haiti",
+                        "title": "Haiti",
+                        "className": "flagicon flagicon"
+                      },
                       "content": [
                         {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "2"
+                          "type": "tag",
+                          "tag_type": "img",
+                          "tag_class": "void",
+                          "attrs": {
+                            "alt": "Haiti",
+                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/23px-Flag_of_Haiti_%28civil%29.svg.png",
+                            "decoding": "async",
+                            "width": "23",
+                            "height": "14",
+                            "className": "thumbborder",
+                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/35px-Flag_of_Haiti_%28civil%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Flag_of_Haiti_%28civil%29.svg/46px-Flag_of_Haiti_%28civil%29.svg.png 2x",
+                            "data-file-width": "1000",
+                            "data-file-height": "600"
+                          },
+                          "content": []
                         }
                       ]
                     }
@@ -630,7 +659,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": ")[[CITE|1|http://www.fs.fed.us/land/staff/lar/LAR2011/LAR2011_Book_A5.pdf]]"
+                      "text": " [[LINK|lang_en|Soulouque|Faustin Soulouque]]"
                     }
                   ]
                 }
@@ -640,16 +669,20 @@
         },
         {
           "index": 7,
-          "attrs": {
-            "className": "note"
-          },
+          "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
           "cells": [
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
+                "colSpan": "2",
+                "style": {
+                  "backgroundColor": "#C3D6EF",
+                  "textAlign": "center",
+                  "verticalAlign": "middle",
+                  "fontSize": "110%"
+                }
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -660,25 +693,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Established"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "March 1, 1907[[CITE|2|https://foresthistory.org/wp-content/uploads/2017/01/National-Forests-of-the-U.S.pdf]]"
+                      "text": "Strength"
                     }
                   ]
                 }
@@ -695,26 +710,11 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Governing body"
-                    }
-                  ]
+                "style": {
+                  "width": "50%",
+                  "borderRight": "1px dotted #aaa"
                 }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -724,7 +724,47 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "[[LINK|lang_en|United_States_Forest_Service|U.S. Forest Service]]"
+                      "text": "\n800 militia[[CITE|2|null]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "width": "50%",
+                  "paddingLeft": "0.25em"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "\n10,000 regulars"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "7 artillery pieces"
                     }
                   ]
                 }
@@ -741,7 +781,13 @@
             {
               "index": 0,
               "attrs": {
-                "scope": "row"
+                "colSpan": "2",
+                "style": {
+                  "backgroundColor": "#C3D6EF",
+                  "textAlign": "center",
+                  "verticalAlign": "middle",
+                  "fontSize": "110%"
+                }
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -752,15 +798,28 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Website"
+                      "text": "Casualties and losses"
                     }
                   ]
                 }
               ]
-            },
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
             {
-              "index": 1,
-              "attrs": {},
+              "index": 0,
+              "attrs": {
+                "style": {
+                  "width": "50%",
+                  "borderRight": "1px dotted #aaa"
+                }
+              },
               "tag_type": "td",
               "tag_class": "block",
               "content": [
@@ -770,7 +829,47 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "[[LINK|lang_en|/www.fs.usda.gov/colville/|Colville National Forest]]"
+                      "text": "\nminimal"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "width": "50%",
+                  "paddingLeft": "0.25em"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "\n500+ killed[[CITE|1|null]]"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "7 artillery pieces captured"
                     }
                   ]
                 }
@@ -794,7 +893,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The **Colville National Forest** is a U.S. National Forest located in northeastern [[LINK|lang_en|Washington_(U.S._state)|Washington]] state. It is bordered on the west by the [[LINK|lang_en|Okanogan_National_Forest|Okanogan National Forest]] and the [[LINK|lang_en|Kaniksu_National_Forest|Kaniksu National Forest]] to the east. The forest itself also contains [[LINK|lang_en|Little_Pend_Oreille_National_Wildlife_Refuge|Little Pend Oreille National Wildlife Refuge]] and the [[LINK|lang_en|Lake_Roosevelt_National_Recreation_Area|Lake Roosevelt National Recreation Area]]."
+              "text": "The **Battle of Las Carreras**, was a major battle during the years after the [[LINK|lang_en|Dominican_War_of_Independence|Dominican War of Independence]] and was fought on the 21-22 April 1849, nearby [[LINK|lang_en|Ban%C3%AD|Baní]], [[LINK|lang_en|Peravia_Province|Peravia Province]]. A force of 800 Dominican troops, a portion of the Army of the South, led by General [[LINK|lang_en|Pedro_Santana|Pedro Santana]], defeated an outnumbering force of 10,000 troops of the Haitian Army led by [[LINK|lang_en|Soulouque|Faustin Soulouque]].[[CITE|4|null]]"
             }
           ],
           "tag_type": "p",
@@ -811,7 +910,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Description"
+              "text": "Battle"
             }
           ],
           "tag_type": "h2",
@@ -823,99 +922,10 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "The forest encompasses a mountainous area consisting of the [[LINK|lang_en|Kettle_River_Range|Kettle River]] and [[LINK|lang_en|Selkirk_Mountains|Selkirk]] mountain ranges, and the upper reaches of the [[LINK|lang_en|Columbia_River|Columbia River]].  Wildlife include [[LINK|lang_en|Grizzly_bear|grizzly]] and [[LINK|lang_en|Cinnamon_bear|black]] bears, [[LINK|lang_en|Northwestern_wolf|wolf]] packs, [[LINK|lang_en|Bighorn_sheep|bighorn sheep]], [[LINK|lang_en|North_American_cougar|cougars]], [[LINK|lang_en|Bald_eagle|bald eagles]], [[LINK|lang_en|Canada_lynx|Canadian lynxes]], [[LINK|lang_en|Moose|moose]], [[LINK|lang_en|North_American_beaver|beavers]], [[LINK|lang_en|Loon|loons]], and the last remaining herd of [[LINK|lang_en|Caribou|caribou]] in the lower 48 US states."
+              "text": "The battle opened with a cannon barrage and devolved into hand-to-hand combat.[[CITE|2|null]] As the remnants of the Haitian army retreated along the southern coastal road, they were under fire from a small Dominican squadron.[[CITE|2|null]]"
             }
           ],
           "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 2,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The forest has a total area of 1.1 million [[LINK|lang_en|Acre|acres]] (1,719 sq mi, or 4,452  km²).  A 1993 Forest Service study estimated that the extent of [[LINK|lang_en|Old_growth|old growth]] in the Forest was 212,488 acres (85,991 ha).[[CITE|3|http://www.fs.fed.us/pnw/pubs/pnw_rb197.pdf]]  In descending order of forestland area it is located in parts of [[LINK|lang_en|Ferry_County,_Washington|Ferry]], [[LINK|lang_en|Pend_Oreille_County,_Washington|Pend Oreille]], and [[LINK|lang_en|Stevens_County,_Washington|Stevens]] counties. The forest headquarters is located in [[LINK|lang_en|Colville,_Washington|Colville, Washington]]. There are local [[LINK|lang_en|National_Park_Ranger|ranger]] district offices located in [[LINK|lang_en|Kettle_Falls,_Washington|Kettle Falls]], [[LINK|lang_en|Metaline_Falls,_Washington|Metaline Falls]], [[LINK|lang_en|Newport,_Washington|Newport]], and [[LINK|lang_en|Republic,_Washington|Republic]]."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 3,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Most of the [[LINK|lang_en|Salmo-Priest_Wilderness|Salmo-Priest Wilderness]] lies within the forest, while its southeastern portion extends into [[LINK|lang_en|Kaniksu_National_Forest|Kaniksu National Forest]]."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Other protected areas"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The [[LINK|lang_en|Pacific_Northwest_National_Scenic_Trail|Pacific Northwest National Scenic Trail]] passes through the Colville National Forest. It enters the forest on the east side within the [[LINK|lang_en|Salmo-Priest_Wilderness|Salmo-Priest Wilderness]], crosses the Pend Oreille at [[LINK|lang_en|Boundary_Dam|Boundary Dam]], passes through [[LINK|lang_en|Leadpoint,_Washington|Leadpoint]] and [[LINK|lang_en|Northport,_Washington|Northport]], then traverses the Kettle Range and exits the Colville near [[LINK|lang_en|Republic|Republic]]. The **Sullivan Lake Trail**, designated a [[LINK|lang_en|National_Recreation_Trail|National Recreation Trail]] in 1978, runs 4.3 miles (6.9 km) between two campgrounds in the forest.[[CITE|4|http://www.americantrails.org/NRTDatabase/trailDetail.php?recordID=605]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "See also"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|International_Selkirk_Loop|International Selkirk Loop]]"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
           "attrs": {}
         }
       ],
@@ -925,58 +935,58 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "http://www.fs.fed.us/land/staff/lar/LAR2011/LAR2011_Book_A5.pdf",
+      "url": null,
       "thumb": null,
-      "category": "FILE",
+      "category": "NONE",
       "citation_id": 1,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Land Areas of the National Forest System\" (PDF). U.S. Forest Service. January 2012. Retrieved June 30, 2012. Cite web requires |website= (help)"
+          "text": "Over 500 Haitians were killed in the battles of El Número and Las Carreras. , p. 302."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T02:31:51.534Z",
-      "mime": "application/pdf"
+      "timestamp": "2019-09-06T03:35:18.469Z",
+      "mime": null
     },
     {
-      "url": "https://foresthistory.org/wp-content/uploads/2017/01/National-Forests-of-the-U.S.pdf",
+      "url": null,
       "thumb": null,
-      "category": "FILE",
+      "category": "BOOK",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"The National Forests of the United States\" (PDF). ForestHistory.org. Retrieved July 30, 2012. Cite web requires |website= (help)"
+          "text": "Scheina, Robert L. (2003). *Latin America's Wars*. Potomac Books.."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T02:31:51.535Z",
-      "mime": "application/pdf"
+      "timestamp": "2019-09-06T03:35:18.471Z",
+      "mime": null
     },
     {
-      "url": "http://www.fs.fed.us/pnw/pubs/pnw_rb197.pdf",
+      "url": "https://openlibrary.org/search?q=",
       "thumb": null,
-      "category": "FILE",
+      "category": "BOOK",
       "citation_id": 3,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Bolsinger, Charles L.; Waddell, Karen L. (1993), *Area of old-growth forests in California, Oregon, and Washington* (PDF), United States Forest Service, Pacific Northwest Research Station, Resource Bulletin PNW-RB-197"
+          "text": ""
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T02:31:51.535Z",
-      "mime": "application/pdf"
+      "timestamp": "2019-09-06T03:35:18.471Z",
+      "mime": null
     },
     {
-      "url": "http://www.americantrails.org/NRTDatabase/trailDetail.php?recordID=605",
+      "url": null,
       "thumb": null,
       "category": "NONE",
       "citation_id": 4,
@@ -984,16 +994,16 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Sullivan Lake\". American Trails. 2013-04-24. Retrieved 2014-08-14. Cite web requires |website= (help)"
+          "text": "."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T02:31:51.536Z",
+      "timestamp": "2019-09-06T03:35:18.472Z",
       "mime": null
     },
     {
-      "url": "http://www.fs.fed.us/r6/colville/",
+      "url": "https://books.google.com/books?id=AvKxAgAAQBAJ&pg=PT133&dq=#v=onepage&q&f=false",
       "thumb": null,
       "category": "NONE",
       "citation_id": 5,
@@ -1001,16 +1011,16 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "USDA Forest Service - Colville National Forest"
+          "text": "*Imperial Wars 1815–1914*"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T02:31:53.111Z",
+      "timestamp": "2019-09-06T03:35:18.476Z",
       "mime": null
     },
     {
-      "url": "https://en.wikipedia.org/wiki/Colville_National_Forest",
+      "url": "https://en.wikipedia.org/wiki/Battle_of_Las_Carreras",
       "thumb": null,
       "category": "NONE",
       "citation_id": 6,
@@ -1043,7 +1053,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T02:31:53.114Z",
+      "timestamp": "2019-09-06T03:35:18.478Z",
       "mime": null
     }
   ],
@@ -1083,7 +1093,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/6/2019 2:31:50 AM UTC"
+      "value": "8/6/2019 3:35:17 AM UTC"
     },
     {
       "key": "last_modified",
@@ -1095,11 +1105,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Colville_National_Forest"
+      "value": "Battle_of_Las_Carreras"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Colville_National_Forest"
+      "value": "Battle_of_Las_Carreras"
     }
   ],
   "amp_info": {
@@ -1108,5 +1118,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmZcWR16nkAuBT7QMigkLhdXPC1GmR9e1KDL6T4RJ1BLhe"
+  "ipfs_hash": "QmaNwcyTrzDPSQ8ebnbqyJPuaJVtQzvxUzsQC1zyEA51dK"
 }

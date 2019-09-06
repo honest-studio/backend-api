@@ -88,40 +88,22 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				workingMainPhoto.media_props.srcSet = srcsetString;
 			}
 
-			// Add the height and width, if present
-			if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
-				workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
-				workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
-			}
-			else if(theAttribs.width && theAttribs.height){
-				workingMainPhoto.media_props.height = parseInt(theAttribs.height);
-				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
-			}
-
 			// Check the size to max sure it isn't a crappy flagicon or something
-			let theHeight = workingMainPhoto.media_props.height;
-			let theWidth = workingMainPhoto.media_props.width;
+			let theHeight = parseInt(theAttribs.height);
+			let theWidth = parseInt(theAttribs.width);
 			if (theHeight * theWidth >= 5000){
 				console.log(`Found a prospective ${theWidth}x${theHeight} image: |${workingMainPhoto.url}|`);
-				// 	print("Now trying to find a bigger one from the srcset")
-				// 	try:
-				// 		theSrcSet = testImage['srcset']
-				// 		quickSplit = theSrcSet.split(" ")
-				// 		lastPhoto = ""
-				// 		for item in quickSplit:
-				// 			if "wikimedia" in item:
-				// 				lastPhoto = item
-				// 				if lastPhoto[0] == "/":
-				// 					lastPhoto = "https:" + lastPhoto
-				// 		if lastPhoto != "":
-				// 			thePhotoUrl = lastPhoto
-				// 			print("Found a bigger image: |%s|" % thePhotoUrl)
-				// 	except:
-				// 		pass
+				
+				// Add the height and width, if present
+				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
+					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
+				}
+				else if(theAttribs.width && theAttribs.height){
+					workingMainPhoto.media_props.height = parseInt(theAttribs.height);
+					workingMainPhoto.media_props.width = parseInt(theAttribs.width);
+				}
 
-				// 	if (skipExtract):
-				// 		extractTag = None
-				// 	else:
 				// If there is more than one image in the nearest tr, do not extract
 				let $extractTD = $(img_anchor).closest("td");
 				let $extractTR = $($extractTD).closest("tr");
@@ -149,17 +131,12 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
 				// Do nothing
 			}
-
-
-
-
-
 		};
 	})
 
 	// Try method 2 next
 	// Extract a section image
-	if (!workingMainPhoto.url){
+	if (!main_photo_found){
 		$content.find('div.thumb').each((idx, sect_img) => {
 			if (main_photo_found) return;
 			let parsed_section_img = getImage(sect_img, $, [], true);
@@ -174,7 +151,79 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			}
 		});
 	}
-	
+
+	// Try method 3 next
+	// Find any image that is of a decent size, but don't extract it
+	if (!main_photo_found){
+		$content.find("a.image").each((idx, img_anchor) => {
+			if (main_photo_found) return;
+			let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
+
+			if(inner_href.search(/File/gimu) >= 0){
+				// Set the attribution url
+				workingMainPhoto.attribution_url = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
+
+				let inner_img = $(img_anchor).find("img");
+				let inner_img_elem = inner_img.eq(0)[0];
+				let theAttribs = inner_img_elem.attribs;
+				let theWorkingURL = theAttribs.src ? theAttribs.src : workingMainPhoto.url;
+				
+				// Fix upload.wikimedia.org
+				theWorkingURL = theWorkingURL.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+
+				// Set the thumb
+				workingMainPhoto.thumb = theWorkingURL;
+
+				// Get the full size image
+				theWorkingURL = theWorkingURL.replace("/thumb", "");
+				let quickSplit = theWorkingURL.split("/");
+				if (quickSplit[quickSplit.length - 1] 
+					&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0
+					&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|px-)/gimu) >= 0
+				){
+					theWorkingURL = quickSplit.slice(0, -1).join("/");
+				}
+				workingMainPhoto.url = theWorkingURL;
+
+
+				// Get the srcset, if present
+				if (theAttribs.srcset){
+					let srcsetString = theAttribs.srcset;
+
+					// Fix upload.wikimedia.org 
+					srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+					
+					// Add the srcset
+					workingMainPhoto.media_props.srcSet = srcsetString;
+				}
+
+				// Check the size to max sure it isn't a crappy flagicon or something
+				let theHeight = parseInt(theAttribs.height);
+				let theWidth = parseInt(theAttribs.width);
+				if (theHeight * theWidth >= 5000){
+					console.log(`Found a prospective ${theWidth}x${theHeight} image: |${workingMainPhoto.url}|`);
+
+					// Add the height and width, if present
+					if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+						workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
+						workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
+					}
+					else if(theAttribs.width && theAttribs.height){
+						workingMainPhoto.media_props.height = parseInt(theAttribs.height);
+						workingMainPhoto.media_props.width = parseInt(theAttribs.width);
+					}
+
+					main_photo_found = true;
+					console.log(chalk.green("Found a main image from the infobox"));
+				}
+				else{
+					console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
+					// Do nothing
+				}
+			};
+		})
+	}
+
 	// Categorize and get the MIME types
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);

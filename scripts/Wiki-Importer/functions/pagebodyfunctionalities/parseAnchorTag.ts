@@ -52,7 +52,7 @@ export const parseInlineImage = (img, $) => {
 	}
 	let height = $img.attr('height');
 	let width = $img.attr('width'); 
-	return '[[' + 'INLINE_IMAGE' + '|' + src + '|' + srcset + '|' + alt + '|' + 'h' + height + '|' + 'w' + width + ']]'
+	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
 }
 
 
