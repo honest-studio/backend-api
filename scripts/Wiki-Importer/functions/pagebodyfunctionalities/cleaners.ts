@@ -14,6 +14,7 @@ export interface CheerioPack {
 }
 
 export const preCleanHTML = (input_html: string): CheerioPack => {
+    process.stdout.write(chalk.bold.cyan(`Cleaning the page...`));
     const $ = cheerio.load(input_html, {decodeEntities: false});
     
     // Remove certain tags that mess with AMP
@@ -162,6 +163,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         else $(flag_anchor_elem).attr('class', "flagicon");
     })
 
+    process.stdout.write(chalk.bold.cyan(`DONE\n`));
     return {
         cheerio_static: $
     }

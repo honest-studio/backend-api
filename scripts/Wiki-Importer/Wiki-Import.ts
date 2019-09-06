@@ -229,7 +229,7 @@ export const WikiImport = async (inputString: string) => {
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));
     
-    console.log(chalk.blue.bold("========================================COMPLETE======================================="));
+    logYlw("========================================COMPLETE=======================================");
     return null;
     
 
@@ -247,9 +247,9 @@ export const WikiImport = async (inputString: string) => {
         currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;
 
         console.log("\n");
-        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
-        console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
-        console.log(chalk.blue.bold("=========================================START========================================="));
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("=========================================START=========================================");
         console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`));
 
         const fetchedArticles: any[] = await theMysql.TryQuery(

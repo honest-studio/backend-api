@@ -13,6 +13,8 @@ export interface GetMainPhotoReturnPack {
 }
 
 export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack => {
+	console.log(chalk.yellow.bold("=================MAIN PHOTO================="));
+
 	// Parse the dom
 	const $ = input_pack.cheerio_static;
 	const $content = $('div.mw-parser-output');
@@ -40,6 +42,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// Try method 1 first
 	// Extract an image from the infobox
 	let main_photo_found = false;
+	console.log(chalk.yellow("Trying method 1: [infobox images]"));
 	$($infobox).find("a.image").each((idx, img_anchor) => {
 		if (main_photo_found) return;
 		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
@@ -92,8 +95,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			let theHeight = parseInt(theAttribs.height);
 			let theWidth = parseInt(theAttribs.width);
 			if (theHeight * theWidth >= 5000){
-				console.log(`Found a prospective ${theWidth}x${theHeight} image: |${workingMainPhoto.url}|`);
-				
+
 				// Add the height and width, if present
 				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
 					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
@@ -125,10 +127,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				}
 				
 				main_photo_found = true;
-				console.log(chalk.green("Found a main image from the infobox"));
+				let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+				console.log(chalk.green.bold(`Found a main image from the infobox: ${imgString}`));
 			}
 			else{
-				console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
+				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
 				// Do nothing
 			}
 		};
@@ -137,9 +140,21 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// Try method 2 next
 	// Extract a section image
 	if (!main_photo_found){
+		console.log(chalk.yellow("Trying method 2: [section images]"));
 		$content.find('div.thumb').each((idx, sect_img) => {
 			if (main_photo_found) return;
 			let parsed_section_img = getImage(sect_img, $, [], true);
+			let theAttribs = sect_img.attribs;
+			
+			// Add the height and width, if present
+			if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+				workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
+				workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
+			}
+			else if(theAttribs.width && theAttribs.height){
+				workingMainPhoto.media_props.height = parseInt(theAttribs.height);
+				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
+			}
 
 			// Make sure a full Media was returned and not just a string
 			if ((parsed_section_img as Media).url) {
@@ -147,7 +162,8 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				workingMainPhoto.media_props.type = 'main_photo';
 				workingMainPhoto.type = 'main_photo';
 				main_photo_found = true;
-				console.log(chalk.green("Found a main image from the body"));
+				let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+				console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
 			}
 		});
 	}
@@ -155,6 +171,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	// Try method 3 next
 	// Find any image that is of a decent size, but don't extract it
 	if (!main_photo_found){
+		console.log(chalk.yellow("Trying method 3: [remaining large images]"));
 		$content.find("a.image").each((idx, img_anchor) => {
 			if (main_photo_found) return;
 			let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
@@ -201,7 +218,6 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				let theHeight = parseInt(theAttribs.height);
 				let theWidth = parseInt(theAttribs.width);
 				if (theHeight * theWidth >= 5000){
-					console.log(`Found a prospective ${theWidth}x${theHeight} image: |${workingMainPhoto.url}|`);
 
 					// Add the height and width, if present
 					if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
@@ -214,11 +230,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 					}
 
 					main_photo_found = true;
-					console.log(chalk.green("Found a main image from the infobox"));
+					let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+					console.log(chalk.green.bold(`Found a main image from the remaining images: ${imgString}`));
 				}
 				else{
-					console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
-					// Do nothing
+					// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
 				}
 			};
 		})
@@ -232,9 +248,8 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	if (!workingMainPhoto.url) workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
 	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
-	// console.log(workingMainPhoto)
 
-	// Return main photo:
+	// Return main photo:chalk.bold.cyan
 	return {
 		main_photo: workingMainPhoto,
 		cheerio_pack: {
