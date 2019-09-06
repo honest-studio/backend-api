@@ -149,7 +149,7 @@ export class MediaUploadService {
                     text: `\nISBN-10: ${initialPack.isbn_10}`
                 }
             );
-            availableIndex = availableIndex + 1;
+            availableIndex++;
         }
         if (initialPack.isbn_13) {
             initialPack.description.push(
@@ -159,7 +159,7 @@ export class MediaUploadService {
                     text: `\nISBN-13: ${initialPack.isbn_13}`
                 }
             );
-            availableIndex = availableIndex + 1;
+            availableIndex++;
         }
         
         return initialPack;
@@ -220,7 +220,7 @@ export class MediaUploadService {
         //             text: `\nISBN-10: ${initialPack.isbn_10}`
         //         }
         //     );
-        //     availableIndex = availableIndex + 1;
+        //     availableIndex++;
         // }
         // if (initialPack.isbn_13) {
         //     initialPack.description.push(
@@ -230,7 +230,7 @@ export class MediaUploadService {
         //             text: `\nISBN-13: ${initialPack.isbn_13}`
         //         }
         //     );
-        //     availableIndex = availableIndex + 1;
+        //     availableIndex++;
         // }
         
         return initialPack;

@@ -6,7 +6,8 @@ export const parseAnchorTag = (element, $) => {
 	  return parseLink(element, $);
 	}
 	else if ($element.attr('class').search(/external/gimu) >= 0) { // External link
-    	return $(element).text();
+		// return $(element).text();
+		return element;
     }
     else if ($element.attr('class') == 'image') { // Inline-image 
     	return parseInlineImage($element.find('img'), $);

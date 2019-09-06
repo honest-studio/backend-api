@@ -48,13 +48,31 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 			let $cell = $(el2);
 
 			let content = nestedContentParser(el2.children, []);
-			if (content != [] && content != undefined) {
+
+			// Combine adjacent text 
+			let local_accumulator = "", merged_content: NestedContentItem[] = [];
+			let content_idx = 0;
+			while(content_idx < content.length){
+				let item: NestedContentItem = content[content_idx]
+				switch(item.type){
+					case 'text': {
+						break;
+					}
+					case 'tag': {
+						break;
+					}
+				}
+				content_idx++;
+			}
+
+
+			if (merged_content != [] && merged_content != undefined) {
 				let cell: TableCell = {
 					index: i2,
 					attrs: cleanAttrs(el2.attribs),
 					tag_type: $cell[0].name as any,
 					tag_class: 'block', 
-					content: content
+					content: merged_content
 				}
 				cells.push(cell); 
 			}

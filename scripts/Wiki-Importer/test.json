@@ -19,7 +19,7 @@
         "width": 502,
         "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg/375px-Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg/500px-Kootenai_County_Idaho_Incorporated_and_Unincorporated_areas_Hayden_Highlighted_1636370.svg.png 2x"
       },
-      "timestamp": "2019-09-05T23:15:49.965Z",
+      "timestamp": "2019-09-06T00:16:13.364Z",
       "category": "PICTURE",
       "mime": "image/svg+xml"
     }
@@ -1612,12 +1612,58 @@
                   },
                   "content": [
                     {
-                      "type": "text",
+                      "type": "tag",
+                      "tag_type": "a",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "rel": "nofollow",
+                        "className": "external text",
+                        "href": "http://www.cityofhaydenid.us"
+                      },
                       "content": [
                         {
-                          "type": "sentence",
-                          "index": 0,
-                          "text": "www.cityofhaydenid.us"
+                          "type": "text",
+                          "content": [
+                            {
+                              "type": "sentence",
+                              "index": 0,
+                              "text": "www"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "wbr",
+                          "tag_class": "void",
+                          "attrs": {},
+                          "content": []
+                        },
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "type": "sentence",
+                              "index": 0,
+                              "text": ".cityofhaydenid"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "wbr",
+                          "tag_class": "void",
+                          "attrs": {},
+                          "content": []
+                        },
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "type": "sentence",
+                              "index": 0,
+                              "text": ".us"
+                            }
+                          ]
                         }
                       ]
                     }
@@ -2975,7 +3021,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.985Z",
+      "timestamp": "2019-09-06T00:16:13.385Z",
       "mime": null
     },
     {
@@ -2992,7 +3038,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.986Z",
+      "timestamp": "2019-09-06T00:16:13.386Z",
       "mime": null
     },
     {
@@ -3009,7 +3055,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.987Z",
+      "timestamp": "2019-09-06T00:16:13.387Z",
       "mime": null
     },
     {
@@ -3026,7 +3072,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.988Z",
+      "timestamp": "2019-09-06T00:16:13.388Z",
       "mime": null
     },
     {
@@ -3043,7 +3089,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.989Z",
+      "timestamp": "2019-09-06T00:16:13.389Z",
       "mime": null
     },
     {
@@ -3060,7 +3106,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.989Z",
+      "timestamp": "2019-09-06T00:16:13.389Z",
       "mime": null
     },
     {
@@ -3077,7 +3123,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.990Z",
+      "timestamp": "2019-09-06T00:16:13.390Z",
       "mime": null
     },
     {
@@ -3094,7 +3140,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.990Z",
+      "timestamp": "2019-09-06T00:16:13.390Z",
       "mime": null
     },
     {
@@ -3111,7 +3157,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:49.990Z",
+      "timestamp": "2019-09-06T00:16:13.391Z",
       "mime": null
     },
     {
@@ -3128,7 +3174,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:53.341Z",
+      "timestamp": "2019-09-06T00:16:15.767Z",
       "mime": null
     },
     {
@@ -3165,7 +3211,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-05T23:15:53.347Z",
+      "timestamp": "2019-09-06T00:16:15.773Z",
       "mime": null
     }
   ],
@@ -3205,7 +3251,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/5/2019 23:15:49 PM UTC"
+      "value": "8/6/2019 0:16:12 AM UTC"
     },
     {
       "key": "last_modified",
@@ -3230,5 +3276,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmUCJnPEy9UCu7bWTeJRtCfFB1TNcWUx1d27aut24awbaC"
+  "ipfs_hash": "QmYWbPSJkQQFFMmkTiJuZcEcdJpBPVcEJvvjRd6ru3YWnu"
 }

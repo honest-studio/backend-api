@@ -276,7 +276,7 @@ export const WikiImport = async (inputString: string) => {
             }
         }
 
-        batchCounter = batchCounter + 1;
+        batchCounter++;
     }
     return;
 })();

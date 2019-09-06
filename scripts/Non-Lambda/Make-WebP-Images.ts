@@ -446,7 +446,7 @@ export const MakeWebPImages = async (inputString: string, processMediaGallery: b
             }
         }
 
-        batchCounter = batchCounter + 1;
+        batchCounter++;
     }
     return;
 })();

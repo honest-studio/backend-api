@@ -89,7 +89,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				text: null,
 				note_element: list_item,
 			};
-			available_citation_id = available_citation_id + 1;
+			available_citation_id++;
 
 			// Add the ref and note information to the list of raw citations
 			rawCitations.push(workingRawCitation)
@@ -277,7 +277,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				}
 			}
 			citations.push(workingCitation);
-			available_citation_id = available_citation_id + 1;
+			available_citation_id++;
 		};
 	});
 
@@ -328,7 +328,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			timestamp: new Date(), 
 			mime: null
 	});
-	available_citation_id = available_citation_id + 1;
+	available_citation_id++;
 
 	return {
 		citations: citations,
