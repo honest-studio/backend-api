@@ -89,7 +89,10 @@ export class MediaUploadService {
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
     getFavicon(inputPack: UrlPack, timeout?: number): Promise<any> {
         let timeoutToUse = undefined;
-        if (timeout) timeoutToUse = timeout;
+        timeoutToUse = timeout ? timeout : 1500;
+
+        // Set up the timeout
+
         return fetchUrl(inputPack.url, timeoutToUse);
     }
 

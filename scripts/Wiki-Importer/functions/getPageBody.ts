@@ -10,6 +10,8 @@ import { getCitations } from './getCitations';
 import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '../../../src/types/article';
 import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
+const chalk = require('chalk');
+
 // input: page html, url
 // output sections[] 
 
@@ -26,11 +28,14 @@ export interface PageBodyPack {
 }
 
 export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
+	console.log(chalk.yellow.bold("=================PAGE BODY================="));
+
 	// Compute citations first to be able to implement internal citations
 	// When parsing the page body
 	let ctn_return_pack = await getCitations(input_pack, url, theMediaUploadService);
 	let internalCitations = ctn_return_pack.internalCitations;
 
+	console.log(chalk.yellow.bold("=================SECTIONS================="));
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
 	// Current section
@@ -48,12 +53,14 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	const $content = $('div.mw-parser-output');
 
 	// Loop through the children
+	console.log(chalk.yellow("Looping through the children"));
 	$content.children('h1, h2, h3, h4, h5, h6, p, div, table, ul, ol, dl, center').each((i, el) => { 
 		let $el = $(el);
 		let tag_name = $el[0].name;
 
 		// Process headlines / headers
 		// Create new section when h tag is reached
+		process.stdout.write(chalk.yellow(`Adding ${tag_name}...`));
 		if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
 			// Terminate loop once references are reached (they've already been computed)
 			if ( $el.attr('id') == 'References' ) {
@@ -158,6 +165,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 			})
 			paragraphIndex++;
 		}
+		process.stdout.write(chalk.yellow(`DONE\n`));
 	})
 	return {
 		sections: sections,

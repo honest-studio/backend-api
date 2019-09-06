@@ -62,6 +62,8 @@ let defaultDescription: Sentence[] = [
 
 // Parse out the citations from Wikipedia
 export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<CitationReturnPack> => { 
+	console.log(chalk.yellow.bold("=================CITATIONS================="));
+
 	const $: CheerioStatic = input_pack.cheerio_static;
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
 	
@@ -75,6 +77,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
+	process.stdout.write(chalk.yellow(`Finding the citation notes...`));
 	$content.find("li").each((idx, list_item) => {
 		// Find the citation notes
 		if (list_item.attribs['id'] && list_item.attribs['id'].search(/cite_note/gimu) >= 0){
@@ -96,8 +99,10 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			
 		};
 	});
+	process.stdout.write(chalk.yellow(`DONE\n`));
 
 	// Start classifying the citations
+	process.stdout.write(chalk.yellow(`Classifying the citations...`));
 	rawCitations = rawCitations.map((raw_citn, idx) => {
 		// console.log($(raw_citn.note_element).html())
 
@@ -158,11 +163,14 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 		}
 		return raw_citn;
 	})
+	process.stdout.write(chalk.yellow(`DONE\n`));
 
 	// Convert the raw citations into real ones
 	// Also replace the <sup> tags with markdown
+	process.stdout.write(chalk.yellow(`Converting real citations to real ones...`));
 	let await_done = false, await_counter = 0;
 	await Promise.all(
+		
 		rawCitations.map(async (raw_citn, idx) => {
 			let workingCitation: Citation = {
 				url: raw_citn.url || null,
@@ -179,11 +187,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'PERIODICAL':
 				case 'BOOK': {
 					if (raw_citn.isbn){
+						process.stdout.write(chalk.yellow(`\t Fetching book info\n`));
 						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn);
 						workingCitation.url = bookInfo.url;
 						workingCitation.thumb = bookInfo.thumb;
 					}
 					else if (raw_citn.issn){
+						process.stdout.write(chalk.yellow(`\t Fetching periodical info\n`));
 						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn);
 						workingCitation.url = periodicalInfo.url;
 						workingCitation.thumb = periodicalInfo.thumb;
@@ -232,7 +242,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					}
 					case 'NONE': {
 						try{
-							let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 3000);
+							let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 2000);
 							if (fetched_favicon != "") workingCitation.thumb = fetched_favicon;
 						}
 						catch (err){
@@ -249,8 +259,10 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			
 		})
 	)
+	process.stdout.write(chalk.yellow(`DONE\n`));
 
 	// Loop through all of the <a> tags and find the external links
+	process.stdout.write(chalk.yellow(`Finding external link citations...`));
 	$content.find("ul li a").each((idx, anchor) => {
 		// Find the external links
 		if (anchor.attribs['class'] && anchor.attribs['class'].search(/external/gimu) >= 0){
@@ -280,11 +292,15 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			available_citation_id++;
 		};
 	});
+	process.stdout.write(chalk.yellow(`DONE\n`));
 
 	// Sort the citations properly
+	process.stdout.write(chalk.yellow(`Sorting the citations...`));
 	citations = _.sortBy(citations, ctn => ctn.citation_id);
+	process.stdout.write(chalk.yellow(`DONE\n`));
 
 	// Chop off the area below certain elements
+	process.stdout.write(chalk.yellow(`Removing stuff below the citations...`));
 	POST_CITATION_CHOP_BELOW.forEach(pack => {
 		let parent_selector = pack.parent ? 
 							`${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
@@ -301,6 +317,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			}
 		});
 	});
+	process.stdout.write(chalk.yellow(`DONE\n`));
 
 
 	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));

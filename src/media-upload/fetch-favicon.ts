@@ -38,8 +38,13 @@ export function fetchUrl(siteUrl, timeout?: number) {
         .catch(rej => {
             // console.log(rej);
             // console.log("Axios failed in fetch-favicon");
-            resolve("");
+            reject("");
         });
+
+        setTimeout(function() {
+            let msg = `Promise timed out after ${timeout} ms`;
+            reject(msg);
+        }, timeout);
     });
 }
 
