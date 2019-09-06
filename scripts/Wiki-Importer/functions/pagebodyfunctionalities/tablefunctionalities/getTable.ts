@@ -3,6 +3,8 @@ import { getTagClass } from '../getTagClass';
 import { parseAnchorTag } from '../parseAnchorTag';
 import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem, NestedTextItem, NestedTagItem } from '../../../../../src/types/article';
 import { nestedContentParser } from '../../../../../src/utils/article-utils/article-converter';
+const util = require('util');
+const chalk = require('chalk');
 
 export const getTable = (element, $: CheerioStatic, internal_citations, table_type: 'wikitable' | 'body-table'): Table => {
 	let $table = $(element);
@@ -32,7 +34,7 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 
 	// Traverse table
 	// Loop through each row
-	$table.find('tr').each((i, el) => {
+	$table.children('tbody').children('tr').each((i, el) => {
 		cells = []; // Reset cells array for each new row
 		let $row = $(el);
 		let row: TableRow = {
@@ -44,7 +46,7 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 		}
 
 		 // Loop through each cell
-		$row.find('td, th').each((i2, el2) => {
+		$row.children('td, th').each((i2, el2) => {
 			let $cell = $(el2);
 			let content = nestedContentParser(el2.children, []);
 			if (content != [] && content != undefined) {
@@ -59,6 +61,9 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 			}
 		}) 
 		row.cells = cells; 
+		// console.log(chalk.yellow("------------------------"))
+		// console.log($.html($row))
+		// console.log(util.inspect(row, {showHidden: false, depth: null, chalk: true}));
 		rows.push(row)
 	});
 

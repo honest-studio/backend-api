@@ -32,7 +32,7 @@ export const getImage = (element, $: CheerioStatic, internal_citations, delete_w
 	let $thumbcaption = $el.find('.thumbcaption');
 	if ($thumbinner.length > 0 && $thumbcaption.length > 0) { 
 		url = cleanURL(src);
-		if (!url.includes('.jpg') && !url.includes('.png')) { // Prevent edge case
+		if (url && url.search(/.jpg|.jpeg|.png|.svg/gimu) == -1) { // Prevent edge case
 			url = 'https:' + src;
 		}
 
@@ -97,7 +97,7 @@ export const getImage = (element, $: CheerioStatic, internal_citations, delete_w
 
 	src = $el.attr('src');
 	url = cleanURL(src);
-	if (!url.includes('.jpg') && !url.includes('.png')) { // Prevent edge case
+	if (url && url.search(/.jpg|.jpeg|.png|.svg/gimu) == -1) { // Prevent edge case
 		url = 'https:' + src;
 	}
 

@@ -46,6 +46,8 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             // console.log(chalk.red(`Image src fixed`));
         }
 
+        // // Fix the //upload.wikimedia.org issue
+        // $(img_elem).attr("src", theSrc.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org"));
     })
 
     // Remove certain elements

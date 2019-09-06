@@ -19,7 +19,7 @@
         "width": 965,
         "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Kootenai_County_Courthouse.jpg/330px-Kootenai_County_Courthouse.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Kootenai_County_Courthouse.jpg/440px-Kootenai_County_Courthouse.jpg 2x"
       },
-      "timestamp": "2019-09-06T01:16:12.430Z",
+      "timestamp": "2019-09-06T02:08:04.847Z",
       "category": "PICTURE",
       "mime": "image/jpeg"
     }
@@ -259,99 +259,11 @@
                   ]
                 }
               ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {
-                  "verticalAlign": "middle",
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/0f/Kootenai_County%2C_Idaho_seal.png/75px-Kootenai_County%2C_Idaho_seal.png|//upload.wikimedia.org/wikipedia/en/0/0f/Kootenai_County%2C_Idaho_seal.png 1.5x|Seal of Kootenai County, Idaho|h75|w75]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "**Seal**"
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
         {
           "index": 4,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "style": {
-                  "verticalAlign": "middle",
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/0f/Kootenai_County%2C_Idaho_seal.png/75px-Kootenai_County%2C_Idaho_seal.png|//upload.wikimedia.org/wikipedia/en/0/0f/Kootenai_County%2C_Idaho_seal.png 1.5x|Seal of Kootenai County, Idaho|h75|w75]]"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {},
-                  "content": []
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "**Seal**"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 5,
           "attrs": {
             "className": "mergedrow"
           },
@@ -401,7 +313,7 @@
           ]
         },
         {
-          "index": 6,
+          "index": 5,
           "attrs": {
             "className": "mergedrow"
           },
@@ -451,7 +363,7 @@
           ]
         },
         {
-          "index": 7,
+          "index": 6,
           "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
@@ -497,7 +409,7 @@
           ]
         },
         {
-          "index": 8,
+          "index": 7,
           "attrs": {
             "className": "mergedrow"
           },
@@ -545,7 +457,7 @@
           ]
         },
         {
-          "index": 9,
+          "index": 8,
           "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
@@ -591,7 +503,7 @@
           ]
         },
         {
-          "index": 10,
+          "index": 9,
           "attrs": {
             "className": "mergedbottomrow"
           },
@@ -639,7 +551,7 @@
           ]
         },
         {
-          "index": 11,
+          "index": 10,
           "attrs": {
             "className": "mergedtoprow"
           },
@@ -676,7 +588,7 @@
           ]
         },
         {
-          "index": 12,
+          "index": 11,
           "attrs": {
             "className": "mergedrow"
           },
@@ -752,7 +664,7 @@
           ]
         },
         {
-          "index": 13,
+          "index": 12,
           "attrs": {
             "className": "mergedrow"
           },
@@ -828,7 +740,7 @@
           ]
         },
         {
-          "index": 14,
+          "index": 13,
           "attrs": {
             "className": "mergedbottomrow"
           },
@@ -904,7 +816,7 @@
           ]
         },
         {
-          "index": 15,
+          "index": 14,
           "attrs": {
             "className": "mergedtoprow"
           },
@@ -941,7 +853,7 @@
           ]
         },
         {
-          "index": 16,
+          "index": 15,
           "attrs": {
             "className": "mergedrow"
           },
@@ -989,7 +901,7 @@
           ]
         },
         {
-          "index": 17,
+          "index": 16,
           "attrs": {
             "className": "mergedbottomrow"
           },
@@ -1065,7 +977,7 @@
           ]
         },
         {
-          "index": 18,
+          "index": 17,
           "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
@@ -1111,7 +1023,7 @@
           ]
         },
         {
-          "index": 19,
+          "index": 18,
           "attrs": {
             "className": "mergedtoprow"
           },
@@ -1169,7 +1081,7 @@
           ]
         },
         {
-          "index": 20,
+          "index": 19,
           "attrs": {},
           "tag_type": "tr",
           "tag_class": "block",
@@ -1522,7 +1434,7 @@
           ],
           "mime": "image/jpeg",
           "category": "PICTURE",
-          "timestamp": "2019-09-06T01:16:16.742Z",
+          "timestamp": "2019-09-06T02:08:09.030Z",
           "media_props": {
             "type": "section_image",
             "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/CourdAlene_TheLake.jpg/420px-CourdAlene_TheLake.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/CourdAlene_TheLake.jpg/560px-CourdAlene_TheLake.jpg 2x",
@@ -6894,7 +6806,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.467Z",
+      "timestamp": "2019-09-06T02:08:04.873Z",
       "mime": null
     },
     {
@@ -6911,7 +6823,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.470Z",
+      "timestamp": "2019-09-06T02:08:04.875Z",
       "mime": null
     },
     {
@@ -6928,7 +6840,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.472Z",
+      "timestamp": "2019-09-06T02:08:04.876Z",
       "mime": "application/pdf"
     },
     {
@@ -6945,7 +6857,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.473Z",
+      "timestamp": "2019-09-06T02:08:04.877Z",
       "mime": "application/pdf"
     },
     {
@@ -6962,7 +6874,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.474Z",
+      "timestamp": "2019-09-06T02:08:04.877Z",
       "mime": "application/pdf"
     },
     {
@@ -6979,7 +6891,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.475Z",
+      "timestamp": "2019-09-06T02:08:04.878Z",
       "mime": "application/pdf"
     },
     {
@@ -6996,7 +6908,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.476Z",
+      "timestamp": "2019-09-06T02:08:04.880Z",
       "mime": "application/pdf"
     },
     {
@@ -7013,7 +6925,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.477Z",
+      "timestamp": "2019-09-06T02:08:04.881Z",
       "mime": "application/pdf"
     },
     {
@@ -7030,7 +6942,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.478Z",
+      "timestamp": "2019-09-06T02:08:04.882Z",
       "mime": null
     },
     {
@@ -7047,7 +6959,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.479Z",
+      "timestamp": "2019-09-06T02:08:04.882Z",
       "mime": "application/pdf"
     },
     {
@@ -7064,7 +6976,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.480Z",
+      "timestamp": "2019-09-06T02:08:04.883Z",
       "mime": "application/pdf"
     },
     {
@@ -7081,7 +6993,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.481Z",
+      "timestamp": "2019-09-06T02:08:04.884Z",
       "mime": null
     },
     {
@@ -7098,7 +7010,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.482Z",
+      "timestamp": "2019-09-06T02:08:04.884Z",
       "mime": "application/pdf"
     },
     {
@@ -7115,7 +7027,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.490Z",
+      "timestamp": "2019-09-06T02:08:04.885Z",
       "mime": null
     },
     {
@@ -7132,7 +7044,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.491Z",
+      "timestamp": "2019-09-06T02:08:04.889Z",
       "mime": "application/pdf"
     },
     {
@@ -7149,7 +7061,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.492Z",
+      "timestamp": "2019-09-06T02:08:04.890Z",
       "mime": "application/pdf"
     },
     {
@@ -7166,7 +7078,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.493Z",
+      "timestamp": "2019-09-06T02:08:04.891Z",
       "mime": "application/pdf"
     },
     {
@@ -7183,7 +7095,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.494Z",
+      "timestamp": "2019-09-06T02:08:04.892Z",
       "mime": "application/pdf"
     },
     {
@@ -7200,7 +7112,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.494Z",
+      "timestamp": "2019-09-06T02:08:04.892Z",
       "mime": null
     },
     {
@@ -7217,7 +7129,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.495Z",
+      "timestamp": "2019-09-06T02:08:04.892Z",
       "mime": null
     },
     {
@@ -7234,7 +7146,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.495Z",
+      "timestamp": "2019-09-06T02:08:04.893Z",
       "mime": null
     },
     {
@@ -7251,7 +7163,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.496Z",
+      "timestamp": "2019-09-06T02:08:04.893Z",
       "mime": null
     },
     {
@@ -7268,7 +7180,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.497Z",
+      "timestamp": "2019-09-06T02:08:04.894Z",
       "mime": null
     },
     {
@@ -7285,7 +7197,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.497Z",
+      "timestamp": "2019-09-06T02:08:04.894Z",
       "mime": null
     },
     {
@@ -7302,7 +7214,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.498Z",
+      "timestamp": "2019-09-06T02:08:04.895Z",
       "mime": "application/pdf"
     },
     {
@@ -7319,7 +7231,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.498Z",
+      "timestamp": "2019-09-06T02:08:04.895Z",
       "mime": null
     },
     {
@@ -7336,7 +7248,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.499Z",
+      "timestamp": "2019-09-06T02:08:04.896Z",
       "mime": null
     },
     {
@@ -7353,7 +7265,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.501Z",
+      "timestamp": "2019-09-06T02:08:04.897Z",
       "mime": null
     },
     {
@@ -7370,7 +7282,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.503Z",
+      "timestamp": "2019-09-06T02:08:04.898Z",
       "mime": null
     },
     {
@@ -7387,7 +7299,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.506Z",
+      "timestamp": "2019-09-06T02:08:04.899Z",
       "mime": null
     },
     {
@@ -7404,7 +7316,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:12.509Z",
+      "timestamp": "2019-09-06T02:08:04.899Z",
       "mime": null
     },
     {
@@ -7421,7 +7333,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:16.731Z",
+      "timestamp": "2019-09-06T02:08:08.982Z",
       "mime": null
     },
     {
@@ -7438,7 +7350,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:16.731Z",
+      "timestamp": "2019-09-06T02:08:08.983Z",
       "mime": null
     },
     {
@@ -7475,7 +7387,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-06T01:16:16.735Z",
+      "timestamp": "2019-09-06T02:08:08.987Z",
       "mime": null
     }
   ],
@@ -7515,7 +7427,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/6/2019 1:16:11 AM UTC"
+      "value": "8/6/2019 2:8:4 AM UTC"
     },
     {
       "key": "last_modified",
@@ -7540,5 +7452,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmcMf7eNMfsX5RU1bqbXZg2rR9SS2XHAroCARhwKLYCctS"
+  "ipfs_hash": "QmamuLkbeRtAGTQS54Kz2uhKqvzdV8Dby9TBjYLJRUndsj"
 }

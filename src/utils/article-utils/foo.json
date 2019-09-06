@@ -1,1 +1,2779 @@
-[]
+[
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "**Bonner County** is a [[LINK|lang_en|County_(USA)|county]] located in the northern part of the [[LINK|lang_en|U.S._state|U.S. state]] of [[LINK|lang_en|Idaho|Idaho]]. As of the [[LINK|lang_en|2010_United_States_Census|2010 census]], the population was 40,877. [[CITE|1|http://quickfacts.census.gov/qfd/states/16/16017.html]] The [[LINK|lang_en|County_seat|county seat]] and largest city is [[LINK|lang_en|Sandpoint,_Idaho|Sandpoint]]. [[CITE|2|http://naco.org/Counties/Pages/FindACounty.aspx]] Partitioned from [[LINK|lang_en|Kootenai_County,_Idaho|Kootenai County]] and established in 1907, it was named for Edwin L. Bonner, a ferry operator."
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Bonner County comprises the Sandpoint, ID [[LINK|lang_en|Micropolitan_Statistical_Area|Micropolitan Statistical Area]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "history"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "History"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Bonner County was formed on February 21, 1907; it was formerly the northern section of [[LINK|lang_en|Kootenai_County,_Idaho|Kootenai County]]. It was named for travel entrepreneur Edwin L. Bonner, a ferry operator. [[CITE|3|http://state.id.us/aboutidaho/county/bonner.html]] [[LINK|lang_en|Bonners_Ferry,_Idaho|Bonners Ferry]] is now in [[LINK|lang_en|Boundary_County,_Idaho|Boundary County]], which was partitioned in 1915 from Bonner County."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "geography"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Geography"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "According to the [[LINK|lang_en|U.S._Census_Bureau|U.S. Census Bureau]], the county has a total area of 1,919 square miles (4,970 km 2 ), of which 1,735 square miles (4,490 km 2 ) is land and 185 square miles (480 km 2 ) (9.6%) is water. [[CITE|4|http://census.gov/geo/www/gazetteer/gazette.html]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "adjacent-counties"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Adjacent counties"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Boundary_County,_Idaho|Boundary County]]- north"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Lincoln_County,_Montana|Lincoln County]], [[LINK|lang_en|Montana|Montana]]- east"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Sanders_County,_Montana|Sanders County]], [[LINK|lang_en|Montana|Montana]]- southeast"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Shoshone_County,_Idaho|Shoshone County]]- southeast"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Kootenai_County,_Idaho|Kootenai County]]- south"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Spokane_County,_Washington|Spokane County, Washington]]- southwest"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Pend_Oreille_County,_Washington|Pend Oreille County, Washington]]- northwest"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "national-protected-areas"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "National protected areas"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Pacific_Northwest_National_Scenic_Trail|Pacific Northwest National Scenic Trail]] (part)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Coeur_d%27Alene_National_Forest|Coeur d'Alene National Forest]] (part)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Kaniksu_National_Forest|Kaniksu National Forest]] (part)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Kootenai_National_Forest|Kootenai National Forest]] (part)"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "major-highways"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Major highways"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|........file:us_2.svg|]] [[LINK|lang_en|U.S._Route_2_in_Idaho|US 2]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|........file:us_95.svg|]] [[LINK|lang_en|U.S._Route_95_in_Idaho|US 95]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|........file:id-41.svg|]] [[LINK|lang_en|Idaho_State_Highway_41|SH-41]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|........file:id-57.svg|]] [[LINK|lang_en|Idaho_State_Highway_57|SH-57]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|........file:id-200.svg|]] [[LINK|lang_en|Idaho_State_Highway_200|SH-200]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "rivers-and-lakes"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Rivers and lakes"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Albeni_Falls_Dam|Albeni Falls Dam]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Clark_Fork_River|Clark Fork River]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Cocolalla"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Kelso Lake"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Lake_Pend_Oreille|Lake Pend Oreille]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Pack_River|Pack River]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Pend_Oreille_River|Pend Oreille River]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Priest_Lake|Priest Lake]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "demographics"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Demographics"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "table",
+				"attrs": {
+					"className": "toccolours",
+					"style": {
+						"borderSpacing": "1px",
+						"float": "right",
+						"clear": "right",
+						"margin": "0 0 1em 1em",
+						"textAlign": "right"
+					}
+				},
+				"items": [
+					{
+						"type": "body-table",
+						"attrs": {
+							"className": "toccolours",
+							"style": {
+								"borderSpacing": "1px",
+								"float": "right",
+								"clear": "right",
+								"margin": "0 0 1em 1em",
+								"textAlign": "right"
+							}
+						},
+						"caption": {
+							"attrs": {},
+							"sentences": []
+						},
+						"thead": {
+							"rows": [],
+							"attrs": {}
+						},
+						"tbody": {
+							"rows": [
+								{
+									"index": 0,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"className": "navbox-title",
+												"colSpan": "4",
+												"style": {
+													"paddingRight": "3px",
+													"paddingLeft": "3px",
+													"fontSize": "110%",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Historical population "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 1,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {
+										"style": {
+											"fontSize": "95%"
+										}
+									},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center",
+													"borderBottom": "1px solid black"
+												}
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " Census "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"textAlign": "center",
+													"borderBottom": "1px solid black"
+												}
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "abbr",
+													"tag_class": "inline",
+													"attrs": {
+														"title": "Population"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " Pop. "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"textAlign": "center",
+													"borderBottom": "1px solid black"
+												}
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"textAlign": "center",
+													"borderBottom": "1px solid black"
+												}
+											},
+											"tag_type": "th",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "abbr",
+													"tag_class": "inline",
+													"attrs": {
+														"title": "Percent change"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " %± "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 2,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1910_United_States_Census|1910]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 13,588 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " — "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 3,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1920_United_States_Census|1920]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 12,957 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " −4.6% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 4,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1930_United_States_Census|1930]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 13,152 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1.5% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 5,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1940_United_States_Census|1940]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 15,667 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 19.1% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 6,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1950_United_States_Census|1950]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 14,853 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " −5.2% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 7,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1960_United_States_Census|1960]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 15,587 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 4.9% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 8,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1970_United_States_Census|1970]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 15,560 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " −0.2% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 9,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1980_United_States_Census|1980]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 24,163 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 55.3% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 10,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|1990_United_States_Census|1990]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 26,622 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 10.2% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 11,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|2000_United_States_Census|2000]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 36,835 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 38.4% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 12,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **[[LINK|lang_en|2010_United_States_Census|2010]] ** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 40,877 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 11.0% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 13,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"style": {
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " **Est. 2015** "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 41,859 "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 2,
+											"attrs": {
+												"style": {
+													"fontSize": "85%"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-USCensusEst2015_5-0"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " [[CITE|5|http://census.gov/popest/data/counties/totals/2015/CO-EST2015-alldata.html]] "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 3,
+											"attrs": {
+												"style": {
+													"paddingLeft": "8px",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 2.4% "
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 14,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {
+												"colSpan": "4",
+												"style": {
+													"borderTop": "1px solid black",
+													"fontSize": "85%",
+													"textAlign": "center"
+												}
+											},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " U.S. Decennial Census "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-6"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " [[CITE|6|http://census.gov/prod/www/decennial.html]] "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "br",
+													"tag_class": "void",
+													"attrs": {},
+													"content": []
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1790-1960 1900-1990 "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-8"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " [[CITE|7|http://census.gov/population/cencounts/id190090.txt]] "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "br",
+													"tag_class": "void",
+													"attrs": {},
+													"content": []
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 1990-2000 "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-9"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " [[CITE|8|http://census.gov/population/www/cen2000/briefs/phc-t4/tables/tab02.pdf]] "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " 2010-2013 "
+														}
+													]
+												},
+												{
+													"type": "tag",
+													"tag_type": "sup",
+													"tag_class": "inline",
+													"attrs": {
+														"className": "reference",
+														"id": "cite_ref-QF_1-1"
+													},
+													"content": [
+														{
+															"type": "text",
+															"content": [
+																{
+																	"index": 0,
+																	"type": "sentence",
+																	"text": " [[CITE|1|http://quickfacts.census.gov/qfd/states/16/16017.html]] "
+																}
+															]
+														}
+													]
+												},
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": " "
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							],
+							"attrs": {}
+						},
+						"tfoot": {
+							"rows": [],
+							"attrs": {}
+						}
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "2000-census"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "2000 census"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "As of the [[LINK|lang_en|Census|census]] of 2000, there were 36,835 people, 14,693 households, and 10,270 families residing in the county. The [[LINK|lang_en|Population_density|population density]] was 21 people per square mile (8/km²). There were 19,646 housing units at an average density of 11 per square mile (4/km²). The racial makeup of the county was 96.58% [[LINK|lang_en|Race_(United_States_Census)|White]], 0.11% [[LINK|lang_en|Race_(United_States_Census)|Black]] or [[LINK|lang_en|Race_(United_States_Census)|African American]], 0.87% [[LINK|lang_en|Race_(United_States_Census)|Native American]], 0.27% [[LINK|lang_en|Race_(United_States_Census)|Asian]], 0.05% [[LINK|lang_en|Race_(United_States_Census)|Pacific Islander]], 0.42% from [[LINK|lang_en|Race_(United_States_Census)|other races]], and 1.70% from two or more races. 1.64% of the population were [[LINK|lang_en|Race_(United_States_Census)|Hispanic]] or [[LINK|lang_en|Race_(United_States_Census)|Latino]] of any race. 20.9% were of [[LINK|lang_en|Germans|German]], 11.7% [[LINK|lang_en|English_people|English]], 11.7% [[LINK|lang_en|United_States|American]], 9.6% [[LINK|lang_en|Irish_people|Irish]] and 5.3% [[LINK|lang_en|Norwegian_people|Norwegian]] ancestry according to [[LINK|lang_en|Census_2000|Census 2000]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "There were 14,693 households out of which 30.60% had children under the age of 18 living with them, 58.60% were [[LINK|lang_en|Marriage|married couples]] living together, 7.50% had a female householder with no husband present, and 30.10% were non-families. 24.00% of all households were made up of individuals and 8.20% had someone living alone who was 65 years of age or older. The average household size was 2.49 and the average family size was 2.94."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In the county the population was spread out with 25.50% under the age of 18, 6.70% from 18 to 24, 25.40% from 25 to 44, 29.30% from 45 to 64, and 13.10% who were 65 years of age or older. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The median age was 41 years. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "For every 100 females there were 100.30 males. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "For every 100 females age 18 and over, there were 98.20 males."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The median income for a household in the county was $32,803, and the median income for a family was $37,930. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Males had a median income of $32,504 versus $21,086 for females. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The [[LINK|lang_en|Per_capita_income|per capita income]] for the county was $17,263. About 11.90% of families and 15.50% of the population were below the [[LINK|lang_en|Poverty_line|poverty line]], including 21.20% of those under age 18 and 10.20% of those age 65 or over."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "2010-census"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "2010 census"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "As of the [[LINK|lang_en|2010_United_States_Census|2010 United States Census]], there were 40,877 people, 17,100 households, and 11,591 families residing in the county. [[CITE|9|http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_DP/DPDP1/0500000US16017]] The population density was 23.6 inhabitants per square mile (9.1/km 2 ). There were 24,669 housing units at an average density of 14.2 per square mile (5.5/km 2 ). [[CITE|10|http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_SF1/GCTPH1.CY07/0500000US16017]] The racial makeup of the county was 96.0% white, 0.8% American Indian, 0.5% Asian, 0.1% Pacific islander, 0.1% black or African American, 0.4% from additional races, and 2.1% from two or more races. Those of Hispanic or Latino origin made up 2.2% of the population. [[CITE|9|http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_DP/DPDP1/0500000US16017]] In terms of ancestry, 25.4% were [[LINK|lang_en|Germans|German]], 15.3% were [[LINK|lang_en|Irish_people|Irish]], 15.2% were [[LINK|lang_en|English_people|English]], 6.2% were [[LINK|lang_en|Norwegians|Norwegian]], and 5.0% were [[LINK|lang_en|Americans|American]]. [[CITE|11|http://factfinder.census.gov/bkmk/table/1.0/en/ACS/10_5YR/DP02/0500000US16017]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Of the 17,100 households, 27.2% had children under the age of 18 living with them, 55.3% were married couples living together, 7.9% had a female householder with no husband present, 32.2% were non-families, and 26.0% of all households were made up of individuals. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The average household size was 2.37 and the average family size was 2.82. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The median age was 45.8 years. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "[[CITE|9|http://factfinder.census.gov/bkmk/table/1.0/en/DEC/10_DP/DPDP1/0500000US16017]]"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The median income for a household in the county was $41,943 and the median income for a family was $51,377. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Males had a median income of $40,076 versus $30,829 for females. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The per capita income for the county was $24,745. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "About 10.1% of families and 14.3% of the population were below the [[LINK|lang_en|Poverty_line|poverty line]], including 22.3% of those under age 18 and 6.7% of those age 65 or over. [[CITE|12|http://factfinder.census.gov/bkmk/table/1.0/en/ACS/10_5YR/DP03/0500000US16017]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "communities"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Communities"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "cities"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cities"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Sandpoint,_Idaho|Sandpoint]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Clark_Fork,_Idaho|Clark Fork]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Dover,_Idaho|Dover]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|East_Hope,_Idaho|East Hope]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Hope,_Idaho|Hope]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Kootenai,_Idaho|Kootenai]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Oldtown,_Idaho|Oldtown]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Ponderay,_Idaho|Ponderay]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Priest_River,_Idaho|Priest River]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "census-designated-place"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Census-designated place"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Blanchard,_Idaho|Blanchard]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "unincorporated-communities"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Unincorporated communities"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Careywood,_Idaho|Careywood]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cocolalla,_Idaho|Cocolalla]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Colburn,_Idaho|Colburn]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Coolin,_Idaho|Coolin]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Laclede,_Idaho|Laclede]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Lamb_Creek,_Idaho|Lamb Creek]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nordman,_Idaho|Nordman]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Outlet_Bay,_Idaho|Outlet Bay]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Sagle,_Idaho|Sagle]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Vans_Corner,_Idaho|Vans Corner]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Westmond,_Idaho|Westmond]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "ski-area"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Ski area"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Schweitzer_Mountain|Schweitzer Mountain Resort]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "h2-idh2-idh2h2"
+				},
+				"items": []
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|National_Register_of_Historic_Places_listings_in_Bonner_County,_Idaho|National Register of Historic Places listings in Bonner County, Idaho]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	}
+]
