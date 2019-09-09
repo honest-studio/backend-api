@@ -13,7 +13,7 @@ import * as imagemin_Jpegtran from 'imagemin-jpegtran';
 import * as imagemin_Optipng from 'imagemin-optipng';
 import * as imagemin_Svgo from 'imagemin-svgo';
 import * as imagemin_Webp from 'imagemin-webp';
-import * as Jimp from 'jimp';
+import Jimp = require('jimp');
 import * as mimeClass from 'mime';
 import * as fetch from 'node-fetch';
 import * as path from 'path';
@@ -22,10 +22,9 @@ import { StringDecoder } from 'string_decoder';
 import * as zlib from 'zlib';
 import { AWSS3Service } from '../feature-modules/database';
 import { fetchUrl } from './fetch-favicon';
-import { getYouTubeIdIfPresent } from '../utils/article-utils/article-tools';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
-import { BookInfoPack } from '../types/api';
+import { BookInfoPack, PeriodicalInfoPack } from '../types/api';
 import * as sharp from 'sharp';
 import * as axios from 'axios';
 const isSvg = require('is-svg');
@@ -88,8 +87,13 @@ export class MediaUploadService {
     constructor(private awsS3Service: AWSS3Service) {}
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
-    getFavicon(inputPack: UrlPack): Promise<any> {
-        return fetchUrl(inputPack.url);
+    getFavicon(inputPack: UrlPack, timeout?: number): Promise<any> {
+        let timeoutToUse = undefined;
+        timeoutToUse = timeout ? timeout : 1500;
+
+        // Set up the timeout
+
+        return fetchUrl(inputPack.url, timeoutToUse);
     }
 
     async getBookInfoFromISBN(inputISBN: string): Promise<BookInfoPack> {
@@ -148,7 +152,7 @@ export class MediaUploadService {
                     text: `\nISBN-10: ${initialPack.isbn_10}`
                 }
             );
-            availableIndex = availableIndex + 1;
+            availableIndex++;
         }
         if (initialPack.isbn_13) {
             initialPack.description.push(
@@ -158,11 +162,83 @@ export class MediaUploadService {
                     text: `\nISBN-13: ${initialPack.isbn_13}`
                 }
             );
-            availableIndex = availableIndex + 1;
+            availableIndex++;
         }
         
         return initialPack;
     }
+
+    async getPeriodicalInfoFromISSN(inputISSN: string): Promise<PeriodicalInfoPack> {
+        let initialPack: PeriodicalInfoPack = {
+            title: "<TITLE>",
+            thumb: null,
+            url: `https://portal.issn.org/resource/ISSN/${inputISSN}`,
+            issn: "<ISSN>",
+            author: "<AUTHOR>",
+            publisher: "<PUBLISHER>",
+            published: "<PUBLISHED DATE>",
+            description: []
+        };
+        
+        // // Fetch the url
+        // let response = await rp.default({
+        //     uri: `https://portal.issn.org/resource/ISSN/${inputISSN}?format=json`,
+        //     headers: UNIVERSAL_HEADERS,
+        //     resolveWithFullResponse: true,
+        //     // gzip: true
+        // }).then((response) => {
+        //     return response;
+        // }).catch((err) => {
+        //     console.log(err);
+        // });
+        
+        // let bookJSON = JSON.parse(response.body);
+        // let theKey = Object.keys(bookJSON)[0];
+        // bookJSON = bookJSON[theKey];
+
+        // if(bookJSON && bookJSON.title){
+        //     initialPack.title = `${bookJSON.title}${bookJSON.subtitle ? ": " + bookJSON.subtitle : ""}`;
+        //     initialPack.thumb = bookJSON.cover && bookJSON.cover.medium;
+        //     initialPack.url = bookJSON.url;
+        //     initialPack.isbn_10 = bookJSON.identifiers && bookJSON.identifiers.isbn_10 && bookJSON.identifiers.isbn_10.length && bookJSON.identifiers.isbn_10[0];
+        //     initialPack.isbn_13 = bookJSON.identifiers && bookJSON.identifiers.isbn_13 && bookJSON.identifiers.isbn_13.length && bookJSON.identifiers.isbn_13[0];
+        //     initialPack.author = bookJSON.authors && bookJSON.authors.map(author => author.name).join(", ");
+        //     initialPack.publisher = bookJSON.publishers && bookJSON.publishers.map(publisher => publisher.name).join(", ");
+        //     initialPack.published = bookJSON.publish_date;
+        // }
+
+        // let availableIndex = 1;
+        // initialPack.description = [
+        //     {
+        //         index: 0,
+        //         type: 'sentence',
+        //         text: `${initialPack.author ? initialPack.author + '. ' : ''}***${initialPack.title}***, ${initialPack.publisher}, ${initialPack.published}.`
+        //     },
+        // ]
+        // if (initialPack.isbn_10) {
+        //     initialPack.description.push(
+        //         {
+        //             index: availableIndex,
+        //             type: 'sentence',
+        //             text: `\nISBN-10: ${initialPack.isbn_10}`
+        //         }
+        //     );
+        //     availableIndex++;
+        // }
+        // if (initialPack.isbn_13) {
+        //     initialPack.description.push(
+        //         {
+        //             index: availableIndex,
+        //             type: 'sentence',
+        //             text: `\nISBN-13: ${initialPack.isbn_13}`
+        //         }
+        //     );
+        //     availableIndex++;
+        // }
+        
+        return initialPack;
+    }
+
 
     // Fetch a file from an external URL
     getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
@@ -468,7 +544,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the BMP and convert it to JPEG due to AMP and compatibility issues (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
+                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -479,7 +555,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Set the BMP thumbnail as a JPEG
-                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
+                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -500,7 +576,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the TIFF and convert it to JPEG due to AMP and compatibility issues (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
+                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -511,7 +587,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Set the TIFF thumbnail as a JPEG
-                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
+                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -540,7 +616,7 @@ export class MediaUploadService {
                         //         .then((pngFrame) => {
                         //             console.log(pngFrame);
                         //             // return pngFrame;
-                        //             return Jimp.read(pngFrame)
+                        //             return Jimp.default.read(pngFrame)
                         //         })
                         //         .then((image) => { 
                         //             return image
@@ -586,7 +662,7 @@ export class MediaUploadService {
                         // Otherwise, errors will show up
 
                         // Convert the PNG to JPEG for the thumbnail
-                        bufferPack.thumbBuf = await Jimp.read(bufferPack.mainBuf)
+                        bufferPack.thumbBuf = await Jimp.default.read(bufferPack.mainBuf)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -598,7 +674,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Resize the PNG and convert to AMP JPEG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(bufferPack.mainBuf)
+                        bufferPack.mainBuf = await Jimp.default.read(bufferPack.mainBuf)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -630,7 +706,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the JPEG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
+                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -641,7 +717,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Resize the JPEG for its thumbnail
-                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
+                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -663,13 +739,13 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/png';
 
                         // Resize the PNG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.read(bufferToUse)
+                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
                             .then((image) => image.scaleToFit(mainWidth, mainHeight).getBufferAsync('image/png'))
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Resize the PNG for its thumbnail
-                        bufferPack.thumbBuf = await Jimp.read(bufferToUse)
+                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
                             .then((image) =>
                                 image
                                     .scaleToFit(thumbWidth, thumbHeight)
@@ -711,7 +787,7 @@ export class MediaUploadService {
                     bufferPack.mainBuf = bufferToUse;
 
                     // Resize the snapshot JPEG
-                    bufferPack.thumbBuf = await Jimp.read(fs.readFileSync(snapshotPath))
+                    bufferPack.thumbBuf = await Jimp.default.read(fs.readFileSync(snapshotPath))
                         .then((image) =>
                             image
                                 .background(0xffffffff)

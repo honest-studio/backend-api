@@ -1,0 +1,2320 @@
+{
+  "page_title": [
+    {
+      "type": "sentence",
+      "index": 0,
+      "text": "2010 Movistar Open"
+    }
+  ],
+  "main_photo": [
+    {
+      "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
+      "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
+      "caption": null,
+      "type": "main_photo",
+      "attribution_url": null,
+      "media_props": {
+        "type": "main_photo",
+        "height": null,
+        "width": null,
+        "srcSet": null
+      },
+      "timestamp": "2019-09-09T17:48:00.857Z",
+      "category": "NONE",
+      "mime": null
+    }
+  ],
+  "infobox_html": {
+    "type": "wikitable",
+    "attrs": {
+      "className": "infobox vevent",
+      "style": {
+        "width": "22em"
+      }
+    },
+    "caption": {
+      "attrs": {},
+      "sentences": []
+    },
+    "thead": {
+      "rows": [],
+      "attrs": {}
+    },
+    "tbody": {
+      "attrs": {},
+      "rows": [
+        {
+          "index": 0,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "className": "summary",
+                "style": {
+                  "textAlign": "center",
+                  "fontSize": "125%",
+                  "fontWeight": "bold",
+                  "background": "#F3D6B6",
+                  "color": "black"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "2010 Movistar Open"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Date"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "February 1 – February 7"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Edition"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "17th"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Category"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|ATP_World_Tour_250_series|ATP 250]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Draw"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "32S / 16D / 32Q"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Prize money"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|United_States_dollar|USD]] $398,250"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Surface"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Clay_court|Clay]] (red)"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Location"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "className": "location"
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Colina,_Chile|Colina]], [[LINK|lang_en|Chile|Chile]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Venue"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "className": "location"
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Club Piedra Roja, [[LINK|lang_en|Chicureo|Chicureo]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Champions"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "padding": "0"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|2010_Movistar_Open_%E2%80%93_Singles|Singles]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "a",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "href": "/wiki/Brazil",
+                        "title": "Brazil",
+                        "className": "flagicon flagicon"
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "img",
+                          "tag_class": "void",
+                          "attrs": {
+                            "alt": "Brazil",
+                            "src": "//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png",
+                            "decoding": "async",
+                            "width": "22",
+                            "height": "15",
+                            "className": "thumbborder",
+                            "srcSet": "//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x",
+                            "data-file-width": "720",
+                            "data-file-height": "504"
+                          },
+                          "content": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": " [[LINK|lang_en|Thomaz_Bellucci|Thomaz Bellucci]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "padding": "0"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|2010_Movistar_Open_%E2%80%93_Doubles|Doubles]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "a",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "href": "/wiki/Poland",
+                        "title": "Poland",
+                        "className": "flagicon flagicon"
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "img",
+                          "tag_class": "void",
+                          "attrs": {
+                            "alt": "Poland",
+                            "src": "//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/23px-Flag_of_Poland.svg.png",
+                            "decoding": "async",
+                            "width": "23",
+                            "height": "14",
+                            "className": "thumbborder",
+                            "srcSet": "//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/35px-Flag_of_Poland.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/46px-Flag_of_Poland.svg.png 2x",
+                            "data-file-width": "1280",
+                            "data-file-height": "800"
+                          },
+                          "content": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": " [[LINK|lang_en|%C5%81ukasz_Kubot|Łukasz Kubot]] / "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "flagicon"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "a",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "href": "/wiki/Austria",
+                        "title": "Austria",
+                        "className": "flagicon flagicon"
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "img",
+                          "tag_class": "void",
+                          "attrs": {
+                            "alt": "Austria",
+                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/23px-Flag_of_Austria.svg.png",
+                            "decoding": "async",
+                            "width": "23",
+                            "height": "15",
+                            "className": "thumbborder",
+                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/35px-Flag_of_Austria.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/45px-Flag_of_Austria.svg.png 2x",
+                            "data-file-width": "900",
+                            "data-file-height": "600"
+                          },
+                          "content": []
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": " [[LINK|lang_en|Oliver_Marach|Oliver Marach]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "attrs": {
+            "style": {
+              "display": "none"
+            }
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": []
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "attrs": {
+            "className": "hlist noprint",
+            "style": {
+              "backgroundColor": "#eee"
+            }
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "table",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "width": "100%",
+                      "margin": "1px"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "tbody",
+                      "tag_class": "inline",
+                      "attrs": {},
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "tr",
+                          "tag_class": "block",
+                          "attrs": {},
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "textAlign": "left",
+                                  "verticalAlign": "middle",
+                                  "padding": "0 0.5em 0 0"
+                                },
+                                "className": "noprint"
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "← [[LINK|lang_en|2009_Movistar_Open|2009]]**·**"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "textAlign": "center",
+                                  "verticalAlign": "middle",
+                                  "padding": "0 1px",
+                                  "lineHeight": "130%"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "**[[LINK|lang_en|Movistar_Open|Movistar Open]]**"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "textAlign": "right",
+                                  "verticalAlign": "middle",
+                                  "padding": "0 0 0 0.5em"
+                                },
+                                "className": "noprint"
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "**·**[[LINK|lang_en|2011_Movistar_Open|2011]] →"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tfoot": {
+      "rows": [],
+      "attrs": {}
+    }
+  },
+  "page_body": [
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The **2010 Movistar Open** was a [[LINK|lang_en|Tennis|tennis]] tournament played on [[LINK|lang_en|Tennis_court#Clay_courts|clay courts]]. It was the 16th edition of the [[LINK|lang_en|Chile_Open_(tennis)|Chile Open]], and was part of the [[LINK|lang_en|ATP_World_Tour_250_series|ATP World Tour 250 series]] of the [[LINK|lang_en|2010_ATP_World_Tour|2010 ATP World Tour]]. It took place in [[LINK|lang_en|Chicureo|Chicureo]] at the [[LINK|lang_en|Santiago_Metropolitan_Region|Santiago]]'s commune of [[LINK|lang_en|Colina,_Chile|Colina]][[CITE|1|http://www.adnradio.cl/noticias/deportes/torneo-movistar-open-se-jugara-en-el-club-piedra-roja-de-chicureo/20090903/nota/872931.aspx]] from February 1 through February 7, 2010."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "ATP entrants"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Seeds"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "body-table",
+              "attrs": {
+                "className": "sortable wikitable"
+              },
+              "caption": {
+                "attrs": {},
+                "sentences": []
+              },
+              "thead": {
+                "rows": [],
+                "attrs": {}
+              },
+              "tbody": {
+                "attrs": {},
+                "rows": [
+                  {
+                    "index": 0,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {
+                          "width": "70"
+                        },
+                        "tag_type": "th",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "Country\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {
+                          "width": "175"
+                        },
+                        "tag_type": "th",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "Player\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "th",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "Rank"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "tag",
+                            "tag_type": "sup",
+                            "tag_class": "inline",
+                            "attrs": {},
+                            "content": [
+                              {
+                                "type": "text",
+                                "content": [
+                                  {
+                                    "index": 0,
+                                    "type": "sentence",
+                                    "text": "1"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "th",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "Seed\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 1,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "15",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x",
+                                  "data-file-width": "1500",
+                                  "data-file-height": "1000"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Chile|CHI]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Fernando_Gonz%C3%A1lez|Fernando González]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "11\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "1\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 2,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "14",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x",
+                                  "data-file-width": "800",
+                                  "data-file-height": "500"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Argentina|ARG]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Juan_M%C3%B3naco|Juan Mónaco]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "33\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "2\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 3,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png",
+                                  "decoding": "async",
+                                  "width": "22",
+                                  "height": "15",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x",
+                                  "data-file-width": "720",
+                                  "data-file-height": "504"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Brazil|BRA]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Thomaz_Bellucci|Thomaz Bellucci]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "35\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "3\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 4,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/23px-Flag_of_Uruguay.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "15",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/35px-Flag_of_Uruguay.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Uruguay.svg/45px-Flag_of_Uruguay.svg.png 2x",
+                                  "data-file-width": "900",
+                                  "data-file-height": "600"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Uruguay|URU]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Pablo_Cuevas|Pablo Cuevas]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "48\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "4\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 5,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "14",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x",
+                                  "data-file-width": "800",
+                                  "data-file-height": "500"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Argentina|ARG]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Horacio_Zeballos|Horacio Zeballos]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "50\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "5\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 6,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "14",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x",
+                                  "data-file-width": "800",
+                                  "data-file-height": "500"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Argentina|ARG]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Jos%C3%A9_Acasuso|José Acasuso]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "51\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "6\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 7,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/23px-Flag_of_Germany.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "14",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/35px-Flag_of_Germany.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/b/ba/Flag_of_Germany.svg/46px-Flag_of_Germany.svg.png 2x",
+                                  "data-file-width": "1000",
+                                  "data-file-height": "600"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Germany|GER]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Simon_Greul|Simon Greul]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "61\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "7\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "index": 8,
+                    "attrs": {},
+                    "tag_type": "tr",
+                    "tag_class": "block",
+                    "cells": [
+                      {
+                        "index": 0,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "tag",
+                            "tag_type": "span",
+                            "tag_class": "inline",
+                            "attrs": {
+                              "className": "flagicon"
+                            },
+                            "content": [
+                              {
+                                "type": "tag",
+                                "tag_type": "img",
+                                "tag_class": "void",
+                                "attrs": {
+                                  "src": "//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/23px-Flag_of_Italy.svg.png",
+                                  "decoding": "async",
+                                  "width": "23",
+                                  "height": "15",
+                                  "className": "thumbborder",
+                                  "srcSet": "//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/35px-Flag_of_Italy.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/45px-Flag_of_Italy.svg.png 2x",
+                                  "data-file-width": "1500",
+                                  "data-file-height": "1000"
+                                },
+                                "content": []
+                              }
+                            ]
+                          },
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Italy|ITA]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 1,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "[[LINK|lang_en|Potito_Starace|Potito Starace]]"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 2,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "63\n"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "index": 3,
+                        "attrs": {},
+                        "tag_type": "td",
+                        "tag_class": "block",
+                        "content": [
+                          {
+                            "type": "text",
+                            "content": [
+                              {
+                                "index": 0,
+                                "type": "sentence",
+                                "text": "8\n"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              "tfoot": {
+                "rows": [],
+                "attrs": {}
+              }
+            }
+          ],
+          "tag_type": "table",
+          "attrs": {
+            "className": "sortable wikitable"
+          }
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "list_item",
+              "index": 0,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "Rankings are as of January 18, 2010"
+                }
+              ],
+              "tag_type": "li"
+            }
+          ],
+          "tag_type": "ul",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Other Entrants"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The following players received wildcards into the singles main draw:"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "list_item",
+              "index": 0,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23|thumbborder]] [[LINK|lang_en|Jorge_Aguilar|Jorge Aguilar]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 1,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23|thumbborder]] [[LINK|lang_en|Hans_Podlipnik|Hans Podlipnik-Castillo]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 2,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23|thumbborder]] [[LINK|lang_en|Crist%C3%B3bal_Saavedra-Corval%C3%A1n|Cristóbal Saavedra-Corvalán]]"
+                }
+              ],
+              "tag_type": "li"
+            }
+          ],
+          "tag_type": "ul",
+          "attrs": {}
+        },
+        {
+          "index": 3,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The following players received entry from the qualifying draw:"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 4,
+          "items": [
+            {
+              "type": "list_item",
+              "index": 0,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23|thumbborder]] [[LINK|lang_en|Juan-Mart%C3%ADn_Aranguren|Juan-Martín Aranguren]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 1,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/23px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/35px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/45px-Flag_of_Spain.svg.png 2x|Spain|h15|w23|thumbborder]] [[LINK|lang_en|David_Marrero|David Marrero]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 2,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/23px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/35px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/45px-Flag_of_Spain.svg.png 2x|Spain|h15|w23|thumbborder]] [[LINK|lang_en|Rub%C3%A9n_Ram%C3%ADrez_Hidalgo|Rubén Ramírez Hidalgo]]"
+                }
+              ],
+              "tag_type": "li"
+            },
+            {
+              "type": "list_item",
+              "index": 3,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x|Brazil|h15|w22|thumbborder]] [[LINK|lang_en|Jo%C3%A3o_Souza|João Souza]]"
+                }
+              ],
+              "tag_type": "li"
+            }
+          ],
+          "tag_type": "ul",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Champions"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Singles"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x|Brazil|h15|w22|thumbborder]] **[[LINK|lang_en|Thomaz_Bellucci|Thomaz Bellucci]]** def. [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23|thumbborder]] [[LINK|lang_en|Juan_M%C3%B3naco|Juan Mónaco]], 6–2, 0–6, 6–4"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "list_item",
+              "index": 0,
+              "sentences": [
+                {
+                  "type": "sentence",
+                  "index": 0,
+                  "text": "It was Bellucci's first title of the year and second of his career."
+                }
+              ],
+              "tag_type": "li"
+            }
+          ],
+          "tag_type": "ul",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Doubles"
+            }
+          ],
+          "tag_type": "h3",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/23px-Flag_of_Poland.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/35px-Flag_of_Poland.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/46px-Flag_of_Poland.svg.png 2x|Poland|h14|w23|thumbborder]] **[[LINK|lang_en|%C5%81ukasz_Kubot|Łukasz Kubot]]** / [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/23px-Flag_of_Austria.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/35px-Flag_of_Austria.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/45px-Flag_of_Austria.svg.png 2x|Austria|h15|w23|thumbborder]] **[[LINK|lang_en|Oliver_Marach|Oliver Marach]]** def. [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/23px-Flag_of_Italy.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/35px-Flag_of_Italy.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/45px-Flag_of_Italy.svg.png 2x|Italy|h15|w23|thumbborder]] [[LINK|lang_en|Potito_Starace|Potito Starace]] / [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23|thumbborder]] [[LINK|lang_en|Horacio_Zeballos|Horacio Zeballos]], 6–4, 6–0."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    }
+  ],
+  "infoboxes": [],
+  "citations": [
+    {
+      "url": "http://www.adnradio.cl/noticias/deportes/torneo-movistar-open-se-jugara-en-el-club-piedra-roja-de-chicureo/20090903/nota/872931.aspx",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 1,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"Torneo Movistar Open se jugará en el club Piedra Roja de Chicureo\" [The Movistar Open tournament will be played at the Club Piedra Roja in Chicureo]. *ADN Deportes* (in Spanish). 3 September 2009. Retrieved 24 October 2016."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T17:48:00.864Z",
+      "mime": null
+    },
+    {
+      "url": "https://web.archive.org/web/20101121031000/http://www.movistaropen.cl/",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 2,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Official website"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T17:48:02.878Z",
+      "mime": null
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/2010_Movistar_Open",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 3,
+      "description": [
+        {
+          "index": 0,
+          "text": "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia.",
+          "type": "sentence"
+        },
+        {
+          "index": 1,
+          "text": "Text is available under the Creative Commons Attribution-ShareAlike License.",
+          "type": "sentence"
+        },
+        {
+          "index": 2,
+          "text": "Additional terms may apply.",
+          "type": "sentence"
+        },
+        {
+          "index": 3,
+          "text": "See everipedia.org/everipedia-termsfor further details.",
+          "type": "sentence"
+        },
+        {
+          "index": 4,
+          "text": "Images/media credited individually (click the icon for details).",
+          "type": "sentence"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T17:48:02.886Z",
+      "mime": null
+    }
+  ],
+  "media_gallery": [],
+  "metadata": [
+    {
+      "key": "page_type",
+      "value": "Thing"
+    },
+    {
+      "key": "is_removed",
+      "value": false
+    },
+    {
+      "key": "is_adult_content",
+      "value": false
+    },
+    {
+      "key": "sub_page_type",
+      "value": null
+    },
+    {
+      "key": "is_wikipedia_import",
+      "value": true
+    },
+    {
+      "key": "is_indexed",
+      "value": false
+    },
+    {
+      "key": "bing_index_override",
+      "value": true
+    },
+    {
+      "key": "is_locked",
+      "value": false
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/9/2019 17:48:0 PM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "2010_Movistar_Open"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "2010_Movistar_Open"
+    }
+  ],
+  "amp_info": {
+    "load_youtube_js": false,
+    "load_audio_js": false,
+    "load_video_js": false,
+    "lightboxes": []
+  },
+  "ipfs_hash": "QmUb3ck4BamzFN2LCwQTeUXCkJ8W1JWkzXnhGJg6NnXPZe"
+}

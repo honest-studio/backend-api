@@ -7,6 +7,8 @@ import * as tokenizer from 'sbd';
 import { ArticleJson, Citation, CitationCategoryType, DescList, Infobox, InfoboxValue, Media, Metadata, NestedContentItem, NestedTagItem, NestedTextItem, Section, Sentence, Table } from '../../types/article';
 import { urlCleaner, getYouTubeIdIfPresent } from './article-tools';
 import * as JSONCycleCustom from './json-cycle-custom';
+const util = require('util');
+const chalk = require('chalk');
 var colors = require('colors');
 const voidElements = require('html-void-elements');
 const decode = require('unescape');
@@ -61,7 +63,7 @@ export const CAPTURE_REGEXES = {
     link_match: /\[\[LINK\|lang_(.*?)\|(.*?)\|(.*?)\]\]/g,
     cite: /(?<=\[\[)CITE\|[^\]]*(?=\]\])/g,
     inline_image: /(?<=\[\[)INLINE_IMAGE\|[^\]]*(?=\]\])/g,
-    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)\]\]/g
+    inline_image_match: /\[\[INLINE_IMAGE\|(.*?)\|(.*?)\|(.*?)\|h(.*?)\|w(.*?)(?:\|(.*?))?\]\]/gm
 };
 export const REPLACEMENTS = [
     { regex: /\u00A0/g, replacement: ' ' },
@@ -119,6 +121,7 @@ export const VALID_VIDEO_EXTENSIONS = [
 ];
 export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
+export const VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.pps', '.ppsx', '.odt', '.ods', '.key', '.csv', '.txt', '.rtf'];
 
 // Convert False/True into false/true and None into null
 function pyToJS(inputItem: any) {
@@ -678,7 +681,10 @@ function parseSection($section: Cheerio): Section {
             mime: theImgNode.attr('data-mimetype'),
             thumb: null,
             caption: null,
-            category: linkCategorizer(theImgNode.attr('src')) || null
+            category: linkCategorizer(theImgNode.attr('src')) || null,
+            media_props: {
+                type: 'section_image'
+            }
         };
 
         // Deal with images in tables
@@ -687,7 +693,12 @@ function parseSection($section: Cheerio): Section {
             if (inline_image_token) {
                 const parts = inline_image_token[0].split('|');
                 image.url = urlCleaner(parts[1]);
-                image.srcSet = parts[2];
+                image.media_props = {
+                    type: 'inline_image',
+                    srcSet: parts[2],
+                    height: Number(parts[4].substring(1)),
+                    width: Number(parts[5].substring(1))
+                };
                 image.alt = parts[3];
                 image.height = Number(parts[4].substring(1));
                 image.width = Number(parts[5].substring(1));
@@ -893,10 +904,12 @@ function sanitizeText($: CheerioStatic) {
         const height = $(this).attr('height');
         const width = $(this).attr('width');
         const alt = $(this).attr('alt') || '';
-
+        let the_class_string = $(this).attr('class') || '';
+        if (!the_class_string || the_class_string == null || the_class_string == "") the_class_string = "";
+        else the_class_string = `|${the_class_string}`;
 
         // Replace the tag with the string
-        const plaintextString = `[[INLINE_IMAGE|${src}|${srcSet}|${alt}|h${height}|w${width}]]`;
+        const plaintextString = `[[INLINE_IMAGE|${src}|${srcSet}|${alt}|h${height}|w${width}${the_class_string}]]`;
 
         $(this).replaceWith(plaintextString);
     });
@@ -956,7 +969,7 @@ function sanitizeText($: CheerioStatic) {
 }
 
 // Convert the plaintext strings for links and citations to the Markdown format
-export function parseSentences(inputString: string): Sentence[] {
+export function parseSentences(inputString: string, bypass_trim?: boolean): Sentence[] {
     if (!inputString) return [];
     if (inputString == " ") return [{ type: 'sentence', index: 0, text: ' ' }];
 
@@ -979,10 +992,10 @@ export function parseSentences(inputString: string): Sentence[] {
 
 
         // Make sure that no sentences start with a space
-        if (sentence.text.charAt(0) == " ") sentence.text = sentence.text.slice(1);
+        if (sentence.text.charAt(0) == " " && !bypass_trim) sentence.text = sentence.text.slice(1);
 
         // If there is only one sentence, trim it
-        if (index == 0 && sentenceTokens.length == 1) sentence.text = sentence.text.trim();
+        if (index == 0 && sentenceTokens.length == 1 && !bypass_trim) sentence.text = sentence.text.trim();
 
         if (sentenceTokens.length > 2 && index < sentenceTokens.length - 1){
             // FIX THIS TO MAKE SURE THAT SENTENCES DO NOT START WITH SPACES, and INSTEAD END WITH THEM
@@ -997,7 +1010,7 @@ export function parseSentences(inputString: string): Sentence[] {
         }
 
         // If it is the last sentence, trim it
-        if (index == sentenceTokens.length - 1) sentence.text = sentence.text.trim();
+        if (index == sentenceTokens.length - 1 && !bypass_trim) sentence.text = sentence.text.trim();
 
         // console.log(sentence)
 
@@ -1175,19 +1188,23 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
     // Test for different categories
     if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
-    } else if (theMIME == '' || theMIME == null) {
+    } else if (theMIME == '' || theMIME == null || theMIME.search(/^text/gimu) >= 0) {
         return 'NONE';
     } else if (theMIME == 'image/gif') {
         return 'GIF';
-    } else if (inputString.indexOf('https://openlibrary.org/books/') == 0) {
+    } else if (inputString.indexOf('https://openlibrary.org/books/') == 0 || inputString.indexOf('https://openlibrary.org/search') == 0) {
         return 'BOOK';
+    } else if (inputString.indexOf('https://portal.issn.org/resource/ISSN/') == 0) {
+        return 'PERIODICAL';
     } else if (theMIME && theMIME.indexOf('image') >= 0) {
         return 'PICTURE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'NORMAL_VIDEO';
     } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
-    } else return 'FILE'
+    } else if (VALID_FILE_EXTENSIONS.includes(theExtension) || VALID_FILE_EXTENSIONS.includes('.' + theExtension)) {
+        return 'FILE';
+    } else return 'NONE';
 }
 
 // Copied with light modifications from NPM package get-youtube-id
@@ -1217,11 +1234,11 @@ var circularObj = {} as any;
 circularObj.circularRef = circularObj;
 circularObj.list = [ circularObj, circularObj ];
 
-function nestedContentParser($contents: CheerioElement[], nestedContents: NestedContentItem[] = []) {
+export function nestedContentParser($contents: CheerioElement[], nestedContents: NestedContentItem[] = []) {
     $contents.forEach((element, index) => {
         switch (element.type){
             case 'text':
-                let theSentences: Sentence[] = parseSentences(element.data);
+                let theSentences: Sentence[] = parseSentences(element.data, true);
                 if (theSentences.length) {
                     nestedContents.push({
                         type: 'text',
@@ -1230,7 +1247,7 @@ function nestedContentParser($contents: CheerioElement[], nestedContents: Nested
                 }
                 break;
             case 'tag':
-                let newElement: NestedTagItem;
+                let newElement: NestedTagItem | NestedTextItem;
                 let tagClass = BLOCK_ELEMENTS.indexOf(element.name) !== -1 
                 ? 'block'   
                 : voidElements.indexOf(element.name) !== -1 
@@ -1242,18 +1259,65 @@ function nestedContentParser($contents: CheerioElement[], nestedContents: Nested
                 if (element.children.length) {
                     parsedChildrenContent = nestedContentParser(element.children, [])
                 }
-                newElement = {
-                    type: 'tag',
-                    tag_type: element.name,
-                    tag_class: tagClass,
-                    attrs: cleanAttributes(element.attribs),
-                    content: parsedChildrenContent
-                } as NestedTagItem;
+                let cleanedAttributes = cleanAttributes(element.attribs);
+
+                // Handle <img>'s inside of cells as INLINE_IMAGES
+                if( false && element.name == 'img' ){
+                    newElement = {
+                        type: 'text',
+                        content: [{ index: 0, type: 'sentence', text: parseInlineImageCheerioElement(element) }] 
+                    } as NestedTextItem;
+                } 
+                // Otherwise, process normally
+                else {
+                    newElement = {
+                        type: 'tag',
+                        tag_type: element.name,
+                        tag_class: tagClass,
+                        attrs: cleanedAttributes,
+                        content: parsedChildrenContent
+                    } as NestedTagItem;
+                }
+
                 nestedContents.push(newElement);
                 break;
         }
     })
-    return nestedContents;
+
+    // Combine adjacent text 
+    let accumulated_text = "", merged_content: NestedContentItem[] = [];
+    let content_idx = 0;
+    while(content_idx < nestedContents.length){
+        let item: NestedContentItem = nestedContents[content_idx];
+        switch(item.type){
+            case 'text': {
+                accumulated_text += (item as NestedTextItem).content.map(sent => sent.text).join("");
+                
+                // If the next item is a tag, or the end, push the current accumulated text
+                if (content_idx == nestedContents.length - 1 || nestedContents[content_idx + 1].type == 'tag'){
+                    merged_content.push({
+                        type: 'text',
+                        content: [{
+                            index: 0,
+                            type: 'sentence',
+                            text: accumulated_text
+                        }]
+                    });
+                    accumulated_text = "";
+                }
+
+                break;
+            }
+            // Push a tag regardless
+            case 'tag': {
+                merged_content.push(item);
+                break;
+            }
+        }
+        content_idx++;
+    }
+
+    return merged_content;
 }
 
 function parseDescriptionList($dlist: Cheerio): DescList {
@@ -1355,4 +1419,37 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     // Prevent MongoDB from complaining about Circular references in JSON
     let decycledTable = JSONCycleCustom.decycle(table, []) as any;
     return decycledTable as Table;
+}
+
+//[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}|cls_${the_class}]] 
+export const parseInlineImage = (img, $) => {
+	let $img = $(img);
+	let src = $img.attr('src');
+	let srcset = $img.attr('srcset');
+	let alt = $img.attr('alt');
+	if (alt == undefined) {
+		alt = '';
+	}
+	let height = $img.attr('height');
+    let width = $img.attr('width'); 
+    let the_class_string = $img.attr('class'); 
+    if (!the_class_string || the_class_string == null || the_class_string == "") the_class_string = "";
+    else the_class_string = `|${the_class_string}`;
+	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}${the_class_string}]]`;
+}
+
+export const parseInlineImageCheerioElement = (img: CheerioElement) => {
+	let theAttribs = img.attribs;
+	let src = theAttribs['src'];
+	let srcset = theAttribs['srcset'];
+	let alt = theAttribs['alt'];
+	if (alt == undefined) {
+		alt = '';
+	}
+	let height = theAttribs['height'];
+    let width = theAttribs['width'];
+    let the_class_string = theAttribs['class']; 
+    if (!the_class_string || the_class_string == null || the_class_string == "") the_class_string = "";
+    else the_class_string = `|${the_class_string}`;
+	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}${the_class_string}]]`;
 }

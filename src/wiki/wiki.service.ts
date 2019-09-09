@@ -171,7 +171,10 @@ export class WikiService {
             throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
 
         // Try and get cached wiki
-        if (current_hash) {
+        console.log(colors.red("NEED TO REMOVE THE && false"));
+        console.log(colors.red("NEED TO REMOVE THE && false"));
+        console.log(colors.red("NEED TO REMOVE THE && false"));
+        if (current_hash && false) {
             const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
             if (cache_wiki) return JSON.parse(cache_wiki);
         }
@@ -759,7 +762,7 @@ export class WikiService {
             pipeline.exec();
 
             console.log(colors.green('========================================'));
-            console.log(colors.green(`MySQL and ElasticSearch updated. Terminating loop...`));
+            console.log(colors.green(`MySQL and Elasticsearch updated. Terminating loop...`));
             console.log(colors.green('========================================'));
 
         }

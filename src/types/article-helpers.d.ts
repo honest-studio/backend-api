@@ -27,6 +27,7 @@ export interface InlineImage {
     alt: string;
     height: string;
     width: string;
+    class?: string;
 }
 
 export interface WikiExtraInfo {

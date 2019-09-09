@@ -164,7 +164,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
                     '@type': 'ImageObject',
                     url: media.url,
                     name: `${page_title} YouTube Video #${index}`,
-                    thumbnailUrl: `https://i.ytimg.com/vi/${getYouTubeID(media.url)}/default.jpg`,
+                    thumbnailUrl: `https://i.ytimg.com/vi/${getYouTubeID(media.url)}/hqdefault.jpg`,
                     caption: sanitizedCaptionPlaintext,
                     uploadDate: media.timestamp,
                     height: 300,

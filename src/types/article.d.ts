@@ -12,7 +12,7 @@ export interface WikiLink {
 
 export type DiffType = 'add' | 'delete' | 'none';
 
-export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO' | 'BOOK' | 'FILE';
+export type CitationCategoryType = 'NONE' | 'PICTURE' | 'GIF' | 'YOUTUBE' | 'NORMAL_VIDEO' | 'AUDIO' | 'BOOK' | 'PERIODICAL' | 'FILE';
 
 export type CaptionType = 'main-photo-caption' | 'media-gallery-caption' | 'inline-image-caption' ;
 
@@ -96,7 +96,6 @@ export interface Media {
     width?: number;
     category?: CitationCategoryType;
     diff?: DiffType;
-    srcSet?: string;
     media_props?: MediaProps;
 }
 
@@ -209,6 +208,17 @@ export interface TableCell {
     tag_class: TagClass;
     content: NestedContentItem[];
 }
+
+export type PageType =
+    | 'CreativeWork'
+    | 'Event'
+    | 'List'
+    | 'MedicalEntity'
+    | 'Organization'
+    | 'Person'
+    | 'Place'
+    | 'Product'
+    | 'Thing';
 
 export interface ArticleJson {
     page_title: Sentence[];
