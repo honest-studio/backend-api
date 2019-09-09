@@ -119,6 +119,9 @@ export const VALID_VIDEO_EXTENSIONS = [
     '.mov',
     '.avi'
 ];
+export const ANCILLARY_STYLES = [
+    { normal: 'bgcolor', react: 'backgroundColor'} // Background color
+]
 export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 export const VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.pps', '.ppsx', '.odt', '.ods', '.key', '.csv', '.txt', '.rtf'];
@@ -145,7 +148,7 @@ function pyToJS(inputItem: any) {
  * @param {string} styles
  * @returns {Object}
  */
-const parseStyles = (styles: string): {} => {
+export const parseStyles = (styles: string): {} => {
     return styles
     .split(';')
     .filter(style => style.split(':')[0] && style.split(':')[1])
@@ -159,15 +162,44 @@ const parseStyles = (styles: string): {} => {
     }), {});
 }
 
-const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
-    let cleanedAttrs = {};
+export const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+    // Prevent error for empty inputs
+	if (inputAttrs === undefined || inputAttrs === null) {
+		return {}
+	}
+	const cleanedAttrs = {};
     const keys = Object.keys(inputAttrs);
+
+    // Look for the non-react CSS name and convert it to the React format
     for (const key of keys) {
-        if (inputAttrs[key] && inputAttrs[key] != '') cleanedAttrs[ReactAttrConvert(key)] = inputAttrs[key];
+        if (inputAttrs[key] && inputAttrs[key] != '') {
+        	cleanedAttrs[ReactAttrConvert(key)] = inputAttrs[key];
+        }
     }
+
+    // If a 'style' attribute is present, combine all of the styles into one style string 
     if (cleanedAttrs['style']){
         cleanedAttrs['style'] = parseStyles(cleanedAttrs['style']);
-    } 
+        
+        // Look to add other styles, if present
+        ANCILLARY_STYLES.forEach(sty => {
+            if (cleanedAttrs[sty.normal] && !cleanedAttrs['style'][sty.react]){
+                cleanedAttrs['style'][sty.react] = cleanedAttrs[sty.normal];
+            }
+        });
+
+
+    }
+    else {
+        cleanedAttrs['style'] = {};
+
+        // Look to add other styles, if present
+        ANCILLARY_STYLES.forEach(sty => {
+            if (cleanedAttrs[sty.normal] && !cleanedAttrs['style'][sty.react]){
+                cleanedAttrs['style'][sty.react] = cleanedAttrs[sty.normal];
+            }
+        });
+    }
     return cleanedAttrs;
 }
 

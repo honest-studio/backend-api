@@ -1,4 +1,4 @@
-import { cleanAttrs } from '../getAttributes';
+import { cleanAttributes } from '../../../../../src/utils/article-utils/article-converter';
 import { getTagClass } from '../getTagClass';
 import { parseAnchorTag } from '../parseAnchorTag';
 import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem, NestedTextItem, NestedTagItem } from '../../../../../src/types/article';
@@ -27,7 +27,7 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
  	// Instantiate return object
 	let table: Table = {
 		type: table_type,
-		attrs: cleanAttrs($table[0].attribs), 
+		attrs: cleanAttributes($table[0].attribs), 
 		caption: { attrs: {}, sentences: [] }, 
 		thead: { rows: [], attrs: {} },
 		tbody: { rows: [], attrs: {} },
@@ -46,7 +46,7 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 		let $row = $(el);
 		let row: TableRow = {
 			index: i,
-			attrs: cleanAttrs(el.attribs),
+			attrs: cleanAttributes(el.attribs),
 			tag_type: 'tr',
 			tag_class: 'block', 
 			cells: []
@@ -59,7 +59,7 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 			if (content != [] && content != undefined) {
 				let cell: TableCell = {
 					index: i2,
-					attrs: cleanAttrs(el2.attribs),
+					attrs: cleanAttributes(el2.attribs),
 					tag_type: $cell[0].name as any,
 					tag_class: 'block', 
 					content: content
@@ -76,7 +76,7 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 
 	// Create the table body
     let tbody: TableSection = {
-        attrs: cleanAttrs($table.find('tbody')[0].attribs),
+        attrs: cleanAttributes($table.find('tbody')[0].attribs),
         rows: rows
 	};
 	

@@ -5,7 +5,7 @@ import { getHeadlineSentence } from './pagebodyfunctionalities/getHeadlineSenten
 import { getListItems } from './pagebodyfunctionalities/getListItems';
 import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
-import { cleanAttrs } from './pagebodyfunctionalities/getAttributes';
+import { cleanAttributes } from '../../../src/utils/article-utils/article-converter';
 import { getCitations } from './getCitations';
 import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '../../../src/types/article';
 import { MediaUploadService, UrlPack } from '../../../src/media-upload';
@@ -90,7 +90,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				index: paragraphIndex,
 				items: [headline] as Sentence[],
 				tag_type: $el[0].name, 
-				attrs: cleanAttrs(el.attribs)
+				attrs: cleanAttributes(el.attribs)
 			});
 			paragraphIndex++;
 		}
@@ -101,7 +101,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				index: paragraphIndex,
 				items: sentenceItems,
 				tag_type: 'p',
-				attrs: cleanAttrs(el.attribs)
+				attrs: cleanAttributes(el.attribs)
 			})
 			paragraphIndex++;
 		}
@@ -123,7 +123,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 					index: paragraphIndex,
 					items: [parsed_table] as Table[],
 					tag_type: 'table',
-					attrs: cleanAttrs(el.attribs)
+					attrs: cleanAttributes(el.attribs)
 				})
 				paragraphIndex++;
 			}
@@ -139,7 +139,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 					index: paragraphIndex,
 					items: [parsed_table] as Table[],
 					tag_type: 'table',
-					attrs: cleanAttrs(childTable[0].attribs)
+					attrs: cleanAttributes(childTable[0].attribs)
 				})
 				paragraphIndex++;
 			}
@@ -150,7 +150,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				index: paragraphIndex,
 				items: items,
 				tag_type: tag_name,
-				attrs: cleanAttrs(el.attribs)
+				attrs: cleanAttributes(el.attribs)
 			})
 			paragraphIndex++;	
 		}
@@ -160,7 +160,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				index: paragraphIndex,
 				items: [item] as DescList[],
 				tag_type: 'dl',
-				attrs: cleanAttrs(el.attribs)
+				attrs: cleanAttributes(el.attribs)
 			})
 			paragraphIndex++;
 		}
