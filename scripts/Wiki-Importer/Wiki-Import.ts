@@ -108,9 +108,6 @@ export const WikiImport = async (inputString: string) => {
         })
     }
 
-    // NEED TO ADD CLASSES TO INLINE_IMAGE, MAKE THE REGEX HAVE THE CLASS PART AS OPTIONAL, AND MAKE SURE THE CLASSES FROM 2010_Movistar_Open
-    // GET PASSED TO THE FRONTEND
-
     logYlw("==============⚙️  ARTICLEJSON ASSEMBLY ⚙️ =============");
     // Assemble the wiki
     process.stdout.write(chalk.yellow(`Creating the ArticleJson object...`));

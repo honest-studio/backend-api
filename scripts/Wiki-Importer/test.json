@@ -19,7 +19,11 @@
         "width": null,
         "srcSet": null
       },
+<<<<<<< HEAD
       "timestamp": "2019-09-09T17:48:00.857Z",
+=======
+      "timestamp": "2019-09-06T22:21:00.070Z",
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
       "category": "NONE",
       "mime": null
     }
@@ -1983,7 +1987,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23|thumbborder]] [[LINK|lang_en|Jorge_Aguilar|Jorge Aguilar]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23]] [[LINK|lang_en|Jorge_Aguilar|Jorge Aguilar]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -1995,7 +2003,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23|thumbborder]] [[LINK|lang_en|Hans_Podlipnik|Hans Podlipnik-Castillo]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23]] [[LINK|lang_en|Hans_Podlipnik|Hans Podlipnik-Castillo]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -2007,7 +2019,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23|thumbborder]] [[LINK|lang_en|Crist%C3%B3bal_Saavedra-Corval%C3%A1n|Cristóbal Saavedra-Corvalán]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/23px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/35px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/45px-Flag_of_Chile.svg.png 2x|Chile|h15|w23]] [[LINK|lang_en|Crist%C3%B3bal_Saavedra-Corval%C3%A1n|Cristóbal Saavedra-Corvalán]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -2038,7 +2054,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23|thumbborder]] [[LINK|lang_en|Juan-Mart%C3%ADn_Aranguren|Juan-Martín Aranguren]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23]] [[LINK|lang_en|Juan-Mart%C3%ADn_Aranguren|Juan-Martín Aranguren]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -2050,7 +2070,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/23px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/35px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/45px-Flag_of_Spain.svg.png 2x|Spain|h15|w23|thumbborder]] [[LINK|lang_en|David_Marrero|David Marrero]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/23px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/35px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/45px-Flag_of_Spain.svg.png 2x|Spain|h15|w23]] [[LINK|lang_en|David_Marrero|David Marrero]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -2062,7 +2086,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/23px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/35px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/45px-Flag_of_Spain.svg.png 2x|Spain|h15|w23|thumbborder]] [[LINK|lang_en|Rub%C3%A9n_Ram%C3%ADrez_Hidalgo|Rubén Ramírez Hidalgo]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/23px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/35px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/9/9a/Flag_of_Spain.svg/45px-Flag_of_Spain.svg.png 2x|Spain|h15|w23]] [[LINK|lang_en|Rub%C3%A9n_Ram%C3%ADrez_Hidalgo|Rubén Ramírez Hidalgo]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -2074,7 +2102,11 @@
                 {
                   "type": "sentence",
                   "index": 0,
+<<<<<<< HEAD
                   "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x|Brazil|h15|w22|thumbborder]] [[LINK|lang_en|Jo%C3%A3o_Souza|João Souza]]"
+=======
+                  "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x|Brazil|h15|w22]] [[LINK|lang_en|Jo%C3%A3o_Souza|João Souza]]"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
                 }
               ],
               "tag_type": "li"
@@ -2123,7 +2155,11 @@
             {
               "type": "sentence",
               "index": 0,
+<<<<<<< HEAD
               "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x|Brazil|h15|w22|thumbborder]] **[[LINK|lang_en|Thomaz_Bellucci|Thomaz Bellucci]]** def. [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23|thumbborder]] [[LINK|lang_en|Juan_M%C3%B3naco|Juan Mónaco]], 6–2, 0–6, 6–4"
+=======
+              "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/05/Flag_of_Brazil.svg/43px-Flag_of_Brazil.svg.png 2x|Brazil|h15|w22]] **[[LINK|lang_en|Thomaz_Bellucci|Thomaz Bellucci]]** def. [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23]] [[LINK|lang_en|Juan_M%C3%B3naco|Juan Mónaco]], 6–2, 0–6, 6–4"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
             }
           ],
           "tag_type": "p",
@@ -2171,7 +2207,11 @@
             {
               "type": "sentence",
               "index": 0,
+<<<<<<< HEAD
               "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/23px-Flag_of_Poland.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/35px-Flag_of_Poland.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/46px-Flag_of_Poland.svg.png 2x|Poland|h14|w23|thumbborder]] **[[LINK|lang_en|%C5%81ukasz_Kubot|Łukasz Kubot]]** / [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/23px-Flag_of_Austria.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/35px-Flag_of_Austria.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/45px-Flag_of_Austria.svg.png 2x|Austria|h15|w23|thumbborder]] **[[LINK|lang_en|Oliver_Marach|Oliver Marach]]** def. [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/23px-Flag_of_Italy.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/35px-Flag_of_Italy.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/45px-Flag_of_Italy.svg.png 2x|Italy|h15|w23|thumbborder]] [[LINK|lang_en|Potito_Starace|Potito Starace]] / [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23|thumbborder]] [[LINK|lang_en|Horacio_Zeballos|Horacio Zeballos]], 6–4, 6–0."
+=======
+              "text": "[[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/23px-Flag_of_Poland.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/35px-Flag_of_Poland.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/1/12/Flag_of_Poland.svg/46px-Flag_of_Poland.svg.png 2x|Poland|h14|w23]] **[[LINK|lang_en|%C5%81ukasz_Kubot|Łukasz Kubot]]** / [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/23px-Flag_of_Austria.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/35px-Flag_of_Austria.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_Austria.svg/45px-Flag_of_Austria.svg.png 2x|Austria|h15|w23]] **[[LINK|lang_en|Oliver_Marach|Oliver Marach]]** def. [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/23px-Flag_of_Italy.svg.png|//upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/35px-Flag_of_Italy.svg.png 1.5x, //upload.wikimedia.org/wikipedia/en/thumb/0/03/Flag_of_Italy.svg/45px-Flag_of_Italy.svg.png 2x|Italy|h15|w23]] [[LINK|lang_en|Potito_Starace|Potito Starace]] / [[INLINE_IMAGE|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/23px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/35px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/46px-Flag_of_Argentina.svg.png 2x|Argentina|h14|w23]] [[LINK|lang_en|Horacio_Zeballos|Horacio Zeballos]], 6–4, 6–0."
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
             }
           ],
           "tag_type": "p",
@@ -2197,7 +2237,11 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
+<<<<<<< HEAD
       "timestamp": "2019-09-09T17:48:00.864Z",
+=======
+      "timestamp": "2019-09-06T22:21:00.079Z",
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
       "mime": null
     },
     {
@@ -2214,7 +2258,11 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
+<<<<<<< HEAD
       "timestamp": "2019-09-09T17:48:02.878Z",
+=======
+      "timestamp": "2019-09-06T22:21:01.066Z",
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
       "mime": null
     },
     {
@@ -2251,7 +2299,11 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
+<<<<<<< HEAD
       "timestamp": "2019-09-09T17:48:02.886Z",
+=======
+      "timestamp": "2019-09-06T22:21:01.068Z",
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
       "mime": null
     }
   ],
@@ -2291,7 +2343,11 @@
     },
     {
       "key": "creation_timestamp",
+<<<<<<< HEAD
       "value": "8/9/2019 17:48:0 PM UTC"
+=======
+      "value": "8/6/2019 22:20:59 PM UTC"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
     },
     {
       "key": "last_modified",
@@ -2316,5 +2372,9 @@
     "load_video_js": false,
     "lightboxes": []
   },
+<<<<<<< HEAD
   "ipfs_hash": "QmUb3ck4BamzFN2LCwQTeUXCkJ8W1JWkzXnhGJg6NnXPZe"
+=======
+  "ipfs_hash": "QmaVJQY4NH32xCDiPcniSqpECjq959p8wNzfhtKMigYaVa"
+>>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
 }
