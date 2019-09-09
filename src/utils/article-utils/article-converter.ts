@@ -1421,11 +1421,7 @@ function parseTable($element: Cheerio, tableType: Table['type'] ): Table {
     return decycledTable as Table;
 }
 
-<<<<<<< HEAD
 //[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}|cls_${the_class}]] 
-=======
-//[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]] 
->>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
 export const parseInlineImage = (img, $) => {
 	let $img = $(img);
 	let src = $img.attr('src');
@@ -1435,16 +1431,11 @@ export const parseInlineImage = (img, $) => {
 		alt = '';
 	}
 	let height = $img.attr('height');
-<<<<<<< HEAD
     let width = $img.attr('width'); 
     let the_class_string = $img.attr('class'); 
     if (!the_class_string || the_class_string == null || the_class_string == "") the_class_string = "";
     else the_class_string = `|${the_class_string}`;
 	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}${the_class_string}]]`;
-=======
-	let width = $img.attr('width'); 
-	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
->>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
 }
 
 export const parseInlineImageCheerioElement = (img: CheerioElement) => {
@@ -1457,12 +1448,8 @@ export const parseInlineImageCheerioElement = (img: CheerioElement) => {
 	}
 	let height = theAttribs['height'];
     let width = theAttribs['width'];
-<<<<<<< HEAD
     let the_class_string = theAttribs['class']; 
     if (!the_class_string || the_class_string == null || the_class_string == "") the_class_string = "";
     else the_class_string = `|${the_class_string}`;
 	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}${the_class_string}]]`;
-=======
-	return `[[INLINE_IMAGE|${src}|${srcset}|${alt}|h${height}|w${width}]]`;
->>>>>>> a9cdf187a0fb9eb8ae054a4d62afa153b42a2f21
 }
