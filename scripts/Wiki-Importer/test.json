@@ -1,0 +1,1372 @@
+{
+  "page_title": [
+    {
+      "type": "sentence",
+      "index": 0,
+      "text": "Brachydiplax denticauda"
+    }
+  ],
+  "main_photo": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/91/Palemouth_6266.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Palemouth_6266.jpg/220px-Palemouth_6266.jpg",
+      "caption": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": ""
+        }
+      ],
+      "type": "main_photo",
+      "attribution_url": "https://en.wikipedia.org/wiki/File:Palemouth_6266.jpg",
+      "media_props": {
+        "type": "main_photo",
+        "height": 1560,
+        "width": 2080,
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Palemouth_6266.jpg/330px-Palemouth_6266.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Palemouth_6266.jpg/440px-Palemouth_6266.jpg 2x"
+      },
+      "timestamp": "2019-09-09T20:43:54.401Z",
+      "category": "PICTURE",
+      "mime": "image/jpeg"
+    }
+  ],
+  "infobox_html": {
+    "type": "wikitable",
+    "attrs": {
+      "className": "infobox biota",
+      "style": {
+        "textAlign": "left",
+        "width": "200px",
+        "fontSize": "100%"
+      }
+    },
+    "caption": {
+      "attrs": {},
+      "sentences": []
+    },
+    "thead": {
+      "rows": [],
+      "attrs": {}
+    },
+    "tbody": {
+      "attrs": {},
+      "rows": [
+        {
+          "index": 0,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(235,235,210)"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Palemouth\n"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": []
+        },
+        {
+          "index": 2,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "fontSize": "88%"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Male *Brachydiplax denticauda*"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "a",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "href": "/wiki/File:Brachydiplax_denticauda_-_Palemouth_(female).jpg",
+                    "className": "image"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "alt": "Brachydiplax denticauda - Palemouth (female).jpg",
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/6/68/Brachydiplax_denticauda_-_Palemouth_%28female%29.jpg/220px-Brachydiplax_denticauda_-_Palemouth_%28female%29.jpg",
+                        "decoding": "async",
+                        "width": "220",
+                        "height": "176",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/6/68/Brachydiplax_denticauda_-_Palemouth_%28female%29.jpg/330px-Brachydiplax_denticauda_-_Palemouth_%28female%29.jpg 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/68/Brachydiplax_denticauda_-_Palemouth_%28female%29.jpg/440px-Brachydiplax_denticauda_-_Palemouth_%28female%29.jpg 2x",
+                        "data-file-width": "2718",
+                        "data-file-height": "2174"
+                      },
+                      "content": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "fontSize": "88%"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Female *Brachydiplax denticauda*"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {
+            "style": {
+              "textAlign": "center",
+              "backgroundColor": "rgb(235,235,210)"
+            }
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2"
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "textAlign": "center"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "[[LINK|lang_en|Conservation_status|Conservation status]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2"
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "textAlign": "center"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Status_iucn3.1_LC.svg/220px-Status_iucn3.1_LC.svg.png",
+                        "decoding": "async",
+                        "width": "220",
+                        "height": "59",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Status_iucn3.1_LC.svg/330px-Status_iucn3.1_LC.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Status_iucn3.1_LC.svg/440px-Status_iucn3.1_LC.svg.png 2x",
+                        "data-file-width": "240",
+                        "data-file-height": "64"
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "br",
+                      "tag_class": "void",
+                      "attrs": {},
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "[[LINK|lang_en|Least_Concern|Least Concern]] ([[LINK|lang_en|IUCN_Red_List|IUCN 3.1]])[[CITE|1|http://www.iucnredlist.org/details/163899/0]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "minWidth": "15em",
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(235,235,210)"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Taxonomy_(biology)|Scientific classification]] "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "plainlinks",
+                    "style": {
+                      "fontSize": "smaller",
+                      "float": "right",
+                      "paddingRight": "0.4em",
+                      "marginLeft": "-3em"
+                    }
+                  },
+                  "content": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Kingdom:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Animal|Animalia]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Phylum:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Arthropod|Arthropoda]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Class:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Insect|Insecta]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Order:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Odonata|Odonata]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Infraorder:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Dragonfly|Anisoptera]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Family:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Libellulidae|Libellulidae]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Genus:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Brachydiplax|*Brachydiplax*]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Species:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {},
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "display": "inline"
+                    },
+                    "className": "species"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "***B. denticauda***"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(235,235,210)"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Binomial_nomenclature|Binomial name]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "**"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal"
+                    }
+                  },
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "*Brachydiplax denticauda***"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {},
+                  "content": []
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontSize": "85%"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "([[LINK|lang_en|Friedrich_Moritz_Brauer|Brauer]], 1867)[[CITE|2|https://www.biodiversitylibrary.org/page/26724784]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "attrs": {},
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "a",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "href": "/wiki/File:Brachydiplax_denticauda_distribution_map.svg",
+                    "className": "image"
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "alt": "Brachydiplax denticauda distribution map.svg",
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/55/Brachydiplax_denticauda_distribution_map.svg/220px-Brachydiplax_denticauda_distribution_map.svg.png",
+                        "decoding": "async",
+                        "width": "220",
+                        "height": "185",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/55/Brachydiplax_denticauda_distribution_map.svg/330px-Brachydiplax_denticauda_distribution_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/55/Brachydiplax_denticauda_distribution_map.svg/440px-Brachydiplax_denticauda_distribution_map.svg.png 2x",
+                        "data-file-width": "1000",
+                        "data-file-height": "839"
+                      },
+                      "content": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tfoot": {
+      "rows": [],
+      "attrs": {}
+    }
+  },
+  "page_body": [
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": ""
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "className": "mw-empty-elt"
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "***Brachydiplax denticauda*** is a species of [[LINK|lang_en|Dragonfly|dragonfly]] in the family [[LINK|lang_en|Libellulidae|Libellulidae]][[CITE|3|https://biodiversity.org.au/afd/taxa/Brachydiplax_denticauda]]\nknown commonly as the **palemouth**.[[CITE|4|http://bie.ala.org.au/species/BRACHYDIPLAX+DENTICAUDA]] It is native to [[LINK|lang_en|Australia|Australia]], [[LINK|lang_en|Indonesia|Indonesia]], [[LINK|lang_en|Papua_New_Guinea|Papua New Guinea]], and the [[LINK|lang_en|Solomon_Islands|Solomon Islands]].[[CITE|5|/wiki/International_Standard_Book_Number]]\nIt lives in [[LINK|lang_en|Habitat|habitat]] with still and slow-moving waters.[[CITE|1|http://www.iucnredlist.org/details/163899/0]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Males of this [[LINK|lang_en|Species|species]] are typical in colour for the [[LINK|lang_en|Genus|genus]],[[CITE|1|http://www.iucnredlist.org/details/163899/0]] being bright powder blue on both the [[LINK|lang_en|Thorax_(insect_anatomy)|thorax]] and [[LINK|lang_en|Abdomen#Other_animals|abdomen]]. The [[LINK|lang_en|Insect_mouthparts#Labrum|labrum]] is pale cream, thus giving the species its common name of palemouth. In northern [[LINK|lang_en|Australia|Australia]], it is found [[LINK|lang_en|Coastal|coastal]] and adjacent inland in an arc from the southern [[LINK|lang_en|Queensland|Queensland]] border to [[LINK|lang_en|Broome,_Western_Australia|Broome, Western Australia]].[[CITE|6|http://www.environment.nsw.gov.au/resources/publications/09730AustOdonata.pdf]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Brief Description"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {}
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "This species is small in size with a wingspan of 40 to 60 millimeters. *Brachydiplax denticauda* usually has six [[LINK|lang_en|Antenodal_veins|antenodal]] crossveins in the fore-wing and five in the hind-wing whereas the very similar *[[LINK|lang_en|Brachydiplax_duivenbodei|Brachydiplax duivenbodei]]* has seven antenodal crossveins in the fore-wing and six in the hind-wing.[[CITE|7|/wiki/International_Standard_Book_Number]] Though brightly coloured, the males often go unnoticed by an observer once they land on a lily pad or similar place.[[CITE|7|/wiki/International_Standard_Book_Number]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {}
+        }
+      ],
+      "images": []
+    }
+  ],
+  "infoboxes": [],
+  "citations": [
+    {
+      "url": "http://www.iucnredlist.org/details/163899/0",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 1,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Kalkman, V. (2009). \"*Brachydiplax denticauda*\". *IUCN Red List of Threatened Species*. IUCN. **2009**: e.T163899A5665437. doi:10.2305/IUCN.UK.2009-2.RLTS.T163899A5665437.en. Retrieved 17 December 2017."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.423Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.biodiversitylibrary.org/page/26724784",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 2,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Brauer, F. (1867). \"Bericht über die von Hrn. Dir. Kaup eingesendeten Odonaten. (Schluss.)\". *Verhandlungen der Zoologisch-Botanischen Gesellschaft in Wien*. **17**: 287–302 [301] – via Biodiversity Heritage Library."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.425Z",
+      "mime": null
+    },
+    {
+      "url": "https://biodiversity.org.au/afd/taxa/Brachydiplax_denticauda",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 3,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"Species *Brachydiplax denticauda* (Brauer, 1867)\". *Australian Faunal Directory*. Australian Biological Resources Study. 2012. Retrieved 28 February 2017."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.426Z",
+      "mime": null
+    },
+    {
+      "url": "http://bie.ala.org.au/species/BRACHYDIPLAX+DENTICAUDA",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 4,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "*Brachydiplax denticauda*. Atlas of Living Australia."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.427Z",
+      "mime": null
+    },
+    {
+      "url": "/wiki/International_Standard_Book_Number",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 5,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Watson, J.A.L.; Theischinger, G.; Abbey, H.M. (1991). *The Australian Dragonflies: A Guide to the Identification, Distributions and Habitats of Australian Odonata*. Melbourne: CSIRO. p. 278. ISBN 0643051368."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.428Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.environment.nsw.gov.au/resources/publications/09730AustOdonata.pdf",
+      "thumb": null,
+      "category": "FILE",
+      "citation_id": 6,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Theischinger, Gunther; Endersby, Ian (2009). *Identification Guide to the Australian Odonata* (PDF). Department of Environment, Climate Change and Water NSW. p. 207. ISBN 978 1 74232 475 3."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.428Z",
+      "mime": "application/pdf"
+    },
+    {
+      "url": "/wiki/International_Standard_Book_Number",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 7,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Theischinger, Gunther; Hawking, John (2006). *The Complete Field Guide to Dragonflies of Australia*. Collingwood Vic.: CSIRO. p. 270. ISBN 0643090738."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:54.429Z",
+      "mime": null
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg/150px-Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg",
+      "category": "PICTURE",
+      "citation_id": 8,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Female"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Brachydiplax_denticauda_-_Palemouth_(female)_0118.jpg",
+      "timestamp": "2019-09-09T20:43:56.435Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg/225px-Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg/300px-Brachydiplax_denticauda_-_Palemouth_%28female%29_0118.jpg 2x",
+        "height": 2205,
+        "width": 2757
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3c/Brachydiplax_denticauda_5711_ed.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Brachydiplax_denticauda_5711_ed.jpg/160px-Brachydiplax_denticauda_5711_ed.jpg",
+      "category": "PICTURE",
+      "citation_id": 9,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Mature male"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Brachydiplax_denticauda_5711_ed.jpg",
+      "timestamp": "2019-09-09T20:43:56.442Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Brachydiplax_denticauda_5711_ed.jpg/240px-Brachydiplax_denticauda_5711_ed.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Brachydiplax_denticauda_5711_ed.jpg/320px-Brachydiplax_denticauda_5711_ed.jpg 2x",
+        "height": 2356,
+        "width": 3142
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg/160px-Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg",
+      "category": "PICTURE",
+      "citation_id": 10,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "An adult male Palemouth has a pale blue tail with a black tip"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Palemouth_(Brachydiplax_denticauda)_(23867332788).jpg",
+      "timestamp": "2019-09-09T20:43:56.446Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg/240px-Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg/320px-Palemouth_%28Brachydiplax_denticauda%29_%2823867332788%29.jpg 2x",
+        "height": 2144,
+        "width": 2859
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Brachydiplax_denticauda_male_obelisk.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Brachydiplax_denticauda_male_obelisk.jpg/160px-Brachydiplax_denticauda_male_obelisk.jpg",
+      "category": "PICTURE",
+      "citation_id": 11,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Male puts his tail in the air in an obelisk position that is not vertical"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Brachydiplax_denticauda_male_obelisk.jpg",
+      "timestamp": "2019-09-09T20:43:56.448Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Brachydiplax_denticauda_male_obelisk.jpg/240px-Brachydiplax_denticauda_male_obelisk.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Brachydiplax_denticauda_male_obelisk.jpg/320px-Brachydiplax_denticauda_male_obelisk.jpg 2x",
+        "height": 1536,
+        "width": 2048
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Brachydiplax_denticauda_bum_%2834146430300%29.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Brachydiplax_denticauda_bum_%2834146430300%29.jpg/200px-Brachydiplax_denticauda_bum_%2834146430300%29.jpg",
+      "category": "PICTURE",
+      "citation_id": 12,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Male from behind showing a creamy yellow mark on the outside of his eye rim"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Brachydiplax_denticauda_bum_(34146430300).jpg",
+      "timestamp": "2019-09-09T20:43:56.450Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Brachydiplax_denticauda_bum_%2834146430300%29.jpg/300px-Brachydiplax_denticauda_bum_%2834146430300%29.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Brachydiplax_denticauda_bum_%2834146430300%29.jpg/400px-Brachydiplax_denticauda_bum_%2834146430300%29.jpg 2x",
+        "height": 1839,
+        "width": 3267
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Palemouth_close-up_of_head.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Palemouth_close-up_of_head.jpg/160px-Palemouth_close-up_of_head.jpg",
+      "category": "PICTURE",
+      "citation_id": 13,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Close-up of head highlighting the pale mouth"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Palemouth_close-up_of_head.jpg",
+      "timestamp": "2019-09-09T20:43:56.455Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Palemouth_close-up_of_head.jpg/240px-Palemouth_close-up_of_head.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Palemouth_close-up_of_head.jpg/320px-Palemouth_close-up_of_head.jpg 2x",
+        "height": 957,
+        "width": 1276
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg/200px-Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg",
+      "category": "PICTURE",
+      "citation_id": 14,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Female wings"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Brachydiplax_denticauda_female_wings_(34215848654).jpg",
+      "timestamp": "2019-09-09T20:43:56.457Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg/300px-Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg/400px-Brachydiplax_denticauda_female_wings_%2834215848654%29.jpg 2x",
+        "height": 5067,
+        "width": 9008
+      }
+    },
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg/200px-Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg",
+      "category": "PICTURE",
+      "citation_id": 15,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Male wings"
+        }
+      ],
+      "social_type": null,
+      "attribution": "https://en.wikipedia.org/wiki/File:Brachydiplax_denticauda_male_wings_(34215851744).jpg",
+      "timestamp": "2019-09-09T20:43:56.458Z",
+      "mime": "image/jpeg",
+      "media_props": {
+        "type": "normal",
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg/300px-Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg/400px-Brachydiplax_denticauda_male_wings_%2834215851744%29.jpg 2x",
+        "height": 5067,
+        "width": 9008
+      }
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Brachydiplax_denticauda",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 16,
+      "description": [
+        {
+          "index": 0,
+          "text": "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia.",
+          "type": "sentence"
+        },
+        {
+          "index": 1,
+          "text": "Text is available under the Creative Commons Attribution-ShareAlike License.",
+          "type": "sentence"
+        },
+        {
+          "index": 2,
+          "text": "Additional terms may apply.",
+          "type": "sentence"
+        },
+        {
+          "index": 3,
+          "text": "See everipedia.org/everipedia-termsfor further details.",
+          "type": "sentence"
+        },
+        {
+          "index": 4,
+          "text": "Images/media credited individually (click the icon for details).",
+          "type": "sentence"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-09T20:43:56.461Z",
+      "mime": null
+    }
+  ],
+  "media_gallery": [],
+  "metadata": [
+    {
+      "key": "page_type",
+      "value": "Thing"
+    },
+    {
+      "key": "is_removed",
+      "value": false
+    },
+    {
+      "key": "is_adult_content",
+      "value": false
+    },
+    {
+      "key": "sub_page_type",
+      "value": null
+    },
+    {
+      "key": "is_wikipedia_import",
+      "value": true
+    },
+    {
+      "key": "is_indexed",
+      "value": false
+    },
+    {
+      "key": "bing_index_override",
+      "value": true
+    },
+    {
+      "key": "is_locked",
+      "value": false
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/9/2019 20:43:53 PM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Brachydiplax_denticauda"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Brachydiplax_denticauda"
+    }
+  ],
+  "amp_info": {
+    "load_youtube_js": false,
+    "load_audio_js": false,
+    "load_video_js": false,
+    "lightboxes": []
+  },
+  "ipfs_hash": "QmdGzn8TakubVzx8peJ7i9GPJdkJG9XEV5qdkAN3D2omrA"
+}

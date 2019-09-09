@@ -5,19 +5,1456 @@
 				"index": 0,
 				"tag_type": "p",
 				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**Null** may refer to:"
+						"text": "**Korea** is a historical country in [[LINK|lang_en|East_Asia|East Asia]]; since 1945 it has been [[LINK|lang_en|Division_of_Korea|divided]] into two distinct [[LINK|lang_en|Sovereign_state|sovereign states]]: [[LINK|lang_en|North_Korea|North Korea]] (officially the \"Democratic People's Republic of Korea\") and [[LINK|lang_en|South_Korea|South Korea]] (officially the \"Republic of Korea\"). Located on the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]], Korea is bordered by [[LINK|lang_en|China|China]] to the northwest and [[LINK|lang_en|Russia|Russia]] to the northeast. It is separated from [[LINK|lang_en|Japan|Japan]] to the east by the [[LINK|lang_en|Korea_Strait|Korea Strait]] and the [[LINK|lang_en|East_Sea_of_Korea|East Sea of Korea]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korea emerged as a singular political entity in 676CE after centuries of conflict among the [[LINK|lang_en|Three_Kingdoms_of_Korea|Three Kingdoms of Korea]], which were unified as [[LINK|lang_en|Unified_Silla|Unified Silla]] to the south and [[LINK|lang_en|Balhae|Balhae]] to the north. Unified Silla divided into three separate states during the [[LINK|lang_en|Later_Three_Kingdoms_period|Later Three Kingdoms period]]. [[LINK|lang_en|Goryeo|Goryeo]], which had succeeded [[LINK|lang_en|Goguryeo|Goguryeo]], defeated the two other states and united the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]]. Around the same time, Balhae collapsed and its last crown prince fled south to Goryeo. Goryeo (also spelled as *Koryŏ*), whose name developed into the modern [[LINK|lang_en|Exonym|exonym]]\"Korea\", was a highly cultured state that created the world's first metal [[LINK|lang_en|Movable_type|movable type]] in 1234. [[CITE|112|http://loc.gov/exhibits/world/world-record.html#obj152]] [[CITE|228|https://loc.gov/rr/asian/guide/guide-korean.html]] [[CITE|34|http://bl.uk/learning/timeline/item100565.html]] [[CITE|85|http://metmuseum.org/toah/ht/07/eak.html]] [[CITE|-1|http://doi.org/10.1093/oi/authority.20110803100213284]] [[CITE|-1|https://books.google.com/books?id=QfkWAAAAQBAJ&q=%22Korea+led+the+world+in+inventing+metal+movable-type+printing+in+1234%22#v=snippet&q=%22Korealed%20the%20world%20in%20inventing%20metal%20movable-type%20printing%20in%201234%22&f=false]] However, multiple invasions by the [[LINK|lang_en|Mongol_Empire|Mongol]] [[LINK|lang_en|Yuan_Dynasty|Yuan Dynasty]] during the 13th century greatly weakened the nation, which eventually agreed to become a [[LINK|lang_en|Korea_under_Yuan_rule|vassal state]] after decades of fighting. Following the Yuan Dynasty's collapse, severe political strife followed, and Goryeo eventually fell to a coup led by General [[LINK|lang_en|Yi_Seong-gye|Yi Seong-gye]], who established [[LINK|lang_en|Joseon|Joseon]] in 1392."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The first 200 years of Joseon were marked by relative peace. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "During this period, the [[LINK|lang_en|Hangul|Korean]] [[LINK|lang_en|Featural_alphabet|alphabet]] was created by [[LINK|lang_en|Sejong_the_Great|Sejong the Great]] in the 15th century and there was increasing influence of [[LINK|lang_en|Confucianism|Confucianism]]. During the later part of the dynasty, Korea's isolationist policy earned it the Western nickname of the \"[[LINK|lang_en|Hermit_Kingdom|Hermit Kingdom]]\". By the late 19th century, the country became the object of imperial design by the Empire of Japan. After the [[LINK|lang_en|First_Sino-Japanese_War|First Sino-Japanese War]], despite the [[LINK|lang_en|Korean_Empire|Korean Empire]]'s effort to modernize, it was [[LINK|lang_en|Korea_under_Japanese_rule|annexed by Japan]] in 1910 and ruled by Imperial Japan until the end of [[LINK|lang_en|World_War_II|World War II]] in August 1945."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1945, the [[LINK|lang_en|Soviet_Union|Soviet Union]] and the [[LINK|lang_en|United_States|United States]] agreed on the [[LINK|lang_en|Surrender_of_Japan|surrender of Japanese forces]] in Korea in the aftermath of World War II, leaving Korea partitioned along the 38th parallel. The [[LINK|lang_en|Soviet_Civil_Administration|North was under Soviet occupation]] and the [[LINK|lang_en|United_States_Army_Military_Government_in_Korea|South under U.S. occupation]]. These circumstances soon became the basis for the division of Korea by the two [[LINK|lang_en|Superpower|superpowers]], exacerbated by their incapability to agree on the terms of Korean independence. The Communist-inspired government in the North received backing from the Soviet Union in opposition to the pro-Western government in the South, leading to Korea's division into two political entities: North Korea (formally the Democratic People's Republic of Korea), and South Korea (formally the Republic of Korea). Tensions between the two resulted in the outbreak of the [[LINK|lang_en|Korean_War|Korean War]] in 1950. With involvement by foreign troops, the war ended in a stalemate in 1953, but without a formalized peace treaty. This status contributes to the high tensions that continue to divide the peninsula. To date, each country contends that it is the sole legitimate government of all of Korea; they refuse to recognize the other as legitimate."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "etymology",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Etymology"
 					}
 				]
 			},
 			{
 				"index": 1,
 				"tag_type": "p",
-				"attrs": {},
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "\"Korea\" is the modern spelling of \"Corea\" (고려,高麗), a name attested in English as early as 1614. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Korea was transliterated as *Cauli* in [[LINK|lang_en|The_Travels_of_Marco_Polo|The Travels of Marco Polo]], [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] based on the kingdom of [[LINK|lang_en|Goryeo|Goryeo]] (Koryŏ), which ruled most of the Korean peninsula during Marco Polo's time. Korea's introduction to the West resulted from trade and contact with merchants from Arabic lands, [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] with some records dating back as far as the 9th century. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] Goryeo's name was a continuation of [[LINK|lang_en|Goguryeo|Goguryeo]] (Koguryŏ) the northernmost of the [[LINK|lang_en|Three_Kingdoms_of_Korea|Three Kingdoms of Korea]], which was officially known as Goryeo beginning in the 5th century. [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] The original name was a combination of the adjective *go* (\"high, lofty\") with the name of a local [[LINK|lang_en|Yemaek|Yemaek]] tribe, whose original name is thought to have been either * *Guru*(溝樓, \"walled city,\" inferred from some toponyms in Chinese historical documents) or * *Gauri*(가우리, \"center\"). With expanding British and American trade following the [[LINK|lang_en|Opening_of_Korea|opening of Korea]] in the late 19th century, the spelling \"Korea\" appeared and gradually grew in popularity; its use in transcribing [[LINK|lang_en|East_Asian_culture|East Asian]] languages avoids the issues caused by the separate [[LINK|lang_en|Hard_and_soft_C|hard and soft Cs]] existing in English vocabulary derived from the [[LINK|lang_en|Romance_languages|Romance languages]]. The name Korea is now commonly used in English contexts by both North and South Korea."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In [[LINK|lang_en|South_Korea|South Korea]], Korea as a whole is referred to as Hanguk (한국,[haːnɡuk], lit. \"country of the *[[LINK|lang_en|Samhan|Han]] *\"). The name references the *[[LINK|lang_en|Samhan|Samhan]] * — [[LINK|lang_en|Mahan_confederacy|Ma]], [[LINK|lang_en|Jinhan|Jin]], and [[LINK|lang_en|Byeonhan|Byeon]] —who preceded the Three Kingdoms in the southern and central end of the peninsula during the 1st centuries BC and AD. Although written in [[LINK|lang_en|Hanja|Hanja]] as 韓, 幹, or 刊, this *Han* has no relation to the Chinese place names or peoples who used those characters but was a [[LINK|lang_en|Transcription_into_Chinese|phonetic transcription]] ([[LINK|lang_en|Old_Chinese|OC]]: [[LINK|lang_en|Reconstruction_of_Old_Chinese|*]] *Gar*, [[LINK|lang_en|Middle_Chinese|MC]] *Han* or *Gan*) of a native Korean word that seems to have had the meaning \"big\" or \"great\", particularly in reference to leaders. It has been tentatively linked with the title *[[LINK|lang_en|Khan_(title)|khan]] * used by the nomads of [[LINK|lang_en|Manchuria|Manchuria]] and [[LINK|lang_en|Central_Asia|Central Asia]]."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In [[LINK|lang_en|North_Korea|North Korea]], [[LINK|lang_en|China|China]], [[LINK|lang_en|Japan|Japan]], [[LINK|lang_en|Vietnam|Vietnam]], and Chinese and Vietnamese-speaking areas, Korea as a whole is referred to as Chosŏn (조선,*Joseon*,[tɕosʰʌn], (朝鲜 ), *Cháoxiǎn*, (朝鮮 ), *Chōsen*, *Triều Tiên* (朝鮮) lit. \"[land of the] Morning Calm\"). \"Great [[LINK|lang_en|Joseon|Joseon]]\" was the name of the kingdom ruled by the [[LINK|lang_en|House_of_Yi|Joseon dynasty]] from 1393 until their declaration of the short-lived [[LINK|lang_en|Great_Korean_Empire|Great Korean Empire]] in 1897. [[LINK|lang_en|Taejo_of_Joseon|King Taejo]] had named them for the earlier [[LINK|lang_en|Gojoseon|Kojoseon]] (고조선), who ruled northern Korea from its legendary [[LINK|lang_en|Prehistory_of_Korea|prehistory]] until their conquest in 108 BC by China's [[LINK|lang_en|Han_Empire|Han Empire]]. This *go* is the [[LINK|lang_en|Hanja|Hanja]] 古 and simply means \"ancient\" or \"old\"; it is a modern usage to distinguish the ancient Joseon from the later dynasty. *Joseon* itself is the modern Korean pronunciation of the [[LINK|lang_en|Hanja|Hanja]] 朝鮮 but it is unclear whether this was a [[LINK|lang_en|Transcription_into_Chinese|transcription]] of a native Korean name ([[LINK|lang_en|Old_Chinese|OC]] [[LINK|lang_en|Reconstruction_of_Old_Chinese|*]] *T[r]awser*, [[LINK|lang_en|Middle_Chinese|MC]] *Trjewsjen*) or a partial translation into Chinese of the Korean capital [[LINK|lang_en|Asadal|Asadal]] (아사달), whose meaning has been reconstructed as \"Morning Land\" or \"Mountain\"."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "history",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "History"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "prehistory-and-gojoseon",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Prehistory and Gojoseon"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The Korean Academy claimed ancient hominid fossils originating from about 100,000 BC in the lava at a stone city site in Korea. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Fluorescent and high-magnetic analyses indicate the volcanic fossils may be from as early as 300,000 BC. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "[[CITE|193|http://pureinsight.org/node/1065]] The best preserved Korean pottery goes back to the [[LINK|lang_en|Paleolithic|paleolithic]] times around 10,000 BC and the [[LINK|lang_en|Neolithic|Neolithic]] period begins around 6000 BC."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "According to legend, [[LINK|lang_en|Dangun|Dangun]], a descendant of Heaven, established [[LINK|lang_en|Gojoseon|Gojoseon]] in 2333 BC. In 108 BC, the [[LINK|lang_en|Han_dynasty|Han dynasty]] defeated Gojoseon and installed [[LINK|lang_en|Four_Commanderies_of_Han|four commanderies]] in the northern Korean peninsula. Three of the commanderies fell or retreated westward within a few decades, but the [[LINK|lang_g_commandery|undefined|Lelang commandery]] remained as a center of cultural and economic exchange with successive Chinese dynasties for four centuries. By 313, [[LINK|lang_en|Goguryeo|Goguryeo]] annexed all of the Chinese commanderies."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "protothree-kingdoms",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Proto–Three Kingdoms"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The Proto–Three Kingdoms period, sometimes called the Multiple States Period, is the earlier part of what is commonly called the [[LINK|lang_en|Three_Kingdoms_of_Korea|Three Kingdoms Period]], following the fall of [[LINK|lang_en|Gojoseon|Gojoseon]] but before [[LINK|lang_en|Goguryeo|Goguryeo]], [[LINK|lang_en|Baekje|Baekje]], and [[LINK|lang_en|Silla|Silla]] fully developed into kingdoms."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "This time period saw numerous states spring up from the former territories of Gojoseon, which encompassed northern Korea and southern [[LINK|lang_en|Manchuria|Manchuria]]. With the fall of Gojoseon, southern Korea entered the [[LINK|lang_en|Samhan|Samhan]] period."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Located in the southern part of the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]], Samhan refers to the three confederacies of [[LINK|lang_en|Mahan_confederacy|Mahan]], [[LINK|lang_en|Jinhan_confederacy|Jinhan]], and [[LINK|lang_en|Byeonhan_confederacy|Byeonhan]]. Mahan was the largest and consisted of 54 states. [[LINK|lang_en|Byeonhan|Byeonhan]] and [[LINK|lang_en|Jinhan|Jinhan]] both consisted of twelve states, bringing a total of 78 states within the [[LINK|lang_en|Samhan|Samhan]]. These three confederacies eventually developed into [[LINK|lang_en|Baekje|Baekje]], [[LINK|lang_en|Silla|Silla]], and [[LINK|lang_en|Gaya_confederacy|Gaya]]."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "three-kingdoms",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Three Kingdoms"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The [[LINK|lang_en|Three_Kingdoms_of_Korea|Three Kingdoms of Korea]] consisted of [[LINK|lang_en|Goguryeo|Goguryeo]], [[LINK|lang_en|Silla|Silla]], and [[LINK|lang_en|Baekje|Baekje]]. Silla and Baekje controlled the southern half of the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]], maintaining the former [[LINK|lang_en|Samhan|Samhan]] territories, while Goguryeo controlled the northern half of the Korean Peninsula, Manchuria and the [[LINK|lang_en|Liaodong_Peninsula|Liaodong Peninsula]], uniting [[LINK|lang_en|Buyeo_Kingdom|Buyeo]], [[LINK|lang_en|Okjeo|Okjeo]], [[LINK|lang_en|Dongye|Dongye]], and other states in the former [[LINK|lang_en|Gojoseon|Gojoseon]] territories. [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Goguryeo|Goguryeo]] was a highly militaristic state; [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] it was a powerful empire and one of the great powers in [[LINK|lang_en|East_Asia|East Asia]], [[CITE|-1|https://books.google.com/books?id=A2cfZkU5aQgC&q=koguryo+powerful+empire#v=snippet&q=koguryopowerful%20empire&f=false]] [[CITE|-1|https://books.google.com/books?id=acvGAAAAQBAJ&q=Inner+Mongolia#v=snippet&q=greatpowers&f=false]] [[CITE|56|https://books.google.com/books?id=PvlthkbFU1UC&pg=PA1133#v=onepage&q&f=false]] [[CITE|91|https://books.google.com/books?id=GBvRs-za0CIC&pg=PA6#v=onepage&q&f=false]] reaching its zenith in the 5th century when its territories expanded to encompass most of Manchuria to the north, parts of [[LINK|lang_en|Inner_Mongolia|Inner Mongolia]] to the west, [[CITE|-1|https://books.google.com/books?id=BA_QAgAAQBAJ&q=Inner+Mongolia#v=snippet&q=InnerMongolia&f=false]] parts of Russia to the east, [[CITE|-1|https://books.google.com/books?id=t_DqBgAAQBAJ&q=Koguryo+Siberia+Russia%27s#v=snippet&q=KoguryoSiberia%20Russia's&f=false]] and the Seoul region to the south. [[CITE|124|https://books.google.com/books?id=QFPsi3IK8gcC&pg=PA35#v=onepage&q&f=false]] Goguryeo experienced a golden age under [[LINK|lang_en|Gwanggaeto_the_Great|Gwanggaeto the Great]] and his son [[LINK|lang_en|Jangsu_of_Goguryeo|Jangsu]], [[CITE|158|https://books.google.com/books?id=KO8MAQAAMAAJ]] [[CITE|-1|https://books.google.com/books?id=A3_6lp8IOK8C&q=%22The+reign+of+King+Kwanggaet%27o+is+thought+of+as+Koguryo%27s+golden+age+of+political+might+and+Buddhist+splendor.%22#v=snippet&q=%22Thereign%20of%20King%20Kwanggaet'o%20is%20thought%20of%20as%20Koguryo's%20golden%20age%20of%20political%20might%20and%20Buddhist%20splendor.%22&f=false]] [[CITE|220|https://books.google.com/books?focus=searchwithinvolume&id=LtwpAQAAMAAJ&q=%22Nevertheless%2C+the+reigns+of+Kwanggaet%27o+and+his+successor+Changsu+%28413-491%29+constituted+the+golden+age+of+Koguryo.%22]] [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] who both subdued Baekje and Silla during their times, achieving a brief unification of the [[LINK|lang_en|Three_Kingdoms_of_Korea|Three Kingdoms of Korea]] and becoming the most dominant power on the Korean Peninsula. [[CITE|124|https://books.google.com/books?id=QFPsi3IK8gcC&pg=PA35#v=onepage&q&f=false]] [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] In addition to contesting for control of the Korean Peninsula, Goguryeo had many [[LINK|lang_en|Military_history_of_Goguryeo|military conflicts]] with various Chinese dynasties, [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] most notably the [[LINK|lang_en|Goguryeo-Sui_War|Goguryeo-Sui War]], in which Goguryeo defeated a huge force said to number over a million men. [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] In 642, the powerful general [[LINK|lang_en|Yeon_Gaesomun|Yeon Gaesomun]] led a coup and gained complete control over Goguryeo. In response, Emperor [[LINK|lang_en|Tang_Taizong|Tang Taizong]] of China led a [[LINK|lang_en|First_campaign_in_the_Goguryeo–Tang_War|campaign against Goguryeo]], but was defeated and retreated. [[CITE|108|http://cnn.com/2015/08/07/asia/north-korea-time-zone]] After the death of Tang Taizong, his son Emperor [[LINK|lang_en|Tang_Gaozong|Tang Gaozong]] allied with the Korean kingdom of Silla and invaded Goguryeo again, but was unable to overcome Goguryeo's stalwart defenses and was defeated in 662. [[CITE|-1|https://books.google.com/books?id=voerPYsAB5wC&q=stalwart+defenses#v=snippet&q=stalwartdefenses&f=false]] [[CITE|37|https://books.google.com/books?id=46OTBQAAQBAJ&pg=PA29#v=onepage&q&f=false]] However, Yeon Gaesomun died of a natural cause in 666 and Goguryeo was thrown into chaos and weakened by a succession struggle among his sons and younger brother, with his eldest son defecting to [[LINK|lang_en|Tang_dynasty|Tang]] and his younger brother defecting to Silla. [[CITE|60|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA67#v=onepage&q&f=false]] [[CITE|126|https://books.google.com/books?id=IgxvBAAAQBAJ&pg=PA49#v=onepage&q&f=false]] The Tang-Silla alliance finally conquered Goguryeo in 668. After the collapse of Goguryeo, Tang and Silla ended their alliance and fought over control of the Korean Peninsula. Silla succeeded in gaining control over most of the Korean Peninsula, while Tang gained control over Goguryeo's northern territories. However, 30 years after the fall of Goguryeo, a Goguryeo general by the name of [[LINK|lang_en|Dae_Joyeong|Dae Joyeong]] founded the Korean-Mohe state of [[LINK|lang_en|Balhae|Balhae]] and successfully expelled the Tang presence from much of the former Goguryeo territories."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tleft",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": []
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The southwestern Korean kingdom of [[LINK|lang_en|Baekje|Baekje]] was founded around modern-day [[LINK|lang_en|Seoul|Seoul]] by a [[LINK|lang_en|Onjo_of_Baekje|Goguryeo prince]], a son of the [[LINK|lang_en|Dongmyeong_of_Goguryeo|founder of Goguryeo]]. [[CITE|-1|https://books.google.com/books?id=r15cAgAAQBAJ&q=%22prince+of+Koguryo%22#v=snippet&q=%22princeof%20Koguryo%22&f=false]] [[CITE|128|https://books.google.com/books?id=TYKNdiDCGLAC&pg=PA27#v=onepage&q&f=false]] [[CITE|-1|https://books.google.com/books?id=QFPsi3IK8gcC&q=%22son+of+Chumong%22#v=snippet&q=%22sonof%20Chumong%22&f=false]] Baekje absorbed all of the [[LINK|lang_en|Mahan_confederacy|Mahan]] states and subjugated most of the western Korean peninsula (including the modern provinces of [[LINK|lang_en|Gyeonggi|Gyeonggi]], [[LINK|lang_en|Chungcheong-do|Chungcheong]], and [[LINK|lang_en|Jeolla|Jeolla]], as well as parts of [[LINK|lang_en|Hwanghae|Hwanghae]] and [[LINK|lang_en|Gangwon-do_(South_Korea)|Gangwon]]) to a centralised government; during the expansion of its territory, Baekje acquired Chinese culture and technology through maritime contacts with the [[LINK|lang_en|Southern_Dynasties|Southern Dynasties]]. Baekje was a great maritime power; [[CITE|182|https://books.google.com/books?dq=%22Paekche+was+probably+the+most+important+maritime+nation+in+the+late+fourth+century%22&hl=en&id=0entAAAAMAAJ&q=%22Paekche+was+probably+the+most+important+maritime+nation+in+the+late+fourth+century%22&sa=X&ved=0ahUKEwiG2K_Dy4jPAhVJ0WMKHcgmANEQ6AEIHjAA]] its nautical skill, which made it the [[LINK|lang_en|Phoenicia|Phoenicia]] of East Asia, was instrumental in the dissemination of Buddhism throughout East Asia and continental culture to Japan. [[CITE|-1|https://books.google.com/books?id=9fyzAAAAQBAJ&q=%22Of+vital+importance+for+the+dissemination+of+Buddhism+throughout+East+Asia%2C+however%2C+was+Paekche%27s+nautical+skill%2C+which+made+the+kingdom+the+Phoenicia+of+medieval+East+Asia.%22#v=snippet&q=%22Ofvital%20importance%20for%20the%20dissemination%20of%20Buddhism%20throughout%20East%20Asia,%20however,%20was%20Paekche's%20nautical%20skill,%20which%20made%20the%20kingdom%20the%20Phoenicia%20of%20medieval%20East%20Asia.%22&f=false]] [[CITE|14|https://books.google.com/books?id=CWE8AAAAQBAJ&pg=PA104#v=onepage&q&f=false]] Historic evidence suggests that Japanese culture, art, and language were influenced by the kingdom of Baekje and Korea itself; [[CITE|91|https://books.google.com/books?id=GBvRs-za0CIC&pg=PA6#v=onepage&q&f=false]] [[CITE|-1|https://books.google.com/books?dq=%22Corea+was+not+only+the+road+by+which+the+art+of+China+reached+Japan%2C+but+it+is+the+original+home+of+many+of+the+art-ideas+which+the+world+believes+to+be+purely+Japanese.%22&hl=en&id=F5xDAAAAYAAJ&pg=PA251&sa=X&ved=0ahUKEwjxr7mL8qDOAhUP9GMKHX9pCVYQ6AEIHjAA#v=onepage&q=%22Coreawas%20not%20only%20the%20road%20by%20which%20the%20art%20of%20China%20reached%20Japan,%20but%20it%20is%20the%20original%20home%20of%20many%20of%20the%20art-ideas%20which%20the%20world%20believes%20to%20be%20purely%20Japanese.%22&f=false]] [[CITE|127|http://metmuseum.org/toah/hd/yayo/hd_yayo.htm]] [[CITE|61|http://www1.korea-np.co.jp/pk/035th_issue/98032502.htm]] [[CITE|131|http://mnsu.edu/emuseum/prehistory/japan/yayoi/yayoi.html]] [[CITE|133|http://japan-guide.com/e/e2131.html]] [[CITE|135|http://asiasocietymuseum.com]] [[CITE|139|http://encarta.msn.com/encyclopedia_761568150_4/Pottery.html]] [[CITE|141|http://japan-guide.com/e/e2046.html]] [[CITE|143|https://books.google.com/?id=hhOj8JrLQBMC&pg=PA218]] [[CITE|145|http://www2.kenyon.edu/Depts/Religion/Fac/Adler/Reln275/Jap-Kor-art.htm]] [[CITE|146|http://news.nationalgeographic.com/news/2008/04/080428-ancient-tomb.html]] Baekje also played an important role in transmitting advanced Chinese culture to the Japanese archipelago. Baekje was once a great military power on the Korean Peninsula, most notably in the 4th century during the rule of [[LINK|lang_en|Geunchogo_of_Baekje|Geunchogo]] when its influence extended across the sea to [[LINK|lang_en|Liaoxi|Liaoxi]] and [[LINK|lang_en|Shandong|Shandong]] in China, taking advantage of the weakened state of [[LINK|lang_en|Former_Qin|Former Qin]], and [[LINK|lang_en|Kyushu|Kyushu]] in the Japanese archipelago; [[CITE|226|https://books.google.com/books?id=o-WlUd3cjh0C&pg=PT29#v=onepage&q&f=false]] however, Baekje was critically defeated by Gwanggaeto the Great and declined."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Although later records claim that [[LINK|lang_en|Silla|Silla]] was the oldest of the [[LINK|lang_en|Three_Kingdoms_of_Korea|Three Kingdoms of Korea]], it is now believed to have been the last kingdom to develop. By the 2nd century, Silla existed as a large state in the southeast, occupying and influencing its neighboring city-states. In 562, Silla annexed the [[LINK|lang_en|Gaya_confederacy|Gaya confederacy]] which was located between Baekje and Silla. The Three Kingdoms of Korea often warred with each other and Silla was often dominated by Baekje and Goguryeo. Silla was the smallest and weakest of the three, but it used cunning diplomatic means to make opportunistic pacts and alliances with the more powerful Korean kingdoms, and eventually Tang China, to its great advantage. [[CITE|29|https://books.google.com/books?id=s2EVi-MpnUsC&pg=PA44#v=onepage&q&f=false]] [[CITE|54|https://books.google.com/books?id=6zoLCgAAQBAJ&pg=PA18#v=onepage&q&f=false]] In 660, King [[LINK|lang_en|Muyeol_of_Silla|Muyeol]] ordered his armies to attack [[LINK|lang_en|Baekje|Baekje]]. General [[LINK|lang_en|Kim_Yu-shin|Kim Yu-shin]], aided by [[LINK|lang_en|Tang_dynasty|Tang]] forces, conquered Baekje after defeating General [[LINK|lang_en|Gyebaek|Gyebaek]] at the [[LINK|lang_en|Battle_of_Hwangsanbeol|Battle of Hwangsanbeol]]. In 661, Silla and Tang attacked Goguryeo but were repelled. King [[LINK|lang_en|Munmu_of_Silla|Munmu]], son of Muyeol and nephew of General Kim Yu-shin, launched another campaign in 667 and Goguryeo fell in the following year."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "north-south-states-period",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "North-South States Period"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Beginning in the 6th century, [[LINK|lang_en|Silla|Silla]]'s power gradually extended across the Korean Peninsula. Silla first annexed the adjacent [[LINK|lang_en|Gaya_confederacy|Gaya confederacy]] in 562. By the 640s, Silla formed an alliance with the [[LINK|lang_en|Tang_Dynasty|Tang Dynasty]] of China to conquer [[LINK|lang_en|Baekje|Baekje]] and later [[LINK|lang_en|Goguryeo|Goguryeo]]. After conquering Baekje and Goguryeo, Silla repulsed Tang China from the Korean peninsula in 676. Even though Silla unified most of the Korean Peninsula, most of the Goguryeo territories to the north of the Korean Peninsula were ruled by [[LINK|lang_en|Balhae|Balhae]]. Former Goguryeo general [[LINK|lang_en|Dae_Jo-yeong|Dae Jo-yeong]] led a group of Goguryeo and [[LINK|lang_en|Mohe_people|Mohe]] refugees to the [[LINK|lang_en|Jilin|Jilin]] and founded the kingdom of [[LINK|lang_en|Balhae|Balhae]], 30 years after the collapse of Goguryeo, as the successor to Goguryeo. At its height, Balhae's territories extended from southern [[LINK|lang_en|Manchuria|Manchuria]] down to the northern Korean peninsula. Balhae was called the \"Prosperous Country in the East\". [[CITE|78|https://books.google.com/books?id=46OTBQAAQBAJ&pg=PA64#v=onepage&q&f=false]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Later_Silla|Later Silla]] carried on the maritime prowess of [[LINK|lang_en|Baekje|Baekje]], which acted like the [[LINK|lang_en|Phoenicia|Phoenicia]] of medieval [[LINK|lang_en|East_Asia|East Asia]], [[CITE|-1|https://books.google.com/books?id=9fyzAAAAQBAJ&q=%22the+Phoenicia+of+medieval+East+Asia%22#v=snippet&q=%22thePhoenicia%20of%20medieval%20East%20Asia%22&f=false]] and during the 8th and 9th centuries dominated the seas of East Asia and the trade between China, Korea and Japan, most notably during the time of [[LINK|lang_en|Jang_Bogo|Jang Bogo]]; in addition, Silla people made overseas communities in China on the [[LINK|lang_en|Shandong_Peninsula|Shandong Peninsula]] and the mouth of the [[LINK|lang_en|Yangtze_River|Yangtze River]]. [[CITE|-1|https://books.google.com/books?id=jqb7L-pKCV8C&q=%22Korea+held+a+dominant+position+in+the+north-eastern+seas%22#v=snippet&q=%22Koreaheld%20a%20dominant%20position%20in%20the%20north-eastern%20seas%22&f=false]] [[CITE|174|https://books.google.com/books/about/Ennin_s_Travels_in_T_ang_China.html?id=HXqEAAAACAAJ]] [[CITE|-1|https://books.google.com/books?id=IgxvBAAAQBAJ&q=%22Greater+Silla+dominated+the+Yellow+Sea%2C+the+East+China+Sea%2C+and+the+South+%28Korea%29+Sea+with+trade+between+Tang+China+and+Nara-Heian+Japan.%22#v=snippet&q=%22GreaterSilla%20dominated%20the%20Yellow%20Sea,%20the%20East%20China%20Sea,%20and%20the%20South%20(Korea)%20Sea%20with%20trade%20between%20Tang%20China%20and%20Nara-Heian%20Japan.%22&f=false]] [[CITE|-1|https://books.google.com/books?id=Qe4PoOd89XIC&q=%22Koreans+dominated+the+commerce+of+Northeast+Asia+in+the+eighth+and+ninth+centuries%22#v=snippet&q=%22Koreansdominated%20the%20commerce%20of%20Northeast%20Asia%20in%20the%20eighth%20and%20ninth%20centuries%22&f=false]] Later Silla was a prosperous and wealthy country, [[CITE|27|https://books.google.com/books?id=r3mUtaSxCncC&pg=PT408#v=onepage&q&f=false]] and its metropolitan capital of [[LINK|lang_en|Gyeongju|Gyeongju]] [[CITE|48|https://books.google.com/books?id=DnaiYKYmQegC&pg=PA230#v=onepage&q&f=false]] was the fourth largest city in the world. [[CITE|74|https://books.google.com/books?id=HjIEAAAAMBAJ&pg=PA28#v=onepage&q&f=false]] [[CITE|104|https://books.google.com/books?id=bur02Vwn9jgC&pg=PT20#v=onepage&q&f=false]] [[CITE|134|http://korea.net/NewsFocus/Column/view?articleId=109953]] [[CITE|175|https://books.google.com/books?focus=searchwithinvolume&id=riLrAAAAMAAJ&q=%22Kyongju+City+became+one+of+the+most+influential+centers+of+Asia+and+fourth+largest+city+in+the+ancient+world+during+this+period%22]] Later Silla was a golden age of art and culture, [[CITE|-1|https://books.google.com/books?id=JklBlOQhkTcC&q=%22golden+age+of+art+and+culture%22#v=snippet&q=%22goldenage%20of%20art%20and%20culture%22&f=false]] [[CITE|-1|https://books.google.com/books?id=02rFSecPhEsC&q=%22golden+age+of+artistic+and+cultural+achievement%22#v=snippet&q=%22goldenage%20of%20artistic%20and%20cultural%20achievement%22&f=false]] [[CITE|-1|https://books.google.com/books?id=MhwXBQAAQBAJ&q=%22cultural+and+political+golden+age%22#v=snippet&q=%22culturaland%20political%20golden%20age%22&f=false]] [[CITE|62|https://books.google.com/books?id=ci_iGuAAqmsC&pg=PA47#v=onepage&q&f=false]] as evidenced by the [[LINK|lang_en|Hwangnyongsa|Hwangnyongsa]], [[LINK|lang_en|Seokguram|Seokguram]], and [[LINK|lang_en|Emille_Bell|Emille Bell]]. Buddhism flourished during this time, and many Korean Buddhists gained great fame among Chinese Buddhists [[CITE|-1|https://books.google.com/books?id=au1oD1kKv94C&q=%22Korean+Buddhist+monks+such+as+Woncheuk%2C+Wonhyo+and+Uisang+enjoyed+a+very+high+fame+among+Chinese+Buddhists%22#v=snippet&q=%22KoreanBuddhist%20monks%20such%20as%20Woncheuk,%20Wonhyo%20and%20Uisang%20enjoyed%20a%20very%20high%20fame%20among%20Chinese%20Buddhists%22&f=false]] and contributed to Chinese Buddhism, [[CITE|-1|https://books.google.com/books?id=L-6ghsWDMTAC&q=%22Korean+thinkers+made+reciprocal+contributions+to+Chinese+Buddhism%22#v=snippet&q=%22Koreanthinkers%20made%20reciprocal%20contributions%20to%20Chinese%20Buddhism%22&f=false]] including: [[LINK|lang_en|Woncheuk|Woncheuk]], [[LINK|lang_en|Wonhyo|Wonhyo]], [[LINK|lang_en|Uisang|Uisang]], [[LINK|lang_en|Kim_Hwasang|Musang]], [[CITE|147|https://books.google.com/books?id=DXN2AAAAQBAJ&pg=PA187#v=onepage&q&f=false]] [[CITE|185|https://books.google.com/books?id=5fwRXrVPh-cC&pg=PA24#v=onepage&q&f=false]] [[CITE|223|https://books.google.com/books?id=IX7ICgAAQBAJ&pg=PA155#v=onepage&q&f=false]] [[CITE|20|https://books.google.com/books?id=JfHQCwAAQBAJ&pg=PT124#v=onepage&q&f=false]] and [[LINK|lang_en|Kim_Gyo-gak|Kim Gyo-gak]], a Silla prince whose influence made [[LINK|lang_en|Mount_Jiuhua|Mount Jiuhua]] one of the Four [[LINK|lang_en|Sacred_Mountains_of_China|Sacred Mountains]] of Chinese Buddhism. [[CITE|47|https://books.google.com/books?id=UgOwDAAAQBAJ&pg=PT668#v=onepage&q&f=false]] [[CITE|81|https://books.google.com/books?id=TozUCgAAQBAJ&pg=PA137#v=onepage&q&f=false]] [[CITE|106|https://books.google.com/books?id=dA_QbQiZkB4C&pg=PA519#v=onepage&q&f=false]] [[CITE|138|https://books.google.com/books?id=FjqJAwAAQBAJ&pg=PT509#v=onepage&q&f=false]] [[CITE|168|https://books.google.com/books?id=rm7XCwAAQBAJ&pg=PA240#v=onepage&q&f=false]]"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Later Silla fell apart in the late 9th century, giving way to the tumultuous [[LINK|lang_en|Later_Three_Kingdoms_period|Later Three Kingdoms period]] (892–935), and Balhae was destroyed by the [[LINK|lang_en|Khitan_people|Khitans]] in 926. [[LINK|lang_en|Goryeo|Goryeo]] unified the Later Three Kingdoms and received the [[LINK|lang_en|Dae_Gwang-hyeon|last crown prince]] and much of the ruling class of Balhae, thus bringing about a unification of the two successor nations of [[LINK|lang_en|Goguryeo|Goguryeo]]."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "goryeo-dynasty",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Goryeo dynasty"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Goryeo|Goryeo]] was founded in 918 and replaced Silla as the ruling dynasty of Korea. Goryeo's land was at first what is now South Korea and about 1/3 of North Korea, but later on managed to recover most of the Korean peninsula. Momentarily, Goryeo advanced to parts of [[LINK|lang_en|Jiandao|Jiandao]] while conquering the [[LINK|lang_en|Jurchen_people|Jurchens]], but returned the territories due to the harsh climate and difficulties in defending them. The name \"Goryeo\" (高麗) is a short form of \"[[LINK|lang_en|Goguryeo|Goguryeo]]\" (高句麗) and was first used during the time of King [[LINK|lang_en|Jangsu_of_Goguryeo|Jangsu]]. Goryeo regarded itself as the successor of Goguryeo, hence its name and efforts to recover the former territories of Goguryeo. [[CITE|-1|https://books.google.com/books?id=sNpD5UKmkswC&q=%22As+the+self-proclaimed+successor+to+Koguryo+and+the+protector+of+Parhae+refugees%2C+many+of+them+of+Koguryo+origin%2C+Koryo+considered+the+northern+territories+in+Manchuria+its+rightful+legacy.%22#v=snippet&q=%22Asthe%20self-proclaimed%20successor%20to%20Koguryo%20and%20the%20protector%20of%20Parhae%20refugees,%20many%20of%20them%20of%20Koguryo%20origin,%20Koryo%20considered%20the%20northern%20territories%20in%20Manchuria%20its%20rightful%20legacy.%22&f=false]] [[CITE|8|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA103#v=onepage&q&f=false]] [[CITE|31|https://books.google.com/books?id=ci_iGuAAqmsC&pg=PA57#v=onepage&q&f=false]] [[CITE|57|https://books.google.com/books?id=LU78AQAAQBAJ&pg=PA79#v=onepage&q&f=false]] [[LINK|lang_en|Wang_Geon|Wang Geon]], the founder of Goryeo, was of Goguryeo descent, [[CITE|-1|https://books.google.com/books?id=ZrZ-PuddnnYC&q=Goguryeo+descent#v=snippet&q=Goguryeodescent&f=false]] and traced his ancestry to a noble Goguryeo clan. [[CITE|94|https://books.google.com/books?id=Qn6TCgAAQBAJ&pg=PT59#v=onepage&q&f=false]] He made [[LINK|lang_en|Kaesong|Kaesong]], his hometown, the capital."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "During this period, laws were codified and a civil service system was introduced. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[LINK|lang_en|Buddhism|Buddhism]] flourished and spread throughout the peninsula. The development of [[LINK|lang_en|Goryeo_ware|celadon]] industries flourished in the 12th and 13th centuries. The publication of the [[LINK|lang_en|Tripitaka_Koreana|Tripitaka Koreana]] onto more than 80,000 wooden blocks and the invention of the world's first metal [[LINK|lang_en|Movable_type|movable type]] in the 13th century attest to Goryeo's cultural achievements. [[CITE|112|http://loc.gov/exhibits/world/world-record.html#obj152]] [[CITE|228|https://loc.gov/rr/asian/guide/guide-korean.html]] [[CITE|34|http://bl.uk/learning/timeline/item100565.html]] [[CITE|85|http://metmuseum.org/toah/ht/07/eak.html]] [[CITE|-1|http://doi.org/10.1093/oi/authority.20110803100213284]] [[CITE|-1|https://books.google.com/books?id=QfkWAAAAQBAJ&q=%22Korea+led+the+world+in+inventing+metal+movable-type+printing+in+1234%22#v=snippet&q=%22Korealed%20the%20world%20in%20inventing%20metal%20movable-type%20printing%20in%201234%22&f=false]]"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Goryeo had to defend frequently against attacks by nomadic empires, especially the [[LINK|lang_en|Khitan_people|Khitans]] and the [[LINK|lang_en|Mongols|Mongols]]. Goryeo had a hostile relationship with the Khitans, because the [[LINK|lang_en|Khitan_Empire|Khitan Empire]] had destroyed [[LINK|lang_en|Balhae|Balhae]], also a successor state of Goguryeo. In 993, the Khitans, who had established the [[LINK|lang_en|Liao_dynasty|Liao dynasty]] in 907, [[LINK|lang_en|First_conflict_in_the_Goryeo–Khitan_War|invaded Goryeo]], demanding that it make amity with them. Goryeo sent the diplomat [[LINK|lang_en|Seo_Hui|Seo Hui]] to negotiate, who successfully persuaded the Khitans to let Goryeo expand to the banks of the [[LINK|lang_en|Yalu_River|Amnok River]], citing that in the past the land belonged to Goguryeo, the predecessor of Goryeo. [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] During the [[LINK|lang_en|Goryeo–Khitan_War|Goryeo–Khitan War]], the Khitan Empire invaded Korea twice more in [[LINK|lang_en|Second_conflict_in_the_Goryeo–Khitan_War|1009]] and [[LINK|lang_en|Third_conflict_in_the_Goryeo–Khitan_War|1018]], but was defeated."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "After defeating the Khitan Empire, which was the most powerful empire of its time, [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] Goryeo experienced a golden age that lasted a century, during which the [[LINK|lang_en|Tripitaka_Koreana|Tripitaka Koreana]] was completed, and there were great developments in printing and publishing, promoting learning and dispersing knowledge on philosophy, literature, religion, and science; by 1100, there were 12 universities that produced famous scholars and scientists. [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]]"
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Goryeo was [[LINK|lang_en|Mongol_invasions_of_Korea|invaded by the Mongols]] in seven major campaigns from the 1230s until the 1270s, but was never conquered. [[CITE|46|https://books.google.com/books?id=XrZQs-6KswMC&pg=PA72#v=onepage&q&f=false]] Exhausted after decades of fighting, Goryeo sent its [[LINK|lang_en|Wonjong_of_Goryeo|crown prince]] to the [[LINK|lang_en|Yuan_dynasty|Yuan]] capital to swear allegiance to the Mongols; [[LINK|lang_en|Kublai_Khan|Kublai Khan]] accepted, and married one of his daughters to the Korean crown prince, [[CITE|46|https://books.google.com/books?id=XrZQs-6KswMC&pg=PA72#v=onepage&q&f=false]] and the dynastic line of Goryeo continued to survive [[LINK|lang_en|Korea_under_Yuan_rule|under the overlordship]] of the Mongol Yuan dynasty as a semi-autonomous vassal state and compulsory ally. The two nations became intertwined for 80 years as all subsequent Korean kings married Mongol princesses, [[CITE|46|https://books.google.com/books?id=XrZQs-6KswMC&pg=PA72#v=onepage&q&f=false]] and the [[LINK|lang_en|Empress_Gi|last empress]] of the Yuan dynasty was a Korean princess. [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]]"
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In the 1350s, [[LINK|lang_en|Gongmin_of_Goryeo|King Gongmin]] was free at last to reform the Goryeo government when the Yuan dynasty began to crumble. Gongmin had various problems that needed to be dealt with, which included the removal of pro-Mongol aristocrats and military officials, the question of land holding, and quelling the growing animosity between the Buddhists and [[LINK|lang_en|Confucian|Confucian]] scholars. During this tumultuous period, Goryeo momentarily conquered [[LINK|lang_en|Liaoyang|Liaoyang]] in 1356, repulsed two large [[LINK|lang_en|Red_Turban_invasions_of_Goryeo|invasions by the Red Turbans]] in 1359 and 1360, and defeated the final attempt by the Yuan to dominate Goryeo when General [[LINK|lang_en|Choe_Yeong|Choe Yeong]] defeated a Mongol [[LINK|lang_en|Tumen_(unit)|tumen]] in 1364. During the 1380s, Goryeo turned its attention to the [[LINK|lang_en|Wokou|Wokou]] threat and used [[LINK|lang_en|Naval_history_of_Korea|naval artillery]] created by [[LINK|lang_en|Choe_Museon|Choe Museon]] to annihilate hundreds of pirate ships."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "joseon-dynasty",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Joseon dynasty"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1392, the general [[LINK|lang_en|Taejo_of_Joseon|Yi Seong-gye]] overthrew the [[LINK|lang_en|Goryeo|Goryeo]] dynasty after he staged a coup and defeated General [[LINK|lang_en|Choe_Yeong|Choe Yeong]]. Yi Seong-gye named his new dynasty [[LINK|lang_en|Joseon|Joseon]] and moved the capital from [[LINK|lang_en|Kaesong|Kaesong]] to [[LINK|lang_en|Hanseong|Hanseong]] (formerly Hanyang; modern-day [[LINK|lang_en|Seoul|Seoul]]) and built the [[LINK|lang_en|Gyeongbokgung|Gyeongbokgung]] palace. [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] In 1394, he adopted [[LINK|lang_en|Confucianism|Confucianism]] as the country's official ideology, resulting in much loss of power and wealth by the [[LINK|lang_en|Korean_Buddhism|Buddhists]]. The prevailing philosophy of the Joseon dynasty was [[LINK|lang_en|Korean_Confucianism|Neo-Confucianism]], which was epitomized by the [[LINK|lang_en|Seonbi|seonbi]] class, scholars who passed up positions of wealth and power to lead lives of study and integrity."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Joseon was a nominal tributary state of [[LINK|lang_en|China|China]] but exercised full sovereignty, [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] [[CITE|55|https://books.google.com/books?id=DSfvfr8VQSEC&pg=PA4#v=onepage&q&f=false]] and maintained the highest position among China's tributary states, [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] which also included countries such as the [[LINK|lang_en|Ryukyu_Kingdom|Ryukyu Kingdom]], Vietnam, Thailand, [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] the Philippines, Burma, Laos, among others. [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] In addition, Joseon received tribute from Jurchens and Japanese until the 17th century, [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] [[CITE|93|https://books.google.com/books?id=RxOpAgAAQBAJ&pg=PA145#v=onepage&q&f=false]] and had a small enclave in the Ryukyu Kingdom that engaged in trade with Siam and Java. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]]"
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "During the 15th and 16th centuries, Joseon enjoyed many benevolent rulers who promoted education and science. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[CITE|76|https://books.google.com/books?id=XrZQs-6KswMC&pg=PA86#v=onepage&q&f=false]] Most notable among them was [[LINK|lang_en|Sejong_the_Great|Sejong the Great]] (r. 1418–50), who promulgated [[LINK|lang_en|Hangul|Hangul]], the Korean alphabet. This golden age [[CITE|76|https://books.google.com/books?id=XrZQs-6KswMC&pg=PA86#v=onepage&q&f=false]] saw great cultural and scientific advancements, [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] including in printing, [[LINK|lang_en|Rain_gauge|meteorological observation]], astronomy, calendar science, [[LINK|lang_en|Korean_pottery_and_porcelain|ceramics]], military technology, geography, cartography, medicine, and agricultural technology, some of which were unrivaled elsewhere. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] Joseon implemented a class system that consisted of *[[LINK|lang_en|Yangban|yangban]] * the noble class, *jungin* the middle class, *yangin* the common class, and *cheonin* the lowest class, which included occupations such as butchers, tanners, shamans, entertainers, and *[[LINK|lang_en|Nobi|nobi]] *, the equivalent of slaves, bondservants, or [[LINK|lang_en|Serfs|serfs]]. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]]"
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1592 and again in 1597, the [[LINK|lang_en|Imjin_War|Japanese invaded Korea]]; the Korean military at the time was unprepared and untrained, due to two centuries of peace on the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]]. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] [[LINK|lang_en|Toyotomi_Hideyoshi|Toyotomi Hideyoshi]] intended to conquer [[LINK|lang_en|China|China]] and [[LINK|lang_en|India|India]] [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] through the Korean Peninsula, but was defeated by strong resistance from the [[LINK|lang_en|Righteous_Army|Righteous Army]], the naval superiority of Admiral [[LINK|lang_en|Yi_Sun-sin|Yi Sun-sin]] and his [[LINK|lang_en|Turtle_ship|turtle ships]], and assistance from [[LINK|lang_en|Wanli_Emperor|Wanli Emperor]] of [[LINK|lang_en|Ming_dynasty|Ming China]]. However, Joseon experienced great destruction, including a tremendous loss of cultural sites such as temples and palaces to Japanese pillaging, and the Japanese brought back to Japan an estimated 100,000–200,000 [[LINK|lang_en|Nose_tomb|noses]] cut from Korean victims. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] Less than 30 years after the Japanese invasions, the [[LINK|lang_en|Manchus|Manchus]] took advantage of Joseon's war-weakened state and [[LINK|lang_en|Manchu_invasion_of_Korea|invaded]] in 1627 and 1637, and then went on to [[LINK|lang_en|Qing_conquest_of_the_Ming|conquer]] the destabilized Ming dynasty."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "After normalizing relations with the new [[LINK|lang_en|Qing_dynasty|Qing dynasty]], Joseon experienced a nearly 200-year period of peace. Kings [[LINK|lang_en|Yeongjo_of_Joseon|Yeongjo]] and [[LINK|lang_en|Jeongjo_of_Joseon|Jeongjo]] led a new renaissance of the Joseon dynasty during the 18th century. [[CITE|107|https://books.google.com/books?id=tvcQAQAAIAAJ]] [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]]"
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In the 19th century, the royal in-law families gained control of the government, leading to mass corruption and weakening of the state, and severe poverty and peasant rebellions throughout the country. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Furthermore, the Joseon government adopted a strict isolationist policy, earning the nickname \"the [[LINK|lang_en|Hermit_kingdom|hermit kingdom]]\", but ultimately failed to protect itself against [[LINK|lang_en|Imperialism|imperialism]] and was forced to open its borders, beginning an era leading into [[LINK|lang_en|Korea_under_Japanese_rule|Japanese imperial rule]]."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Seokguram_Buddha.JPG",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Seokguram_Grotto|Seokguram Grotto]] from the [[LINK|lang_en|Silla|Silla]] era, a [[LINK|lang_en|UNESCO_World_Heritage_Site|UNESCO World Heritage Site]]"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Seokguram_Buddha.JPG"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "korean-empire",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean Empire"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Beginning in 1871, [[LINK|lang_en|Empire_of_Japan|Japan]] began to exert more influence in Korea, forcing it out of China's traditional sphere of influence. As a result of the Sino-Japanese War (1894–95), the [[LINK|lang_en|Qing_dynasty|Qing dynasty]] had to give up such a position according to Article 1 of the [[LINK|lang_en|Treaty_of_Shimonoseki|Treaty of Shimonoseki]], which was concluded between China and Japan in 1895. That same year, [[LINK|lang_en|Empress_Myeongseong|Empress Myeongseong]] of Korea was assassinated by Japanese agents. [[CITE|157|http://kimsoft.com/2002/jp-rape.htm]]"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1897, the [[LINK|lang_en|Joseon_dynasty|Joseon dynasty]] proclaimed the [[LINK|lang_en|Korean_Empire|Korean Empire]] (1897–1910). [[LINK|lang_en|Gojong_of_the_Korean_Empire|King Gojong]] became an [[LINK|lang_en|Gojong_of_the_Korean_Empire|emperor]]. During this brief period, Korea had some success in modernizing the military, economy, real property laws, education system, and various industries. [[LINK|lang_en|Russian_Empire|Russia]], Japan, [[LINK|lang_en|French_Third_Republic|France]], and the [[LINK|lang_en|United_States|United States]] all invested in the country and sought to influence it politically."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1904, the [[LINK|lang_en|Russo-Japanese_War|Russo-Japanese War]] pushed the Russians out of the fight for Korea. In [[LINK|lang_en|Manchuria|Manchuria]] on 26 October 1909, [[LINK|lang_en|An_Jung-geun|An Jung-geun]] assassinated the former [[LINK|lang_en|Governor-General_of_Korea|Resident-General of Korea]], [[LINK|lang_en|Itō_Hirobumi|Itō Hirobumi]], for his role in trying to force Korea into occupation."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/%EA%B2%BD%EB%B3%B5%EA%B6%81_%EC%A0%84%EA%B2%BD.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Gyeongbokgung|Gyeongbokgung]] Palace"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:%EA%B2%BD%EB%B3%B5%EA%B6%81_%EC%A0%84%EA%B2%BD.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "japanese-occupation-and-japan-korea-annexation",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Japanese occupation and Japan-Korea Annexation"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1910, an already militarily occupied Korea was a forced party to the [[LINK|lang_en|Japan-Korea_Annexation_Treaty|Japan-Korea Annexation Treaty]]. The treaty was signed by [[LINK|lang_en|Lee_Wan-Yong|Lee Wan-Yong]], who was given the General Power of Attorney by the Emperor. However, the Emperor is said to have not actually ratified the treaty according to Yi Tae-jin. [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] There is a long dispute whether this treaty was legal or illegal due to its signing under duress, threat of force and bribes."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean resistance to the brutal Japanese occupation [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] was manifested in the nonviolent [[LINK|lang_en|March_1st_Movement|March 1st Movement]] of 1919, during which 7,000 demonstrators were killed by Japanese police and military. [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] The [[LINK|lang_en|Korean_independence_movement|Korean liberation movement]] also spread to neighbouring [[LINK|lang_en|Manchuria|Manchuria]] and [[LINK|lang_en|Siberia|Siberia]]."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Over five million [[LINK|lang_en|Koreans|Koreans]] were conscripted for labour beginning in 1939, [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] and tens of thousands of men were forced into Japan's military. [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] Nearly 400,000 Korean labourers died. [[CITE|140|https://culturecontent.com/content/contentView.do?content_id=rp070309330002&cp_code=rp0703&index_id=rp07032340&print=Y&search_div=CP_THE&search_div_id=CP_THE004]] Approximately 200,000 girls and women, mostly from China and Korea, were forced into sexual slavery for the Japanese military. [[CITE|177|http://edition.cnn.com/2001/WORLD/asiapcf/east/03/29/japan.comfort.women.02]] In 1993, Japanese Chief Cabinet Secretary [[LINK|lang_en|Yohei_Kono|Yohei Kono]] acknowledged the terrible injustices faced by these euphemistically named \"[[LINK|lang_en|Comfort_women|comfort women]]\". [[CITE|178|http://comfort-women.org]] [[CITE|179|http://mofa.go.jp/policy/women/fund/state9308.html]]"
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "During the Japanese annexation, the Korean language was suppressed in an effort to eradicate Korean national identity. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Koreans were forced to take Japanese surnames, known as [[LINK|lang_en|Sōshi-kaimei|Sōshi-kaimei]]. [[CITE|181|http://han.org/a/fukuoka96a.html]] Traditional [[LINK|lang_en|Korean_culture|Korean culture]] suffered heavy losses, as numerous Korean cultural artifacts were destroyed [[CITE|184|http://lifeinkorea.com/Travel2/66]] or taken to Japan. [[CITE|187|http://newsweek.com/id/48765/output/print]] To this day, valuable Korean artifacts can often be found in Japanese museums or among private collections. [[CITE|191|http://msnbc.msn.com/id/6919593/site/newsweek]] One investigation by the South Korean government identified 75,311 cultural assets that were taken from Korea, 34,369 in Japan and 17,803 in the [[LINK|lang_en|United_States|United States]]. However, experts estimate that over 100,000 artifacts actually remain in Japan. [[CITE|187|http://newsweek.com/id/48765/output/print]] [[CITE|192|http://news.naver.com/news/read.php?article_id=0001429084&mode=LSD&office_id=001]] Japanese officials considered returning Korean cultural properties, but to date [[CITE|187|http://newsweek.com/id/48765/output/print]] this has not occurred. [[CITE|192|http://news.naver.com/news/read.php?article_id=0001429084&mode=LSD&office_id=001]] Korea and Japan still dispute the ownership of the [[LINK|lang_en|Dokdo|Dokdo]], islets located east of the Korean Peninsula. [[CITE|194|http://vop.co.kr/A00000206601.html]]"
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "There was a significant level of emigration to the overseas territories of the [[LINK|lang_en|Empire_of_Japan|Empire of Japan]] during the Japanese occupation period, including [[LINK|lang_en|Korea_under_Japanese_rule|Korea]]. [[CITE|196|http://columbia.edu/~hds2/BIB95/00korea_cohen.htm]] By the end of [[LINK|lang_en|World_War_II|World War II]], there were over 850,000 Japanese settlers in Korea. [[CITE|197|http://usc.edu/dept/LAS/CMTS/MonoPaper3-13.html]] After World War II, most of these [[LINK|lang_en|Overseas_Japanese|overseas Japanese]] repatriated to Japan."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/e/e6/Donggwol-do.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "*[[LINK|lang_en|Donggwoldo|Donggwoldo]] *"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Donggwol-do.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "division",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Division"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tmulti tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1945, with the [[LINK|lang_en|Surrender_of_Japan|surrender of Japan]], the [[LINK|lang_en|United_Nations|United Nations]] developed plans for a trusteeship administration, the [[LINK|lang_en|Soviet_Union|Soviet Union]] administering the peninsula north of the [[LINK|lang_en|38th_parallel_north|38th parallel]] and the [[LINK|lang_en|United_States|United States]] [[LINK|lang_en|USAMGIK|administering the south]]. The politics of the [[LINK|lang_en|Cold_War|Cold War]] resulted in the 1948 establishment of two separate governments, [[LINK|lang_en|North_Korea|North Korea]] and [[LINK|lang_en|South_Korea|South Korea]]."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The aftermath of World War II left Korea partitioned along the 38th parallel, with the north under Soviet occupation and the south under US occupation supported by other allied states. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Consequently, the [[LINK|lang_en|Democratic_People's_Republic_of_Korea|Democratic People's Republic of Korea]], a Soviet-style socialist republic, was established in the north while the [[LINK|lang_en|Republic_of_Korea|Republic of Korea]], a Western-style regime, [[LINK|lang_en|Division_of_Korea|was established in the South]]."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Since the 1960s, the South Korean economy has grown enormously and the economic structure was radically transformed. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In 1957, South Korea had a lower per capita [[LINK|lang_en|GDP|GDP]] than [[LINK|lang_en|Ghana|Ghana]], and by 2008 it was 17 times as high as Ghana's."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|North_Korea|North Korea]], officially the *Democratic People's Republic of Korea*, is a [[LINK|lang_en|One-party_state|one-party state]], now centred on [[LINK|lang_en|Kim_Il-sung|Kim Il-sung]]'s [[LINK|lang_en|Juche|Juche]] ideology, with a [[LINK|lang_en|Planned_economy|centrally planned]] industrial economy. [[LINK|lang_en|South_Korea|South Korea]], officially the *Republic of Korea*, is a [[LINK|lang_en|Multi-party_state|multi-party state]] with a [[LINK|lang_en|Capitalism|capitalist]] [[LINK|lang_en|Market_economy|market economy]], alongside membership in the Organisation for Economic Co-operation and Development and the [[LINK|lang_en|G-20_major_economies|Group of Twenty]]. The two states have greatly diverged both culturally and economically since their partition, though they still share a common traditional culture and pre-Cold War history."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "According to [[LINK|lang_en|R.J._Rummel|R.J. Rummel]], [[LINK|lang_en|Slavery|forced labor]], executions, and concentration camps were responsible for over one million deaths in North Korea from 1948 to 1987; [[CITE|204|http://hawaii.edu/powerkills/SOD.CHAP10.HTM]] others have estimated 400,000 deaths in concentration camps alone. Estimates based on the most recent North Korean census suggest that 240,000 to 420,000 people died as a result of the [[LINK|lang_en|North_Korean_famine|1990s famine]] and that there were 600,000 to 850,000 unnatural deaths in North Korea from 1993 to 2008. [[CITE|-1|http://doi.org/10.1111/j.1728-4457.2012.00475.x]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "korean-war",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean War"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The Korean War broke out when Soviet-backed North Korea invaded South Korea, though neither side gained much territory as a result. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The Korean Peninsula remained divided, the [[LINK|lang_en|Korean_Demilitarized_Zone|Korean Demilitarized Zone]] being the *de facto* border between the two states."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In June 1950 North Korea invaded the South, using Soviet tanks and weaponry. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "During the [[LINK|lang_en|Korean_War|Korean War]] (1950–53) more than 1.2 million people died and the three years of fighting throughout the nation effectively destroyed most cities. [[CITE|-1|http://doi.org/10.1007/s10680-005-6851-6]] The war ended in an [[LINK|lang_en|https://en.wikisource.orgKorean_Armistice_Agreement|Armistice Agreement]] at approximately the [[LINK|lang_en|Military_Demarcation_Line|Military Demarcation Line]]."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/6/6f/March_1st_movement.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The memorial tablet for the [[LINK|lang_en|March_1st_movement|March 1st movement]] in Pagoda Park, Seoul"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:March_1st_movement.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "geography",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Geography"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tleft",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 3,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 4,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korea is located on the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]] in [[LINK|lang_en|East_Asia|East Asia]]. To the northwest, the Amnok River separates Korea from China and to the northeast, the Duman River separates Korea from China and Russia. The peninsula is surrounded by the [[LINK|lang_en|Yellow_Sea|Yellow Sea]] to the west, the [[LINK|lang_en|East_China_Sea|East China Sea]] and Korea Strait to the south, and the East Sea (Sea of Japan). [[CITE|159|https://web.archive.org/web/20130723104323/http://www1.korea-np.co.jp/pk/064th_issue/98100708.htm]] Notable islands include [[LINK|lang_en|Jeju_Island|Jeju Island]], [[LINK|lang_en|Ulleung_Island|Ulleung Island]], [[LINK|lang_en|Dokdo|Dokdo]]."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The southern and western parts of the peninsula have well-developed plains, while the eastern and northern parts are mountainous. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The highest mountain in Korea is [[LINK|lang_en|Mount_Paektu|Mount Paektu]] (2,744 m), through which runs the border with China. The southern extension of Mount Paektu is a highland called [[LINK|lang_en|Gaema_Heights|Gaema Heights]]. This highland was mainly raised during the [[LINK|lang_en|Cenozoic|Cenozoic]] orogeny and partly covered by volcanic matter. To the south of Gaema Gowon, successive high mountains are located along the eastern coast of the peninsula. This mountain range is named [[LINK|lang_en|Baekdudaegan|Baekdudaegan]]. Some significant mountains include [[LINK|lang_en|Sobaeksan|Mount Sobaek]] or Sobaeksan (1,439 m), [[LINK|lang_en|Mount_Kumgang|Mount Kumgang]] (1,638 m), [[LINK|lang_en|Seoraksan|Mount Seorak]] (1,708 m), [[LINK|lang_en|Taebaeksan|Mount Taebaek]] (1,567 m), and [[LINK|lang_en|Mount_Jiri|Mount Jiri]] (1,915 m). There are several lower, secondary mountain series whose direction is almost perpendicular to that of [[LINK|lang_en|Baekdudaegan|Baekdudaegan]]. They are developed along the tectonic line of Mesozoic orogeny and their directions are basically northwest."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Unlike most ancient mountains on the mainland, many important islands in Korea were formed by volcanic activity in the Cenozoic orogeny. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Jeju Island, situated off the southern coast, is a large volcanic island whose main mountain [[LINK|lang_en|Mount_Halla|Mount Halla]] or Hallasan (1950 m) is the highest in South Korea. Ulleung Island is a volcanic island in the East Sea, whose composition is more felsic than Jeju-do. The volcanic islands tend to be younger, the more westward."
+					}
+				]
+			},
+			{
+				"index": 8,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Because the mountainous region is mostly on the eastern part of the peninsula, the main [[LINK|lang_en|Rivers_of_Korea|rivers]] tend to flow westwards. Two exceptions are the southward-flowing [[LINK|lang_en|Nakdong_River|Nakdong River]] and [[LINK|lang_en|Seomjin_River|Seomjin River]]. Important rivers running westward include the Amnok River, the [[LINK|lang_en|Ch'ongch'on_River|Chongchon River]], the [[LINK|lang_en|Taedong_River|Taedong River]], the [[LINK|lang_en|Han_River_(Korea)|Han River]], the [[LINK|lang_en|Geum_River|Geum River]], and the [[LINK|lang_en|Yeongsan_River|Yeongsan River]]. These rivers have vast flood plains and provide an ideal environment for wet-rice cultivation."
+					}
+				]
+			},
+			{
+				"index": 9,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The southern and southwestern coastlines of Korea form a well-developed [[LINK|lang_en|Ria|ria]] coastline, known as *Dadohae-jin* in Korean. Its convoluted coastline provides mild seas, and the resulting calm environment allows for safe navigation, fishing, and seaweed farming. In addition to the complex coastline, the western coast of the Korean Peninsula has an extremely high tidal amplitude (at [[LINK|lang_en|Incheon|Incheon]], around the middle of the western coast. It can get as high as 9 m). Vast tidal flats have been developing on the south and west coastlines."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/KoreanWar_recover_Seoul.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Urban combat in Seoul, 1950, as US Marines fight North Koreans holding the city."
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:KoreanWar_recover_Seoul.jpg"
+			},
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/National_museum_area_-_Gyeongju.JPG",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A neighborhood in [[LINK|lang_en|North_Gyeongsang_Province|North Gyeongsang Province]]"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:National_museum_area_-_Gyeongju.JPG"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "wildlife",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Wildlife"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Animal life of Korea includes a considerable number of bird species and native [[LINK|lang_en|Freshwater_fish|freshwater fish]]. Native or [[LINK|lang_en|Endemic|endemic]] species of the [[LINK|lang_en|Korean_Peninsula|Korean Peninsula]] include [[LINK|lang_en|Korean_hare|Korean hare]], [[LINK|lang_en|Water_deer|Korean water deer]], [[LINK|lang_en|Korean_field_mouse|Korean field mouse]], [[LINK|lang_en|Korean_brown_frog|Korean brown frog]], [[LINK|lang_en|Korean_pine|Korean pine]] and [[LINK|lang_en|Picea_koraiensis|Korean spruce]]. The [[LINK|lang_en|Korean_Demilitarized_Zone|Korean Demilitarized Zone]] (DMZ) with its forest and natural [[LINK|lang_en|Wetlands|wetlands]] is a unique biodiversity spot, which harbours eighty two [[LINK|lang_en|Endangered_species|endangered species]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "There are also approximately 3,034 species of [[LINK|lang_en|Vascular_plants|vascular plants]]."
+					}
+				]
 			}
 		],
 		"images": []
@@ -28,13 +1465,37 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "science-technology-and-mathematics"
+					"id": "demographics",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Science, technology, and mathematics"
+						"text": "Demographics"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The combined population of the Koreans is about 76 million (North Korea: 25 million, South Korea: 51 million). "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Korea is chiefly populated by a highly [[LINK|lang_en|https://en.wiktionary.orghomogeneous|homogeneous]] [[LINK|lang_en|Ethnic|ethnic]] group, the [[LINK|lang_en|Koreans|Koreans]], who speak the [[LINK|lang_en|Korean_language|Korean language]]. [[CITE|193|http://pureinsight.org/node/1065]] The number of foreigners living in Korea has also steadily increased since the late 20th century, particularly in South Korea, where more than 1 million foreigners reside. [[CITE|193|http://pureinsight.org/node/1065]] It was estimated in 2006 that only 26,700 of the old [[LINK|lang_en|Ethnic_Chinese_in_Korea|Chinese community]] now remain in South Korea. [[CITE|193|http://pureinsight.org/node/1065]] However, in recent years, immigration from mainland China has increased; 624,994 persons of [[LINK|lang_en|People's_Republic_of_China|Chinese]] nationality have immigrated to South Korea, including 443,566 of [[LINK|lang_en|Ethnic_Koreans_in_China|ethnic Korean]] descent. [[CITE|216|http://english.chosun.com/site/data/html_dir/2009/08/06/2009080600243.html]] Small communities of ethnic Chinese and [[LINK|lang_en|Japanese_people_in_North_Korea|Japanese]] are also found in North Korea. [[CITE|193|http://pureinsight.org/node/1065]]"
 					}
 				]
 			}
@@ -47,338 +1508,75 @@
 				"index": 0,
 				"tag_type": "h3",
 				"attrs": {
-					"id": "computing"
+					"id": "language",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Computing"
+						"text": "Language"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(SQL)|Null (SQL)]] (or NULL), a special marker and keyword in SQL indicating that something has no value"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_character|Null character]], the zero-valued ASCII character, also designated by NUL , often used as a terminator, separator or filler. This symbol has no visual representation."
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_device|Null device]], a special computer file that discards all data written to it"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_modem|Null modem]], a specially wired serial communications cable"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_object_pattern|Null object pattern]], a software design pattern using an object with defined neutral behavior"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_pointer|Null pointer]] (sometimes written NULL , nil , or None ), used in computer programming for an uninitialized, undefined, empty, or meaningless value"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 6,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_route|Null route]], a network route that goes nowhere"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 7,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_string|Null string]], the unique string of length zero (in computer science and formal language theory)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 8,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null-terminated_string|Null-terminated string]], a character string of which the length is determined by the first null-character (in programming language C and related languages)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 9,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nullable_type|Nullable type]], a feature of some statically-typed programming languages which allows a data type to be set to the special value NULL"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
+				"tag_type": "div",
 				"attrs": {
-					"id": "mathematics"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Mathematics"
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
 					}
-				]
+				},
+				"items": []
 			},
 			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(mathematics)|Null (mathematics)]], a zero value in several branches of mathematics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_set|Null set]], a set that is negligible in some sense Also an older term for the [[LINK|lang_en|Empty_set|empty set]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
+				"index": 2,
+				"tag_type": "p",
 				"attrs": {
-					"id": "physics"
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Physics"
+						"text": "[[LINK|lang_en|Korean_language|Korean]] is the official language of both North and South Korea, and (along with Mandarin) of [[LINK|lang_en|Yanbian_Korean_Autonomous_Prefecture|Yanbian Korean Autonomous Prefecture]] in the Manchuria area of China. Worldwide, there are up to 80 million speakers of the Korean language. South Korea has around 50 million speakers while North Korea around 25 million. Other large groups of Korean speakers through [[LINK|lang_en|Korean_diaspora|Korean diaspora]] are found in [[LINK|lang_en|People's_Republic_of_China|China]], the [[LINK|lang_en|United_States|United States]], [[LINK|lang_en|Japan|Japan]], former [[LINK|lang_en|Soviet_Union|Soviet Union]] and elsewhere."
 					}
 				]
 			},
 			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(physics)|Null (physics)]], a point in a field where the field quantity is zero"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(radio)|Null (radio)]], a concept in electromagnetism"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Causal_structure#Tangent_vectors|Null vectors or curves]] in the causal structure of a Lorentzian manifold such as a Minkowski space-time"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
+				"index": 3,
+				"tag_type": "p",
 				"attrs": {
-					"id": "other-uses-in-science-and-technology"
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Other uses in science and technology"
+						"text": "The [[LINK|lang_en|Korean_language#Classification|classification of Korean]] is debated. Some linguists place it in the [[LINK|lang_en|Altaic_languages|Altaic]] language family; others consider it to be a [[LINK|lang_en|Language_isolate|language isolate]]. Korean is [[LINK|lang_en|Agglutinative_language|agglutinative]] in its morphology and [[LINK|lang_en|Subject–object–verb|SOV]] in its [[LINK|lang_en|Syntax|syntax]]. Like [[LINK|lang_en|Japanese_language|Japanese]] and [[LINK|lang_en|Vietnamese_language|Vietnamese]], Korean has borrowed much vocabulary from the [[LINK|lang_en|Chinese_language|Chinese]] or created vocabulary on Chinese models."
 					}
 				]
 			},
 			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": [
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_allele|Null allele]], in genetics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_cipher|Null cipher]], a ciphertext symbol"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_hypothesis|Null hypothesis]], a concept in statistical hypothesis testing"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_morpheme|Null morpheme]], a concept in linguistics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_result|Null result]], the absence of a hypothesized effect in the outcome of a scientific experiment"
-							}
-						],
-						"tag_type": "li"
+						"text": "Modern Korean is written almost exclusively in the script of the [[LINK|lang_en|Hangul|Korean alphabet]] (known as Hangul in South Korea and Chosungul in China and North Korea), which was invented in the 15th century. Korean is sometimes written with the addition of some Chinese characters called Hanja; however, this is only occasionally seen nowadays. While Hangul may appear [[LINK|lang_en|Logographic|logographic]], it is actually a [[LINK|lang_en|Phonemic|phonemic]] alphabet organised into [[LINK|lang_en|Syllable|syllabic]] blocks. Each block consists of at least two of the 24 hangul letters (*[[LINK|lang_en|Jamo|jamo]] *): at least one each of the 14 [[LINK|lang_en|Consonant|consonants]] and 10 [[LINK|lang_en|Vowel|vowels]]. Historically, the alphabet had several additional letters (see [[LINK|lang_en|Hangul#Obsolete_jamo|obsolete jamo]]). For a phonological description of the letters, see [[LINK|lang_en|Korean_phonology|Korean phonology]]."
 					}
 				]
 			}
@@ -391,13 +1589,148 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "arts-and-media"
+					"id": "culture-and-arts",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Arts and media"
+						"text": "Culture and arts"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In ancient Chinese texts, Korea is referred to as \"Rivers and Mountains Embroidered on Silk\" (금수강산, [[LINK|lang_en|https://en.wiktionary.org錦|錦]] [[LINK|lang_en|https://en.wiktionary.org繡|繡]] [[LINK|lang_en|https://en.wiktionary.org江|江]] [[LINK|lang_en|https://en.wiktionary.org山|山]]) and \"Eastern Nation of Decorum\" (동방예의지국, [[LINK|lang_en|https://en.wiktionary.org東|東]] [[LINK|lang_en|https://en.wiktionary.org方|方]] [[LINK|lang_en|https://en.wiktionary.org禮|禮]] [[LINK|lang_en|https://en.wiktionary.org儀|儀]] [[LINK|lang_en|https://en.wiktionary.org之|之]] [[LINK|lang_en|https://en.wiktionary.org國|國]]). [[CITE|193|http://pureinsight.org/node/1065]] Individuals are regarded as one year old when they are born, as Koreans reckon the pregnancy period as one year of life for infants, and age increments increase on [[LINK|lang_en|Korean_New_Year|New Year's Day]] rather than on the anniversary of birthdays. Thus, one born immediately before New Year's Day may only be a few days old in western reckoning, but two years old in Korea. Accordingly, a Korean person's stated age (at least among fellow Koreans) will be one or two years more than their age according to western reckoning. However, western reckoning is sometimes applied with regard to the concept of [[LINK|lang_en|Legal_age|legal age]]; for example, the [[LINK|lang_en|Legal_drinking_age|legal age for purchasing alcohol]] or [[LINK|lang_en|Smoking_age|cigarettes]] in the Republic of Korea is 19, which is measured according to western reckoning."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Korean.Seoraksan-Ulsanbawi-01.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A view of [[LINK|lang_en|Seoraksan|Mount Seorak]]"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Korean.Seoraksan-Ulsanbawi-01.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "literature",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Literature"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean literature written before the end of the Joseon Dynasty is called \"Classical\" or \"Traditional.\" "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Literature, written in Chinese characters ([[LINK|lang_en|Hanja|hanja]]), was established at the same time as the Chinese script arrived on the peninsula. Korean scholars were writing poetry in the classical Korean style as early as the 2nd century BC, reflecting Korean thoughts and experiences of that time. Classical Korean literature has its roots in traditional folk beliefs and folk tales of the peninsula, strongly influenced by [[LINK|lang_en|Confucianism|Confucianism]], [[LINK|lang_en|Buddhism|Buddhism]] and [[LINK|lang_en|Taoism|Taoism]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Modern literature is often linked with the development of [[LINK|lang_en|Hangul|hangul]], which helped spread literacy from the aristocracy to the common men and women. Hangul, however, only reached a dominant position in Korean literature in the second half of the 19th century, resulting in a major growth in Korean literature. *Sinsoseol*, for instance, are novels written in hangul."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The [[LINK|lang_en|Korean_War|Korean War]] led to the development of literature centered on the wounds and chaos of [[LINK|lang_en|War|war]]. Much of the post-war literature in South Korea deals with the daily lives of ordinary people, and their struggles with national pain. The collapse of the traditional Korean value system is another common theme of the time."
 					}
 				]
 			}
@@ -410,7 +1743,10 @@
 				"index": 0,
 				"tag_type": "h3",
 				"attrs": {
-					"id": "music"
+					"id": "music",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
@@ -422,56 +1758,17 @@
 			},
 			{
 				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": [
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|The_Null_Corporation|The Null Corporation]], an imprint of the band Nine Inch Nails"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(Intronaut_EP)|Null (Intronaut EP)]], 2006"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(Foetus_EP)|Null (Foetus EP)]], 1995"
-							}
-						],
-						"tag_type": "li"
+						"text": "Traditional Korean music includes combinations of the folk, vocal, religious and [[LINK|lang_en|Korean_Court_Music|ritual]] music styles of the [[LINK|lang_en|Korean_people|Korean people]]. Korean music has been practiced since prehistoric times. [[CITE|193|http://pureinsight.org/node/1065]] Korean music falls into two broad categories. The first, [[LINK|lang_en|Hyangak|Hyangak]], literally means *The local music* or *Music native to Korea* of which example is *Sujecheon*, a piece of instrumental music as old as 1,300 years. [[CITE|193|http://pureinsight.org/node/1065]] The second, *yangak*, represent a more Western style."
 					}
 				]
 			}
@@ -484,92 +1781,448 @@
 				"index": 0,
 				"tag_type": "h3",
 				"attrs": {
-					"id": "other-media"
+					"id": "religion",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Other media"
+						"text": "Religion"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": [
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, an identity of the character [[LINK|lang_en|Gray_Fox_(Metal_Gear)|Gray Fox]] in the *Metal Gear Solid: Portable Ops* video game"
-							}
-						],
-						"tag_type": "li"
+						"text": "[[LINK|lang_en|Confucian|Confucian]] tradition has dominated Korean thought, along with contributions by [[LINK|lang_en|Buddhism|Buddhism]], [[LINK|lang_en|Taoism|Taoism]], and [[LINK|lang_en|Korean_Shamanism|Korean Shamanism]]. Since the middle of the 20th century, however, [[LINK|lang_en|Christianity|Christianity]] has competed with Buddhism in South Korea, while religious practice has been suppressed in North Korea. Throughout Korean history and culture, regardless of separation; the influence of traditional beliefs of Korean Shamanism, Mahayana Buddhism, Confucianism and Taoism have remained an underlying religion of the Korean people as well as a vital aspect of their culture; all these traditions have coexisted peacefully for hundreds of years up to today despite strong Westernisation from [[LINK|lang_en|Christian|Christian]] missionary conversions in the South [[CITE|193|http://pureinsight.org/node/1065]] [[CITE|193|http://pureinsight.org/node/1065]] [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]] or the pressure from the [[LINK|lang_en|Juche|Juche]] [[LINK|lang_en|Government_of_North_Korea|government]] in the North. [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]] [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]]"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "According to 2005 statistics compiled by the South Korean government, about 46% of citizens profess to follow no particular religion. "
 					},
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, man-eating sentients in the *Downs-Lord Triptich* books by [[LINK|lang_en|John_Whitbourn|John Whitbourn]]"
-							}
-						],
-						"tag_type": "li"
+						"text": "[[LINK|lang_en|Christianity_in_Korea|Christians]] account for 29.2% of the population (of which are Protestants 18.3% and Catholics 10.9%) and [[LINK|lang_en|Korean_Buddhism|Buddhists]] 22.8%. [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]]"
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Islam_in_South_Korea|Islam in South Korea]] is practiced by about 45,000 natives (about 0.09% of the population) in addition to some 100,000 foreign workers from Muslim countries. [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]]"
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Daedongyeojijeondo_small.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Daedongyeojijeondo, a map of Korea"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Daedongyeojijeondo_small.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "cuisine",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cuisine"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tleft",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Koreans traditionally believe that the taste and quality of food depend on its spices and sauces, the essential ingredients to making a delicious meal. "
 					},
 					{
-						"type": "list-item",
+						"type": "sentence",
+						"index": 1,
+						"text": "Therefore, [[LINK|lang_en|Soybean_paste|soybean paste]], [[LINK|lang_en|Soy_sauce|soy sauce]], *[[LINK|lang_en|Gochujang|gochujang]] * or red pepper paste and [[LINK|lang_en|Kimchi|kimchi]] are some of the most important staples in a Korean household."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean cuisine was greatly influenced by the geography and climate of the Korean Peninsula, which is known for its cold autumns and winters, therefore there are many fermented dishes and hot soups and stews."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean cuisine is probably best known for [[LINK|lang_en|Kimchi|kimchi]], a side dish which uses a distinctive [[LINK|lang_en|Fermentation_(food)|fermentation]] process of preserving vegetables, most commonly cabbage. Kimchi is said to relieve the pores on the skin, thereby reducing wrinkles and providing nutrients to the skin naturally. It is also healthy, as it provides necessary vitamins and nutrients. Gochujang, a traditional Korean sauce made of red pepper is also commonly used, often as pepper (chilli) paste, earning the cuisine a reputation for spiciness."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Bulgogi|Bulgogi]] (roasted marinated meat, usually beef), [[LINK|lang_en|Galbi|galbi]] (marinated grilled short ribs), and [[LINK|lang_en|Samgyeopsal|samgyeopsal]] (pork belly) are popular meat entrees. Fish is also a popular commodity, as it is the traditional meat that Koreans eat. Meals are usually accompanied by a soup or stew, such as [[LINK|lang_en|Galbitang|galbitang]] (stewed ribs) or [[LINK|lang_en|Doenjang_jjigae|doenjang jjigae]] (fermented bean paste soup). The center of the table is filled with a shared collection of sidedishes called [[LINK|lang_en|Banchan|banchan]]."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other popular dishes include *[[LINK|lang_en|Bibimbap|bibimbap]] * which literally means \"mixed rice\" (rice mixed with meat, vegetables, and red pepper paste) and [[LINK|lang_en|Naengmyeon|naengmyeon]] (cold noodles). [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]] [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]]"
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Instant noodles or *[[LINK|lang_en|Ramyeon|ramyeon]] * are a popular snack food and Koreans also enjoy food from *[[LINK|lang_en|Pojangmacha|pojangmachas]] * (street vendors), where customers can buy [[LINK|lang_en|Tteokbokki|tteokbokki]] (rice cake and fish cake with a spicy gochujang sauce), *[[LINK|lang_en|Gimbap|gimbap]] * made of steamed white rice wrapped in dried [[LINK|lang_en|Laver_(seaweed)|laver seaweed]] as well as fried squid and glazed sweet potato. [[LINK|lang_en|Sundae_(Korean_food)|Soondae]], a sausage made of cellophane noodles and pork blood, is widely eaten."
+					}
+				]
+			},
+			{
+				"index": 8,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Additionally, some other common snacks include \"[[LINK|lang_en|Choco_Pie|Choco Pie]]\", shrimp crackers, \"bbeongtwigi\" (puffed rice grains), and \"nurungji\" (slightly burnt rice). Nurungji can be eaten as it is or boiled with water to make a soup. Nurungji can also be eaten as a snack or a dessert."
+					}
+				]
+			},
+			{
+				"index": 9,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korea is unique among Asian countries in its use of metal chopsticks. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Metal chopsticks have been discovered in archaeological sites belonging to the ancient Korean kingdoms of Goguryeo, Baekje and Silla."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Korea-Jejudo-Coast-03.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Jeju Island seashore"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Korea-Jejudo-Coast-03.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "television",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Television"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Korean television dramas (\"K-dramas\") have become popular in many countries, and as a result outdoor locations featured in K-dramas have become popular stops for international tourists. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Product placements in the dramas have proven effective in advertising; for example, sales of cosmetics, clothing and food favored by the female lead played by actress [[LINK|lang_en|Jun_Ji-hyun|Jun Ji-hyun]] in the drama [[LINK|lang_en|My_Love_from_the_Star|My Love from the Star]] rose significantly after the relevant episodes aired. In one notorious case it was reported that a woman in China became ill after consuming nothing but fried chicken and beer – the character's favorite snack – [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]] for several days."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "education",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Education"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The modern South Korean school system consists of six years in elementary school, three years in middle school, and three years in high school. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Students are required to go to elementary and middle school, and do not have to pay for their education, except for a small fee called a \"School Operation Support Fee\" that differs from school to school. "
+					},
+					{
+						"type": "sentence",
 						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null,_the_Living_Darkness|Null, the Living Darkness]], a Marvel Comics character"
-							}
-						],
-						"tag_type": "li"
+						"text": "The [[LINK|lang_en|Programme_for_International_Student_Assessment|Programme for International Student Assessment]], coordinated by the [[LINK|lang_en|OECD|OECD]], ranks South Korea's science education as the third best in the world and being significantly higher than the OECD average. [[CITE|114|http://asianinfo.org/asianinfo/korea/history.htm]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "South Korea ranks second on math and literature and first in problem solving. "
 					},
 					{
-						"type": "list-item",
+						"type": "sentence",
+						"index": 1,
+						"text": "Although South Korean students often rank high on international comparative assessments, the education system is criticised for emphasising too much upon passive learning and memorization. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The South Korean education system is rather notably strict and structured as compared to its counterparts in most Western societies. "
+					},
+					{
+						"type": "sentence",
 						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, a villain from *[[LINK|lang_en|Teenage_Mutant_Ninja_Turtles_Adventures|Teenage Mutant Ninja Turtles Adventures]] *"
-							}
-						],
-						"tag_type": "li"
+						"text": "Also, the prevalence of non-school for-profit private institutes such as academies or cram schools ([[LINK|lang_en|Hagwon|Hagwon]] [학원]), which too emphasise passive memorisation, as opposed to conceptual understanding, in students are criticised as a major social problem. After students enter university, however, the situation is markedly reversed. In Korea, university is hard to enter, and graduation is comparatively easier than entry."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The North Korean education system consists primarily of [[LINK|lang_en|State_school|universal and state funded]] schooling by the [[LINK|lang_en|Politics_of_North_Korea|government]]. The national literacy rate for citizens 15 years of age and above is over 99 percent. [[CITE|103|https://webcitation.org/6FXLe34aH?url=http%3A%2F%2Flcweb2.loc.gov%2Ffrd%2Fcs%2Fprofiles%2FNorth_Korea.pdf]] [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] Children go through one year of kindergarten, four years of [[LINK|lang_en|Primary_education|primary education]], six years of [[LINK|lang_en|Secondary_education|secondary education]], and then on to [[LINK|lang_en|University|universities]]. The most prestigious university in the DPRK is [[LINK|lang_en|Kim_Il-sung_University|Kim Il-sung University]]. Other notable universities include [[LINK|lang_en|Kim_Chaek_University_of_Technology|Kim Chaek University of Technology]], which focuses on computer science, [[LINK|lang_en|Pyongyang_University_of_Foreign_Studies|Pyongyang University of Foreign Studies]], which trains working level diplomats and trade officials, and Kim Hyong Jik University, which trains teachers."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Outside the formal structure of schools and classrooms in the north is the extremely important \"social education\". "
 					},
 					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Nulls, worm-like remains of defeated characters in the animated program *[[LINK|lang_en|ReBoot|ReBoot]] *"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Type:_Null|Type: Null]], a Gen VII *Pokémon* species introduced in *Pokémon Sun and Moon*"
-							}
-						],
-						"tag_type": "li"
+						"type": "sentence",
+						"index": 1,
+						"text": "This education includes not only [[LINK|lang_en|Extracurricular_activity|extracurricular activities]] but also family life and the broadest range of [[LINK|lang_en|Interpersonal_relationship|human relationships]] within society. There is great sensitivity to the influence of the [[LINK|lang_en|Social_environment|social environment]] on the growing child and its role in the development of his or her character. The ideal of social education is to provide a carefully controlled environment in which [[LINK|lang_en|Propaganda|children are exposed only to]] pro-[[LINK|lang_en|Juche|Juche]] and anti-south influences. According to a North Korean official interviewed in 1990, 'School education is not enough to turn the rising generation into men of knowledge, virtue, and [[LINK|lang_en|Physical_fitness|physical fitness]]. After school, our children have many spare hours. So it's important to efficiently organise their afterschool education'."
 					}
 				]
 			}
@@ -582,142 +2235,319 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "people"
+					"id": "science-and-technology",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "People"
+						"text": "Science and technology"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": [
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Christopher_Null|Christopher Null]] (born 1971), American film critic"
-							}
-						],
-						"tag_type": "li"
+						"text": "One of the best known artifacts of Korea's history of science and technology is the [[LINK|lang_en|Cheomseongdae|Cheomseongdae]] (첨성대, [[LINK|lang_en|https://en.wiktionary.org瞻|瞻]] [[LINK|lang_en|https://en.wiktionary.org星|星]] [[LINK|lang_en|https://en.wiktionary.org臺|臺]]), a 9.4-meter high observatory built in 634."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The earliest known surviving Korean example of woodblock printing is the [[LINK|lang_en|Seokgatap#National_treasure_No.126|Mugujeonggwang Great Dharani Sutra]]. [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] It is believed to have been printed in Korea in 750–51, which if correct, would make it older than the [[LINK|lang_en|Diamond_Sutra|Diamond Sutra]]."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "During the [[LINK|lang_en|Goryeo_Dynasty|Goryeo Dynasty]], [[LINK|lang_en|Metal_movable_type|metal movable type]] printing was invented by [[LINK|lang_en|Choe_Yun-ui|Choe Yun-ui]] in 1234. [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] This invention made printing easier, more efficient and also increased literacy, which observed by Chinese visitors was seen to be so important where it was considered to be shameful to not be able to read. [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] The [[LINK|lang_en|Mongol_Empire|Mongol Empire]] later adopted Korea's movable type printing and spread as far as Central Asia. There is conjecture as to whether or not Choe's invention had any influence on later printing inventions such as Gutenberg's [[LINK|lang_en|Printing_press|Printing press]]. [[CITE|1|https://books.google.com/books?id=g2mdVwXpMzwC&pg=PA23#v=onepage&q&f=false]] When the [[LINK|lang_en|Mongols|Mongols]] [[LINK|lang_en|Mongol_invasion_of_Europe|invaded Europe]] they inadvertently introduced different kinds of Asian technology."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "During the Joseon period, the [[LINK|lang_en|Turtle_Ship|Turtle Ship]] was invented, which were covered by a wooden deck and iron with thorns, [[CITE|-1|http://review.aks.ac.kr/AttachedFiles/7-3-1-YiSun-shin,%20an%20Admiral%20Who%20Became%20a%20Myth.pdf]] as well as other weapons such as the [[LINK|lang_en|Korean_cannon|bigyeokjincheolloe cannon]] (비격진천뢰, [[LINK|lang_en|https://en.wiktionary.org飛|飛]] [[LINK|lang_en|https://en.wiktionary.org擊|擊]] [[LINK|lang_en|https://en.wiktionary.org震|震]] [[LINK|lang_en|https://en.wiktionary.org天|天]] [[LINK|lang_en|https://en.wiktionary.org雷|雷]]) and the [[LINK|lang_en|Hwacha|hwacha]]."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The Korean alphabet [[LINK|lang_en|Hangul|hangul]] was also invented during this time by [[LINK|lang_en|Sejong_the_Great_of_Joseon|King Sejong the Great]]."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Hunmin_jeong-eum.jpg",
+				"mime": "image/png",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "*[[LINK|lang_en|Hunminjeongeum|Hunminjeongeum]] *, afterwards called [[LINK|lang_en|Hangul|Hangul]]."
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				},
+				"attribution_url": "https://en.wikipedia.org/wiki/File:Hunmin_jeong-eum.jpg"
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "sport",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Sport"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "While [[LINK|lang_en|Association_football|association football]] remains one of the most popular sports in South Korea, the martial art of [[LINK|lang_en|Taekwondo|taekwondo]] is considered to be the national sport. [[LINK|lang_en|Baseball|Baseball]] and [[LINK|lang_en|Golf|golf]] are also popular."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "taekwondo",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Taekwondo"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Taekwondo is one of Korea's most famous sports. "
 					},
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Eduard_van_der_Nüll|Eduard van der Nüll]] (1812–1868), Austrian architect"
-							}
-						],
-						"tag_type": "li"
+						"text": "It combines combat techniques, self-defense, sport, exercise and in some cases meditation and philosophy. "
 					},
 					{
-						"type": "list-item",
+						"type": "sentence",
 						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Gary_Null|Gary Null]] (born 1945), American radio host and author on alternative medicine"
-							}
-						],
-						"tag_type": "li"
+						"text": "Taekwondo has become an official Olympic sport, starting as a demonstration event in [[LINK|lang_en|1988_Summer_Olympics|1988]] (when South Korea hosted the Games in Seoul) and becoming an official medal event in [[LINK|lang_en|2000_Summer_Olympics|2000.]] There are two main authoritative Taekwondo organizations in the world. One is World Taekwondo (formerly World Taekwondo Federation and the larger of the two) and the other is ITF (International Taekwondo Federation)."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "hapkido",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Hapkido"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Hapkido is a modern [[LINK|lang_en|Korean_martial_arts|Korean martial art]] with a grappling focus that employs joint locks, throws, kicks, punches and other striking attacks like attacks against pressure points. Hapkido emphasizes circular motion, non-resisting movements and control of the opponent. Practitioners seek to gain advantage through footwork and body positioning to employ leverage, avoiding the pure use of strength against strength."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "ssireum",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Ssireum"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Ssireum is a traditional form of wrestling that has been practiced in Korea for thousands of years, with evidence discovered from Goguryeo of Korea's Three Kingdoms Period (57 BC to 688). "
 					},
 					{
-						"type": "list-item",
+						"type": "sentence",
+						"index": 1,
+						"text": "Ssireum is the traditional national sport of Korea. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "During a match, opponents grip each other by sash belts wrapped around the waist and the thigh, attempting to throw their competitor to the sandy ground of the ring. "
+					},
+					{
+						"type": "sentence",
 						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Keith_Null|Keith Null]] (born 1985), American football player"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
-							}
-						],
-						"tag_type": "li"
+						"text": "The first opponent to touch the ground with any body part above the knee or to lose hold of their opponent loses the round."
 					}
 				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
+			},
 			{
-				"index": 0,
-				"tag_type": "h2",
+				"index": 2,
+				"tag_type": "p",
 				"attrs": {
-					"id": "other-uses"
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Other uses"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_and_void|Null and void]], having no legal validity"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null-A|Null-A]], a term used in science fiction, referring to Korzybski's notation [[INLINE_IMAGE|https://wikimedia.org/api/rest_v1/media/math/render/svg/92efef0e89bdc77f6a848764195ef5b9d9bfcc6a||{overline {A}}|hundefined|wundefined|mwe-math-fallback-image-inline]] as an abbreviation for \"non-Aristotelian\" logic"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Stunde_Null|Stunde Null]], a term used in Germany to mark the end of the Second World War"
-							}
-						],
-						"tag_type": "li"
+						"text": "Ssireum competitions are traditionally held twice a year, during the [[LINK|lang_en|Dano_(Korean_festival)|Dano Festival]] (the 5th day of the fifth lunar month) and [[LINK|lang_en|Chuseok|Chuseok]] (the 15th day of the 8th lunar month). Competitions are also held throughout the year as a part of festivals and other events."
 					}
 				]
 			}
@@ -730,7 +2560,184 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "see-also"
+					"id": "notable-public-holidays-in-south-korea",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Notable public holidays in South Korea"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "independence-movement-day-march-1st",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Independence Movement Day, March 1st"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Samiljeol|Samiljeol]], Independence Movement Day, commemorates Korea's declaration of independence from Japanese occupation on March 1, 1919. The name is derived from Korean 삼 \"sam\" 'three', 일 \"il\" 'one,' and 절 \"jeol\" 'day', the date of the uprising in 1919. Korea was annexed to the Empire of Japan on August 29, 1910 following the imposed Japan-Korea Treaty. On March 1, 1919, Korean presented their resistance towards Japan and Japanese occupation with a declaration of independence. Following the conclusion of World War II, Korea was liberated from Japan and its independence restored. The newly established Korean government set aside March 1 as a national holiday to commemorate the sacrifices borne in the long struggle for Korean independence."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "memorial-day-june-6th",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Memorial day, June 6th"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Memorial_Day_(South_Korea)|Hyunchoongil]] is the national holiday in Korea commemorating those who fought and died for the nation. In August 1948, only a few years after Korea achieved its independence from Japan, the Korean War, in Korea also known as the 6.25 war, broke out between North and South Korea. During this war, approximately 400,000 soldiers and some one million citizens were killed or injured. In 1953, North and South Korea agreed to a cease-fire, and three years later the Korean government established Hyungchoogil to commemorate the soldiers who fought in the Korean War. Subsequent to its establishment, Hyungchoogil was reinterpreted as a day of remembrance for those who died defending Korea in all conflicts, not only during the Korean War."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "national-liberation-day-august-15th",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "National Liberation Day, August 15th"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|National_Liberation_Day_of_Korea|Gwangbokjeol]] is the day for celebrating liberation of the country from Japan in 1945 as well as celebrating the establishment of Korean government in 1948. Gwangbok means \"returned light\" representing gaining national sovereignty from Japan. It was first declared to be national holiday in 1949 October 1. On this date every year, the president of Korea visits Independence Hall, and invites diplomatic envoys from many countries and all social standings in countries to Cheongwadae (the Blue House, the Korean presidential residence)."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "hangul-day-october-9th",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Hangul Day, October 9th"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Hangul_Day|Hangul Day]] (also spelled as Hangeul Day) is a day that celebrates the creation of the [[LINK|lang_en|Hunminjeongeum|Hunminjeongeum]] ([[LINK|lang_en|Hangul|Hangul]], Korean alphabet), which was inscribed to the [[LINK|lang_en|Memory_of_the_World_Register_–_Asia_and_the_Pacific|UNESCO Memory of the World Register]] in 1997. [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] Hangul was created by [[LINK|lang_en|Sejong_the_Great|Sejong the Great]] in 1443 and proclaimed in 1446. Before the creation of Hangul, people in Korea (known as [[LINK|lang_en|Joseon|Joseon]] at the time) primarily wrote using [[LINK|lang_en|Classical_Chinese|Classical Chinese]] alongside native phonetic writing systems that predate Hangul by hundreds of years, including [[LINK|lang_en|Idu_script|idu]], [[LINK|lang_en|Hyangchal|hyangchal]], [[LINK|lang_en|Gugyeol|gugyeol]], and gakpil. [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] [[CITE|188|https://books.google.com/books?id=00a2AAAAIAAJ]] [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] However, due to the fundamental differences between the Korean and Chinese languages, and the large number of characters needed to be learned, there was much difficulty in learning how to write using Chinese characters for the lower classes, who often didn't have the privilege of education. To assuage this problem, King Sejong created the unique alphabet known as Hangul to promote literacy among the common people. [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] Hangul Day was founded in 1926 during the [[LINK|lang_en|Korea_under_Japanese_rule|Japanese occupation]] by members of the [[LINK|lang_en|Korean_Language_Society|Korean Language Society]], whose goal was to preserve the Korean language during a time of rapid forced [[LINK|lang_en|Japanization|Japanization]]. [[CITE|-1|https://books.google.com/books?id=3Z3a0NU4RHMC&q=%22Citizens+of+Koguryo+concentrated+on+maintaining+their+military+strength%2C+being+similar+in+this+respect+to+the+ancient+Greek+city-state+Sparta.%22#v=snippet&q=%22Citizensof%20Koguryo%20concentrated%20on%20maintaining%20their%20military%20strength,%20being%20similar%20in%20this%20respect%20to%20the%20ancient%20Greek%20city-state%20Sparta.%22&f=false]] Today, both South Korea and North Korea celebrate Hangul Day as a national holiday."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "see-also",
+					"style": {
+						"textAlign": "justify"
+					}
 				},
 				"items": [
 					{
@@ -743,7 +2750,11 @@
 			{
 				"index": 1,
 				"tag_type": "ul",
-				"attrs": {},
+				"attrs": {
+					"style": {
+						"textAlign": "justify"
+					}
+				},
 				"items": [
 					{
 						"type": "list-item",
@@ -752,7 +2763,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Ø_(disambiguation)|Ø (disambiguation)]]"
+								"text": "[[LINK|lang_en|Index_of_Korea-related_articles|Index of Korea-related articles]]"
 							}
 						],
 						"tag_type": "li"
@@ -764,7 +2775,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_symbol_(disambiguation)|Null symbol (disambiguation)]]"
+								"text": "[[LINK|lang_en|Anti-Japanese_sentiment_in_Korea|Anti-Japanese sentiment in Korea]]"
 							}
 						],
 						"tag_type": "li"
@@ -776,7 +2787,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|0_(disambiguation)|0 (disambiguation)]]"
+								"text": "[[LINK|lang_en|Inter-Korean_summit|Inter-Korean summit]]"
 							}
 						],
 						"tag_type": "li"
@@ -788,7 +2799,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Nil_(disambiguation)|Nil (disambiguation)]]"
+								"text": "[[LINK|lang_en|Korean_name|Korean name]]"
 							}
 						],
 						"tag_type": "li"
@@ -800,12 +2811,123 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Nul_(disambiguation)|Nul (disambiguation)]]"
+								"text": "[[LINK|lang_en|List_of_people_of_Korean_descent|List of people of Korean descent]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|National_Treasures_of_North_Korea|National Treasures of North Korea]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|National_Treasures_of_South_Korea|National Treasures of South Korea]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Korean_natural_farming|Korean natural farming]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Korean_cuisine|Korean cuisine]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|List_of_Korean_inventions_and_discoveries|List of Korean inventions and discoveries]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Korean_War|Korean War]]"
 							}
 						],
 						"tag_type": "li"
 					}
 				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "notes",
+					"style": {
+						"textAlign": "justify"
+					}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Notes"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "reflist",
+					"style": {
+						"listStyleType": "decimal"
+					}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
 			}
 		],
 		"images": []

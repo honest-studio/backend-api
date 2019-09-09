@@ -260,6 +260,7 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "Bibliography", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "Footnotes", class: null }, // References section
+    { parent: { tag: 'h2'}, tag: "span", id: "Gallery", class: null }, // Image gallery section
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
 

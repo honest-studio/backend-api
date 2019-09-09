@@ -81,7 +81,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 
 
 			// Get the srcset, if present
-			if (theAttribs.srcset){
+			if (theAttribs && theAttribs.srcset){
 				let srcsetString = theAttribs.srcset;
 
 				// Fix upload.wikimedia.org 
@@ -97,11 +97,11 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			if (theHeight * theWidth >= 5000){
 
 				// Add the height and width, if present
-				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
 					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
 					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
 				}
-				else if(theAttribs.width && theAttribs.height){
+				else if(theAttribs && theAttribs.width && theAttribs.height){
 					workingMainPhoto.media_props.height = parseInt(theAttribs.height);
 					workingMainPhoto.media_props.width = parseInt(theAttribs.width);
 				}
