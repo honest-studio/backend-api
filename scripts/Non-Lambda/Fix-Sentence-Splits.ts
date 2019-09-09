@@ -132,20 +132,6 @@ export const FixSentenceSplits = async (inputString: string) => {
     const prerenderToken = theConfig.get('PRERENDER_TOKEN');
     flushPrerenders(lang_code, slug, prerenderToken);
 
-    // const data: Response = await fetch(`${'https://api.everipedia.org/v2/'}wiki/bot-submit?token=HmMhOCDZTspmAfNugg8AZPBnxN2DZ4ZCaivyvCKMdK2MomxJx56M9SdsmAK&bypass_ipfs=1`, {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(wiki)
-    // });
-    // let theResult = await data.json();
-    // if ((theResult as any).status == 'Success'){
-    //     return theResult;
-    // }
-    // else{
-    //     console.log(util.inspect(theResult, {showHidden: false, depth: null, chalk: true}));
-    //     throw new Error((theResult as any).status) as any;
-    // }
-    
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
 }
@@ -188,7 +174,7 @@ export const FixSentenceSplits = async (inputString: string) => {
             }
         }
 
-        batchCounter = batchCounter + 1;
+        batchCounter++;
     }
     return;
 })();

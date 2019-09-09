@@ -42,7 +42,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
         // Both have good photos
         // Move the source wiki photo to the gallery of the target
         resultantWiki.citations.push(convertMediaToCitation(workingSourceWiki.main_photo[0], availableCitationID, 'normal'));
-        availableCitationID = availableCitationID + 1;
+        availableCitationID++;
 
     } else if (sourceWikiPhoto.indexOf('no-image-slide') == -1 && targetWikiPhoto.indexOf('no-image-slide') >= 0){
         // The source has a good photo and the target has the default
@@ -179,7 +179,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
                                 ...srcVal,
                                 index: availableIboxValueIdx
                             })
-                            availableIboxValueIdx = availableIboxValueIdx + 1;
+                            availableIboxValueIdx++;
                         }
                     })
                     insertionPointIbox.values.push(...newValues);
@@ -213,7 +213,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
                 ...srcCtn,
                 citation_id: availableCtnID
             });
-            availableCtnID = availableCtnID + 1;
+            availableCtnID++;
         }
     })
     resultantWiki.citations.push(...newCitations);

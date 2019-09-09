@@ -9,7 +9,7 @@ export interface FaviconReturnPack {
     area: number;
 }
 
-export function fetchUrl(siteUrl) {
+export function fetchUrl(siteUrl, timeout?: number) {
     return new Promise((resolve, reject) => {
         axios.get(siteUrl)
         .then(response => {
@@ -17,7 +17,7 @@ export function fetchUrl(siteUrl) {
             const faviconUrl = crawlHTMLForFaviconUrl(html);
             let resultURL = resolveFaviconUrl(siteUrl, faviconUrl);
             return checkLinks([resultURL], {
-                timeout: 1500,
+                timeout: timeout ? timeout : 1500,
                 retry: 0
             })
         })
@@ -36,9 +36,15 @@ export function fetchUrl(siteUrl) {
             }
         })
         .catch(rej => {
-            console.log(rej)
-            resolve("")
+            // console.log(rej);
+            // console.log("Axios failed in fetch-favicon");
+            reject("");
         });
+
+        setTimeout(function() {
+            let msg = `Promise timed out after ${timeout} ms`;
+            reject(msg);
+        }, timeout);
     });
 }
 

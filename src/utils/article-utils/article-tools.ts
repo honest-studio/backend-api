@@ -10,8 +10,10 @@ import urlSlug from 'url-slug';
 import * as axios from 'axios';
 const conv = require('binstring');
 import endianness from 'endianness';
+import bs58 from 'bs58';
+const css_escape = require('css.escape');
 
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue } from '../../types/article';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
@@ -276,7 +278,8 @@ export const CheckForLinksOrCitationsAMP = (
                         srcSet: result ? result[2] : '',
                         alt: result ? result[3] : '',
                         height: result ? result[4] : '1',
-                        width: result ? result[5] : '1'
+                        width: result ? result[5] : '1',
+                        class: result && result[6] ? result[6] : ''
                     };
 
                     // Create the amp-img
@@ -286,6 +289,7 @@ export const CheckForLinksOrCitationsAMP = (
                     $(ampImgTag).attr('layout', 'fixed');
                     $(ampImgTag).attr('alt', workingImage.alt);
                     $(ampImgTag).attr('src', workingImage.src);
+                    $(ampImgTag).attr('class', workingImage.class);
 
                     // Create the placeholder / thumbnail image
                     let placeholderTag = $('<amp-img />');
@@ -691,7 +695,6 @@ export function convertMediaToCitation(inputMedia: Media, idToUse: number, media
     if (inputMedia.diff) newCitation.diff = inputMedia.diff;
     if (inputMedia.height) newCitation.media_props.height = inputMedia.height;
     if (inputMedia.width) newCitation.media_props.width = inputMedia.width;
-    if (inputMedia.srcSet) newCitation.media_props.srcSet = inputMedia.srcSet;
 
     return newCitation;
 }
@@ -790,7 +793,8 @@ export function sentenceSplitFixer(inputWiki: ArticleJson): ArticleJson {
                             // Don't split inside a LINK, CITE, or INLINE IMAGE
                             for (let i = 0; i < newPara.items.length; i++) {
                                 // const lastWord = returnTokens[i].split(' ').pop();
-                                if ((newPara.items[i] as Sentence).text.match(/\[\[(LINK|CITE|INLINE_IMAGE)\|(.*?)\|(.*?)\|(.*?)[!?.\s]\s?$/gm) && i + 1 < newPara.items.length) {
+                                // ORIGINAL if ((newPara.items[i] as Sentence).text.match(/\[\[(LINK|CITE|INLINE_IMAGE)\|(.*?)\|(.*?)\|(.*?)[!?.\s]\s?$/gm) && i + 1 < newPara.items.length) {
+                                if ((newPara.items[i] as Sentence).text.match(/\[\[(LINK|CITE|INLINE_IMAGE)\|(.*?)\|(.*?)[!?.\s]\s?$/gm) && i + 1 < newPara.items.length) {
                                     (newPara.items[i] as Sentence).text = `${(newPara.items[i] as Sentence).text}${(newPara.items[i + 1] as Sentence).text}`;
                                     newPara.items.splice(i + 1, 1);
                                     i--; // re-check this sentence in case there's multiple bad splits
@@ -977,4 +981,35 @@ export const sha256ToChecksum256EndianSwapper = (input_sha256: string) => {
     let comboString = conv(bytes1, { in:'bytes', out: 'hex' }) + conv(bytes2, { in:'bytes', out: 'hex' });
     // console.log(comboString);
     return comboString;
+}
+
+export const calcIPFSHash = (inputString: string): string => {
+    const data = inputString;
+    const hashFunction = Buffer.from('12', 'hex');
+    const digest = crypto.createHash('sha256').update(data).digest();
+    const digestSize = Buffer.from(digest.byteLength.toString(16), 'hex');
+    const combined = Buffer.concat([hashFunction, digestSize, digest]);
+    const multihash = bs58.encode(combined);
+    return multihash.toString();
+}
+
+export function cheerio_css_cleaner(input_css: string): string{
+    let cleaned_css = input_css;
+    cleaned_css = css_escape(cleaned_css).replace("\\#", "#");
+    return cleaned_css;
+}
+
+export function linkCategoryFromText(input_text: string): CitationCategoryType{
+    let working_category: CitationCategoryType = 'NONE';
+    // Look for periodical-related stuff first
+    if(input_text.search(/magazine|picayune|tribune|gazette|journal|herald|sentinel|courier|newspaper/gimu) >= 0) {
+        working_category = 'PERIODICAL';
+    }
+    // Look for book-related stuff next
+    else if(input_text.search(/pp\.|p\. [0-9]+|book|publishing/gimu) >= 0) {
+        working_category = 'BOOK';
+    }
+
+    // Return the result
+    return working_category;
 }
