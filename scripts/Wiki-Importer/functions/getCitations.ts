@@ -112,9 +112,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			if(theInnerURL[0] == "#"){
 				let linked_id = theInnerURL;
 				let linked_id_escaped = cheerio_css_cleaner(linked_id);
+
 				if (linked_id){
 					$(`${linked_id_escaped} a`).each((idx, inner_anchor) => {
+
+				
 						let inner_href = inner_anchor.attribs['href'];
+						// console.log($.html(linked_id_escaped))
 						if(inner_href){
 							// Look for an ISBN
 							if(inner_href.search(/Special:BookSources/gimu) >= 0){
@@ -127,7 +131,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 								raw_citn.issn = $(inner_anchor).text().trim();
 							}
 						}
-						$(inner_anchor).remove();
+						// $(inner_anchor).remove();
 					})
 				}
 				$(possible_anchor).replaceWith($(linked_id_escaped).contents()); 
@@ -158,8 +162,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			raw_citn.text = $(raw_citn.note_element)
 								.text()
 								.trim();
-			raw_citn.url = `https://openlibrary.org/search?q=${encodeURIComponent(raw_citn.text.substr(0, 50))}`;
+			raw_citn.url = `https://openlibrary.org/search?q=${
+				encodeURIComponent(raw_citn.text.substr(0, 50))
+					.replace(/\(/g, "%28")
+					.replace(/\)/g, "%29")
+			}`;
 		}
+		// console.log(raw_citn)
 		return raw_citn;
 	})
 	process.stdout.write(chalk.yellow(` DONE\n`));
@@ -377,7 +386,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				}
 
 				// If there is more than one image in the nearest tr, do not extract
-				let $extractGallery = $(gal_box).closest("ul.gallery");
+				let $extractGallery = $(gal_box).parentsUntil("ul.gallery");
 
 				// Remove the img's parent <a> first
 				$(img_anchor).remove();

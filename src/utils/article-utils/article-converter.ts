@@ -187,8 +187,6 @@ export const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: s
                 cleanedAttrs['style'][sty.react] = cleanedAttrs[sty.normal];
             }
         });
-
-
     }
     else {
         cleanedAttrs['style'] = {};

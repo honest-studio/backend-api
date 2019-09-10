@@ -107,8 +107,8 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				}
 
 				// If there is more than one image in the nearest tr, do not extract
-				let $extractTD = $(img_anchor).closest("td");
-				let $extractTR = $($extractTD).closest("tr");
+				let $extractTD = $(img_anchor).parentsUntil("td");
+				let $extractTR = $($extractTD).parentsUntil("tr");
 
 				// Look for multiple images within the td
 				let rowImages = $($extractTR).find('img');
