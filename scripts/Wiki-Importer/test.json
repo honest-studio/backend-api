@@ -3,28 +3,806 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Steven Dann"
+      "text": "Agia Varvara, Paphos"
     }
   ],
   "main_photo": [
     {
-      "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
-      "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Cyprus_location_map.svg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
       "caption": null,
       "type": "main_photo",
-      "attribution_url": null,
+      "attribution_url": "https://en.wikipedia.org/wiki/File:Cyprus_location_map.svg",
       "media_props": {
         "type": "main_photo",
-        "height": null,
-        "width": null,
-        "srcSet": null
+        "height": 761,
+        "width": 1276,
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x"
       },
-      "timestamp": "2019-09-10T00:36:31.216Z",
-      "category": "NONE",
-      "mime": null
+      "timestamp": "2019-09-10T02:18:30.855Z",
+      "category": "PICTURE",
+      "mime": "image/svg+xml"
     }
   ],
-  "infobox_html": null,
+  "infobox_html": {
+    "type": "wikitable",
+    "attrs": {
+      "className": "infobox geography vcard",
+      "style": {
+        "width": "23em"
+      }
+    },
+    "caption": {
+      "attrs": {},
+      "sentences": []
+    },
+    "thead": {
+      "rows": [],
+      "attrs": {}
+    },
+    "tbody": {
+      "attrs": {
+        "style": {}
+      },
+      "rows": [
+        {
+          "index": 0,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "fontSize": "1.25em",
+                  "fontWeight": "bold",
+                  "whiteSpace": "nowrap"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "display": "inline"
+                    },
+                    "className": "fn org"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "Agia Varvara"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {
+                    "style": {}
+                  },
+                  "content": []
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "className": "nickname",
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "Αγία Βαρβάρα"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "br",
+                      "tag_class": "void",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "*Engindere* / *Ayvarvara*"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "className": "center",
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "div",
+                      "tag_class": "block",
+                      "attrs": {
+                        "style": {
+                          "width": "300px",
+                          "float": "none",
+                          "clear": "both",
+                          "marginLeft": "auto",
+                          "marginRight": "auto"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "div",
+                          "tag_class": "block",
+                          "attrs": {
+                            "style": {
+                              "width": "300px",
+                              "padding": "0"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "div",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "position": "relative",
+                                  "width": "300px"
+                                },
+                                "className": "geonugget"
+                              },
+                              "content": [
+                                {
+                                  "type": "tag",
+                                  "tag_type": "a",
+                                  "tag_class": "inline",
+                                  "attrs": {
+                                    "href": "/wiki/File:Cyprus_location_map.svg",
+                                    "className": "image",
+                                    "title": "Agia Varvara is located in Cyprus",
+                                    "style": {}
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "img",
+                                      "tag_class": "void",
+                                      "attrs": {
+                                        "alt": "Agia Varvara is located in Cyprus",
+                                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
+                                        "decoding": "async",
+                                        "width": "300",
+                                        "height": "179",
+                                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x",
+                                        "data-file-width": "1276",
+                                        "data-file-height": "761",
+                                        "style": {}
+                                      },
+                                      "content": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "tag",
+                                  "tag_type": "div",
+                                  "tag_class": "block",
+                                  "attrs": {
+                                    "style": {
+                                      "position": "absolute",
+                                      "top": "74.96%",
+                                      "left": "15.237%"
+                                    }
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "div",
+                                      "tag_class": "block",
+                                      "attrs": {
+                                        "style": {
+                                          "position": "absolute",
+                                          "left": "-3px",
+                                          "top": "-3px",
+                                          "lineHeight": "0"
+                                        }
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "tag",
+                                          "tag_type": "img",
+                                          "tag_class": "void",
+                                          "attrs": {
+                                            "alt": "Agia Varvara",
+                                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png",
+                                            "decoding": "async",
+                                            "title": "Agia Varvara",
+                                            "width": "6",
+                                            "height": "6",
+                                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x",
+                                            "data-file-width": "64",
+                                            "data-file-height": "64",
+                                            "className": "geodot",
+                                            "style": {}
+                                          },
+                                          "content": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "div",
+                                      "tag_class": "block",
+                                      "attrs": {
+                                        "style": {
+                                          "fontSize": "90%",
+                                          "lineHeight": "110%",
+                                          "position": "absolute",
+                                          "width": "6em",
+                                          "top": "4px",
+                                          "left": "-3em",
+                                          "textAlign": "center"
+                                        }
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "tag",
+                                          "tag_type": "div",
+                                          "tag_class": "block",
+                                          "attrs": {
+                                            "style": {
+                                              "display": "inline",
+                                              "padding": "1px"
+                                            }
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "text",
+                                              "content": [
+                                                {
+                                                  "index": 0,
+                                                  "type": "sentence",
+                                                  "text": "Agia Varvara"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "div",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {}
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "Location in Cyprus"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "attrs": {
+            "className": "mergedbottomrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Coordinates: "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "plainlinks nourlexpansion",
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "34°45′2″N 32°30′41″E"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontSize": "small"
+                    }
+                  },
+                  "content": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Country"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "flagicon",
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/23px-Flag_of_Cyprus.svg.png",
+                        "decoding": "async",
+                        "width": "23",
+                        "height": "15",
+                        "className": "thumbborder",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/35px-Flag_of_Cyprus.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/45px-Flag_of_Cyprus.svg.png 2x",
+                        "data-file-width": "900",
+                        "data-file-height": "600",
+                        "style": {}
+                      },
+                      "content": []
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Cyprus|Cyprus]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {
+            "className": "mergedrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Districts_of_Cyprus|District]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Paphos_District|Paphos District]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Population"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "span",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "className": "nowrap",
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "(2011)[[CITE|1|http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {
+            "className": "mergedrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": " • Total"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "172"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Time_zone|Time zone]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|UTC%2B2|UTC+2]] ([[LINK|lang_en|Eastern_European_Time|EET]])"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {
+            "className": "mergedrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "whiteSpace": "nowrap"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": " • Summer ([[LINK|lang_en|Daylight_saving_time|DST]])"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|UTC%2B3|UTC+3]] ([[LINK|lang_en|Eastern_European_Summer_Time|EEST]])"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tfoot": {
+      "rows": [],
+      "attrs": {}
+    }
+  },
   "page_body": [
     {
       "paragraphs": [
@@ -34,1935 +812,10 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**Steven Dann** (born December 27, 1953) is a [[LINK|lang_en|Canadians|Canadian]] [[LINK|lang_en|Viola|violist]].[[CITE|1|https://pqasb.pqarchiver.com/thestar/access/427990701.html?FMT=ABS&FMTS=ABS:FT&type=current&date=Oct+16,+1999&author=&pub=Toronto+Star&desc=Strung+out+on+violins&pqatl=google]][[CITE|2|https://pqasb.pqarchiver.com/thestar/access/428007361.html?FMT=ABS&FMTS=ABS:FT&type=current&date=Oct+24,+1999&author=&pub=Toronto+Star&desc=Players+prove+value+of+rare+instruments&pqatl=google]][[CITE|3|https://www.nytimes.com/2009/02/11/arts/music/11mova.html]]"
+              "text": "**Agia Varvara** ([[LINK|lang_en|Greek_language|Greek]]: Αγία Βαρβάρα, [[LINK|lang_en|Turkish_language|Turkish]]: *Engindere* or *Ayvarvara*) is a village located in the [[LINK|lang_en|Paphos_District|Paphos District]] of [[LINK|lang_en|Cyprus|Cyprus]]. Prior to 1974, the village was largely inhabited by Turkish Cypriots.[[CITE|2|https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg]] Afterwards, the Turkish Cypriot population was relocated to [[LINK|lang_en|Karavas|Karavas]], [[LINK|lang_en|Trachoni,_Nicosia|Trachoni]], [[LINK|lang_en|Pentageia|Pentageia]], [[LINK|lang_en|Famagusta|Famagusta]] and [[LINK|lang_en|Morphou|Morphou]] and was partially replaced by displaced Greek Cypriots from the north.[[CITE|3|http://www.prio-cyprus-displacement.net/default.asp?id=471]]"
             }
           ],
           "tag_type": "p",
-          "attrs": {
-            "style": {}
-          }
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Early years"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Dann was born in [[LINK|lang_en|Burnaby|Burnaby]], [[LINK|lang_en|British_Columbia|British Columbia]]. He played the violin until 1970, when he switched to the viola. He began studying with [[LINK|lang_en|Lorand_Fenyves|Lorand Fenyves]] in [[LINK|lang_en|Toronto|Toronto]] in 1972, and continued his studies until he graduated from the [[LINK|lang_en|University_of_Toronto|University of Toronto]] in 1977. During this time, he also studied with [[LINK|lang_en|Robert_Pikler|Robert Pikler]] in [[LINK|lang_en|Australia|Australia]], as well as [[LINK|lang_en|William_Primrose|William Primrose]] and [[LINK|lang_en|Bruno_Giuranna|Bruno Giuranna]]."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 2,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Dann has held the position of principal viola with a number of orchestras, including the [[LINK|lang_en|National_Arts_Centre_Orchestra|National Arts Centre Orchestra]], the [[LINK|lang_en|Royal_Concertgebouw_Orchestra|Royal Concertgebouw Orchestra]] in [[LINK|lang_en|Amsterdam|Amsterdam]], the [[LINK|lang_en|Vancouver_Symphony_Orchestra|Vancouver Symphony Orchestra]], and the [[LINK|lang_en|Toronto_Symphony_Orchestra|Toronto Symphony Orchestra]]."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 3,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "As soloist, Dann has performed concerti with several orchestras, as well as with conductors [[LINK|lang_en|Vladimir_Ashkenazy|Vladimir Ashkenazy]], Sir [[LINK|lang_en|John_Eliot_Gardiner|John Eliot Gardiner]] and [[LINK|lang_en|Andrew_Davis_(conductor)|Andrew Davis]]. He has also commissioned concerti and chamber works from a number of composers, notably [[LINK|lang_en|Alexina_Louie|Alexina Louie]], [[LINK|lang_en|Christos_Hatzis|Christos Hatzis]] and [[LINK|lang_en|Kaija_Saariaho|Kaija Saariaho]]. He is a noted chamber musician as well as a member of the Axelrod Quartet and the Smithsonian Chamber Players, both based in [[LINK|lang_en|Washington,_D.C.|Washington, D.C.]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {
-            "style": {}
-          }
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Discography"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***[[LINK|lang_en|Johannes_Brahms|Brahms]] Viola Works***; Steven Dann (viola); Lambert Orkis (piano); Susan Platts (mezzo-soprano); ATMA Classique ACD2 2350 (2006)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 2,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Sonata No.1 in F minor for viola and piano, Op.120 No.1 (1894)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Sonata No.2 in E"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "span",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "className": "music-symbol",
-                                "style": {
-                                  "fontFamily": "Arial Unicode MS, Lucida Sans Unicode"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "span",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "className": "music-flat",
-                                    "style": {}
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "♭"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " major for viola and piano, Op.120 No.2 (1894)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "*2 Gesänge* (2 Songs) for alto, viola and piano, Op.91 (1884)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 3,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***De Bréville • Koechlin • Tournemire: Sonatas & Suite***; Steven Dann (viola); James Parker (piano); ATMA Classique ACD2 2519 (2013)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 4,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Pierre_de_Br%C3%A9ville",
-                                "title": "Pierre de Bréville",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Pierre de Bréville"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – Sonata for viola and piano (1944)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Charles_Koechlin",
-                                "title": "Charles Koechlin",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Charles Koechlin"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – Sonata for viola and piano, Op. 53 (1911–1913)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Charles_Tournemire",
-                                "title": "Charles Tournemire",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Charles Tournemire"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Suite en trois parties* (Suite in Three Parts) for viola and piano, Op. 11 (1897)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 5,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***Portrait of the Viola***; Steven Dann (viola); Bruce Vogt (piano); Musica Viva MVCD1072 (1994)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 6,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Rebecca_Helferich_Clarke",
-                                "className": "mw-redirect",
-                                "title": "Rebecca Helferich Clarke",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Rebecca Clarke"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – Sonata for viola and piano (1919)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Arnold_Bax",
-                                "title": "Arnold Bax",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Arnold Bax"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Legend* for viola and piano (1929)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Igor_Stravinsky",
-                                "title": "Igor Stravinsky",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Igor Stravinsky"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Élégie* for viola solo (1944)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Ralph_Vaughan_Williams",
-                                "title": "Ralph Vaughan Williams",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Ralph Vaughan Williams"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Romance* for viola and piano (c.1914)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Hermann_Reutter",
-                                "title": "Hermann Reutter",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Hermann Reutter"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Cinco Caprichos sobre Cervantes* (5 Caprices on Cervantes) for viola solo (1968)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Jean_Coulthard",
-                                "title": "Jean Coulthard",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Jean Coulthard"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Sonata Rhapsody* for viola and piano (1962)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 7,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Michael_Conway_Baker|Michael Conway Baker]] – *Counterplay* for viola and string orchestra, Op.16 (1971); Steven Dann (viola); [[LINK|lang_en|Kazuyoshi_Akiyama|Kazuyoshi Akiyama]] (conductor); [[LINK|lang_en|CBC_Vancouver_Orchestra|CBC Vancouver Orchestra]]; CBC Music (2001)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Paul_Ben-Haim|Paul Ben-Haim]] – *2 Landscapes* (שתי תמונות נוף) for viola and piano, Op. 27 (1939); Steven Dann (viola); Dianne Werner (piano); Chandos Records 10769 (2013)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 2,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Luciano_Berio|Luciano Berio]] – *Sequenza VI* for viola solo (1967); Steven Dann (viola); Naxos 8.557661-63 (2006)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 3,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "Giovanni Battista Borghi – Sonata No.1 in D major for viola and double bass; Steven Dann (viola); [[LINK|lang_en|Joel_Quarrington|Joel Quarrington]] (double bass); CBC Records 1108 (1999)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 4,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Christos_Hatzis|Christos Hatzis]] – *The Mega4 Meta4* for viola and tape (1990); Steven Dann (viola); Centrediscs (1994)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 5,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Alexina_Louie|Alexina Louie]] – *Winter Music*, Chamber Concerto for viola and 11 instruments (1989); Steven Dann (viola); Owen Underhill (conductor); Vancouver New Music Ensemble; CBC Music (2001)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 6,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Godfrey_Ridout|Godfrey Ridout]] – *Ballade* for viola and string orchestra (1938); Steven Dann (viola); [[LINK|lang_en|Victor_Feldbrill|Victor Feldbrill]] (conductor); [[LINK|lang_en|Toronto_Symphony_Orchestra|Toronto Symphony Orchestra]]; Centrediscs (1993)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 7,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Julius_R%C3%B6ntgen|Julius Röntgen]] – Sonata in C minor for viola and piano (1924); Steven Dann (viola); Dianne Werner (piano); RCA Red Seal 88697-15837-2 (2007)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 8,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|John_Weinzweig|John Weinzweig]] – *Tremologue* for viola solo (1987); Steven Dann (viola); Centrediscs 5295 (1995)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 8,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***Chamber Suite: Catherine Wilson and Friends***; DoReMi (2008)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 9,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Felix_Mendelssohn",
-                                "title": "Felix Mendelssohn",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Felix Mendelssohn"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – Sextet in D Major for piano and strings, Op. 110 (1824); Catherine Wilson, Marie Bérard, Steven Dann, Max Mandel, David Hetherington, "
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Joel_Quarrington",
-                                "title": "Joel Quarrington",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Joel Quarrington"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Srul_Irving_Glick",
-                                "title": "Srul Irving Glick",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Srul Irving Glick"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *The Old Toronter Klezmer Suite*, Quintet for piano and strings (1998); Catherine Wilson, Marie Bérard, Steven Dann, David Hetherington, "
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Joel_Quarrington",
-                                "title": "Joel Quarrington",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Joel Quarrington"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 10,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***Musique de Chambre Française***; Susan Hoeppner (flute); Annalee Patipatanakoon (clarinet); [[LINK|lang_en|Erika_Raum|Erika Raum]] (violin); Joaquin Valdepenas (violin); Steven Dann (viola); [[LINK|lang_en|Amanda_Forsyth|Amanda Forsyth]] (cello); [[LINK|lang_en|Judy_Loman|Judy Loman]] (harp); Marquis Music (2005)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 11,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Claude_Debussy",
-                                "title": "Claude Debussy",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Claude Debussy"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Sonate en trio* for flute, viola and harp, L.137 (1915)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Maurice_Ravel",
-                                "title": "Maurice Ravel",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Maurice Ravel"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Introduction et Allegro* for harp, flute, clarinet and string quartet (1905)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Albert_Roussel",
-                                "title": "Albert Roussel",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Albert Roussel"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Sérénade* for flute, violin, viola, cello and harp, Op.30 (1925)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Andr%C3%A9_Jolivet",
-                                "title": "André Jolivet",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "André Jolivet"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – *Chant de Linos* for flute, violin, viola, cello and harp (1944)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 12,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|T%C4%81livaldis_%C4%B6eni%C5%86%C5%A1|Tālivaldis Ķeniņš]] – Piano Quartet No.2; Paul Meyer (violin); Steven Dann (viola); David Hetherington (cello), William Aide (piano); Centrediscs (1997)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***[[LINK|lang_en|Felix_Mendelssohn|Mendelssohn]]: Requiem für Fanny***; Quatour Alcan; [[LINK|lang_en|ATMA_Classique|ATMA Classique]] (2007)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 13,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "String Quartet No.6 *\"Requiem für Fanny\"* in F minor, Op.80 (1847)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "*Four Pieces* for string quartet, Op.81"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "String Quintet No.2 in B"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "span",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "className": "music-symbol",
-                                "style": {
-                                  "fontFamily": "Arial Unicode MS, Lucida Sans Unicode"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "span",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "className": "music-flat",
-                                    "style": {}
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "♭"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " major, Op.87 (1845)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 14,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***Mendelssohn • Gade: Octets for Strings***; Smithsonian Chamber Players; Sony Classical (1992)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 15,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Felix Mendelssohn – String Octet in E"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "span",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "className": "music-symbol",
-                                "style": {
-                                  "fontFamily": "Arial Unicode MS, Lucida Sans Unicode"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "span",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "className": "music-flat",
-                                    "style": {}
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "♭"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " major, Op.20 (1825)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "a",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "href": "/wiki/Niels_Gade",
-                                "title": "Niels Gade",
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Niels Gade"
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " – String Octet in F major, Op.17 (1849)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 16,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***Right through the Bone: [[LINK|lang_en|Julius_R%C3%B6ntgen|Julius Röntgen]] Chamber Music***; ARC Ensemble; RCA Red Seal 88697-15837-2 (2007)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 17,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Piano Quintet in A minor, Op.100 (1927)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Trio in E"
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "span",
-                              "tag_class": "inline",
-                              "attrs": {
-                                "className": "music-symbol",
-                                "style": {
-                                  "fontFamily": "Arial Unicode MS, Lucida Sans Unicode"
-                                }
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "span",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "className": "music-flat",
-                                    "style": {}
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "text",
-                                      "content": [
-                                        {
-                                          "index": 0,
-                                          "type": "sentence",
-                                          "text": "♭"
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": " major for clarinet, viola and piano (1921)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Sonata in C minor for viola and piano (1924)"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "String Sextet in G major (1931)"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 18,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Kaija_Saariaho|Kaija Saariaho]] – *Je sens un deuxième coeur* for viola, cello and piano (2003); Steven Dann (viola); Anssi Karttunen (cello), Tuija Hakkila (piano); Ondine 1189-2 (2012)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Franz_Schubert|Franz Schubert]] – Quintet in C major for 2 violins, viola and 2 cellos, D.956; Smithsonian Chamber Players; Sony Classical (1991)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 2,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "***[[LINK|lang_en|Louis_Spohr|Louis Spohr]]: Octet, Sextet, Quintet***; Smithsonian Chamber Players; Sony Classical (1993)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 19,
-          "items": [
-            {
-              "type": "dl",
-              "attrs": {},
-              "items": [
-                {
-                  "index": 0,
-                  "tag_type": "dd",
-                  "tag_class": "block",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "dl",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "Double String Quartet No.1 in D minor, Op.65"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "String Sextet in C major, Op.140"
-                                }
-                              ]
-                            }
-                          ]
-                        },
-                        {
-                          "type": "tag",
-                          "tag_type": "dd",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {}
-                          },
-                          "content": [
-                            {
-                              "type": "text",
-                              "content": [
-                                {
-                                  "index": 0,
-                                  "type": "sentence",
-                                  "text": "String Quintet No.2 in G major *\"Grande Quintetto\"*, Op.33 No.2"
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ],
-          "tag_type": "dl",
-          "attrs": {
-            "style": {}
-          }
-        },
-        {
-          "index": 20,
-          "items": [
-            {
-              "type": "list_item",
-              "index": 0,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|T%C5%8Dru_Takemitsu|Tōru Takemitsu]] – *And Then I Knew 'Twas Wind* for flute, viola and harp (1992); [[LINK|lang_en|Robert_Aitken_(composer)|Robert Aitken]] (flute); Steven Dann (viola); Erica Goodman (harp); Naxos (2003)"
-                }
-              ],
-              "tag_type": "li"
-            },
-            {
-              "type": "list_item",
-              "index": 1,
-              "sentences": [
-                {
-                  "type": "sentence",
-                  "index": 0,
-                  "text": "[[LINK|lang_en|Mieczys%C5%82aw_Weinberg|Mieczysław Weinberg]] – Piano Quintet, Op.18 (1944); ARC Ensemble; RCA Red Seal (2006)"
-                }
-              ],
-              "tag_type": "li"
-            }
-          ],
-          "tag_type": "ul",
           "attrs": {
             "style": {}
           }
@@ -1974,7 +827,7 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "https://pqasb.pqarchiver.com/thestar/access/427990701.html?FMT=ABS&FMTS=ABS:FT&type=current&date=Oct+16,+1999&author=&pub=Toronto+Star&desc=Strung+out+on+violins&pqatl=google",
+      "url": "http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement",
       "thumb": null,
       "category": "NONE",
       "citation_id": 1,
@@ -1982,70 +835,53 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"dann\". *Toronto Star*. 16 October 1999. Retrieved 22 December 2010."
+          "text": "Census 2011"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T00:36:31.225Z",
+      "timestamp": "2019-09-10T02:18:30.858Z",
       "mime": null
     },
     {
-      "url": "https://pqasb.pqarchiver.com/thestar/access/428007361.html?FMT=ABS&FMTS=ABS:FT&type=current&date=Oct+24,+1999&author=&pub=Toronto+Star&desc=Players+prove+value+of+rare+instruments&pqatl=google",
+      "url": "https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg",
       "thumb": null,
-      "category": "NONE",
+      "category": "PICTURE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"Players prove value of rare instruments\". *Toronto Star*. 24 October 1999. Retrieved 22 December 2010."
+          "text": "\"1960\". Archived from the original on 2007-10-28. Retrieved 2009-06-14. Cite uses deprecated parameter |deadurl= (help)"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T00:36:31.227Z",
-      "mime": null
+      "timestamp": "2019-09-10T02:18:30.858Z",
+      "mime": "image/jpeg"
     },
     {
-      "url": "https://www.nytimes.com/2009/02/11/arts/music/11mova.html",
-      "thumb": "https://static01.nyt.com/images/icons/ios-default-homescreen-57x57.png",
+      "url": "http://www.prio-cyprus-displacement.net/default.asp?id=471",
+      "thumb": null,
       "category": "NONE",
       "citation_id": 3,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Kozinn, Allan (10 February 2009). \"Peering Into Complex Cloud Formations and Finding Sunshine\". *New York Times*. Retrieved 22 December 2010."
+          "text": "\"AGIA VARVARA\". PRIO Cyprus Displacement Center. Retrieved 28 March 2015."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T00:36:31.228Z",
+      "timestamp": "2019-09-10T02:18:30.858Z",
       "mime": null
     },
     {
-      "url": "http://www.stevendann.org/",
+      "url": "https://en.wikipedia.org/wiki/Agia_Varvara%2C_Paphos",
       "thumb": null,
       "category": "NONE",
       "citation_id": 4,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Steven Dann official website"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T00:36:31.681Z",
-      "mime": null
-    },
-    {
-      "url": "https://en.wikipedia.org/wiki/Steven_Dann",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 5,
       "description": [
         {
           "index": 0,
@@ -2075,7 +911,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T00:36:31.696Z",
+      "timestamp": "2019-09-10T02:18:32.206Z",
       "mime": null
     }
   ],
@@ -2083,7 +919,7 @@
   "metadata": [
     {
       "key": "page_type",
-      "value": "Thing"
+      "value": "Place"
     },
     {
       "key": "is_removed",
@@ -2115,7 +951,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/10/2019 0:36:30 AM UTC"
+      "value": "8/10/2019 2:18:20 AM UTC"
     },
     {
       "key": "last_modified",
@@ -2127,11 +963,91 @@
     },
     {
       "key": "url_slug",
-      "value": "Steven_Dann"
+      "value": "Swan_Puka"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Steven_Dann"
+      "value": "Swan_Puka"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:22 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Oreostylidium"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Oreostylidium"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:25 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Hillsong_International_Leadership_College"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Hillsong_International_Leadership_College"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:28 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "The_Eight_Truths"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "The_Eight_Truths"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:30 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Agia_Varvara,_Paphos"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Agia_Varvara,_Paphos"
     }
   ],
   "amp_info": {
@@ -2140,5 +1056,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmPt8GgBzS5Nbm3LpGBQAY3EEqT9diGPANLNZtW4WJUz1B"
+  "ipfs_hash": "QmXiNCgWBoDkPtrpJNkY5ahhGsUnpKphXZx3YMKdM8PEyg"
 }

@@ -244,6 +244,10 @@ export const WikiImport = async (inputString: string) => {
 
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));
+
+    fs.appendFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'resultlinks.txt'), `http://127.0.0.1:7777/wiki/lang_${lang_code}/${slug}\n`);
+    fs.appendFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'resultlinks.txt'), `https://${lang_code}.wikipedia.org/wiki/${slug_alt}\n`);
+
     
     logYlw("========================================COMPLETE=======================================");
     return null;
@@ -258,6 +262,7 @@ export const WikiImport = async (inputString: string) => {
     let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
     console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
     let currentStart, currentEnd;
+    fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'resultlinks.txt'), "");
     for (let i = 0; i < totalBatches; i++) {
         currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
         currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;

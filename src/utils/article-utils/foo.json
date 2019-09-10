@@ -7,18 +7,13 @@
 				"attrs": {
 					"style": {}
 				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "**Vladimir Davidovich Ashkenazy** ([[LINK|lang_en|Russian_language|Russian]] : Влади́мир Дави́дович Ашкена́зи , *Vladimir Davidovich Ashkenazi*; born 6 July 1937) is an internationally recognized solo pianist, chamber music performer, and [[LINK|lang_en|Conducting|conductor]]. He is originally from Russia and has held Icelandic citizenship since 1972. He has lived in Switzerland since 1978. Ashkenazy has collaborated with well-known orchestras and soloists. In addition, he has recorded a large storehouse of classical and romantic works. His recordings have earned him five [[LINK|lang_en|Grammy|Grammy]] awards plus Iceland's [[LINK|lang_en|Order_of_the_Falcon|Order of the Falcon]]."
-					}
-				]
+				"items": []
 			},
 			{
 				"index": 1,
-				"tag_type": "p",
+				"tag_type": "div",
 				"attrs": {
+					"className": "thumb tright",
 					"style": {}
 				},
 				"items": []
@@ -29,7 +24,13 @@
 				"attrs": {
 					"style": {}
 				},
-				"items": []
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "**Spahn Ranch** was an [[LINK|lang_en|Electro-industrial|electro-industrial]] group from [[LINK|lang_en|Los_Angeles|Los Angeles]]. Active from 1992 to 2000, the band was well known in a subgenre of industrial music for its fusion of [[LINK|lang_en|Electronic_dance_music|electronic dance]], [[LINK|lang_en|Industrial_Music|industrial]] and [[LINK|lang_en|Gothic_music|gothic]] music."
+					}
+				]
 			}
 		],
 		"images": []
@@ -40,14 +41,14 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "early-life",
+					"id": "history",
 					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Early life"
+						"text": "History"
 					}
 				]
 			},
@@ -61,75 +62,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Ashkenazy was born in Gorky, [[LINK|lang_en|Soviet_Union|Soviet Union]] (now [[LINK|lang_en|Nizhny_Novgorod|Nizhny Novgorod]], [[LINK|lang_en|Russia|Russia]]), to the pianist and composer [[LINK|lang_en|David_Ashkenazi|David Ashkenazi]] and to the actress Yevstolia Grigorievna, born Plotnova. His father was [[LINK|lang_en|Jews|Jewish]] and his mother was the daughter of a family of [[LINK|lang_en|Russia|Russian]] [[LINK|lang_en|Russian_Orthodox_Church|Orthodox]] peasants. [[CITE|6|http://icelandreview.com/icelandreview/daily_news?cat_id=16567&ew_0_a_id=275815]] [[CITE|7|http://enotes.com/contemporary-musicians/ashkenazy-vladimir-biography]] He began playing piano at the age of six. He was accepted to the Central Music School at age eight studying with [[LINK|lang_en|Anaida_Sumbatyan|Anaida Sumbatyan]]."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "education",
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Education"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Ashkenazy attended the [[LINK|lang_en|Moscow_Conservatory|Moscow Conservatory]] where he studied with [[LINK|lang_en|Lev_Oborin|Lev Oborin]] and Boris Zemliansky. He won second prize in the [[LINK|lang_en|International_Chopin_Piano_Competition|International Chopin Piano Competition]] in Warsaw in 1955 and the first prize in the [[LINK|lang_en|Queen_Elisabeth_Music_Competition|Queen Elisabeth Music Competition]] in Brussels in 1956. He shared the first prize in the 1962 [[LINK|lang_en|International_Tchaikovsky_Competition|International Tchaikovsky Competition]] with British pianist [[LINK|lang_en|John_Ogdon|John Ogdon]]. As a student, like many in that period, he was harassed by the [[LINK|lang_en|KGB|KGB]] to become an \"informer\". He did not really cooperate, despite pressures from the authorities."
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "personal-life",
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Personal life"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In 1961 he married the [[LINK|lang_en|Iceland|Iceland]]-born Þórunn Jóhannsdóttir, who studied [[LINK|lang_en|Piano|piano]] at the [[LINK|lang_en|Moscow_Conservatory|Moscow Conservatory]]. To marry Ashkenazy, Þórunn was forced to give up her Icelandic citizenship and declare that she wanted to live in the USSR. (Her name is usually transliterated as Thorunn and her nickname was Dódý. [[CITE|8|http://britishpathe.com/video/russian-pianist-vladimir-ashkenazy-interviewed/query/Hotel]] She is recorded as Dódý Ashkenazy. [[CITE|9|https://itunes.apple.com/us/album/rachmaninov-transcriptions/id121716932]])"
+						"text": "The band was formed in 1992 in Los Angelos by [[LINK|lang_en|Matt_Green_(musician)|Matt Green]] and his New York–based collaborator, Rob Morton. They collectively used the funds they had saved up to jump-start the band. Rob Morton had been Matt Green's musical partner for the 5 years prior. That same year in 1992, they signed to [[LINK|lang_en|Cleopatra_Records|Cleopatra Records]] and released a self-titled, four-song [[LINK|lang_en|Extended_play|EP]], with vocals supplied by Scott \"Chopper\" Franklin (later to become bass player for [[LINK|lang_en|The_Cramps|The Cramps]]) Scott Franklin left another band to provide vocals for Spahn Ranch."
 					}
 				]
 			},
@@ -143,7 +76,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "After numerous bureaucratic procedures, the Soviet authorities agreed to allow the Ashkenazys to visit [[LINK|lang_en|Western_Bloc|the West]] for musical performances and for visits to his parents-in-law with their first grandson. In his memoirs, Soviet leader [[LINK|lang_en|Nikita_Khrushchev|Nikita Khrushchev]] recollects that Ashkenazy had married an Englishwoman [ *[[LINK|lang_en|Sic|sic]] * ] and on a visit to London refused to return to the Soviet Union. Khrushchev mentions that Ashkenazy then sought advice from the Soviet Embassy in London, who in turn referred the matter to Moscow. Khrushchev claims to have been of the opinion that to require Ashkenazy to return to the USSR would have made him an \"Anti-Soviet\". He further claims that this was a good example of an artist being able to come and go in and out of the USSR freely, which Ashkenazy himself said was a gross \"distortion of the truth.\". In 1963 Ashkenazy decided to leave the USSR permanently, establishing residence in London where his wife's parents lived."
+						"text": "In 1993, they added vocalist [[LINK|lang_en|Athan_Maroulis|Athan Maroulis]] and recorded their debut album, *Collateral Damage*. Their second album, *The Coiled One*, appeared two years later in the midst of Morton leaving the band due to creative and logistical differences. After his departure, the line-up was expanded to include [[LINK|lang_en|Christian_Death|Christian Death]] drummer David Glass, Screams for Tina guitarist Kent Bancroft, and Tubalcain drummer Harry Lewis. This offered a beginning of the fuller, more diverse, dark electro-industrial sound that Spahn Ranch would continue to pursue. By 1997, Spahn Ranch had pared themselves down to the three-piece unit of Green, Maroulis and Lewis."
 					}
 				]
 			},
@@ -157,12 +90,40 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The couple moved to Iceland in 1968 where, in 1972, Ashkenazy became an Icelandic citizen. "
+						"text": "Spahn Ranch continued to release albums throughout the late 1990s. "
 					},
 					{
 						"type": "sentence",
 						"index": 1,
-						"text": "[[CITE|10|http://britannica.com/EBchecked/topic/38311/Vladimir-Ashkenazy]] In 1970 he helped to found the [[LINK|lang_en|Reykjavík|Reykjavík]] Arts Festival, of which he remains Honorary President. [[CITE|11|http://listahatid.is/en/about/organisation]] [[CITE|-1|http://efa-aef.eu/en/festivals/members/profile/663/ReykjavikArts%20Festival]] In 1978 the couple and their (then) four children (Vladimir Stefan, Nadia Liza, Dimitri Thor, and Sonia Edda) moved to [[LINK|lang_en|Lucerne|Lucerne]], Switzerland. Their fifth child, Alexandra Inga, was born in 1979. As of 1989, Ashkenazy resides in [[LINK|lang_en|Meggen|Meggen]]. [[CITE|13|http://bazonline.ch/leben/gesellschaft/Es-ist-schwer-die-Sowjetunion-zu-vermissen/story/12490064]] His eldest son Vladimir, who uses his nickname 'Vovka' as a stage name, is a pianist, as well as a teacher at the Imola International Piano Academy. His second son, Dimitri, is a clarinetist."
+						"text": "*Architecture*, released in 1997, featured contributions from [[LINK|lang_en|Killing_Joke|Killing Joke]] / [[LINK|lang_en|Prong_(band)|Prong]] bassist [[LINK|lang_en|Paul_Raven_(musician)|Paul Raven]] and [[LINK|lang_en|Rockats|Rockats]] / [[LINK|lang_en|Nancy_Sinatra|Nancy Sinatra]] guitarist [[LINK|lang_en|Danny_B._Harvey|Danny B. Harvey]]. This album took an even more experimental approach to the Spahn Ranch sound, incorporating elements of drum and bass, dub and for the first time, live guitar parts. *Beat Noir*, in 1998, followed a similar path even further and included work with [[LINK|lang_en|Bauhaus_(band)|Bauhaus]] / [[LINK|lang_en|Love_and_Rockets_(band)|Love & Rockets]] bassist [[LINK|lang_en|David_J|David J]]."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The band regularly toured throughout North America during their existence with the likes of [[LINK|lang_en|Front_Line_Assembly|Front Line Assembly]], [[LINK|lang_en|Front_242|Front 242]], [[LINK|lang_en|Switchblade_Symphony|Switchblade Symphony]] and [[LINK|lang_en|Apoptygma_Berzerk|Apoptygma Berzerk]]. Spahn Ranch also made a couple of European treks prior to their demise as a group in 2000."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "*Closure*, their final album, was recorded in 2000 and released in 2001."
 					}
 				]
 			}
@@ -175,38 +136,39 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "career",
+					"id": "discography",
 					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Career"
+						"text": "Discography"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "albumseps",
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Albums/EP's"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Ashkenazy has recorded a wide range of piano repertoire, both solo works and concerti. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "His recordings include:"
-					}
-				]
-			},
-			{
-				"index": 2,
 				"tag_type": "ul",
 				"attrs": {
 					"style": {}
@@ -219,7 +181,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Johann_Sebastian_Bach|Bach]]'s *[[LINK|lang_en|The_Well-Tempered_Clavier|The Well-Tempered Clavier]] *"
+								"text": "*Spahn Ranch* (1992) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -231,7 +193,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "Bach's *[[LINK|lang_en|French_Suites_(Bach)|French Suites]] *"
+								"text": "*Collateral Damage* (1993) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -243,7 +205,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|24_Preludes_and_Fugues_(Shostakovich)|24 Preludes and Fugues]] of [[LINK|lang_en|Dmitri_Shostakovich|Shostakovich]]"
+								"text": "*Collateral* (1993) Zoth Ommog, Germany"
 							}
 						],
 						"tag_type": "li"
@@ -255,7 +217,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "complete sonatas by [[LINK|lang_en|Ludwig_van_Beethoven|Beethoven]]"
+								"text": "*The Blackmail Starters Kit* (1994) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -267,7 +229,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "complete sonatas by [[LINK|lang_en|Alexander_Scriabin|Scriabin]]"
+								"text": "*Breath and Taxes* (1994) Zoth Ommog, Germany"
 							}
 						],
 						"tag_type": "li"
@@ -279,7 +241,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "the complete works for piano by [[LINK|lang_en|Sergei_Rachmaninoff|Rachmaninoff]]"
+								"text": "*The Coiled One* (1995) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -291,7 +253,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "the complete works for solo piano by [[LINK|lang_en|Frédéric_Chopin|Chopin]]"
+								"text": "*In Parts Assembled Solely* (1996) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -303,15 +265,107 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "the (almost) complete works for piano by [[LINK|lang_en|Robert_Schumann|Schumann]]"
+								"text": "*Architecture* (1997) Cleopatra, US"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Architecture: Beta* (1997) Out of Line, Germany"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Retrofit* (1998) Cleopatra US / Out of Line, Germany"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Limited Edition 12\"*- first 4 tracks from *Retrofit* (1998) Cleopatra, US"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Beat Noir* (1998) Cleopatra, US / Out of Line, Germany"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 12,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Anthology 1992-1994* (2000) Cleopatra, US"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 13,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Closure* (2001) Cleopatra, US / Cryonica, UK"
 							}
 						],
 						"tag_type": "li"
 					}
 				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "compilation-appearances",
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Compilation appearances"
+					}
+				]
 			},
 			{
-				"index": 3,
+				"index": 1,
 				"tag_type": "p",
 				"attrs": {
 					"style": {}
@@ -320,12 +374,12 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "His concerto recordings include:"
+						"text": "(non-LP tracks)"
 					}
 				]
 			},
 			{
-				"index": 4,
+				"index": 2,
 				"tag_type": "ul",
 				"attrs": {
 					"style": {}
@@ -338,7 +392,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "the complete piano concertos of [[LINK|lang_en|Wolfgang_Amadeus_Mozart|Mozart]] (conducting from the keyboard with the [[LINK|lang_en|Philharmonia_Orchestra|Philharmonia Orchestra]])"
+								"text": "*The Whip*- \"Machine Politics (Original Version)\" (1993) Cleopatra, US (CD and cassette) / Music Research, Germany / Jungle Records, UK (CD only)"
 							}
 						],
 						"tag_type": "li"
@@ -350,54 +404,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "three cycles of the 5 Beethoven concerti"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			},
-			{
-				"index": 5,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "(a) with the [[LINK|lang_en|Chicago_Symphony_Orchestra|Chicago Symphony Orchestra]] under [[LINK|lang_en|Georg_Solti|Sir Georg Solti]] (b) with [[LINK|lang_en|Zubin_Mehta|Zubin Mehta]] and the [[LINK|lang_en|Vienna_Philharmonic|Vienna Philharmonic]] (c) conducting from the piano with the [[LINK|lang_en|Cleveland_Orchestra|Cleveland Orchestra]]"
-					}
-				]
-			},
-			{
-				"index": 6,
-				"tag_type": "ul",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Johannes_Brahms|Brahms]] with [[LINK|lang_en|Bernard_Haitink|Bernard Haitink]] ([[LINK|lang_en|Piano_Concerto_No._1_(Brahms)|No. 1]] with the [[LINK|lang_en|Royal_Concertgebouw_Orchestra|Concertgebouw Orchestra]]; [[LINK|lang_en|Piano_Concerto_No._2_(Brahms)|No. 2]] with the Vienna Philharmonic)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Béla_Bartók|Bartók]] (with Georg Solti and the [[LINK|lang_en|London_Philharmonic_Orchestra|London Philharmonic Orchestra]])"
+								"text": "*Mysterious Encounters*- \"Antibody (Alternate Mix)\" (1994) Cleopatra, US (CD and cassette)"
 							}
 						],
 						"tag_type": "li"
@@ -409,7 +416,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Sergei_Prokofiev|Prokofiev]] (with [[LINK|lang_en|André_Previn|André Previn]] and the [[LINK|lang_en|London_Symphony_Orchestra|London Symphony Orchestra]])"
+								"text": "*Industrial Revolution Second Edition*- \"Succumber (Blacklist)\" (1994) Cleopatra, US (CD)"
 							}
 						],
 						"tag_type": "li"
@@ -421,230 +428,178 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "two cycles of the Rachmaninoff concerti"
+								"text": "*Body Rapture Volume 4*- \"Succumber (Blacklist)\" (1994) Zoth Ommog, Germany (CD)"
 							}
 						],
 						"tag_type": "li"
-					}
-				]
-			},
-			{
-				"index": 7,
-				"tag_type": "dl",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
+					},
 					{
-						"type": "dl",
-						"attrs": {
-							"style": {}
-						},
-						"items": [
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
 							{
+								"type": "sentence",
 								"index": 0,
-								"attrs": {
-									"style": {}
-								},
-								"tag_type": "dd",
-								"content": [
-									{
-										"type": "text",
-										"content": [
-											{
-												"index": 0,
-												"type": "sentence",
-												"text": " "
-											}
-										]
-									},
-									{
-										"type": "tag",
-										"tag_type": "dl",
-										"tag_class": "block",
-										"attrs": {
-											"style": {}
-										},
-										"content": [
-											{
-												"type": "text",
-												"content": [
-													{
-														"index": 0,
-														"type": "sentence",
-														"text": " "
-													}
-												]
-											},
-											{
-												"type": "tag",
-												"tag_type": "dd",
-												"tag_class": "block",
-												"attrs": {
-													"style": {}
-												},
-												"content": [
-													{
-														"type": "text",
-														"content": [
-															{
-																"index": 0,
-																"type": "sentence",
-																"text": " (a) with André Previn and the London Symphony Orchestra "
-															}
-														]
-													}
-												]
-											},
-											{
-												"type": "text",
-												"content": [
-													{
-														"index": 0,
-														"type": "sentence",
-														"text": " "
-													}
-												]
-											},
-											{
-												"type": "tag",
-												"tag_type": "dd",
-												"tag_class": "block",
-												"attrs": {
-													"style": {}
-												},
-												"content": [
-													{
-														"type": "text",
-														"content": [
-															{
-																"index": 0,
-																"type": "sentence",
-																"text": " (b) with Bernard Haitink and the Concertgebouw Orchestra "
-															}
-														]
-													}
-												]
-											},
-											{
-												"type": "text",
-												"content": [
-													{
-														"index": 0,
-														"type": "sentence",
-														"text": " "
-													}
-												]
-											}
-										]
-									},
-									{
-										"type": "text",
-										"content": [
-											{
-												"index": 0,
-												"type": "sentence",
-												"text": " "
-											}
-										]
-									}
-								]
+								"text": "*A Saucerful of Pink*- \"One of These Days\" (1995) Cleopatra, US / Cherry Red Records, UK (CD)"
 							}
-						]
-					}
-				]
-			},
-			{
-				"index": 8,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In public piano performances, Ashkenazy was known for rejecting a tie and button shirt in favor of a white turtleneck and for running (not walking) onstage and offstage. "
+						],
+						"tag_type": "li"
 					},
 					{
-						"type": "sentence",
-						"index": 1,
-						"text": "He has also performed and recorded chamber music."
-					}
-				]
-			},
-			{
-				"index": 9,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Moreover, Ashkenazy has had an acclaimed collaborative career, including an acclaimed recording of [[LINK|lang_en|Beethoven|Beethoven]]'s complete violin sonatas with [[LINK|lang_en|Itzhak_Perlman|Itzhak Perlman]], as well as the cello sonatas with [[LINK|lang_en|Lynn_Harrell|Lynn Harrell]], and the piano trios with Harrell and [[LINK|lang_en|Perlman|Perlman]]."
-					}
-				]
-			},
-			{
-				"index": 10,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Midway through his pianistic career, Ashkenazy branched into conducting. "
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*The Digital Space Between Vol 2*- \"Forceps (Fezmix)\" (1995,)Cleopatra, US / Hard Records, Denmark (CD)"
+							}
+						],
+						"tag_type": "li"
 					},
 					{
-						"type": "sentence",
-						"index": 1,
-						"text": "In Europe, Ashkenazy was principal conductor of the [[LINK|lang_en|Royal_Philharmonic_Orchestra|Royal Philharmonic Orchestra]] from 1987 to 1994, and of the [[LINK|lang_en|Czech_Philharmonic|Czech Philharmonic]] from 1998 to 2003. Ashkenazy is also conductor laureate of the [[LINK|lang_en|Philharmonia_Orchestra|Philharmonia Orchestra]], conductor laureate of the [[LINK|lang_en|Iceland_Symphony_Orchestra|Iceland Symphony Orchestra]], and music director of the [[LINK|lang_en|European_Union_Youth_Orchestra|European Union Youth Orchestra]]. [[CITE|14|https://web.archive.org/web/20080420171344/http://www.euyo.org.uk/artists/directorEUYO.htm]] In July 2013 he became director of the *Accademia Pianistica Internazionale di Imola*, succeeding its founder and director Franco Scala. [[CITE|15|http://bologna.repubblica.it/cronaca/2013/07/15/news/musica_ashkenazy_nuovo_direttore_dell_accademia_pianistica_imola-63033612]] His recordings as a conductor include complete cycles of the symphonies of Sibelius and of Rachmaninoff, as well as orchestral works of Prokofiev, Shostakovich, Scriabin, [[LINK|lang_en|Richard_Strauss|Richard Strauss]], [[LINK|lang_en|Igor_Stravinsky|Stravinsky]], Beethoven, and Tchaikovsky."
-					}
-				]
-			},
-			{
-				"index": 11,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*There Is No Time*- \"One of These Days (different mix)\" (1995) Ras Dva, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
 					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Outside of Europe, Ashkenazy served as music director of the [[LINK|lang_en|NHK_Symphony_Orchestra|NHK Symphony Orchestra]] from 2004 to 2007. He was chief conductor of the [[LINK|lang_en|Sydney_Symphony_Orchestra|Sydney Symphony Orchestra]] from 2009 to 2013. [[CITE|16|http://www.smh.com.au/news/arts/maestros-star-power-a-masterstroke-for-orchestra/2007/04/11/1175971183173.html?page=fullpage#contentSwap1]]"
-					}
-				]
-			},
-			{
-				"index": 12,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Industrial Revolution Third Edition*- \"Vortex (Extended Mix)\" (1996) Cleopatra, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
 					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Ashkenazy has recorded for [[LINK|lang_en|Decca_Records|Decca]] since 1963; in 2013, Decca celebrated his 50th anniversary with the label with the box set 'Vladimir Ashkenazy: 50 Years on Decca', including 50 of Ashkenazy's recordings as both pianist and conductor. [[CITE|2|http://deccaclassics.com/en/cat/4785093]] As part of Ashkenazy's 80th birthday celebrations, Decca is releasing the 'Complete Piano Concerto Recordings' and 'Ashkenazy on Vinyl' in July 2017."
-					}
-				]
-			},
-			{
-				"index": 13,
-				"tag_type": "p",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Vertigo Compilation 3 1996*- \"Locusts (Pygmy Children Mix)\" (1996) Germany (promo-only CD available with *Vertigo* magazine)"
+							}
+						],
+						"tag_type": "li"
+					},
 					{
-						"type": "sentence",
-						"index": 0,
-						"text": "In other media, Ashkenazy has also appeared in several films on music by [[LINK|lang_en|Christopher_Nupen|Christopher Nupen]]. He has also made his own orchestration of [[LINK|lang_en|Modest_Mussorgsky|Modest Mussorgsky]]'s piano suite *[[LINK|lang_en|Pictures_at_an_Exhibition|Pictures at an Exhibition]] * (1982). There has been a CD produced of his works named 'The Art of Ashkenazy', and a biography of Ashkenazy, 'Beyond Frontiers', has been published."
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Covered in Black*- \"Shot Down in Flames\" (1997) Cleopatra, US / RCA Victor, Japan / Zebra-Cherry Red Records, UK (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Ultimate Drum 'N' Bass*- \"The Mark Inside\" (1997) Hypnotic, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Electronic Lust v. 1*- \"In the Aftermath (Astralasia Mix 2)\" (1998) Orkus, Germany (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 12,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Hymns of the Warlock*- \"Dig It\" (1998) Cleopatra, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 13,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*The Black Bible*- \"An Exit (Alternate Mix)\" (1999) Cleopatra, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 14,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Virgin Voices*- \"Swim\" (1999) Cleopatra, US / RCA Victor, Japan (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 15,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*We Will Follow*- \"I Will Follow\" 1999, Cleopatra, US / Anagram Records, UK (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 16,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Awake the Machines Vol. 2*- \"Remnants (CKultur Mutation mix)\" (1999) Out of Line, Germany (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 17,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Darken My Fire*- \"Strange Days\" (2000) Cleopatra, US / EMI, Japan / Anagram Records, UK (CD)"
+							}
+						],
+						"tag_type": "li"
 					}
 				]
 			}
@@ -655,16 +610,16 @@
 		"paragraphs": [
 			{
 				"index": 0,
-				"tag_type": "h2",
+				"tag_type": "h3",
 				"attrs": {
-					"id": "awards-and-recognition",
+					"id": "music-videos",
 					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Awards and recognition"
+						"text": "Music videos"
 					}
 				]
 			},
@@ -682,7 +637,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "1955 [[LINK|lang_en|International_Chopin_Piano_Competition|International Chopin Piano Competition]], Warsaw (Second prize) [[CITE|17|http://www.konkurs.chopin.pl/redirect.php?DOC=d_ifoo99]]"
+								"text": "*Breath and Taxes* (1993)"
 							}
 						],
 						"tag_type": "li"
@@ -694,55 +649,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "1956 [[LINK|lang_en|Queen_Elisabeth_Music_Competition|Queen Elisabeth Music Competition]] for piano, Brussels"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "1962 [[LINK|lang_en|International_Tchaikovsky_Competition|International Tchaikovsky Competition]], Moscow (shared with John Ogdon)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "2000 [[LINK|lang_en|Hanno_R._Ellenbogen_Citizenship_Award|Hanno R. Ellenbogen Citizenship Award]], with the Czech Philharmonic Orchestra conducting corps"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Current president of the Rachmaninoff Society."
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "2014"
+								"text": "*Locusts* (1995), directed by [[LINK|lang_en|Joseph_Kahn|Joseph Kahn]]"
 							}
 						],
 						"tag_type": "li"
@@ -751,210 +658,11 @@
 			},
 			{
 				"index": 2,
-				"tag_type": "dl",
+				"tag_type": "p",
 				"attrs": {
 					"style": {}
 				},
-				"items": [
-					{
-						"type": "dl",
-						"attrs": {
-							"style": {}
-						},
-						"items": [
-							{
-								"index": 0,
-								"attrs": {
-									"style": {}
-								},
-								"tag_type": "dt",
-								"content": [
-									{
-										"type": "text",
-										"content": [
-											{
-												"index": 0,
-												"type": "sentence",
-												"text": " [[LINK|lang_en|Grammy_Award_for_Best_Instrumental_Soloist(s)_Performance_(with_orchestra)|Grammy Award for Best Instrumental Soloist(s) Performance (with orchestra)]] "
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "ul",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|16th_Grammy_Awards|1974]] *[[LINK|lang_en|Ludwig_van_Beethoven|Beethoven]] : [[LINK|lang_en|List_of_compositions_by_Ludwig_van_Beethoven#Concertos|The Piano Concertos]] (Vladimir Ashkenazy, Sir Georg Solti & Chicago Symphony Orchestra)*"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "dl",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "dl",
-						"attrs": {
-							"style": {}
-						},
-						"items": [
-							{
-								"index": 0,
-								"attrs": {
-									"style": {}
-								},
-								"tag_type": "dt",
-								"content": [
-									{
-										"type": "text",
-										"content": [
-											{
-												"index": 0,
-												"type": "sentence",
-												"text": " [[LINK|lang_en|Grammy_Award_for_Best_Chamber_Music_Performance|Grammy Award for Best Chamber Music Performance]] "
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"index": 5,
-				"tag_type": "ul",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|21st_Grammy_Awards|1979]] *[[LINK|lang_en|Ludwig_van_Beethoven|Beethoven]] : [[LINK|lang_en|List_of_compositions_by_Ludwig_van_Beethoven#Violin_sonatas|Sonatas for Violin and Piano]] ([[LINK|lang_en|Itzhak_Perlman|Itzhak Perlman]] & Vladimir Ashkenazy)*"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|24th_Grammy_Awards|1982]] *[[LINK|lang_en|Pyotr_Ilyich_Tchaikovsky|Tchaikovsky]] : [[LINK|lang_en|Piano_Trio_(Tchaikovsky)|Piano Trio in A minor]] (Vladimir Ashkenazy, Itzhak Perlman, [[LINK|lang_en|Lynn_Harrell|Lynn Harrell]])*"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|30th_Grammy_Awards|1988]] *[[LINK|lang_en|Ludwig_van_Beethoven|Beethoven]] : [[LINK|lang_en|List_of_compositions_by_Ludwig_van_Beethoven#Piano_trios|The Complete Piano Trios]] (Vladimir Ashkenazy, Itzhak Perlman, Lynn Harrell)*"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			},
-			{
-				"index": 6,
-				"tag_type": "dl",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "dl",
-						"attrs": {
-							"style": {}
-						},
-						"items": [
-							{
-								"index": 0,
-								"attrs": {
-									"style": {}
-								},
-								"tag_type": "dt",
-								"content": [
-									{
-										"type": "text",
-										"content": [
-											{
-												"index": 0,
-												"type": "sentence",
-												"text": " [[LINK|lang_en|Grammy_Award_for_Best_Instrumental_Soloist_Performance_(without_orchestra)|Grammy Award for Best Instrumental Soloist Performance]] "
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
-			},
-			{
-				"index": 7,
-				"tag_type": "ul",
-				"attrs": {
-					"style": {}
-				},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|28th_Grammy_Awards|1986]] *[[LINK|lang_en|Maurice_Ravel|Ravel]] : [[LINK|lang_en|Gaspard_de_la_nuit|Gaspard de la nuit]]; [[LINK|lang_en|Pavane_pour_une_infante_défunte|Pavane pour une infante défunte]]; [[LINK|lang_en|Valses_nobles_et_sentimentales_(Ravel)|Valses nobles et sentimentales]] *"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|42nd_Grammy_Awards|2000]] *[[LINK|lang_en|Dmitri_Shostakovich|Shostakovich]] : [[LINK|lang_en|24_Preludes_and_Fugues_(Shostakovich)|24 Preludes and Fugues, Op. 87]] *"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
+				"items": []
 			}
 		],
 		"images": []
