@@ -81,7 +81,7 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 
 
 			// Get the srcset, if present
-			if (theAttribs.srcset){
+			if (theAttribs && theAttribs.srcset){
 				let srcsetString = theAttribs.srcset;
 
 				// Fix upload.wikimedia.org 
@@ -97,18 +97,18 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 			if (theHeight * theWidth >= 5000){
 
 				// Add the height and width, if present
-				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
 					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
 					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
 				}
-				else if(theAttribs.width && theAttribs.height){
+				else if(theAttribs && theAttribs.width && theAttribs.height){
 					workingMainPhoto.media_props.height = parseInt(theAttribs.height);
 					workingMainPhoto.media_props.width = parseInt(theAttribs.width);
 				}
 
 				// If there is more than one image in the nearest tr, do not extract
-				let $extractTD = $(img_anchor).closest("td");
-				let $extractTR = $($extractTD).closest("tr");
+				let $extractTD = $(img_anchor).parentsUntil("td");
+				let $extractTR = $($extractTD).parentsUntil("tr");
 
 				// Look for multiple images within the td
 				let rowImages = $($extractTR).find('img');

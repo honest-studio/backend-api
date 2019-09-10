@@ -1,0 +1,1060 @@
+{
+  "page_title": [
+    {
+      "type": "sentence",
+      "index": 0,
+      "text": "Agia Varvara, Paphos"
+    }
+  ],
+  "main_photo": [
+    {
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Cyprus_location_map.svg",
+      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
+      "caption": null,
+      "type": "main_photo",
+      "attribution_url": "https://en.wikipedia.org/wiki/File:Cyprus_location_map.svg",
+      "media_props": {
+        "type": "main_photo",
+        "height": 761,
+        "width": 1276,
+        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x"
+      },
+      "timestamp": "2019-09-10T02:18:30.855Z",
+      "category": "PICTURE",
+      "mime": "image/svg+xml"
+    }
+  ],
+  "infobox_html": {
+    "type": "wikitable",
+    "attrs": {
+      "className": "infobox geography vcard",
+      "style": {
+        "width": "23em"
+      }
+    },
+    "caption": {
+      "attrs": {},
+      "sentences": []
+    },
+    "thead": {
+      "rows": [],
+      "attrs": {}
+    },
+    "tbody": {
+      "attrs": {
+        "style": {}
+      },
+      "rows": [
+        {
+          "index": 0,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "fontSize": "1.25em",
+                  "fontWeight": "bold",
+                  "whiteSpace": "nowrap"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "display": "inline"
+                    },
+                    "className": "fn org"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "Agia Varvara"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "br",
+                  "tag_class": "void",
+                  "attrs": {
+                    "style": {}
+                  },
+                  "content": []
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "className": "nickname",
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "Αγία Βαρβάρα"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "br",
+                      "tag_class": "void",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "*Engindere* / *Ayvarvara*"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "className": "center",
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "div",
+                      "tag_class": "block",
+                      "attrs": {
+                        "style": {
+                          "width": "300px",
+                          "float": "none",
+                          "clear": "both",
+                          "marginLeft": "auto",
+                          "marginRight": "auto"
+                        }
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "div",
+                          "tag_class": "block",
+                          "attrs": {
+                            "style": {
+                              "width": "300px",
+                              "padding": "0"
+                            }
+                          },
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "div",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "position": "relative",
+                                  "width": "300px"
+                                },
+                                "className": "geonugget"
+                              },
+                              "content": [
+                                {
+                                  "type": "tag",
+                                  "tag_type": "a",
+                                  "tag_class": "inline",
+                                  "attrs": {
+                                    "href": "/wiki/File:Cyprus_location_map.svg",
+                                    "className": "image",
+                                    "title": "Agia Varvara is located in Cyprus",
+                                    "style": {}
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "img",
+                                      "tag_class": "void",
+                                      "attrs": {
+                                        "alt": "Agia Varvara is located in Cyprus",
+                                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
+                                        "decoding": "async",
+                                        "width": "300",
+                                        "height": "179",
+                                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x",
+                                        "data-file-width": "1276",
+                                        "data-file-height": "761",
+                                        "style": {}
+                                      },
+                                      "content": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "tag",
+                                  "tag_type": "div",
+                                  "tag_class": "block",
+                                  "attrs": {
+                                    "style": {
+                                      "position": "absolute",
+                                      "top": "74.96%",
+                                      "left": "15.237%"
+                                    }
+                                  },
+                                  "content": [
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "div",
+                                      "tag_class": "block",
+                                      "attrs": {
+                                        "style": {
+                                          "position": "absolute",
+                                          "left": "-3px",
+                                          "top": "-3px",
+                                          "lineHeight": "0"
+                                        }
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "tag",
+                                          "tag_type": "img",
+                                          "tag_class": "void",
+                                          "attrs": {
+                                            "alt": "Agia Varvara",
+                                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png",
+                                            "decoding": "async",
+                                            "title": "Agia Varvara",
+                                            "width": "6",
+                                            "height": "6",
+                                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x",
+                                            "data-file-width": "64",
+                                            "data-file-height": "64",
+                                            "className": "geodot",
+                                            "style": {}
+                                          },
+                                          "content": []
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "tag",
+                                      "tag_type": "div",
+                                      "tag_class": "block",
+                                      "attrs": {
+                                        "style": {
+                                          "fontSize": "90%",
+                                          "lineHeight": "110%",
+                                          "position": "absolute",
+                                          "width": "6em",
+                                          "top": "4px",
+                                          "left": "-3em",
+                                          "textAlign": "center"
+                                        }
+                                      },
+                                      "content": [
+                                        {
+                                          "type": "tag",
+                                          "tag_type": "div",
+                                          "tag_class": "block",
+                                          "attrs": {
+                                            "style": {
+                                              "display": "inline",
+                                              "padding": "1px"
+                                            }
+                                          },
+                                          "content": [
+                                            {
+                                              "type": "text",
+                                              "content": [
+                                                {
+                                                  "index": 0,
+                                                  "type": "sentence",
+                                                  "text": "Agia Varvara"
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "div",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {}
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "Location in Cyprus"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "attrs": {
+            "className": "mergedbottomrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Coordinates: "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "plainlinks nourlexpansion",
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "34°45′2″N 32°30′41″E"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontSize": "small"
+                    }
+                  },
+                  "content": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Country"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "flagicon",
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/23px-Flag_of_Cyprus.svg.png",
+                        "decoding": "async",
+                        "width": "23",
+                        "height": "15",
+                        "className": "thumbborder",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/35px-Flag_of_Cyprus.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/45px-Flag_of_Cyprus.svg.png 2x",
+                        "data-file-width": "900",
+                        "data-file-height": "600",
+                        "style": {}
+                      },
+                      "content": []
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Cyprus|Cyprus]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {
+            "className": "mergedrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Districts_of_Cyprus|District]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Paphos_District|Paphos District]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Population"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal",
+                      "display": "inline"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "span",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "className": "nowrap",
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "(2011)[[CITE|1|http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {
+            "className": "mergedrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": " • Total"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "172"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {
+            "className": "mergedtoprow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Time_zone|Time zone]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|UTC%2B2|UTC+2]] ([[LINK|lang_en|Eastern_European_Time|EET]])"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {
+            "className": "mergedrow",
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {}
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "whiteSpace": "nowrap"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": " • Summer ([[LINK|lang_en|Daylight_saving_time|DST]])"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|UTC%2B3|UTC+3]] ([[LINK|lang_en|Eastern_European_Summer_Time|EEST]])"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tfoot": {
+      "rows": [],
+      "attrs": {}
+    }
+  },
+  "page_body": [
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "**Agia Varvara** ([[LINK|lang_en|Greek_language|Greek]]: Αγία Βαρβάρα, [[LINK|lang_en|Turkish_language|Turkish]]: *Engindere* or *Ayvarvara*) is a village located in the [[LINK|lang_en|Paphos_District|Paphos District]] of [[LINK|lang_en|Cyprus|Cyprus]]. Prior to 1974, the village was largely inhabited by Turkish Cypriots.[[CITE|2|https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg]] Afterwards, the Turkish Cypriot population was relocated to [[LINK|lang_en|Karavas|Karavas]], [[LINK|lang_en|Trachoni,_Nicosia|Trachoni]], [[LINK|lang_en|Pentageia|Pentageia]], [[LINK|lang_en|Famagusta|Famagusta]] and [[LINK|lang_en|Morphou|Morphou]] and was partially replaced by displaced Greek Cypriots from the north.[[CITE|3|http://www.prio-cyprus-displacement.net/default.asp?id=471]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "style": {}
+          }
+        }
+      ],
+      "images": []
+    }
+  ],
+  "infoboxes": [],
+  "citations": [
+    {
+      "url": "http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 1,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Census 2011"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-10T02:18:30.858Z",
+      "mime": null
+    },
+    {
+      "url": "https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg",
+      "thumb": null,
+      "category": "PICTURE",
+      "citation_id": 2,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"1960\". Archived from the original on 2007-10-28. Retrieved 2009-06-14. Cite uses deprecated parameter |deadurl= (help)"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-10T02:18:30.858Z",
+      "mime": "image/jpeg"
+    },
+    {
+      "url": "http://www.prio-cyprus-displacement.net/default.asp?id=471",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 3,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"AGIA VARVARA\". PRIO Cyprus Displacement Center. Retrieved 28 March 2015."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-10T02:18:30.858Z",
+      "mime": null
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Agia_Varvara%2C_Paphos",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 4,
+      "description": [
+        {
+          "index": 0,
+          "text": "The original version of this page is from Wikipedia, you can edit the page right here on Everipedia.",
+          "type": "sentence"
+        },
+        {
+          "index": 1,
+          "text": "Text is available under the Creative Commons Attribution-ShareAlike License.",
+          "type": "sentence"
+        },
+        {
+          "index": 2,
+          "text": "Additional terms may apply.",
+          "type": "sentence"
+        },
+        {
+          "index": 3,
+          "text": "See everipedia.org/everipedia-termsfor further details.",
+          "type": "sentence"
+        },
+        {
+          "index": 4,
+          "text": "Images/media credited individually (click the icon for details).",
+          "type": "sentence"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-10T02:18:32.206Z",
+      "mime": null
+    }
+  ],
+  "media_gallery": [],
+  "metadata": [
+    {
+      "key": "page_type",
+      "value": "Place"
+    },
+    {
+      "key": "is_removed",
+      "value": false
+    },
+    {
+      "key": "is_adult_content",
+      "value": false
+    },
+    {
+      "key": "sub_page_type",
+      "value": null
+    },
+    {
+      "key": "is_wikipedia_import",
+      "value": true
+    },
+    {
+      "key": "is_indexed",
+      "value": false
+    },
+    {
+      "key": "bing_index_override",
+      "value": true
+    },
+    {
+      "key": "is_locked",
+      "value": false
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:20 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Swan_Puka"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Swan_Puka"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:22 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Oreostylidium"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Oreostylidium"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:25 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Hillsong_International_Leadership_College"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Hillsong_International_Leadership_College"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:28 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "The_Eight_Truths"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "The_Eight_Truths"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/10/2019 2:18:30 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Agia_Varvara,_Paphos"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Agia_Varvara,_Paphos"
+    }
+  ],
+  "amp_info": {
+    "load_youtube_js": false,
+    "load_audio_js": false,
+    "load_video_js": false,
+    "lightboxes": []
+  },
+  "ipfs_hash": "QmXiNCgWBoDkPtrpJNkY5ahhGsUnpKphXZx3YMKdM8PEyg"
+}

@@ -13,6 +13,7 @@ export const ReactAttrConvertMap = {
     autoComplete: 'autocomplete',
     autoFocus: 'autofocus',
     autoPlay: 'autoplay',
+    // backgroundColor: 'bgcolor', // Doesn't work
     capture: 'capture',
     cellPadding: 'cellpadding',
     cellSpacing: 'cellspacing',

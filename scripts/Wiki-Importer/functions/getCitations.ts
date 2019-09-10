@@ -62,7 +62,7 @@ let defaultDescription: Sentence[] = [
 
 // Parse out the citations from Wikipedia
 export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<CitationReturnPack> => { 
-	console.log(chalk.yellow.bold("===================📚 CITATIONS 📚===================="));
+	console.log(chalk.yellow.bold("============📚 CITATIONS AND GALLERIES 📚============="));
 	const $: CheerioStatic = input_pack.cheerio_static;
 	let citations: Citation[] = []; // Instantiate return object - stores all citation objects 
 	
@@ -112,9 +112,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			if(theInnerURL[0] == "#"){
 				let linked_id = theInnerURL;
 				let linked_id_escaped = cheerio_css_cleaner(linked_id);
+
 				if (linked_id){
 					$(`${linked_id_escaped} a`).each((idx, inner_anchor) => {
+
+				
 						let inner_href = inner_anchor.attribs['href'];
+						// console.log($.html(linked_id_escaped))
 						if(inner_href){
 							// Look for an ISBN
 							if(inner_href.search(/Special:BookSources/gimu) >= 0){
@@ -127,7 +131,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 								raw_citn.issn = $(inner_anchor).text().trim();
 							}
 						}
-						$(inner_anchor).remove();
+						// $(inner_anchor).remove();
 					})
 				}
 				$(possible_anchor).replaceWith($(linked_id_escaped).contents()); 
@@ -158,8 +162,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			raw_citn.text = $(raw_citn.note_element)
 								.text()
 								.trim();
-			raw_citn.url = `https://openlibrary.org/search?q=${encodeURIComponent(raw_citn.text.substr(0, 50))}`;
+			raw_citn.url = `https://openlibrary.org/search?q=${
+				encodeURIComponent(raw_citn.text.substr(0, 50))
+					.replace(/\(/g, "%28")
+					.replace(/\)/g, "%29")
+			}`;
 		}
+		// console.log(raw_citn)
 		return raw_citn;
 	})
 	process.stdout.write(chalk.yellow(` DONE\n`));
@@ -300,6 +309,113 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	citations = _.sortBy(citations, ctn => ctn.citation_id);
 	process.stdout.write(chalk.yellow(` DONE\n`));
 
+	// Look for galleries
+	console.log(chalk.yellow.bold(`---Looking for a photo gallery---`));
+	$('ul.gallery > .gallerybox').each((idx, gal_box) => {
+
+		let img_anchor = $(gal_box).find('a.image').eq(0)[0];
+		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
+
+		let workingCitation: Citation = {
+			url: null,
+			thumb: null,
+			category: null,
+			citation_id: available_citation_id,
+			description: null,
+			social_type: null,
+			attribution: null,
+			timestamp: new Date(), 
+			mime: null,
+			media_props: {
+				type: 'normal'
+			}
+		};
+		available_citation_id++;
+
+		if(inner_href.search(/File/gimu) >= 0){
+			// Set the attribution url
+			workingCitation.attribution = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
+
+			let inner_img = $(img_anchor).find("img");
+			let inner_img_elem = inner_img.eq(0)[0];
+			let theAttribs = inner_img_elem.attribs;
+			let theWorkingURL = theAttribs.src ? theAttribs.src : workingCitation.url;
+			
+			// Fix upload.wikimedia.org
+			theWorkingURL = theWorkingURL.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+
+			// Set the thumb
+			workingCitation.thumb = theWorkingURL;
+
+			// Get the full size image
+			theWorkingURL = theWorkingURL.replace("/thumb", "");
+			let quickSplit = theWorkingURL.split("/");
+			if (quickSplit[quickSplit.length - 1] 
+				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+			){
+				theWorkingURL = quickSplit.slice(0, -1).join("/");
+			}
+			workingCitation.url = theWorkingURL;
+
+
+			// Get the srcset, if present
+			if (theAttribs && theAttribs.srcset){
+				let srcsetString = theAttribs.srcset;
+
+				// Fix upload.wikimedia.org 
+				srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+				
+				// Add the srcset
+				workingCitation.media_props.srcSet = srcsetString;
+			}
+
+			// Check the size to max sure it isn't a crappy flagicon or something
+			let theHeight = parseInt(theAttribs.height);
+			let theWidth = parseInt(theAttribs.width);
+			if (theHeight * theWidth >= 5000){
+
+				// Add the height and width, if present
+				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
+					workingCitation.media_props.height = parseInt(theAttribs['data-file-height']);
+					workingCitation.media_props.width = parseInt(theAttribs['data-file-width']);
+				}
+				else if(theAttribs && theAttribs.width && theAttribs.height){
+					workingCitation.media_props.height = parseInt(theAttribs.height);
+					workingCitation.media_props.width = parseInt(theAttribs.width);
+				}
+
+				// If there is more than one image in the nearest tr, do not extract
+				let $extractGallery = $(gal_box).parentsUntil("ul.gallery");
+
+				// Remove the img's parent <a> first
+				$(img_anchor).remove();
+
+				// Try to get a caption
+				workingCitation.description = accumulateText(gal_box, $, []);
+
+				// Remove the surrounding <td>
+				$($extractGallery).remove();
+				
+				let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
+				console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
+			}
+			else{
+				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
+				// Do nothing
+			}
+
+			workingCitation.category = linkCategorizer(theWorkingURL);
+			workingCitation.social_type = socialURLType(theWorkingURL);
+			workingCitation.mime = mimePackage.getType(theWorkingURL);
+
+		};
+		citations.push(workingCitation);
+	})
+	console.log(chalk.yellow.bold(`--------------DONE--------------`));
+	
+	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
+
 	// Chop off the area below certain elements
 	process.stdout.write(chalk.yellow(`Removing stuff below the citations...`));
 	POST_CITATION_CHOP_BELOW.forEach(pack => {
@@ -319,20 +435,6 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 		});
 	});
 	process.stdout.write(chalk.yellow(` DONE\n`));
-
-
-	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
-
-
-	// // OPTIONAL: Add thumbnails
-	// citations = citations.map(ctn => {
-	// 	switch(ctn.category){
-	// 		case 'NONE': {
-	// 			break;
-	// 		}
-	// 	}
-	// 	return ctn;
-	// })
 
 	// Default push 
 	citations.push({

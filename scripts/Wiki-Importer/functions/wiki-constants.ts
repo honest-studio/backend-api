@@ -163,7 +163,9 @@ export const WIKI_LANG_PACKAGES = {
 export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
     { target_tag: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
     { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" },
-    { target_tag: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" }
+    { target_tag: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" },
+    { target_tag: "table", target_class: "tracklist", replacement_tag: "table", replacement_class: "wikitable tracklist" }
+
 ];
 
 // Strip out these crappy images because they look ugly and also mess up the profile-picture-finding algorithm
@@ -238,6 +240,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     // { tag: "div", id: null, class: "mw-references-wrap" }, 
     { tag: "div", id: null, class: "navbox" }, // Various navboxes
     { tag: "table", id: null, class: "stub" }, // Stub notice
+    { tag: "table", id: 'disambigbox', class: null }, // Disambiguation box
 ]
 
 // Some elements need to be unwrapped
@@ -260,6 +263,7 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "Bibliography", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "Footnotes", class: null }, // References section
+    { parent: { tag: 'h2'}, tag: "span", id: "Gallery", class: null }, // Image gallery section
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
 

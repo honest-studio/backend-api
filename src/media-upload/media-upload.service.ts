@@ -13,7 +13,7 @@ import * as imagemin_Jpegtran from 'imagemin-jpegtran';
 import * as imagemin_Optipng from 'imagemin-optipng';
 import * as imagemin_Svgo from 'imagemin-svgo';
 import * as imagemin_Webp from 'imagemin-webp';
-import Jimp = require('jimp');
+import Jimp from 'jimp';
 import * as mimeClass from 'mime';
 import * as fetch from 'node-fetch';
 import * as path from 'path';
@@ -478,7 +478,6 @@ export class MediaUploadService {
                 category: 'NONE'
             };
 
-
             // Determine how to move forward based on the MIME type
             if (mimePack.mime.includes('image')) {
                 switch (mimePack.mime) {
@@ -544,7 +543,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the BMP and convert it to JPEG due to AMP and compatibility issues (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -555,7 +554,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Set the BMP thumbnail as a JPEG
-                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -576,7 +575,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the TIFF and convert it to JPEG due to AMP and compatibility issues (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -587,7 +586,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Set the TIFF thumbnail as a JPEG
-                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -616,7 +615,7 @@ export class MediaUploadService {
                         //         .then((pngFrame) => {
                         //             console.log(pngFrame);
                         //             // return pngFrame;
-                        //             return Jimp.default.read(pngFrame)
+                        //             return (Jimp as any).read(pngFrame)
                         //         })
                         //         .then((image) => { 
                         //             return image
@@ -662,7 +661,7 @@ export class MediaUploadService {
                         // Otherwise, errors will show up
 
                         // Convert the PNG to JPEG for the thumbnail
-                        bufferPack.thumbBuf = await Jimp.default.read(bufferPack.mainBuf)
+                        bufferPack.thumbBuf = await (Jimp as any).read(bufferPack.mainBuf)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -674,7 +673,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Resize the PNG and convert to AMP JPEG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.default.read(bufferPack.mainBuf)
+                        bufferPack.mainBuf = await (Jimp as any).read(bufferPack.mainBuf)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -706,7 +705,7 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/jpeg';
 
                         // Resize the JPEG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -717,7 +716,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
                         // Resize the JPEG for its thumbnail
-                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .background(0xffffffff)
@@ -739,13 +738,13 @@ export class MediaUploadService {
                         varPack.thumbMIME = 'image/png';
 
                         // Resize the PNG due to AMP (1200px width minimum)
-                        bufferPack.mainBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) => image.scaleToFit(mainWidth, mainHeight).getBufferAsync('image/png'))
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
                         // Resize the PNG for its thumbnail
-                        bufferPack.thumbBuf = await Jimp.default.read(bufferToUse)
+                        bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) =>
                                 image
                                     .scaleToFit(thumbWidth, thumbHeight)
@@ -787,7 +786,7 @@ export class MediaUploadService {
                     bufferPack.mainBuf = bufferToUse;
 
                     // Resize the snapshot JPEG
-                    bufferPack.thumbBuf = await Jimp.default.read(fs.readFileSync(snapshotPath))
+                    bufferPack.thumbBuf = await (Jimp as any).read(fs.readFileSync(snapshotPath))
                         .then((image) =>
                             image
                                 .background(0xffffffff)
@@ -813,7 +812,7 @@ export class MediaUploadService {
             } else {
                 // Normal file
                 useMediaRoute = false;
-                console.log(mimePack)
+                console.log(mimePack);
                 varPack.suffix = mimePack.ext;
                 varPack.mainMIME = mimePack.mime;
                 bufferPack.mainBuf = bufferToUse;
@@ -1049,7 +1048,7 @@ export class MediaUploadService {
                 });
             });
 
-            console.log(returnPack)
+            console.log(returnPack);
             return returnPack;
         } catch (e) {
             return null;

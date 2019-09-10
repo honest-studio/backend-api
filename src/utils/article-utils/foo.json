@@ -4,20 +4,33 @@
 			{
 				"index": 0,
 				"tag_type": "p",
-				"attrs": {},
+				"attrs": {
+					"style": {}
+				},
+				"items": []
+			},
+			{
+				"index": 1,
+				"tag_type": "div",
+				"attrs": {
+					"className": "thumb tright",
+					"style": {}
+				},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**Null** may refer to:"
+						"text": "**Spahn Ranch** was an [[LINK|lang_en|Electro-industrial|electro-industrial]] group from [[LINK|lang_en|Los_Angeles|Los Angeles]]. Active from 1992 to 2000, the band was well known in a subgenre of industrial music for its fusion of [[LINK|lang_en|Electronic_dance_music|electronic dance]], [[LINK|lang_en|Industrial_Music|industrial]] and [[LINK|lang_en|Gothic_music|gothic]] music."
 					}
 				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": []
 			}
 		],
 		"images": []
@@ -28,13 +41,109 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "science-technology-and-mathematics"
+					"id": "history",
+					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Science, technology, and mathematics"
+						"text": "History"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The band was formed in 1992 in Los Angelos by [[LINK|lang_en|Matt_Green_(musician)|Matt Green]] and his New York–based collaborator, Rob Morton. They collectively used the funds they had saved up to jump-start the band. Rob Morton had been Matt Green's musical partner for the 5 years prior. That same year in 1992, they signed to [[LINK|lang_en|Cleopatra_Records|Cleopatra Records]] and released a self-titled, four-song [[LINK|lang_en|Extended_play|EP]], with vocals supplied by Scott \"Chopper\" Franklin (later to become bass player for [[LINK|lang_en|The_Cramps|The Cramps]]) Scott Franklin left another band to provide vocals for Spahn Ranch."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In 1993, they added vocalist [[LINK|lang_en|Athan_Maroulis|Athan Maroulis]] and recorded their debut album, *Collateral Damage*. Their second album, *The Coiled One*, appeared two years later in the midst of Morton leaving the band due to creative and logistical differences. After his departure, the line-up was expanded to include [[LINK|lang_en|Christian_Death|Christian Death]] drummer David Glass, Screams for Tina guitarist Kent Bancroft, and Tubalcain drummer Harry Lewis. This offered a beginning of the fuller, more diverse, dark electro-industrial sound that Spahn Ranch would continue to pursue. By 1997, Spahn Ranch had pared themselves down to the three-piece unit of Green, Maroulis and Lewis."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Spahn Ranch continued to release albums throughout the late 1990s. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "*Architecture*, released in 1997, featured contributions from [[LINK|lang_en|Killing_Joke|Killing Joke]] / [[LINK|lang_en|Prong_(band)|Prong]] bassist [[LINK|lang_en|Paul_Raven_(musician)|Paul Raven]] and [[LINK|lang_en|Rockats|Rockats]] / [[LINK|lang_en|Nancy_Sinatra|Nancy Sinatra]] guitarist [[LINK|lang_en|Danny_B._Harvey|Danny B. Harvey]]. This album took an even more experimental approach to the Spahn Ranch sound, incorporating elements of drum and bass, dub and for the first time, live guitar parts. *Beat Noir*, in 1998, followed a similar path even further and included work with [[LINK|lang_en|Bauhaus_(band)|Bauhaus]] / [[LINK|lang_en|Love_and_Rockets_(band)|Love & Rockets]] bassist [[LINK|lang_en|David_J|David J]]."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The band regularly toured throughout North America during their existence with the likes of [[LINK|lang_en|Front_Line_Assembly|Front Line Assembly]], [[LINK|lang_en|Front_242|Front 242]], [[LINK|lang_en|Switchblade_Symphony|Switchblade Symphony]] and [[LINK|lang_en|Apoptygma_Berzerk|Apoptygma Berzerk]]. Spahn Ranch also made a couple of European treks prior to their demise as a group in 2000."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "*Closure*, their final album, was recorded in 2000 and released in 2001."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "discography",
+					"style": {}
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Discography"
 					}
 				]
 			}
@@ -47,20 +156,23 @@
 				"index": 0,
 				"tag_type": "h3",
 				"attrs": {
-					"id": "computing"
+					"id": "albumseps",
+					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Computing"
+						"text": "Albums/EP's"
 					}
 				]
 			},
 			{
 				"index": 1,
 				"tag_type": "ul",
-				"attrs": {},
+				"attrs": {
+					"style": {}
+				},
 				"items": [
 					{
 						"type": "list-item",
@@ -69,7 +181,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_(SQL)|Null (SQL)]] (or NULL), a special marker and keyword in SQL indicating that something has no value"
+								"text": "*Spahn Ranch* (1992) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -81,7 +193,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_character|Null character]], the zero-valued ASCII character, also designated by NUL , often used as a terminator, separator or filler. This symbol has no visual representation."
+								"text": "*Collateral Damage* (1993) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -93,7 +205,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_device|Null device]], a special computer file that discards all data written to it"
+								"text": "*Collateral* (1993) Zoth Ommog, Germany"
 							}
 						],
 						"tag_type": "li"
@@ -105,7 +217,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_modem|Null modem]], a specially wired serial communications cable"
+								"text": "*The Blackmail Starters Kit* (1994) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -117,7 +229,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_object_pattern|Null object pattern]], a software design pattern using an object with defined neutral behavior"
+								"text": "*Breath and Taxes* (1994) Zoth Ommog, Germany"
 							}
 						],
 						"tag_type": "li"
@@ -129,7 +241,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_pointer|Null pointer]] (sometimes written NULL , nil , or None ), used in computer programming for an uninitialized, undefined, empty, or meaningless value"
+								"text": "*The Coiled One* (1995) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -141,7 +253,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_route|Null route]], a network route that goes nowhere"
+								"text": "*In Parts Assembled Solely* (1996) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -153,7 +265,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_string|Null string]], the unique string of length zero (in computer science and formal language theory)"
+								"text": "*Architecture* (1997) Cleopatra, US"
 							}
 						],
 						"tag_type": "li"
@@ -165,7 +277,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null-terminated_string|Null-terminated string]], a character string of which the length is determined by the first null-character (in programming language C and related languages)"
+								"text": "*Architecture: Beta* (1997) Out of Line, Germany"
 							}
 						],
 						"tag_type": "li"
@@ -177,7 +289,55 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Nullable_type|Nullable type]], a feature of some statically-typed programming languages which allows a data type to be set to the special value NULL"
+								"text": "*Retrofit* (1998) Cleopatra US / Out of Line, Germany"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Limited Edition 12\"*- first 4 tracks from *Retrofit* (1998) Cleopatra, US"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Beat Noir* (1998) Cleopatra, US / Out of Line, Germany"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 12,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Anthology 1992-1994* (2000) Cleopatra, US"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 13,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Closure* (2001) Cleopatra, US / Cryonica, UK"
 							}
 						],
 						"tag_type": "li"
@@ -193,70 +353,37 @@
 				"index": 0,
 				"tag_type": "h3",
 				"attrs": {
-					"id": "mathematics"
+					"id": "compilation-appearances",
+					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Mathematics"
+						"text": "Compilation appearances"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(mathematics)|Null (mathematics)]], a zero value in several branches of mathematics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_set|Null set]], a set that is negligible in some sense Also an older term for the [[LINK|lang_en|Empty_set|empty set]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
+				"tag_type": "p",
 				"attrs": {
-					"id": "physics"
+					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Physics"
+						"text": "(non-LP tracks)"
 					}
 				]
 			},
 			{
-				"index": 1,
+				"index": 2,
 				"tag_type": "ul",
-				"attrs": {},
+				"attrs": {
+					"style": {}
+				},
 				"items": [
 					{
 						"type": "list-item",
@@ -265,7 +392,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_(physics)|Null (physics)]], a point in a field where the field quantity is zero"
+								"text": "*The Whip*- \"Machine Politics (Original Version)\" (1993) Cleopatra, US (CD and cassette) / Music Research, Germany / Jungle Records, UK (CD only)"
 							}
 						],
 						"tag_type": "li"
@@ -277,7 +404,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_(radio)|Null (radio)]], a concept in electromagnetism"
+								"text": "*Mysterious Encounters*- \"Antibody (Alternate Mix)\" (1994) Cleopatra, US (CD and cassette)"
 							}
 						],
 						"tag_type": "li"
@@ -289,69 +416,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Causal_structure#Tangent_vectors|Null vectors or curves]] in the causal structure of a Lorentzian manifold such as a Minkowski space-time"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "other-uses-in-science-and-technology"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Other uses in science and technology"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_allele|Null allele]], in genetics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_cipher|Null cipher]], a ciphertext symbol"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_hypothesis|Null hypothesis]], a concept in statistical hypothesis testing"
+								"text": "*Industrial Revolution Second Edition*- \"Succumber (Blacklist)\" (1994) Cleopatra, US (CD)"
 							}
 						],
 						"tag_type": "li"
@@ -363,7 +428,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_morpheme|Null morpheme]], a concept in linguistics"
+								"text": "*Body Rapture Volume 4*- \"Succumber (Blacklist)\" (1994) Zoth Ommog, Germany (CD)"
 							}
 						],
 						"tag_type": "li"
@@ -375,186 +440,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_result|Null result]], the absence of a hypothesized effect in the outcome of a scientific experiment"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "arts-and-media"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Arts and media"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "music"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Music"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|The_Null_Corporation|The Null Corporation]], an imprint of the band Nine Inch Nails"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(Intronaut_EP)|Null (Intronaut EP)]], 2006"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(Foetus_EP)|Null (Foetus EP)]], 1995"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "other-media"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Other media"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, an identity of the character [[LINK|lang_en|Gray_Fox_(Metal_Gear)|Gray Fox]] in the *Metal Gear Solid: Portable Ops* video game"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, man-eating sentients in the *Downs-Lord Triptich* books by [[LINK|lang_en|John_Whitbourn|John Whitbourn]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null,_the_Living_Darkness|Null, the Living Darkness]], a Marvel Comics character"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, a villain from *[[LINK|lang_en|Teenage_Mutant_Ninja_Turtles_Adventures|Teenage Mutant Ninja Turtles Adventures]] *"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Nulls, worm-like remains of defeated characters in the animated program *[[LINK|lang_en|ReBoot|ReBoot]] *"
+								"text": "*A Saucerful of Pink*- \"One of These Days\" (1995) Cleopatra, US / Cherry Red Records, UK (CD)"
 							}
 						],
 						"tag_type": "li"
@@ -566,7 +452,151 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Type:_Null|Type: Null]], a Gen VII *Pokémon* species introduced in *Pokémon Sun and Moon*"
+								"text": "*The Digital Space Between Vol 2*- \"Forceps (Fezmix)\" (1995,)Cleopatra, US / Hard Records, Denmark (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*There Is No Time*- \"One of These Days (different mix)\" (1995) Ras Dva, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Industrial Revolution Third Edition*- \"Vortex (Extended Mix)\" (1996) Cleopatra, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Vertigo Compilation 3 1996*- \"Locusts (Pygmy Children Mix)\" (1996) Germany (promo-only CD available with *Vertigo* magazine)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Covered in Black*- \"Shot Down in Flames\" (1997) Cleopatra, US / RCA Victor, Japan / Zebra-Cherry Red Records, UK (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Ultimate Drum 'N' Bass*- \"The Mark Inside\" (1997) Hypnotic, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Electronic Lust v. 1*- \"In the Aftermath (Astralasia Mix 2)\" (1998) Orkus, Germany (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 12,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Hymns of the Warlock*- \"Dig It\" (1998) Cleopatra, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 13,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*The Black Bible*- \"An Exit (Alternate Mix)\" (1999) Cleopatra, US (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 14,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Virgin Voices*- \"Swim\" (1999) Cleopatra, US / RCA Victor, Japan (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 15,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*We Will Follow*- \"I Will Follow\" 1999, Cleopatra, US / Anagram Records, UK (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 16,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Awake the Machines Vol. 2*- \"Remnants (CKultur Mutation mix)\" (1999) Out of Line, Germany (CD)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 17,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "*Darken My Fire*- \"Strange Days\" (2000) Cleopatra, US / EMI, Japan / Anagram Records, UK (CD)"
 							}
 						],
 						"tag_type": "li"
@@ -580,22 +610,25 @@
 		"paragraphs": [
 			{
 				"index": 0,
-				"tag_type": "h2",
+				"tag_type": "h3",
 				"attrs": {
-					"id": "people"
+					"id": "music-videos",
+					"style": {}
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "People"
+						"text": "Music videos"
 					}
 				]
 			},
 			{
 				"index": 1,
 				"tag_type": "ul",
-				"attrs": {},
+				"attrs": {
+					"style": {}
+				},
 				"items": [
 					{
 						"type": "list-item",
@@ -604,7 +637,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Christopher_Null|Christopher Null]] (born 1971), American film critic"
+								"text": "*Breath and Taxes* (1993)"
 							}
 						],
 						"tag_type": "li"
@@ -616,196 +649,20 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Eduard_van_der_Nüll|Eduard van der Nüll]] (1812–1868), Austrian architect"
+								"text": "*Locusts* (1995), directed by [[LINK|lang_en|Joseph_Kahn|Joseph Kahn]]"
 							}
 						],
 						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Gary_Null|Gary Null]] (born 1945), American radio host and author on alternative medicine"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Keith_Null|Keith Null]] (born 1985), American football player"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "other-uses"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Other uses"
 					}
 				]
 			},
 			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_and_void|Null and void]], having no legal validity"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null-A|Null-A]], a term used in science fiction, referring to Korzybski's notation [[INLINE_IMAGE|https://wikimedia.org/api/rest_v1/media/math/render/svg/92efef0e89bdc77f6a848764195ef5b9d9bfcc6a||{overline {A}}|hundefined|wundefined|mwe-math-fallback-image-inline]] as an abbreviation for \"non-Aristotelian\" logic"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Stunde_Null|Stunde Null]], a term used in Germany to mark the end of the Second World War"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
+				"index": 2,
+				"tag_type": "p",
 				"attrs": {
-					"id": "see-also"
+					"style": {}
 				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "See also"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Ø_(disambiguation)|Ø (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_symbol_(disambiguation)|Null symbol (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|0_(disambiguation)|0 (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nil_(disambiguation)|Nil (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nul_(disambiguation)|Nul (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
+				"items": []
 			}
 		],
 		"images": []

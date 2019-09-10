@@ -1,4 +1,4 @@
-import { cleanAttrs } from './getAttributes';
+import { cleanAttributes } from '../../../../src/utils/article-utils/article-converter';
 import { getTagClass } from './getTagClass';
 import { nestedContentParser } from '../../../../src/utils/article-utils/article-converter';
 import { DescList, DescListItem } from '../../../../src/types/article';
@@ -17,7 +17,7 @@ export const getDescList = (element, $, internal_citations): DescList => {
 			index: i,
 			tag_type: $item[0].name,
 			tag_class: getTagClass($item[0].name),
-			attrs: cleanAttrs(el.attrs),
+			attrs: cleanAttributes(el.attrs),
 			content: []
 		}
 		
