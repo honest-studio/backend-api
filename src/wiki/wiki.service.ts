@@ -92,7 +92,7 @@ export class WikiService {
     async unmergeProposal(rejected_merge_proposal: any){
         let parsedMergeInfo: MergeProposalParsePack = parseMergeInfoFromProposal(rejected_merge_proposal);
         const prerenderToken = this.config.get('PRERENDER_TOKEN');
-        console.log(util.inspect(parsedMergeInfo, {showHidden: false, depth: null, chalk: true}));
+        // console.log(util.inspect(parsedMergeInfo, {showHidden: false, depth: null, chalk: true}));
 
         // Update the source of the merge
         await this.mysql.TryQuery(
@@ -104,7 +104,7 @@ export class WikiService {
             `,
             [parsedMergeInfo.source.slug, parsedMergeInfo.source.slug, parsedMergeInfo.source.lang]
         );
-        console.log(colors.blue.bold(`Unmerged source [lang_${parsedMergeInfo.source.lang}/${parsedMergeInfo.source.slug}]`));
+        // console.log(colors.blue.bold(`Unmerged source [lang_${parsedMergeInfo.source.lang}/${parsedMergeInfo.source.slug}]`));
         flushPrerenders(parsedMergeInfo.source.lang, parsedMergeInfo.source.slug, prerenderToken);
 
         // Update the target of the merge
