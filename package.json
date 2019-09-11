@@ -21,11 +21,7 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
     "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Make-WebP-Images.js -s 1000 -e 1250",
-<<<<<<< HEAD
     "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 4224498 -e 4224499",
-=======
-    "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 4224450 -e 4224460",
->>>>>>> b06c1f69b3f01a87146058fe88e6840f1baf3c7a
     "maintenance:create-webp": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Make-WebP-Images.js --input '../../../scripts/Non-Lambda/input/slug-list.txt'",
     "maintenance:batch": "tsc --p ./tsconfig.json && python ./scripts/batch/batch-commands.py &",
     "maintenance:batch-burn-lines": "find ./scripts/batch/inputs/ -type f -name 'batch*' | xargs sed -i '1,925d'",
