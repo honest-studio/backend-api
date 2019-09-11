@@ -1,2 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/Phenylalanine_dehydrogenase
-https://en.wikipedia.org/wiki/Phenylalanine_dehydrogenase
+http://127.0.0.1:7777/wiki/lang_en/Caliphate_of_C%25C3%25B3rdoba
+https://en.wikipedia.org/wiki/Caliphate_of_C%C3%B3rdoba
