@@ -1,6 +1,7 @@
 import * as cheerio from 'cheerio';
 import * as mimePackage from 'mime';
 import { MediaUploadService } from '../../../src/media-upload';
+import { parseInternalCitation } from './pagebodyfunctionalities/parseInternalCitation';
 import { Citation, CitationCategoryType, Sentence } from '../../../src/types/article';
 import { cheerio_css_cleaner, linkCategoryFromText } from '../../../src/utils/article-utils/article-tools';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
@@ -179,7 +180,6 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	let await_done = false, await_counter = 0;
 
 	await Promise.all(
-		
 		rawCitations.map(async (raw_citn, idx) => {
 			let workingCitation: Citation = {
 				url: raw_citn.url || null,
@@ -304,10 +304,39 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	});
 	process.stdout.write(chalk.yellow(` DONE\n`));
 
-	// Sort the citations properly
-	process.stdout.write(chalk.yellow(`Sorting the citations...`));
-	citations = _.sortBy(citations, ctn => ctn.citation_id);
-	process.stdout.write(chalk.yellow(` DONE\n`));
+	// Handle external links as citations
+	// Leave the plaintext next to the []
+	$('a.external').each((idx, anchor) => {
+		let theWorkingURL = anchor.attribs['href'];
+		let workingCitation: Citation = {
+			url: theWorkingURL,
+			thumb: null,
+			category: linkCategorizer(theWorkingURL),
+			citation_id: available_citation_id,
+			description: accumulateText(anchor, $, []),
+			social_type: socialURLType(theWorkingURL),
+			attribution: 'rel=nofollow',
+			timestamp: new Date(), 
+			mime: null
+		};
+		switch(workingCitation.category){
+			case 'AUDIO':
+			case 'GIF':
+			case 'PICTURE':
+			case 'NORMAL_VIDEO':
+			case 'FILE': {
+				workingCitation.mime = mimePackage.getType(workingCitation.url);
+				break;
+			}
+		}
+		// Replace the <a> with the citation Markdown
+		let the_plaintext = $(anchor).text();
+		$(anchor).replaceWith(the_plaintext + " " + parseInternalCitation(anchor, $, [], workingCitation.citation_id));
+
+		// Add the citation to the list
+		citations.push(workingCitation);
+		available_citation_id++;
+	});
 
 	// Look for galleries
 	console.log(chalk.yellow.bold(`---Looking for a photo gallery---`));
@@ -386,7 +415,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				}
 
 				// If there is more than one image in the nearest tr, do not extract
-				let $extractGallery = $(gal_box).parentsUntil("ul.gallery");
+				let $extractGallery = $(gal_box).parents("ul.gallery");
 
 				// Remove the img's parent <a> first
 				$(img_anchor).remove();
@@ -414,6 +443,12 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	})
 	console.log(chalk.yellow.bold(`--------------DONE--------------`));
 	
+
+	// Sort the citations properly
+	process.stdout.write(chalk.yellow(`Sorting the citations...`));
+	citations = _.sortBy(citations, ctn => ctn.citation_id);
+	process.stdout.write(chalk.yellow(` DONE\n`));
+
 	// console.log(util.inspect(citations, {showHidden: false, depth: null, chalk: true}));
 
 	// Chop off the area below certain elements

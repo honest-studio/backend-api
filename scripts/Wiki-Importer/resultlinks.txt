@@ -1,10 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/Swan_Puka
-https://en.wikipedia.org/wiki/Swan_Puka
-http://127.0.0.1:7777/wiki/lang_en/Oreostylidium
-https://en.wikipedia.org/wiki/Oreostylidium
-http://127.0.0.1:7777/wiki/lang_en/Hillsong_International_Leadership_College
-https://en.wikipedia.org/wiki/Hillsong_International_Leadership_College
-http://127.0.0.1:7777/wiki/lang_en/The_Eight_Truths
-https://en.wikipedia.org/wiki/The_Eight_Truths
-http://127.0.0.1:7777/wiki/lang_en/Agia_Varvara%2C_Paphos
-https://en.wikipedia.org/wiki/Agia_Varvara,_Paphos
+http://127.0.0.1:7777/wiki/lang_en/Phenylalanine_dehydrogenase
+https://en.wikipedia.org/wiki/Phenylalanine_dehydrogenase

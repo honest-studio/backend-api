@@ -3,33 +3,33 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Agia Varvara, Paphos"
+      "text": "Phenylalanine dehydrogenase"
     }
   ],
   "main_photo": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Cyprus_location_map.svg",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
+      "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
+      "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
       "caption": null,
       "type": "main_photo",
-      "attribution_url": "https://en.wikipedia.org/wiki/File:Cyprus_location_map.svg",
+      "attribution_url": null,
       "media_props": {
         "type": "main_photo",
-        "height": 761,
-        "width": 1276,
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x"
+        "height": null,
+        "width": null,
+        "srcSet": null
       },
-      "timestamp": "2019-09-10T02:18:30.855Z",
-      "category": "PICTURE",
-      "mime": "image/svg+xml"
+      "timestamp": "2019-09-11T00:10:43.770Z",
+      "category": "NONE",
+      "mime": null
     }
   ],
   "infobox_html": {
     "type": "wikitable",
     "attrs": {
-      "className": "infobox geography vcard",
+      "className": "infobox",
       "style": {
-        "width": "23em"
+        "width": "22em"
       }
     },
     "caption": {
@@ -59,86 +59,20 @@
                 "colSpan": "2",
                 "style": {
                   "textAlign": "center",
-                  "fontSize": "1.25em",
-                  "fontWeight": "bold",
-                  "whiteSpace": "nowrap"
+                  "fontSize": "125%",
+                  "fontWeight": "bold"
                 }
               },
               "tag_type": "th",
               "tag_class": "block",
               "content": [
                 {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "display": "inline"
-                    },
-                    "className": "fn org"
-                  },
+                  "type": "text",
                   "content": [
                     {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "Agia Varvara"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "br",
-                  "tag_class": "void",
-                  "attrs": {
-                    "style": {}
-                  },
-                  "content": []
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "className": "nickname",
-                    "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "Αγία Βαρβάρα"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "tag",
-                      "tag_type": "br",
-                      "tag_class": "void",
-                      "attrs": {
-                        "style": {}
-                      },
-                      "content": []
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "*Engindere* / *Ayvarvara*"
-                        }
-                      ]
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "phenylalanine dehydrogenase"
                     }
                   ]
                 }
@@ -149,7 +83,6 @@
         {
           "index": 1,
           "attrs": {
-            "className": "mergedtoprow",
             "style": {}
           },
           "tag_type": "tr",
@@ -160,7 +93,537 @@
               "attrs": {
                 "colSpan": "2",
                 "style": {
-                  "textAlign": "center"
+                  "textAlign": "center",
+                  "backgroundColor": "#ddd"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Identifiers"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Enzyme_Commission_number|EC number]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "1.4.1.20 [[CITE|4|https://www.qmul.ac.uk/sbcs/iubmb/enzyme/EC1/4/1/20.html]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|CAS_registry_number|CAS number]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "69403-12-9 [[CITE|5|http://www.commonchemistry.org/ChemicalDetail.aspx?ref=69403-12-9&title=]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "#ddd"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Databases"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|IntEnz|IntEnz]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "IntEnz view [[CITE|6|https://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec=1.4.1.20]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|BRENDA|BRENDA]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "BRENDA entry [[CITE|7|http://www.brenda-enzymes.org/enzyme.php?ecno=1.4.1.20]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|ExPASy|ExPASy]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "NiceZyme view [[CITE|8|http://www.expasy.org/enzyme/1.4.1.20]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|KEGG|KEGG]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "KEGG entry [[CITE|9|https://www.genome.jp/dbget-bin/www_bget?enzyme+1.4.1.20]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|MetaCyc|MetaCyc]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "metabolic pathway [[CITE|10|https://biocyc.org/META/substring-search?type=NIL&object=1.4.1.20]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|PRIAM_enzyme_specific_profiles|PRIAM]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "profile [[CITE|11|http://priam.prabi.fr/cgi-bin/PRIAM_profiles_CurrentRelease.pl?EC=1.4.1.20]] "
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Protein_Data_Bank|PDB]] structures"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
                 }
               },
               "tag_type": "td",
@@ -168,177 +631,160 @@
               "content": [
                 {
                   "type": "tag",
-                  "tag_type": "div",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontSize": "85%"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "RCSB PDB [[CITE|12|http://www.rcsb.org/pdb/search/smartSubquery.do?smartSearchSubtype=EnzymeClassificationQuery&Enzyme_Classification=1.4.1.20]]  PDBe [[CITE|13|https://www.ebi.ac.uk/pdbe/entry/search/index?ec_number:1.4.1.20]]  PDBsum [[CITE|14|//www.ebi.ac.uk/thornton-srv/databases/cgi-bin/enzymes/GetPage.pl?ec_number=1.4.1.20]] "
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "scope": "row",
+                "style": {
+                  "backgroundColor": "#e7dcc3"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Gene_Ontology|Gene Ontology]]"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontSize": "85%"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "AmiGO [[CITE|15|http://amigo.geneontology.org/amigo/term/GO:0050175]]  / QuickGO [[CITE|16|//www.ebi.ac.uk/QuickGO/term/GO:0050175]] "
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "#eee"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "table",
                   "tag_class": "block",
                   "attrs": {
-                    "className": "center",
-                    "style": {}
+                    "className": "infobox collapsible collapsed",
+                    "style": {
+                      "width": "100%",
+                      "float": "none",
+                      "clear": "none",
+                      "margin": "0",
+                      "borderWidth": "0",
+                      "borderCollapse": "collapse",
+                      "textAlign": "left"
+                    }
                   },
                   "content": [
                     {
                       "type": "tag",
-                      "tag_type": "div",
-                      "tag_class": "block",
+                      "tag_type": "tbody",
+                      "tag_class": "inline",
                       "attrs": {
-                        "style": {
-                          "width": "300px",
-                          "float": "none",
-                          "clear": "both",
-                          "marginLeft": "auto",
-                          "marginRight": "auto"
-                        }
+                        "style": {}
                       },
                       "content": [
                         {
                           "type": "tag",
-                          "tag_type": "div",
+                          "tag_type": "tr",
                           "tag_class": "block",
                           "attrs": {
-                            "style": {
-                              "width": "300px",
-                              "padding": "0"
-                            }
+                            "style": {}
                           },
                           "content": [
                             {
                               "type": "tag",
-                              "tag_type": "div",
+                              "tag_type": "th",
                               "tag_class": "block",
                               "attrs": {
+                                "colSpan": "2",
                                 "style": {
-                                  "position": "relative",
-                                  "width": "300px"
-                                },
-                                "className": "geonugget"
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "a",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "href": "/wiki/File:Cyprus_location_map.svg",
-                                    "className": "image",
-                                    "title": "Agia Varvara is located in Cyprus",
-                                    "style": {}
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "img",
-                                      "tag_class": "void",
-                                      "attrs": {
-                                        "alt": "Agia Varvara is located in Cyprus",
-                                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
-                                        "decoding": "async",
-                                        "width": "300",
-                                        "height": "179",
-                                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x",
-                                        "data-file-width": "1276",
-                                        "data-file-height": "761",
-                                        "style": {}
-                                      },
-                                      "content": []
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {
-                                    "style": {
-                                      "position": "absolute",
-                                      "top": "74.96%",
-                                      "left": "15.237%"
-                                    }
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "position": "absolute",
-                                          "left": "-3px",
-                                          "top": "-3px",
-                                          "lineHeight": "0"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "img",
-                                          "tag_class": "void",
-                                          "attrs": {
-                                            "alt": "Agia Varvara",
-                                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png",
-                                            "decoding": "async",
-                                            "title": "Agia Varvara",
-                                            "width": "6",
-                                            "height": "6",
-                                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x",
-                                            "data-file-width": "64",
-                                            "data-file-height": "64",
-                                            "className": "geodot",
-                                            "style": {}
-                                          },
-                                          "content": []
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "fontSize": "90%",
-                                          "lineHeight": "110%",
-                                          "position": "absolute",
-                                          "width": "6em",
-                                          "top": "4px",
-                                          "left": "-3em",
-                                          "textAlign": "center"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "div",
-                                          "tag_class": "block",
-                                          "attrs": {
-                                            "style": {
-                                              "display": "inline",
-                                              "padding": "1px"
-                                            }
-                                          },
-                                          "content": [
-                                            {
-                                              "type": "text",
-                                              "content": [
-                                                {
-                                                  "index": 0,
-                                                  "type": "sentence",
-                                                  "text": "Agia Varvara"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
+                                  "textAlign": "center",
+                                  "backgroundColor": "#ddd"
                                 }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "div",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {}
                               },
                               "content": [
                                 {
@@ -347,7 +793,184 @@
                                     {
                                       "index": 0,
                                       "type": "sentence",
-                                      "text": "Location in Cyprus"
+                                      "text": "Search"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "tr",
+                          "tag_class": "block",
+                          "attrs": {
+                            "style": {}
+                          },
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "th",
+                              "tag_class": "block",
+                              "attrs": {
+                                "scope": "row",
+                                "style": {
+                                  "backgroundColor": "#e7dcc3",
+                                  "border": "#fafafa 2px solid",
+                                  "borderWidth": "3px 2px 0 0"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "[[LINK|lang_en|PubMed_Central|PMC]]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "backgroundColor": "#eee",
+                                  "border": "#fafafa 2px solid",
+                                  "borderWidth": "3px 0 0 2px"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "articles [[CITE|17|https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term=1.4.1.20%5BEC/RN%20Number%5D%20AND%20pubmed%20pmc%20local%5Bsb%5D]] "
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "tr",
+                          "tag_class": "block",
+                          "attrs": {
+                            "style": {}
+                          },
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "th",
+                              "tag_class": "block",
+                              "attrs": {
+                                "scope": "row",
+                                "style": {
+                                  "backgroundColor": "#e7dcc3",
+                                  "border": "#fafafa 2px solid",
+                                  "borderWidth": "3px 2px 0 0"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "[[LINK|lang_en|PubMed|PubMed]]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "backgroundColor": "#eee",
+                                  "border": "#fafafa 2px solid",
+                                  "borderWidth": "3px 0 0 2px"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "articles [[CITE|18|https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term=1.4.1.20%5BEC/RN%20Number%5D]] "
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "tr",
+                          "tag_class": "block",
+                          "attrs": {
+                            "style": {}
+                          },
+                          "content": [
+                            {
+                              "type": "tag",
+                              "tag_type": "th",
+                              "tag_class": "block",
+                              "attrs": {
+                                "scope": "row",
+                                "style": {
+                                  "backgroundColor": "#e7dcc3",
+                                  "border": "#fafafa 2px solid",
+                                  "borderWidth": "3px 2px 0 0"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "[[LINK|lang_en|National_Center_for_Biotechnology_Information|NCBI]]"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "tag",
+                              "tag_type": "td",
+                              "tag_class": "block",
+                              "attrs": {
+                                "style": {
+                                  "backgroundColor": "#eee",
+                                  "border": "#fafafa 2px solid",
+                                  "borderWidth": "3px 0 0 2px"
+                                }
+                              },
+                              "content": [
+                                {
+                                  "type": "text",
+                                  "content": [
+                                    {
+                                      "index": 0,
+                                      "type": "sentence",
+                                      "text": "proteins [[CITE|19|https://www.ncbi.nlm.nih.gov/protein?term=1.4.1.20%5BEC/RN%20Number%5D]] "
                                     }
                                   ]
                                 }
@@ -364,9 +987,8 @@
           ]
         },
         {
-          "index": 2,
+          "index": 14,
           "attrs": {
-            "className": "mergedbottomrow",
             "style": {}
           },
           "tag_type": "tr",
@@ -377,72 +999,9 @@
               "attrs": {
                 "colSpan": "2",
                 "style": {
-                  "textAlign": "center"
+                  "textAlign": "center",
+                  "backgroundColor": "#ddd"
                 }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Coordinates: "
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "plainlinks nourlexpansion",
-                    "style": {}
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "34°45′2″N 32°30′41″E"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "fontSize": "small"
-                    }
-                  },
-                  "content": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "attrs": {
-            "className": "mergedtoprow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -453,55 +1012,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Country"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "flagicon",
-                    "style": {}
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "img",
-                      "tag_class": "void",
-                      "attrs": {
-                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/23px-Flag_of_Cyprus.svg.png",
-                        "decoding": "async",
-                        "width": "23",
-                        "height": "15",
-                        "className": "thumbborder",
-                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/35px-Flag_of_Cyprus.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/45px-Flag_of_Cyprus.svg.png 2x",
-                        "data-file-width": "900",
-                        "data-file-height": "600",
-                        "style": {}
-                      },
-                      "content": []
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Cyprus|Cyprus]]"
+                      "text": "Search"
                     }
                   ]
                 }
@@ -510,9 +1021,8 @@
           ]
         },
         {
-          "index": 4,
+          "index": 15,
           "attrs": {
-            "className": "mergedrow",
             "style": {}
           },
           "tag_type": "tr",
@@ -522,60 +1032,10 @@
               "index": 0,
               "attrs": {
                 "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Districts_of_Cyprus|District]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Paphos_District|Paphos District]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "attrs": {
-            "className": "mergedtoprow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
                 "style": {
-                  "textAlign": "left"
+                  "backgroundColor": "#e7dcc3",
+                  "border": "#fafafa 2px solid",
+                  "borderWidth": "3px 2px 0 0"
                 }
               },
               "tag_type": "th",
@@ -587,72 +1047,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "Population"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "span",
-                      "tag_class": "inline",
-                      "attrs": {
-                        "className": "nowrap",
-                        "style": {}
-                      },
-                      "content": []
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "(2011)[[CITE|1|http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement]]"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "attrs": {
-            "className": "mergedrow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " • Total"
+                      "text": "[[LINK|lang_en|PubMed_Central|PMC]]"
                     }
                   ]
                 }
@@ -661,7 +1056,11 @@
             {
               "index": 1,
               "attrs": {
-                "style": {}
+                "style": {
+                  "backgroundColor": "#eee",
+                  "border": "#fafafa 2px solid",
+                  "borderWidth": "3px 0 0 2px"
+                }
               },
               "tag_type": "td",
               "tag_class": "block",
@@ -672,7 +1071,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "172"
+                      "text": "articles [[CITE|17|https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term=1.4.1.20%5BEC/RN%20Number%5D%20AND%20pubmed%20pmc%20local%5Bsb%5D]] "
                     }
                   ]
                 }
@@ -681,9 +1080,8 @@
           ]
         },
         {
-          "index": 7,
+          "index": 16,
           "attrs": {
-            "className": "mergedtoprow",
             "style": {}
           },
           "tag_type": "tr",
@@ -693,7 +1091,11 @@
               "index": 0,
               "attrs": {
                 "scope": "row",
-                "style": {}
+                "style": {
+                  "backgroundColor": "#e7dcc3",
+                  "border": "#fafafa 2px solid",
+                  "borderWidth": "3px 2px 0 0"
+                }
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -704,7 +1106,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "[[LINK|lang_en|Time_zone|Time zone]]"
+                      "text": "[[LINK|lang_en|PubMed|PubMed]]"
                     }
                   ]
                 }
@@ -713,7 +1115,11 @@
             {
               "index": 1,
               "attrs": {
-                "style": {}
+                "style": {
+                  "backgroundColor": "#eee",
+                  "border": "#fafafa 2px solid",
+                  "borderWidth": "3px 0 0 2px"
+                }
               },
               "tag_type": "td",
               "tag_class": "block",
@@ -724,7 +1130,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "[[LINK|lang_en|UTC%2B2|UTC+2]] ([[LINK|lang_en|Eastern_European_Time|EET]])"
+                      "text": "articles [[CITE|18|https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term=1.4.1.20%5BEC/RN%20Number%5D]] "
                     }
                   ]
                 }
@@ -733,9 +1139,8 @@
           ]
         },
         {
-          "index": 8,
+          "index": 17,
           "attrs": {
-            "className": "mergedrow",
             "style": {}
           },
           "tag_type": "tr",
@@ -745,30 +1150,22 @@
               "index": 0,
               "attrs": {
                 "scope": "row",
-                "style": {}
+                "style": {
+                  "backgroundColor": "#e7dcc3",
+                  "border": "#fafafa 2px solid",
+                  "borderWidth": "3px 2px 0 0"
+                }
               },
               "tag_type": "th",
               "tag_class": "block",
               "content": [
                 {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "whiteSpace": "nowrap"
-                    }
-                  },
+                  "type": "text",
                   "content": [
                     {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": " • Summer ([[LINK|lang_en|Daylight_saving_time|DST]])"
-                        }
-                      ]
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|National_Center_for_Biotechnology_Information|NCBI]]"
                     }
                   ]
                 }
@@ -777,7 +1174,11 @@
             {
               "index": 1,
               "attrs": {
-                "style": {}
+                "style": {
+                  "backgroundColor": "#eee",
+                  "border": "#fafafa 2px solid",
+                  "borderWidth": "3px 0 0 2px"
+                }
               },
               "tag_type": "td",
               "tag_class": "block",
@@ -788,7 +1189,7 @@
                     {
                       "index": 0,
                       "type": "sentence",
-                      "text": "[[LINK|lang_en|UTC%2B3|UTC+3]] ([[LINK|lang_en|Eastern_European_Summer_Time|EEST]])"
+                      "text": "proteins [[CITE|19|https://www.ncbi.nlm.nih.gov/protein?term=1.4.1.20%5BEC/RN%20Number%5D]] "
                     }
                   ]
                 }
@@ -812,7 +1213,261 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**Agia Varvara** ([[LINK|lang_en|Greek_language|Greek]]: Αγία Βαρβάρα, [[LINK|lang_en|Turkish_language|Turkish]]: *Engindere* or *Ayvarvara*) is a village located in the [[LINK|lang_en|Paphos_District|Paphos District]] of [[LINK|lang_en|Cyprus|Cyprus]]. Prior to 1974, the village was largely inhabited by Turkish Cypriots.[[CITE|2|https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg]] Afterwards, the Turkish Cypriot population was relocated to [[LINK|lang_en|Karavas|Karavas]], [[LINK|lang_en|Trachoni,_Nicosia|Trachoni]], [[LINK|lang_en|Pentageia|Pentageia]], [[LINK|lang_en|Famagusta|Famagusta]] and [[LINK|lang_en|Morphou|Morphou]] and was partially replaced by displaced Greek Cypriots from the north.[[CITE|3|http://www.prio-cyprus-displacement.net/default.asp?id=471]]"
+              "text": "In [[LINK|lang_en|Enzymology|enzymology]], a **phenylalanine dehydrogenase** ([[LINK|lang_en|Enzyme_Commission_number|EC]] 1.4.1.20  [[CITE|20|https://enzyme.expasy.org/EC/1.4.1.20]] ) is an [[LINK|lang_en|Enzyme|enzyme]] that [[LINK|lang_en|Catalysis|catalyzes]] the [[LINK|lang_en|Chemical_reaction|chemical reaction]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "style": {}
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "dl",
+              "attrs": {},
+              "items": [
+                {
+                  "index": 0,
+                  "tag_type": "dd",
+                  "tag_class": "block",
+                  "attrs": {},
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "L-phenylalanine + H"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "sub",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "index": 0,
+                              "type": "sentence",
+                              "text": "2"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "O + NAD"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "sup",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "index": 0,
+                              "type": "sentence",
+                              "text": "+"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": " "
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "span",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "className": "mwe-math-element",
+                        "style": {}
+                      },
+                      "content": [
+                        {
+                          "type": "tag",
+                          "tag_type": "span",
+                          "tag_class": "inline",
+                          "attrs": {
+                            "className": "mwe-math-mathml-inline mwe-math-mathml-a11y",
+                            "style": {
+                              "display": "none"
+                            }
+                          },
+                          "content": []
+                        },
+                        {
+                          "type": "tag",
+                          "tag_type": "img",
+                          "tag_class": "void",
+                          "attrs": {
+                            "src": "https://wikimedia.org/api/rest_v1/media/math/render/svg/1c37b981df851b9e54e489e017b1481e37d418f3",
+                            "className": "mwe-math-fallback-image-inline",
+                            "aria-hidden": "true",
+                            "style": {
+                              "verticalAlign": "-0.338ex",
+                              "width": "2.324ex",
+                              "height": "1.843ex"
+                            },
+                            "alt": "\\rightleftharpoons "
+                          },
+                          "content": []
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": " phenylpyruvate + NH"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "sub",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "index": 0,
+                              "type": "sentence",
+                              "text": "3"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": " + NADH + H"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "sup",
+                      "tag_class": "inline",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": [
+                        {
+                          "type": "text",
+                          "content": [
+                            {
+                              "index": 0,
+                              "type": "sentence",
+                              "text": "+"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "tag_type": "dl",
+          "attrs": {
+            "style": {}
+          }
+        },
+        {
+          "index": 2,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The 3 [[LINK|lang_en|Substrate_(biochemistry)|substrates]] of this enzyme are [[LINK|lang_en|L-phenylalanine|L-phenylalanine]], , and , whereas its 4 [[LINK|lang_en|Product_(chemistry)|products]] are [[LINK|lang_en|Phenylpyruvate|phenylpyruvate]], , [[LINK|lang_en|Nicotinamide_adenine_dinucleotide|NADH]], and ."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "style": {}
+          }
+        },
+        {
+          "index": 3,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "This enzyme belongs to the family of [[LINK|lang_en|Oxidoreductase|oxidoreductases]], specifically those acting on the CH-NH2 group of donors with NAD+ or NADP+ as acceptor.  The [[LINK|lang_en|List_of_enzymes|systematic name]] of this enzyme class is **L-phenylalanine:NAD+ oxidoreductase (deaminating)**. Other names in common use include **L-phenylalanine dehydrogenase**, and **PHD**.  This enzyme participates in [[LINK|lang_en|Phenylalanine_metabolism|phenylalanine metabolism]] and phenylalanine, tyrosine and tryptophan biosynthesis."
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "style": {}
+          }
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Structural studies"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {
+            "style": {}
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "As of late 2007, two [[LINK|lang_en|Tertiary_structure|structures]] have been solved for this class of enzymes, with [[LINK|lang_en|Protein_Data_Bank|PDB]] accession codes 1BW9  [[CITE|21|https://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/pdbsum/GetPage.pl?pdbcode=1BW9]]  and 1BXG  [[CITE|22|https://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/pdbsum/GetPage.pl?pdbcode=1BXG]] ."
             }
           ],
           "tag_type": "p",
@@ -827,7 +1482,7 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement",
+      "url": "//www.ncbi.nlm.nih.gov/pubmed/3112142",
       "thumb": null,
       "category": "NONE",
       "citation_id": 1,
@@ -835,33 +1490,33 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "Census 2011"
+          "text": "3112142"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:30.858Z",
+      "timestamp": "2019-09-11T00:10:43.776Z",
       "mime": null
     },
     {
-      "url": "https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg",
+      "url": "//doi.org/10.1111%2Fj.1432-1033.1987.tb13399.x",
       "thumb": null,
-      "category": "PICTURE",
+      "category": "NONE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"1960\". Archived from the original on 2007-10-28. Retrieved 2009-06-14. Cite uses deprecated parameter |deadurl= (help)"
+          "text": "10.1111/j.1432-1033.1987.tb13399.x"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:30.858Z",
-      "mime": "image/jpeg"
+      "timestamp": "2019-09-11T00:10:43.776Z",
+      "mime": null
     },
     {
-      "url": "http://www.prio-cyprus-displacement.net/default.asp?id=471",
+      "url": "//www.ncbi.nlm.nih.gov/pubmed/3311741",
       "thumb": null,
       "category": "NONE",
       "citation_id": 3,
@@ -869,19 +1524,393 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"AGIA VARVARA\". PRIO Cyprus Displacement Center. Retrieved 28 March 2015."
+          "text": "3311741"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:30.858Z",
+      "timestamp": "2019-09-11T00:10:43.776Z",
       "mime": null
     },
     {
-      "url": "https://en.wikipedia.org/wiki/Agia_Varvara%2C_Paphos",
+      "url": "https://www.qmul.ac.uk/sbcs/iubmb/enzyme/EC1/4/1/20.html",
       "thumb": null,
       "category": "NONE",
       "citation_id": 4,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "1.4.1.20"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.777Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.commonchemistry.org/ChemicalDetail.aspx?ref=69403-12-9&title=",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 5,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "69403-12-9"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.778Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ebi.ac.uk/intenz/query?cmd=SearchEC&ec=1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 6,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "IntEnz view"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.778Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.brenda-enzymes.org/enzyme.php?ecno=1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 7,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "BRENDA entry"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.779Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.expasy.org/enzyme/1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 8,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "NiceZyme view"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.779Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.genome.jp/dbget-bin/www_bget?enzyme+1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 9,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "KEGG entry"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.779Z",
+      "mime": null
+    },
+    {
+      "url": "https://biocyc.org/META/substring-search?type=NIL&object=1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 10,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "metabolic pathway"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.780Z",
+      "mime": null
+    },
+    {
+      "url": "http://priam.prabi.fr/cgi-bin/PRIAM_profiles_CurrentRelease.pl?EC=1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 11,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "profile"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.781Z",
+      "mime": null
+    },
+    {
+      "url": "http://www.rcsb.org/pdb/search/smartSubquery.do?smartSearchSubtype=EnzymeClassificationQuery&Enzyme_Classification=1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 12,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "RCSB PDB"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.781Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ebi.ac.uk/pdbe/entry/search/index?ec_number:1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 13,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "PDBe"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.782Z",
+      "mime": null
+    },
+    {
+      "url": "//www.ebi.ac.uk/thornton-srv/databases/cgi-bin/enzymes/GetPage.pl?ec_number=1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 14,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "PDBsum"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.783Z",
+      "mime": null
+    },
+    {
+      "url": "http://amigo.geneontology.org/amigo/term/GO:0050175",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 15,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "AmiGO"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.783Z",
+      "mime": null
+    },
+    {
+      "url": "//www.ebi.ac.uk/QuickGO/term/GO:0050175",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 16,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "QuickGO"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.784Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term=1.4.1.20%5BEC/RN%20Number%5D%20AND%20pubmed%20pmc%20local%5Bsb%5D",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 17,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "articles"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.784Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/entrez/query.fcgi?db=pubmed&term=1.4.1.20%5BEC/RN%20Number%5D",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 18,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "articles"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.784Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ncbi.nlm.nih.gov/protein?term=1.4.1.20%5BEC/RN%20Number%5D",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 19,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "proteins"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.785Z",
+      "mime": null
+    },
+    {
+      "url": "https://enzyme.expasy.org/EC/1.4.1.20",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 20,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "1.4.1.20"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.785Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/pdbsum/GetPage.pl?pdbcode=1BW9",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 21,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "1BW9"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.786Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.ebi.ac.uk/thornton-srv/databases/cgi-bin/pdbsum/GetPage.pl?pdbcode=1BXG",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 22,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "1BXG"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.788Z",
+      "mime": null
+    },
+    {
+      "url": "//www.ncbi.nlm.nih.gov/pubmed/3112142",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 23,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "3112142"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.789Z",
+      "mime": null
+    },
+    {
+      "url": "//doi.org/10.1111%2Fj.1432-1033.1987.tb13399.x",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 24,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "10.1111/j.1432-1033.1987.tb13399.x"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.789Z",
+      "mime": null
+    },
+    {
+      "url": "//www.ncbi.nlm.nih.gov/pubmed/3311741",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 25,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "3311741"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T00:10:43.790Z",
+      "mime": null
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Phenylalanine_dehydrogenase",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 26,
       "description": [
         {
           "index": 0,
@@ -911,7 +1940,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:32.206Z",
+      "timestamp": "2019-09-11T00:10:43.793Z",
       "mime": null
     }
   ],
@@ -919,7 +1948,7 @@
   "metadata": [
     {
       "key": "page_type",
-      "value": "Place"
+      "value": "Thing"
     },
     {
       "key": "is_removed",
@@ -951,7 +1980,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:20 AM UTC"
+      "value": "8/11/2019 0:10:43 AM UTC"
     },
     {
       "key": "last_modified",
@@ -963,91 +1992,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Swan_Puka"
+      "value": "Phenylalanine_dehydrogenase"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Swan_Puka"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:22 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "Oreostylidium"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "Oreostylidium"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:25 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "Hillsong_International_Leadership_College"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "Hillsong_International_Leadership_College"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:28 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "The_Eight_Truths"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "The_Eight_Truths"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:30 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "Agia_Varvara,_Paphos"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "Agia_Varvara,_Paphos"
+      "value": "Phenylalanine_dehydrogenase"
     }
   ],
   "amp_info": {
@@ -1056,5 +2005,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmXiNCgWBoDkPtrpJNkY5ahhGsUnpKphXZx3YMKdM8PEyg"
+  "ipfs_hash": "QmbLb9r1r32CTTBL9RR4oZmiFtuj4LPnzH893ipVy3D8NW"
 }

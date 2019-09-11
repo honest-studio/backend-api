@@ -61,8 +61,6 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
                 if (theClass && theClass.search(/flagicon/gu) == -1) $(theParent).attr('class', theClass + " flagicon");
                 else if (!theClass) $(theParent).attr('class', "flagicon");
             }
-
-
         }
 
         // Try find medals
@@ -71,8 +69,6 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             if (theMedalClass && theMedalClass.search(/medalicon/gu) == -1) $(img_elem).attr('class', theMedalClass + " medalicon");
             else if (!theMedalClass) $(img_elem).attr('class', "medalicon");
         }
-
-        
     })
 
     // Remove certain elements
@@ -108,8 +104,22 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         // Create the string
         let htmlString = `**${theString}**`;
 
-        // Replace the tag with the string
-        $(this).replaceWith(htmlString);
+        // Handle <abbr> if present
+        let inner_abbr = $(this).find('abbr');
+        if (inner_abbr.length) {
+            // Add the NON-Markdowned string inside the abbr
+            $(inner_abbr).html(theString);
+
+            // Replace the bold with the inner abbr
+            $(this).replaceWith(inner_abbr);
+        }
+        else {
+            // Replace the tag with the string
+            $(this).replaceWith(htmlString);
+        }
+
+
+
     });
 
     

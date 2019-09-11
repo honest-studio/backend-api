@@ -217,6 +217,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     // { tag: "table", id: null, class: "toccolours" }, // Jank table of contents
     { tag: "table", id: null, class: "vertical-navbox nowraplinks nowraplinks hlist" },
     { tag: "table", id: null, class: "vertical-navbox nowraplinks vcard hlist" }, // Another variation of the series tables above ^
+    { tag: null, id: null, class: "metadata" }, // Metadata
     { tag: "table", id: null, class: "metadata plainlinks ambox ambox-style ambox-citation_style" },
     { tag: "table", id: null, class: "metadata plainlinks ambox ambox-content ambox-Refimprove" },
     { tag: "table", id: null, class: "box-Empty_section" },
@@ -225,6 +226,7 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "table", id: null, class: "mbox-small plainlinks sistersitebox" }, // Table for sistersite like "check out wikinews" bs
     { tag: "table", id: null, class: "navbox" }, // Portal navigation tables
     { tag: "table", id: null, class: "metadata mbox-small noprint selfref" }, // Notice for rendering warning emoji page etc
+    { tag: null, id: null, class: "noprint" }, // Appears at the bottom, usually
     { tag: "div", id: null, class: "toclimit-3" }, // Weird whitespace after the table of contents on big articles like /wikipedia/
     { tag: "div", id: null, class: "toclimit-2" }, 
     { tag: "div", id: null, class: "toclimit-1" }, 
@@ -252,6 +254,7 @@ export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { tag: null, id: null, class: 'div-col'}, // Some ul's and ol's get wrapped by divs
     { tag: "a", id: null, class: 'new' }, // Redlinks
     { tag: "span", id: null, class: 'binomial' }, // Animal species binomial
+    { tag: "a", id: null, class: 'selflink' }, // Self links
 ]
 
 
@@ -264,6 +267,7 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { parent: { tag: 'h2'}, tag: "span", id: "External_links", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "Footnotes", class: null }, // References section
     { parent: { tag: 'h2'}, tag: "span", id: "Gallery", class: null }, // Image gallery section
+    { parent: { tag: 'h2'}, tag: "span", id: "Notes_and_references", class: null }, // Notes and references
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
 

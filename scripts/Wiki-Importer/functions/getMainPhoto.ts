@@ -1,18 +1,20 @@
 import * as cheerio from 'cheerio';
 import { textParser, accumulateText } from './pagebodyfunctionalities/textParser';
 import { getImage } from './pagebodyfunctionalities/getImage';
+import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 import { Media } from '../../../src/types/article';
 import { linkCategorizer } from '../../../src/utils/article-utils/article-converter';
 import { CheerioPack } from './pagebodyfunctionalities/cleaners';
 import * as mimePackage from 'mime';
 const chalk = require('chalk');
+const path = require('path');
 
 export interface GetMainPhotoReturnPack {
 	main_photo: Media,
 	cheerio_pack: CheerioPack
 }
 
-export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack => {
+export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadService: MediaUploadService, lang: string, slug: string,  ): Promise<GetMainPhotoReturnPack> => {
 	console.log(chalk.yellow.bold("===================📷 MAIN PHOTO 📷==================="));
 
 	// Parse the dom
@@ -107,8 +109,8 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 				}
 
 				// If there is more than one image in the nearest tr, do not extract
-				let $extractTD = $(img_anchor).parentsUntil("td");
-				let $extractTR = $($extractTD).parentsUntil("tr");
+				let $extractTD = $(img_anchor).parents("td, th");
+				let $extractTR = $($extractTD).parents("tr");
 
 				// Look for multiple images within the td
 				let rowImages = $($extractTR).find('img');
@@ -124,6 +126,12 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 
 					// Remove the surrounding <td>
 					$($extractTD).remove();
+
+					// If the <tr> is now empty, remove it too
+					let inner_contents = $($extractTR).html();
+					if (!inner_contents || inner_contents == ''){
+						$($extractTR).remove();
+					} 
 				}
 				
 				main_photo_found = true;
@@ -244,10 +252,50 @@ export const getMainPhoto = (input_pack: CheerioPack): GetMainPhotoReturnPack =>
 	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
 	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-	// If no main photo was found. 
-	if (!workingMainPhoto.url) workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+	// Default thumbnail
 	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
+	// If no main photo was found. 
+	if (!workingMainPhoto.url){
+		workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+
+		// Return main photo
+		console.log(chalk.bold.green(`DONE`));
+		return {
+			main_photo: workingMainPhoto,
+			cheerio_pack: {
+				cheerio_static: $
+			}
+		}
+
+	} 
+	
+	// Upload the main image
+	let resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
+	let filename = path.basename(workingMainPhoto.url);
+	let up_res = await theMediaUploadService.processMedia(
+		resultBuffer,
+		lang,
+		slug,
+		filename,
+		'ProfilePicture',
+		''
+	);
+
+	// Update the main photo info with the storage bucket URLs
+	workingMainPhoto = {
+		...workingMainPhoto,
+		url: up_res.mainPhotoURL,
+		thumb: up_res.thumbnailPhotoURL,
+		mime: up_res.mime,
+		media_props: {
+			...workingMainPhoto.media_props,
+			webp_original: up_res.webp_original,
+			webp_medium: up_res.webp_medium,
+			webp_thumb: up_res.webp_thumb,
+		}
+
+	};
 
 	// Return main photo
 	console.log(chalk.bold.green(`DONE`));
