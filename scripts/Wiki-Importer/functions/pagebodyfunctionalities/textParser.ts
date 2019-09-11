@@ -38,11 +38,12 @@ export const accumulateText = (element, $, citations): Sentence[] => {
 }
 
 //parse all but table contentItems (my code for that is in ./tablefunctionalities folder)
-export const textParser = (element, $, internalCitations) => {
+export const textParser = (element, $: CheerioStatic, internalCitations) => {
 	let $element = $(element); 
 	$element.contents().each((i, el) => {
 		// console.log($.html(el));
 		let $el = $(el); 
+		let the_attribs = el.attribs;
 		if (el.type == 'text') {
 			let text = $el.text();
 			if (text != '' && text != undefined) {
@@ -56,7 +57,7 @@ export const textParser = (element, $, internalCitations) => {
 			if ( tag == 'a') {
 				accumulator += parseAnchorTag(el, $);
 			}
-			else if (tag == 'sup') { //internal citation reached
+			else if (tag == 'sup' && the_attribs.class && the_attribs.class.search(/reference/gimu) >= 0) { // Internal citation reached
 				accumulator += parseInternalCitation($el.find('a'), $, internalCitations);
 			}
 			else {

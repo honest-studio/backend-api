@@ -7,10 +7,6 @@ export const parseAnchorTag = (element, $: CheerioStatic) => {
 	let theClass = $element.attr('class');
   if ($element.children().length == 0) { // Resolve anchor tags that only contains text 
 	  return parseLink(element, $);
-	}
-	else if (theClass && theClass.search(/external/gimu) >= 0) { // External link
-		// return $(element).text();
-		return element;
   }
   else if (theClass && theClass.search(/image|flagicon/gimu) >= 0) { // Inline-image 
   	return parseInlineImage($element.children('img'), $);
@@ -22,6 +18,9 @@ export const parseAnchorTag = (element, $: CheerioStatic) => {
     let a = ($.html($element)).replace('<br>', '\n');
     return parseAnchorTag(a, $);
   }
+  else if ($element.children().length > 0) { // Resolve anchor tags with other stuff inside, like <sup>, <sub>, etc 
+	  return parseLink(element, $);
+	}
   else {
     return ''
   }
@@ -33,13 +32,9 @@ export const parseLink = (anchorTagElement, $) => { //LINK
   const linkText = $element.text(); 
   // Get slug 
   const hrefAttr = $element.attr('href');
-  let index = 6; 
   let slug = ''; 
   if(hrefAttr){
-    while(index < hrefAttr.length) { 
-      slug += hrefAttr.charAt(index); 
-      index++; 
-    }
+    slug = hrefAttr.slice(6); // account for 'wiki/'
     wikiLink = '[[LINK|lang_en|' + slug + '|' + linkText + ']]';
     if (wikiLink == undefined || anchorTagElement == undefined) {
       return ''

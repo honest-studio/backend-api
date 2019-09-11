@@ -90,13 +90,15 @@ export const WikiImport = async (inputString: string) => {
     // Precleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
 
+    // return false;
+
     // Try extracting a main photo
-    let photo_result = getMainPhoto(precleaned_cheerio_pack);
+    let photo_result = await getMainPhoto(precleaned_cheerio_pack, theMediaUploadService, lang_code, slug);
     let photoless_cheerio_pack = photo_result.cheerio_pack;
 
     // Note that page_body and citations are computed together to account for internal citations 
     const page_body_pack = await getPageBodyPack(photoless_cheerio_pack, url, theMediaUploadService); 
-    
+
     // Process the wikipedia-style infobox
     const wiki_infobox_pack = getWikipediaStyleInfoBox(page_body_pack.cheerio_pack, page_body_pack.internal_citations);
     

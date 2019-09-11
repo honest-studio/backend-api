@@ -3,33 +3,35 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Agia Varvara, Paphos"
+      "text": "Doichang frog"
     }
   ],
   "main_photo": [
     {
-      "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Cyprus_location_map.svg",
-      "thumb": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
+      "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
+      "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
       "caption": null,
       "type": "main_photo",
-      "attribution_url": "https://en.wikipedia.org/wiki/File:Cyprus_location_map.svg",
+      "attribution_url": null,
       "media_props": {
         "type": "main_photo",
-        "height": 761,
-        "width": 1276,
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x"
+        "height": null,
+        "width": null,
+        "srcSet": null
       },
-      "timestamp": "2019-09-10T02:18:30.855Z",
-      "category": "PICTURE",
-      "mime": "image/svg+xml"
+      "timestamp": "2019-09-11T22:28:24.149Z",
+      "category": "NONE",
+      "mime": null
     }
   ],
   "infobox_html": {
     "type": "wikitable",
     "attrs": {
-      "className": "infobox geography vcard",
+      "className": "infobox biota",
       "style": {
-        "width": "23em"
+        "textAlign": "left",
+        "width": "200px",
+        "fontSize": "100%"
       }
     },
     "caption": {
@@ -59,10 +61,42 @@
                 "colSpan": "2",
                 "style": {
                   "textAlign": "center",
-                  "fontSize": "1.25em",
-                  "fontWeight": "bold",
-                  "whiteSpace": "nowrap"
+                  "backgroundColor": "rgb(235,235,210)"
                 }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Doichang frog\n"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "attrs": {
+            "style": {
+              "textAlign": "center",
+              "backgroundColor": "rgb(235,235,210)"
+            }
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {}
               },
               "tag_type": "th",
               "tag_class": "block",
@@ -73,9 +107,8 @@
                   "tag_class": "block",
                   "attrs": {
                     "style": {
-                      "display": "inline"
-                    },
-                    "className": "fn org"
+                      "textAlign": "center"
+                    }
                   },
                   "content": [
                     {
@@ -84,9 +117,589 @@
                         {
                           "index": 0,
                           "type": "sentence",
-                          "text": "Agia Varvara"
+                          "text": "[[LINK|lang_en|Conservation_status|Conservation status]]"
                         }
                       ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "textAlign": "center"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "tag",
+                      "tag_type": "img",
+                      "tag_class": "void",
+                      "attrs": {
+                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Status_iucn3.1_LC.svg/220px-Status_iucn3.1_LC.svg.png",
+                        "decoding": "async",
+                        "width": "220",
+                        "height": "59",
+                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Status_iucn3.1_LC.svg/330px-Status_iucn3.1_LC.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Status_iucn3.1_LC.svg/440px-Status_iucn3.1_LC.svg.png 2x",
+                        "data-file-width": "240",
+                        "data-file-height": "64",
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "tag",
+                      "tag_type": "br",
+                      "tag_class": "void",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "[[LINK|lang_en|Least_Concern|Least Concern]] ([[LINK|lang_en|IUCN_Red_List|IUCN 3.1]])[[CITE|1|https://iucnredlist.org/details/88370789/0]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "minWidth": "15em",
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(235,235,210)"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Taxonomy_(biology)|Scientific classification]] "
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "className": "plainlinks",
+                    "style": {
+                      "fontSize": "smaller",
+                      "float": "right",
+                      "paddingRight": "0.4em",
+                      "marginLeft": "-3em"
+                    }
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "[[LINK|lang_en|Template:Taxonomy/Nanorana|]]"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Kingdom:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Animal|Animalia]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Phylum:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Chordate|Chordata]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Class:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Amphibian|Amphibia]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Order:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Frog|Anura]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Family:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Dicroglossidae|Dicroglossidae]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Genus:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Nanorana|*Nanorana*]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "Species:\n"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "index": 1,
+              "attrs": {
+                "style": {}
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "div",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {
+                      "display": "inline"
+                    },
+                    "className": "species"
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "***N. aenea***"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(235,235,210)"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Binomial_nomenclature|Binomial name]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "**"
+                    }
+                  ]
+                },
+                {
+                  "type": "tag",
+                  "tag_type": "span",
+                  "tag_class": "inline",
+                  "attrs": {
+                    "style": {
+                      "fontWeight": "normal"
+                    }
+                  },
+                  "content": []
+                },
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "*Nanorana aenea***"
                     }
                   ]
                 },
@@ -104,10 +717,8 @@
                   "tag_type": "div",
                   "tag_class": "block",
                   "attrs": {
-                    "className": "nickname",
                     "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
+                      "fontSize": "85%"
                     }
                   },
                   "content": [
@@ -117,7 +728,84 @@
                         {
                           "index": 0,
                           "type": "sentence",
-                          "text": "Αγία Βαρβάρα"
+                          "text": "([[LINK|lang_en|Malcolm_Arthur_Smith|Smith]], 1922)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "center",
+                  "backgroundColor": "rgb(235,235,210)"
+                }
+              },
+              "tag_type": "th",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "text",
+                  "content": [
+                    {
+                      "index": 0,
+                      "type": "sentence",
+                      "text": "[[LINK|lang_en|Synonym_(taxonomy)|Synonyms]]"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "attrs": {
+            "style": {}
+          },
+          "tag_type": "tr",
+          "tag_class": "block",
+          "cells": [
+            {
+              "index": 0,
+              "attrs": {
+                "colSpan": "2",
+                "style": {
+                  "textAlign": "left"
+                }
+              },
+              "tag_type": "td",
+              "tag_class": "block",
+              "content": [
+                {
+                  "type": "tag",
+                  "tag_type": "p",
+                  "tag_class": "block",
+                  "attrs": {
+                    "style": {}
+                  },
+                  "content": [
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "*Rana aenea* Smith, 1922"
                         }
                       ]
                     },
@@ -136,478 +824,15 @@
                         {
                           "index": 0,
                           "type": "sentence",
-                          "text": "*Engindere* / *Ayvarvara*"
+                          "text": "*Chaparana aenea* (Smith, 1922)"
                         }
                       ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "attrs": {
-            "className": "mergedtoprow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "className": "center",
-                    "style": {}
-                  },
-                  "content": [
+                    },
                     {
                       "type": "tag",
-                      "tag_type": "div",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {
-                          "width": "300px",
-                          "float": "none",
-                          "clear": "both",
-                          "marginLeft": "auto",
-                          "marginRight": "auto"
-                        }
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "div",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {
-                              "width": "300px",
-                              "padding": "0"
-                            }
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "div",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {
-                                  "position": "relative",
-                                  "width": "300px"
-                                },
-                                "className": "geonugget"
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "a",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "href": "/wiki/File:Cyprus_location_map.svg",
-                                    "className": "image",
-                                    "title": "Agia Varvara is located in Cyprus",
-                                    "style": {}
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "img",
-                                      "tag_class": "void",
-                                      "attrs": {
-                                        "alt": "Agia Varvara is located in Cyprus",
-                                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/300px-Cyprus_location_map.svg.png",
-                                        "decoding": "async",
-                                        "width": "300",
-                                        "height": "179",
-                                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/450px-Cyprus_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/21/Cyprus_location_map.svg/600px-Cyprus_location_map.svg.png 2x",
-                                        "data-file-width": "1276",
-                                        "data-file-height": "761",
-                                        "style": {}
-                                      },
-                                      "content": []
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {
-                                    "style": {
-                                      "position": "absolute",
-                                      "top": "74.96%",
-                                      "left": "15.237%"
-                                    }
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "position": "absolute",
-                                          "left": "-3px",
-                                          "top": "-3px",
-                                          "lineHeight": "0"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "img",
-                                          "tag_class": "void",
-                                          "attrs": {
-                                            "alt": "Agia Varvara",
-                                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png",
-                                            "decoding": "async",
-                                            "title": "Agia Varvara",
-                                            "width": "6",
-                                            "height": "6",
-                                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x",
-                                            "data-file-width": "64",
-                                            "data-file-height": "64",
-                                            "className": "geodot",
-                                            "style": {}
-                                          },
-                                          "content": []
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "fontSize": "90%",
-                                          "lineHeight": "110%",
-                                          "position": "absolute",
-                                          "width": "6em",
-                                          "top": "4px",
-                                          "left": "-3em",
-                                          "textAlign": "center"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "div",
-                                          "tag_class": "block",
-                                          "attrs": {
-                                            "style": {
-                                              "display": "inline",
-                                              "padding": "1px"
-                                            }
-                                          },
-                                          "content": [
-                                            {
-                                              "type": "text",
-                                              "content": [
-                                                {
-                                                  "index": 0,
-                                                  "type": "sentence",
-                                                  "text": "Agia Varvara"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "div",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {}
-                              },
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Location in Cyprus"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "attrs": {
-            "className": "mergedbottomrow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Coordinates: "
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "plainlinks nourlexpansion",
-                    "style": {}
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "34°45′2″N 32°30′41″E"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "fontSize": "small"
-                    }
-                  },
-                  "content": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "attrs": {
-            "className": "mergedtoprow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Country"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "flagicon",
-                    "style": {}
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "img",
+                      "tag_type": "br",
                       "tag_class": "void",
                       "attrs": {
-                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/23px-Flag_of_Cyprus.svg.png",
-                        "decoding": "async",
-                        "width": "23",
-                        "height": "15",
-                        "className": "thumbborder",
-                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/35px-Flag_of_Cyprus.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Flag_of_Cyprus.svg/45px-Flag_of_Cyprus.svg.png 2x",
-                        "data-file-width": "900",
-                        "data-file-height": "600",
-                        "style": {}
-                      },
-                      "content": []
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Cyprus|Cyprus]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "attrs": {
-            "className": "mergedrow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Districts_of_Cyprus|District]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Paphos_District|Paphos District]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "attrs": {
-            "className": "mergedtoprow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Population"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "span",
-                      "tag_class": "inline",
-                      "attrs": {
-                        "className": "nowrap",
                         "style": {}
                       },
                       "content": []
@@ -618,177 +843,47 @@
                         {
                           "index": 0,
                           "type": "sentence",
-                          "text": "(2011)[[CITE|1|http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement]]"
+                          "text": "*Rana fansipani* Bourret, 1939"
                         }
                       ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "attrs": {
-            "className": "mergedrow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
+                    },
                     {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " • Total"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "172"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 7,
-          "attrs": {
-            "className": "mergedtoprow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Time_zone|Time zone]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|UTC%2B2|UTC+2]] ([[LINK|lang_en|Eastern_European_Time|EET]])"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 8,
-          "attrs": {
-            "className": "mergedrow",
-            "style": {}
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row",
-                "style": {}
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "whiteSpace": "nowrap"
-                    }
-                  },
-                  "content": [
+                      "type": "tag",
+                      "tag_type": "br",
+                      "tag_class": "void",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": []
+                    },
                     {
                       "type": "text",
                       "content": [
                         {
                           "index": 0,
                           "type": "sentence",
-                          "text": " • Summer ([[LINK|lang_en|Daylight_saving_time|DST]])"
+                          "text": "*Chaparana fansipani* (Bourret, 1939)"
                         }
                       ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "style": {}
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
+                    },
                     {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|UTC%2B3|UTC+3]] ([[LINK|lang_en|Eastern_European_Summer_Time|EEST]])"
+                      "type": "tag",
+                      "tag_type": "br",
+                      "tag_class": "void",
+                      "attrs": {
+                        "style": {}
+                      },
+                      "content": []
+                    },
+                    {
+                      "type": "text",
+                      "content": [
+                        {
+                          "index": 0,
+                          "type": "sentence",
+                          "text": "*Nanorana fansipani* (Bourret, 1939)"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -812,7 +907,88 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**Agia Varvara** ([[LINK|lang_en|Greek_language|Greek]]: Αγία Βαρβάρα, [[LINK|lang_en|Turkish_language|Turkish]]: *Engindere* or *Ayvarvara*) is a village located in the [[LINK|lang_en|Paphos_District|Paphos District]] of [[LINK|lang_en|Cyprus|Cyprus]]. Prior to 1974, the village was largely inhabited by Turkish Cypriots.[[CITE|2|https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg]] Afterwards, the Turkish Cypriot population was relocated to [[LINK|lang_en|Karavas|Karavas]], [[LINK|lang_en|Trachoni,_Nicosia|Trachoni]], [[LINK|lang_en|Pentageia|Pentageia]], [[LINK|lang_en|Famagusta|Famagusta]] and [[LINK|lang_en|Morphou|Morphou]] and was partially replaced by displaced Greek Cypriots from the north.[[CITE|3|http://www.prio-cyprus-displacement.net/default.asp?id=471]]"
+              "text": ""
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "className": "mw-empty-elt",
+            "style": {}
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "The **Doichang frog** (***Nanorana aenea***) is a species of [[LINK|lang_en|Frog|frog]] in the [[LINK|lang_en|Dicroglossidae|Dicroglossidae]] family.[[CITE|2|http://research.amnh.org/vz/herpetology/amphibia/Amphibia/Anura/Dicroglossidae/Dicroglossinae/Nanorana/Nanorana-aenea]][[CITE|3|https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=774141]] It is only known from its [[LINK|lang_en|Type_locality_(biology)|type locality]], Doi Chang, mountain north of [[LINK|lang_en|Chiang_Mai|Chiang Mai]] ([[LINK|lang_en|Thailand|Thailand]]), [[LINK|lang_en|Fansipan|Fansipan]] mountain in northern [[LINK|lang_en|Vietnam|Vietnam]] (type locality for the now-synonymized *Rana fansipani*), and Huanglianshan National Nature Reserve in [[LINK|lang_en|Yunnan|Yunnan]], [[LINK|lang_en|China|China]].[[CITE|2|http://research.amnh.org/vz/herpetology/amphibia/Amphibia/Anura/Dicroglossidae/Dicroglossinae/Nanorana/Nanorana-aenea]][[CITE|4|/wiki/Digital_object_identifier]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "style": {}
+          }
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Description"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {
+            "style": {}
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Adult males of Doichang frog are 65–77 mm (2.6–3.0 in) in snout-vent length and have spines in several parts of their bodies, a male [[LINK|lang_en|Secondary_sex_characteristic|secondary sex characteristic]].[[CITE|4|/wiki/Digital_object_identifier]]"
+            }
+          ],
+          "tag_type": "p",
+          "attrs": {
+            "style": {}
+          }
+        }
+      ],
+      "images": []
+    },
+    {
+      "paragraphs": [
+        {
+          "index": 0,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Habitat and conservation"
+            }
+          ],
+          "tag_type": "h2",
+          "attrs": {
+            "style": {}
+          }
+        },
+        {
+          "index": 1,
+          "items": [
+            {
+              "type": "sentence",
+              "index": 0,
+              "text": "Its natural [[LINK|lang_en|Habitat|habitats]] are subtropical or tropical moist [[LINK|lang_en|Montane_forest|montane forests]] and [[LINK|lang_en|River|rivers]]. It is potentially threatened by [[LINK|lang_en|Habitat_loss|habitat loss]], more so in Vietnam[[CITE|5|https://iucnredlist.org/details/58244/0]] than in Thailand.[[CITE|1|https://iucnredlist.org/details/88370789/0]] In Vietnam it is probably eaten locally.[[CITE|5|https://iucnredlist.org/details/58244/0]]"
             }
           ],
           "tag_type": "p",
@@ -827,7 +1003,7 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "http://www.cystat.gov.cy/mof/cystat/statistics.nsf/All/59681B67FE82FD39C2257AD90053F3FA/$file/POP_CEN_11-POP_PLACE_RESID-EL-171115.xls?OpenElement",
+      "url": "https://iucnredlist.org/details/88370789/0",
       "thumb": null,
       "category": "NONE",
       "citation_id": 1,
@@ -835,33 +1011,33 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "Census 2011"
+          "text": "van Dijk, P.P. & Chan-ard, T. (2004). \"*Nanorana aenea*\". *IUCN Red List of Threatened Species. Version 2012.1*. International Union for Conservation of Nature. Retrieved 15 September 2012."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:30.858Z",
+      "timestamp": "2019-09-11T22:28:24.155Z",
       "mime": null
     },
     {
-      "url": "https://web.archive.org/web/20071028223100/http://www.kypros-cyprus.com/maps/1960.jpg",
+      "url": "http://research.amnh.org/vz/herpetology/amphibia/Amphibia/Anura/Dicroglossidae/Dicroglossinae/Nanorana/Nanorana-aenea",
       "thumb": null,
-      "category": "PICTURE",
+      "category": "NONE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"1960\". Archived from the original on 2007-10-28. Retrieved 2009-06-14. Cite uses deprecated parameter |deadurl= (help)"
+          "text": "Frost, Darrel R. (2014). \"*Nanorana aenea* (Smith, 1922)\". *Amphibian Species of the World: an Online Reference. Version 6.0*. American Museum of Natural History. Retrieved 10 June 2014."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:30.858Z",
-      "mime": "image/jpeg"
+      "timestamp": "2019-09-11T22:28:24.157Z",
+      "mime": null
     },
     {
-      "url": "http://www.prio-cyprus-displacement.net/default.asp?id=471",
+      "url": "https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=774141",
       "thumb": null,
       "category": "NONE",
       "citation_id": 3,
@@ -869,19 +1045,138 @@
         {
           "type": "sentence",
           "index": 0,
-          "text": "\"AGIA VARVARA\". PRIO Cyprus Displacement Center. Retrieved 28 March 2015."
+          "text": "\"*Nanorana aenea*\". Integrated Taxonomic Information System."
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:30.858Z",
+      "timestamp": "2019-09-11T22:28:24.159Z",
       "mime": null
     },
     {
-      "url": "https://en.wikipedia.org/wiki/Agia_Varvara%2C_Paphos",
+      "url": "/wiki/Digital_object_identifier",
+      "thumb": null,
+      "category": "PERIODICAL",
+      "citation_id": 4,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "Dubois, A.; Ohler, A. (2005). \"Taxonomic notes on the Asian frogs of the tribe Paini (Ranidae, Dicroglossinae): 1. Morphology and synonymy of *Chaparana aenea* (Smith, 1922), with proposal of a new statistical method for testing homogeneity of small samples\". *Journal of Natural History*. **39** (20): 1759–1778. doi:10.1080/00222930400023735."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:24.159Z",
+      "mime": null
+    },
+    {
+      "url": "https://iucnredlist.org/details/58244/0",
       "thumb": null,
       "category": "NONE",
-      "citation_id": 4,
+      "citation_id": 5,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "van Dijk, P.P. & Swan, S. (2004). \"*Nanorana fansipani*\". *IUCN Red List of Threatened Species. Version 2012.1*. International Union for Conservation of Nature. Retrieved 15 September 2012."
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:24.160Z",
+      "mime": null
+    },
+    {
+      "url": "https://iucnredlist.org/details/88370789/0",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 6,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"*Nanorana aenea*\""
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:26.172Z",
+      "mime": null
+    },
+    {
+      "url": "http://research.amnh.org/vz/herpetology/amphibia/Amphibia/Anura/Dicroglossidae/Dicroglossinae/Nanorana/Nanorana-aenea",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 7,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"*Nanorana aenea* (Smith, 1922)\""
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:26.174Z",
+      "mime": null
+    },
+    {
+      "url": "https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=774141",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 8,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"*Nanorana aenea*\""
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:26.176Z",
+      "mime": null
+    },
+    {
+      "url": "http://doi.org/10.1080%2F00222930400023735",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 9,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "10.1080/00222930400023735"
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:26.177Z",
+      "mime": null
+    },
+    {
+      "url": "https://iucnredlist.org/details/58244/0",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 10,
+      "description": [
+        {
+          "type": "sentence",
+          "index": 0,
+          "text": "\"*Nanorana fansipani*\""
+        }
+      ],
+      "social_type": null,
+      "attribution": "rel=nofollow",
+      "timestamp": "2019-09-11T22:28:26.178Z",
+      "mime": null
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Doichang_frog",
+      "thumb": null,
+      "category": "NONE",
+      "citation_id": 11,
       "description": [
         {
           "index": 0,
@@ -911,7 +1206,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-10T02:18:32.206Z",
+      "timestamp": "2019-09-11T22:28:26.185Z",
       "mime": null
     }
   ],
@@ -919,7 +1214,7 @@
   "metadata": [
     {
       "key": "page_type",
-      "value": "Place"
+      "value": "Thing"
     },
     {
       "key": "is_removed",
@@ -951,7 +1246,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:20 AM UTC"
+      "value": "8/11/2019 22:28:23 PM UTC"
     },
     {
       "key": "last_modified",
@@ -963,91 +1258,11 @@
     },
     {
       "key": "url_slug",
-      "value": "Swan_Puka"
+      "value": "Doichang_frog"
     },
     {
       "key": "url_slug_alternate",
-      "value": "Swan_Puka"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:22 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "Oreostylidium"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "Oreostylidium"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:25 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "Hillsong_International_Leadership_College"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "Hillsong_International_Leadership_College"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:28 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "The_Eight_Truths"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "The_Eight_Truths"
-    },
-    {
-      "key": "creation_timestamp",
-      "value": "8/10/2019 2:18:30 AM UTC"
-    },
-    {
-      "key": "last_modified",
-      "value": null
-    },
-    {
-      "key": "page_lang",
-      "value": "en"
-    },
-    {
-      "key": "url_slug",
-      "value": "Agia_Varvara,_Paphos"
-    },
-    {
-      "key": "url_slug_alternate",
-      "value": "Agia_Varvara,_Paphos"
+      "value": "Doichang_frog"
     }
   ],
   "amp_info": {
@@ -1056,5 +1271,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmXiNCgWBoDkPtrpJNkY5ahhGsUnpKphXZx3YMKdM8PEyg"
+  "ipfs_hash": "QmaF77sqiv9fEBeKAv8uTdntagp9pFLTCRXimGqkSdFw7E"
 }
