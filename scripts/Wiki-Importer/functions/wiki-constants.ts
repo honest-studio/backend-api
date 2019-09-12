@@ -249,6 +249,8 @@ export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: "div", id: null, class: "navbox" }, // Various navboxes
     { tag: "table", id: null, class: "stub" }, // Stub notice
     { tag: "table", id: 'disambigbox', class: null }, // Disambiguation box
+    { tag: null, id: null, class: 'mwe-math-mathml-inline' }, // Math stuff. You will be using the inline image fallback
+    { tag: null, id: null, class: 'mwe-math-mathml-a11y' }, // Math stuff. You will be using the inline image fallback
 ]
 
 // Some elements need to be unwrapped

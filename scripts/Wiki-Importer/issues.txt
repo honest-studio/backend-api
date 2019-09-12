@@ -1,18 +1,33 @@
 
 
 MATH STUFF
+4224534
 https://en.wikipedia.org/wiki/Huffman_coding
 
 TABLE STUFF
+4224546
 https://en.wikipedia.org/wiki/2012_Incheon_United_FC_season
 
 ENCODING STUFF
 https://en.wikipedia.org/wiki/%C3%96yl%C9%99qulu
 
 
-<b> WITH FLAGICON AND LINK: IGNORE
+CITATIONS MESSED UP
+4224651
+https://en.wikipedia.org/wiki/Woolly_Bugger
+
+
+next
+-s 4224660 -e 4224675"
+
+
+============================IGNORE============================
+MESSED UP FLAG
+https://en.wikipedia.org/wiki/Ventanas
+
+<b> WITH FLAGICON AND LINK
 https://en.wikipedia.org/wiki/Poland_at_the_1968_Summer_Olympics
 
-BOLDED SPANS WITH COLOR
+BOLDED SPANS WITH COLOR: IGNORE
 4224502
 https://en.wikipedia.org/wiki/United_Nations_Security_Council_Resolution_872

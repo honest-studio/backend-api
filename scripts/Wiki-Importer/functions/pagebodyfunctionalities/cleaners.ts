@@ -20,7 +20,7 @@ export interface CheerioPack {
 export const preCleanHTML = (input_html: string): CheerioPack => {
     process.stdout.write(chalk.bold.green(`Cleaning the page 🚽 ...`));
     const $ = cheerio.load(input_html, {decodeEntities: false});
-    
+
     // Remove certain tags that mess with AMP
     $(NON_AMP_BAD_TAGS.join(", ")).remove();
 
@@ -264,7 +264,28 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         `
         // Set the <a> contents as the img
         $(kartographer).html(theNewImg);
-    })
+    });
+
+    // Handle some math stuff
+    // Convert to a dl for now so it gets parsed as nested tags
+    $('.mwe-math-element img').each((idx, math_elem_img) => {
+        console.log("------------------------------")
+        // Get the ancestor tag that is a direct child of .mw-parser-output
+        // Only use <p> for now as sometimes irrelevant divs are caught
+        let ancestor_tag = $(math_elem_img).closest('.mw-parser-output > p');
+
+        // Convert the tag type to <samp>, which means anything inside it needs to be parsed as nested
+        $(ancestor_tag).prop('tagName', 'samp');
+        $(ancestor_tag).addClass('math');
+
+        // let cleaned_attribs = math_elem_img.attribs && cleanAttributes(math_elem_img.attribs);
+        // $(math_elem_img).parent().prop('tagName', 'samp');
+        
+        // console.log(cleaned_attribs)
+
+        console.log($.html(ancestor_tag));
+        // NEED TO CONVERT THESE TO A SPECIAL TYPE, OR ADD STYLE to INLINE_IMAGE
+    });
 
     process.stdout.write(chalk.bold.green(` DONE\n`));
     return {
