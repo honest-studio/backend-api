@@ -46,6 +46,7 @@ export const BLOCK_ELEMENTS = [
     "output",
     "p",
     "pre",
+    "samp",
     "section",
     "table",
     "td",
@@ -198,6 +199,9 @@ export const cleanAttributes = (inputAttrs: { [attr: string]: any }): { [attr: s
                 cleanedAttrs['style'][sty.react] = cleanedAttrs[sty.normal];
             }
         });
+
+        // Remove empty styles
+        if (Object.keys(cleanedAttrs['style']).length === 0 && cleanedAttrs['style'].constructor === Object) delete cleanedAttrs['style'];
     }
     return cleanedAttrs;
 }
