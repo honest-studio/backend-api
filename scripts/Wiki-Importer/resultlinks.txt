@@ -1,2 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/Huffman_coding
-https://en.wikipedia.org/wiki/Huffman_coding
+http://127.0.0.1:7777/wiki/lang_en/2012_Incheon_United_FC_season
+https://en.wikipedia.org/wiki/2012_Incheon_United_FC_season

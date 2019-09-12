@@ -219,9 +219,37 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     
     // Try to find flagicons and mark them
     $(".flagicon a").each((idx, flag_anchor_elem) => {
+        // Get the parent
+        let flag_parent = $(flag_anchor_elem).parent('.flagicon');
+
+        // Mark the parent
+        let theParentClass = $(flag_parent).eq(0)[0].attribs['class'];
+        $(flag_parent).attr('class', theParentClass.replace('flagicon', "flagicon-parent"));
+
+        // Mark the anchor
         let theClass = $(flag_anchor_elem).eq(0)[0].attribs['class'];
-        if (theClass) $(flag_anchor_elem).attr('class', theClass + " flagicon");
-        else $(flag_anchor_elem).attr('class', "flagicon");
+        if (theClass){
+            if($(flag_anchor_elem).hasClass('flagicon')){
+                $(flag_anchor_elem).attr('class', theClass.replace('flagicon', "flagicon-anchor"));
+            }
+            else{
+                $(flag_anchor_elem).attr('class', theClass + " flagicon-anchor");
+            }
+        } 
+        else $(flag_anchor_elem).attr('class', "flagicon-anchor");
+
+        // Mark the img
+        let flag_img = $(flag_anchor_elem).find('img');
+        let theImgClass = $(flag_img).eq(0)[0].attribs['class'];
+        if (theImgClass){
+            if($(flag_img).hasClass('flagicon')){
+                $(flag_img).attr('class', theImgClass.replace('flagicon', "flagicon-img"));
+            }
+            else{
+                $(flag_img).attr('class', theImgClass + " flagicon-img");
+            }
+        } 
+        else $(flag_img).attr('class', "flagicon-img");
     })
 
     // Handle kartographers
@@ -276,15 +304,8 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
 
         // Convert the tag type to <samp>, which means anything inside it needs to be parsed as nested
         $(ancestor_tag).prop('tagName', 'samp');
-        $(ancestor_tag).addClass('math');
+        $(ancestor_tag).addClass('wiki-math');
 
-        // let cleaned_attribs = math_elem_img.attribs && cleanAttributes(math_elem_img.attribs);
-        // $(math_elem_img).parent().prop('tagName', 'samp');
-        
-        // console.log(cleaned_attribs)
-
-        console.log($.html(ancestor_tag));
-        // NEED TO CONVERT THESE TO A SPECIAL TYPE, OR ADD STYLE to INLINE_IMAGE
     });
 
     process.stdout.write(chalk.bold.green(` DONE\n`));
