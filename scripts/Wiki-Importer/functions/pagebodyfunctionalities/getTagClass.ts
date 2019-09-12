@@ -32,6 +32,7 @@ const BLOCK_ELEMENTS = [
     "output",
     "p",
     "pre",
+    "samp",
     "section",
     "table",
     "td",

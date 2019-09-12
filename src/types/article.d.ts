@@ -54,7 +54,7 @@ export interface ListItem {
     diff?: DiffType;
 }
 
-export type ParagraphItem = Sentence | ListItem | Table | DescList;
+export type ParagraphItem = Sentence | ListItem | Table | DescList | Samp;
 
 export interface Paragraph {
     index: number;
@@ -157,6 +157,12 @@ export interface Citation {
     media_props?: MediaProps;
     in_blurb?: boolean;
     diff?: DiffType;
+}
+
+export interface Samp {
+    type: 'samp';
+    attrs: {};
+    items: NestedContentItem[];
 }
 
 export interface DescList {

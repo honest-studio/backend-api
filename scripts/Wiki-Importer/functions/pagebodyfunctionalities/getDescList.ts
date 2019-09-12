@@ -31,7 +31,7 @@ export const getDescList = (element, $, internal_citations): DescList => {
 	// Return the DescList
 	return { 
 		type: 'dl',
-		attrs: {},
+		attrs: cleanAttributes($desclist.eq(0)[0].attribs),
 		items: inner_items
 	} as DescList;
 }

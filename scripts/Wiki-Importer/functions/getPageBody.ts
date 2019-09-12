@@ -5,9 +5,10 @@ import { getHeadlineSentence } from './pagebodyfunctionalities/getHeadlineSenten
 import { getListItems } from './pagebodyfunctionalities/getListItems';
 import { getDescList } from './pagebodyfunctionalities/getDescList';
 import { getTable } from './pagebodyfunctionalities/tablefunctionalities/getTable';
+import { getSamp } from './pagebodyfunctionalities/getSamp';
 import { cleanAttributes } from '../../../src/utils/article-utils/article-converter';
 import { getCitations } from './getCitations';
-import { Section, Citation, Paragraph, Media, Sentence, Table, DescList } from '../../../src/types/article';
+import { Section, Citation, Paragraph, Media, Sentence, Table, DescList, Samp } from '../../../src/types/article';
 import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 const chalk = require('chalk');
@@ -53,7 +54,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	// Loop through the children
 	console.log(chalk.yellow("Looping through the children"));
 	let single_section_body = true; // Flag to handle the edge case of a single-section wiki
-	$content.children('h1, h2, h3, h4, h5, h6, p, div, table, ul, ol, dl, blockquote, center').each((i, el) => { 
+	$content.children('h1, h2, h3, h4, h5, h6, p, div, table, ul, ol, dl, blockquote, center, samp').each((i, el) => { 
 		let $el = $(el);
 		let tag_name = $el[0].name;
 
@@ -115,6 +116,17 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				index: paragraphIndex,
 				items: sentenceItems,
 				tag_type: 'blockquote',
+				attrs: cleanAttributes(el.attribs)
+			})
+			paragraphIndex++;
+		}
+		// Process samps, which are nested tag containers
+		else if(tag_name == 'samp') { // Samp
+			let item = getSamp(el, $, internalCitations); // returns samp item
+			paragraphs.push({
+				index: paragraphIndex,
+				items: [item] as Samp[],
+				tag_type: 'samp',
 				attrs: cleanAttributes(el.attribs)
 			})
 			paragraphIndex++;
