@@ -1,2 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/Doichang_frog
-https://en.wikipedia.org/wiki/Doichang_frog
+http://127.0.0.1:7777/wiki/lang_en/Amber_Valley_Borough_Council_election%2C_2010
+https://en.wikipedia.org/wiki/Amber_Valley_Borough_Council_election,_2010

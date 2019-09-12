@@ -111,14 +111,19 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         // Create the string
         let htmlString = `**${theString}**`;
 
-        // Handle <abbr> if present
+        // Handle inner <abbr> or <i> if present
         let inner_abbr = $(this).find('abbr');
+        let inner_i = $(this).find('em, i'); // Special cases
         if (inner_abbr.length) {
             // Add the NON-Markdowned string inside the abbr
             $(inner_abbr).html(theString);
 
             // Replace the bold with the inner abbr
             $(this).replaceWith(inner_abbr);
+        }
+        else if (inner_i.length){
+            htmlString = `***${$(inner_i).text().trim()}***`;
+            $(this).replaceWith(htmlString);
         }
         else {
             // Replace the tag with the string

@@ -261,6 +261,8 @@ export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { tag: "a", id: null, class: 'new' }, // Redlinks
     { tag: "span", id: null, class: 'binomial' }, // Animal species binomial
     { tag: "a", id: null, class: 'selflink' }, // Self links
+    { parent: { tag: 'th' }, tag: "p", id: null, class: null }, // th > p
+    { parent: { tag: 'td' }, tag: "p", id: null, class: null }, // td > p
 ]
 
 // Clean these up after the citations are parsed out
