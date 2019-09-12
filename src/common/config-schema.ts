@@ -68,6 +68,10 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     BOT_TOKEN_1: Joi.string().required(),
     ETERNUM_API_KEY: Joi.string().required(),
     REDIS_REPLAY_ACTIONS: Joi.boolean().default(false),
-    REDIS_RESET_DB: Joi.boolean().default(false)
+    REDIS_RESET_DB: Joi.boolean().default(false),
+    GOOGLE_API_CLIENT_ID: Joi.string(),
+    GOOGLE_API_CLIENT_SECRET: Joi.string(),
+    GOOGLE_API_REFRESH_TOKEN: Joi.string(),
+    GOOGLE_ANALYTICS_VIEW_ID: Joi.string()
 });
 
