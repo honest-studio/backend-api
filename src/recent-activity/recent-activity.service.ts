@@ -123,7 +123,7 @@ export class RecentActivityService {
             .then(json => json.access_token);
 
             const analytics_view_id = this.config.get("GOOGLE_ANALYTICS_VIEW_ID");
-            const trending = await fetch(`https://analyticsreporting.googleapis.com/v4/reports:batchGet`, {
+            const rows = await fetch(`https://analyticsreporting.googleapis.com/v4/reports:batchGet`, {
                 method: "POST",
                 headers: {
                     Authorization: `Bearer ${access_token}`
@@ -131,7 +131,7 @@ export class RecentActivityService {
                 body: JSON.stringify({
                     "reportRequests": [{
                         viewId: analytics_view_id,
-                        dateRanges: [{"startDate": "2019-09-01", "endDate": "2019-09-02"}],
+                        dateRanges: [{"startDate": "yesterday", "endDate": "today"}],
                         metrics: [
                             {"expression": "ga:pageviews" },
                             {"expression": "ga:uniquePageviews" }
@@ -150,13 +150,32 @@ export class RecentActivityService {
                 })
             })
             .then(response => response.json())
-            .then(json => json.reports[0].data.rows)
-            .then(rows => rows.map(r => ({
-                slug: r.dimensions[0].substring(r.dimensions[0].lastIndexOf('/') + 1),
-                lang_code: r.dimensions[0].slice(11,13),
-                pageviews: Number(r.metrics[0].values[0]),
-                unique_pageviews: Number(r.metrics[0].values[1])
-            })));
+            .then(json => json.reports[0].data.rows);
+
+            // combine AMP and regular views
+            const viewcounts = {};
+            for (let r of rows) {
+                let slug = r.dimensions[0];
+                if (slug.slice(-4) == "/amp")
+                    slug = slug.slice(0, -4);
+                slug = slug.substring(slug.lastIndexOf('/') + 1);
+                if (viewcounts[slug]) {
+                    viewcounts[slug].pageviews += Number(r.metrics[0].values[0]);
+                    viewcounts[slug].unique_pageviews += Number(r.metrics[0].values[1]);
+                }
+                else viewcounts[slug] = {
+                    lang_code: r.dimensions[0].slice(11,13),
+                    pageviews: Number(r.metrics[0].values[0]),
+                    unique_pageviews: Number(r.metrics[0].values[1])
+                };
+            }
+
+            const trending = Object.keys(viewcounts).map(slug => ({
+                slug, ...viewcounts[slug]
+            }))
+            .sort((a,b) => b.unique_pageviews - a.unique_pageviews);
+
+
 
             const pipeline = this.redis.connection().pipeline();
             pipeline.set('trending_pages:today', JSON.stringify(trending));
