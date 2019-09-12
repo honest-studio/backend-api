@@ -56,13 +56,31 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         }
 
         // Try find flagicons
-        let theParent = $(img_elem).parent();
-        if(theParent.eq(0)[0].name == 'a'){
-            if (theSrc.search(/Flag_of/gu) >= 0){
-                let theClass = $(theParent).eq(0)[0].attribs['class'];
-                if (theClass && theClass.search(/flagicon/gu) == -1) $(theParent).attr('class', theClass + " flagicon");
-                else if (!theClass) $(theParent).attr('class', "flagicon");
-            }
+        if (theSrc.search(/Flag_of/gu) >= 0){
+            // Mark the parent
+            let theParent = $(img_elem).parent();
+            let theClass = $(theParent).eq(0)[0].attribs['class'];
+            if (theClass){
+                if($(theParent).hasClass('flagicon')){
+                    $(theParent).attr('class', theClass.replace('flagicon', "flagicon-parent"));
+                }
+                else{
+                    $(theParent).attr('class', theClass + " flagicon-parent");
+                }
+            } 
+            else $(theParent).attr('class', "flagicon-parent");
+
+            // Add the class to the img too
+            let theImgClass = $(img_elem).eq(0)[0].attribs['class'];
+            if (theImgClass){
+                if($(img_elem).hasClass('flagicon')){
+                    $(img_elem).attr('class', theImgClass.replace('flagicon', "flagicon-img"));
+                }
+                else{
+                    $(img_elem).attr('class', theImgClass + " flagicon-img");
+                }
+            } 
+            else $(img_elem).attr('class', "flagicon-img");
         }
 
         // Try find medals
@@ -218,28 +236,23 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     // })
     
     // Try to find flagicons and mark them
-    $(".flagicon a").each((idx, flag_anchor_elem) => {
+    $(".flagicon img").each((idx, flag_img) => {
         // Get the parent
-        let flag_parent = $(flag_anchor_elem).parent('.flagicon');
+        let flag_parent = $(flag_img).closest('.flagicon');
 
         // Mark the parent
-        let theParentClass = $(flag_parent).eq(0)[0].attribs['class'];
-        $(flag_parent).attr('class', theParentClass.replace('flagicon', "flagicon-parent"));
-
-        // Mark the anchor
-        let theClass = $(flag_anchor_elem).eq(0)[0].attribs['class'];
+        let theClass = $(flag_parent).eq(0)[0].attribs['class'];
         if (theClass){
-            if($(flag_anchor_elem).hasClass('flagicon')){
-                $(flag_anchor_elem).attr('class', theClass.replace('flagicon', "flagicon-anchor"));
+            if($(flag_parent).hasClass('flagicon')){
+                $(flag_parent).attr('class', theClass.replace('flagicon', "flagicon-parent"));
             }
             else{
-                $(flag_anchor_elem).attr('class', theClass + " flagicon-anchor");
+                $(flag_parent).attr('class', theClass + " flagicon-parent");
             }
         } 
-        else $(flag_anchor_elem).attr('class', "flagicon-anchor");
+        else $(flag_parent).attr('class', "flagicon-parent");
 
         // Mark the img
-        let flag_img = $(flag_anchor_elem).find('img');
         let theImgClass = $(flag_img).eq(0)[0].attribs['class'];
         if (theImgClass){
             if($(flag_img).hasClass('flagicon')){

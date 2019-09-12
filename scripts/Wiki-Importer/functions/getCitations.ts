@@ -104,38 +104,37 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	// Start classifying the citations
 	process.stdout.write(chalk.yellow(`Classifying the citations...`));
 	rawCitations = rawCitations.map((raw_citn, idx) => {
-		// console.log($(raw_citn.note_element).html())
+		console.log($(raw_citn.note_element).html())
 
 		// First look for any <a href='#ABC123' ></a> and pull in that ID as the text.
-		let possible_anchor = $(raw_citn.note_element).find("a").eq(0)[0];
-		if (possible_anchor && possible_anchor.attribs['href']){
-			let theInnerURL = possible_anchor.attribs['href'];
+		$(raw_citn.note_element).find("a").each((idx, ctn_inner_anchor) => {
+			let theInnerURL = ctn_inner_anchor.attribs['href'];
+
+			// See if the citation refers to another section (e.g. in the case of multiple citations of the same book, 
+			// but different pages)
 			if(theInnerURL[0] == "#"){
 				let linked_id = theInnerURL;
 				let linked_id_escaped = cheerio_css_cleaner(linked_id);
 
 				if (linked_id){
-					$(`${linked_id_escaped} a`).each((idx, inner_anchor) => {
-
-				
-						let inner_href = inner_anchor.attribs['href'];
+					$(`${linked_id_escaped} a`).each((idx, other_section_anchor) => {
+						let other_section_href = other_section_anchor.attribs['href'];
 						// console.log($.html(linked_id_escaped))
-						if(inner_href){
+						if(other_section_href){
 							// Look for an ISBN
-							if(inner_href.search(/Special:BookSources/gimu) >= 0){
+							if(other_section_href.search(/Special:BookSources/gimu) >= 0){
 								raw_citn.category = 'BOOK';
-								raw_citn.isbn = $(inner_anchor).text().trim();
+								raw_citn.isbn = $(other_section_anchor).text().trim();
 							}
 							// Look for an ISSN
-							else if(inner_href.search(/issn/gimu) >= 0){
+							else if(other_section_href.search(/issn/gimu) >= 0){
 								raw_citn.category = 'PERIODICAL';
-								raw_citn.issn = $(inner_anchor).text().trim();
+								raw_citn.issn = $(other_section_anchor).text().trim();
 							}
 						}
-						// $(inner_anchor).remove();
 					})
 				}
-				$(possible_anchor).replaceWith($(linked_id_escaped).contents()); 
+				$(ctn_inner_anchor).replaceWith($(linked_id_escaped).contents()); 
 				raw_citn.text = $(raw_citn.note_element)
 										.text()
 										.trim()
@@ -146,30 +145,45 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				if(!raw_citn.category){
 					raw_citn.category = linkCategoryFromText(raw_citn.text);
 				}
+
+				return raw_citn;
 			}
 			else{
-				raw_citn.category = linkCategorizer(theInnerURL);
+				// Look for an ISBN
+				if(theInnerURL.search(/Special:BookSources/gimu) >= 0){
+					raw_citn.category = 'BOOK';
+					raw_citn.isbn = $(ctn_inner_anchor).text().trim();
+				}
+				// Look for an ISSN
+				else if(theInnerURL.search(/issn/gimu) >= 0){
+					raw_citn.category = 'PERIODICAL';
+					raw_citn.issn = $(ctn_inner_anchor).text().trim();
+				}
+				else{
+					raw_citn.category = linkCategorizer(theInnerURL);
+				}
+
 				raw_citn.text = $(raw_citn.note_element)
 									.text()
 									.trim();
 				
 				if(!raw_citn.category || raw_citn.category == 'NONE') raw_citn.category = linkCategoryFromText(raw_citn.text);
 				raw_citn.url = theInnerURL;
+
+				return raw_citn;
 			}
-		}
+		});
+
 		// Otherwise, assume a book and put the URL as a search query
-		else {
-			raw_citn.category = 'BOOK';
-			raw_citn.text = $(raw_citn.note_element)
-								.text()
-								.trim();
-			raw_citn.url = `https://openlibrary.org/search?q=${
-				encodeURIComponent(raw_citn.text.substr(0, 50))
-					.replace(/\(/g, "%28")
-					.replace(/\)/g, "%29")
-			}`;
-		}
-		// console.log(raw_citn)
+		raw_citn.category = 'BOOK';
+		raw_citn.text = $(raw_citn.note_element)
+							.text()
+							.trim();
+		raw_citn.url = `https://openlibrary.org/search?q=${
+			encodeURIComponent(raw_citn.text.substr(0, 50))
+				.replace(/\(/g, "%28")
+				.replace(/\)/g, "%29")
+		}`;
 		return raw_citn;
 	})
 	process.stdout.write(chalk.yellow(` DONE\n`));

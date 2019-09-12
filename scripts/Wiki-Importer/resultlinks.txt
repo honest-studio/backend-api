@@ -1,2 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/2012_Incheon_United_FC_season
-https://en.wikipedia.org/wiki/2012_Incheon_United_FC_season
+http://127.0.0.1:7777/wiki/lang_en/Woolly_Bugger
+https://en.wikipedia.org/wiki/Woolly_Bugger

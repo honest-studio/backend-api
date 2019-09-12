@@ -34,6 +34,8 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	let ctn_return_pack = await getCitations(input_pack, url, theMediaUploadService);
 	let internalCitations = ctn_return_pack.internalCitations;
 
+	// return;
+
 	console.log(chalk.yellow.bold("====================📰 SECTIONS 📰===================="));
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 

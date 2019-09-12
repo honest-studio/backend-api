@@ -159,15 +159,6 @@ export const WIKI_LANG_PACKAGES = {
     }
 };
 
-// Replace tags with certain classes
-export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
-    { target_tag: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
-    { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" },
-    { target_tag: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" },
-    { target_tag: "table", target_class: "tracklist", replacement_tag: "table", replacement_class: "wikitable tracklist" }
-
-];
-
 // Kartographer (Open Maps)
 export const KARTOGRAPHER_PIXEL_WIDTH = 400;
 
@@ -182,6 +173,15 @@ export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo', 'mtd', 'mrow', 'mspace', 'mtext', 'msub', 'msup', 'mstyle', 'semantics', 'usemap', 'xml', 'worddocument', 'mathpr', 'mathfont'];
+
+// Replace tags with certain classes
+export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
+    { target_tag: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
+    { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" },
+    { target_tag: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" },
+    { target_tag: "table", target_class: "tracklist", replacement_tag: "table", replacement_class: "wikitable tracklist" },
+    { target_tag: "table", target_class: "vevent", replacement_tag: "table", replacement_class: "wikitable vevent" },
+];
 
 // Add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
@@ -265,6 +265,8 @@ export const PRECLEAN_UNWRAP_ELEMENTS: ElementCleaningPack[] = [
     { tag: "a", id: null, class: 'selflink' }, // Self links
     { parent: { tag: 'th' }, tag: "p", id: null, class: null }, // th > p
     { parent: { tag: 'td' }, tag: "p", id: null, class: null }, // td > p
+    { tag: null, id: null, class: 'overflowbugx' }, // Appears sometimes. Mainly style-related
+
 ]
 
 // Clean these up after the citations are parsed out

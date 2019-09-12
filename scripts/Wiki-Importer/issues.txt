@@ -1,18 +1,12 @@
-TABLE STUFF
-4224546
-https://en.wikipedia.org/wiki/2012_Incheon_United_FC_season
-
 ENCODING STUFF
 https://en.wikipedia.org/wiki/%C3%96yl%C9%99qulu
-
 
 CITATIONS MESSED UP
 4224651
 https://en.wikipedia.org/wiki/Woolly_Bugger
 
-
 next
--s 4224660 -e 4224675"
+-s 4224705 -e 4224720"
 
 
 ============================IGNORE============================
