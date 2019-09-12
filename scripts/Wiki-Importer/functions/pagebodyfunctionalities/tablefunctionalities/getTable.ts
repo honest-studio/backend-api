@@ -1,5 +1,6 @@
 import { cleanAttributes } from '../../../../../src/utils/article-utils/article-converter';
 import { getTagClass } from '../getTagClass';
+import { accumulateText } from '../textParser';
 import { parseAnchorTag } from '../parseAnchorTag';
 import { Table, TableCell, TableRow, TableSection, TableCaption, NestedContentItem, NestedTextItem, NestedTagItem } from '../../../../../src/types/article';
 import { nestedContentParser } from '../../../../../src/utils/article-utils/article-converter';
@@ -79,7 +80,16 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
         attrs: cleanAttributes($table.find('tbody')[0].attribs),
         rows: rows
 	};
+	table.tbody = tbody;
+
+	// Look for a table caption
+	let $caption = $table.find('caption');
+	if ($caption.length){
+		table.caption = {
+			attrs: cleanAttributes($caption.eq(0)[0].attribs),
+			sentences: accumulateText($caption, $, [])
+		}
+	}
 	
-    table.tbody = tbody;
     return table;
 }

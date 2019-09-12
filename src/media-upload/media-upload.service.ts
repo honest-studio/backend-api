@@ -25,7 +25,7 @@ import { fetchUrl } from './fetch-favicon';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
 import { BookInfoPack, PeriodicalInfoPack } from '../types/api';
-import * as sharp from 'sharp';
+const sharp = require('sharp');
 import * as axios from 'axios';
 const isSvg = require('is-svg');
 const extractFrame = require('ffmpeg-extract-frame');
@@ -423,7 +423,7 @@ export class MediaUploadService {
 
             // Determine the MIME type
             let mimePack: MimePack = fileType(bufferToUse);
-            if (mimePack == null){
+            if (mimePack == null || mimePack.mime == 'application/xml'){
                 if (isSvg(bufferToUse)){
                     mimePack = {
                         ext: 'svg',
@@ -490,7 +490,7 @@ export class MediaUploadService {
                         bufferPack.mainBuf = bufferToUse;
 
                         // Convert the SVG into jpeg and resize it into a thumbnail
-                        bufferPack.thumbBuf = await sharp.default(bufferToUse)
+                        bufferPack.thumbBuf = await sharp(bufferToUse)
                             .resize(thumbWidth, thumbHeight, {
                                 fit: 'inside',
                                 // background: { r: 255, g: 255, b: 255, alpha: 1 }
@@ -830,10 +830,12 @@ export class MediaUploadService {
                     || mimePack.mime.indexOf('tiff') >= 0
                     || mimePack.mime.indexOf('gif') >= 0
                     || mimePack.mime.indexOf('svg') >= 0
+                    || mimePack.mime.indexOf('application/xml') >= 0
+                    || mimePack.mime.indexOf('image/svg+xml') >= 0
                 )
             ){
                 // Get the original image in WEBP form
-                bufferPack.webpOriginalBuf = await sharp.default(bufferToUse)
+                bufferPack.webpOriginalBuf = await sharp(bufferToUse)
                     .resize(mainWidth, mainHeight, {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
@@ -844,7 +846,7 @@ export class MediaUploadService {
                     .catch((err) => console.log(err));
 
                 // Resize the WEBP for the medium image
-                bufferPack.webpMediumBuf = await sharp.default(bufferToUse)
+                bufferPack.webpMediumBuf = await sharp(bufferToUse)
                     .resize(mediumWidth, mediumHeight, {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
@@ -855,7 +857,7 @@ export class MediaUploadService {
                     .catch((err) => console.log(err));
 
                 // Resize the WEBP for the thumb image
-                bufferPack.webpThumbBuf = await sharp.default(bufferToUse)
+                bufferPack.webpThumbBuf = await sharp(bufferToUse)
                     .resize(thumbWidth, thumbHeight, {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }

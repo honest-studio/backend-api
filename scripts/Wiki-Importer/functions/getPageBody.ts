@@ -32,7 +32,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	// When parsing the page body
 	let ctn_return_pack = await getCitations(input_pack, url, theMediaUploadService);
 	let internalCitations = ctn_return_pack.internalCitations;
- 
+
 	console.log(chalk.yellow.bold("====================📰 SECTIONS 📰===================="));
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
@@ -119,13 +119,29 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 			})
 			paragraphIndex++;
 		}
-		// Potentially a section image
-		else if (tag_name == 'div') {
-			let divClass = $el.attr('class');
-			if (divClass !== undefined) {
-				// If section image found
-				if (divClass.includes("thumb")) {
-					images.push(getImage(el, $, internalCitations) as Media);
+		// Sometimes stuff is nested in center or div tags
+		else if (tag_name.search(/center|div/gimu) >=0){
+			if($el.children('table').length > 0) { 
+				let childTable = $el.find('table');
+				let tableclass = childTable.attr('class');
+				if (tableclass && (tableclass.search(/wikitable/gimu) >= 0 || tableclass.search(/body-table/gimu) >= 0)) {
+					let parsed_table = getTable(childTable, $, internalCitations, "body-table");
+					paragraphs.push({
+						index: paragraphIndex,
+						items: [parsed_table] as Table[],
+						tag_type: 'table',
+						attrs: cleanAttributes(childTable[0].attribs)
+					})
+					paragraphIndex++;
+				}
+			}
+			else {
+				let divClass = $el.attr('class');
+				if (divClass !== undefined) {
+					// If section image found
+					if (divClass.includes("thumb")) {
+						images.push(getImage(el, $, internalCitations) as Media);
+					}
 				}
 			}
 		}
@@ -138,22 +154,6 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 					items: [parsed_table] as Table[],
 					tag_type: 'table',
 					attrs: cleanAttributes(el.attribs)
-				})
-				paragraphIndex++;
-			}
-			
-		}
-		// Sometimes pagebody tables are nested in center tags
-		else if (tag_name == 'center' && $el.children('table').length > 0) { 
-			let childTable = $el.find('table');
-			let tableclass = childTable.attr('class');
-			if (tableclass.search(/wikitable/gimu) >= 0 || tableclass.search(/body-table/gimu) >= 0) {
-				let parsed_table = getTable(childTable, $, internalCitations, "body-table");
-				paragraphs.push({
-					index: paragraphIndex,
-					items: [parsed_table] as Table[],
-					tag_type: 'table',
-					attrs: cleanAttributes(childTable[0].attribs)
 				})
 				paragraphIndex++;
 			}
