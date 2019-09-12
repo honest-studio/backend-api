@@ -111,7 +111,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         // Create the string
         let htmlString = `**${theString}**`;
 
-        // Handle inner <abbr> or <i> if present
+        // Handle inner <abbr>, <i>, or <tag><img /></tag> if present
         let inner_abbr = $(this).find('abbr');
         let inner_i = $(this).find('em, i'); // Special cases
         if (inner_abbr.length) {

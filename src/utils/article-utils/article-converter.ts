@@ -120,7 +120,8 @@ export const VALID_VIDEO_EXTENSIONS = [
     '.avi'
 ];
 export const ANCILLARY_STYLES = [
-    { normal: 'bgcolor', react: 'backgroundColor'} // Background color
+    { normal: 'bgcolor', react: 'backgroundColor'}, // Background color
+    { normal: 'align', react: 'textAlign'} // Text alignment
 ]
 export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
 export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
