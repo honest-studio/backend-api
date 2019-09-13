@@ -255,7 +255,6 @@ async function redis_process_actions (actions) {
             }
         }
         else if (action.trace.act.name == "brainmeiq") {
-            console.log("brainmeiq");
             const user = action.trace.act.data.staker;
             const amount = action.trace.act.data.amount;
             pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
