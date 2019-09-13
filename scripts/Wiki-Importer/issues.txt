@@ -1,17 +1,13 @@
 ENCODING STUFF
 https://en.wikipedia.org/wiki/%C3%96yl%C9%99qulu
 
-CITATIONS MESSED UP
-4224651
-https://en.wikipedia.org/wiki/Woolly_Bugger
-
 next
 -s 4224705 -e 4224720"
 
-
 ============================IGNORE============================
-MESSED UP FLAG
-https://en.wikipedia.org/wiki/Ventanas
+POOR QUALITY GALLERY IMAGE THUMBNAILS
+4224721
+https://en.wikipedia.org/wiki/Israel_Weapon_Industries
 
 <b> WITH FLAGICON AND LINK
 https://en.wikipedia.org/wiki/Poland_at_the_1968_Summer_Olympics

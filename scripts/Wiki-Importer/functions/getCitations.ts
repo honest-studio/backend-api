@@ -104,7 +104,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	// Start classifying the citations
 	process.stdout.write(chalk.yellow(`Classifying the citations...`));
 	rawCitations = rawCitations.map((raw_citn, idx) => {
-		console.log($(raw_citn.note_element).html())
+		// console.log($(raw_citn.note_element).html())
 
 		// First look for any <a href='#ABC123' ></a> and pull in that ID as the text.
 		$(raw_citn.note_element).find("a").each((idx, ctn_inner_anchor) => {

@@ -87,7 +87,7 @@ export const WikiImport = async (inputString: string) => {
         page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
     }
 
-    // Precleaning
+    // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
 
     // return false;

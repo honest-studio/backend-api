@@ -18,7 +18,7 @@ export interface CheerioPack {
 }
 
 export const preCleanHTML = (input_html: string): CheerioPack => {
-    process.stdout.write(chalk.bold.green(`Cleaning the page 🚽 ...`));
+    console.log(chalk.yellow.bold("==============🚽  PRE-CLEANING 🚽 ============="));
     const $ = cheerio.load(input_html, {decodeEntities: false});
 
     // Remove certain tags that mess with AMP
@@ -29,8 +29,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
 
     // Replace certain classes
     REPLACE_CLASSES_PREPARSE_UNIVERSAL.forEach(pack => {
-        let selector = `${pack.target_tag}.${pack.target_class}`;
-        $(selector).each((idx, $elem) => {
+        $(pack.target_selector).each((idx, $elem) => {
             $($elem).prop('tagName', pack.replacement_tag);
             let tempClass = $($elem).attr('class').replace(pack.target_class, pack.replacement_class);
             $($elem).attr('class', tempClass);
@@ -115,6 +114,12 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         });
     });
 
+    // Convert quoteboxes to blockquotes
+    $('.quotebox').each((idx, quotebox) => {
+        $(quotebox).prop('tagName', 'blockquote');
+        $(quotebox).addClass('wiki-quotebox');
+    });
+
     // Convert <strong> and <b> tags to **text** (Markdown)
     $('strong, b').each(function() {
         // Get the string
@@ -149,6 +154,41 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         }
     });
 
+    // Unpack section images with multiple pictures  
+    $('.thumb.tmulti').each((idx, multi_thumb_elem) => {
+        // Start a collection
+        let new_singles: CheerioElement[] = [];
+
+        // Process each tsingle
+        $(multi_thumb_elem).find('.tsingle').each((idx, tsingle_elem) => {
+            // Re-class the tsingle into thumbinner
+            $(tsingle_elem).removeClass('tsingle').addClass('thumbinner')
+
+            // Unwrap the thumbimage
+            let thumb_img = $(tsingle_elem).children('.thumbimage');
+            $(thumb_img).replaceWith($(thumb_img).contents());
+
+            // Add the new single to the collection
+            new_singles.push(tsingle_elem);
+        })
+
+        new_singles.forEach(new_single_elem => {
+            // Make a clone of the tmulti
+            let the_clone = $(multi_thumb_elem).clone();
+
+            // Fill the clone with the single image only
+            $(the_clone).html($.html(new_single_elem));
+
+            // Add the clone after the original
+            $(multi_thumb_elem).after(the_clone);
+        })
+
+        // Remove the multi
+        $(multi_thumb_elem).remove();
+    });
+
+    
+
     // Convert <em> and <i> tags to *text* (Markdown)
     $('em, i').each(function() {
         // Get the string
@@ -179,7 +219,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             $($theParent).html(the_inner_text);
             let the_param_split = the_href.split("?")
             the_href = the_param_split[0] + "?" + encodeURIComponent(the_param_split[1]);
-            $($theParent).attr('href', the_href); // Prevents the &para pilcrow issue
+            $($theParent).attr('href', the_href); // Prevents the &para pilcrow issue (maybe)
         }
         else {
             $($lat_long_elem).replaceWith(the_inner_text);

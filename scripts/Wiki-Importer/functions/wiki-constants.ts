@@ -1,7 +1,7 @@
 import { PageType } from '../../../src/types/article';
 
 export interface ReplaceClassPack {
-    target_tag: string,
+    target_selector: string,
     target_class: string,
     replacement_tag: string
     replacement_class: string
@@ -176,11 +176,11 @@ export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo',
 
 // Replace tags with certain classes
 export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
-    { target_tag: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
-    { target_tag: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" },
-    { target_tag: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" },
-    { target_tag: "table", target_class: "tracklist", replacement_tag: "table", replacement_class: "wikitable tracklist" },
-    { target_tag: "table", target_class: "vevent", replacement_tag: "table", replacement_class: "wikitable vevent" },
+    { target_selector: "table", target_class: "infobox_v3", replacement_tag: "table", replacement_class: "infobox" },
+    { target_selector: "table", target_class: "infobox_v2", replacement_tag: "table", replacement_class: "infobox" },
+    { target_selector: "table", target_class: "toccolours", replacement_tag: "table", replacement_class: "wikitable" },
+    { target_selector: "table.tracklist:not(.infobox)", target_class: "tracklist", replacement_tag: "table", replacement_class: "wikitable tracklist" },
+    { target_selector: "table.vevent:not(.infobox)", target_class: "vevent", replacement_tag: "table", replacement_class: "wikitable vevent" },
 ];
 
 // Add the parent tag of any bad elements in a wikipedia page you would like to remove in all scrapes to the below list
