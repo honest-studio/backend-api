@@ -241,24 +241,19 @@ async function redis_process_actions (actions) {
             pipeline.incrbyfloat("stat:total_iq_rewards", amount);
         }
         else if (action.trace.act.name == "transfer") {
-            if (action.trace.act.data.to == "eparticlectr" && action.trace.receipt.receiver == "everipediaiq") {
+            // Block 59902500 is the start block for the 2.0 smart contracts
+            if (action.trace.act.data.to == "eparticlectr" && action.block_num > 59902500) {
                 const user = action.trace.act.data.from;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
                 pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
             }
-            else if (action.trace.act.data.from == "eparticlectr" && action.trace.receipt.receiver == "everipediaiq") {
+            else if (action.trace.act.data.from == "eparticlectr" && action.block_num > 59902500) {
                 const user = action.trace.act.data.to;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
                 pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
             }
-        }
-        else if (action.trace.act.name == "brainmeiq") {
-            const user = action.trace.act.data.staker;
-            const amount = action.trace.act.data.amount;
-            pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
-            pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
         }
         await pipeline.exec();
     }
@@ -319,7 +314,7 @@ async function main () {
         await redis.flushdb();
         console.log(`REDIS: Flushed DB. Replaying...`);
     }
-    catchupRedis();
+    await catchupRedis();
     start();
     setInterval(() => restartIfFailing.apply(this), 15 * 1000);
 }
