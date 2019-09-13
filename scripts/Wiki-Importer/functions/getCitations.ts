@@ -496,6 +496,9 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				$($elem).parent(parent_selector).nextAll().remove();
 				// console.log(chalk.red(`${parent_selector}removed...`));	
 			}
+
+			// Remove the parent itself
+			$($elem).parent().remove();
 		});
 	});
 	process.stdout.write(chalk.yellow(` DONE\n`));

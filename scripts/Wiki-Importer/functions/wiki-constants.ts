@@ -18,10 +18,16 @@ export interface ElementCleaningPack {
     class: string
 }
 
-export interface PageTypeCluePack {
-    id: string,
-    class: string
-    page_type: PageType
+export interface PageTypeSelectorCluePack {
+    selector: string,
+    page_type: PageType,
+    sub_page_type: string
+}
+
+export interface PageTypeRegexCluePack {
+    regex: RegExp,
+    page_type: PageType,
+    sub_page_type: string
 }
 
 export const WIKI_LANG_PACKAGES = {
@@ -281,12 +287,37 @@ export const POST_CITATION_CHOP_BELOW: ElementCleaningPack[] = [
     { tag: "div", id: null, class: "mw-references-wrap" }, // References section
 ]
 
-// Clues in the infobox to help determine the page type
-export const INFOBOX_PAGE_TYPE_CLUES: PageTypeCluePack[] = [
-    { id: null, class: 'biota', page_type: 'Thing'},
-    { id: null, class: 'biography', page_type: 'Person'},
-    { id: null, class: 'geography', page_type: 'Place'},
-    { id: null, class: 'haudio', page_type: 'CreativeWork'},
-    { id: null, class: 'hmedia', page_type: 'CreativeWork'},
-    { id: null, class: 'hproduct', page_type: 'Product'},
+// Clues in the infobox id and class to help determine the page type
+export const INFOBOX_OUTER_PAGE_TYPE_CLUES: PageTypeSelectorCluePack[] = [
+    { selector: 'table.infobox.biota', page_type: 'Thing', sub_page_type: null },
+    { selector: 'table.infobox.biography', page_type: 'Person', sub_page_type: null },
+    { selector: 'table.infobox.geography', page_type: 'Place', sub_page_type: null },
+    { selector: 'table.infobox.haudio', page_type: 'CreativeWork', sub_page_type: null },
+    { selector: 'table.infobox.hmedia', page_type: 'CreativeWork', sub_page_type: null },
+    { selector: 'table.infobox.hproduct', page_type: 'Product', sub_page_type: null },
 ];
+
+// Clues inside the infobox to help determine the page type
+export const INFOBOX_INNER_PAGE_TYPE_CLUES: PageTypeSelectorCluePack[] = [
+    { selector: 'a.mw-kartographer-container', page_type: 'Place', sub_page_type: null },
+    { selector: '.geo-default', page_type: 'Place', sub_page_type: null },
+];
+
+// Page type clues
+// Remember, you can tally regex matches to confer 'strength' to a type deduction
+// TODO: Not used at the moment. Can incorporate later
+export const INFOBOX_PAGE_TYPE_KEYWORDS: {[key in PageType]: PageTypeRegexCluePack[]} = {
+    'CreativeWork': [
+        { regex: /Directed by|Cinematography|Music by|Distributed by|Screenplay by|Starring|Release date|Running time/gimu, page_type: 'CreativeWork', sub_page_type: null },
+    ],
+    'Event': [],
+    'List': [],
+    'MedicalEntity': [],
+    'Organization': [],
+    'Person': [
+        { regex: /Born|Residence|Occupation|Spouse|Children/gimu, page_type: 'Person', sub_page_type: null },
+    ],
+    'Place': [],
+    'Product': [],
+    'Thing': [],
+}

@@ -20,7 +20,7 @@ export interface CheerioPack {
 export const preCleanHTML = (input_html: string): CheerioPack => {
     console.log(chalk.yellow.bold("==================🚽 PRE-CLEANSING 🚽================="));
     const $ = cheerio.load(input_html, {decodeEntities: false});
-
+    
     // Remove certain tags that mess with AMP
     process.stdout.write(chalk.yellow(`Removing tags that are problematic for AMP...`));
     $(NON_AMP_BAD_TAGS.join(", ")).remove();
@@ -255,7 +255,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     if ($table.length > 0) {
         $($table).find("img").each((idx, img_elem) => {
             let theSrc = img_elem.attribs && img_elem.attribs['src'];
-            if (theSrc && theSrc.search(/Red_pog|triangle_with_thick|Airplane_silhouette/gimu) >= 0){
+            if (theSrc && theSrc.search(/Red_pog|triangle_with_thick|Airplane_silhouette|Lighthouse_icon/gimu) >= 0){
                 // console.log(chalk.yellow("Found geodot. Converting it..."));
                 // Get the class of the geodot
                 let theDotClass = img_elem.attribs && img_elem.attribs['class'];

@@ -11,6 +11,7 @@ import { getCitations } from './getCitations';
 import { Section, Citation, Paragraph, Media, Sentence, Table, DescList, Samp } from '../../../src/types/article';
 import { MediaUploadService, UrlPack } from '../../../src/media-upload';
 import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
+import { POST_CITATION_CHOP_BELOW } from '../functions/wiki-constants';
 const chalk = require('chalk');
 
 // input: page html, url
@@ -53,31 +54,25 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	const $ = ctn_return_pack.cheerio_pack.cheerio_static;
 	const $content = $('div.mw-parser-output');
 
+	// Join the POST_CITATION_CHOP_BELOW tags to form a selector
+	let chop_selector = POST_CITATION_CHOP_BELOW.filter(chop => chop.id).map(chop_pack => {
+		return `#${chop_pack.id}`;
+	}).join(", ");
+
 	// Loop through the children
 	console.log(chalk.yellow("Looping through the children"));
 	let single_section_body = true; // Flag to handle the edge case of a single-section wiki
-	let has_no_references = true; // Flag to handle the edge case of a wiki with no references
+
+	// console.log($.html($content))
+
 	$content.children('h1, h2, h3, h4, h5, h6, p, div, table, ul, ol, dl, blockquote, center, samp').each((i, el) => { 
 		let $el = $(el);
 		let tag_name = $el[0].name;
-
-		// Terminate at the references header
-		if ( $(el).find('#References.mw-headline').length > 0 ) {
-			has_no_references = false;
-			return false;
-		}
 
 		// Process headlines / headers
 		// Create new section when h tag is reached
 		process.stdout.write(chalk.yellow(`Adding ${tag_name}...`));
 		if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
-			// Terminate loop once references are reached (they've already been computed)
-			// This is a double check from the one above
-			if ( $el.attr('id') && $el.attr('id').search(/References|Sources/gimu) >= 0 ) {
-				has_no_references = false;
-				return false;
-			}
-
 			// Remove the single section body flag
 			single_section_body = false;
 
@@ -207,9 +202,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 	// Push any leftover paragraphs and/or images into a headerless section
 	// Usually this occurs with a one-paragraph wiki
 	// Also can occur if the wiki has no references
-	if ((single_section_body && (paragraphs.length > 0 || images.length > 0))
-		|| has_no_references
-	){
+	if (single_section_body || (paragraphs.length > 0 || images.length > 0)){
 		process.stdout.write(chalk.yellow(`Pushing leftover paragraphs and images...`));
 		// Assemble current section
 		section = { 

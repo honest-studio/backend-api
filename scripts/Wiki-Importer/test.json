@@ -3,1185 +3,28 @@
     {
       "type": "sentence",
       "index": 0,
-      "text": "Šenčur"
+      "text": "Stuhlinger Ice Piedmont"
     }
   ],
   "main_photo": [
     {
-      "url": "https://everipedia-storage.s3.amazonaws.com/ProfilePicture/en/_u_25C5_u_25A0en_u_25C4_u_258Dur__f8bcd1/Sencur_Slovenia.JPG__26681.jpeg",
-      "thumb": "https://everipedia-storage.s3.amazonaws.com/ProfilePicture/en/_u_25C5_u_25A0en_u_25C4_u_258Dur__04b461/Sencur_Slovenia.JPG__26681__thumb.jpeg",
-      "caption": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": ""
-        }
-      ],
+      "url": "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png",
+      "thumb": "https://epcdn-vz.azureedge.net/static/images/no-image-slide.png",
+      "caption": null,
       "type": "main_photo",
-      "attribution_url": "https://en.wikipedia.org/wiki/File:Sencur_Slovenia.JPG",
+      "attribution_url": null,
       "media_props": {
         "type": "main_photo",
-        "height": 1573,
-        "width": 2643,
-        "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Sencur_Slovenia.JPG/375px-Sencur_Slovenia.JPG 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Sencur_Slovenia.JPG/500px-Sencur_Slovenia.JPG 2x",
-        "webp_original": "https://everipedia-storage.s3.amazonaws.com/ProfilePicture/en/_u_25C5_u_25A0en_u_25C4_u_258Dur__f8bcd1/Sencur_Slovenia.JPG__26681_original.webp",
-        "webp_medium": "https://everipedia-storage.s3.amazonaws.com/ProfilePicture/en/_u_25C5_u_25A0en_u_25C4_u_258Dur__f8bcd1/Sencur_Slovenia.JPG__26681_medium.webp",
-        "webp_thumb": "https://everipedia-storage.s3.amazonaws.com/ProfilePicture/en/_u_25C5_u_25A0en_u_25C4_u_258Dur__f8bcd1/Sencur_Slovenia.JPG__26681_thumb.webp"
+        "height": null,
+        "width": null,
+        "srcSet": null
       },
-      "timestamp": "2019-09-13T03:38:46.371Z",
-      "category": "PICTURE",
-      "mime": "image/jpeg"
+      "timestamp": "2019-09-13T05:34:45.655Z",
+      "category": "NONE",
+      "mime": null
     }
   ],
-  "infobox_html": {
-    "type": "wikitable",
-    "attrs": {
-      "className": "infobox geography vcard",
-      "style": {
-        "width": "23em"
-      }
-    },
-    "caption": {
-      "attrs": {
-        "className": "fn org"
-      },
-      "sentences": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Šenčur Sports Park"
-        }
-      ]
-    },
-    "thead": {
-      "rows": [],
-      "attrs": {}
-    },
-    "tbody": {
-      "attrs": {},
-      "rows": [
-        {
-          "index": 0,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "fontSize": "1.25em",
-                  "fontWeight": "bold",
-                  "whiteSpace": "nowrap"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "display": "inline"
-                    },
-                    "className": "fn org"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "Šenčur"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "attrs": {
-            "className": "mergedtoprow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "className": "center"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "div",
-                      "tag_class": "block",
-                      "attrs": {
-                        "style": {
-                          "width": "250px",
-                          "float": "none",
-                          "clear": "both",
-                          "marginLeft": "auto",
-                          "marginRight": "auto"
-                        }
-                      },
-                      "content": [
-                        {
-                          "type": "tag",
-                          "tag_type": "div",
-                          "tag_class": "block",
-                          "attrs": {
-                            "style": {
-                              "width": "250px",
-                              "padding": "0"
-                            }
-                          },
-                          "content": [
-                            {
-                              "type": "tag",
-                              "tag_type": "div",
-                              "tag_class": "block",
-                              "attrs": {
-                                "style": {
-                                  "position": "relative",
-                                  "width": "250px"
-                                },
-                                "className": "geonugget"
-                              },
-                              "content": [
-                                {
-                                  "type": "tag",
-                                  "tag_type": "a",
-                                  "tag_class": "inline",
-                                  "attrs": {
-                                    "href": "/wiki/File:Slovenia_location_map.svg",
-                                    "className": "image",
-                                    "title": "Šenčur is located in Slovenia"
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "img",
-                                      "tag_class": "void",
-                                      "attrs": {
-                                        "alt": "Šenčur is located in Slovenia",
-                                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Slovenia_location_map.svg/250px-Slovenia_location_map.svg.png",
-                                        "decoding": "async",
-                                        "width": "250",
-                                        "height": "185",
-                                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Slovenia_location_map.svg/375px-Slovenia_location_map.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Slovenia_location_map.svg/500px-Slovenia_location_map.svg.png 2x",
-                                        "data-file-width": "1159",
-                                        "data-file-height": "857"
-                                      },
-                                      "content": []
-                                    }
-                                  ]
-                                },
-                                {
-                                  "type": "tag",
-                                  "tag_type": "div",
-                                  "tag_class": "block",
-                                  "attrs": {
-                                    "style": {
-                                      "position": "absolute",
-                                      "top": "45.103%",
-                                      "left": "33.836%"
-                                    }
-                                  },
-                                  "content": [
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "position": "absolute",
-                                          "left": "-3px",
-                                          "top": "-3px",
-                                          "lineHeight": "0"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "img",
-                                          "tag_class": "void",
-                                          "attrs": {
-                                            "alt": "Šenčur",
-                                            "src": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/6px-Red_pog.svg.png",
-                                            "decoding": "async",
-                                            "title": "Šenčur",
-                                            "width": "6",
-                                            "height": "6",
-                                            "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/9px-Red_pog.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Red_pog.svg/12px-Red_pog.svg.png 2x",
-                                            "data-file-width": "64",
-                                            "data-file-height": "64",
-                                            "className": "geodot"
-                                          },
-                                          "content": []
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "tag",
-                                      "tag_type": "div",
-                                      "tag_class": "block",
-                                      "attrs": {
-                                        "style": {
-                                          "fontSize": "90%",
-                                          "lineHeight": "110%",
-                                          "position": "absolute",
-                                          "width": "6em",
-                                          "top": "4px",
-                                          "left": "-3em",
-                                          "textAlign": "center"
-                                        }
-                                      },
-                                      "content": [
-                                        {
-                                          "type": "tag",
-                                          "tag_type": "div",
-                                          "tag_class": "block",
-                                          "attrs": {
-                                            "style": {
-                                              "display": "inline",
-                                              "padding": "1px"
-                                            }
-                                          },
-                                          "content": [
-                                            {
-                                              "type": "text",
-                                              "content": [
-                                                {
-                                                  "index": 0,
-                                                  "type": "sentence",
-                                                  "text": "Šenčur"
-                                                }
-                                              ]
-                                            }
-                                          ]
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            },
-                            {
-                              "type": "tag",
-                              "tag_type": "div",
-                              "tag_class": "block",
-                              "attrs": {},
-                              "content": [
-                                {
-                                  "type": "text",
-                                  "content": [
-                                    {
-                                      "index": 0,
-                                      "type": "sentence",
-                                      "text": "Location in Slovenia"
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "attrs": {
-            "className": "mergedbottomrow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Coordinates: "
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "className": "plainlinks nourlexpansion"
-                  },
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "46°14′34.94″N 14°25′5.19″E [[CITE|16|http://tools.wmflabs.org/geohack/geohack.php?pagename%3D%25C5%25A0en%25C4%258Dur%26params%3D46_14_34.94_N_14_25_5.19_E_region%3ASI_type%3Acity(3121)]] "
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "span",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "style": {
-                      "fontSize": "small"
-                    }
-                  },
-                  "content": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "attrs": {
-            "className": "mergedtoprow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Country"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "tag",
-                  "tag_type": "a",
-                  "tag_class": "inline",
-                  "attrs": {
-                    "href": "/wiki/File:Flag_of_Slovenia.svg",
-                    "className": "image flagicon-parent"
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "img",
-                      "tag_class": "void",
-                      "attrs": {
-                        "alt": "Flag of Slovenia.svg",
-                        "src": "//upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/25px-Flag_of_Slovenia.svg.png",
-                        "decoding": "async",
-                        "width": "25",
-                        "height": "13",
-                        "srcSet": "//upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/38px-Flag_of_Slovenia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/50px-Flag_of_Slovenia.svg.png 2x",
-                        "data-file-width": "1200",
-                        "data-file-height": "600",
-                        "className": "flagicon-img"
-                      },
-                      "content": []
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " [[LINK|lang_en|Slovenia|Slovenia]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "attrs": {
-            "className": "mergedrow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Traditional Region"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Upper_Carniola|Upper Carniola]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 5,
-          "attrs": {
-            "className": "mergedrow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Statistical_regions_of_Slovenia|Statistical region]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Upper_Carniola_Statistical_Region|Upper Carniola]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 6,
-          "attrs": {
-            "className": "mergedrow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Municipalities_of_Slovenia|Municipality]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Municipality_of_%C5%A0en%C4%8Dur|Šenčur]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 7,
-          "attrs": {
-            "className": "mergedtoprow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Area"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
-                    }
-                  },
-                  "content": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 8,
-          "attrs": {
-            "className": "mergedrow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " • Total"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "9.8 km"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "sup",
-                  "tag_class": "inline",
-                  "attrs": {},
-                  "content": [
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "2"
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " (3.8 sq mi)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 9,
-          "attrs": {
-            "className": "mergedtoprow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Elevation"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
-                    }
-                  },
-                  "content": []
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "402.5 m (1,320.5 ft)"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 10,
-          "attrs": {
-            "className": "mergedtoprow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Population"
-                    }
-                  ]
-                },
-                {
-                  "type": "tag",
-                  "tag_type": "div",
-                  "tag_class": "block",
-                  "attrs": {
-                    "style": {
-                      "fontWeight": "normal",
-                      "display": "inline"
-                    }
-                  },
-                  "content": [
-                    {
-                      "type": "tag",
-                      "tag_type": "span",
-                      "tag_class": "inline",
-                      "attrs": {
-                        "className": "nowrap"
-                      },
-                      "content": []
-                    },
-                    {
-                      "type": "text",
-                      "content": [
-                        {
-                          "index": 0,
-                          "type": "sentence",
-                          "text": "(2012)"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 11,
-          "attrs": {
-            "className": "mergedrow"
-          },
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": " • Total"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "3,121"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 12,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "left"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[CITE|1|https://openlibrary.org/search?q=Statistical%20Office%20of%20the%20Republic%20of%20Slovenia]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 13,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Full name"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Športni park Šenčur"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 14,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Location"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {
-                "className": "label"
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Šenčur"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 15,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|Seating_capacity|Capacity]]"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "540"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 16,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "scope": "row"
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Surface"
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "index": 1,
-              "attrs": {},
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Grass"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 17,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center",
-                  "backgroundColor": "#ccc"
-                }
-              },
-              "tag_type": "th",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "Tenants"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "index": 18,
-          "attrs": {},
-          "tag_type": "tr",
-          "tag_class": "block",
-          "cells": [
-            {
-              "index": 0,
-              "attrs": {
-                "colSpan": "2",
-                "style": {
-                  "textAlign": "center"
-                }
-              },
-              "tag_type": "td",
-              "tag_class": "block",
-              "content": [
-                {
-                  "type": "text",
-                  "content": [
-                    {
-                      "index": 0,
-                      "type": "sentence",
-                      "text": "[[LINK|lang_en|NK_%C5%A0en%C4%8Dur|NK Šenčur]]"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    "tfoot": {
-      "rows": [],
-      "attrs": {}
-    }
-  },
+  "infobox_html": null,
   "page_body": [
     {
       "paragraphs": [
@@ -1191,27 +34,10 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "**Šenčur** (pronounced [[LINK|lang_en|Help:IPA/Slovene|[ʃɛnˈtʃuːɾ]]]; in older sources also *Šentjur*,[[CITE|2|https://openlibrary.org/search?q=*Intelligenzblatt%20zur%20Laibacher%20Zeitung*%2C%20no.%20141.]] [[LINK|lang_en|German_language|German]]: *Sankt Georgen*[[CITE|3|https://openlibrary.org/search?q=*Leksikon%20ob%C4%8Din%20kraljestev%20in%20de%C5%BEel%20zastopanih%20v%20d]] or *Sankt Georgen im Felde*[[CITE|2|https://openlibrary.org/search?q=*Intelligenzblatt%20zur%20Laibacher%20Zeitung*%2C%20no.%20141.]]) is a settlement in the [[LINK|lang_en|Upper_Carniola|Upper Carniola]] region of [[LINK|lang_en|Slovenia|Slovenia]]. It is the seat of the [[LINK|lang_en|Municipality_of_%C5%A0en%C4%8Dur|Municipality of Šenčur]].[[CITE|4|https://openlibrary.org/search?q=%C5%A0en%C4%8Dur%20municipal%20site]]"
+              "text": "**Stuhlinger Ice Piedmont** (70°22′S 162°30′E  [[CITE|1|http://tools.wmflabs.org/geohack/geohack.php?pagename%3DStuhlinger_Ice_Piedmont%26params%3D70_22_S_162_30_E_]] ) is a coastal [[LINK|lang_en|Ice_piedmont|ice piedmont]], about 10 nautical miles (18 km) long and wide, located immediately north of [[LINK|lang_en|Bowers_Mountains|Bowers Mountains]] and between the lower ends of [[LINK|lang_en|Gannutz_Glacier|Gannutz]] and [[LINK|lang_en|Barber_Glacier|Barber Glaciers]]. Mapped by [[LINK|lang_en|United_States_Geological_Survey|United States Geological Survey]] (USGS) from surveys and [[LINK|lang_en|U.S._Navy|U.S. Navy]] air photos, 1960-62. Named by [[LINK|lang_en|Advisory_Committee_on_Antarctic_Names|Advisory Committee on Antarctic Names]] (US-ACAN) in 1968 for [[LINK|lang_en|Ernst_Stuhlinger|Ernst Stuhlinger]], [[LINK|lang_en|National_Aeronautics_and_Space_Administration|National Aeronautics and Space Administration]], a member of the [[LINK|lang_en|U.S._National_Science_Foundation|U.S. National Science Foundation]]'s Advisory Panel for Antarctic Programs."
             }
           ],
           "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Name"
-            }
-          ],
-          "tag_type": "h2",
           "attrs": {}
         },
         {
@@ -1220,36 +46,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "Šenčur was mentioned in written sources in 1221 as *de Sancto Georio*[[CITE|5|https://openlibrary.org/search?q=Jaki%C4%8D%2C%20Ivan.%201997.%20*Vsi%20slovenski%20gradovi%3A%20leksiko]] (and as *ad sanctum Georium* and *ecclesiam sancti Georgii* in 1238, and as *aput Sanctum Georium* in 1264). The Slovene name *Šentčur* is a contraction of the colloquial name for [[LINK|lang_en|Saint_George|Saint George]], the patron saint of the local church: *šent Jur* > **Šenťur* > *Šenčur*.[[CITE|6|https://openlibrary.org/search?q=Snoj%2C%20Marko.%202009.%20*Etimolo%C5%A1ki%20slovar%20slovenskih%20z]] In the past, the settlement was known as *Sankt Georgen (im Felde)* in German.[[CITE|2|https://openlibrary.org/search?q=*Intelligenzblatt%20zur%20Laibacher%20Zeitung*%2C%20no.%20141.]][[CITE|3|https://openlibrary.org/search?q=*Leksikon%20ob%C4%8Din%20kraljestev%20in%20de%C5%BEel%20zastopanih%20v%20d]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "History"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The Šenčur area was already inhabited in late antiquity; archaeological finds include a Roman sarcophagus from the 4th century AD.[[CITE|7|https://openlibrary.org/search?q=Kastelic%2C%20Jo%C5%BEe.%201998.%20*Simbolika%20mitov%20na%20rimskih%20]] Medieval sources mention Šenčur in 1221 in connection with the knight Friedrich of Šenčur (*Fridericus de Sancto Georio*).[[CITE|5|https://openlibrary.org/search?q=Jaki%C4%8D%2C%20Ivan.%201997.%20*Vsi%20slovenski%20gradovi%3A%20leksiko]]"
+              "text": "This article incorporates [[LINK|lang_en|Copyright_status_of_work_by_the_U.S._government|public domain material]] from the [[LINK|lang_en|United_States_Geological_Survey|United States Geological Survey]] document \"Stuhlinger Ice Piedmont\"  [[CITE|2|https://geonames.usgs.gov/apex/f?p=gnispq:5:::NO::P5_ANTAR_ID:14723]]  (content from the [[LINK|lang_en|Geographic_Names_Information_System|Geographic Names Information System]]).  [[LINK|lang_en|//www.wikidata.org/wiki/Q15651275#P804|]]"
             }
           ],
           "tag_type": "p",
@@ -1261,231 +58,7 @@
             {
               "type": "sentence",
               "index": 0,
-              "text": "During the Middle Ages, Šenčur was subordinate to the Dominican monastery in Velesovo. In 1458, almost half of the peasants (21) were subordinated to the monastery. In 1471 and 1472, the settlement came under [[LINK|lang_en|Ottoman_Wars_in_Europe|Ottoman attack]] twice. With the abolition of the monastery in 1782, most of the peasants came under different landlords."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 3,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Šenčur was the scene of the Šenčur Events ([[LINK|lang_en|Slovene_language|Slovene]]: *Šenčurski dogodki*) on 22 May 1932. This was a political incident in which members of the banned [[LINK|lang_en|Slovene_People%27s_Party_(historical)|Slovene People’s Party]] prevented a march by the newly founded [[LINK|lang_en|Yugoslav_National_Party|Yugoslav Radical Peasants' Democracy]], calling out slogans against the [[LINK|lang_en|6_January_Dictatorship|6 January Dictatorship]] and in support of the [[LINK|lang_en|United_Slovenia|United Slovenia]] program. As a result, several Upper Carniolan leaders of the Slovene People’s Party were arrested and imprisoned, including [[LINK|lang_en|Matija_%C5%A0kerbec|Matija Škerbec]].[[CITE|8|https://openlibrary.org/search?q=Prunk%2C%20Janko.%201999.%20%22%C5%A0en%C4%8Durski%20dogodki.%22%20*Enciklop]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 4,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "During the Second World War, a local committee of the communist [[LINK|lang_en|Liberation_Front_of_the_Slovene_Nation|Liberation Front]] was established in Šenčur in May 1941. On 24 January 1944, German forces shot 40 hostages in Šenčur in retaliation for the deaths of three military police.[[CITE|9|https://openlibrary.org/search?q=%22%C5%A0en%C4%8Dur.%22%201999.%20*Enciklopedija%20Slovenije*%2C%20vol.%2013]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        },
-        {
-          "index": 5,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "After the Second World War, the old medieval layout of Šenčur was almost completely obliterated by new development. The population, which had already grown significantly during the interwar period, grew rapidly after 1945, even doubling between 1953 and 1994. By the end of the 20th century, only 5% of the population was still engaged in farming and the majority of residents commuted to [[LINK|lang_en|Kranj|Kranj]] for work.[[CITE|9|https://openlibrary.org/search?q=%22%C5%A0en%C4%8Dur.%22%201999.%20*Enciklopedija%20Slovenije*%2C%20vol.%2013]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Church"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "The church in Šenčur is dedicated to Saint George ([[LINK|lang_en|Slovene_language|Slovene]]: *sveti Jurij*). It is a single-nave structure with a rectangular chancel with beveled corners that was built in 1747 on the site of an earlier building. The furnishings are Baroque, and the chancel arch features a 1750 fresco painted by Franc Jelovšek (1700–1764). The church also contains paintings by Janez (1850–1889) and Jurij Šubic (1855–1890).[[CITE|10|https://openlibrary.org/search?q=Slovenian%20Ministry%20of%20Culture%20register%20of%20national]] The first church at the site was mentioned in written sources in 1238, when [[LINK|lang_en|Berthold_(patriarch_of_Aquileia)|Patriarch Berthold]] of [[LINK|lang_en|Patriarchate_of_Aquileia_(state)|Aquileia]] granted the church to the monastery at [[LINK|lang_en|Velesovo|Velesovo]].[[CITE|9|https://openlibrary.org/search?q=%22%C5%A0en%C4%8Dur.%22%201999.%20*Enciklopedija%20Slovenije*%2C%20vol.%2013]][[CITE|11|https://openlibrary.org/search?q=*Krajevni%20leksikon%20Dravske%20Banovine*.%201937.%20Ljublj]] During the Middle Ages, the church was surrounded with a fortified wall to protect against Ottoman attacks.[[CITE|11|https://openlibrary.org/search?q=*Krajevni%20leksikon%20Dravske%20Banovine*.%201937.%20Ljublj]][[CITE|12|https://openlibrary.org/search?q=Savnik%2C%20Roman%2C%20ed.%201968.%20*Krajevni%20leksikon%20Sloven]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": [
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Sencur_Slovenia_-_church_detail.JPG",
-          "thumb": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Sencur_Slovenia_-_church_detail.JPG",
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Sculpture in niche"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-13T03:38:54.464Z",
-          "media_props": {
-            "type": "section_image",
-            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Sencur_Slovenia_-_church_detail.JPG/218px-Sencur_Slovenia_-_church_detail.JPG 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Sencur_Slovenia_-_church_detail.JPG/290px-Sencur_Slovenia_-_church_detail.JPG 2x",
-            "height": 2737,
-            "width": 1959
-          }
-        },
-        {
-          "type": "section_image",
-          "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Sencur_Slovenia_-_church.JPG",
-          "thumb": "https://upload.wikimedia.org/wikipedia/commons/3/38/Sencur_Slovenia_-_church.JPG",
-          "caption": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "View from north"
-            }
-          ],
-          "mime": "image/jpeg",
-          "category": "PICTURE",
-          "timestamp": "2019-09-13T03:38:54.479Z",
-          "media_props": {
-            "type": "section_image",
-            "srcSet": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Sencur_Slovenia_-_church.JPG/230px-Sencur_Slovenia_-_church.JPG 1.5x, https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Sencur_Slovenia_-_church.JPG/306px-Sencur_Slovenia_-_church.JPG 2x",
-            "height": 2594,
-            "width": 1954
-          }
-        }
-      ]
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Economy"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Šenčur has several small family-owned companies. A business park was built in 1994. A well-known local company is Logar Trade d.o.o., which produces beekeeping equipment for export to German-speaking markets. Several international companies also run Slovenian operations from the business park, most notably Garmin. Logistics companies have established themselves in Šenčur due to its convenient location (next to the freeway, 3 km from the airport, and 4 km from Kranj). Šenčur also has four banks, a post office, a supermarket, several other stores, and several bars and restaurants."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Events"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Šenčur has three prominent annual events. The oldest and biggest carnival in Upper Carniola takes place in the town each year in February or March. The carnival is organized by the Godlarji association (named for the traditional dish *godlja*, a [[LINK|lang_en|Blood_sausage|blood-sausage]] soup, which has also yielded the nickname *godlarji* for the residents). The second event is the Potato Festival, which is held each year at the end of June. The third event is the Grand Prix of Šenčur international cycling race,  which is held annually at the beginning of April."
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Šenčur Sports Park"
-            }
-          ],
-          "tag_type": "h3",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Šenčur Sports Park  is a [[LINK|lang_en|Multi-purpose_stadium|multi-purpose stadium]] in Šenčur. It is used for [[LINK|lang_en|Association_football|football]] matches and is the [[LINK|lang_en|Home_team|home ground]] of the [[LINK|lang_en|Slovenian_Third_League|Slovenian Third League]] team [[LINK|lang_en|NK_%C5%A0en%C4%8Dur|NK Šenčur]]. The stadium currently holds 800 spectators, 540 of them can be seated.[[CITE|13|https://openlibrary.org/search?q=%22Slovenia%20%E2%80%93%20SD%20%C5%A0encur%22.%20*int.soccerway.com*.%20Retri]][[CITE|14|https://openlibrary.org/search?q=%22%C5%A0portni%20park%20%C5%A0en%C4%8Dur%22.%20*en.stadioni.org*.%20Retrieve]]"
-            }
-          ],
-          "tag_type": "p",
-          "attrs": {}
-        }
-      ],
-      "images": []
-    },
-    {
-      "paragraphs": [
-        {
-          "index": 0,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "Associations"
-            }
-          ],
-          "tag_type": "h2",
-          "attrs": {}
-        },
-        {
-          "index": 1,
-          "items": [
-            {
-              "type": "sentence",
-              "index": 0,
-              "text": "There are several associations and clubs in the town. The association with the longest tradition is the volunteer fire department, going back more than 115 years. There are several folkdance groups, a band, and several choral groups. A theater group performs a few shows per year at the local community center. The town also has several sports teams. The [[LINK|lang_en|NK_%C5%A0en%C4%8Dur|NK Šenčur]] [[LINK|lang_en|Association_football|football]] team has played in the [[LINK|lang_en|Slovenian_Second_League|Slovenian Second League]] for several years, and [[LINK|lang_en|KK_%C5%A0en%C4%8Dur|KK Šenčur]] plays in the [[LINK|lang_en|Premier_A_Slovenian_Basketball_League|Premier A Slovenian Basketball League]]. The Šenčur archery club is very active, and the Šenčur cycling club organizes the annual cycling race. Other local associations include the beekeepers' association and the tourism association."
+              "text": ""
             }
           ],
           "tag_type": "p",
@@ -1498,384 +71,44 @@
   "infoboxes": [],
   "citations": [
     {
-      "url": "https://openlibrary.org/search?q=Statistical%20Office%20of%20the%20Republic%20of%20Slovenia",
+      "url": "http://tools.wmflabs.org/geohack/geohack.php?pagename%3DStuhlinger_Ice_Piedmont%26params%3D70_22_S_162_30_E_",
       "thumb": null,
-      "category": "BOOK",
+      "category": "NONE",
       "citation_id": 1,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "Statistical Office of the Republic of Slovenia"
+          "text": "70°22′S 162°30′E"
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.398Z",
+      "timestamp": "2019-09-13T05:34:45.657Z",
       "mime": null
     },
     {
-      "url": "https://openlibrary.org/search?q=*Intelligenzblatt%20zur%20Laibacher%20Zeitung*%2C%20no.%20141.",
+      "url": "https://geonames.usgs.gov/apex/f?p=gnispq:5:::NO::P5_ANTAR_ID:14723",
       "thumb": null,
-      "category": "BOOK",
+      "category": "NONE",
       "citation_id": 2,
       "description": [
         {
           "type": "sentence",
           "index": 0,
-          "text": "*Intelligenzblatt zur Laibacher Zeitung*, no. 141. 24 November 1849, p. 7."
+          "text": "\"Stuhlinger Ice Piedmont\""
         }
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.400Z",
+      "timestamp": "2019-09-13T05:34:45.657Z",
       "mime": null
     },
     {
-      "url": "https://openlibrary.org/search?q=*Leksikon%20ob%C4%8Din%20kraljestev%20in%20de%C5%BEel%20zastopanih%20v%20d",
+      "url": "https://en.wikipedia.org/wiki/Stuhlinger_Ice_Piedmont",
       "thumb": null,
-      "category": "BOOK",
+      "category": "NONE",
       "citation_id": 3,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "*Leksikon občin kraljestev in dežel zastopanih v državnem zboru,* vol. 6: *Kranjsko*. 1906. Vienna: C. Kr. Dvorna in Državna Tiskarna, p. 56."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.402Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=%C5%A0en%C4%8Dur%20municipal%20site",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 4,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Šenčur municipal site"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.404Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=Jaki%C4%8D%2C%20Ivan.%201997.%20*Vsi%20slovenski%20gradovi%3A%20leksiko",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 5,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Jakič, Ivan. 1997. *Vsi slovenski gradovi: leksikon slovenske grajske zapuščine.* Ljubljana: DZS, p. 324."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.404Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=Snoj%2C%20Marko.%202009.%20*Etimolo%C5%A1ki%20slovar%20slovenskih%20z",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 6,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Snoj, Marko. 2009. *Etimološki slovar slovenskih zemljepisnih imen*. Ljubljana: Modrijan and Založba ZRC, p. 408."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.405Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=Kastelic%2C%20Jo%C5%BEe.%201998.%20*Simbolika%20mitov%20na%20rimskih%20",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 7,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Kastelic, Jože. 1998. *Simbolika mitov na rimskih nagrobnih spomenikih: Šempeter v Savinjski dolini.* Ljubljana: Slovenska matica, p. 154."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.406Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=Prunk%2C%20Janko.%201999.%20%22%C5%A0en%C4%8Durski%20dogodki.%22%20*Enciklop",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 8,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Prunk, Janko. 1999. \"Šenčurski dogodki.\" *Enciklopedija Slovenije*, vol. 13. Ljubljana: Mladinska knjiga, p. 20."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.407Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=%22%C5%A0en%C4%8Dur.%22%201999.%20*Enciklopedija%20Slovenije*%2C%20vol.%2013",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 9,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Šenčur.\" 1999. *Enciklopedija Slovenije*, vol. 13. Ljubljana: Mladinska knjiga, p. 20."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.408Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=Slovenian%20Ministry%20of%20Culture%20register%20of%20national",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 10,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Slovenian Ministry of Culture register of national heritage reference number ešd 2414"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.409Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=*Krajevni%20leksikon%20Dravske%20Banovine*.%201937.%20Ljublj",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 11,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "*Krajevni leksikon Dravske Banovine*. 1937. Ljubljana: Zveza za tujski promet za Slovenijo, p. 252."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.409Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=Savnik%2C%20Roman%2C%20ed.%201968.%20*Krajevni%20leksikon%20Sloven",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 12,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Savnik, Roman, ed. 1968. *Krajevni leksikon Slovenije*, vol. 1. Ljubljana: Državna založba Slovenije, p. 170."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.411Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=%22Slovenia%20%E2%80%93%20SD%20%C5%A0encur%22.%20*int.soccerway.com*.%20Retri",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 13,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Slovenia – SD Šencur\". *int.soccerway.com*. Retrieved 5 June 2019."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.413Z",
-      "mime": null
-    },
-    {
-      "url": "https://openlibrary.org/search?q=%22%C5%A0portni%20park%20%C5%A0en%C4%8Dur%22.%20*en.stadioni.org*.%20Retrieve",
-      "thumb": null,
-      "category": "BOOK",
-      "citation_id": 14,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Športni park Šenčur\". *en.stadioni.org*. Retrieved 5 June 2019."
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.414Z",
-      "mime": null
-    },
-    {
-      "url": "http://www.geopedia.si/#T105_F410:10103371_x455681.5_y121661_s14_b4",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 15,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Šenčur at Geopedia"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.417Z",
-      "mime": null
-    },
-    {
-      "url": "http://tools.wmflabs.org/geohack/geohack.php?pagename%3D%25C5%25A0en%25C4%258Dur%26params%3D46_14_34.94_N_14_25_5.19_E_region%3ASI_type%3Acity(3121)",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 16,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "46°14′34.94″N 14°25′5.19″E"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.417Z",
-      "mime": null
-    },
-    {
-      "url": "http://www.stat.si/eng/index.asp",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 17,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Statistical Office of the Republic of Slovenia"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.419Z",
-      "mime": null
-    },
-    {
-      "url": "http://www.sencur.si/",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 18,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Šenčur municipal site"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.419Z",
-      "mime": null
-    },
-    {
-      "url": "http://giskd2s.situla.org/rkd/Opis.asp?Esd=2414",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 19,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Slovenian Ministry of Culture register of national heritage"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.420Z",
-      "mime": null
-    },
-    {
-      "url": "https://int.soccerway.com/teams/slovenia/sd-encur/4598/venue/",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 20,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Slovenia – SD Šencur\""
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.420Z",
-      "mime": null
-    },
-    {
-      "url": "http://en.stadioni.org/sencur/sportni-park-sencur/",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 21,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "\"Športni park Šenčur\""
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.420Z",
-      "mime": null
-    },
-    {
-      "url": "http://www.geopedia.si/#T105_F410:10103371_x455681.5_y121661_s14_b4",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 22,
-      "description": [
-        {
-          "type": "sentence",
-          "index": 0,
-          "text": "Šenčur at Geopedia"
-        }
-      ],
-      "social_type": null,
-      "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.421Z",
-      "mime": null
-    },
-    {
-      "url": "https://en.wikipedia.org/wiki/%25C5%25A0en%25C4%258Dur",
-      "thumb": null,
-      "category": "NONE",
-      "citation_id": 23,
       "description": [
         {
           "index": 0,
@@ -1905,7 +138,7 @@
       ],
       "social_type": null,
       "attribution": "rel=nofollow",
-      "timestamp": "2019-09-13T03:38:54.424Z",
+      "timestamp": "2019-09-13T05:34:45.658Z",
       "mime": null
     }
   ],
@@ -1913,7 +146,7 @@
   "metadata": [
     {
       "key": "page_type",
-      "value": "Place"
+      "value": "Thing"
     },
     {
       "key": "is_removed",
@@ -1945,7 +178,7 @@
     },
     {
       "key": "creation_timestamp",
-      "value": "8/13/2019 3:38:45 AM UTC"
+      "value": "8/13/2019 5:33:11 AM UTC"
     },
     {
       "key": "last_modified",
@@ -1957,11 +190,291 @@
     },
     {
       "key": "url_slug",
-      "value": "%C5%A0en%C4%8Dur"
+      "value": "Backward_Society_Education"
     },
     {
       "key": "url_slug_alternate",
-      "value": "%C5%A0en%C4%8Dur"
+      "value": "Backward_Society_Education"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:33:20 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "The_Eternal_City"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "The_Eternal_City"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:33:22 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Springfield_Meadows,_California"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Springfield_Meadows,_California"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:33:24 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Vanchi_Maniyachchi_Junction_railway_station"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Vanchi_Maniyachchi_Junction_railway_station"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:33:36 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Baguio_Central_University"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Baguio_Central_University"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:33:45 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Workers_and_Farmers_Party"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Workers_and_Farmers_Party"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:33:47 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Aflac_Building"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Aflac_Building"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:1 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "2016%E2%80%9317_Crawley_Town_F.C._season"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "2016%E2%80%9317_Crawley_Town_F.C._season"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:2 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Quarterly_Journal_of_Science"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Quarterly_Journal_of_Science"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:5 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Arturo_Barea"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Arturo_Barea"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:15 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "2012_Open_BNP_Paribas_Banque_de_Bretagne_%E2%80%93_Singles"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "2012_Open_BNP_Paribas_Banque_de_Bretagne_%E2%80%93_Singles"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:16 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Cambio-Aldaketa"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Cambio-Aldaketa"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:23 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "William_Inglis_(British_Army_officer)"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "William_Inglis_(British_Army_officer)"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:31 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Culture_of_Quebec"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Culture_of_Quebec"
+    },
+    {
+      "key": "creation_timestamp",
+      "value": "8/13/2019 5:34:45 AM UTC"
+    },
+    {
+      "key": "last_modified",
+      "value": null
+    },
+    {
+      "key": "page_lang",
+      "value": "en"
+    },
+    {
+      "key": "url_slug",
+      "value": "Stuhlinger_Ice_Piedmont"
+    },
+    {
+      "key": "url_slug_alternate",
+      "value": "Stuhlinger_Ice_Piedmont"
     }
   ],
   "amp_info": {
@@ -1970,5 +483,5 @@
     "load_video_js": false,
     "lightboxes": []
   },
-  "ipfs_hash": "QmWseRZv78wkGnhEfm6bJBQbEx8ViWVJfetME1MprpfAKF"
+  "ipfs_hash": "QmZ3JtyeBGbXo2ThXjq42kamTWFmfvApQQDVf1ndZ5zEbQ"
 }
