@@ -4,6 +4,7 @@ import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { PreviewService } from '../preview/preview.service';
 import { Proposal, ProposalService } from '../proposal';
 import { ActivityType } from '../types/article';
+import { ConfigService } from '../common';
 
 @Injectable()
 export class RecentActivityService {
@@ -13,6 +14,7 @@ export class RecentActivityService {
         private mongo: MongoDbService,
         private redis: RedisService,
         private proposalService: ProposalService,
+        private config: ConfigService,
         private mysql: MysqlService,
     ) {}
 
@@ -107,29 +109,78 @@ export class RecentActivityService {
             }
 
             // No cache? Compute it
-            const one_day_ago = new Date(Date.now() - 24*3600*1000).toISOString().slice(0, 19).replace('T', ' ');
-            const top_slugs: Array<any> = await this.mysql.TryQuery(
-                `
-                SELECT path, COUNT(*) AS pageviews 
-                FROM ep2_backend_requests
-                WHERE path LIKE "/v2/wiki/slug/%"
-                    AND timestamp > ?
-                GROUP BY path
-                ORDER BY pageviews DESC
-                LIMIT 100
-                `,
-                [one_day_ago],
-                20000
-            );
+            const client_id = this.config.get("GOOGLE_API_CLIENT_ID");
+            const client_secret = this.config.get("GOOGLE_API_CLIENT_SECRET");
+            const refresh_token = this.config.get("GOOGLE_API_REFRESH_TOKEN");
+            const access_token = await fetch("https://www.googleapis.com/oauth2/v4/token", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: `client_id=${client_id}&client_secret=${client_secret}&refresh_token=${refresh_token}&grant_type=refresh_token`
+            })
+            .then(response => response.json())
+            .then(json => json.access_token);
 
-            const trending = top_slugs.map(row => ({
-                slug: row.path.substring(row.path.lastIndexOf('/') + 1),
-                lang_code: row.path.slice(19, row.path.lastIndexOf('/')),
-                pageviews_today: row.pageviews,
-                unique_pageviews_today: row.pageviews,
-            }));
+            const analytics_view_id = this.config.get("GOOGLE_ANALYTICS_VIEW_ID");
+            const rows = await fetch(`https://analyticsreporting.googleapis.com/v4/reports:batchGet`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${access_token}`
+                },
+                body: JSON.stringify({
+                    "reportRequests": [{
+                        viewId: analytics_view_id,
+                        dateRanges: [{"startDate": "yesterday", "endDate": "today"}],
+                        metrics: [
+                            {"expression": "ga:pageviews" },
+                            {"expression": "ga:uniquePageviews" }
+                        ],
+                        dimensions: [{"name": "ga:pagePath"}],
+                        dimensionFilterClauses: [{ 
+                            filters: [{
+                                dimensionName: "ga:pagePath",
+                                operator: "BEGINS_WITH",
+                                expressions: "/wiki/",
+                            }]
+                        }],
+                        orderBys: [{ "fieldName": "ga:pageviews", "sortOrder": "DESCENDING" }],
+                        pageSize: 100
+                    }]
+                })
+            })
+            .then(response => response.json())
+            .then(json => json.reports[0].data.rows);
 
-            this.redis.connection().set('trending_pages:today', JSON.stringify(trending));
+            // combine AMP and regular views
+            const viewcounts = {};
+            for (let r of rows) {
+                let slug = r.dimensions[0];
+                if (slug.slice(-4) == "/amp")
+                    slug = slug.slice(0, -4);
+                slug = slug.substring(slug.lastIndexOf('/') + 1);
+                if (viewcounts[slug]) {
+                    viewcounts[slug].pageviews += Number(r.metrics[0].values[0]);
+                    viewcounts[slug].unique_pageviews += Number(r.metrics[0].values[1]);
+                }
+                else viewcounts[slug] = {
+                    lang_code: r.dimensions[0].slice(11,13),
+                    pageviews: Number(r.metrics[0].values[0]),
+                    unique_pageviews: Number(r.metrics[0].values[1])
+                };
+            }
+
+            const trending = Object.keys(viewcounts).map(slug => ({
+                slug, ...viewcounts[slug]
+            }))
+            .sort((a,b) => b.unique_pageviews - a.unique_pageviews);
+
+
+
+            const pipeline = this.redis.connection().pipeline();
+            pipeline.set('trending_pages:today', JSON.stringify(trending));
+            pipeline.expire('trending_pages:today', 3600);
+            pipeline.exec();
 
             return trending.slice(0, limit);
         }
