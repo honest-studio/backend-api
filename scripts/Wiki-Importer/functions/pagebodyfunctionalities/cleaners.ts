@@ -18,16 +18,21 @@ export interface CheerioPack {
 }
 
 export const preCleanHTML = (input_html: string): CheerioPack => {
-    console.log(chalk.yellow.bold("==============🚽  PRE-CLEANING 🚽 ============="));
+    console.log(chalk.yellow.bold("==================🚽 PRE-CLEANSING 🚽================="));
     const $ = cheerio.load(input_html, {decodeEntities: false});
 
     // Remove certain tags that mess with AMP
+    process.stdout.write(chalk.yellow(`Removing tags that are problematic for AMP...`));
     $(NON_AMP_BAD_TAGS.join(", ")).remove();
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Remove style sections
+    process.stdout.write(chalk.yellow(`Removing <style>...`));
     $('style').remove();
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Replace certain classes
+    process.stdout.write(chalk.yellow(`Replacing certain classes...`));
     REPLACE_CLASSES_PREPARSE_UNIVERSAL.forEach(pack => {
         $(pack.target_selector).each((idx, $elem) => {
             $($elem).prop('tagName', pack.replacement_tag);
@@ -36,9 +41,39 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             // console.log(chalk.red(`${selector} replaced with ${pack.replacement_tag}.${pack.replacement_class}`));
         });
     });
+    process.stdout.write(chalk.yellow(` DONE\n`));
+
+    // Remove certain elements
+    process.stdout.write(chalk.yellow(`Removing certain elements...`));
+    PRECLEAN_BAD_ELEMENTS.forEach(pack => {
+        let parent_selector = pack.parent ? 
+                            `${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
+                            : "" ;
+        let selector = `${parent_selector}${pack.tag ? pack.tag : ""}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
+        $(selector).each((idx, $elem) => {
+            $($elem).remove();
+            // console.log(chalk.red(`${selector} removed...`));
+        });
+    });
+    process.stdout.write(chalk.yellow(` DONE\n`));
+    
+    // Unwrap certain elements
+    process.stdout.write(chalk.yellow(`Unwrapping certain elements...`));
+    PRECLEAN_UNWRAP_ELEMENTS.forEach(pack => {
+        let parent_selector = pack.parent ? 
+                            `${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
+                            : "" ;
+        let selector = `${parent_selector}${pack.tag ? pack.tag : ""}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
+        $(selector).each((idx, $elem) => {
+            $($elem).replaceWith($($elem).contents());
+            // console.log(chalk.red(`${selector} unwrapped...`));
+        });
+    });
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Remove crappy images that mess up the infobox
     // Also fix the hrefs for some images
+    process.stdout.write(chalk.yellow(`Removing crappy images and fixing hrefs...`));
     $("img").each((idx, img_elem) => {
         let theSrc = $(img_elem).eq(0)[0].attribs['src'];
 
@@ -89,38 +124,20 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             else if (!theMedalClass) $(img_elem).attr('class', "medalicon");
         }
     })
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
-    // Remove certain elements
-    PRECLEAN_BAD_ELEMENTS.forEach(pack => {
-        let parent_selector = pack.parent ? 
-                            `${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
-                            : "" ;
-        let selector = `${parent_selector}${pack.tag ? pack.tag : ""}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
-        $(selector).each((idx, $elem) => {
-            $($elem).remove();
-            // console.log(chalk.red(`${selector} removed...`));
-        });
-    });
     
-    // Unwrap certain elements
-    PRECLEAN_UNWRAP_ELEMENTS.forEach(pack => {
-        let parent_selector = pack.parent ? 
-                            `${pack.parent.tag ? pack.parent.tag : ""}${pack.parent.id ? '#' + pack.parent.id : ""}${pack.parent.class ? '.' + pack.parent.class : ""} `
-                            : "" ;
-        let selector = `${parent_selector}${pack.tag ? pack.tag : ""}${pack.id ? '#' + pack.id : ""}${pack.class ? '.' + pack.class : ""}`;
-        $(selector).each((idx, $elem) => {
-            $($elem).replaceWith($($elem).contents());
-            // console.log(chalk.red(`${selector} unwrapped...`));
-        });
-    });
 
     // Convert quoteboxes to blockquotes
+    process.stdout.write(chalk.yellow(`Converting quoteboxes to <blockquote>...`));
     $('.quotebox').each((idx, quotebox) => {
         $(quotebox).prop('tagName', 'blockquote');
         $(quotebox).addClass('wiki-quotebox');
     });
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Convert <strong> and <b> tags to **text** (Markdown)
+    process.stdout.write(chalk.yellow(`Converting <strong> and <b> tags to Markdown **text**...`));
     $('strong, b').each(function() {
         // Get the string
         let theString = '';
@@ -153,8 +170,30 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             $(this).replaceWith(htmlString);
         }
     });
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
-    // Unpack section images with multiple pictures  
+    // Convert <em> and <i> tags to *text* (Markdown)
+    process.stdout.write(chalk.yellow(`Converting <em> and <i> tags to Markdown *text*...`));
+    $('em, i').each(function() {
+        // Get the string
+        let theString = '';
+
+        // // Preserve whitespace, but it will need to be moved
+        // let reg_result = WHITESPACE_PRESERVATION_REGEX.exec($(this).text());
+
+        // theString = $(this).html().trim() || '';
+        theString = $(this).html().trim() || '';
+        
+        // Create the string
+        let htmlString = `*${theString}*`;
+
+        // Replace the tag with the string
+        $(this).replaceWith(htmlString);
+    });
+    process.stdout.write(chalk.yellow(` DONE\n`));
+
+    // Unpack section images with multiple pictures
+    process.stdout.write(chalk.yellow(`Unpacking tmulti section images into single thumbs...`)); 
     $('.thumb.tmulti').each((idx, multi_thumb_elem) => {
         // Start a collection
         let new_singles: CheerioElement[] = [];
@@ -186,29 +225,11 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         // Remove the multi
         $(multi_thumb_elem).remove();
     });
-
+    process.stdout.write(chalk.yellow(` DONE\n`));
     
 
-    // Convert <em> and <i> tags to *text* (Markdown)
-    $('em, i').each(function() {
-        // Get the string
-        let theString = '';
-
-        // // Preserve whitespace, but it will need to be moved
-        // let reg_result = WHITESPACE_PRESERVATION_REGEX.exec($(this).text());
-
-        // theString = $(this).html().trim() || '';
-        theString = $(this).html().trim() || '';
-        
-
-        // Create the string
-        let htmlString = `*${theString}*`;
-
-        // Replace the tag with the string
-        $(this).replaceWith(htmlString);
-    });
-
     // Convert latitude / longitude to plaintext with external link
+    process.stdout.write(chalk.yellow(`Cleaning up latitude and longitude stuff...`));
     $('.geo-default').each((idx, $lat_long_elem) => {
         let $theParent = $($lat_long_elem).parent();
         let parentAttribs = $theParent.eq(0)[0].attribs;
@@ -225,15 +246,17 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             $($lat_long_elem).replaceWith(the_inner_text);
         }
     })
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Search for geography red dots and other jank in the infobox
     // Doing this makes sure infobox maps for places / airports / etc show up correctly
+    process.stdout.write(chalk.yellow(`Fixing Red_pog and other stuff that appears overlain on maps...`));
     const $table = $('.infobox');
     if ($table.length > 0) {
         $($table).find("img").each((idx, img_elem) => {
             let theSrc = img_elem.attribs && img_elem.attribs['src'];
             if (theSrc && theSrc.search(/Red_pog|triangle_with_thick|Airplane_silhouette/gimu) >= 0){
-                console.log(chalk.yellow("Found geodot. Converting it..."));
+                // console.log(chalk.yellow("Found geodot. Converting it..."));
                 // Get the class of the geodot
                 let theDotClass = img_elem.attribs && img_elem.attribs['class'];
 
@@ -251,6 +274,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
             }
         })
     }
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // // Search for geography red dots and other jank in section images
     // // Doing this makes sure infobox maps for places / airports / etc show up correctly
@@ -276,6 +300,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     // })
     
     // Try to find flagicons and mark them
+    process.stdout.write(chalk.yellow(`Finding flagicons and normalizing them...`));
     $(".flagicon img").each((idx, flag_img) => {
         // Get the parent
         let flag_parent = $(flag_img).closest('.flagicon');
@@ -304,8 +329,10 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         } 
         else $(flag_img).attr('class', "flagicon-img");
     })
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Handle kartographers
+    process.stdout.write(chalk.yellow(`Normalizing kartographer...`));
     $('a.mw-kartographer-container').each((idx, kartographer) => {
         let theAttribs = $(kartographer).eq(0)[0].attribs;
         let cleanedAttribs = cleanAttributes(theAttribs);
@@ -346,9 +373,11 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         // Set the <a> contents as the img
         $(kartographer).html(theNewImg);
     });
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
     // Handle some math stuff
-    // Convert to a dl for now so it gets parsed as nested tags
+    // Convert to a <samp> tag for now so it gets parsed as nested tags on the frontend
+    process.stdout.write(chalk.yellow(`Converting math stuff to normalized <samp> tags...`));
     $('.mwe-math-element img').each((idx, math_elem_img) => {
         console.log("------------------------------")
         // Get the ancestor tag that is a direct child of .mw-parser-output
@@ -360,8 +389,9 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
         $(ancestor_tag).addClass('wiki-math');
 
     });
+    process.stdout.write(chalk.yellow(` DONE\n`));
 
-    process.stdout.write(chalk.bold.green(` DONE\n`));
+    console.log(chalk.bold.green(`DONE`));
     return {
         cheerio_static: $
     }
