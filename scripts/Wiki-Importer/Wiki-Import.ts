@@ -310,3 +310,14 @@ export const WikiImport = async (inputString: string) => {
     }
     return;
 })();
+
+
+// TO SEE PROGRESS
+// SELECT count(*)
+// FROM enterlink_articletable art
+// INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
+// WHERE art.is_removed = 0
+// AND art.redirect_page_id IS NULL
+// AND art.is_indexed = 0
+// AND art.page_note = '|EN_WIKI_IMPORT|'
+// AND art.lastmod_timestamp <= '2019-09-13 21:08:14'
