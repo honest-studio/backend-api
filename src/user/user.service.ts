@@ -28,11 +28,14 @@ export class UserService {
         pipeline.get(`user:${account_name}:sum_refunds`);
         const values = await pipeline.exec();
 
+        let sum_stakes = 0;
+        if (values[2][1]) sum_stakes += Number(values[2][1]);
+        if (values[3][1]) sum_stakes -= Number(values[3][1]);
+
         return {
             stakes: values[0][1].map(v => JSON.parse(v)),
             refunds: values[1][1].map(v => JSON.parse(v)),
-            sum_stakes: Number(values[2][1]),
-            sum_refunds: Number(values[3][1])
+            sum_stakes
         };
     }
 

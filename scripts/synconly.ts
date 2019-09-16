@@ -141,30 +141,26 @@ function restartIfFailing() {
     }
 }
 
-async function replayRedis () {
-    const replay_config = (config.get("REDIS_REPLAY_ACTIONS") && config.get("REDIS_REPLAY_ACTIONS") === "true");
-    const reset_config = (config.get("REDIS_RESET_DB") && config.get("REDIS_RESET_DB") === "true");
-    if (reset_config) {
-        await redis.flushdb();
-        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Flushed DB.`);
-    }
+async function catchupRedis () {
     const BATCH_SIZE = 50000;
     const mongo_actions = await mongo_actions_promise;
 
-    const last_block_replayed = Number(await redis.get(`eos_actions:last_block_replayed`));
-    let start_block = replay_config ? 0 : last_block_replayed;
+    let last_block_processed: any = await redis.get(`eos_actions:last_block_processed`);
+    if (!last_block_processed) last_block_processed = 0;
+    else last_block_processed = Number(last_block_processed);
 
     // catchup actions
     while (true) {
-        let query = { block_num: { $gte: start_block }};
+        let query = { block_num: { $gte: last_block_processed }};
         let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Syncing ${actions.length} actions since block ${start_block} to Redis`);
+        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Syncing ${actions.length} actions since block ${last_block_processed} to Redis`);
 
         await redis_process_actions(actions);
+        if (actions.length > 0)
+            last_block_processed = actions[actions.length - 1].block_num; 
+        await redis.set(`eos_actions:last_block_processed`, last_block_processed);
+
         if (actions.length < BATCH_SIZE) break;
-        start_block = actions[actions.length - 1].block_num; // start block for next iteration
-        if (start_block > last_block_replayed)
-            await redis.set(`eos_actions:last_block_replayed`, start_block);
     }
 
     return true;
@@ -245,13 +241,14 @@ async function redis_process_actions (actions) {
             pipeline.incrbyfloat("stat:total_iq_rewards", amount);
         }
         else if (action.trace.act.name == "transfer") {
-            if (action.trace.act.data.to == "eparticlectr") {
+            // Block 59902500 is the start block for the 2.0 smart contracts
+            if (action.trace.act.data.to == "eparticlectr" && action.block_num > 59902500) {
                 const user = action.trace.act.data.from;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
                 pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
             }
-            else if (action.trace.act.data.from == "eparticlectr") {
+            else if (action.trace.act.data.from == "eparticlectr" && action.block_num > 59902500) {
                 const user = action.trace.act.data.to;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
@@ -313,7 +310,11 @@ async function catchupMongo () {
 
 async function main () {
     await catchupMongo();
-    replayRedis();
+    if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
+        await redis.flushdb();
+        console.log(`REDIS: Flushed DB. Replaying...`);
+    }
+    await catchupRedis();
     start();
     setInterval(() => restartIfFailing.apply(this), 15 * 1000);
 }

@@ -15,7 +15,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "\"**The Bubble Boy**\" is the 47th episode of the American [[LINK|lang_en|Sitcom|sitcom]] *[[LINK|lang_en|Seinfeld|Seinfeld]] *, as well as the nickname of Donald Sanger, one of the characters in the episode. It is the seventh episode of the fourth season."
+						"text": "**베레타 92** ([[LINK|lang_ko|이탈리아어|이탈리아어]]: Beretta 92 )는 [[LINK|lang_ko|이탈리아|이탈리아]] [[LINK|lang_ko|베레타|베레타]] 사의 [[LINK|lang_ko|권총|권총]] 이다. [[LINK|lang_ko|1972년|1972년]] 에 설계되었으며, 많은 변형들이 현재까지 쓰이고 있다. [[LINK|lang_ko|미군|미군]] 의 제식 권총인 [[LINK|lang_ko|https:|M9 권총]] 으로 유명하다. [[LINK|lang_ko|브라질|브라질]] 의 [[LINK|lang_ko|https:|Taurus PT-92]] 권총과 [[LINK|lang_ko|중화민국|중화민국]] (대만)의 [[LINK|lang_ko|https:|T75]], 프랑스의 PAMAS-G1 등은 이 권총의 라이선스 모델이다."
 					}
 				]
 			},
@@ -27,19 +27,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The episode was directed by [[LINK|lang_en|Tom_Cherones|Tom Cherones]] and written by [[LINK|lang_en|Larry_David|Larry David]] and [[LINK|lang_en|Larry_Charles|Larry Charles]], airing on October 7, 1992."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "American journalists had in the past covered \"bubble boys\" who lived in quarantine due to an [[LINK|lang_en|Severe_combined_immunodeficiency|immune deficiency]]. The coverage often played for sympathy, ignoring anything about the subject other than his medical condition. In contrast, the bubble boy in this episode (voiced by Jon Hayman) is rude, selfish, and impossible to sympathize with. He is never seen fully on-screen, except for a pair of gloves that he uses to reach through the barrier; when he is shown exiting the house on a stretcher, he is partially covered by paramedics. The Bubble Boy also appears in the [[LINK|lang_en|The_Finale_(Seinfeld)|final episode of the series]]. He tells the court the story of what happened and George yells \"it was Moops!\""
+						"text": "파생형으로 피카티니 레일을 추가하고 디자인을 대폭 개량한 **[[LINK|lang_ko|https:|90two]] ** 가 [[LINK|lang_ko|2006년|2006년]] 에 출시되었고, [[LINK|lang_ko|2010년|2010년]] 에는 92FS의 전체적 외형에 90two의 내부 디자인과 레일을 가미한 **92A1** (.40S&W 사용 모델은 **96A1**)이 출시되었다. [[CITE|0|https://web.archive.org/web/20100906064516/http://www.berettausa.com/products/model-92a1/default.aspx]]"
 					}
 				]
 			}
@@ -52,97 +40,500 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "plot"
+					"id": "사용-국가"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Plot"
+						"text": "사용 국가"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "p",
+				"tag_type": "ul",
 				"attrs": {},
 				"items": [
 					{
-						"type": "sentence",
+						"type": "list-item",
 						"index": 0,
-						"text": "Jerry, George, Elaine, and George's girlfriend [[LINK|lang_en|Susan_Ross|Susan]] plan to travel [[LINK|lang_en|Upstate_New_York|upstate]] to Susan's family's lakeside cabin. In the coffee shop, Elaine and Jerry meet a kindly father ([[LINK|lang_en|Brian_Doyle-Murray|Brian Doyle-Murray]]) who describes the sad life of his young son Donald who lives in a \"plastic bubble\" (a plastic divider which creates a germ-free sterile environment). Because Donald is a fan of Jerry's, Jerry is forced by Elaine to visit Donald on the way to the cabin to cheer him up. However, Jerry gets lost and George and Susan arrive before him. While waiting for Jerry to arrive, they play *[[LINK|lang_en|Trivial_Pursuit|Trivial Pursuit]] * with the \"bubble boy.\""
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "The *Trivial Pursuit* game ends prematurely when George disputes the answer to the question: \"Who invaded Spain in the 8th century?\" Donald answers \"the [[LINK|lang_en|Moors|Moors]],\" but — due to a [[LINK|lang_en|Misprint|misprint]] or deliberate [[LINK|lang_en|Copyright_trap|copyright trap]] — the question card says that the answer is \"the Moops.\" George refuses to give Donald credit, causing Donald to attack him. As Susan tries to defend George, she punctures and depressurizes the bubble, inadvertently causing George to be accused of trying to kill him, since he was the one struggling with Donald."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "While this is happening, Jerry and Elaine decide to exit the highway and go to a diner. "
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/22px-Flag_of_Nigeria.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/33px-Flag_of_Nigeria.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/79/Flag_of_Nigeria.svg/44px-Flag_of_Nigeria.svg.png 2x|나이지리아의 기|h11|w22|thumbborder]] [[LINK|lang_ko|나이지리아|나이지리아]]"
+							}
+						],
+						"tag_type": "li"
 					},
 					{
-						"type": "sentence",
+						"type": "list-item",
 						"index": 1,
-						"text": "It turns out that a waitress ([[LINK|lang_en|O-Lan_Jones|O-Lan Jones]]) is a fan of Jerry's as well. She asks for an autographed picture of Jerry, who was mispronounced as \"Gary Seinfield.\" Jerry does not like what he writes, so he asks for it back. The waitress refuses, and it escalates to the point of the waitress attacking Jerry in the same manner Donald attacked George. However, this is interrupted by a man who announces that Donald was attacked by a \"bald man from the city\" (George), who claims that Donald tried to kill him, and that his house is right down the street from the cafe. Jerry and Elaine meet up with George and Susan at the house before being chased away by the residents of the town."
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/22px-Flag_of_South_Africa.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/33px-Flag_of_South_Africa.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/af/Flag_of_South_Africa.svg/44px-Flag_of_South_Africa.svg.png 2x|남아프리카 공화국의 기|h15|w22|thumbborder]] [[LINK|lang_ko|남아프리카_공화국|남아프리카 공화국]]- 군대(SANDF)와 경찰(SAPS)(Vector Z88로 라이선스 생산)"
+							}
+						],
+						"tag_type": "li"
+					},
 					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Meanwhile, Kramer and Naomi (Jerry's girlfriend, played by [[LINK|lang_en|Jessica_Lundy|Jessica Lundy]]) attempt to rendezvous with Jerry, Elaine, George, and Susan at Susan's family's country home. Kramer carelessly leaves his lit cigar near some newspapers, which causes a fire that destroys Susan's family's cabin. The other four travelers arrive shortly after the firefighters. [[CITE|4|http://tbs.com/stories/story/0,,69103,00.html]]"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "eponymous-computer-virus"
-				},
-				"items": [
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/22px-Flag_of_South_Korea.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/33px-Flag_of_South_Korea.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/44px-Flag_of_South_Korea.svg.png 2x|대한민국의 기|h15|w22|thumbborder]] [[LINK|lang_ko|대한민국|대한민국]]-[[LINK|lang_ko|707_특수임무대대|707 특수임무대대]], 경찰특공대, 56전대 대테러팀 등의 일부 특수부대(일부는 Jericho 941로 대체됨)"
+							}
+						],
+						"tag_type": "li"
+					},
 					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Eponymous computer virus"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/22px-Flag_of_Luxembourg.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/33px-Flag_of_Luxembourg.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/44px-Flag_of_Luxembourg.svg.png 2x|룩셈부르크의 기|h13|w22|thumbborder]] [[LINK|lang_ko|룩셈부르크|룩셈부르크]]- 경찰 특수부대(Unité Spéciale de la Police)(92F)"
+							}
+						],
+						"tag_type": "li"
+					},
 					{
-						"type": "sentence",
-						"index": 0,
-						"text": "On November 10, 1999, a [[LINK|lang_en|Computer_virus|computer virus]] named \"BubbleBoy\" was discovered, apparently named after this episode. This was the first [[LINK|lang_en|Malware|malware]] of its kind, having been actually able to activate itself (via an [[LINK|lang_en|Object_Linking_and_Embedding|embedded]] [[LINK|lang_en|Visual_Basic|Visual Basic]] [[LINK|lang_en|Scripting_language|script]]) upon the recipient opening the e-mail contents, as opposed to running an attachment. As such, in spite of not actually being dangerous, the virus changed the concept of [[LINK|lang_en|Antivirus|antivirus]] technology. [[CITE|5|http://news.zdnet.co.uk/itmanagement/0,1000000308,2075007,00.htm]]"
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Flag_of_Malaysia.svg/22px-Flag_of_Malaysia.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/6/66/Flag_of_Malaysia.svg/33px-Flag_of_Malaysia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/6/66/Flag_of_Malaysia.svg/44px-Flag_of_Malaysia.svg.png 2x|말레이시아의 기|h11|w22|thumbborder]] [[LINK|lang_ko|말레이시아|말레이시아]]- 말레이시아군 및 경찰(92 Compact L과 92F)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/22px-Flag_of_Mexico.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/33px-Flag_of_Mexico.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Flag_of_Mexico.svg/44px-Flag_of_Mexico.svg.png 2x|멕시코의 기|h13|w22|thumbborder]] [[LINK|lang_ko|멕시코|멕시코]]- 특수부대와 일부 사법 기관(HK USP 권총으로 거의 완전히 대체되었다)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/22px-Flag_of_Morocco.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/33px-Flag_of_Morocco.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Flag_of_Morocco.svg/44px-Flag_of_Morocco.svg.png 2x|모로코의 기|h15|w22|thumbborder]] [[LINK|lang_ko|모로코|모로코]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/22px-Flag_of_the_United_States.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/33px-Flag_of_the_United_States.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/44px-Flag_of_the_United_States.svg.png 2x|미국의 기|h12|w22|thumbborder]] [[LINK|lang_ko|미국|미국]]- 미군([[LINK|lang_ko|https:|M9 권총]], 1985년부터)과 일부 사법 기관(국경 수비대, 이민국, 메릴랜드 주립 경찰 등). 미국 법률에 의하여 M9 권총은 미국에서 생산된다."
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Flag_of_Venezuela_(state).svg/22px-Flag_of_Venezuela_(state).svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Flag_of_Venezuela_%28state%29.svg/33px-Flag_of_Venezuela_%28state%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Flag_of_Venezuela_%28state%29.svg/44px-Flag_of_Venezuela_%28state%29.svg.png 2x|베네수엘라의 기|h15|w22|thumbborder]] [[LINK|lang_ko|베네수엘라|베네수엘라]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Flag_of_Bosnia_and_Herzegovina.svg/22px-Flag_of_Bosnia_and_Herzegovina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Flag_of_Bosnia_and_Herzegovina.svg/33px-Flag_of_Bosnia_and_Herzegovina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Flag_of_Bosnia_and_Herzegovina.svg/44px-Flag_of_Bosnia_and_Herzegovina.svg.png 2x|보스니아 헤르체고비나의 기|h11|w22|thumbborder]] [[LINK|lang_ko|보스니아_헤르체고비나|보스니아 헤르체고비나]]- 군대와 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/22px-Flag_of_Brazil.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/33px-Flag_of_Brazil.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/05/Flag_of_Brazil.svg/44px-Flag_of_Brazil.svg.png 2x|브라질의 기|h15|w22|thumbborder]] [[LINK|lang_ko|브라질|브라질]]-[[LINK|lang_ko|https:|Taurus PT-92]] 로 라이선스 생산, 공군과 헌병 및 해병대에서 채용"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Sudan.svg/22px-Flag_of_Sudan.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Sudan.svg/33px-Flag_of_Sudan.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/01/Flag_of_Sudan.svg/44px-Flag_of_Sudan.svg.png 2x|수단의 기|h11|w22|thumbborder]] [[LINK|lang_ko|수단|수단]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 12,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Sri_Lanka.svg/22px-Flag_of_Sri_Lanka.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Sri_Lanka.svg/33px-Flag_of_Sri_Lanka.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/11/Flag_of_Sri_Lanka.svg/44px-Flag_of_Sri_Lanka.svg.png 2x|스리랑카의 기|h11|w22|thumbborder]] [[LINK|lang_ko|스리랑카|스리랑카]]- 군대 및 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 13,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/22px-Flag_of_Spain.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/33px-Flag_of_Spain.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Flag_of_Spain.svg/44px-Flag_of_Spain.svg.png 2x|스페인의 기|h15|w22|thumbborder]] [[LINK|lang_ko|스페인|스페인]]-[[LINK|lang_ko|https:|Civil Guard]] (Llama M82)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 14,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/22px-Flag_of_Slovenia.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/33px-Flag_of_Slovenia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Flag_of_Slovenia.svg/44px-Flag_of_Slovenia.svg.png 2x|슬로베니아의 기|h11|w22|thumbborder]] [[LINK|lang_ko|슬로베니아|슬로베니아]]- 군대(1991년부터)와 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 15,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/22px-Flag_of_Argentina.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/33px-Flag_of_Argentina.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/44px-Flag_of_Argentina.svg.png 2x|아르헨티나의 기|h14|w22|thumbborder]] [[LINK|lang_ko|아르헨티나|아르헨티나]]- 해안 경비대 및 헌병대"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 16,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Flag_of_Albania.svg/22px-Flag_of_Albania.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/3/36/Flag_of_Albania.svg/33px-Flag_of_Albania.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/3/36/Flag_of_Albania.svg/44px-Flag_of_Albania.svg.png 2x|알바니아의 기|h16|w22|thumbborder]] [[LINK|lang_ko|알바니아|알바니아]]- 알바니아군 특수부대 일부 및 Republican Guard, State Police Special Forces"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 17,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Algeria.svg/22px-Flag_of_Algeria.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Algeria.svg/33px-Flag_of_Algeria.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/77/Flag_of_Algeria.svg/44px-Flag_of_Algeria.svg.png 2x|알제리의 기|h15|w22|thumbborder]] [[LINK|lang_ko|알제리|알제리]]- 경찰 및 Groupe d'Intervention Spécial"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 18,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Flag_of_Jordan.svg/22px-Flag_of_Jordan.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Flag_of_Jordan.svg/33px-Flag_of_Jordan.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Flag_of_Jordan.svg/44px-Flag_of_Jordan.svg.png 2x|요르단의 기|h11|w22|thumbborder]] [[LINK|lang_ko|요르단|요르단]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 19,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Iraq.svg/22px-Flag_of_Iraq.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Iraq.svg/33px-Flag_of_Iraq.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Flag_of_Iraq.svg/44px-Flag_of_Iraq.svg.png 2x|이라크의 기|h15|w22|thumbborder]] [[LINK|lang_ko|이라크|이라크]]- 이라크군(92FS)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 20,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/22px-Flag_of_Iran.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/33px-Flag_of_Iran.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Flag_of_Iran.svg/44px-Flag_of_Iran.svg.png 2x|이란의 기|h13|w22|thumbborder]] [[LINK|lang_ko|이란|이란]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 21,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/22px-Flag_of_Egypt.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/33px-Flag_of_Egypt.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Flag_of_Egypt.svg/44px-Flag_of_Egypt.svg.png 2x|이집트의 기|h15|w22|thumbborder]] [[LINK|lang_ko|이집트|이집트]]- Helwan Model 92로 라이선스 생산"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 22,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/22px-Flag_of_Italy.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/33px-Flag_of_Italy.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/0/03/Flag_of_Italy.svg/44px-Flag_of_Italy.svg.png 2x|이탈리아의 기|h15|w22|thumbborder]] [[LINK|lang_ko|이탈리아|이탈리아]]- 이탈리아군 및 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 23,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/22px-Flag_of_India.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/33px-Flag_of_India.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/4/41/Flag_of_India.svg/44px-Flag_of_India.svg.png 2x|인도의 기|h15|w22|thumbborder]] [[LINK|lang_ko|인도|인도]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 24,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/22px-Flag_of_Indonesia.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/33px-Flag_of_Indonesia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Flag_of_Indonesia.svg/44px-Flag_of_Indonesia.svg.png 2x|인도네시아의 기|h15|w22|thumbborder]] [[LINK|lang_ko|인도네시아|인도네시아]]-[[LINK|lang_ko|https:|Kopassus]] 와 [[LINK|lang_ko|https:|KOPASKA]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 25,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/22px-Flag_of_Japan.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/33px-Flag_of_Japan.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/44px-Flag_of_Japan.svg.png 2x|일본의 기|h15|w22|thumbborder]] [[LINK|lang_ko|일본|일본]]- 경시청 형사부 조사 제1과 [[LINK|lang_ko|https:|특수범수사계(SIT)]] (M92FS Vertec)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 26,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flag_of_the_Republic_of_China.svg/22px-Flag_of_the_Republic_of_China.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flag_of_the_Republic_of_China.svg/33px-Flag_of_the_Republic_of_China.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/72/Flag_of_the_Republic_of_China.svg/44px-Flag_of_the_Republic_of_China.svg.png 2x|중화민국의 기|h15|w22|thumbborder]] [[LINK|lang_ko|중화민국|중화민국]]-[[LINK|lang_ko|중화민국군|중화민국군]] 및 경찰(92F, [[LINK|lang_ko|https:|T75]] 로 라이선스 생산)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 27,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People's_Republic_of_China.svg/22px-Flag_of_the_People's_Republic_of_China.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/33px-Flag_of_the_People%27s_Republic_of_China.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Flag_of_the_People%27s_Republic_of_China.svg/44px-Flag_of_the_People%27s_Republic_of_China.svg.png 2x|중화인민공화국의 기|h15|w22|thumbborder]] [[LINK|lang_ko|중화인민공화국|중화인민공화국]]- 중화인민공화국 공안부([[LINK|lang_ko|2004년|2004년]] ~ 현재)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 28,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/22px-Flag_of_Chile.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/33px-Flag_of_Chile.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/7/78/Flag_of_Chile.svg/44px-Flag_of_Chile.svg.png 2x|칠레의 기|h15|w22|thumbborder]] [[LINK|lang_ko|칠레|칠레]]-[[LINK|lang_ko|https:|Taurus PT-92]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 29,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/22px-Flag_of_Canada.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/33px-Flag_of_Canada.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Flag_of_Canada.svg/44px-Flag_of_Canada.svg.png 2x|캐나다의 기|h11|w22|thumbborder]] [[LINK|lang_ko|캐나다|캐나다]]-[[LINK|lang_ko|밴쿠버|밴쿠버]] 경찰(베레타 96)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 30,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/22px-Flag_of_Colombia.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/33px-Flag_of_Colombia.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Colombia.svg/44px-Flag_of_Colombia.svg.png 2x|콜롬비아의 기|h15|w22|thumbborder]] [[LINK|lang_ko|콜롬비아|콜롬비아]]- 콜롬비아 육군의 제식 권총(92FS)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 31,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Kuwait.svg/22px-Flag_of_Kuwait.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Kuwait.svg/33px-Flag_of_Kuwait.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Flag_of_Kuwait.svg/44px-Flag_of_Kuwait.svg.png 2x|쿠웨이트의 기|h11|w22|thumbborder]] [[LINK|lang_ko|쿠웨이트|쿠웨이트]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 32,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/22px-Flag_of_Thailand.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/33px-Flag_of_Thailand.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Flag_of_Thailand.svg/44px-Flag_of_Thailand.svg.png 2x|태국의 기|h15|w22|thumbborder]] [[LINK|lang_ko|태국|태국]]- 타이 육군 및 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 33,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/22px-Flag_of_Turkey.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/33px-Flag_of_Turkey.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/44px-Flag_of_Turkey.svg.png 2x|터키의 기|h15|w22|thumbborder]] [[LINK|lang_ko|터키|터키]]- 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 34,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/22px-Flag_of_Pakistan.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/33px-Flag_of_Pakistan.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/3/32/Flag_of_Pakistan.svg/44px-Flag_of_Pakistan.svg.png 2x|파키스탄의 기|h15|w22|thumbborder]] [[LINK|lang_ko|파키스탄|파키스탄]]- 파키스탄 육군 Special Service Group(SSG)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 35,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Flag_of_Peru_(state).svg/22px-Flag_of_Peru_(state).svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/d/df/Flag_of_Peru_%28state%29.svg/33px-Flag_of_Peru_%28state%29.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/d/df/Flag_of_Peru_%28state%29.svg/44px-Flag_of_Peru_%28state%29.svg.png 2x|페루의 기|h15|w22|thumbborder]] [[LINK|lang_ko|페루|페루]]- 페루 해군(92F)과 FOES"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 36,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/22px-Flag_of_Poland.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/33px-Flag_of_Poland.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/44px-Flag_of_Poland.svg.png 2x|폴란드의 기|h14|w22|thumbborder]] [[LINK|lang_ko|폴란드|폴란드]]- GSP FORMOZA와 GROM"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 37,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/22px-Flag_of_France.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/33px-Flag_of_France.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/44px-Flag_of_France.svg.png 2x|프랑스의 기|h15|w22|thumbborder]] [[LINK|lang_ko|프랑스|프랑스]]- 프랑스군 및 국가헌병대(92G, [[LINK|lang_ko|https:|PAMAS-G1]] 으로 라이선스 생산)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 38,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/22px-Flag_of_the_Philippines.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/33px-Flag_of_the_Philippines.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/9/99/Flag_of_the_Philippines.svg/44px-Flag_of_the_Philippines.svg.png 2x|필리핀의 기|h11|w22|thumbborder]] [[LINK|lang_ko|필리핀|필리핀]]- 필리핀군과 경찰"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 39,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[INLINE_IMAGE|https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/22px-Flag_of_Hong_Kong.svg.png|//upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/33px-Flag_of_Hong_Kong.svg.png 1.5x, //upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Flag_of_Hong_Kong.svg/44px-Flag_of_Hong_Kong.svg.png 2x|홍콩의 기|h15|w22|thumbborder]] [[LINK|lang_ko|홍콩|홍콩]]- [:en:Hong Kong Police Force|홍콩 경찰]"
+							}
+						],
+						"tag_type": "li"
 					}
 				]
 			},
