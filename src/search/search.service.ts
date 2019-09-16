@@ -15,7 +15,7 @@ export class SearchService {
     async searchTitle(pack: SearchQueryPack): Promise<any> {
         const { query, langs } = pack;
         const searchJSON = {
-            size: 150,
+            size: 30,
             timeout: '3s',
             min_score: 1.0001, // Make sure non-matches do not show up
             query: {
@@ -66,7 +66,7 @@ export class SearchService {
                     type: 'ep_template_v1',
                     body: searchJSON,
                     timeout: '3s',
-                    terminateAfter: 20
+                    // terminateAfter: 20
                 })
                 .toPromise();
         } catch (e) {
