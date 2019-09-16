@@ -16,6 +16,7 @@ export class SearchService {
         const { query, langs } = pack;
         const searchJSON = {
             size: 150,
+            timeout: '3s',
             min_score: 1.0001, // Make sure non-matches do not show up
             query: {
                 bool: {
@@ -63,7 +64,9 @@ export class SearchService {
                 .search({
                     index: 'articletable_main5',
                     type: 'ep_template_v1',
-                    body: searchJSON
+                    body: searchJSON,
+                    timeout: '3s',
+                    terminateAfter: 20
                 })
                 .toPromise();
         } catch (e) {
