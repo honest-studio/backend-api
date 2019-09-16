@@ -36,7 +36,7 @@ export const preCleanHTML = (input_html: string): CheerioPack => {
     REPLACE_CLASSES_PREPARSE_UNIVERSAL.forEach(pack => {
         $(pack.target_selector).each((idx, $elem) => {
             $($elem).prop('tagName', pack.replacement_tag);
-            let tempClass = $($elem).attr('class').replace(pack.target_class, pack.replacement_class);
+            let tempClass = $($elem).attr('class') && $($elem).attr('class').replace(pack.target_class, pack.replacement_class);
             $($elem).attr('class', tempClass);
             // console.log(chalk.red(`${selector} replaced with ${pack.replacement_tag}.${pack.replacement_class}`));
         });

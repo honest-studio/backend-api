@@ -38,8 +38,10 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 1;
-const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00';
+const BATCH_SIZE = 25;
+const LASTMOD_CUTOFF_TIME = '2019-09-13 21:08:14';
+// const BATCH_SIZE = 1;
+// const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -68,6 +70,7 @@ export const WikiImport = async (inputString: string) => {
     }
 
     console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
+    console.log(chalk.blue.bold(`Page ID: |${pageID}|`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
     console.log(chalk.blue.bold(`Page Slug: |${slug}| alt: |${slug_alt}|`));
     
@@ -274,17 +277,22 @@ export const WikiImport = async (inputString: string) => {
         logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
         console.log(chalk.yellow.bold(`Trying ${currentStart} to ${currentEnd}`));
 
+        // The HAVING statement makes sure that human edited wikiscrapes are not affected.
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, "") ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, '') ) as concatted
                 FROM enterlink_articletable art
+                INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0
                 AND art.redirect_page_id IS NULL
-				AND art.is_indexed = 0
-				AND art.page_note = ?
+                AND art.is_indexed = 0
+                AND art.page_note = ?
+                AND art.lastmod_timestamp <= ?
+                GROUP BY art.id
+                HAVING COUNT(cache.timestamp) = 1
             `,
-            [currentStart, currentEnd, PAGE_NOTE]
+            [currentStart, currentEnd, PAGE_NOTE, LASTMOD_CUTOFF_TIME]
         );
 
         for await (const artResult of fetchedArticles) {
@@ -302,3 +310,14 @@ export const WikiImport = async (inputString: string) => {
     }
     return;
 })();
+
+
+// TO SEE PROGRESS
+// SELECT count(*)
+// FROM enterlink_articletable art
+// INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
+// WHERE art.is_removed = 0
+// AND art.redirect_page_id IS NULL
+// AND art.is_indexed = 0
+// AND art.page_note = '|EN_WIKI_IMPORT|'
+// AND art.lastmod_timestamp <= '2019-09-13 21:08:14'

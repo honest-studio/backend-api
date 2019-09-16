@@ -108,7 +108,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 		// First look for any <a href='#ABC123' ></a> and pull in that ID as the text.
 		$(raw_citn.note_element).find("a").each((idx, ctn_inner_anchor) => {
-			let theInnerURL = ctn_inner_anchor.attribs['href'];
+			let theInnerURL = ctn_inner_anchor.attribs && ctn_inner_anchor.attribs['href'];
+			let inner_class = ctn_inner_anchor.attribs && ctn_inner_anchor.attribs['class'];
 
 			// See if the citation refers to another section (e.g. in the case of multiple citations of the same book, 
 			// but different pages)
@@ -148,6 +149,10 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 				return raw_citn;
 			}
+			else if(theInnerURL.search(/^\/wiki\//gimu) >= 0){
+				// Do nothing
+				// console.log(theInnerURL)
+			}
 			else{
 				// Look for an ISBN
 				if(theInnerURL.search(/Special:BookSources/gimu) >= 0){
@@ -159,10 +164,16 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					raw_citn.category = 'PERIODICAL';
 					raw_citn.issn = $(ctn_inner_anchor).text().trim();
 				}
-				else{
-					raw_citn.category = linkCategorizer(theInnerURL);
+				else if(inner_class && inner_class.search(/external/gimu) >= 0){
+					// Look for a parent <cite> tag for clues
+					let cite_elem = $(ctn_inner_anchor).closest('cite');
+					let cite_attribs = cite_elem.length && $(cite_elem).eq(0)[0].attribs;
+					let cite_class = cite_attribs && cite_attribs.class;
+					if (cite_class && cite_class.search(/news|web/gimu) >= 0){
+						raw_citn.category = 'NONE';
+						raw_citn.url = theInnerURL;
+					}
 				}
-
 				raw_citn.text = $(raw_citn.note_element)
 									.text()
 									.trim();
@@ -174,16 +185,18 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			}
 		});
 
-		// Otherwise, assume a book and put the URL as a search query
-		raw_citn.category = 'BOOK';
-		raw_citn.text = $(raw_citn.note_element)
-							.text()
-							.trim();
-		raw_citn.url = `https://openlibrary.org/search?q=${
-			encodeURIComponent(raw_citn.text.substr(0, 50))
-				.replace(/\(/g, "%28")
-				.replace(/\)/g, "%29")
-		}`;
+		// Otherwise, if there is no url, assume a book and put the text as a search query
+		if(!raw_citn.url){
+			raw_citn.category = 'BOOK';
+			raw_citn.text = $(raw_citn.note_element)
+								.text()
+								.trim();
+			raw_citn.url = `https://openlibrary.org/search?q=${
+				encodeURIComponent(raw_citn.text.substr(0, 50))
+					.replace(/\(/g, "%28")
+					.replace(/\)/g, "%29")
+			}`;
+		}
 		return raw_citn;
 	})
 	process.stdout.write(chalk.yellow(` DONE\n`));
@@ -202,7 +215,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				citation_id: raw_citn.index_to_use,
 				description: [{ type: 'sentence', index: 0, text: raw_citn.text }],
 				social_type: null,
-				attribution: 'rel=nofollow',
+				attribution: null,
 				timestamp: new Date(), 
 				mime: null
 			};
@@ -239,6 +252,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					break;
 				}
 				case 'NONE': {
+					workingCitation.social_type = socialURLType(raw_citn.url),
 					await_done = true;
 					break;
 				}
@@ -265,9 +279,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					}
 					case 'NONE': {
 						try{
-
-							let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 2000);
-							if (fetched_favicon != "") workingCitation.thumb = fetched_favicon;
+							// Only try every 3th citation, to save bandwidth
+							if (workingCitation.citation_id % 3 == 0){
+								let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 5000);
+								if (fetched_favicon != "") {
+									workingCitation.thumb = fetched_favicon;
+								}
+							}
 						}
 						catch (err){
 							// console.log(err);
@@ -298,7 +316,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				citation_id: available_citation_id,
 				description: accumulateText(anchor, $, citations),
 				social_type: socialURLType(theWorkingURL),
-				attribution: 'rel=nofollow',
+				attribution: null,
 				timestamp: new Date(), 
 				mime: null
 			};
@@ -332,7 +350,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			citation_id: available_citation_id,
 			description: accumulateText(anchor, $, []),
 			social_type: socialURLType(theWorkingURL),
-			attribution: 'rel=nofollow',
+			attribution: null,
 			timestamp: new Date(), 
 			mime: null
 		};
@@ -511,9 +529,9 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 		citation_id: available_citation_id,
 		description: defaultDescription,
 		social_type: null,
-			attribution: 'rel=nofollow',
-			timestamp: new Date(), 
-			mime: null
+		attribution: null,
+		timestamp: new Date(), 
+		mime: null
 	});
 	available_citation_id++;
 
