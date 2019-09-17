@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+const util = require('util');
 
 export interface SearchQueryPack {
     query: string,
@@ -60,6 +61,9 @@ export class SearchService {
                 terms: { lang: langs }
             };
         }
+
+        // console.log(util.inspect(searchJSON, {showHidden: false, depth: null, chalk: true}));
+        console.log(JSON.stringify(searchJSON, null, 2))
 
         let searchResult;
         try {
