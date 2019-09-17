@@ -2,10 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+const util = require('util');
 
 export interface SearchQueryPack {
     query: string,
-    langs?: string[];
+    langs?: string[],
+    from?: number,
+    offset?: number
 }
 
 @Injectable()
@@ -13,11 +16,12 @@ export class SearchService {
     constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
 
     async searchTitle(pack: SearchQueryPack): Promise<any> {
-        const { query, langs } = pack;
+        const { query, langs, from, offset } = pack;
         const searchJSON = {
-            size: 30,
-            timeout: '3s',
-            min_score: 1.0001, // Make sure non-matches do not show up
+            from: from ? from : 0,
+            size: offset ? offset : 40,
+            timeout: '1500ms',
+            min_score: 1.0001,
             query: {
                 bool: {
                     should: [
@@ -26,7 +30,7 @@ export class SearchService {
                                 query: query,
                                 fields: ['page_title.keyword'],
                                 type: 'phrase',
-                                boost: 4
+                                boost: 4,
                             }
                         },
                         // Elasticsearch 7.0+ does not allow this
@@ -44,7 +48,7 @@ export class SearchService {
                                 fields: ['page_title'],
                                 type: 'phrase_prefix',
                                 slop: 5,
-                                max_expansions: 250
+                                max_expansions: 25000
                             }
                         }
                     ]
@@ -58,6 +62,9 @@ export class SearchService {
             };
         }
 
+        // console.log(util.inspect(searchJSON, {showHidden: false, depth: null, chalk: true}));
+        // console.log(JSON.stringify(searchJSON, null, 2))
+
         let searchResult;
         try {
             searchResult = await this.client
@@ -65,8 +72,7 @@ export class SearchService {
                     index: 'articletable_main5',
                     type: 'ep_template_v1',
                     body: searchJSON,
-                    timeout: '3s',
-                    // terminateAfter: 20
+                    // timeout: '1250ms',
                 })
                 .toPromise();
         } catch (e) {
@@ -76,9 +82,11 @@ export class SearchService {
         }
 
         const canonical_ids: number[] = searchResult[0].hits.hits.map((h) => {
-            return h._source.canonical_id;
+            return parseInt(h._source.canonical_id);
         });
         if (canonical_ids.length == 0) return [];
+
+        // console.log(canonical_ids);
 
         const result_rows: Array<any> = await this.mysql.TryQuery(
             `
