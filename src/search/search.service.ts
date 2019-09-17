@@ -19,9 +19,9 @@ export class SearchService {
         const { query, langs, from, offset } = pack;
         const searchJSON = {
             from: from ? from : 0,
-            size: offset ? offset : 30,
-            // timeout: '1250ms',
-            min_score: 1.0001, // Make sure non-matches do not show up
+            size: offset ? offset : 40,
+            timeout: '1500ms',
+            min_score: 1.0001,
             query: {
                 bool: {
                     should: [
@@ -30,7 +30,7 @@ export class SearchService {
                                 query: query,
                                 fields: ['page_title.keyword'],
                                 type: 'phrase',
-                                boost: 4
+                                boost: 4,
                             }
                         },
                         // Elasticsearch 7.0+ does not allow this
@@ -48,7 +48,7 @@ export class SearchService {
                                 fields: ['page_title'],
                                 type: 'phrase_prefix',
                                 slop: 5,
-                                max_expansions: 250
+                                max_expansions: 25000
                             }
                         }
                     ]
@@ -63,7 +63,7 @@ export class SearchService {
         }
 
         // console.log(util.inspect(searchJSON, {showHidden: false, depth: null, chalk: true}));
-        console.log(JSON.stringify(searchJSON, null, 2))
+        // console.log(JSON.stringify(searchJSON, null, 2))
 
         let searchResult;
         try {
@@ -82,9 +82,11 @@ export class SearchService {
         }
 
         const canonical_ids: number[] = searchResult[0].hits.hits.map((h) => {
-            return h._source.canonical_id;
+            return parseInt(h._source.canonical_id);
         });
         if (canonical_ids.length == 0) return [];
+
+        // console.log(canonical_ids);
 
         const result_rows: Array<any> = await this.mysql.TryQuery(
             `
