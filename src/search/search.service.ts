@@ -5,7 +5,9 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 
 export interface SearchQueryPack {
     query: string,
-    langs?: string[];
+    langs?: string[],
+    from?: number,
+    offset?: number
 }
 
 @Injectable()
@@ -13,10 +15,11 @@ export class SearchService {
     constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
 
     async searchTitle(pack: SearchQueryPack): Promise<any> {
-        const { query, langs } = pack;
+        const { query, langs, from, offset } = pack;
         const searchJSON = {
-            size: 30,
-            timeout: '3s',
+            from: from ? from : 0,
+            size: offset ? offset : 30,
+            // timeout: '1250ms',
             min_score: 1.0001, // Make sure non-matches do not show up
             query: {
                 bool: {
@@ -65,8 +68,7 @@ export class SearchService {
                     index: 'articletable_main5',
                     type: 'ep_template_v1',
                     body: searchJSON,
-                    timeout: '3s',
-                    // terminateAfter: 20
+                    // timeout: '1250ms',
                 })
                 .toPromise();
         } catch (e) {

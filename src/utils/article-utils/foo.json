@@ -5,7 +5,13 @@
 				"index": 0,
 				"tag_type": "p",
 				"attrs": {},
-				"items": []
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "**Low fidelity** or **lo fi** ([[LINK|lang_en|Adjective|adjectival form]]\"low-fidelity\" or \"lo-fi\") is a type of [[LINK|lang_en|Sound_recording|sound recording]] which contains technical flaws that make the recording sound different compared with the live sound being recorded, such as [[LINK|lang_en|Distortion|distortion]], hum, background noise, or limited [[LINK|lang_en|Frequency|frequency]] response. The term \"low-fidelity\" is used in contrast to the audiophile term [[LINK|lang_en|High_fidelity|high fidelity]] or \"hi-fi\", which refers to equipment that very accurately reproduces music without harmonic distortion or unwanted frequency emphasis or resonance. The ideas of lo-fi are taken to extremes by the genre or \"scene\" of [[LINK|lang_en|No-fi|no fidelity]], or \"no-fi\". Some lower-budget recordings from the 1970s and 1980s have a \"lo-fi\" sound because of the limitations of the analog recording and processing techniques of the time, which introduced unwanted artifacts such as distortion, hum and phase problems. In some recordings, however, high fidelity recording is purposely avoided, or the artifacts such as simulated vinyl record crackles are deliberately retained or added in for aesthetic or historical reasons."
+					}
+				]
 			},
 			{
 				"index": 1,
@@ -15,7 +21,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The **Slovak National Catholic Church** was a small American denomination affiliated with the [[LINK|lang_en|Polish_National_Catholic_Church|Polish National Catholic Church]]."
+						"text": "Some unique aural qualities are available only with \"low-tech\" recording methods, such as recording on tape decks, using analog sound processors (e.g., analog compressors or reverb units) or vintage [[LINK|lang_en|Effects_unit|effects units]]. The lo-fi aesthetic has even contributed to musical subgenres, such as the [[LINK|lang_en|Lo-fi_music|\"lo-fi\" subgenre of indie rock]] and a great deal of [[LINK|lang_en|Punk_rock|punk rock]]. Lo-fi techniques are espoused by some genres outside the [[LINK|lang_en|Indie_rock|indie rock]] world, particularly by [[LINK|lang_en|Punk_rock|punk rock]], [[LINK|lang_en|Hardcore_punk|hardcore punk]] and some [[LINK|lang_en|Heavy_metal_music|heavy metal]] bands (especially within the [[LINK|lang_en|Sludge_metal|sludge]], [[LINK|lang_en|Extreme_metal|extreme metal]] and [[LINK|lang_en|Black_metal|black metal]] scenes), where the very low-quality of the recording has become a desirable quality, as it is associated with [[LINK|lang_en|Authentication|authenticity]], as well as a \"darker\" sound or a \"rebellion\" against the costly studio production techniques used by successful [[LINK|lang_en|Pop_punk|pop punk]] or [[LINK|lang_en|Pop_metal|pop metal]] bands. In punk and hardcore bands of the 1980s, lo-fi sound often occurred because bands did [[LINK|lang_en|DIY|DIY]] recordings with an inexpensive [[LINK|lang_en|Portastudio|Portastudio]] tape deck, rather than using a high-end [[LINK|lang_en|Recording_studio|recording studio]] and professional [[LINK|lang_en|Audio_engineer|audio engineers]]."
 					}
 				]
 			},
@@ -27,12 +33,65 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The Right Reverend Eugene W. Magyar was consecrated on June 29, 1963 as first Bishop of Slovak parishes in New Jersey and Pennsylvania. "
+						"text": "In [[LINK|lang_en|Digital_audio|digital audio]], the term \"lo-fi\" usually refers to an audio file with a lower [[LINK|lang_en|Bit_rate|bit rate]] or [[LINK|lang_en|Sampling_rate|sampling rate]], and thus a lower sound quality. Such audio files may be offered on the internet because of their smaller file sizes and hence shorter download times. The term \"lo-fi\" has come to be used figuratively in other contexts, by analogy with lo-fi audio, usually to mean \"[[LINK|lang_en|Low-technology|low-tech]]\", such as websites with very simple architecture or designed for users with low bandwidth connections."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "lo-fi-audio"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Lo-fi audio"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In general, \"lo-fi\" audio is any process that fails to achieve the accuracy and \"transparency\" that is the goal of [[LINK|lang_en|Hi-fi|hi-fi]] audio. The meaning of the term \"lo-fi\" has changed over time. In the 1970s [[LINK|lang_en|Vacuum_tube|vacuum tube]] equipment was considered the lower fidelity alternative to the new semiconductor solid state equipment, although some still consider valves the only \"pure\" way of listening to music. Low fidelity is often associated with [[LINK|lang_en|Cassette_tape|cassette tape]], although in reality many people simply do not notice the difference between this and [[LINK|lang_en|CD|CD]] quality. Some lower-budget recordings from the 1970s and 1980s have a \"lo-fi\" sound despite the best efforts of the musicians and the producers, due to the limitations of the analog recording and processing techniques, which introduced unwanted artifacts such as distortion and phase problems. In some recordings, high fidelity recording is avoided, or the artifacts are deliberately retained or added to all or part of the recording for artistic reasons. This decision is usually made by the [[LINK|lang_en|Record_producer|record producer]], but in some cases, band members are advocates of the \"lo-fi\" sound."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Some unique aural qualities are available only with \"low-tech\" recording methods, such as recording on tape decks, or using analog sound processors (e.g., analog compressors or reverb units). "
 					},
 					{
 						"type": "sentence",
 						"index": 1,
-						"text": "He had served previously as dean of Slovak parishes in the PNCC since 1958."
+						"text": "Some producers argue that the sound of an overdriven, high gain analog signal has a more pleasing sound than a high gain digital signal. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Also, even though digital effects such as digital reverb may be a more accurate recreation of the reverb that occurs in a cathedral or large space, analog reverb has a distinctive sound that is associated with 1970s and 1980s recordings. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Examples of deliberately lo-fi-type sounds in pop music can be traced to at least 1967, with the two [[LINK|lang_en|The_Beach_Boys|Beach Boys]] albums *[[LINK|lang_en|Smiley_Smile|Smiley Smile]] * and *[[LINK|lang_en|Wild_Honey_(album)|Wild Honey]] *, having been recorded in the home of their leader [[LINK|lang_en|Brian_Wilson|Brian Wilson]] instead of an actual studio. In the following year, [[LINK|lang_en|The_Monkees|The Monkees]] included sounds intended to mimic a 78-rpm record on the song \"Magnolia Simms,\" contained in their album [[LINK|lang_en|The_Birds,_The_Bees_%26_The_Monkees|The Birds, The Bees & The Monkees]]; later that same year a portion of [[LINK|lang_en|The_Beatles|The Beatles]]' song \"[[LINK|lang_en|Honey_Pie|Honey Pie]]\" included similar mimicry. More recent examples include [[LINK|lang_en|Vinyl_record|vinyl]] crackles on [[LINK|lang_en|Compact_disc|compact discs]], as on [[LINK|lang_en|Portishead_(band)|Portishead]]'s album *[[LINK|lang_en|Dummy_(album)|Dummy]] *, and telephonic vocals on [[LINK|lang_en|Craig_David|Craig David]]'s track \"Fill Me In\" (though these two are not regarded as \"lo-fi\" bands). Several prominent hip hop producers, such as [[LINK|lang_en|DJ_Premier|DJ Premier]], and [[LINK|lang_en|RJD2|RjD2]] also favour retaining the lo-fidelity characteristics of the records they sample in order to achieve a hard, unpolished and \"uncut\" sound in their own music. The lo-fi aesthetic has even contributed to musical subgenres, such as the [[LINK|lang_en|Lo-fi_music|\"lo-fi\" subgenre of indie rock]] and punky styles such as [[LINK|lang_en|Digital_hardcore|digital hardcore]]."
 					}
 				]
 			},
@@ -44,12 +103,80 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Slovak National Catholic parishes included:"
+						"text": "Lo-fi techniques are espoused by some genres outside the [[LINK|lang_en|Indie_rock|indie rock]] world, particularly by [[LINK|lang_en|Black_metal|black metal]] artists, where the very low-quality of the recording has become a desirable quality, said by fans to convey a rawness and depth of feeling otherwise unattainable. Some fans deliberately seek out extremely lo-fi concert bootlegs, such as the *[[LINK|lang_en|Dawn_of_the_Black_Hearts|Dawn of the Black Hearts]] *, which are of very low quality. [[LINK|lang_en|DIY_ethic|DIY punk]] is also well noted for its trend toward lo-fi sound, produced for the most part on inexpensive four-track machines such as the Tascam, and copied from tape to tape on home recording equipment, degrading the quality still further. In DIY punk lo-fi is prized mainly because it indicates a rejection of the values of commercialism. No-fi takes the lo-fi and DIY aesthetic to extremes, or at least a different location on the sound spectrum. Fusing the disheveled, DIY and loose playing punk sound and the lo-fi recording style with unconventional playing and tuning of instruments not only creates lo-fi recordings, but also \"lo-fi\" playing and song structures. Some lo-fi bands further add to the lo-fi effect by including studio chatter and false song starts in the final version of an album."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "other-meanings"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other meanings"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "website-or-web-forum"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Website or web forum"
 					}
 				]
 			},
 			{
-				"index": 4,
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A \"lo-fi\" website can also be a website with very simple architecture or a website designed for users with low bandwidth connections. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In general, it is a copy of the main website and often designed for people who have an old computer with/or a slower internet connection (notably [[LINK|lang_en|56K_modem|56K]] connections). Users can often access the main website from a link at the bottom of the page. Usually advanced features and background images (e.g., [[LINK|lang_en|Adobe_Flash|Flash]], [[LINK|lang_en|ActiveX|ActiveX Objects]], images, and videos) are turned off or replaced with textual representation. This allows the page to be loaded faster since less frequent connection is made to the [[LINK|lang_en|Web_server|server]] in order to load these additional items."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "h2-idh2-idh2h2"
+				},
+				"items": []
+			},
+			{
+				"index": 1,
 				"tag_type": "ul",
 				"attrs": {},
 				"items": [
@@ -60,7 +187,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "The Most Holy Name of Jesus Slovak National Catholic Cathedral, [[LINK|lang_en|Passaic,_New_Jersey|Passaic, New Jersey]]"
+								"text": "[[LINK|lang_en|List_of_lo-fi_bands|List of lo-fi bands]]"
 							}
 						],
 						"tag_type": "li"
@@ -72,66 +199,12 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "Sts. Cyril and Methodius Slovak National Catholic Church, [[LINK|lang_en|McKeesport,_Pennsylvania|McKeesport, Pennsylvania]] (Merged with Holy Family PNCC in 2008)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Sts. Cyril and Methodius Slovak National Catholic Church, [[LINK|lang_en|Masontown,_Pennsylvania|Masontown, Pennsylvania]] (closed)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "St. Elizabeth Slovak National Catholic Church, [[LINK|lang_en|Pittsburgh,_Pennsylvania|Pittsburgh, Pennsylvania]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Holy Name Slovak Parish, [[LINK|lang_en|North_Braddock,_Pennsylvania|North Braddock, Pennsylvania]]"
+								"text": "[[LINK|lang_en|Lo-fi_photography|Lo-fi photography]]"
 							}
 						],
 						"tag_type": "li"
 					}
 				]
-			},
-			{
-				"index": 5,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "A similar denomination was the [[LINK|lang_en|Lithuanian_National_Catholic_Church|Lithuanian National Catholic Church]], also affiliated with the PNCC."
-					}
-				]
-			},
-			{
-				"index": 6,
-				"tag_type": "p",
-				"attrs": {},
-				"items": []
 			}
 		],
 		"images": []
