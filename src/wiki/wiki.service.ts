@@ -146,16 +146,19 @@ export class WikiService {
     async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         // console.log("mysql slug: ", mysql_slug)
-        let decodedSlug = decodeURIComponent(mysql_slug);
+        let alternateSlug = decodeURIComponent(mysql_slug);
+
+        // If the two slugs are the same, encode the alternateSlug
+        if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
 
         // Get current IPFS hash
         const pipeline = this.redis.connection().pipeline();
         pipeline.get(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_proposed_hash`);
-        pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_proposed_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${alternateSlug}:last_proposed_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${slug}:last_approved_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:last_approved_hash`);
-        pipeline.get(`wiki:lang_${lang_code}:${decodedSlug}:last_approved_hash`);
+        pipeline.get(`wiki:lang_${lang_code}:${alternateSlug}:last_approved_hash`);
         pipeline.get(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`);
         const values = await pipeline.exec();
         let current_hash;
@@ -178,6 +181,9 @@ export class WikiService {
             const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
             if (cache_wiki) return JSON.parse(cache_wiki);
         }
+        console.log('mysql_slug: ', mysql_slug);
+        console.log('alternateSlug: ', alternateSlug);
+        // NEED TO TRY A DECODED SLUG HERE TOO??, OR IF THEY ARE EQUAL, HAVE A DIFFERENT???
 
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
@@ -194,7 +200,7 @@ export class WikiService {
                 ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
                 AND (art.page_lang = ? OR art_redir.page_lang = ?)
             `,
-            [mysql_slug, mysql_slug, decodedSlug, decodedSlug, lang_code, lang_code]
+            [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code, lang_code]
         );
         let db_hash;
         let overrideIsIndexed;

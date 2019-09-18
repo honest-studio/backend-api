@@ -1,11 +1,9 @@
 ENCODING STUFF
 https://en.wikipedia.org/wiki/%C3%96yl%C9%99qulu
 
-next
--s 4224705 -e 4224720"
-
-MISSING ELEMENTS
-https://en.wikipedia.org/wiki/Strabomantidae
+CITATIONS TO LINKS ARE MESSED UP AND TREATED AS OPENLIBRARIES
+TechCrunch
+nasa
 
 ============================IGNORE============================
 POOR QUALITY GALLERY IMAGE THUMBNAILS
