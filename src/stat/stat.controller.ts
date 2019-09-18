@@ -3,11 +3,12 @@ import { ApiImplicitQuery, ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { StatQuerySchema } from './stat.query-schema';
 import { StatService } from './stat.service';
+import { ChainService } from '../chain/chain.service';
 
 @Controller('v2/stat')
 @ApiUseTags('Stats')
 export class StatController {
-    constructor(private readonly statService: StatService) {}
+    constructor(private readonly statService: StatService, private chainService: ChainService) {}
 
     @Get('editor-leaderboard')
     @ApiOperation({ title: 'All-time editor leaderboard' })
@@ -52,4 +53,15 @@ export class StatController {
     //async getUniques(@Query() query): Promise<any> {
     //    return await this.statService.getUniques(query);
     //}
+
+    @Get('token-supply')
+    async tokenSupply(): Promise<any> {
+        return this.chainService.getTableRows({
+            code: "everipediaiq",
+            table: "stat",
+            scope: "IQ",
+            json: true
+        })
+        .then(response => response.rows[0].supply.split(' ')[0]);
+    }
 }
