@@ -39,7 +39,7 @@ commander
   .parse(process.argv);
 
 const BATCH_SIZE = 100;
-const LASTMOD_CUTOFF_TIME = '2019-09-13 21:08:14';
+const LASTMOD_CUTOFF_TIME = '2019-09-18 02:08:19';
 // const BATCH_SIZE = 1;
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
