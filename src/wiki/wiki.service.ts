@@ -408,7 +408,6 @@ export class WikiService {
         let tempSeeAlsos: SeeAlso[] = calculateSeeAlsos(inputWiki);
         if (tempSeeAlsos.length == 0) return [];
 
-        console.time('getSeeAlsos mysql');
         let seeAlsoWhere = tempSeeAlsos
             .map((value, index) => {
                 // performance is slow when ORing slug_alt for some reason, even though it is indexed
@@ -434,7 +433,6 @@ export class WikiService {
             WHERE ${seeAlsoWhere};`,
             []
         );
-        console.timeEnd('getSeeAlsos mysql');
 
         // clean up text previews
         for (let preview of seeAlsoRows) {
