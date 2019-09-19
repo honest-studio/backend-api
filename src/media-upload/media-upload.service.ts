@@ -25,6 +25,7 @@ import { fetchUrl } from './fetch-favicon';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
 import { BookInfoPack, PeriodicalInfoPack } from '../types/api';
+const svg2png = require("svg2png");
 const sharp = require('sharp');
 import * as axios from 'axios';
 const isSvg = require('is-svg');
@@ -81,6 +82,12 @@ const VALID_VIDEO_EXTENSIONS = [
     '.avi'
 ];
 const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
+
+function callbackClosure(i, callback) {
+    return function() {
+      return callback(i);
+    }
+  }
 
 @Injectable()
 export class MediaUploadService {
@@ -435,11 +442,11 @@ export class MediaUploadService {
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
             let bufferPack = { 
-                mainBuf: new Buffer(''), 
-                thumbBuf: new Buffer(''),
-                webpOriginalBuf: new Buffer(''),
-                webpMediumBuf: new Buffer(''),
-                webpThumbBuf: new Buffer('')
+                mainBuf: null, 
+                thumbBuf: null,
+                webpOriginalBuf: null,
+                webpMediumBuf: null,
+                webpThumbBuf: null
             };
 
             // NOTES FOR S3 AND PUSHING STREAMS/BUFFERS
@@ -485,20 +492,24 @@ export class MediaUploadService {
                     case 'image/svg+xml': {
                         varPack.suffix = 'svg';
                         varPack.mainMIME = 'image/svg+xml';
-                        varPack.thumbSuffix = 'jpeg';
-                        varPack.thumbMIME = 'image/jpeg';
+                        varPack.thumbSuffix = 'png';
+                        varPack.thumbMIME = 'image/png';
                         bufferPack.mainBuf = bufferToUse;
 
                         // Convert the SVG into jpeg and resize it into a thumbnail
-                        bufferPack.thumbBuf = await sharp(bufferToUse)
+                        let temp_buffer = await svg2png(bufferToUse, { width: thumbWidth, height: thumbHeight })
+                            .then(buffer => buffer)
+                            .catch(e => console.error(e));
+
+                        bufferPack.thumbBuf = await sharp(temp_buffer)
                             .resize(thumbWidth, thumbHeight, {
                                 fit: 'inside',
                                 // background: { r: 255, g: 255, b: 255, alpha: 1 }
                             })
                             .jpeg({ quality: 85, force: true })
                             .toBuffer()
-                            .then((buffer) => buffer as any)
-                            .catch((err) => console.log(err));
+                            .then((buffer) => buffer)
+                            .catch((err) => console.log(colors.red("SVG ERROR ON thumbBuf: "), colors.red(err)));
 
                         break;
                     }
@@ -834,8 +845,20 @@ export class MediaUploadService {
                     || mimePack.mime.indexOf('image/svg+xml') >= 0
                 )
             ){
+                let temp_bufferToUse = bufferToUse;
+                
+                // Fix for SVGs. Sharp crashes on them
+                if ( mimePack.mime.indexOf('svg') >= 0
+                    || mimePack.mime.indexOf('application/xml') >= 0
+                    || mimePack.mime.indexOf('image/svg+xml') >= 0
+                ){
+                    temp_bufferToUse = await svg2png(bufferToUse, { width: PHOTO_CONSTANTS.CROPPED_WIDTH, height: PHOTO_CONSTANTS.CROPPED_HEIGHT })
+                        .then(buffer => buffer)
+                        .catch(e => console.error(e));
+                }
+
                 // Get the original image in WEBP form
-                bufferPack.webpOriginalBuf = await sharp(bufferToUse)
+                bufferPack.webpOriginalBuf = await sharp(temp_bufferToUse)
                     .resize(mainWidth, mainHeight, {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
@@ -843,10 +866,10 @@ export class MediaUploadService {
                     .webp({ quality: 100, lossless: true, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log("webpOriginalBuf error: ", err));
 
                 // Resize the WEBP for the medium image
-                bufferPack.webpMediumBuf = await sharp(bufferToUse)
+                bufferPack.webpMediumBuf = await sharp(temp_bufferToUse)
                     .resize(mediumWidth, mediumHeight, {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
@@ -854,10 +877,10 @@ export class MediaUploadService {
                     .webp({ quality: 85, nearLossless: true, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log("webpMediumBuf error: ", err));
 
                 // Resize the WEBP for the thumb image
-                bufferPack.webpThumbBuf = await sharp(bufferToUse)
+                bufferPack.webpThumbBuf = await sharp(temp_bufferToUse)
                     .resize(thumbWidth, thumbHeight, {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
@@ -865,7 +888,7 @@ export class MediaUploadService {
                     .webp({ quality: 85, lossless: false, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
-                    .catch((err) => console.log(err));
+                    .catch((err) => console.log("webpThumbBuf error: ", err));
             }
 
 

@@ -83,8 +83,6 @@ export async function getMetaData(lang_code: string, slug: string): Promise<Meta
 		i++;
 	}
 
-	console.log(slugToUse)
-
 	// Add the slug and the alternate slug to metadata list
 	metaData.push({key: 'url_slug', value: slugToUse});
 	metaData.push({key: 'url_slug_alternate', value: encodeUrl(slugToUse)});
