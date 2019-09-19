@@ -72,8 +72,6 @@ export class DiffService {
             .filter(v => v[1])
             .map(v => JSON.parse(v[1]));
 
-        console.log(extended_infos.map(e => e.trace.act.data.proposal_id));
-
         // add old_hash to proposal_hashes
         for (let obj of proposal_hashes) {
             try {
