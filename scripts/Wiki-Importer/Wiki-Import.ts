@@ -32,7 +32,7 @@ const theMediaUploadService = new MediaUploadService(theAWSS3);
 
 commander
   .version('1.0.0', '-v, --version')
-  .description('Add WebP data to enterlink_articletable')
+  .description('Import a page from Wikipedia')
   .usage('[OPTIONS]...')
   .option('-s, --start <pageid>', 'Starting ID')
   .option('-e, --end <endid>', 'Ending ID')
@@ -69,7 +69,7 @@ export const WikiImport = async (inputString: string) => {
         slug_alt = wikiLangSlug_alt;
     }
 
-    console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
+    console.log(chalk.blue.bold(`Starting to import: ${inputString}`));
     console.log(chalk.blue.bold(`Page ID: |${pageID}|`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
     console.log(chalk.blue.bold(`Page Slug: |${slug}| alt: |${slug_alt}|`));
