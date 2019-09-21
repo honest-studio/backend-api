@@ -743,7 +743,7 @@ export function infoboxDtoPatcher(inputWiki: ArticleJson): ArticleJson {
     let modifiedWiki = inputWiki;
     if (modifiedWiki && modifiedWiki.infoboxes && modifiedWiki.infoboxes.length) {
         modifiedWiki.infoboxes = modifiedWiki.infoboxes.map(ibox => {
-            return {...ibox, values: ibox.values.map((val, valIdx) => {
+            return {...ibox, values: ibox.values && ibox.values.map((val, valIdx) => {
                 // Check for Sentence instead of InfoboxValue
                 if(val.hasOwnProperty('type')){
                     // Convert to InfoboxValue
