@@ -1,2 +1,0 @@
-http://127.0.0.1:7777/wiki/lang_en/Gun_control
-https://en.wikipedia.org/wiki/Gun_control

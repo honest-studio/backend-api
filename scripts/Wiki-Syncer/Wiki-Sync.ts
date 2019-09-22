@@ -23,8 +23,11 @@ commander
 
 const LANG_CODE = 'en';
 
+
 const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
+const RC_LIMIT = 50; // Max allowed is 5000
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
+// const RC_LIMIT = 10;
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -33,7 +36,7 @@ export const logYlw = (inputString: string) => {
 
 (async () => {
     logYlw("=================STARTING MAIN SCRIPT=================");
-    let start_time;
+    let start_time = commander.start;
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Syncer", 'resultlinks.txt'), "");
 
     console.log("\n");
@@ -44,7 +47,7 @@ export const logYlw = (inputString: string) => {
 
     logYlw("==========🧐 CHECKING RECENT CHANGES🧐==========");
     // https://www.mediawiki.org/wiki/API:RecentChanges
-    // https://en.wikipedia.org/w/api.php?action=query&list=recentchanges&rcprop=title%7Cids%7Csizes%7Cflags%7Cuser&rclimit=3
+    // https://en.wikipedia.org/w/api.php?action=query&list=recentchanges&format=json&rcstart=2019-09-21T00:00:00Z
 
     // Check recent edits on Wikipedia
     process.stdout.write(chalk.bold.yellow(`Checking for recent edits ✍️ ...`));
@@ -53,14 +56,20 @@ export const logYlw = (inputString: string) => {
     const action = 'action=query';
     const list = 'list=recentchanges';
     const start = `rcstart=${start_time}`;
-    const recent_edits_url = `${wikiMedia}${action}&${list}&${format}&${start}`;
-    
-    // https://en.wikipedia.org/w/api.php?action=query&list=recentchanges&format=json
+    const limit = `rclimit=${RC_LIMIT}`
+    const recent_edits_url = `${wikiMedia}${action}&${list}&${format}&${start}&${limit}`;
+    console.log(chalk.yellow(recent_edits_url));
 
-    let title = await rp(recent_edits_url)
-                    .then(body => JSON.parse(body).parse.displaytitle);
+    let parsed_body = await rp(recent_edits_url)
+                    .then(body => JSON.parse(body));
+
+    // Need to filter here, etc
+
+    console.log(util.inspect(parsed_body, {showHidden: false, depth: null, chalk: true}));
 
     process.stdout.write(chalk.bold.yellow(` DONE\n`));
+
+    return false;
 
     let fetchedArticles = [];
     for await (const artResult of fetchedArticles) {
