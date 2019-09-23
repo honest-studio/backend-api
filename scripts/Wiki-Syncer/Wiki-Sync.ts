@@ -2,6 +2,7 @@ const rp = require('request-promise');
 const commander = require('commander');
 import * as elasticsearch from 'elasticsearch';
 import { WikiImport } from '../Wiki-Importer/Wiki-Import';
+import { WIKI_SYNC_RECENTCHANGES_FILTER_REGEX } from '../Wiki-Importer/functions/wiki-constants';
 import { MysqlService } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { ArticleJson, Sentence } from '../../src/types/article';
@@ -23,9 +24,10 @@ commander
 
 const LANG_CODE = 'en';
 
-
-const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
-const RC_LIMIT = 50; // Max allowed is 5000
+const BATCH_SIZE = 5;
+const LASTMOD_CUTOFF_TIME = '2019-09-22 00:00:00';
+const RC_LIMIT = 25; // Max allowed is 5000
+// const BATCH_SIZE = 250;
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 // const RC_LIMIT = 10;
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
@@ -50,37 +52,86 @@ export const logYlw = (inputString: string) => {
     // https://en.wikipedia.org/w/api.php?action=query&list=recentchanges&format=json&rcstart=2019-09-21T00:00:00Z
 
     // Check recent edits on Wikipedia
-    process.stdout.write(chalk.bold.yellow(`Checking for recent edits ✍️ ...`));
+    console.log(chalk.bold.yellow(`Checking for recent edits ✍️ ...`));
     const wikiMedia = `https://${LANG_CODE}.wikipedia.org/w/api.php?` // Default WikiMedia format
     const format = 'format=json';
     const action = 'action=query';
     const list = 'list=recentchanges';
     const start = `rcstart=${start_time}`;
-    const limit = `rclimit=${RC_LIMIT}`
-    const recent_edits_url = `${wikiMedia}${action}&${list}&${format}&${start}&${limit}`;
+    const limit = `rclimit=${RC_LIMIT}`;
+    const type = `rctype=edit|new`;
+    const recent_edits_url = `${wikiMedia}${action}&${list}&${format}&${start}&${type}&${limit}`;
     console.log(chalk.yellow(recent_edits_url));
 
     let parsed_body = await rp(recent_edits_url)
                     .then(body => JSON.parse(body));
 
     // Need to filter here, etc
+    let title_array = [];
+    let changes_list = parsed_body && parsed_body.query && parsed_body.query.recentchanges.map(change => {
+        let result;
 
-    console.log(util.inspect(parsed_body, {showHidden: false, depth: null, chalk: true}));
+        // Remove useless titles
+        if (change.title && change.title.search(WIKI_SYNC_RECENTCHANGES_FILTER_REGEX) >= 0) result = null;
+        else result = change;
 
-    process.stdout.write(chalk.bold.yellow(` DONE\n`));
+        // Add the title to the title array
+        if (result) title_array.push(result.title)
 
-    return false;
+        return result;
+    }).filter(c => c);
 
-    let fetchedArticles = [];
-    for await (const artResult of fetchedArticles) {
-        try{
-            // console.log(artResult.concatted)
-            await WikiImport(artResult.concatted);
+    // console.log(changes_list)
+
+    // console.log(util.inspect(parsed_body, {showHidden: false, depth: null, chalk: true}));
+
+
+    logYlw("=================STARTING BATCH SCRIPT=================");
+    let batchCounter = 0;
+    let totalBatches = Math.ceil(changes_list.length / BATCH_SIZE);
+    console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
+    fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Syncer", 'resultlinks.txt'), "");
+    let title_array_sliced = [];
+    for (let i = 0; i < totalBatches; i++) {
+
+        console.log("\n");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🗄️ BATCH 🗄️🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨🔨");
+        console.log(chalk.yellow.bold(`Trying batch #${i}`));
+
+        title_array_sliced = title_array.slice(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
+
+        // The HAVING statement makes sure that human edited wikiscrapes are not affected.
+        const fetchedArticles: any[] = await theMysql.TryQuery(
+            `
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, '') ) as concatted
+                FROM enterlink_articletable art
+                INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
+                WHERE art.page_title IN (?)
+                AND art.is_removed = 0
+                AND art.redirect_page_id IS NULL
+                AND art.is_indexed = 0
+                AND art.page_note = ?
+                AND art.lastmod_timestamp <= ?
+                AND art.page_lang = ?
+                GROUP BY art.id
+                HAVING COUNT(cache.timestamp) = 1
+            `,
+            [title_array_sliced, PAGE_NOTE, LASTMOD_CUTOFF_TIME, LANG_CODE]
+        );
+
+        for await (const artResult of fetchedArticles) {
+            try{
+                // console.log(artResult.concatted)
+                await WikiImport(artResult.concatted);
+            }
+            catch (err){
+                console.error(`${artResult.concatted} FAILED!!! [${err}]`);
+                console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
+            }
         }
-        catch (err){
-            console.error(`${artResult.concatted} FAILED!!! [${err}]`);
-            console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
-        }
+
     }
 })();
 
