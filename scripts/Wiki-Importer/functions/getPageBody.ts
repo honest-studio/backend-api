@@ -158,7 +158,8 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				if (divClass !== undefined) {
 					// If section image found
 					if (divClass.includes("thumb")) {
-						images.push(getImage(el, $, internalCitations) as Media);
+						let gotten_image = getImage(el, $, internalCitations) as Media;
+						if (gotten_image) images.push(gotten_image);
 					}
 				}
 			}

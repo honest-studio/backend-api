@@ -80,15 +80,25 @@ export const WikiImport = async (inputString: string) => {
     let page_title, metadata, page;
     try{
         page_title = await getTitle(lang_code, slug);
+        
+        // Move on if the title does not exist
+        if (page_title === undefined || page_title == null) return false;
+
         metadata = await getMetaData(lang_code, slug);
         page = await rp(url);
     }
     catch(err){
         console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
         page_title = await getTitle(lang_code, slug_alt);
+
+        // Move on if the title does not exist
+        if (page_title === undefined || page_title == null) return false;
+
         metadata = await getMetaData(lang_code, slug_alt);
         page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
     }
+
+
 
     // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
