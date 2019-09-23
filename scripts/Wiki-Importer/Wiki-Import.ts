@@ -309,6 +309,7 @@ export const WikiImport = async (inputString: string) => {
     return;
 })();
 
+// TOTAL ARTICLES FOR EN_WIKI_IMPORT: 5293982
 
 // TO SEE PROGRESS
 // SELECT count(*)
