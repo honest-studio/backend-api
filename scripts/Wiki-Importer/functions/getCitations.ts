@@ -436,9 +436,11 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			}
 
 			// Check the size to max sure it isn't a crappy flagicon or something
+			// Also make sure it isn't gigantic ( >= 5000 x 5000)
 			let theHeight = parseInt(theAttribs.height);
 			let theWidth = parseInt(theAttribs.width);
-			if (theHeight * theWidth >= 5000){
+			let pixelCount = theHeight * theWidth;
+			if (pixelCount >= 5000 && pixelCount <= 25000000){
 
 				// Add the height and width, if present
 				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
