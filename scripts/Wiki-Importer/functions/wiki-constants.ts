@@ -196,6 +196,7 @@ export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
 // use this list to add format removal exception tags to make the scrape look nicer over time
 export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
+    { tag: null, id: "noarticletext", class: null }, 
     { tag: null, id: null, class: "mw-authority-control" }, 
     { tag: null, id: null, class: "sisterlinks" }, 
     { tag: null, id: null, class: "commonscat" }, 
