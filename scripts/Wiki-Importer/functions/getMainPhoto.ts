@@ -111,8 +111,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
 				}
 				else if(theAttribs && theAttribs.width && theAttribs.height){
-					workingMainPhoto.media_props.height = parseInt(theAttribs.height);
-					workingMainPhoto.media_props.width = parseInt(theAttribs.width);
+					workingMainPhoto.media_props.height = theHeight;
+					workingMainPhoto.media_props.width = theWidth;
 				}
 
 				// If there is more than one image in the nearest tr, do not extract
@@ -160,25 +160,33 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			if (main_photo_found) return;
 			let parsed_section_img = getImage(sect_img, $, [], true);
 			let theAttribs = sect_img.attribs;
-			
-			// Add the height and width, if present
-			if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
-				workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
-				workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
-			}
-			else if(theAttribs.width && theAttribs.height){
-				workingMainPhoto.media_props.height = parseInt(theAttribs.height);
-				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
-			}
 
-			// Make sure a full Media was returned and not just a string
-			if (parsed_section_img && (parsed_section_img as Media).url) {
-				workingMainPhoto = parsed_section_img as Media;
-				workingMainPhoto.media_props.type = 'main_photo';
-				workingMainPhoto.type = 'main_photo';
-				main_photo_found = true;
-				let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
-				console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
+
+			// Check the size to max sure it isn't a crappy flagicon or something
+			// Also make sure it isn't gigantic ( >= 5000 x 5000)
+			let theHeight = parseInt(theAttribs.height);
+			let theWidth = parseInt(theAttribs.width);
+			let pixelCount = theHeight * theWidth;
+			if (pixelCount >= 5000 && pixelCount <= 25000000){
+				// Add the height and width, if present
+				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
+					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
+				}
+				else if(theAttribs.width && theAttribs.height){
+					workingMainPhoto.media_props.height = theHeight;
+					workingMainPhoto.media_props.width = theWidth;
+				}
+
+				// Make sure a full Media was returned and not just a string
+				if (parsed_section_img && (parsed_section_img as Media).url) {
+					workingMainPhoto = parsed_section_img as Media;
+					workingMainPhoto.media_props.type = 'main_photo';
+					workingMainPhoto.type = 'main_photo';
+					main_photo_found = true;
+					let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+					console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
+				}
 			}
 		});
 	}
