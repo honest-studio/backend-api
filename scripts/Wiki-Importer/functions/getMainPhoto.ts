@@ -170,7 +170,7 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			}
 
 			// Make sure a full Media was returned and not just a string
-			if ((parsed_section_img as Media).url) {
+			if (parsed_section_img && (parsed_section_img as Media).url) {
 				workingMainPhoto = parsed_section_img as Media;
 				workingMainPhoto.media_props.type = 'main_photo';
 				workingMainPhoto.type = 'main_photo';
