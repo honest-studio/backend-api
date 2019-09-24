@@ -38,10 +38,10 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250;
-const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
-// const BATCH_SIZE = 1;
-// const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
+// const BATCH_SIZE = 250;
+// const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
+const BATCH_SIZE = 1;
+const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -181,11 +181,13 @@ export const WikiImport = async (inputString: string) => {
     try {
         const first_para = articlejson.page_body[0].paragraphs[0];
         text_preview = (first_para.items[0] as Sentence).text;
-        if (first_para.items.length > 1)
+        if (first_para.items.length > 1){
             text_preview += (first_para.items[1] as Sentence).text;
+        }
     } catch (e) {
         text_preview = "";
     }
+
     const title_to_use = page_title.map(sent => sent.text).join();
     const photo_url = articlejson.main_photo[0].url;
     const photo_thumb_url = articlejson.main_photo[0].thumb;

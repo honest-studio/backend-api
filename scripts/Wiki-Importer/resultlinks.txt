@@ -1,2 +1,0 @@
-http://127.0.0.1:7777/wiki/lang_en/Stephen_A._Douglas_Tomb
-https://en.wikipedia.org/wiki/Stephen_A._Douglas_Tomb

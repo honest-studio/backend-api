@@ -201,6 +201,7 @@ export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
 export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: null, id: "noarticletext", class: null }, 
     { tag: null, id: null, class: "mw-authority-control" }, 
+    { tag: null, id: null, class: "mw-empty-elt" }, 
     { tag: null, id: null, class: "sisterlinks" }, 
     { tag: null, id: null, class: "commonscat" }, 
     { tag: null, id: null, class: "navigation-only" }, 

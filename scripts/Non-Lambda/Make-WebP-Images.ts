@@ -124,6 +124,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
         url: startingURL,
         method: 'GET',
         responseType: 'arraybuffer',
+        timeout: 5000
     }).then(response => {
         let fileBuffer = response.data;
         let mimePack: MimePack = fileType(fileBuffer);
