@@ -281,16 +281,40 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 	// 	})
 	// }
 
-	// Categorize and get the MIME types
-	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
-	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
+	if(main_photo_found){
+		// Categorize and get the MIME types
+		workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
+		workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-	// Default thumbnail
-	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+		// Default thumbnail
+		if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
-	// If no main photo was found. 
-	if (!workingMainPhoto.url){
-		workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+		// Upload the main image
+		let resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
+		let filename = path.basename(workingMainPhoto.url);
+		let up_res = await theMediaUploadService.processMedia(
+			resultBuffer,
+			lang,
+			slug,
+			filename,
+			'ProfilePicture',
+			''
+		);
+
+		// Update the main photo info with the storage bucket URLs
+		workingMainPhoto = {
+			...workingMainPhoto,
+			url: up_res.mainPhotoURL,
+			thumb: up_res.thumbnailPhotoURL,
+			mime: up_res.mime,
+			media_props: {
+				...workingMainPhoto.media_props,
+				webp_original: up_res.webp_original,
+				webp_medium: up_res.webp_medium,
+				webp_thumb: up_res.webp_thumb,
+			}
+
+		};
 
 		// Return main photo
 		console.log(chalk.bold.green(`DONE`));
@@ -300,42 +324,18 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 				cheerio_static: $
 			}
 		}
+	}
+	else {
+		workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
 
-	} 
-	
-	// Upload the main image
-	let resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
-	let filename = path.basename(workingMainPhoto.url);
-	let up_res = await theMediaUploadService.processMedia(
-		resultBuffer,
-		lang,
-		slug,
-		filename,
-		'ProfilePicture',
-		''
-	);
-
-	// Update the main photo info with the storage bucket URLs
-	workingMainPhoto = {
-		...workingMainPhoto,
-		url: up_res.mainPhotoURL,
-		thumb: up_res.thumbnailPhotoURL,
-		mime: up_res.mime,
-		media_props: {
-			...workingMainPhoto.media_props,
-			webp_original: up_res.webp_original,
-			webp_medium: up_res.webp_medium,
-			webp_thumb: up_res.webp_thumb,
-		}
-
-	};
-
-	// Return main photo
-	console.log(chalk.bold.green(`DONE`));
-	return {
-		main_photo: workingMainPhoto,
-		cheerio_pack: {
-			cheerio_static: $
+		// Return the default main photo
+		console.log(chalk.bold.green(`DONE`));
+		return {
+			main_photo: workingMainPhoto,
+			cheerio_pack: {
+				cheerio_static: $
+			}
 		}
 	}
+
 };
