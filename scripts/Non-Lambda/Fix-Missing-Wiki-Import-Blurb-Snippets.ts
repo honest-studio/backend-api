@@ -31,7 +31,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250;
+const BATCH_SIZE = 1000;
 const LASTMOD_TIMESTAMP_FLOOR = '2019-09-18 02:35:19';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
