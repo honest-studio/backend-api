@@ -253,20 +253,13 @@ export class StatService {
         return doc;
     }
 
-    async getEditorStats(starttime: number, endtime: number) {
+    async getEditStats() {
         const block_docs = await this.mongo.connection().actions
             .find()
             .sort({ block_num: -1 })
             .limit(1)
             .toArray();
         
-        const REF_BLOCK = block_docs[0].block_num;
-        const REF_TIME = new Date(block_docs[0].block_time).getTime() / 1000 | 0;
-        
-        const now = Date.now() / 1000 | 0;
-        const start_block = REF_BLOCK + ((starttime - REF_TIME) * 2);
-        const end_block = REF_BLOCK + ((endtime - REF_TIME) * 2);
-
         const edits = await this.mongo.connection().actions
             .find({
                 'trace.act.account': 'eparticlectr',
