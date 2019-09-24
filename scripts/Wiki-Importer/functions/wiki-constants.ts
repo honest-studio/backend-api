@@ -200,6 +200,7 @@ export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
 // use this list to add format removal exception tags to make the scrape look nicer over time
 export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
     { tag: null, id: "noarticletext", class: null }, 
+    { tag: null, id: null, class: "shortdescription" }, 
     { tag: null, id: null, class: "mw-authority-control" }, 
     { tag: null, id: null, class: "mw-empty-elt" }, 
     { tag: null, id: null, class: "sisterlinks" }, 
