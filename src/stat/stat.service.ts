@@ -252,4 +252,52 @@ export class StatService {
 
         return doc;
     }
+
+    async getEditorStats(starttime: number, endtime: number) {
+        const block_docs = await this.mongo.connection().actions
+            .find()
+            .sort({ block_num: -1 })
+            .limit(1)
+            .toArray();
+        
+        const REF_BLOCK = block_docs[0].block_num;
+        const REF_TIME = new Date(block_docs[0].block_time).getTime() / 1000 | 0;
+        
+        const now = Date.now() / 1000 | 0;
+        const start_block = REF_BLOCK + ((starttime - REF_TIME) * 2);
+        const end_block = REF_BLOCK + ((endtime - REF_TIME) * 2);
+
+        const edits = await this.mongo.connection().actions
+            .find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo'
+            })
+            .toArray();
+
+        let num_edits_by_day = {};
+        let editors_by_day = {};
+        let num_editors_by_day = {};
+
+        for (let edit of edits) {
+            const day = new Date(edit.block_time).toISOString().slice(0,10);
+
+            if (num_edits_by_day[day]) num_edits_by_day[day] += 1;
+            else num_edits_by_day[day] = 1;
+
+            if(!editors_by_day[day]) editors_by_day[day] = new Set();
+            editors_by_day[day].add(edit.trace.act.data.proposer);
+            num_editors_by_day[day] = editors_by_day[day].size;
+        }
+
+        const num_edits = Object.keys(num_edits_by_day)
+            .sort((b,a) => new Date(a).getTime() - new Date(b).getTime())
+            .map(date => [date, num_edits_by_day[date]]);
+
+        const num_editors = Object.keys(num_editors_by_day)
+            .sort((b,a) => new Date(a).getTime() - new Date(b).getTime())
+            .map(date => [ date, num_editors_by_day[date]]);
+
+        return { num_edits, num_editors }
+
+    }
 }

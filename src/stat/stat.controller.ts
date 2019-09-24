@@ -38,21 +38,21 @@ export class StatController {
         return await this.statService.siteUsage();
     }
 
-    //@Get('uniques')
-    //@ApiImplicitQuery({
-    //    name: 'starttime',
-    //    description: `Start date as a UNIX timestamp.`,
-    //    required: false
-    //})
-    //@ApiImplicitQuery({
-    //    name: 'endtime',
-    //    description: `End date as a UNIX timestamp.`,
-    //    required: false
-    //})
-    //@UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
-    //async getUniques(@Query() query): Promise<any> {
-    //    return await this.statService.getUniques(query);
-    //}
+    @Get('edits')
+    @ApiImplicitQuery({
+        name: 'starttime',
+        description: `Start date as a UNIX timestamp. Default: 90 days ago`,
+        required: false
+    })
+    @ApiImplicitQuery({
+        name: 'endtime',
+        description: `End date as a UNIX timestamp. Default: now`,
+        required: false
+    })
+    @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
+    async getUniques(@Query() query): Promise<any> {
+        return await this.statService.getEditorStats(query.starttime, query.endtime);
+    }
 
     @Get('token-supply')
     async tokenSupply(): Promise<any> {
