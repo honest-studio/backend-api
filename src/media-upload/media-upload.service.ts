@@ -96,7 +96,7 @@ export class MediaUploadService {
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
     getFavicon(inputPack: UrlPack, timeout?: number): Promise<any> {
         let timeoutToUse = undefined;
-        timeoutToUse = timeout ? timeout : 1500;
+        timeoutToUse = timeout ? timeout : 3500;
 
         // Set up the timeout
 
@@ -105,7 +105,7 @@ export class MediaUploadService {
 
     async getBookInfoFromISBN(inputISBN: string, timeout?: number): Promise<BookInfoPack> {
         let timeoutToUse = undefined;
-        timeoutToUse = timeout ? timeout : 1500;
+        timeoutToUse = timeout ? timeout : 3500;
 
         let initialPack: BookInfoPack = {
             title: "<TITLE>",
@@ -181,7 +181,7 @@ export class MediaUploadService {
 
     async getPeriodicalInfoFromISSN(inputISSN: string, timeout?: number): Promise<PeriodicalInfoPack> {
         let timeoutToUse = undefined;
-        timeoutToUse = timeout ? timeout : 1500;
+        timeoutToUse = timeout ? timeout : 3500;
         
         let initialPack: PeriodicalInfoPack = {
             title: "<TITLE>",

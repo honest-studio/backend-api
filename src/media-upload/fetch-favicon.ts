@@ -12,14 +12,14 @@ export interface FaviconReturnPack {
 export function fetchUrl(siteUrl, timeout?: number) {
     return new Promise((resolve, reject) => {
         axios.get(siteUrl, {
-            timeout: timeout ? timeout : 1500
+            timeout: timeout ? timeout : 3500
         })
         .then(response => {
             const html = response.data;
             const faviconUrl = crawlHTMLForFaviconUrl(html);
             let resultURL = resolveFaviconUrl(siteUrl, faviconUrl);
             return checkLinks([resultURL], {
-                timeout: timeout ? timeout : 1500,
+                timeout: timeout ? timeout : 3500,
                 retry: 0,
             })
         })
