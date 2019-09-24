@@ -71,7 +71,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 
 		// Process headlines / headers
 		// Create new section when h tag is reached
-		process.stdout.write(chalk.yellow(`Adding ${tag_name}...`));
+		// process.stdout.write(chalk.yellow(`Adding ${tag_name}...`));
 		if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
 			// Remove the single section body flag
 			single_section_body = false;
@@ -197,7 +197,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 			})
 			paragraphIndex++;
 		}
-		process.stdout.write(chalk.yellow(` DONE\n`));
+		// process.stdout.write(chalk.yellow(` DONE\n`));
 	})
 
 	// Push any leftover paragraphs and/or images into a headerless section
