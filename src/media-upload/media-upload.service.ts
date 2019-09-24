@@ -103,7 +103,10 @@ export class MediaUploadService {
         return fetchUrl(inputPack.url, timeoutToUse);
     }
 
-    async getBookInfoFromISBN(inputISBN: string): Promise<BookInfoPack> {
+    async getBookInfoFromISBN(inputISBN: string, timeout?: number): Promise<BookInfoPack> {
+        let timeoutToUse = undefined;
+        timeoutToUse = timeout ? timeout : 1500;
+
         let initialPack: BookInfoPack = {
             title: "<TITLE>",
             thumb: null,
@@ -121,6 +124,7 @@ export class MediaUploadService {
             uri: initialPack.url,
             headers: UNIVERSAL_HEADERS,
             resolveWithFullResponse: true,
+            timeout: timeoutToUse
             // gzip: true
         }).then((response) => {
             return response;
@@ -175,7 +179,10 @@ export class MediaUploadService {
         return initialPack;
     }
 
-    async getPeriodicalInfoFromISSN(inputISSN: string): Promise<PeriodicalInfoPack> {
+    async getPeriodicalInfoFromISSN(inputISSN: string, timeout?: number): Promise<PeriodicalInfoPack> {
+        let timeoutToUse = undefined;
+        timeoutToUse = timeout ? timeout : 1500;
+        
         let initialPack: PeriodicalInfoPack = {
             title: "<TITLE>",
             thumb: null,
@@ -248,9 +255,13 @@ export class MediaUploadService {
 
 
     // Fetch a file from an external URL
-    getRemoteFile(inputPack: UrlPack): Promise<FileFetchResult> {
+    getRemoteFile(inputPack: UrlPack, timeout?: number): Promise<FileFetchResult> {
         let theCategory = linkCategorizer(inputPack.url);
         let urlToUse = inputPack.url;
+
+        // Set timeout
+        let timeoutToUse = undefined;
+        timeoutToUse = timeout ? timeout : 5000;
 
         // Test for YouTube first
         if (theCategory == 'YOUTUBE'){
@@ -265,6 +276,7 @@ export class MediaUploadService {
             url: urlToUse,
             method: 'GET',
             responseType: 'arraybuffer',
+            timeout: timeoutToUse
         }).then(response => {
             let fileBuffer = response.data;
             let mimePack: MimePack = fileType(fileBuffer);
@@ -321,16 +333,22 @@ export class MediaUploadService {
     // }
 
     // Get a buffer from a URL
-    async getImageBufferFromURL(inputURL: string): Promise<Buffer> {
+    async getImageBufferFromURL(inputURL: string, timeout?: number): Promise<Buffer> {
         const options = {
             headers: UNIVERSAL_HEADERS
         };
+
+        // Set timeout
+        let timeoutToUse = undefined;
+        timeoutToUse = timeout ? timeout : 5000;
+
         try {
             console.log(colors.yellow(inputURL))
             return axios.default({
                 url: inputURL,
                 method: 'GET',
                 responseType: 'arraybuffer',
+                timeout: timeoutToUse
             }).then(response => {
                 let buffer = response.data;
                 return buffer;

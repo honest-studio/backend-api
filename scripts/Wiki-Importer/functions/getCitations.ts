@@ -224,13 +224,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'BOOK': {
 					if (raw_citn.isbn){
 						process.stdout.write(chalk.yellow(`\tFetching book info\n`));
-						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn);
+						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn, 3500);
 						workingCitation.url = bookInfo.url;
 						workingCitation.thumb = bookInfo.thumb;
 					}
 					else if (raw_citn.issn){
 						process.stdout.write(chalk.yellow(`\tFetching periodical info\n`));
-						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn);
+						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn, 3500);
 						workingCitation.url = periodicalInfo.url;
 						workingCitation.thumb = periodicalInfo.thumb;
 					};
