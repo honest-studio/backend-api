@@ -6,6 +6,7 @@ import { Media } from '../../../src/types/article';
 import { linkCategorizer } from '../../../src/utils/article-utils/article-converter';
 import { CheerioPack } from './pagebodyfunctionalities/cleaners';
 import * as mimePackage from 'mime';
+import { IMAGE_MAX_PIXELS } from './wiki-constants';
 const chalk = require('chalk');
 const path = require('path');
 
@@ -103,7 +104,7 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			let theHeight = parseInt(theAttribs.height);
 			let theWidth = parseInt(theAttribs.width);
 			let pixelCount = theHeight * theWidth;
-			if (pixelCount >= 5000 && pixelCount <= 25000000){
+			if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
 
 				// Add the height and width, if present
 				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
@@ -115,35 +116,41 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 					workingMainPhoto.media_props.width = theWidth;
 				}
 
-				// If there is more than one image in the nearest tr, do not extract
-				let $extractTD = $(img_anchor).parents("td, th");
-				let $extractTR = $($extractTD).parents("tr");
 
-				// Look for multiple images within the td
-				let rowImages = $($extractTR).find('img');
-				if (rowImages.length > 1){
-					console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
+				// Inner pixel count check
+				pixelCount = workingMainPhoto.media_props.height * workingMainPhoto.media_props.width;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+
+					// If there is more than one image in the nearest tr, do not extract
+					let $extractTD = $(img_anchor).parents("td, th");
+					let $extractTR = $($extractTD).parents("tr");
+
+					// Look for multiple images within the td
+					let rowImages = $($extractTR).find('img');
+					if (rowImages.length > 1){
+						console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
+					}
+					else {
+						// Remove the img's parent <a> first
+						$(img_anchor).remove();
+
+						// Try to get a caption
+						workingMainPhoto.caption = accumulateText($extractTD, $, []);
+
+						// Remove the surrounding <td>
+						$($extractTD).remove();
+
+						// If the <tr> is now empty, remove it too
+						let inner_contents = $($extractTR).html();
+						if (!inner_contents || inner_contents == ''){
+							$($extractTR).remove();
+						} 
+					}
+					
+					main_photo_found = true;
+					let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+					console.log(chalk.green.bold(`Found a main image from the infobox: ${imgString}`));
 				}
-				else {
-					// Remove the img's parent <a> first
-					$(img_anchor).remove();
-
-					// Try to get a caption
-					workingMainPhoto.caption = accumulateText($extractTD, $, []);
-
-					// Remove the surrounding <td>
-					$($extractTD).remove();
-
-					// If the <tr> is now empty, remove it too
-					let inner_contents = $($extractTR).html();
-					if (!inner_contents || inner_contents == ''){
-						$($extractTR).remove();
-					} 
-				}
-				
-				main_photo_found = true;
-				let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
-				console.log(chalk.green.bold(`Found a main image from the infobox: ${imgString}`));
 			}
 			else{
 				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
@@ -167,7 +174,7 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			let theHeight = parseInt(theAttribs.height);
 			let theWidth = parseInt(theAttribs.width);
 			let pixelCount = theHeight * theWidth;
-			if (pixelCount >= 5000 && pixelCount <= 25000000){
+			if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
 				// Add the height and width, if present
 				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
 					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
@@ -178,14 +185,18 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 					workingMainPhoto.media_props.width = theWidth;
 				}
 
-				// Make sure a full Media was returned and not just a string
-				if (parsed_section_img && (parsed_section_img as Media).url) {
-					workingMainPhoto = parsed_section_img as Media;
-					workingMainPhoto.media_props.type = 'main_photo';
-					workingMainPhoto.type = 'main_photo';
-					main_photo_found = true;
-					let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
-					console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
+				// Inner pixel count check
+				pixelCount = workingMainPhoto.media_props.height * workingMainPhoto.media_props.width;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+					// Make sure a full Media was returned and not just a string
+					if (parsed_section_img && (parsed_section_img as Media).url) {
+						workingMainPhoto = parsed_section_img as Media;
+						workingMainPhoto.media_props.type = 'main_photo';
+						workingMainPhoto.type = 'main_photo';
+						main_photo_found = true;
+						let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+						console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
+					}
 				}
 			}
 		});
@@ -247,7 +258,7 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 	// 			let theHeight = parseInt(theAttribs.height);
 	// 			let theWidth = parseInt(theAttribs.width);
 	// let pixelCount = theHeight * theWidth;
-	// if (pixelCount >= 5000 && pixelCount <= 25000000){
+	// if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
 
 	// 				// Add the height and width, if present
 	// 				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){

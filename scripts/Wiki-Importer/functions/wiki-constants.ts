@@ -168,6 +168,9 @@ export const WIKI_LANG_PACKAGES = {
 // Kartographer (Open Maps)
 export const KARTOGRAPHER_PIXEL_WIDTH = 400;
 
+// Max pixels for an image
+export const IMAGE_MAX_PIXELS = 6250000;
+
 // Regex for preserving whitespace
 export const WHITESPACE_PRESERVATION_REGEX = /^(\s*)?([^\s]*)(\s*)?$/gimu;
 

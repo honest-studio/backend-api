@@ -6,7 +6,7 @@ import { Citation, CitationCategoryType, Sentence } from '../../../src/types/art
 import { cheerio_css_cleaner, linkCategoryFromText } from '../../../src/utils/article-utils/article-tools';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { accumulateText } from './pagebodyfunctionalities/textParser';
-import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
+import { POST_CITATION_CHOP_BELOW, IMAGE_MAX_PIXELS } from './wiki-constants';
 import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 const util = require('util');
 const chalk = require('chalk');
@@ -440,7 +440,7 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 			let theHeight = parseInt(theAttribs.height);
 			let theWidth = parseInt(theAttribs.width);
 			let pixelCount = theHeight * theWidth;
-			if (pixelCount >= 5000 && pixelCount <= 25000000){
+			if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
 
 				// Add the height and width, if present
 				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
@@ -452,20 +452,24 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 					workingCitation.media_props.width = parseInt(theAttribs.width);
 				}
 
-				// If there is more than one image in the nearest tr, do not extract
-				let $extractGallery = $(gal_box).parents("ul.gallery");
+				// Inner pixel count check
+				pixelCount = workingCitation.media_props.height * workingCitation.media_props.width;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+					// If there is more than one image in the nearest tr, do not extract
+					let $extractGallery = $(gal_box).parents("ul.gallery");
 
-				// Remove the img's parent <a> first
-				$(img_anchor).remove();
+					// Remove the img's parent <a> first
+					$(img_anchor).remove();
 
-				// Try to get a caption
-				workingCitation.description = accumulateText(gal_box, $, []);
+					// Try to get a caption
+					workingCitation.description = accumulateText(gal_box, $, []);
 
-				// Remove the surrounding <td>
-				$($extractGallery).remove();
-				
-				let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
-				console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
+					// Remove the surrounding <td>
+					$($extractGallery).remove();
+					
+					let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
+					console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
+				}
 			}
 			else{
 				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
