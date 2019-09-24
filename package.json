@@ -20,7 +20,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
-    "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Fix-Missing-Wiki-Import-Blurb-Snippets.js -s 0 -e 2500",
+    "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Fix-Missing-Wiki-Import-Blurb-Snippets.js -s 0 -e 1000000",
     "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 1126777 -e 1126778",
     "maintenance:run-wiki-sync": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Syncer/Wiki-Sync.js -s \"2019-09-22T00:00:00Z\"",
     "maintenance:create-webp": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Make-WebP-Images.js --input '../../../scripts/Non-Lambda/input/slug-list.txt'",

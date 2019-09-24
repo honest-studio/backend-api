@@ -32,7 +32,7 @@ commander
   .parse(process.argv);
 
 const BATCH_SIZE = 250;
-const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00';
+const LASTMOD_TIMESTAMP_FLOOR = '2019-09-18 02:35:19';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -77,7 +77,7 @@ export const FixMissingSnippets = async (inputString: string) => {
     );
 
     if (hashCacheResult.length == 0) {
-        console.log(chalk.red(`NO ${inputIPFS} FOUND BELOW ${LASTMOD_TIMESTAMP_CEIL}. Continuing...`));
+        console.log(chalk.red(`NO ${inputIPFS} FOUND ABOVE ${LASTMOD_TIMESTAMP_FLOOR}. Continuing...`));
         return;
     }
 
@@ -90,43 +90,50 @@ export const FixMissingSnippets = async (inputString: string) => {
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
+
     console.log(chalk.yellow("Running the patch"));
 
-    // Run the patches for now
-    // wiki = sentenceSplitFixer(wiki);
-
-    console.log(wiki)
-    return false;
+    let text_preview;
+    try {
+        const first_para = wiki.page_body[0].paragraphs[0];
+        text_preview = (first_para.items[0] as Sentence).text;
+        if (first_para.items.length > 1){
+            text_preview += (first_para.items[1] as Sentence).text;
+        }
+        else if (!text_preview || text_preview == ""){
+            text_preview = "";
+            // Loop through the first section until text is found
+            let sliced_paras = wiki.page_body[0].paragraphs.slice(1);
+            sliced_paras.forEach(para => {
+                // Only take the first two sentences
+                if (text_preview == ""){
+                    if (para.items.length <= 2){
+                        para.items.forEach(item => {
+                            text_preview += (item as Sentence).text;
+                        })
+                    }
+                    else{
+                        para.items.slice(0, 2).forEach(item => {
+                            text_preview += (item as Sentence).text;
+                        })
+                    }
+                }
+            })
+        }
+    } catch (e) {
+        text_preview = "";
+    }
 
     logYlw("=================MAIN UPLOAD=================");
-
-    try {
-        const json_insertion = await theMysql.TryQuery(
-            `
-                UPDATE enterlink_hashcache
-                SET html_blob = ?,
-                    timestamp = NOW() 
-                WHERE ipfs_hash = ? 
-            `,
-            [JSON.stringify(wiki), inputIPFS]
-        );
-    } catch (e) {
-        if (e.message.includes("ER_DUP_ENTRY")){
-            console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
-        }
-        else throw e;
-    }
 
     try {
         const article_update = await theMysql.TryQuery(
             `
                 UPDATE enterlink_articletable 
-                SET lastmod_timestamp = NOW(),
-                    desktop_cache_timestamp = NULL,
-                    mobile_cache_timestamp = NULL
+                SET blurb_snippet = ?
                 WHERE ipfs_hash_current = ? 
             `,
-            [inputIPFS]
+            [text_preview, inputIPFS]
         );
     } catch (e) {
         if (e.message.includes("ER_DUP_ENTRY")){
@@ -136,8 +143,8 @@ export const FixMissingSnippets = async (inputString: string) => {
     }
 
     // Flush the prerenders
-    const prerenderToken = theConfig.get('PRERENDER_TOKEN');
-    flushPrerenders(lang_code, slug, prerenderToken);
+    // const prerenderToken = theConfig.get('PRERENDER_TOKEN');
+    // flushPrerenders(lang_code, slug, prerenderToken);
 
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
@@ -171,10 +178,11 @@ export const FixMissingSnippets = async (inputString: string) => {
                 AND art.is_indexed = 0
                 AND art.page_note = ?
                 AND art.blurb_snippet = ''
+                AND art.lastmod_timestamp >= ?
                 GROUP BY art.id
                 HAVING COUNT(cache.timestamp) = 1
             `,
-            [currentStart, currentEnd, PAGE_NOTE]
+            [currentStart, currentEnd, PAGE_NOTE, LASTMOD_TIMESTAMP_FLOOR]
         );
 
         for await (const artResult of fetchedArticles) {

@@ -184,6 +184,26 @@ export const WikiImport = async (inputString: string) => {
         if (first_para.items.length > 1){
             text_preview += (first_para.items[1] as Sentence).text;
         }
+        else if (!text_preview || text_preview == ""){
+            text_preview = "";
+            // Loop through the first section until text is found
+            let sliced_paras = articlejson.page_body[0].paragraphs.slice(1);
+            sliced_paras.forEach(para => {
+                // Only take the first two sentences
+                if (text_preview == ""){
+                    if (para.items.length <= 2){
+                        para.items.forEach(item => {
+                            text_preview += (item as Sentence).text;
+                        })
+                    }
+                    else{
+                        para.items.slice(0, 2).forEach(item => {
+                            text_preview += (item as Sentence).text;
+                        })
+                    }
+                }
+            })
+        }
     } catch (e) {
         text_preview = "";
     }
