@@ -254,32 +254,61 @@ export class StatService {
     }
 
     async getEditStats() {
-        const block_docs = await this.mongo.connection().actions
-            .find()
-            .sort({ block_num: -1 })
-            .limit(1)
-            .toArray();
-        
-        const edits = await this.mongo.connection().actions
-            .find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo'
-            })
-            .toArray();
-
+        let last_block_processed = 59902500;
         let num_edits_by_day = {};
         let editors_by_day = {};
         let num_editors_by_day = {};
+        let users_by_day = {};
+        let num_users_by_day = {};
 
-        for (let edit of edits) {
-            const day = new Date(edit.block_time).toISOString().slice(0,10);
+        let cache = await this.redis.connection().get('stats:edits');
+        if (cache) {
+            cache = JSON.parse(cache);
+            last_block_processed = cache.last_block_processed;
+            cache.num_edits.forEach(row => num_edits_by_day[row[0]] = row[1]);
+            cache.num_editors.forEach(row => num_editors_by_day[row[0]] = row[1]);
+            cache.num_chain_users.forEach(row => num_users_by_day[row[0]] = row[1]);
+            cache.unique_editors.forEach(row => editors_by_day[row[0]] = new Set(row[1]));
+            cache.unique_users.forEach(row => users_by_day[row[0]] = new Set(row[1]));
+        }   
 
-            if (num_edits_by_day[day]) num_edits_by_day[day] += 1;
-            else num_edits_by_day[day] = 1;
+        while (true) {
+            const action_docs = await this.mongo.connection().actions
+                .find({ 'block_num': { $gte: last_block_processed }})
+                .sort({ 'block_num': 1 })
+                .limit(50000)
+                .toArray();
 
-            if(!editors_by_day[day]) editors_by_day[day] = new Set();
-            editors_by_day[day].add(edit.trace.act.data.proposer);
-            num_editors_by_day[day] = editors_by_day[day].size;
+            for (let doc of action_docs) {
+                if (doc.block_num <= last_block_processed) continue;
+
+                const day = new Date(doc.block_time).toISOString().slice(0,10);
+                if(!users_by_day[day]) users_by_day[day] = new Set();
+
+                if (doc.trace.act.name == "logpropinfo") {
+                    if (num_edits_by_day[day]) num_edits_by_day[day] += 1;
+                    else num_edits_by_day[day] = 1;
+
+                    if(!editors_by_day[day]) editors_by_day[day] = new Set();
+                    editors_by_day[day].add(doc.trace.act.data.proposer);
+                    num_editors_by_day[day] = editors_by_day[day].size;
+
+                    users_by_day[day].add(doc.trace.act.data.proposer);
+                }
+                else if (doc.trace.act.name == "transfer") {
+                    users_by_day[day].add(doc.trace.act.data.from);
+                    users_by_day[day].add(doc.trace.act.data.to);
+                }
+                else if (doc.trace.act.name == "vote") {
+                    users_by_day[day].add(doc.trace.act.data.voter);
+                }
+                num_users_by_day[day] = users_by_day[day].size;
+
+            }
+
+            last_block_processed = action_docs[action_docs.length - 1].block_num;
+
+            if (action_docs.length < 50000) break;
         }
 
         const num_edits = Object.keys(num_edits_by_day)
@@ -290,7 +319,24 @@ export class StatService {
             .sort((b,a) => new Date(a).getTime() - new Date(b).getTime())
             .map(date => [ date, num_editors_by_day[date]]);
 
-        return { num_edits, num_editors }
+        const num_chain_users = Object.keys(num_users_by_day)
+            .sort((b,a) => new Date(a).getTime() - new Date(b).getTime())
+            .map(date => [date, num_users_by_day[date]]);
+
+        const unique_editors = Object.keys(editors_by_day)
+            .sort((b,a) => new Date(a).getTime() - new Date(b).getTime())
+            .map(date => [date, Array.from(editors_by_day[date])]);
+
+        const unique_users = Object.keys(users_by_day)
+            .sort((b,a) => new Date(a).getTime() - new Date(b).getTime())
+            .map(date => [date, Array.from(users_by_day[date])]);
+
+
+        const result = { num_edits, num_editors, num_chain_users, unique_editors, unique_users, last_block_processed };
+        this.redis.connection().set('stats:edits', JSON.stringify(result));
+
+        return result;
+
 
     }
 }
