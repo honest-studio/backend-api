@@ -261,7 +261,7 @@ export class StatService {
         let users_by_day = {};
         let num_users_by_day = {};
 
-        let cache = await this.redis.connection().get('stats:edits');
+        let cache: any = await this.redis.connection().get('stats:edits');
         if (cache) {
             cache = JSON.parse(cache);
             last_block_processed = cache.last_block_processed;
