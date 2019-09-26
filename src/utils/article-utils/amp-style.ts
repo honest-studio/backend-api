@@ -337,25 +337,35 @@ font-weight: inherit;
     line-height: 1.65;
 }
 
+.ent-ct h2, 
+.ent-ct h3, 
+.ent-ct h4, 
+.ent-ct h5, 
+.ent-ct h6 {
+    border-bottom: 1px solid #EFEFEF;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    font-family: 'Garamond,Georgia';
+}
+
 .ent-ct h2 {
 	font-size:26px;
-	margin-bottom: 5px;
-	margin-top:0px;
 }
 
 .ent-ct h3 {
 	font-size:24px;
-	margin-bottom: 5px;
 }
 
 .ent-ct h4 {
 	font-size: 18px;
-	margin-bottom: 5px;
 }
 
 .ent-ct h5 {
 	font-size: 17px;
-	margin-bottom: 5px;
+}
+
+.ent-ct h6 {
+	font-size: 17px;
 }
 
 .qf-header {
