@@ -744,23 +744,16 @@ export class AmpRenderPartial {
             })
             .join('');
         return `
-            <span id="mediaGallerySpan" class="toc-span-fix"></span>
-            <amp-accordion  class="media-gallery-accordion">
-                <section expanded>
-                    <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
-                        <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                this.artJSON.page_title[0].text
-                            } images, pictures, and videos" />
-                        </span>
-                    </h2>
-                    <div class="pic-video-container">
-                        <div class="photo-gallery">
-                            ${mediaComboString}
-                        </div>
-                    </div>
-                </section>
-            </amp-accordion>
+            <div class="media-gallery-container">
+                <h2 class="media-gallery-header" id="mediaGallery">MEDIA
+                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
+                        this.artJSON.page_title[0].text
+                    } images, pictures, and videos" />
+                </h2>
+                <div class="photo-gallery">
+                    ${mediaComboString}
+                </div>
+            </div>
         `;
     };
 

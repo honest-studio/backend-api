@@ -47,9 +47,26 @@ amp-accordion, .toc-button, button, a{
 -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
-amp-accordion.infobox-accordion, amp-accordion.media-gallery-accordion, amp-accordion.link-list-accordion{
+amp-accordion.infobox-accordion, amp-accordion.link-list-accordion{
     float: left;
     width: 100%;
+}
+
+.media-gallery-container {
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    width: calc(100% - 30px);
+    padding: 0 0px 15px 0;
+    float: left;
+    margin: 0 15px 0 15px;
+}
+
+.media-gallery-container .media-gallery-header {
+    font-family: OpenSans-SemiBold,'Open Sans SemiBold',sans-serif;
+    font-size: 14px;
+    color: #979797;
+    text-align: left;
+    padding: 0px 15px 0px 15px;
 }
 
 amp-accordion>section>:first-child{
@@ -1072,11 +1089,19 @@ ul.l-lst li .link-box-details a.dislike-button{
     width: auto;
 }
 .tile-ct {
-	width: calc(50% - 16px);
-	float: left;
-	display: block;
-	margin: 0 3px 3px 0px;
+    width: calc(33% - 16px);
+    display: inline-block;
+    margin: 0 3px 3px 0;
 }
+
+.tile-ct amp-youtube,
+.tile-ct amp-img,
+.tile-ct amp-anim,
+.tile-ct amp-video,
+.tile-ct amp-audio {
+    border-radius: 4px;
+}
+
 .tile-desc{
     font-size: 12px;
     width: auto;
@@ -1136,7 +1161,6 @@ ul.l-lst li .link-box-details a.dislike-button{
     text-align: center;
     width: 100%;
     margin-top:0px;
-    margin-left:15px;
 }
 
 a.photo-gallery-anchor{

@@ -37,8 +37,8 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                 ${arp.renderNameContainer()}
                 ${arp.renderFirstParagraph()}
                 ${arp.renderInfoboxes()}
-                ${arp.renderPageBody()}
                 ${arp.renderMediaGallery()}
+                ${arp.renderPageBody()}
                 ${arp.renderCitations()}
                 <div class="page-times">
                     <div>Created: <span id="page_create_time">${creation_timestamp}</span></div>
