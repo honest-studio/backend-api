@@ -25,6 +25,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
             ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
         </head>
         <body>
+            ${arp.renderHeaderBar()}
             ${arp.renderNavBar()}
             <amp-sidebar id='sidebar' layout="nodisplay" side="left">
                 <ul class="heading-collection">

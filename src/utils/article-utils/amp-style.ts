@@ -1436,6 +1436,16 @@ margin: 0px;
     top: 0;
 }
 
+.amp-nav-bar {
+    position: fixed;
+    background-color: #2D2D2D;
+    z-index: 20;
+    width: 100%;
+    height: 52px;
+    border-bottom: 1px solid #e9e9e9;
+    top: 52px;
+}
+
 .amp-header-bar ul {
 	list-style-type:none;
 	width:100%;
@@ -1480,9 +1490,10 @@ margin: 0px;
 
 
 .amp-header-toc {
-	float:left;
+	position: absolute;
 	margin-top:-2.5px;
     margin-left: 5px;
+    z-index: 11;
 }
 
 .amp-header-toc button {
@@ -1537,13 +1548,13 @@ margin: 0px;
 	right: 0;
 	margin-left: auto;
 	margin-right: auto;
-	width: 100px;
-	top: 8.5px;
+    width: 100%;
+    top: 10px;
 }
 
 .amp-header-search {
 	float:right;
-	margin-right: 10px;
+	margin-right: 5px;
 	margin-top: -5px;
 }
 

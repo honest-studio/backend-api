@@ -122,6 +122,14 @@ export class AmpRenderPartial {
 
     renderNavBar = (): string => {
         return `
+            <div class="amp-nav-bar">
+                <div>BEE</div>
+            </div>
+        `;
+    };
+
+    renderHeaderBar = (): string => {
+        return `
             <nav class="amp-header-bar">
                 <ul>
                     <li class="amp-header-toc">
@@ -131,7 +139,7 @@ export class AmpRenderPartial {
                     </li>
                     <li class="amp-header-logo">
                         <a rel='nofollow' href="https://everipedia.org">
-                            <amp-img width='45' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/Everipedia_Logo.svg' alt='Everipedia Logo' ></amp-img>
+                            <amp-img width='230' height='30' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/EVP-beta-logo-black.svg' alt='Everipedia Logo' ></amp-img>
                         </a>
                     </li>
                     <li class="amp-header-menu">
@@ -142,7 +150,9 @@ export class AmpRenderPartial {
                         </button>
                     </li>
                     <li class="amp-header-search">
-                        <button on="tap:search-lightbox" data-description="Search Bar"><span class="svgIcon svgIcon--search svgIcon--25px u-textColorNormal u-baseColor--iconLight"><svg class="svgIcon-use" width="30" height="30" viewBox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span></button>
+                        <button on="tap:search-lightbox" data-description="Search Bar">
+                        <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_black.svg" ></amp-img>
+                        </button>
                     </li>
                 </ul>
             </nav>
