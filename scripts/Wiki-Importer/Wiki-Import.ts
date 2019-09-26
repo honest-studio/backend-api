@@ -135,12 +135,7 @@ export const WikiImport = async (inputString: string) => {
         citations: page_body_pack.citations,
         media_gallery: [],
         metadata: metadata,
-        amp_info: { 
-            load_youtube_js: false,
-            load_audio_js: false,
-            load_video_js: false,
-            lightboxes: []
-        },
+        amp_info: page_body_pack.amp_info,
         ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
     } as ArticleJson;
     process.stdout.write(chalk.yellow(` DONE\n`));

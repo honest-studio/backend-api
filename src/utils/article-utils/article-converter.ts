@@ -266,6 +266,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
         load_video_js: false,
         lightboxes: []
     };
+    
     media_gallery.forEach((value, index) => {
         switch (value.category) {
             case 'YOUTUBE': {

@@ -29,7 +29,13 @@ export interface RawCitation {
 export interface CitationReturnPack {
 	citations: Citation[],
 	internalCitations: any,
-	cheerio_pack: CheerioPack
+	cheerio_pack: CheerioPack,
+	amp_info: {
+		load_youtube_js: boolean,
+		load_audio_js: boolean,
+		load_video_js: boolean,
+		lightboxes: any[]
+	}
 }
 
 // Default description for the Wikipedia citation
@@ -74,6 +80,14 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 	// Page content
 	const $content = $('div.mw-parser-output');
+
+	// AMP info
+	let amp_info = {
+		load_youtube_js: false,
+		load_audio_js: false,
+		load_video_js: false,
+		lightboxes: []
+	}
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
@@ -486,9 +500,29 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	console.log(chalk.yellow.bold(`--------------DONE--------------`));
 	
 
-	// Sort the citations properly
-	process.stdout.write(chalk.yellow(`Sorting the citations...`));
-	citations = _.sortBy(citations, ctn => ctn.citation_id);
+	// Sort the citations properly and also look for AMP-related stuff
+	process.stdout.write(chalk.yellow(`Sorting the citations and getting AMP info...`));
+	citations = _.sortBy(citations, ctn => {
+		switch (ctn.category) {
+			// AMP needs to know if these are present so it can import external JS files to handle them
+			// They are not included by default as an AMP validation error will occur if the import is not needed
+			case 'YOUTUBE': {
+				amp_info.load_youtube_js = true;
+				break;
+			}
+			case 'NORMAL_VIDEO': {
+				amp_info.load_video_js = true;
+				break;
+			}
+			case 'AUDIO': {
+				amp_info.load_audio_js = true;
+				break;
+			}
+			default:
+			break;
+		}
+		return ctn.citation_id
+	});
 	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// // Clean all of the citations
@@ -547,7 +581,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 		internalCitations: internalCitations, // Map passed to textParser for instant internal citation lookup
 		cheerio_pack:  {
 			cheerio_static: $
-		}
+		},
+		amp_info: amp_info
 	}; 
 }
 

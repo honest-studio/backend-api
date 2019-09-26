@@ -26,7 +26,13 @@ export interface PageBodyPack {
 	sections: Section[],
 	citations: Citation[],
 	internal_citations: any,
-	cheerio_pack: CheerioPack
+	cheerio_pack: CheerioPack,
+	amp_info: {
+		load_youtube_js: boolean,
+		load_audio_js: boolean,
+		load_video_js: boolean,
+		lightboxes: any[]
+	},
 }
 
 export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
@@ -221,6 +227,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 		internal_citations: internalCitations,
 		cheerio_pack: {
 			cheerio_static: $
-		}
+		},
+		amp_info: ctn_return_pack.amp_info
 	}
 }

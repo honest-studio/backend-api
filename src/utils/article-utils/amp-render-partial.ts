@@ -182,7 +182,7 @@ export class AmpRenderPartial {
     };
 
     renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        
+        console.log(this.artJSON.amp_info)
         // Metadata values
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
@@ -569,11 +569,11 @@ export class AmpRenderPartial {
         `;
     };
 
-    renderOneMedia = (media: Media, index: number): string => {
+    renderOneMedia = (media: Citation, index: number): string => {
         // const RANDOMSTRING = Math.random()
         //     .toString(36)
         //     .substring(7);
-        let sanitizedCaption = media.caption
+        let sanitizedCaption = media.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
@@ -609,9 +609,9 @@ export class AmpRenderPartial {
                     </div>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -637,9 +637,9 @@ export class AmpRenderPartial {
                     </div>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -661,9 +661,9 @@ export class AmpRenderPartial {
                     </span>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -692,9 +692,9 @@ export class AmpRenderPartial {
                     </span>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -714,9 +714,9 @@ export class AmpRenderPartial {
                     </span>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -736,7 +736,7 @@ export class AmpRenderPartial {
     };
 
     renderMediaGallery = (): string => {
-        let media: Media[] = this.artJSON.media_gallery;
+        let media: Citation[] = this.artJSON.citations.filter(ctn => ctn.media_props);
         if (media.length == 0) return ``;
         let mediaComboString = media
             .map((value, index) => {
