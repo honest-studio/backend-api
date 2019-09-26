@@ -8,7 +8,7 @@ body, html{
     float: left;
     position:relative;
     top:0px;
-    font-family: 'Garamond',  Georgia;
+    font-family: 'Libre Baskerville',serif;
 }
 main{
     float: left;
@@ -89,6 +89,7 @@ ul.infobox.list-plural{
 ul.infobox.list-plural li:first-child{
     float: left;
     border: 0px;
+    margin-top: 5px;
 }
 ul.infobox.list-plural li{
     font-size: 12.5px;
@@ -96,6 +97,7 @@ ul.infobox.list-plural li{
     float: left;
     width: 100%;
     min-height: 20px;
+    padding: 5px 0px 5px 0px;
 }
 
 ul.infobox.list-plural li p {
@@ -104,15 +106,15 @@ ul.infobox.list-plural li p {
 
 ul.infobox.list-plural > .row li:not([class]) > .info-qt{
 	width: 100%;
-	font-size: 13px;
+    font-size: 12px;
+    font-weight: bold;
     margin-top: 2px;
 	padding: 0px;
 	background-color: #fbfbfb;
-	color: #333;
+	color: #2D2D2D;
 	text-align: left;
 	float: left;
 	border: 0px solid red;
-	font-weight: bold;
 	line-height: 16px;
 }
 
@@ -129,7 +131,7 @@ ul.infobox.list-plural > .info-an {
 	text-align: left;
 	word-break: normal;
 	word-wrap: break-word;
-	font-size: 13.5px;
+	font-size: 12px;
 	padding: 0px;
 	margin-left: 0;
 	line-height: 19px;
@@ -168,7 +170,7 @@ ul.infobox.list-plural > .row .info-an button {
 	border-radius: 0 0 2px 2px;
 	border-top: 0;
 	padding: 15px;
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	padding-top:5px;
 }
 
@@ -202,14 +204,16 @@ float: left;
 width: 25%;
 text-align: left;
 font-weight: bold;
-font-size: 13px;
+font-size: 12px;
 line-height: 16px;
 display: table-caption;
 padding: 5px 0px;
 word-wrap: break-word;
+color: #2D2D2D;
 }
 .infobox .info-qt h3{
 font-size: inherit;
+font-weight: bold;
 margin-top: inherit;
 margin-bottom: inherit;
 line-height: inherit;
@@ -345,7 +349,7 @@ font-weight: inherit;
     border-bottom: 1px solid #EFEFEF;
     padding-bottom: 5px;
     margin-bottom: 20px;
-    font-family: 'Garamond,Georgia';
+    font-family: 'Libre Baskerville',serif;
 }
 
 .ent-ct h2 {
@@ -369,7 +373,7 @@ font-weight: inherit;
 }
 
 .qf-header {
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	font-weight: 600;
 	color: #272727;
 	font-size: 17px;
@@ -386,6 +390,13 @@ font-weight: inherit;
 	border: 0 solid #d9d9d9;
 	border-radius: 2px;
 	border-bottom: 0;
+}
+
+.qf-header.qf-infobox {
+    background: red;
+    border: none;
+    height: 0px;
+    padding: 0px;
 }
 
 .qf-header span, .acc-header span {
@@ -434,7 +445,7 @@ font-weight: inherit;
     background-color: #4d4d4d;
     color: #fff;
     font-size: 14px;
-    font-family: 'Poppins', Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     text-align: left;
     padding: 7px 15px 10px 15px;
     line-height: 20px;
@@ -552,7 +563,7 @@ margin-top: 75px;
 
 
 .tb-header {
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	font-weight: 600;
 	color: #272727;
 	text-align: left;
@@ -571,7 +582,7 @@ margin-top: 75px;
 }
 
 .tb-header-alternate{
-font-family: 'Poppins', Helvetica, Arial;
+font-family: 'OpenSans','Open Sans',sans-serif;
     font-weight: 600;
     color: #272727;
     text-align: left;
@@ -658,7 +669,7 @@ font-family: 'Poppins', Helvetica, Arial;
 
 .tlbx-ct li .views-nr {
     font-size: 13px;
-    font-family: 'Poppins',Helvetica,Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     float: left;
     margin-top: 3px;
     margin-left: 7px;
@@ -691,7 +702,7 @@ font-family: 'Poppins', Helvetica, Arial;
 .name-container h1 {
     text-align: left;
     margin: 0px;
-    font-size: 44px;
+    font-size: 40px;
     color: #262626;
     font-weight: 400;
     float: left;
@@ -772,7 +783,7 @@ ul.l-lst{
     float: left;
     overflow-x: hidden;
     margin-bottom: 0px;
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     padding: 0px 15px 0px 15px;
 }
 
@@ -879,7 +890,7 @@ ul.l-lst li .link-box-right .link-comment {
 }
 
 ul.l-lst li .link-box-right .link-comment button.tooltippable{
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     margin: 0px;
 }
 
@@ -967,7 +978,7 @@ ul.l-lst li .link-box-details a.dislike-button{
     text-overflow: ellipsis;
     text-align: left;
     border-top: 0 solid rgba(225,232,237,0.34);
-    font-family: Garamond, Georgia, Times;
+    font-family: 'Libre Baskerville',serif;
     font-style: italic;
     margin-bottom: 6px;
 }
@@ -1030,7 +1041,7 @@ ul.l-lst li .link-box-details a.dislike-button{
 	text-align: left;
 	font-size: 0.9em;
 	color: #333;
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	font-weight: 400;
 	padding-left: 15px;
 	text-transform: uppercase;
@@ -1044,7 +1055,7 @@ ul.l-lst li .link-box-details a.dislike-button{
 
 .top-page-editor-header h2 {
 	font-size: 17px;
-    font-family: 'Poppins', Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     color: #272727;
@@ -1693,7 +1704,7 @@ font-weight: normal;
 	min-height: 700px;
 	float: right;
 	width: 75%;
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	z-index: 9999;
 }
 
@@ -1776,7 +1787,7 @@ font-weight: normal;
 	margin: 0px;
 	margin-left: 14px;
 	margin-top: 8px;
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	font-weight: normal;
 	font-size: 15px;
 }
@@ -1916,7 +1927,7 @@ amp-sidebar{
 background: #4C4C4C;
 color: #EFEFEF;
 border-right: 1px solid #4C4C4C;
-font-family: 'Poppins', Helvetica, Arial;
+font-family: 'OpenSans','Open Sans',sans-serif;
 }
 
 amp-sidebar .toc-header {
@@ -2210,7 +2221,7 @@ border-radius: 6px;
 
 button.close-amp-lightbox-btn {
     width: 100%;
-    font-family: 'Poppins', Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     padding: 10px 15px 10px 15px;
     font-size: 16px;
     font-weight: bold;
@@ -2264,7 +2275,7 @@ button.tooltippableCarat{
 
 .infbx-ct button.tooltippable, .infbx-ct button.tooltippableCarat{
 	font-size: inherit;
-	font-family: "Poppins", Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	line-height: inherit;
     margin-left: 0px;
 }
@@ -2292,13 +2303,13 @@ button.tooltippableCarat{
     width: 100%;
     position: relative;
     z-index: 15;
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
 }
 
 .footer .copyright {
     color: #666;
     font-size: 14px;
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     padding: 10px 15px 10px 15px;
 }
 
@@ -2339,7 +2350,7 @@ button.tooltippableCarat{
 .footer .footer-links {
     color: #666;
     font-size: 14px;
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     padding: 20px 10px 20px 10px;
     margin-left:auto;
     margin-right:auto;
@@ -2352,7 +2363,7 @@ button.tooltippableCarat{
     display: inline-block;
 	margin-right: 10px;
 	font-size: 14px;
-	font-family: 'Poppins', Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	line-height: 20px;
 }
 
@@ -2495,7 +2506,7 @@ border-left: 1px solid rgba(128,128,128,0.13);
 
 .share-ct-inner h2 {
 	font-size: 17px;
-    font-family: 'Poppins', Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     color: #272727;
@@ -2510,7 +2521,7 @@ border-left: 1px solid rgba(128,128,128,0.13);
 }
 
 .share-ct-link{
-    font-family: 'Poppins', Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     width: calc(100% - 40px);
     float: left;
     padding: 10px 20px;
@@ -2538,7 +2549,7 @@ border-left: 1px solid rgba(128,128,128,0.13);
 
 .share-ct-link .suggested-tags{
 	font-size: 17px;
-    font-family: 'Poppins', Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     font-weight: normal;
     text-transform: uppercase;
     color: #272727;
@@ -2546,7 +2557,7 @@ border-left: 1px solid rgba(128,128,128,0.13);
 }
 
 .share-ct .share-hshtgs{
-font-family: "Poppins", Helvetica, Arial;
+font-family: 'OpenSans','Open Sans',sans-serif;
 margin: 0 20px;
 width: calc(100% - 40px);
 float: left;
@@ -2593,7 +2604,7 @@ margin: 3px 0px;
     text-align: center;
     width: 100%;
     text-transform: uppercase;
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
 }
 
 .lang-ct ul{
@@ -2617,7 +2628,7 @@ margin: 3px 0px;
 
 .lang-ct .mini-lang-title{
     position: relative;
-    font-family: "Poppins", Helvetica, Arial;
+    font-family: 'OpenSans','Open Sans',sans-serif;
     top: -10px;
     left: 10px;
     font-size: 18px;
@@ -2713,7 +2724,7 @@ object-fit: cover;
 
 
 table.blurb-inline-image-container caption.blurbimage-caption {
-font-family: 'Garamond', Garamond, Georgia;
+font-family: 'Libre Baskerville',serif;
 font-size: 13px;
 line-height: 1.4em;
 padding: 8px 8px 5px 8px;
@@ -2868,7 +2879,7 @@ visibility: hidden;
 	-ms-transform: translateY(-50%);
 	transform: translateY(50%);
 	height: 40px;
-	font-family: "Poppins", Helvetica, Arial;
+	font-family: 'OpenSans','Open Sans',sans-serif;
     float: left;
 }
 

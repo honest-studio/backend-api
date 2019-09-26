@@ -42,7 +42,7 @@ export class AmpRenderPartial {
             <meta charset="utf-8" />
             <meta name="theme-color" content="#FFFFFF" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,600&amp;subset=latin-ext" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
             ${comboHreflangs}
             <script async src="https://cdn.ampproject.org/v0.js"></script>
             <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
@@ -475,7 +475,7 @@ export class AmpRenderPartial {
         return `
             <li>
                 <div class="info-qt">
-                    <h3>${infobox.key}</h3>
+                    <h3>${infobox.key && infobox.key.toUpperCase()}</h3>
                 </div>
                 ${infobox.values
                     .map((value, index) => {
@@ -544,9 +544,7 @@ export class AmpRenderPartial {
             <span id='infoboxHeader'></span>
             <amp-accordion class="infobox-accordion">
                 <section id="infobox_section" class="infobox-main-wrap" expanded>
-                    <h2 class="qf-header">
-                        ${page_type == 'Person' ? `Quick Biography` : true ? `Quick Facts` : ``}
-                        <span class="icon"><i class="fa fa-chevron-down"></i></span>
+                    <h2 class="qf-header qf-infobox">
                     </h2>
                     <div class='amp-wrap'>
                         ${
