@@ -174,15 +174,11 @@ export class WikiService {
             throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
 
         // Try and get cached wiki
-        console.log(colors.red("NEED TO REMOVE THE && false"));
-        console.log(colors.red("NEED TO REMOVE THE && false"));
-        console.log(colors.red("NEED TO REMOVE THE && false"));
-        if (current_hash && false) {
+        if (current_hash) {
             const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
             if (cache_wiki) return JSON.parse(cache_wiki);
         }
-        console.log('mysql_slug: ', mysql_slug);
-        console.log('alternateSlug: ', alternateSlug);
+
         // NEED TO TRY A DECODED SLUG HERE TOO??, OR IF THEY ARE EQUAL, HAVE A DIFFERENT???
 
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
@@ -280,7 +276,10 @@ export class WikiService {
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
 
         // cache wiki
-        this.redis.connection().set(`wiki:${ipfs_hash}`, JSON.stringify(wiki));
+        const pipeline2 = this.redis.connection().pipeline();
+        pipeline2.set(`wiki:${ipfs_hash}`, JSON.stringify(wiki));
+        pipeline2.expire(`wiki:${ipfs_hash}`, 86400);
+        pipeline.exec();
 
         return wiki;
     }
@@ -866,10 +865,10 @@ export class WikiService {
     }
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
-        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
-        const see_also = await this.getSeeAlsos(wiki);
-        const schema = renderSchema(wiki, 'JSON');
-        const pageviews_rows: any[] = await this.mysql.TryQuery(
+        const wiki_promise = this.getWikiBySlug(lang_code, slug, false, false, false);
+        const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki));
+        const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
+        const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
         SELECT 
             COALESCE (art_redir.pageviews, art.pageviews) AS pageviews, 
@@ -881,24 +880,35 @@ export class WikiService {
         `,
             [lang_code, slug]
         );
-        let pageviews = 0;
-        if (pageviews_rows.length > 0) pageviews = pageviews_rows[0].pageviews;
+        const pageviews_promise = pageviews_rows_promise.then(pageviews_rows => {
+            let pageviews = 0;
+            if (pageviews_rows.length > 0) pageviews = pageviews_rows[0].pageviews;
+            return pageviews;
+        });
 
-        let alt_langs;
-        try {
-            alt_langs = await this.getWikiGroups(lang_code, slug);
-        } catch (e) {
-            if (e instanceof NotFoundException) alt_langs = [];
-            else throw e;
-        }
+        const alt_langs_promise: Promise<LanguagePack[]> = this.getWikiGroups(lang_code, slug)
+            .catch(e => {
+                if (e instanceof NotFoundException) return [];
+                else throw e;
+            });
 
-        return { 
-            alt_langs, 
-            see_also, 
-            pageviews, 
-            schema, 
-            canonical_lang: lang_code, 
-            canonical_slug: slug  
-        };
+        return Promise.all([alt_langs_promise, see_also_promise, pageviews_promise, schema_promise])
+        .then(values => {
+            const alt_langs: LanguagePack[] = values[0];
+            const see_also = values[1];
+            const pageviews = values[2];
+            const schema = values[3];
+
+            return { 
+                alt_langs, 
+                see_also, 
+                pageviews, 
+                schema, 
+                canonical_lang: lang_code, 
+                canonical_slug: slug  
+            };
+
+        });
+
     }
 }

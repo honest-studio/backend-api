@@ -427,6 +427,12 @@ describe('Backend API', () => {
         .expect(200)
   });
 
+  it('Stat: Edits', () => {
+    return request(app.getHttpServer())
+        .get('/v2/stat/edits')
+        .expect(200)
+  });
+
   it('Contact Us: Submit', () => {
     return request(app.getHttpServer())
         .post('/v2/contact-us')
