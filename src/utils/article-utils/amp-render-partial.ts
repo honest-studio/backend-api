@@ -140,7 +140,7 @@ export class AmpRenderPartial {
                         </a>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=view_history">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=vote">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
                         </a>
@@ -319,34 +319,7 @@ export class AmpRenderPartial {
                     <div class="tlbx-ct-wrapper">
                         <div class="tlbx-ct">
                             <ul>
-                                <li><a rel='nofollow' href="https://everipedia.org/wiki/lang_${
-                                    page_lang
-                                }/${
-            url_slug
-        }/edit/" class="icon"><i class="fa fa-pencil"></i></a></li>
                                 <li><button on="tap:share-lightbox" aria-label="Share" class="icon"><i class="fa fa-share-alt"></i></button></li>
-                                <li><a rel='nofollow' href="https://everipedia.org/vote/lang_${
-                                    page_lang
-                                }/${url_slug}" class="icon"><i class="fa fa-archive"></i></a></li>
-                                <li class="language-tile">
-                                    <button on="tap:language-lightbox" aria-label="Languages" class="icon">
-                                        <amp-img id="flag-button" height="35" width="35" alt="Language flag" layout="fixed" class="page-lang-dropdown-flag" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${
-                                            page_lang
-                                        }.png"></amp-img>
-                                        <span class="flag-lang-plain">${page_lang.substring(
-                                            0,
-                                            2
-                                        )}</span>
-                                    </button>
-                                </li>
-                                ${
-                                    this.wikiExtras.pageviews > 50
-                                        ? `<li class="pageviews-tile">
-                                        <a rel='nofollow' href="#" class="icon"><i class="fa fa-eye"></i></a>
-                                        <span class="views-nr">${this.wikiExtras.pageviews.toLocaleString()}</span>
-                                    </li>`
-                                        : ``
-                                }
                                 ${
                                     page_type == 'Person'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${

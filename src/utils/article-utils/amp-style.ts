@@ -261,9 +261,11 @@ font-weight: inherit;
     width: 100%;
     font-size: 15px;
     line-height: 28px;
+    color: rgb(45, 45, 45);
     float: none;
     display: block;
     overflow-x: hidden;
+    font-family: 'Open Sans',sans-serif;
 }
 
 .ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) {
@@ -679,16 +681,18 @@ font-family: 'Poppins', Helvetica, Arial;
 .name-container {
 	width:calc(100% - 30px);
 	float:left;
-    margin-top:15px;
+    margin-top: 5px;
     padding:0 15px;
+
+    border-bottom: 1px solid #DFDFDF;
 }
 
 .name-container h1 {
     text-align: left;
     margin: 0px;
-    font-size: 1.8em;
+    font-size: 40px;
     color: #262626;
-    font-weight: 200;
+    font-weight: 400;
     float: left;
 }
 
@@ -1441,7 +1445,6 @@ margin: 0px;
     background-color: #2D2D2D;
     z-index: 20;
     width: calc(100% - 40px);
-    border-bottom: 1px solid #e9e9e9;
     top: 52px;
 
     color: white;
@@ -2229,12 +2232,12 @@ width: 100%;
 background: white;
 }
 button.tooltippable{
-	color: #3097d1;
+	color: rgb(56, 128, 224);
     border: none;
     background: none;
     font-size: inherit;
     padding: 0px;
-    font-family: 'Garamond', Garamond, Georgia;
+    font-family: 'Open Sans',sans-serif;
     display: inline;
     cursor: pointer;
     white-space: normal;
@@ -2242,12 +2245,12 @@ button.tooltippable{
     margin: 0px 1px;
 }
 button.tooltippableCarat{
-	color: #3097d1;
+	color: rgb(56, 128, 224);
 	border: 0;
 	background: 0;
 	font-size: 12px;
 	padding: 0;
-	font-family: 'Garamond',Garamond,Georgia;
+	font-family: 'Open Sans',sans-serif;
 	top: -6px;
 	position: relative;
 	display: inline;
