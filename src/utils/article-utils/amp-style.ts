@@ -16,7 +16,7 @@ main{
     position: relative;
     z-index: 15;
     display: block;
-    margin-top: 53px;
+    margin-top: 95px;
 }
 article.schema-wrap{
     display: block;
@@ -617,13 +617,6 @@ font-family: 'Poppins', Helvetica, Arial;
 	margin-left: 10px;
 }
 
-
-.tlbx-ct-wrapper{
-    height: 30px;
-    margin-top: 10px;
-}
-
-
 .tlbx-ct ul {
 	list-style-type: none;
 	float: left;
@@ -637,7 +630,6 @@ font-family: 'Poppins', Helvetica, Arial;
 
 .tlbx-ct li {
 	float:left;
-	margin-right:15px;
 }
 
 .tlbx-ct button {
@@ -691,16 +683,15 @@ font-family: 'Poppins', Helvetica, Arial;
 .name-container {
 	width:calc(100% - 30px);
 	float:left;
-    margin-top: 5px;
-    padding:0 15px;
-
+    margin: 20px 0px 15px 0px;
+    padding: 5px 15px 15px 15px;
     border-bottom: 1px solid #DFDFDF;
 }
 
 .name-container h1 {
     text-align: left;
     margin: 0px;
-    font-size: 40px;
+    font-size: 44px;
     color: #262626;
     font-weight: 400;
     float: left;
@@ -725,9 +716,8 @@ font-family: 'Poppins', Helvetica, Arial;
 }
 
 #title-buttonset{
-    float: left;
+    float: right;
     position: relative;
-    width: 100%;
 }
 
 #title-buttonset > .micro-image-top, .name-container .micro-image-top{
@@ -1517,7 +1507,6 @@ margin: 0px;
 
 .amp-nav-bar .nav-item .nav-text {
     font-family: 'Open Sans',sans-serif;
-    font-weight: 400;
     font-size: 11px;
     text-align: center;
     font-style: normal;
@@ -1527,7 +1516,6 @@ margin: 0px;
     overflow: visible;
     text-overflow: auto;
     opacity: 1;
-    font-weight: 600;
     top: -8px;
     position: relative;
 }

@@ -319,7 +319,11 @@ export class AmpRenderPartial {
                     <div class="tlbx-ct-wrapper">
                         <div class="tlbx-ct">
                             <ul>
-                                <li><button on="tap:share-lightbox" aria-label="Share" class="icon"><i class="fa fa-share-alt"></i></button></li>
+                                <li>
+                                    <button on="tap:share-lightbox" aria-label="Share" class="icon">
+                                        <amp-img width='36' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/share.svg' alt='Sahre' ></amp-img>
+                                    </button>
+                                </li>
                                 ${
                                     page_type == 'Person'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
