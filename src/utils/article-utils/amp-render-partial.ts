@@ -121,9 +121,31 @@ export class AmpRenderPartial {
     };
 
     renderNavBar = (): string => {
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
+        
         return `
             <div class="amp-nav-bar">
-                <div>BEE</div>
+                <div class="nav-container" >
+                    <div class="nav-read nav-item">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=read">
+                            <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
+                            <span class='nav-text'>Read</span>
+                        </a>
+                    </div>
+                    <div class="nav-edit nav-item">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=edit">
+                            <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
+                            <span class='nav-text'>Edit</span>
+                        </a>
+                    </div>
+                    <div class="nav-view-history nav-item">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=view_history">
+                            <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
+                            <span class='nav-text'>View History</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         `;
     };
@@ -424,8 +446,8 @@ export class AmpRenderPartial {
             })
             .join('');
         return `
-            <div class="entry-content" id="first-paragraph" itemprop="description">
-                <div class="entry-content-inner-wrap">
+            <div class="ent-ct" id="first-paragraph" itemprop="description">
+                <div class="ent-ct-inner-wrap">
                     ${imageBlock}${paraBlock}
                 </div>
             </div>
@@ -464,8 +486,8 @@ export class AmpRenderPartial {
             .join('');
 
         return `
-            <div class="entry-content">
-                <div class="entry-content-inner-wrap">
+            <div class="ent-ct">
+                <div class="ent-ct-inner-wrap">
                     ${comboSections}
                 </div>
             </div>
@@ -552,7 +574,7 @@ export class AmpRenderPartial {
                     <div class='amp-wrap'>
                         ${
                             this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length != 0
-                                ? `<div id="blobBox_container" class='infbx-ct'>
+                                ? `<div id="blbx_ct" class='infbx-ct'>
                                 ${blobBoxResult.text}
                             </div>`
                                 : ``
@@ -1042,7 +1064,7 @@ export class AmpRenderPartial {
             <div class="lightbox" tabindex="1" role="menubar">
                 <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
                 </div>
-                <div class="usermenu-ct">
+                <div class="usr-mnu">
                     <div class="usermenu-header">
                             <div class="loggedin-default">Menu</div>
                     </div>
