@@ -14,7 +14,7 @@ export class AmpRenderPartial {
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
-        this.sanitizedVariables.page_title = this.artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
+        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -747,7 +747,7 @@ export class AmpRenderPartial {
             <div class="media-gallery-container">
                 <h2 class="media-gallery-header" id="mediaGallery">MEDIA
                     <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        this.artJSON.page_title[0].text
+                        this.sanitizedVariables.page_title
                     } images, pictures, and videos" />
                 </h2>
                 <div class="photo-gallery">
@@ -836,9 +836,9 @@ export class AmpRenderPartial {
                 <div class="l-lst-header" id="link_list_container">
                     <div class="ll-wrapper">
                         <div class="disclaimer">All information for ${
-                            this.artJSON.page_title
+                            this.sanitizedVariables.page_title
                         }'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${
-            this.artJSON.page_title
+            this.sanitizedVariables.page_title
         } are also acceptable encyclopedic sources.</div>
                         <ul class="l-lst">
                             ${citationComboString}
@@ -882,7 +882,7 @@ export class AmpRenderPartial {
                     </span>
                 </h2>
                 <div>
-                    <div class="disclaimer">Other wiki pages related to ${this.artJSON.page_title}.</div>
+                    <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
                     ${seeAlsoComboString}
                 </div>
             </section>
@@ -953,7 +953,7 @@ export class AmpRenderPartial {
         let comboString: string = `
             <li class='toc-header-description' data-blurb-id="top_header">
                 <a rel="nofollow" class='toc-header-description' href="#toc-top">
-                    <div class="fixed-items-description">${this.artJSON.page_title}</div>
+                    <div class="fixed-items-description">${this.sanitizedVariables.page_title}</div>
                 </a>
             </li>
         `;
@@ -1137,29 +1137,29 @@ export class AmpRenderPartial {
                             <ul class="tag-list">
                                 ${
                                     page_type == 'Person'
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} bio</li>
-                                    <li>${this.artJSON.page_title} net worth</li>
-                                    <li>${this.artJSON.page_title} age</li>
-                                    <li>${this.artJSON.page_title} married</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} bio</li>
+                                    <li>${this.sanitizedVariables.page_title} net worth</li>
+                                    <li>${this.sanitizedVariables.page_title} age</li>
+                                    <li>${this.sanitizedVariables.page_title} married</li>`
                                         : page_type == 'Product'
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} review</li>
-                                    <li>${this.artJSON.page_title} history</li>
-                                    <li>${this.artJSON.page_title} sales</li>
-                                    <li>${this.artJSON.page_title} facts</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} review</li>
+                                    <li>${this.sanitizedVariables.page_title} history</li>
+                                    <li>${this.sanitizedVariables.page_title} sales</li>
+                                    <li>${this.sanitizedVariables.page_title} facts</li>`
                                         : page_type == 'Organization'
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} review</li>
-                                    <li>${this.artJSON.page_title} history</li>
-                                    <li>${this.artJSON.page_title} founders</li>
-                                    <li>${this.artJSON.page_title} facts</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} review</li>
+                                    <li>${this.sanitizedVariables.page_title} history</li>
+                                    <li>${this.sanitizedVariables.page_title} founders</li>
+                                    <li>${this.sanitizedVariables.page_title} facts</li>`
                                         : true
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} review</li>
-                                    <li>${this.artJSON.page_title} history</li>
-                                    <li>${this.artJSON.page_title} encyclopedia</li>
-                                    <li>${this.artJSON.page_title} facts</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} review</li>
+                                    <li>${this.sanitizedVariables.page_title} history</li>
+                                    <li>${this.sanitizedVariables.page_title} encyclopedia</li>
+                                    <li>${this.sanitizedVariables.page_title} facts</li>`
                                         : ``
                                 }
                             </ul>
@@ -1238,7 +1238,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "${this.artJSON.page_title[0].text}"
+                        "title": "${this.sanitizedVariables.page_title}"
                         }
                     }
                     }
