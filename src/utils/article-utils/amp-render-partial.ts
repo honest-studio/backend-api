@@ -6,6 +6,7 @@ import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } f
 import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
+import moment from 'moment';
 import * as MimeTypes from 'mime-types';
 
 export class AmpRenderPartial {
@@ -803,29 +804,49 @@ export class AmpRenderPartial {
         let theTLD = parsedDomain && parsedDomain.tld ? "." + parsedDomain.tld : "";  
         let domainToShow = (citation.mime == 'None' || citation.mime === undefined || citation.mime == null) ? `${theSubdomain}${theDomain}${theTLD}` : null;
     
-        return `
+        return `                        
             <li>
-                <div class="link-id">[${citation.citation_id}]</div>
-                ${
-                    theThumbSrc != 'None'
-                        ? `<a class='avatar-wrap' href="${citation.url}" title="Preview Thumbnail">
-                            <amp-img alt='Thumbnail' class="link-image" width=40 height=40 layout="fixed" src="${theThumbSrc}" >
-                                <amp-img placeholder width=40 height=40 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
-                            </amp-img>
-                        </a>`
-                        : ``
-                }
-                <div class="link-box-details">
-                    ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
-                    ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
-                    <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
-                    <div class="link-date"><a href="${citation.url}" rel="nofollow">${citation.timestamp}</a></div>
+                <a class='citation-anchor' href="${citation.url}" rel="nofollow">
+                    <div class="link-id">[${citation.citation_id}]</div>
+                    ${
+                        theThumbSrc != 'None' && theThumbSrc != ''
+                            ? `<div class='avatar-wrap' title="Preview Thumbnail">
+                                    <amp-img alt='Thumbnail' class="link-image" width=40 height=40 layout="fixed" src="${theThumbSrc}" >
+                                        <amp-img placeholder width=40 height=40 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
+                                    </amp-img>
+                                </div>`
+                            : ``
+                    }
+                    <div class="link-box-details">
+                        ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
+                        ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
+                        <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
+                        <div class="link-date">
+                            ${moment(new Date(citation.timestamp)).locale('en').format('lll')}
+                        </div>
+                    </div>
+                </a>
             </li>
         `;
+        // return `
+        //     <li>
+        //         <a class='citation-anchor' href="${citation.url}">
+        //             <div class="link-box-details">
+        //                 ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
+        //                 ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
+        //                 <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
+
+        //             </div>
+        //             <div class="link-date">
+        //             <a href="${citation.url}" rel="nofollow">${moment(new Date(citation.timestamp)).locale('en').format('lll')}</a>
+        //         </div>
+        //         </a>
+        //     </li>
+        // `;
     };
 
     renderCitations = (): string => {
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+        // const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
         let citations: Citation[] = this.artJSON.citations;
         if (citations.length == 0) return ``;

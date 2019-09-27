@@ -109,6 +109,7 @@
     "lodash": "^4.17.15",
     "markdown-it": "^9.1.0",
     "mime": "^2.4.4",
+    "moment": "^2.24.0",
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.0",
     "morgan": "^1.9.1",

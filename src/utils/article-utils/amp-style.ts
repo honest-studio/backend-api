@@ -794,6 +794,7 @@ font-family: 'OpenSans','Open Sans',sans-serif;
     line-height: 20px;
     font-style: normal;
     margin: 0px 15px 0px 0px;
+    padding-left: 5px;
     color: #3880E0;
     cursor: inherit;
     max-height: none;
@@ -893,9 +894,13 @@ ul.l-lst li .link-url a{
 
 ul.l-lst li .link-box-details .link-comment {
     font-size: 12px;
-    padding: 0px 0px 3px 0px;
-    line-height: 1.25;
-    word-break: normal;
+    line-height: 24px;
+    font-style: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-right: 4px;
+    color: #2d2d2d;
+    cursor: inherit;
 }
 
 ul.l-lst li .link-box-details .link-comment button.tooltippable{
@@ -908,12 +913,47 @@ ul.l-lst li .link-box-details .link-comment .thumbcaption {
     text-align: left;
 }
 
-.avatar-wrap {
+ul.l-lst li .avatar-wrap {
     margin-right: 10px;
+    float: left;
+}
+
+ul.l-lst li .citation-anchor {
+    float: left;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-items: stretch;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -webkit-flex-wrap: auto;
+    -ms-flex-wrap: auto;
+    flex-wrap: auto;
+    margin: initial;
+    height: initial;
+    width: initial;
+    padding: 3px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+ul.l-lst li .citation-anchor:hover {
+    background: #f8f8f8;
+    cursor: pointer;
 }
 
 ul.l-lst li .link-box-details{
-    font-size: 11px;
+    font-size: 12px;
+    text-align: left;
     float: left;
     width: 100%;
 }
@@ -924,9 +964,6 @@ ul.l-lst li .link-box-details{
 
 ul.l-lst li .link-box-details .link-date{
     float: left;
-}
-
-ul.l-lst li .link-box-details .link-date > a{
     color: #666;
 }
 
