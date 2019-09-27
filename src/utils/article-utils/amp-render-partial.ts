@@ -1056,7 +1056,7 @@ export class AmpRenderPartial {
                 <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
                 </div>
                 <div class="usr-mnu">
-                    <div class="usermenu-header">
+                    <div class="usr-mnu-hdr">
                             <div class="loggedin-default">Menu</div>
                     </div>
                     <ul>

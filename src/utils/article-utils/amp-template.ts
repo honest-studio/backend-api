@@ -28,7 +28,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
             ${arp.renderHeaderBar()}
             ${arp.renderNavBar()}
             <amp-sidebar id='sidebar' layout="nodisplay" side="left">
-                <ul class="heading-collection">
+                <ul class="hdr-clct">
                     ${arp.renderTableOfContents()}
                 </ul>
             </amp-sidebar>
