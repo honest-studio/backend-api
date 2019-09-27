@@ -789,6 +789,36 @@ font-family: 'OpenSans','Open Sans',sans-serif;
     width: 100%;
 }
 
+.l-lst .link-id {
+    font-size: 12px;
+    line-height: 20px;
+    font-style: normal;
+    margin: 0px 15px 0px 0px;
+    color: #3880E0;
+    cursor: inherit;
+    max-height: none;
+    overflow: visible;
+    text-overflow: auto;
+    overflow-wrap: break-word;
+}
+
+.l-lst .citation-domain {
+    font-size: 10px;
+    font-style: normal;
+    color: #3880E0;
+    font-weight: bold;
+    margin-right: 4px;
+    float: left;
+    padding: 2px 5px 2px 5px;
+    line-height: 12px;
+    position: relative;
+    top: 4px;
+    background: #e9f2ff;
+    border-radius: 4px;
+}
+
+
+
 
 #link_list_container_mobile_wrapper ul.l-lst{
     margin-top: 10px;
@@ -819,6 +849,7 @@ ul.l-lst li {
 
 ul.l-lst li .link-image{
     float: left;
+    margin-top: 5px;
 }
 
 ul.l-lst li .link-image img {
@@ -836,49 +867,10 @@ ul.l-lst li .link-box-left {
     top: -5px;
 }
 
-#likebutton, #dislikebutton {
-	border: 0 none;
-	font-size: 17px;
-	height: 22px;
-    color: #999;
-	cursor: pointer;
-	background-repeat:no-repeat;
-    background-size:100% auto;
-    background-color: transparent;
-	margin: 0 auto;
-	display: block;
-}
-
-ul.l-lst li .link-box-left #vote_value {
-    width: 20px;
-    text-align: center;
-    font-size: 13px;
-    margin-bottom: 0;
-    margin-top: 0;
-}
-
-ul.l-lst li .link-box-left [data-role="like_container"]{
-    text-align: center;
-    display: inline-block;
-}
-
-
 .link-box-left .icon::before {
     top: 0;
 }
 
-ul.l-lst li .link-box-right{
-	min-height: 35px;
-	flex: 1;
-	float: left;
-	padding-left: 0px;
-	margin-left: 0px;
-	font-size: 13px;
-	text-align: left;
-	word-break: break-all;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
 ul.l-lst li .link-url {
     font-size: 12px;
     width: 100%;
@@ -899,19 +891,19 @@ ul.l-lst li .link-url a{
 	margin-bottom: 5px;
 }
 
-ul.l-lst li .link-box-right .link-comment {
+ul.l-lst li .link-box-details .link-comment {
     font-size: 12px;
     padding: 0px 0px 3px 0px;
     line-height: 1.25;
     word-break: normal;
 }
 
-ul.l-lst li .link-box-right .link-comment button.tooltippable{
+ul.l-lst li .link-box-details .link-comment button.tooltippable{
     font-family: 'OpenSans','Open Sans',sans-serif;
     margin: 0px;
 }
 
-ul.l-lst li .link-box-right .link-comment .thumbcaption {
+ul.l-lst li .link-box-details .link-comment .thumbcaption {
     display: inline;
     text-align: left;
 }
@@ -954,39 +946,6 @@ ul.l-lst li .link-box-details > a{
     margin-top: -2px;
 }
 
-ul.l-lst li .link-box-details.vote-block{
-    margin-top: 5px;
-}
-
-ul.l-lst li .link-box-details a.vote-button {
-    padding: 0 1px;
-    font-size: 14px;
-    cursor: pointer;
-    background-color: transparent;
-    display: inline;
-    height: 14px;
-    width: 14px;
-}
-
-ul.l-lst li .link-box-details .vote-count {
-    margin: 0 7px;
-    font-size: 11px;
-    display: inline;
-    float: left;
-    padding-top: 2px;
-}
-
-ul.l-lst li .link-box-details a.like-button{
-    color: #00b800;
-    background: rgba(0, 128, 0, 0.1);
-}
-
-ul.l-lst li .link-box-details a.dislike-button{
-    color: red;
-    background: rgba(216, 130, 130, 0.1);
-}
-
-
 .photo-gallery .tile-desc{
     padding: 5px 4px 3px 0px;
     height: 44px;
@@ -1000,7 +959,7 @@ ul.l-lst li .link-box-details a.dislike-button{
     margin-bottom: 6px;
 }
 
-.photo-gallery .tile-desc .magnify, .mainphoto-caption .magnify, ul.l-lst li .link-box-right .link-comment .magnify, .blurbimage-caption .magnify{
+.photo-gallery .tile-desc .magnify, .mainphoto-caption .magnify, ul.l-lst li .link-box-details .link-comment .magnify, .blurbimage-caption .magnify{
     display: none;
 }
 

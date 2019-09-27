@@ -5,7 +5,8 @@ import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPPar
 import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
 import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { styleNugget } from './amp-style';
-
+const parseDomain = require('parse-domain');
+import * as MimeTypes from 'mime-types';
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];
@@ -182,7 +183,6 @@ export class AmpRenderPartial {
     };
 
     renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        console.log(this.artJSON.amp_info)
         // Metadata values
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
@@ -772,36 +772,54 @@ export class AmpRenderPartial {
             })
             .join('');
         
+        let theThumbSrc = null;
+
+        if (
+            citation.thumb &&
+            citation.thumb != 'None' &&
+            citation.thumb != '' &&
+            citation.thumb.indexOf('no-image-slide') == -1
+        ) {
+            theThumbSrc = citation.thumb;
+        }
+        else if (
+            citation.url &&
+            citation.url != 'None' &&
+            citation.url != '' &&
+            citation.url.indexOf('no-image-slide') == -1 &&
+            citation.media_props
+        ) {
+            theThumbSrc = citation.url;
+        }
+        else {
+            theThumbSrc = null;
+            // if (useWebP) theThumbSrc = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp';
+            // else theThumbSrc = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+        }
+        let hasFileMime = citation.mime && citation.mime != 'None' && citation.mime != 'youtube';
+        let parsedDomain = parseDomain(citation.url);
+        let theSubdomain = parsedDomain && parsedDomain.subdomain ? parsedDomain.subdomain + "." : ""; 
+        let theDomain = parsedDomain && parsedDomain.domain ? parsedDomain.domain : ""; 
+        let theTLD = parsedDomain && parsedDomain.tld ? "." + parsedDomain.tld : "";  
+        let domainToShow = (citation.mime == 'None' || citation.mime === undefined || citation.mime == null) ? `${theSubdomain}${theDomain}${theTLD}` : null;
+    
         return `
             <li>
+                <div class="link-id">[${citation.citation_id}]</div>
                 ${
-                    citation.thumb && citation.thumb != 'None'
-                        ? `<a class='avatar-wrap' href="${
-                              citation.url
-                          }" title="Preview Thumbnail">
-                        <amp-img alt='Thumbnail' class="link-image" width=50 height=50 layout="fixed" src="${
-                            citation.url
-                        }" >
-                            <amp-img placeholder width=50 height=50 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
-                        </amp-img>
-                    </a>`
+                    theThumbSrc != 'None'
+                        ? `<a class='avatar-wrap' href="${citation.url}" title="Preview Thumbnail">
+                            <amp-img alt='Thumbnail' class="link-image" width=40 height=40 layout="fixed" src="${theThumbSrc}" >
+                                <amp-img placeholder width=40 height=40 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
+                            </amp-img>
+                        </a>`
                         : ``
                 }
-
-                <div class="link-box-right">
-                    <div class="link-url">
-                        ${
-                            citation.social_type && citation.social_type != 'None'
-                                ? `<span itemprop="sameAs"><a href="${citation.url}" class="link-box-url" target="_blank">${citation.url}</a></span>`
-                                : true
-                                ? `<a href="${citation.url}" class="link-box-url" target="_blank">${citation.url}</a>`
-                                : ``
-                        }
-                    </div>
+                <div class="link-box-details">
+                    ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
+                    ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
                     <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
-                    <div class="link-box-details">
-                        <div class="link-date"><a href="${citation.url}" rel="nofollow">${citation.timestamp}</a></div>
-                    </div>
+                    <div class="link-date"><a href="${citation.url}" rel="nofollow">${citation.timestamp}</a></div>
             </li>
         `;
     };
@@ -821,25 +839,9 @@ export class AmpRenderPartial {
             <span id="referenceList" class="toc-span-fix"></span>
             <amp-accordion class='link-list-accordion'>
             <section expanded>
-                <h2 class="acc-header">
-                    ${
-                        page_type == 'Person'
-                            ? `Reference Links For This Biography`
-                            : true
-                            ? `Reference Links For This Wiki`
-                            : ``
-                    }
-                    <span class="icon"><i class="fa fa-chevron-down"></i>
-                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
-                    </span>
-                </h2>
+                <h2 class="acc-header">References</h2>
                 <div class="l-lst-header" id="link_list_container">
                     <div class="ll-wrapper">
-                        <div class="disclaimer">All information for ${
-                            this.sanitizedVariables.page_title
-                        }'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${
-            this.sanitizedVariables.page_title
-        } are also acceptable encyclopedic sources.</div>
                         <ul class="l-lst">
                             ${citationComboString}
                         </ul>

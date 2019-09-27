@@ -117,6 +117,7 @@
     "node-fetch": "^2.6.0",
     "normalize-url": "^4.3.0",
     "object.omit": "^3.0.0",
+    "parse-domain": "^2.3.2",
     "parse5": "^5.1.0",
     "pify": "^4.0.1",
     "pixel": "^0.1.3",
