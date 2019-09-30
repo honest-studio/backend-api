@@ -32,14 +32,14 @@ const theMediaUploadService = new MediaUploadService(theAWSS3);
 
 commander
   .version('1.0.0', '-v, --version')
-  .description('Add WebP data to enterlink_articletable')
+  .description('Import a page from Wikipedia')
   .usage('[OPTIONS]...')
   .option('-s, --start <pageid>', 'Starting ID')
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 100;
-const LASTMOD_CUTOFF_TIME = '2019-09-13 21:08:14';
+const BATCH_SIZE = 250;
+const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
 // const BATCH_SIZE = 1;
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
@@ -69,7 +69,7 @@ export const WikiImport = async (inputString: string) => {
         slug_alt = wikiLangSlug_alt;
     }
 
-    console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
+    console.log(chalk.blue.bold(`Starting to import: ${inputString}`));
     console.log(chalk.blue.bold(`Page ID: |${pageID}|`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
     console.log(chalk.blue.bold(`Page Slug: |${slug}| alt: |${slug_alt}|`));
@@ -80,15 +80,25 @@ export const WikiImport = async (inputString: string) => {
     let page_title, metadata, page;
     try{
         page_title = await getTitle(lang_code, slug);
+
+        // Move on if the title does not exist
+        if (page_title === undefined || page_title == null) return null;
+
         metadata = await getMetaData(lang_code, slug);
         page = await rp(url);
     }
     catch(err){
         console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
         page_title = await getTitle(lang_code, slug_alt);
+
+        // Move on if the title does not exist
+        if (page_title === undefined || page_title == null) return null;
+
         metadata = await getMetaData(lang_code, slug_alt);
         page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
     }
+
+
 
     // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
@@ -125,12 +135,7 @@ export const WikiImport = async (inputString: string) => {
         citations: page_body_pack.citations,
         media_gallery: [],
         metadata: metadata,
-        amp_info: { 
-            load_youtube_js: false,
-            load_audio_js: false,
-            load_video_js: false,
-            lightboxes: []
-        },
+        amp_info: page_body_pack.amp_info,
         ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
     } as ArticleJson;
     process.stdout.write(chalk.yellow(` DONE\n`));
@@ -171,11 +176,33 @@ export const WikiImport = async (inputString: string) => {
     try {
         const first_para = articlejson.page_body[0].paragraphs[0];
         text_preview = (first_para.items[0] as Sentence).text;
-        if (first_para.items.length > 1)
+        if (first_para.items.length > 1){
             text_preview += (first_para.items[1] as Sentence).text;
+        }
+        else if (!text_preview || text_preview == ""){
+            text_preview = "";
+            // Loop through the first section until text is found
+            let sliced_paras = articlejson.page_body[0].paragraphs.slice(1);
+            sliced_paras.forEach(para => {
+                // Only take the first two sentences
+                if (text_preview == ""){
+                    if (para.items.length <= 2){
+                        para.items.forEach(item => {
+                            text_preview += (item as Sentence).text;
+                        })
+                    }
+                    else{
+                        para.items.slice(0, 2).forEach(item => {
+                            text_preview += (item as Sentence).text;
+                        })
+                    }
+                }
+            })
+        }
     } catch (e) {
         text_preview = "";
     }
+
     const title_to_use = page_title.map(sent => sent.text).join();
     const photo_url = articlejson.main_photo[0].url;
     const photo_thumb_url = articlejson.main_photo[0].thumb;
@@ -247,7 +274,7 @@ export const WikiImport = async (inputString: string) => {
     await flushPrerenders(lang_code, slug, prerenderToken);
     console.log(chalk.yellow.bold(`------Flush complete-----`));
 
-    fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
+    // fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));
 
     fs.appendFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'resultlinks.txt'), `http://127.0.0.1:7777/wiki/lang_${lang_code}/${slug}\n`);
@@ -255,8 +282,6 @@ export const WikiImport = async (inputString: string) => {
 
     logYlw("🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏁 END 🏁🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅");
     return null;
-    
-
 
 }
 
@@ -311,6 +336,7 @@ export const WikiImport = async (inputString: string) => {
     return;
 })();
 
+// TOTAL ARTICLES FOR EN_WIKI_IMPORT: 5293982
 
 // TO SEE PROGRESS
 // SELECT count(*)

@@ -76,12 +76,15 @@ export const getTable = (element, $: CheerioStatic, internal_citations, table_ty
 	});
 
 	// Create the table body
-    let tbody: TableSection = {
-        attrs: cleanAttributes($table.find('tbody')[0].attribs),
-        rows: rows
-	};
-	table.tbody = tbody;
-
+	let the_found_table = $table.find('tbody')[0];
+	if(the_found_table){
+		let tbody: TableSection = {
+			attrs: cleanAttributes($table.find('tbody')[0].attribs),
+			rows: rows
+		};
+		table.tbody = tbody;
+	}
+	
 	// Look for a table caption
 	let $caption = $table.find('caption');
 	if ($caption.length){

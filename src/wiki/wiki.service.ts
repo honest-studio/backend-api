@@ -601,11 +601,33 @@ export class WikiService {
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
             text_preview = (first_para.items[0] as Sentence).text;
-            if (first_para.items.length > 1)
+            if (first_para.items.length > 1){
                 text_preview += (first_para.items[1] as Sentence).text;
+            }
+            else if (!text_preview || text_preview == ""){
+                text_preview = "";
+                // Loop through the first section until text is found
+                let sliced_paras = wiki.page_body[0].paragraphs.slice(1);
+                sliced_paras.forEach(para => {
+                    // Only take the first two sentences
+                    if (text_preview == ""){
+                        if (para.items.length <= 2){
+                            para.items.forEach(item => {
+                                text_preview += (item as Sentence).text;
+                            })
+                        }
+                        else{
+                            para.items.slice(0, 2).forEach(item => {
+                                text_preview += (item as Sentence).text;
+                            })
+                        }
+                    }
+                })
+            }
         } catch (e) {
             text_preview = "";
         }
+        
         const photo_url = wiki.main_photo[0].url;
         const photo_thumb_url = wiki.main_photo[0].thumb;
         const media_props = wiki.main_photo[0].media_props || null;

@@ -168,6 +168,9 @@ export const WIKI_LANG_PACKAGES = {
 // Kartographer (Open Maps)
 export const KARTOGRAPHER_PIXEL_WIDTH = 400;
 
+// Max pixels for an image
+export const IMAGE_MAX_PIXELS = 6250000;
+
 // Regex for preserving whitespace
 export const WHITESPACE_PRESERVATION_REGEX = /^(\s*)?([^\s]*)(\s*)?$/gimu;
 
@@ -179,6 +182,9 @@ export const PRECLEAN_BAD_CLASSES_DELETE_PARENTS = [{'extiw': /wikidata/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id': /'مراجع/gimu}];
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo', 'mtd', 'mrow', 'mspace', 'mtext', 'msub', 'msup', 'mstyle', 'semantics', 'usemap', 'xml', 'worddocument', 'mathpr', 'mathfont'];
+
+export const WIKI_SYNC_RECENTCHANGES_FILTER_REGEX = /Talk:|Wikipedia:|Template:|User talk:|Portal:|User:|Category:/gimu;
+
 
 // Replace tags with certain classes
 export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
@@ -193,7 +199,10 @@ export const REPLACE_CLASSES_PREPARSE_UNIVERSAL: ReplaceClassPack[] = [
 // ex: <div id="siteSub"></div> this makes sure that any time a span tag with id=siteSub is on a wikipedia page, it will get removed
 // use this list to add format removal exception tags to make the scrape look nicer over time
 export const PRECLEAN_BAD_ELEMENTS: ElementCleaningPack[] = [
+    { tag: null, id: "noarticletext", class: null }, 
+    { tag: null, id: null, class: "shortdescription" }, 
     { tag: null, id: null, class: "mw-authority-control" }, 
+    { tag: null, id: null, class: "mw-empty-elt" }, 
     { tag: null, id: null, class: "sisterlinks" }, 
     { tag: null, id: null, class: "commonscat" }, 
     { tag: null, id: null, class: "navigation-only" }, 

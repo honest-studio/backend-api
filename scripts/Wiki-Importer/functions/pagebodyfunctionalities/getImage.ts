@@ -36,6 +36,9 @@ export const getImage = (element, $: CheerioStatic, internal_citations, delete_w
 			url = 'https:' + src;
 		}
 
+		// Skip invalid URLs
+		if (!url || url == "") return null;
+
 		// Get media attributes
 		let attributes = getMediaAttributes(url);
 

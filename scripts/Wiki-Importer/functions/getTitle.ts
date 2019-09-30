@@ -13,10 +13,16 @@ export const getTitle = async (lang_code: string, slug: string): Promise<Sentenc
 
 	const url = `${wikiMedia}${action}&${prop}&${format}&${pageToUse}`;
 	let title = await rp(url)
-					.then(body => JSON.parse(body).parse.displaytitle);
+					.then(body => {
+						let result = JSON.parse(body);
+						return result && result.parse && result.parse.displaytitle;
+					});
 
-	process.stdout.write(chalk.bold.green(` DONE\n`));
-	return [{ type: 'sentence', index: 0, text: title.replace(/<[^>]+>/gimu, '') }];
+	if (title){
+		process.stdout.write(chalk.bold.green(` DONE\n`));
+		return [{ type: 'sentence', index: 0, text: title.replace(/<[^>]+>/gimu, '') }];
+	}
+	else return null;
 }
 
 

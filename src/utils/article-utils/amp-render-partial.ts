@@ -5,7 +5,9 @@ import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPPar
 import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
 import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
 import { styleNugget } from './amp-style';
-
+const parseDomain = require('parse-domain');
+import moment from 'moment';
+import * as MimeTypes from 'mime-types';
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];
@@ -14,7 +16,7 @@ export class AmpRenderPartial {
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
-        this.sanitizedVariables.page_title = this.artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
+        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -42,7 +44,7 @@ export class AmpRenderPartial {
             <meta charset="utf-8" />
             <meta name="theme-color" content="#FFFFFF" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-            <link href="https://fonts.googleapis.com/css?family=Poppins:400,400i,600&amp;subset=latin-ext" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
             ${comboHreflangs}
             <script async src="https://cdn.ampproject.org/v0.js"></script>
             <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
@@ -121,6 +123,36 @@ export class AmpRenderPartial {
     };
 
     renderNavBar = (): string => {
+        const page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
+        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
+        
+        return `
+            <div class="amp-nav-bar">
+                <div class="nav-container" >
+                    <div class="nav-read nav-item">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=read">
+                            <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
+                            <span class='nav-text'>Read</span>
+                        </a>
+                    </div>
+                    <div class="nav-edit nav-item">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=edit">
+                            <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
+                            <span class='nav-text'>Edit</span>
+                        </a>
+                    </div>
+                    <div class="nav-view-history nav-item">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=vote">
+                            <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
+                            <span class='nav-text'>View History</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+    };
+
+    renderHeaderBar = (): string => {
         return `
             <nav class="amp-header-bar">
                 <ul>
@@ -131,7 +163,7 @@ export class AmpRenderPartial {
                     </li>
                     <li class="amp-header-logo">
                         <a rel='nofollow' href="https://everipedia.org">
-                            <amp-img width='45' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/Everipedia_Logo.svg' alt='Everipedia Logo' ></amp-img>
+                            <amp-img width='230' height='30' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/EVP-beta-logo-black.svg' alt='Everipedia Logo' ></amp-img>
                         </a>
                     </li>
                     <li class="amp-header-menu">
@@ -142,7 +174,9 @@ export class AmpRenderPartial {
                         </button>
                     </li>
                     <li class="amp-header-search">
-                        <button on="tap:search-lightbox" data-description="Search Bar"><span class="svgIcon svgIcon--search svgIcon--25px u-textColorNormal u-baseColor--iconLight"><svg class="svgIcon-use" width="30" height="30" viewBox="0 0 25 25"><path d="M20.067 18.933l-4.157-4.157a6 6 0 1 0-.884.884l4.157 4.157a.624.624 0 1 0 .884-.884zM6.5 11c0-2.62 2.13-4.75 4.75-4.75S16 8.38 16 11s-2.13 4.75-4.75 4.75S6.5 13.62 6.5 11z"></path></svg></span></button>
+                        <button on="tap:search-lightbox" data-description="Search Bar">
+                        <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_black.svg" ></amp-img>
+                        </button>
                     </li>
                 </ul>
             </nav>
@@ -150,7 +184,6 @@ export class AmpRenderPartial {
     };
 
     renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        
         // Metadata values
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
@@ -287,34 +320,11 @@ export class AmpRenderPartial {
                     <div class="tlbx-ct-wrapper">
                         <div class="tlbx-ct">
                             <ul>
-                                <li><a rel='nofollow' href="https://everipedia.org/wiki/lang_${
-                                    page_lang
-                                }/${
-            url_slug
-        }/edit/" class="icon"><i class="fa fa-pencil"></i></a></li>
-                                <li><button on="tap:share-lightbox" aria-label="Share" class="icon"><i class="fa fa-share-alt"></i></button></li>
-                                <li><a rel='nofollow' href="https://everipedia.org/vote/lang_${
-                                    page_lang
-                                }/${url_slug}" class="icon"><i class="fa fa-archive"></i></a></li>
-                                <li class="language-tile">
-                                    <button on="tap:language-lightbox" aria-label="Languages" class="icon">
-                                        <amp-img id="flag-button" height="35" width="35" alt="Language flag" layout="fixed" class="page-lang-dropdown-flag" src="https://epcdn-vz.azureedge.net/static/images/flags/png/48/languages/${
-                                            page_lang
-                                        }.png"></amp-img>
-                                        <span class="flag-lang-plain">${page_lang.substring(
-                                            0,
-                                            2
-                                        )}</span>
+                                <li>
+                                    <button on="tap:share-lightbox" aria-label="Share" class="icon">
+                                        <amp-img width='36' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/share.svg' alt='Sahre' ></amp-img>
                                     </button>
                                 </li>
-                                ${
-                                    this.wikiExtras.pageviews > 50
-                                        ? `<li class="pageviews-tile">
-                                        <a rel='nofollow' href="#" class="icon"><i class="fa fa-eye"></i></a>
-                                        <span class="views-nr">${this.wikiExtras.pageviews.toLocaleString()}</span>
-                                    </li>`
-                                        : ``
-                                }
                                 ${
                                     page_type == 'Person'
                                         ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
@@ -414,8 +424,8 @@ export class AmpRenderPartial {
             })
             .join('');
         return `
-            <div class="entry-content" id="first-paragraph" itemprop="description">
-                <div class="entry-content-inner-wrap">
+            <div class="ent-ct" id="first-paragraph" itemprop="description">
+                <div class="ent-ct-inner-wrap">
                     ${imageBlock}${paraBlock}
                 </div>
             </div>
@@ -454,8 +464,8 @@ export class AmpRenderPartial {
             .join('');
 
         return `
-            <div class="entry-content">
-                <div class="entry-content-inner-wrap">
+            <div class="ent-ct">
+                <div class="ent-ct-inner-wrap">
                     ${comboSections}
                 </div>
             </div>
@@ -466,7 +476,7 @@ export class AmpRenderPartial {
         return `
             <li>
                 <div class="info-qt">
-                    <h3>${infobox.key}</h3>
+                    <h3>${infobox.key && infobox.key.toUpperCase()}</h3>
                 </div>
                 ${infobox.values
                     .map((value, index) => {
@@ -535,14 +545,12 @@ export class AmpRenderPartial {
             <span id='infoboxHeader'></span>
             <amp-accordion class="infobox-accordion">
                 <section id="infobox_section" class="infobox-main-wrap" expanded>
-                    <h2 class="qf-header">
-                        ${page_type == 'Person' ? `Quick Biography` : true ? `Quick Facts` : ``}
-                        <span class="icon"><i class="fa fa-chevron-down"></i></span>
+                    <h2 class="qf-header qf-infobox">
                     </h2>
                     <div class='amp-wrap'>
                         ${
                             this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length != 0
-                                ? `<div id="blobBox_container" class='infbx-ct'>
+                                ? `<div id="blbx_ct" class='infbx-ct'>
                                 ${blobBoxResult.text}
                             </div>`
                                 : ``
@@ -562,11 +570,11 @@ export class AmpRenderPartial {
         `;
     };
 
-    renderOneMedia = (media: Media, index: number): string => {
+    renderOneMedia = (media: Citation, index: number): string => {
         // const RANDOMSTRING = Math.random()
         //     .toString(36)
         //     .substring(7);
-        let sanitizedCaption = media.caption
+        let sanitizedCaption = media.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
@@ -600,18 +608,20 @@ export class AmpRenderPartial {
                             </a>
                         </span>
                     </div>
-                    <div class="tile-desc">
-                        ${
-                            media.attribution_url && media.attribution_url != 'None'
-                                ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
-                                  }">
-                                <i class="fa fa-info-circle"></i>
-                            </a>`
-                                : ``
-                        }
-                        ${sanitizedCaption}
-                    </div>
+                    ${ sanitizedCaption != '' ? 
+                        `<div class="tile-desc">
+                            ${
+                                media.attribution && media.attribution != 'None'
+                                    ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
+                                        media.attribution
+                                    }">
+                                    <i class="fa fa-info-circle"></i>
+                                </a>`
+                                    : ``
+                            }
+                            ${sanitizedCaption}
+                        </div>` : ''
+                    }
                 </div>`
                     : media.category == 'GIF'
                     ? `<div class="tile-ct">
@@ -630,9 +640,9 @@ export class AmpRenderPartial {
                     </div>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -654,9 +664,9 @@ export class AmpRenderPartial {
                     </span>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -685,9 +695,9 @@ export class AmpRenderPartial {
                     </span>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -707,9 +717,9 @@ export class AmpRenderPartial {
                     </span>
                     <div class="tile-desc">
                         ${
-                            media.attribution_url && media.attribution_url != 'None'
+                            media.attribution && media.attribution != 'None'
                                 ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution_url
+                                      media.attribution
                                   }">
                                 <i class="fa fa-info-circle"></i>
                             </a>`
@@ -729,7 +739,7 @@ export class AmpRenderPartial {
     };
 
     renderMediaGallery = (): string => {
-        let media: Media[] = this.artJSON.media_gallery;
+        let media: Citation[] = this.artJSON.citations.filter(ctn => ctn.media_props);
         if (media.length == 0) return ``;
         let mediaComboString = media
             .map((value, index) => {
@@ -737,23 +747,16 @@ export class AmpRenderPartial {
             })
             .join('');
         return `
-            <span id="mediaGallerySpan" class="toc-span-fix"></span>
-            <amp-accordion  class="media-gallery-accordion">
-                <section expanded>
-                    <h2 class="acc-header" id="mediaGallery">Image & Video Gallery
-                        <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                this.artJSON.page_title[0].text
-                            } images, pictures, and videos" />
-                        </span>
-                    </h2>
-                    <div class="pic-video-container">
-                        <div class="photo-gallery">
-                            ${mediaComboString}
-                        </div>
-                    </div>
-                </section>
-            </amp-accordion>
+            <div class="media-gallery-container">
+                <h2 class="media-gallery-header" id="mediaGallery">MEDIA
+                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
+                        this.sanitizedVariables.page_title
+                    } images, pictures, and videos" />
+                </h2>
+                <div class="photo-gallery">
+                    ${mediaComboString}
+                </div>
+            </div>
         `;
     };
 
@@ -772,42 +775,80 @@ export class AmpRenderPartial {
             })
             .join('');
         
-        return `
-            <li>
-                ${
-                    citation.thumb && citation.thumb != 'None'
-                        ? `<a class='avatar-wrap' href="${
-                              citation.url
-                          }" title="Preview Thumbnail">
-                        <amp-img alt='Thumbnail' class="link-image" width=50 height=50 layout="fixed" src="${
-                            citation.url
-                        }" >
-                            <amp-img placeholder width=50 height=50 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
-                        </amp-img>
-                    </a>`
-                        : ``
-                }
+        let theThumbSrc = null;
 
-                <div class="link-box-right">
-                    <div class="link-url">
-                        ${
-                            citation.social_type && citation.social_type != 'None'
-                                ? `<span itemprop="sameAs"><a href="${citation.url}" class="link-box-url" target="_blank">${citation.url}</a></span>`
-                                : true
-                                ? `<a href="${citation.url}" class="link-box-url" target="_blank">${citation.url}</a>`
-                                : ``
-                        }
-                    </div>
-                    <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
+        if (
+            citation.thumb &&
+            citation.thumb != 'None' &&
+            citation.thumb != '' &&
+            citation.thumb.indexOf('no-image-slide') == -1
+        ) {
+            theThumbSrc = citation.thumb;
+        }
+        else if (
+            citation.url &&
+            citation.url != 'None' &&
+            citation.url != '' &&
+            citation.url.indexOf('no-image-slide') == -1 &&
+            citation.media_props
+        ) {
+            theThumbSrc = citation.url;
+        }
+        else {
+            theThumbSrc = null;
+            // if (useWebP) theThumbSrc = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp';
+            // else theThumbSrc = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+        }
+        let hasFileMime = citation.mime && citation.mime != 'None' && citation.mime != 'youtube';
+        let parsedDomain = parseDomain(citation.url);
+        let theSubdomain = parsedDomain && parsedDomain.subdomain ? parsedDomain.subdomain + "." : ""; 
+        let theDomain = parsedDomain && parsedDomain.domain ? parsedDomain.domain : ""; 
+        let theTLD = parsedDomain && parsedDomain.tld ? "." + parsedDomain.tld : "";  
+        let domainToShow = (citation.mime == 'None' || citation.mime === undefined || citation.mime == null) ? `${theSubdomain}${theDomain}${theTLD}` : null;
+
+        return `                        
+            <li>
+                <a class='citation-anchor' href="${citation.url}" rel="nofollow">
+                    <div class="link-id">[${citation.citation_id}]</div>
+                    ${
+                        theThumbSrc != null && theThumbSrc != 'None' && theThumbSrc != ''  
+                            ? `<div class='avatar-wrap' title="Preview Thumbnail">
+                                    <amp-img alt='Thumbnail' class="link-image" width=40 height=40 layout="fixed" src="${theThumbSrc}" >
+                                        <amp-img placeholder width=40 height=40 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>
+                                    </amp-img>
+                                </div>`
+                            : ``
+                    }
                     <div class="link-box-details">
-                        <div class="link-date"><a href="${citation.url}" rel="nofollow">${citation.timestamp}</a></div>
+                        ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
+                        ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
+                        <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
+                        <div class="link-date">
+                            ${moment(new Date(citation.timestamp)).locale('en').format('lll')}
+                        </div>
                     </div>
+                </a>
             </li>
         `;
+        // return `
+        //     <li>
+        //         <a class='citation-anchor' href="${citation.url}">
+        //             <div class="link-box-details">
+        //                 ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
+        //                 ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
+        //                 <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
+
+        //             </div>
+        //             <div class="link-date">
+        //             <a href="${citation.url}" rel="nofollow">${moment(new Date(citation.timestamp)).locale('en').format('lll')}</a>
+        //         </div>
+        //         </a>
+        //     </li>
+        // `;
     };
 
     renderCitations = (): string => {
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+        // const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
         let citations: Citation[] = this.artJSON.citations;
         if (citations.length == 0) return ``;
@@ -821,25 +862,9 @@ export class AmpRenderPartial {
             <span id="referenceList" class="toc-span-fix"></span>
             <amp-accordion class='link-list-accordion'>
             <section expanded>
-                <h2 class="acc-header">
-                    ${
-                        page_type == 'Person'
-                            ? `Reference Links For This Biography`
-                            : true
-                            ? `Reference Links For This Wiki`
-                            : ``
-                    }
-                    <span class="icon"><i class="fa fa-chevron-down"></i>
-                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Links to historical reviews, career / educational facts, and other encyclopedic information" />
-                    </span>
-                </h2>
+                <h2 class="acc-header">References</h2>
                 <div class="l-lst-header" id="link_list_container">
                     <div class="ll-wrapper">
-                        <div class="disclaimer">All information for ${
-                            this.artJSON.page_title
-                        }'s wiki comes from the below links. Any source is valid, including Twitter, Facebook, Instagram, and LinkedIn. Pictures, videos, biodata, and files relating to ${
-            this.artJSON.page_title
-        } are also acceptable encyclopedic sources.</div>
                         <ul class="l-lst">
                             ${citationComboString}
                         </ul>
@@ -882,7 +907,7 @@ export class AmpRenderPartial {
                     </span>
                 </h2>
                 <div>
-                    <div class="disclaimer">Other wiki pages related to ${this.artJSON.page_title}.</div>
+                    <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
                     ${seeAlsoComboString}
                 </div>
             </section>
@@ -893,6 +918,10 @@ export class AmpRenderPartial {
     renderFooter = (): string => {
         return `
             <div class="footer-wrapper">
+                <div class='footer-img-wrap'>
+                    <amp-img class='footer-logo-img' width=200 height=34 src="https://epcdn-vz.azureedge.net/static/images/EVP-logo-footer.svg">
+                    </amp-img>
+                </div>
                 <amp-anim class='gif-pixel-fix' width=1 height=1 alt="GIF Pixel" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
                     <amp-img placeholder width=1 height=1 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png">
                     </amp-img>
@@ -906,7 +935,6 @@ export class AmpRenderPartial {
                     <a href="/exchange-listings/">Get IQ</a>
                     <a rel="nofollow" href="/investor-relations/">Investors</a>
                 </div>
-                <div class="footer-separator"></div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
                     <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>
@@ -953,7 +981,7 @@ export class AmpRenderPartial {
         let comboString: string = `
             <li class='toc-header-description' data-blurb-id="top_header">
                 <a rel="nofollow" class='toc-header-description' href="#toc-top">
-                    <div class="fixed-items-description">${this.artJSON.page_title}</div>
+                    <div class="fixed-items-description">${this.sanitizedVariables.page_title}</div>
                 </a>
             </li>
         `;
@@ -1032,8 +1060,8 @@ export class AmpRenderPartial {
             <div class="lightbox" tabindex="1" role="menubar">
                 <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
                 </div>
-                <div class="usermenu-ct">
-                    <div class="usermenu-header">
+                <div class="usr-mnu">
+                    <div class="usr-mnu-hdr">
                             <div class="loggedin-default">Menu</div>
                     </div>
                     <ul>
@@ -1137,29 +1165,29 @@ export class AmpRenderPartial {
                             <ul class="tag-list">
                                 ${
                                     page_type == 'Person'
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} bio</li>
-                                    <li>${this.artJSON.page_title} net worth</li>
-                                    <li>${this.artJSON.page_title} age</li>
-                                    <li>${this.artJSON.page_title} married</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} bio</li>
+                                    <li>${this.sanitizedVariables.page_title} net worth</li>
+                                    <li>${this.sanitizedVariables.page_title} age</li>
+                                    <li>${this.sanitizedVariables.page_title} married</li>`
                                         : page_type == 'Product'
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} review</li>
-                                    <li>${this.artJSON.page_title} history</li>
-                                    <li>${this.artJSON.page_title} sales</li>
-                                    <li>${this.artJSON.page_title} facts</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} review</li>
+                                    <li>${this.sanitizedVariables.page_title} history</li>
+                                    <li>${this.sanitizedVariables.page_title} sales</li>
+                                    <li>${this.sanitizedVariables.page_title} facts</li>`
                                         : page_type == 'Organization'
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} review</li>
-                                    <li>${this.artJSON.page_title} history</li>
-                                    <li>${this.artJSON.page_title} founders</li>
-                                    <li>${this.artJSON.page_title} facts</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} review</li>
+                                    <li>${this.sanitizedVariables.page_title} history</li>
+                                    <li>${this.sanitizedVariables.page_title} founders</li>
+                                    <li>${this.sanitizedVariables.page_title} facts</li>`
                                         : true
-                                        ? `<li>${this.artJSON.page_title} wiki</li>
-                                    <li>${this.artJSON.page_title} review</li>
-                                    <li>${this.artJSON.page_title} history</li>
-                                    <li>${this.artJSON.page_title} encyclopedia</li>
-                                    <li>${this.artJSON.page_title} facts</li>`
+                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
+                                    <li>${this.sanitizedVariables.page_title} review</li>
+                                    <li>${this.sanitizedVariables.page_title} history</li>
+                                    <li>${this.sanitizedVariables.page_title} encyclopedia</li>
+                                    <li>${this.sanitizedVariables.page_title} facts</li>`
                                         : ``
                                 }
                             </ul>
@@ -1238,7 +1266,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "${this.artJSON.page_title[0].text}"
+                        "title": "${this.sanitizedVariables.page_title}"
                         }
                     }
                     }

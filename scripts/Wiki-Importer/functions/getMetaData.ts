@@ -16,44 +16,46 @@ export const doRequest = (MediaWiki): Promise<any> => {
   });
 }
 
-let metaData: Metadata[] = 
-[ 
-	{
-		key: "page_type",
-		value: 'Thing'
-	},
-	{
-		key: "is_removed",
-		value: false
-	},
-	{
-		key: "is_adult_content",
-		value: false
-	},
-	{
-		key: "sub_page_type",
-		value: null
-	},
-	{
-		key:"is_wikipedia_import",
-		value: true
-	},
-	{
-		key:"is_indexed",
-		value: false
-	},
-	{
-		key:"bing_index_override",
-		value: true
-	},
-	{
-		key:"is_locked",
-		value: false
-	}
-];
-
 export async function getMetaData(lang_code: string, slug: string): Promise<Metadata[]> {
 	process.stdout.write(chalk.bold.green(`Getting the metadata 🗄️ ...`));
+
+	// Initialize the variable
+	let metaData: Metadata[] = 
+	[ 
+		{
+			key: "page_type",
+			value: 'Thing'
+		},
+		{
+			key: "is_removed",
+			value: false
+		},
+		{
+			key: "is_adult_content",
+			value: false
+		},
+		{
+			key: "sub_page_type",
+			value: null
+		},
+		{
+			key:"is_wikipedia_import",
+			value: true
+		},
+		{
+			key:"is_indexed",
+			value: false
+		},
+		{
+			key:"bing_index_override",
+			value: true
+		},
+		{
+			key:"is_locked",
+			value: false
+		}
+	];
+
 	// Create and append creation_timestamp
 	let creationtime = getTimeStamp();
 	metaData.push({key: 'creation_timestamp', value: creationtime});

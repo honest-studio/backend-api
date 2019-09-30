@@ -6,7 +6,7 @@ import { Citation, CitationCategoryType, Sentence } from '../../../src/types/art
 import { cheerio_css_cleaner, linkCategoryFromText } from '../../../src/utils/article-utils/article-tools';
 import { linkCategorizer, socialURLType } from '../../../src/utils/article-utils/article-converter';
 import { accumulateText } from './pagebodyfunctionalities/textParser';
-import { POST_CITATION_CHOP_BELOW } from './wiki-constants';
+import { POST_CITATION_CHOP_BELOW, IMAGE_MAX_PIXELS } from './wiki-constants';
 import { CheerioPack } from '../functions/pagebodyfunctionalities/cleaners';
 const util = require('util');
 const chalk = require('chalk');
@@ -29,7 +29,13 @@ export interface RawCitation {
 export interface CitationReturnPack {
 	citations: Citation[],
 	internalCitations: any,
-	cheerio_pack: CheerioPack
+	cheerio_pack: CheerioPack,
+	amp_info: {
+		load_youtube_js: boolean,
+		load_audio_js: boolean,
+		load_video_js: boolean,
+		lightboxes: any[]
+	}
 }
 
 // Default description for the Wikipedia citation
@@ -74,6 +80,14 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 
 	// Page content
 	const $content = $('div.mw-parser-output');
+
+	// AMP info
+	let amp_info = {
+		load_youtube_js: false,
+		load_audio_js: false,
+		load_video_js: false,
+		lightboxes: []
+	}
 
 	// Find the citation notes
 	let rawCitations: RawCitation[] = [];
@@ -224,13 +238,13 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'BOOK': {
 					if (raw_citn.isbn){
 						process.stdout.write(chalk.yellow(`\tFetching book info\n`));
-						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn);
+						let bookInfo = await theMediaUploadService.getBookInfoFromISBN(raw_citn.isbn, 3500);
 						workingCitation.url = bookInfo.url;
 						workingCitation.thumb = bookInfo.thumb;
 					}
 					else if (raw_citn.issn){
 						process.stdout.write(chalk.yellow(`\tFetching periodical info\n`));
-						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn);
+						let periodicalInfo = await theMediaUploadService.getPeriodicalInfoFromISSN(raw_citn.issn, 3500);
 						workingCitation.url = periodicalInfo.url;
 						workingCitation.thumb = periodicalInfo.thumb;
 					};
@@ -248,10 +262,12 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'NORMAL_VIDEO':
 				case 'FILE': {
 					await_done = true;
+					process.stdout.write(chalk.yellow(`\Getting MIME type\n`));
 					workingCitation.mime = mimePackage.getType(raw_citn.url);
 					break;
 				}
 				case 'NONE': {
+					process.stdout.write(chalk.yellow(`\Getting social type\n`));
 					workingCitation.social_type = socialURLType(raw_citn.url),
 					await_done = true;
 					break;
@@ -281,7 +297,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 						try{
 							// Only try every 3th citation, to save bandwidth
 							if (workingCitation.citation_id % 3 == 0){
-								let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 5000);
+								process.stdout.write(chalk.yellow(`\Getting Favicon\n`));
+								let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 2000);
 								if (fetched_favicon != "") {
 									workingCitation.thumb = fetched_favicon;
 								}
@@ -377,112 +394,139 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	// Look for galleries
 	console.log(chalk.yellow.bold(`---Looking for a photo gallery---`));
 	$('ul.gallery > .gallerybox').each((idx, gal_box) => {
-
 		let img_anchor = $(gal_box).find('a.image').eq(0)[0];
-		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
-
-		let workingCitation: Citation = {
-			url: null,
-			thumb: null,
-			category: null,
-			citation_id: available_citation_id,
-			description: null,
-			social_type: null,
-			attribution: null,
-			timestamp: new Date(), 
-			mime: null,
-			media_props: {
-				type: 'normal'
-			}
-		};
-		available_citation_id++;
-
-		if(inner_href.search(/File/gimu) >= 0){
-			// Set the attribution url
-			workingCitation.attribution = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
-
-			let inner_img = $(img_anchor).find("img");
-			let inner_img_elem = inner_img.eq(0)[0];
-			let theAttribs = inner_img_elem.attribs;
-			let theWorkingURL = theAttribs.src ? theAttribs.src : workingCitation.url;
-			
-			// Fix upload.wikimedia.org
-			theWorkingURL = theWorkingURL.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
-
-			// Set the thumb
-			workingCitation.thumb = theWorkingURL;
-
-			// Get the full size image
-			theWorkingURL = theWorkingURL.replace("/thumb", "");
-			let quickSplit = theWorkingURL.split("/");
-			if (quickSplit[quickSplit.length - 1] 
-				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-			){
-				theWorkingURL = quickSplit.slice(0, -1).join("/");
-			}
-			workingCitation.url = theWorkingURL;
-
-
-			// Get the srcset, if present
-			if (theAttribs && theAttribs.srcset){
-				let srcsetString = theAttribs.srcset;
-
-				// Fix upload.wikimedia.org 
-				srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
-				
-				// Add the srcset
-				workingCitation.media_props.srcSet = srcsetString;
-			}
-
-			// Check the size to max sure it isn't a crappy flagicon or something
-			let theHeight = parseInt(theAttribs.height);
-			let theWidth = parseInt(theAttribs.width);
-			if (theHeight * theWidth >= 5000){
-
-				// Add the height and width, if present
-				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
-					workingCitation.media_props.height = parseInt(theAttribs['data-file-height']);
-					workingCitation.media_props.width = parseInt(theAttribs['data-file-width']);
+		let inner_href = img_anchor && img_anchor.attribs && img_anchor.attribs['href'];
+		if(inner_href){
+			let workingCitation: Citation = {
+				url: null,
+				thumb: null,
+				category: null,
+				citation_id: available_citation_id,
+				description: null,
+				social_type: null,
+				attribution: null,
+				timestamp: new Date(), 
+				mime: null,
+				media_props: {
+					type: 'normal'
 				}
-				else if(theAttribs && theAttribs.width && theAttribs.height){
-					workingCitation.media_props.height = parseInt(theAttribs.height);
-					workingCitation.media_props.width = parseInt(theAttribs.width);
-				}
-
-				// If there is more than one image in the nearest tr, do not extract
-				let $extractGallery = $(gal_box).parents("ul.gallery");
-
-				// Remove the img's parent <a> first
-				$(img_anchor).remove();
-
-				// Try to get a caption
-				workingCitation.description = accumulateText(gal_box, $, []);
-
-				// Remove the surrounding <td>
-				$($extractGallery).remove();
+			};
+			available_citation_id++;
+	
+			if(inner_href.search(/File/gimu) >= 0){
+				// Set the attribution url
+				workingCitation.attribution = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
+	
+				let inner_img = $(img_anchor).find("img");
+				let inner_img_elem = inner_img.eq(0)[0];
+				let theAttribs = inner_img_elem.attribs;
+				let theWorkingURL = theAttribs.src ? theAttribs.src : workingCitation.url;
 				
-				let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
-				console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
-			}
-			else{
-				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
-				// Do nothing
-			}
-
-			workingCitation.category = linkCategorizer(theWorkingURL);
-			workingCitation.social_type = socialURLType(theWorkingURL);
-			workingCitation.mime = mimePackage.getType(theWorkingURL);
-
-		};
-		citations.push(workingCitation);
+				// Fix upload.wikimedia.org
+				theWorkingURL = theWorkingURL.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+	
+				// Set the thumb
+				workingCitation.thumb = theWorkingURL;
+	
+				// Get the full size image
+				theWorkingURL = theWorkingURL.replace("/thumb", "");
+				let quickSplit = theWorkingURL.split("/");
+				if (quickSplit[quickSplit.length - 1] 
+					&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+					&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+				){
+					theWorkingURL = quickSplit.slice(0, -1).join("/");
+				}
+				workingCitation.url = theWorkingURL;
+	
+	
+				// Get the srcset, if present
+				if (theAttribs && theAttribs.srcset){
+					let srcsetString = theAttribs.srcset;
+	
+					// Fix upload.wikimedia.org 
+					srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+					
+					// Add the srcset
+					workingCitation.media_props.srcSet = srcsetString;
+				}
+	
+				// Check the size to max sure it isn't a crappy flagicon or something
+				// Also make sure it isn't gigantic ( >= 5000 x 5000)
+				let theHeight = parseInt(theAttribs.height);
+				let theWidth = parseInt(theAttribs.width);
+				let pixelCount = theHeight * theWidth;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+	
+					// Add the height and width, if present
+					if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
+						workingCitation.media_props.height = parseInt(theAttribs['data-file-height']);
+						workingCitation.media_props.width = parseInt(theAttribs['data-file-width']);
+					}
+					else if(theAttribs && theAttribs.width && theAttribs.height){
+						workingCitation.media_props.height = parseInt(theAttribs.height);
+						workingCitation.media_props.width = parseInt(theAttribs.width);
+					}
+	
+					// Inner pixel count check
+					pixelCount = workingCitation.media_props.height * workingCitation.media_props.width;
+					if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+						// If there is more than one image in the nearest tr, do not extract
+						let $extractGallery = $(gal_box).parents("ul.gallery");
+	
+						// Remove the img's parent <a> first
+						$(img_anchor).remove();
+	
+						// Try to get a caption
+						workingCitation.description = accumulateText(gal_box, $, []);
+	
+						// Remove the surrounding <td>
+						$($extractGallery).remove();
+						
+						let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
+						console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
+					}
+				}
+				else{
+					// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
+					// Do nothing
+				}
+	
+				workingCitation.category = linkCategorizer(theWorkingURL);
+				workingCitation.social_type = socialURLType(theWorkingURL);
+				workingCitation.mime = mimePackage.getType(theWorkingURL);
+	
+			};
+			citations.push(workingCitation);
+		}
+		
 	})
 	console.log(chalk.yellow.bold(`--------------DONE--------------`));
 	
 
-	// Sort the citations properly
-	process.stdout.write(chalk.yellow(`Sorting the citations...`));
-	citations = _.sortBy(citations, ctn => ctn.citation_id);
+	// Sort the citations properly and also look for AMP-related stuff
+	process.stdout.write(chalk.yellow(`Sorting the citations and getting AMP info...`));
+	citations = _.sortBy(citations, ctn => {
+		switch (ctn.category) {
+			// AMP needs to know if these are present so it can import external JS files to handle them
+			// They are not included by default as an AMP validation error will occur if the import is not needed
+			case 'YOUTUBE': {
+				amp_info.load_youtube_js = true;
+				break;
+			}
+			case 'NORMAL_VIDEO': {
+				amp_info.load_video_js = true;
+				break;
+			}
+			case 'AUDIO': {
+				amp_info.load_audio_js = true;
+				break;
+			}
+			default:
+			break;
+		}
+		return ctn.citation_id
+	});
 	process.stdout.write(chalk.yellow(` DONE\n`));
 
 	// // Clean all of the citations
@@ -541,7 +585,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 		internalCitations: internalCitations, // Map passed to textParser for instant internal citation lookup
 		cheerio_pack:  {
 			cheerio_static: $
-		}
+		},
+		amp_info: amp_info
 	}; 
 }
 
