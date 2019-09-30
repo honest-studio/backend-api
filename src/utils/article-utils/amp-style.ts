@@ -251,42 +251,7 @@ ul.infobox.list-plural > .row li.plural-infobox {
 	overflow-x: hidden;
 	font-family: 'Open Sans',sans-serif;
 }
-.ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) {
-	display: inline;
-	overflow-x: scroll;
-	float: left;
-	font-size: 12px;
-	line-height: 18px;
-	width: 100%;
-	margin: 0 auto;
-	border-collapse: collapse;
-	margin-bottom: 15px;
-}
-.ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) button.tooltippableCarat{
-	font-size: 10px;
-}
-.ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) > caption{
-	width: 100%;
-	float: left;
-	display: block;
-	text-align: left;
-}
-.ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) tbody{
-	width: 1200px;
-	float: left;
-}
-.ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) td {
-	border: 1px solid rgba(128, 128, 128, 0.13);
-	padding-left: 5px;
-	padding-right: 5px;
-	text-align: left;
-}
-.ent-ct table:not(.blurb-inline-image-container):not(.amp-san-picfix) th {
-	border: 1px solid rgba(128, 128, 128, 0.13);
-	padding-left: 5px;
-	padding-right: 5px;
-	text-align: left;
-}
+
 .ent-ct table.ep-table {
 	margin-top: 10px;
 }
@@ -496,6 +461,7 @@ section:not([expanded]) .show-less {
 	color: #262626;
 	font-weight: 400;
 	float: left;
+	width: calc(100% - 40px);
 }
 .name-container h1 button {
 	border: 0px;
@@ -1275,6 +1241,85 @@ article .flagicon{
 	height: 60px;
 	visibility: hidden;
 }
+.ent-ct table.wikitable {
+	font-size: inherit;
+    overflow-x: auto;
+    display: block;
+    width: auto;
+    margin-bottom: 15px;
+    font-family: 'Open Sans', 'OpenSans', sans-serif;
+	color: #2d2d2d;
+	float: left;
+	margin: 0px 15px 15px 0px;
+	border-collapse: collapse;
+}
+
+
+
+.ent-ct table.wikitable tbody > tr > th, .ent-ct table.wikitable tbody > tr > td, .ent-ct table.wikitable tbody > * > tr > th, .ent-ct table.wikitable tbody > * > tr > td {
+	border: 1px solid #a2a9b1;
+	padding: 0.2em 0.4em;
+}
+
+.ent-ct table.wikitable tbody > tr > th, .ent-ct table.wikitable tbody > * > tr > th {
+	background-color: #eaecf0;
+	text-align: center;
+}
+
+.ent-ct table.wikitable caption {
+	font-weight: bold;
+}
+
+.ent-ct table.wikitable .hlist dd, .ent-ct table.wikitable .hlist dt, .hlist li {
+	margin: 0;
+	display: inline;
+}
+
+.ent-ct table.wikitable .hlist dl, .ent-ct table.wikitable .hlist ol, .hlist ul {
+	margin: 0;
+	padding: 0;
+}
+
+.ent-ct table.wikitable .hlist dd:after, .ent-ct table.wikitable .hlist li:after {
+	content: " · ";
+	font-weight: bold;
+}
+
+.ent-ct table.wikitable .nowrap, .ent-ct table.wikitable .nowraplinks a, .ent-ct table.wikitable .nowraplinks .selflink {
+	white-space: nowrap;
+}
+
+.ent-ct table.wikitable abbr {
+	font-weight: bold;
+}
+
+.ent-ct table.wikitable caption {
+	padding-top: unset;
+	padding-bottom: unset;
+	color: unset;
+	text-align: center;
+	caption-side: unset;
+	display: table-caption;
+}
+
+.ent-ct table.wikitable thead {
+	background: #f4f4f4;
+}
+.ent-ct table.wikitable thead tr,
+.ent-ct table.wikitable thead tr > td,
+.ent-ct table.wikitable thead tr > th {
+	border-bottom: 1px solid lightgrey;
+}
+
+.ent-ct table.wikitable tfoot {
+	background: #f4f4f4;
+}
+
+.ent-ct table.wikitable td div span {
+	display: inline-block;
+}
+
+
 .amp-header-logo {
 	position: absolute;
 	left: 0;
@@ -1815,29 +1860,34 @@ button.tooltippableCarat{
 	text-align: center;
 	font-size: 13px;
 	display: block;
-	font-style: italic;
+	font-family: 'OpenSans','Open Sans',sans-serif;
 	float: left;
 	width: 100%;
 	position: relative;
 	z-index: 15;
-	color:black;
+	color: #2d2d2d;
 }
 .footer {
-	margin-top: 25px;
-	background: #f8f8f8;
-	border-top: 1px solid #ebebeb;
-	text-align: center;
+    width: calc(100% - 20px);
+    max-width: 1100px;
+    padding: 0px 10px 0px 10px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 20px;
+	background: auto;
 	float: left;
-	width: 100%;
-	position: relative;
-	z-index: 15;
 	font-family: 'OpenSans','Open Sans',sans-serif;
+}
+.footer .footer-wrapper {
+	border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+	padding: 15px 0px 15px 0px;
+	margin-bottom: 15px;
 }
 .footer .copyright {
 	color: #666;
 	font-size: 14px;
 	font-family: 'OpenSans','Open Sans',sans-serif;
-	padding: 10px 15px 10px 15px;
 }
 .footer .cayman-flag-footer {
 	position: relative;

@@ -608,18 +608,20 @@ export class AmpRenderPartial {
                             </a>
                         </span>
                     </div>
-                    <div class="tile-desc">
-                        ${
-                            media.attribution && media.attribution != 'None'
-                                ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
-                                      media.attribution
-                                  }">
-                                <i class="fa fa-info-circle"></i>
-                            </a>`
-                                : ``
-                        }
-                        ${sanitizedCaption}
-                    </div>
+                    ${ sanitizedCaption != '' ? 
+                        `<div class="tile-desc">
+                            ${
+                                media.attribution && media.attribution != 'None'
+                                    ? `<a class="grid-attribution" rel="nofollow" target="_blank" href="${
+                                        media.attribution
+                                    }">
+                                    <i class="fa fa-info-circle"></i>
+                                </a>`
+                                    : ``
+                            }
+                            ${sanitizedCaption}
+                        </div>` : ''
+                    }
                 </div>`
                     : media.category == 'GIF'
                     ? `<div class="tile-ct">
@@ -916,6 +918,10 @@ export class AmpRenderPartial {
     renderFooter = (): string => {
         return `
             <div class="footer-wrapper">
+                <div class='footer-img-wrap'>
+                    <amp-img class='footer-logo-img' width=200 height=34 src="https://epcdn-vz.azureedge.net/static/images/EVP-logo-footer.svg">
+                    </amp-img>
+                </div>
                 <amp-anim class='gif-pixel-fix' width=1 height=1 alt="GIF Pixel" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
                     <amp-img placeholder width=1 height=1 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png">
                     </amp-img>
@@ -929,7 +935,6 @@ export class AmpRenderPartial {
                     <a href="/exchange-listings/">Get IQ</a>
                     <a rel="nofollow" href="/investor-relations/">Investors</a>
                 </div>
-                <div class="footer-separator"></div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
                     <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>

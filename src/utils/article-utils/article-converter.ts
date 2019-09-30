@@ -151,6 +151,8 @@ function pyToJS(inputItem: any) {
  * @returns {Object}
  */
 export const parseStyles = (styles: string): {} => {
+    if (!styles) return null;
+    console.log(styles)
     return styles
     .split(';')
     .filter(style => style.split(':')[0] && style.split(':')[1])
