@@ -803,13 +803,13 @@ export class AmpRenderPartial {
         let theDomain = parsedDomain && parsedDomain.domain ? parsedDomain.domain : ""; 
         let theTLD = parsedDomain && parsedDomain.tld ? "." + parsedDomain.tld : "";  
         let domainToShow = (citation.mime == 'None' || citation.mime === undefined || citation.mime == null) ? `${theSubdomain}${theDomain}${theTLD}` : null;
-    
+
         return `                        
             <li>
                 <a class='citation-anchor' href="${citation.url}" rel="nofollow">
                     <div class="link-id">[${citation.citation_id}]</div>
                     ${
-                        theThumbSrc != 'None' && theThumbSrc != ''
+                        theThumbSrc != null && theThumbSrc != 'None' && theThumbSrc != ''  
                             ? `<div class='avatar-wrap' title="Preview Thumbnail">
                                     <amp-img alt='Thumbnail' class="link-image" width=40 height=40 layout="fixed" src="${theThumbSrc}" >
                                         <amp-img placeholder width=40 height=40 src="https://epcdn-vz.azureedge.net/static/images/link-2.png" layout="fill"></amp-img>

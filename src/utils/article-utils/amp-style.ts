@@ -577,6 +577,20 @@ section:not([expanded]) .show-less {
 	background: #e9f2ff;
 	border-radius: 4px;
 }
+.l-lst .citation-mime {
+	font-size: 10px;
+    font-style: normal;
+    color: rgb(87, 87, 87);
+    font-weight: bold;
+    margin-right: 4px;
+    float: left;
+    line-height: 12px;
+    position: relative;
+    top: 4px;
+    padding: 2px 5px;
+    background: rgba(104, 104, 104, 0.11);
+    border-radius: 4px;
+}
 #link_list_container_mobile_wrapper ul.l-lst{
 	margin-top: 10px;
 }

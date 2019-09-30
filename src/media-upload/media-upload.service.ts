@@ -343,7 +343,7 @@ export class MediaUploadService {
         timeoutToUse = timeout ? timeout : 5000;
 
         try {
-            console.log(colors.yellow(inputURL))
+            // console.log(colors.yellow(inputURL))
             return axios.default({
                 url: inputURL,
                 method: 'GET',

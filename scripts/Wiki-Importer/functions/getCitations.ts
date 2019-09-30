@@ -262,10 +262,12 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				case 'NORMAL_VIDEO':
 				case 'FILE': {
 					await_done = true;
+					process.stdout.write(chalk.yellow(`\Getting MIME type\n`));
 					workingCitation.mime = mimePackage.getType(raw_citn.url);
 					break;
 				}
 				case 'NONE': {
+					process.stdout.write(chalk.yellow(`\Getting social type\n`));
 					workingCitation.social_type = socialURLType(raw_citn.url),
 					await_done = true;
 					break;
@@ -295,7 +297,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 						try{
 							// Only try every 3th citation, to save bandwidth
 							if (workingCitation.citation_id % 3 == 0){
-								let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 3500);
+								process.stdout.write(chalk.yellow(`\Getting Favicon\n`));
+								let fetched_favicon = await theMediaUploadService.getFavicon({ url: raw_citn.url }, 2000);
 								if (fetched_favicon != "") {
 									workingCitation.thumb = fetched_favicon;
 								}
@@ -391,111 +394,112 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 	// Look for galleries
 	console.log(chalk.yellow.bold(`---Looking for a photo gallery---`));
 	$('ul.gallery > .gallerybox').each((idx, gal_box) => {
-
 		let img_anchor = $(gal_box).find('a.image').eq(0)[0];
-		let inner_href = img_anchor.attribs && img_anchor.attribs['href'];
-
-		let workingCitation: Citation = {
-			url: null,
-			thumb: null,
-			category: null,
-			citation_id: available_citation_id,
-			description: null,
-			social_type: null,
-			attribution: null,
-			timestamp: new Date(), 
-			mime: null,
-			media_props: {
-				type: 'normal'
-			}
-		};
-		available_citation_id++;
-
-		if(inner_href.search(/File/gimu) >= 0){
-			// Set the attribution url
-			workingCitation.attribution = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
-
-			let inner_img = $(img_anchor).find("img");
-			let inner_img_elem = inner_img.eq(0)[0];
-			let theAttribs = inner_img_elem.attribs;
-			let theWorkingURL = theAttribs.src ? theAttribs.src : workingCitation.url;
-			
-			// Fix upload.wikimedia.org
-			theWorkingURL = theWorkingURL.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
-
-			// Set the thumb
-			workingCitation.thumb = theWorkingURL;
-
-			// Get the full size image
-			theWorkingURL = theWorkingURL.replace("/thumb", "");
-			let quickSplit = theWorkingURL.split("/");
-			if (quickSplit[quickSplit.length - 1] 
-				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-			){
-				theWorkingURL = quickSplit.slice(0, -1).join("/");
-			}
-			workingCitation.url = theWorkingURL;
-
-
-			// Get the srcset, if present
-			if (theAttribs && theAttribs.srcset){
-				let srcsetString = theAttribs.srcset;
-
-				// Fix upload.wikimedia.org 
-				srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+		let inner_href = img_anchor && img_anchor.attribs && img_anchor.attribs['href'];
+		if(inner_href){
+			let workingCitation: Citation = {
+				url: null,
+				thumb: null,
+				category: null,
+				citation_id: available_citation_id,
+				description: null,
+				social_type: null,
+				attribution: null,
+				timestamp: new Date(), 
+				mime: null,
+				media_props: {
+					type: 'normal'
+				}
+			};
+			available_citation_id++;
+	
+			if(inner_href.search(/File/gimu) >= 0){
+				// Set the attribution url
+				workingCitation.attribution = inner_href.replace(/(^\/wiki)/gimu, "https://en.wikipedia.org/wiki");
+	
+				let inner_img = $(img_anchor).find("img");
+				let inner_img_elem = inner_img.eq(0)[0];
+				let theAttribs = inner_img_elem.attribs;
+				let theWorkingURL = theAttribs.src ? theAttribs.src : workingCitation.url;
 				
-				// Add the srcset
-				workingCitation.media_props.srcSet = srcsetString;
-			}
-
-			// Check the size to max sure it isn't a crappy flagicon or something
-			// Also make sure it isn't gigantic ( >= 5000 x 5000)
-			let theHeight = parseInt(theAttribs.height);
-			let theWidth = parseInt(theAttribs.width);
-			let pixelCount = theHeight * theWidth;
-			if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
-
-				// Add the height and width, if present
-				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
-					workingCitation.media_props.height = parseInt(theAttribs['data-file-height']);
-					workingCitation.media_props.width = parseInt(theAttribs['data-file-width']);
+				// Fix upload.wikimedia.org
+				theWorkingURL = theWorkingURL.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
+	
+				// Set the thumb
+				workingCitation.thumb = theWorkingURL;
+	
+				// Get the full size image
+				theWorkingURL = theWorkingURL.replace("/thumb", "");
+				let quickSplit = theWorkingURL.split("/");
+				if (quickSplit[quickSplit.length - 1] 
+					&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+					&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+				){
+					theWorkingURL = quickSplit.slice(0, -1).join("/");
 				}
-				else if(theAttribs && theAttribs.width && theAttribs.height){
-					workingCitation.media_props.height = parseInt(theAttribs.height);
-					workingCitation.media_props.width = parseInt(theAttribs.width);
-				}
-
-				// Inner pixel count check
-				pixelCount = workingCitation.media_props.height * workingCitation.media_props.width;
-				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
-					// If there is more than one image in the nearest tr, do not extract
-					let $extractGallery = $(gal_box).parents("ul.gallery");
-
-					// Remove the img's parent <a> first
-					$(img_anchor).remove();
-
-					// Try to get a caption
-					workingCitation.description = accumulateText(gal_box, $, []);
-
-					// Remove the surrounding <td>
-					$($extractGallery).remove();
+				workingCitation.url = theWorkingURL;
+	
+	
+				// Get the srcset, if present
+				if (theAttribs && theAttribs.srcset){
+					let srcsetString = theAttribs.srcset;
+	
+					// Fix upload.wikimedia.org 
+					srcsetString = srcsetString.replace(/(?<!https:|http:)\/\/upload.wikimedia.org/gimu, "https://upload.wikimedia.org");
 					
-					let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
-					console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
+					// Add the srcset
+					workingCitation.media_props.srcSet = srcsetString;
 				}
-			}
-			else{
-				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
-				// Do nothing
-			}
-
-			workingCitation.category = linkCategorizer(theWorkingURL);
-			workingCitation.social_type = socialURLType(theWorkingURL);
-			workingCitation.mime = mimePackage.getType(theWorkingURL);
-
-		};
-		citations.push(workingCitation);
+	
+				// Check the size to max sure it isn't a crappy flagicon or something
+				// Also make sure it isn't gigantic ( >= 5000 x 5000)
+				let theHeight = parseInt(theAttribs.height);
+				let theWidth = parseInt(theAttribs.width);
+				let pixelCount = theHeight * theWidth;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+	
+					// Add the height and width, if present
+					if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
+						workingCitation.media_props.height = parseInt(theAttribs['data-file-height']);
+						workingCitation.media_props.width = parseInt(theAttribs['data-file-width']);
+					}
+					else if(theAttribs && theAttribs.width && theAttribs.height){
+						workingCitation.media_props.height = parseInt(theAttribs.height);
+						workingCitation.media_props.width = parseInt(theAttribs.width);
+					}
+	
+					// Inner pixel count check
+					pixelCount = workingCitation.media_props.height * workingCitation.media_props.width;
+					if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+						// If there is more than one image in the nearest tr, do not extract
+						let $extractGallery = $(gal_box).parents("ul.gallery");
+	
+						// Remove the img's parent <a> first
+						$(img_anchor).remove();
+	
+						// Try to get a caption
+						workingCitation.description = accumulateText(gal_box, $, []);
+	
+						// Remove the surrounding <td>
+						$($extractGallery).remove();
+						
+						let imgString = `|${workingCitation.url}| [${workingCitation.media_props.width}x${workingCitation.media_props.height}]`;
+						console.log(chalk.green.bold(`Found a gallery image from the body: ${imgString}`));
+					}
+				}
+				else{
+					// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
+					// Do nothing
+				}
+	
+				workingCitation.category = linkCategorizer(theWorkingURL);
+				workingCitation.social_type = socialURLType(theWorkingURL);
+				workingCitation.mime = mimePackage.getType(theWorkingURL);
+	
+			};
+			citations.push(workingCitation);
+		}
+		
 	})
 	console.log(chalk.yellow.bold(`--------------DONE--------------`));
 	
