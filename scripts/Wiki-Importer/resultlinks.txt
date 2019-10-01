@@ -1,2 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/Soup_Is_Good_Food
-https://en.wikipedia.org/wiki/Soup_Is_Good_Food
+http://127.0.0.1:7777/wiki/lang_en/Iv%25C3%25A1n_Petrovich
+https://en.wikipedia.org/wiki/Iv%C3%A1n_Petrovich

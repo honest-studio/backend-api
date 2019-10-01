@@ -81,21 +81,37 @@ export const WikiImport = async (inputString: string) => {
     try{
         page_title = await getTitle(lang_code, slug);
 
-        // Move on if the title does not exist
-        if (page_title === undefined || page_title == null) return null;
-
-        metadata = await getMetaData(lang_code, slug);
-        page = await rp(url);
+        // Throw if the title wasn't found
+        if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
+        else {
+            metadata = await getMetaData(lang_code, slug);
+            page = await rp(url);
+        }
     }
     catch(err){
         console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
         page_title = await getTitle(lang_code, slug_alt);
 
-        // Move on if the title does not exist
-        if (page_title === undefined || page_title == null) return null;
-
-        metadata = await getMetaData(lang_code, slug_alt);
-        page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+        // If Wikipedia deleted the page, update the articletable lastmod_timestamp and move on
+        // If the request itself 404'd or messed up, just move to the next slug on the list and don't update the table
+        if (page_title == "TITLE_REQUEST_FAILED") return null;
+        else if (page_title === undefined || page_title == null) {
+            try {
+                const article_update = await theMysql.TryQuery(
+                    `
+                        UPDATE enterlink_articletable 
+                        SET lastmod_timestamp = NOW()
+                        WHERE ipfs_hash_current = ? 
+                    `,
+                    [inputIPFS]
+                );
+            } catch (e) {}
+            return null;
+        }
+        else {
+            metadata = await getMetaData(lang_code, slug_alt);
+            page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+        }
     }
 
 

@@ -598,6 +598,7 @@ export class MediaUploadService {
                     // Process TIFF files
                     case 'image/tiff':
                     case 'image/tiff-fx': {
+                        console.log("TIFF HERE!!!")
                         varPack.suffix = 'jpeg';
                         varPack.mainMIME = 'image/jpeg';
                         varPack.thumbSuffix = 'jpeg';
