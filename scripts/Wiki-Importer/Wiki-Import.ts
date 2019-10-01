@@ -9,7 +9,7 @@ import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
 import lodashSet from 'lodash/fp/set';
-import { ArticleJson, Sentence } from '../../src/types/article';
+import { ArticleJson, Sentence, ListItem } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
@@ -38,10 +38,10 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250;
-const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
-// const BATCH_SIZE = 1;
-// const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
+// const BATCH_SIZE = 250;
+// const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
+const BATCH_SIZE = 1;
+const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -172,12 +172,27 @@ export const WikiImport = async (inputString: string) => {
     // Update the article cache
     process.stdout.write(chalk.yellow(`Updating the article cache...`));
     const cleanedSlug = theMysql.cleanSlugForMysql(slug);
-    let text_preview;
+    let text_preview = "";
     try {
         const first_para = articlejson.page_body[0].paragraphs[0];
         text_preview = (first_para.items[0] as Sentence).text;
+        if (text_preview === undefined) text_preview = "";
         if (first_para.items.length > 1){
-            text_preview += (first_para.items[1] as Sentence).text;
+            if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+                let list_sentences = (first_para.items[1]as ListItem).sentences;
+                if (list_sentences.length <= 2){
+                    list_sentences.forEach(item => {
+                        if (item) text_preview += (item as Sentence).text;
+                    })
+                }
+                else{
+                    list_sentences.slice(0, 2).forEach(item => {
+                        if (item) text_preview += (item as Sentence).text;
+                    })
+                }
+            } else {
+                text_preview += (first_para.items[1] as Sentence).text;
+            }
         }
         else if (!text_preview || text_preview == ""){
             text_preview = "";

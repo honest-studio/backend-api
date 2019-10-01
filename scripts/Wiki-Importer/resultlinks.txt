@@ -1,2 +1,2 @@
-http://127.0.0.1:7777/wiki/lang_en/Neume
-https://en.wikipedia.org/wiki/Neume
+http://127.0.0.1:7777/wiki/lang_en/Soup_Is_Good_Food
+https://en.wikipedia.org/wiki/Soup_Is_Good_Food

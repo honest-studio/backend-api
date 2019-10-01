@@ -1,6 +1,6 @@
 
 const commander = require('commander');
-import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
+import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType, ListItem } from '../../src/types/article';
 import * as readline from 'readline';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
@@ -93,12 +93,27 @@ export const FixMissingSnippets = async (inputString: string) => {
 
     console.log(chalk.yellow("Running the patch"));
 
-    let text_preview;
+    let text_preview = "";
     try {
         const first_para = wiki.page_body[0].paragraphs[0];
         text_preview = (first_para.items[0] as Sentence).text;
+        if (text_preview === undefined) text_preview = "";
         if (first_para.items.length > 1){
-            text_preview += (first_para.items[1] as Sentence).text;
+            if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+                let list_sentences = (first_para.items[1]as ListItem).sentences;
+                if (list_sentences.length <= 2){
+                    list_sentences.forEach(item => {
+                        if (item) text_preview += (item as Sentence).text;
+                    })
+                }
+                else{
+                    list_sentences.slice(0, 2).forEach(item => {
+                        if (item) text_preview += (item as Sentence).text;
+                    })
+                }
+            } else {
+                text_preview += (first_para.items[1] as Sentence).text;
+            }
         }
         else if (!text_preview || text_preview == ""){
             text_preview = "";

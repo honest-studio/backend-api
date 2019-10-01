@@ -13,7 +13,7 @@ import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ChainService } from '../chain';
-import { ArticleJson, Sentence, Citation, Media } from '../types/article';
+import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
 import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
 import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
@@ -597,12 +597,27 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
 
-        let text_preview;
+        let text_preview = "";
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
             text_preview = (first_para.items[0] as Sentence).text;
+            if (text_preview === undefined) text_preview = "";
             if (first_para.items.length > 1){
-                text_preview += (first_para.items[1] as Sentence).text;
+                if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+                    let list_sentences = (first_para.items[1]as ListItem).sentences;
+                    if (list_sentences.length <= 2){
+                        list_sentences.forEach(item => {
+                            if (item) text_preview += (item as Sentence).text;
+                        })
+                    }
+                    else{
+                        list_sentences.slice(0, 2).forEach(item => {
+                            if (item) text_preview += (item as Sentence).text;
+                        })
+                    }
+                } else {
+                    text_preview += (first_para.items[1] as Sentence).text;
+                }
             }
             else if (!text_preview || text_preview == ""){
                 text_preview = "";
