@@ -223,6 +223,7 @@ export class WikiService {
         if (current_hash && current_hash != ipfs_hash)
             ipfs_hash = current_hash;
 
+
         if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
         // No cache available. Pull and construct it
@@ -258,7 +259,6 @@ export class WikiService {
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
 
-
         // If the page has been modified since the last prerender, recache it
         if ((!desktopCacheToUse && !mobileCacheToUse) 
             || (desktopCacheToUse <= lastmodToUse) 
@@ -268,11 +268,19 @@ export class WikiService {
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             flushPrerenders(lang_code, slug, prerenderToken);
 
-            // Update the cache timestamp too in the pageview increment query to save overhead
-            this.incrementPageviewCount(lang_code, mysql_slug, true, true);
+            // Update the cache timestamps
+            this.mysql.TryQuery(
+                `
+                UPDATE enterlink_articletable 
+                SET desktop_cache_timestamp = NOW(), mobile_cache_timestamp = NOW()
+                WHERE 
+                    page_lang= ? 
+                    AND (slug = ? OR slug_alt = ?) 
+                `,
+                [lang_code, slug, slug]
+            );
         }
-        else this.incrementPageviewCount(lang_code, mysql_slug);
-
+        
         // Add redirect information, if present
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
 
@@ -849,15 +857,24 @@ export class WikiService {
     // increment the pageview counter for a page
     // optionally update the mobile and desktop cache timestamps at the same time
     async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
+        let mysql_slug = this.mysql.cleanSlugForMysql(slug);
+        // console.log("mysql slug: ", mysql_slug)
+        let alternateSlug = decodeURIComponent(mysql_slug);
+
+        // If the two slugs are the same, encode the alternateSlug
+        if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
+        
         let desktopCacheString = setDesktopCache ? ", desktop_cache_timestamp = NOW()": "";
         let mobileCacheString = setMobileCache ? ", mobile_cache_timestamp = NOW()": "";
         return this.mysql.TryQuery(
             `
-            UPDATE enterlink_articletable 
-            SET pageviews = pageviews + 1${desktopCacheString}${mobileCacheString} 
-            WHERE page_lang= ? AND slug = ? 
+            UPDATE enterlink_articletable art
+            SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
+            WHERE 
+                ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                AND art.page_lang = ?
             `,
-            [lang_code, slug]
+            [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
         );
     }
 
