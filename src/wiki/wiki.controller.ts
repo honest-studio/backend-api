@@ -67,6 +67,7 @@ export class WikiController {
     })
     @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
     async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<ArticleJson> {
+        this.wikiService.incrementPageviewCount(lang_code, slug);
         return this.wikiService.getWikiBySlug(lang_code, slug, options.cache);
     }
 
@@ -110,6 +111,7 @@ export class WikiController {
         description: `An AMP HTML wiki encoded in UTF-8`
     })
     async getAMPBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<any> {
+        this.wikiService.incrementPageviewCount(lang_code, slug);
         return this.wikiService.getAMPBySlug(lang_code, slug, options.cache);
     }
 
