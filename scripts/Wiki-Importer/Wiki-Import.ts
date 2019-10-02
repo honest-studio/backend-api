@@ -56,6 +56,7 @@ export const WikiImport = async (inputString: string) => {
     let pageTitle = quickSplit[3].trim();
     let pageID = quickSplit[4];
     let redirectPageID = quickSplit[5];
+    let creationTimestamp = quickSplit[6];
     if (redirectPageID == "") redirectPageID = null;
 
     let lang_code, slug, slug_alt;
@@ -84,7 +85,7 @@ export const WikiImport = async (inputString: string) => {
         // Throw if the title wasn't found
         if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
         else {
-            metadata = await getMetaData(lang_code, slug);
+            metadata = await getMetaData(lang_code, slug, creationTimestamp);
             page = await rp(url);
         }
     }
@@ -109,7 +110,7 @@ export const WikiImport = async (inputString: string) => {
             return null;
         }
         else {
-            metadata = await getMetaData(lang_code, slug_alt);
+            metadata = await getMetaData(lang_code, slug_alt, creationTimestamp);
             page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
         }
     }
@@ -336,7 +337,7 @@ export const WikiImport = async (inputString: string) => {
         // The HAVING statement makes sure that human edited wikiscrapes are not affected.
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, '') ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
                 INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
                 WHERE art.id between ? and ?

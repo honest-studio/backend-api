@@ -189,7 +189,9 @@ export class WikiService {
                 art_redir.is_indexed as is_idx_redir,
                 COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
                 COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug
+                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug,
+                COALESCE(art_redir.desktop_cache_timestamp, art.desktop_cache_timestamp) AS desktop_cache_timestamp,
+                COALESCE(art_redir.mobile_cache_timestamp, art.mobile_cache_timestamp) AS mobile_cache_timestamp
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -237,7 +239,6 @@ export class WikiService {
                 else return obj;
             });
             
-            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
             // some wikis don't have page langs set
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         } catch {
@@ -365,7 +366,6 @@ export class WikiService {
                     json_wiki = oldHTMLtoJSON(r.html_blob);
                     json_wiki.ipfs_hash = r.ipfs_hash;
                 }
-                json_wiki = infoboxDtoPatcher(mergeMediaIntoCitations(json_wiki));
                 json_wikis.push(json_wiki);
                 pipeline.set(`wiki:${r.ipfs_hash}`, JSON.stringify(json_wiki));
             });
