@@ -315,9 +315,6 @@ export const MakeWebPImages = async (inputString: string, processMediaGallery: b
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
-    // Run the patches for now
-    wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
-
     // If it is an import, prefix with AuxiliaryImports and the page note
     const pageNoteFilter = wiki.metadata.filter(w => w.key == 'page_note');
     const page_note = pageNoteFilter.length ? pageNoteFilter[0].value : null;

@@ -1869,7 +1869,6 @@ button.tooltippableCarat{
 }
 .footer {
     width: calc(100% - 20px);
-    max-width: 1100px;
     padding: 0px 10px 0px 10px;
     margin-left: 0px;
     margin-right: 0px;

@@ -9,7 +9,7 @@ import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
 import lodashSet from 'lodash/fp/set';
-import { ArticleJson, Sentence } from '../../src/types/article';
+import { ArticleJson, Sentence, ListItem } from '../../src/types/article';
 import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
@@ -56,6 +56,7 @@ export const WikiImport = async (inputString: string) => {
     let pageTitle = quickSplit[3].trim();
     let pageID = quickSplit[4];
     let redirectPageID = quickSplit[5];
+    let creationTimestamp = quickSplit[6];
     if (redirectPageID == "") redirectPageID = null;
 
     let lang_code, slug, slug_alt;
@@ -81,21 +82,37 @@ export const WikiImport = async (inputString: string) => {
     try{
         page_title = await getTitle(lang_code, slug);
 
-        // Move on if the title does not exist
-        if (page_title === undefined || page_title == null) return null;
-
-        metadata = await getMetaData(lang_code, slug);
-        page = await rp(url);
+        // Throw if the title wasn't found
+        if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
+        else {
+            metadata = await getMetaData(lang_code, slug, creationTimestamp);
+            page = await rp(url);
+        }
     }
     catch(err){
         console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
         page_title = await getTitle(lang_code, slug_alt);
 
-        // Move on if the title does not exist
-        if (page_title === undefined || page_title == null) return null;
-
-        metadata = await getMetaData(lang_code, slug_alt);
-        page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+        // If Wikipedia deleted the page, update the articletable lastmod_timestamp and move on
+        // If the request itself 404'd or messed up, just move to the next slug on the list and don't update the table
+        if (page_title == "TITLE_REQUEST_FAILED") return null;
+        else if (page_title === undefined || page_title == null) {
+            try {
+                const article_update = await theMysql.TryQuery(
+                    `
+                        UPDATE enterlink_articletable 
+                        SET lastmod_timestamp = NOW()
+                        WHERE ipfs_hash_current = ? 
+                    `,
+                    [inputIPFS]
+                );
+            } catch (e) {}
+            return null;
+        }
+        else {
+            metadata = await getMetaData(lang_code, slug_alt, creationTimestamp);
+            page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+        }
     }
 
 
@@ -172,12 +189,27 @@ export const WikiImport = async (inputString: string) => {
     // Update the article cache
     process.stdout.write(chalk.yellow(`Updating the article cache...`));
     const cleanedSlug = theMysql.cleanSlugForMysql(slug);
-    let text_preview;
+    let text_preview = "";
     try {
         const first_para = articlejson.page_body[0].paragraphs[0];
         text_preview = (first_para.items[0] as Sentence).text;
+        if (text_preview === undefined) text_preview = "";
         if (first_para.items.length > 1){
-            text_preview += (first_para.items[1] as Sentence).text;
+            if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+                let list_sentences = (first_para.items[1]as ListItem).sentences;
+                if (list_sentences.length <= 2){
+                    list_sentences.forEach(item => {
+                        if (item) text_preview += (item as Sentence).text;
+                    })
+                }
+                else{
+                    list_sentences.slice(0, 2).forEach(item => {
+                        if (item) text_preview += (item as Sentence).text;
+                    })
+                }
+            } else {
+                text_preview += (first_para.items[1] as Sentence).text;
+            }
         }
         else if (!text_preview || text_preview == ""){
             text_preview = "";
@@ -305,7 +337,7 @@ export const WikiImport = async (inputString: string) => {
         // The HAVING statement makes sure that human edited wikiscrapes are not affected.
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, '') ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
                 INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
                 WHERE art.id between ? and ?

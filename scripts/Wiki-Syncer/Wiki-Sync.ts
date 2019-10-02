@@ -25,11 +25,13 @@ commander
 const LANG_CODE = 'en';
 
 const BATCH_SIZE = 5;
-const LASTMOD_CUTOFF_TIME = '2019-09-22 00:00:00';
-const RC_LIMIT = 25; // Max allowed is 5000
+const LASTMOD_CUTOFF_TIME = '2019-07-22 00:00:00';
+const RC_LIMIT = 50; // Max allowed is 500 for non-Wikipedia superusers
+// const EDIT_TYPES = 'edit|new';
+const EDIT_TYPES = 'new'
 // const BATCH_SIZE = 250;
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
-// const RC_LIMIT = 10;
+// const RC_LIMIT = 500;
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -59,15 +61,15 @@ export const logYlw = (inputString: string) => {
     const list = 'list=recentchanges';
     const start = `rcstart=${start_time}`;
     const limit = `rclimit=${RC_LIMIT}`;
-    const type = `rctype=edit|new`;
+    const type = `rctype=${EDIT_TYPES}`;
     const recent_edits_url = `${wikiMedia}${action}&${list}&${format}&${start}&${type}&${limit}`;
-    console.log(chalk.yellow(recent_edits_url));
+    // console.log(chalk.yellow(recent_edits_url));
 
     let parsed_body = await rp(recent_edits_url)
                     .then(body => JSON.parse(body));
 
     // Need to filter here, etc
-    let title_array = [];
+    let title_array = [], new_page_array = [];
     let changes_list = parsed_body && parsed_body.query && parsed_body.query.recentchanges.map(change => {
         let result;
 
@@ -76,15 +78,44 @@ export const logYlw = (inputString: string) => {
         else result = change;
 
         // Add the title to the title array
+        // Also look for new pages
         if (result) title_array.push(result.title)
+        if (result && result.type && result.type == 'new') new_page_array.push({ title: result.title, id: result.pageid });
 
         return result;
     }).filter(c => c);
 
-    // console.log(changes_list)
+    console.log(chalk.bold.yellow(`Recent edits found: `));
+    console.log(title_array);
 
     // console.log(util.inspect(parsed_body, {showHidden: false, depth: null, chalk: true}));
 
+    logYlw("===============🆕 PROCESSING NEW PAGES 🆕===============");
+    console.log(chalk.bold.yellow(`New pages found: `));
+    console.log(new_page_array);
+    console.log(chalk.bold.yellow(`-------------`));
+
+    // Need to make dummy entries in enterlink_articletable and enterlink_hashcache
+    for (let index = 0; index < new_page_array.length; index++) {
+        console.log(chalk.bold.yellow(`****`));
+        console.log("Making dummy MySQL entries for: ", new_page_array[index]);
+        let new_slug = "";
+        let url = `https://${LANG_CODE}.wikipedia.org/w/api.php?action=query&prop=info&titles=${encodeURIComponent(new_page_array[index].title)}&inprop=url&format=json`;
+        let result = await rp(url)
+                        .then(body => {
+                            let result = JSON.parse(body);
+                            return result && result.query && result.query.pages && result.query.pages[new_page_array[index].id];
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            return "TITLE_REQUEST_FAILED";
+                        });
+        if (result) {
+            new_slug = result.canonicalurl.replace(`https://${LANG_CODE}.wikipedia.org/wiki/`, '');
+            console.log(`NEW SLUG: |${new_slug}|`);
+        }
+    }
+    return false;
 
     logYlw("=================STARTING BATCH SCRIPT=================");
     let batchCounter = 0;
@@ -105,7 +136,7 @@ export const logYlw = (inputString: string) => {
         // The HAVING statement makes sure that human edited wikiscrapes are not affected.
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, '') ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
                 INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
                 WHERE art.page_title IN (?)

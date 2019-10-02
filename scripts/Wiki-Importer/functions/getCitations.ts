@@ -432,8 +432,8 @@ export const getCitations = async (input_pack: CheerioPack, url, theMediaUploadS
 				theWorkingURL = theWorkingURL.replace("/thumb", "");
 				let quickSplit = theWorkingURL.split("/");
 				if (quickSplit[quickSplit.length - 1] 
-					&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-					&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+					&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
+					&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
 				){
 					theWorkingURL = quickSplit.slice(0, -1).join("/");
 				}

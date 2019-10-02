@@ -411,7 +411,14 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
         allSentences.push(...(media.caption as Sentence[]));
     });
     passedJSON.citations.forEach((citation, index) => {
-        allSentences.push(...(citation.description as Sentence[]));
+        let theDescription: Sentence[] = [];
+        if(citation.description){
+            theDescription = citation.description;
+        }
+        else {
+            theDescription = [{ index: 0, type: 'sentence', text: ''}]
+        }
+        allSentences.push(...theDescription);
     });
     let tempSeeAlsos: SeeAlso[] = [];
 

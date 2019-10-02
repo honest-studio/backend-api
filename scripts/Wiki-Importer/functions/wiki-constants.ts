@@ -183,7 +183,7 @@ export const POSTCLEAN_BAD_ELEMENTS_DELETE_PARENTS = [{'id': /Note/gimu}, {'id':
 export const POSTCLEAN_BAD_ELEMENTS_BUT_KEEP_CHILDS = [/mw-parser-output/gimu];
 export const NON_AMP_BAD_TAGS = [ 'head', 'noscript', 'map', 'math', 'mi', 'mo', 'mtd', 'mrow', 'mspace', 'mtext', 'msub', 'msup', 'mstyle', 'semantics', 'usemap', 'xml', 'worddocument', 'mathpr', 'mathfont'];
 
-export const WIKI_SYNC_RECENTCHANGES_FILTER_REGEX = /Talk:|Wikipedia:|Template:|User talk:|Portal:|User:|Category:/gimu;
+export const WIKI_SYNC_RECENTCHANGES_FILTER_REGEX = /Talk:|Wikipedia:|Template:|User talk:|Portal:|User:|Draft:|Category:/gimu;
 
 
 // Replace tags with certain classes

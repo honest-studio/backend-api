@@ -80,9 +80,6 @@ export const MergeMediaAndPatchInfoboxes = async (inputString: string) => {
     }
     console.log(chalk.yellow("Running the patch"));
 
-    // Run the patches for now
-    wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
-
     logYlw("=================MAIN UPLOAD=================");
 
     try {

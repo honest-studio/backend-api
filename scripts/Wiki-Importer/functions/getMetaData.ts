@@ -16,7 +16,7 @@ export const doRequest = (MediaWiki): Promise<any> => {
   });
 }
 
-export async function getMetaData(lang_code: string, slug: string): Promise<Metadata[]> {
+export async function getMetaData(lang_code: string, slug: string, creation_stamp: string): Promise<Metadata[]> {
 	process.stdout.write(chalk.bold.green(`Getting the metadata 🗄️ ...`));
 
 	// Initialize the variable
@@ -53,13 +53,16 @@ export async function getMetaData(lang_code: string, slug: string): Promise<Meta
 		{
 			key:"is_locked",
 			value: false
+		},
+		{
+			key:"creation_timestamp",
+			value: creation_stamp
+		},
+		{
+			key:"last_modified",
+			value: getTimeStamp()
 		}
 	];
-
-	// Create and append creation_timestamp
-	let creationtime = getTimeStamp();
-	metaData.push({key: 'creation_timestamp', value: creationtime});
-	metaData.push({key:'last_modified', value: null}); // null because it was just created 
 
 	// Get and append url_slug
 	let titles = '&titles=' + slug;

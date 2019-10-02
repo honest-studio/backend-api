@@ -13,7 +13,7 @@ import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ChainService } from '../chain';
-import { ArticleJson, Sentence, Citation, Media } from '../types/article';
+import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
 import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
 import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
@@ -189,7 +189,9 @@ export class WikiService {
                 art_redir.is_indexed as is_idx_redir,
                 COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
                 COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug
+                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug,
+                COALESCE(art_redir.desktop_cache_timestamp, art.desktop_cache_timestamp) AS desktop_cache_timestamp,
+                COALESCE(art_redir.mobile_cache_timestamp, art.mobile_cache_timestamp) AS mobile_cache_timestamp
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -202,6 +204,7 @@ export class WikiService {
         let overrideIsIndexed;
         let db_timestamp;
         let main_redirect_wikilangslug;
+        let lastmodToUse = '1975-01-01 00:00:00', desktopCacheToUse = null, mobileCacheToUse = null;
         if (ipfs_hash_rows.length > 0) {
             if (ignoreRemovalStatus) { /* Do nothing */ }
             else if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
@@ -210,6 +213,9 @@ export class WikiService {
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
+            lastmodToUse = ipfs_hash_rows[0].lastmod_timestamp;
+            desktopCacheToUse = ipfs_hash_rows[0].desktop_cache_timestamp;
+            mobileCacheToUse = ipfs_hash_rows[0].mobile_cache_timestamp;
         };
 
         if (db_hash) this.redis.connection().set(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`, db_hash);
@@ -237,7 +243,6 @@ export class WikiService {
                 else return obj;
             });
             
-            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
             // some wikis don't have page langs set
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         } catch {
@@ -254,21 +259,17 @@ export class WikiService {
         }
 
 
-        const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp') 
-                                    ? wiki.metadata.find(w => w.key == 'lastmod_timestamp').value 
-                                    : '1919-12-31 00:00:00';
-        const mobile_cache_timestamp = wiki.metadata.find(w => w.key == 'mobile_cache_timestamp') 
-                                    ? wiki.metadata.find(w => w.key == 'mobile_cache_timestamp').value
-                                    : '1919-12-31 00:00:00';
-
         // If the page has been modified since the last prerender, recache it
-        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+        if ((!desktopCacheToUse && !mobileCacheToUse) 
+            || (desktopCacheToUse <= lastmodToUse) 
+            || (mobileCacheToUse <= lastmodToUse) 
+        ){
             // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             flushPrerenders(lang_code, slug, prerenderToken);
 
             // Update the cache timestamp too in the pageview increment query to save overhead
-            this.incrementPageviewCount(lang_code, mysql_slug, false, true);
+            this.incrementPageviewCount(lang_code, mysql_slug, true, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
 
@@ -365,7 +366,6 @@ export class WikiService {
                     json_wiki = oldHTMLtoJSON(r.html_blob);
                     json_wiki.ipfs_hash = r.ipfs_hash;
                 }
-                json_wiki = infoboxDtoPatcher(mergeMediaIntoCitations(json_wiki));
                 json_wikis.push(json_wiki);
                 pipeline.set(`wiki:${r.ipfs_hash}`, JSON.stringify(json_wiki));
             });
@@ -597,12 +597,27 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
 
-        let text_preview;
+        let text_preview = "";
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
             text_preview = (first_para.items[0] as Sentence).text;
+            if (text_preview === undefined) text_preview = "";
             if (first_para.items.length > 1){
-                text_preview += (first_para.items[1] as Sentence).text;
+                if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+                    let list_sentences = (first_para.items[1]as ListItem).sentences;
+                    if (list_sentences.length <= 2){
+                        list_sentences.forEach(item => {
+                            if (item) text_preview += (item as Sentence).text;
+                        })
+                    }
+                    else{
+                        list_sentences.slice(0, 2).forEach(item => {
+                            if (item) text_preview += (item as Sentence).text;
+                        })
+                    }
+                } else {
+                    text_preview += (first_para.items[1] as Sentence).text;
+                }
             }
             else if (!text_preview || text_preview == ""){
                 text_preview = "";

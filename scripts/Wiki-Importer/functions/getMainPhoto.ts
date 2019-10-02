@@ -80,8 +80,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			theWorkingURL = theWorkingURL.replace("/thumb", "");
 			let quickSplit = theWorkingURL.split("/");
 			if (quickSplit[quickSplit.length - 1] 
-				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
+				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
 			){
 				theWorkingURL = quickSplit.slice(0, -1).join("/");
 			}
@@ -235,8 +235,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 	// 			theWorkingURL = theWorkingURL.replace("/thumb", "");
 	// 			let quickSplit = theWorkingURL.split("/");
 	// 			if (quickSplit[quickSplit.length - 1] 
-	// 				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-	// 				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+	// 				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
+	// 				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
 	// 			){
 	// 				theWorkingURL = quickSplit.slice(0, -1).join("/");
 	// 			}
@@ -290,7 +290,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 		if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
 		// Upload the main image
-		let resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
+		let resultBuffer;
+		resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
 		let filename = path.basename(workingMainPhoto.url);
 		let up_res = await theMediaUploadService.processMedia(
 			resultBuffer,
@@ -301,29 +302,44 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			''
 		);
 
-		// Update the main photo info with the storage bucket URLs
-		workingMainPhoto = {
-			...workingMainPhoto,
-			url: up_res.mainPhotoURL,
-			thumb: up_res.thumbnailPhotoURL,
-			mime: up_res.mime,
-			media_props: {
-				...workingMainPhoto.media_props,
-				webp_original: up_res.webp_original,
-				webp_medium: up_res.webp_medium,
-				webp_thumb: up_res.webp_thumb,
-			}
+		if(up_res){
+			// Update the main photo info with the storage bucket URLs
+			workingMainPhoto = {
+				...workingMainPhoto,
+				url: up_res.mainPhotoURL,
+				thumb: up_res.thumbnailPhotoURL,
+				mime: up_res.mime,
+				media_props: {
+					...workingMainPhoto.media_props,
+					webp_original: up_res.webp_original,
+					webp_medium: up_res.webp_medium,
+					webp_thumb: up_res.webp_thumb,
+				}
 
-		};
+			};
 
-		// Return main photo
-		console.log(chalk.bold.green(`DONE`));
-		return {
-			main_photo: workingMainPhoto,
-			cheerio_pack: {
-				cheerio_static: $
+			// Return main photo
+			console.log(chalk.bold.green(`DONE`));
+			return {
+				main_photo: workingMainPhoto,
+				cheerio_pack: {
+					cheerio_static: $
+				}
 			}
 		}
+		else {
+			workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+	
+			// Return the default main photo
+			console.log(chalk.bold.green(`DONE`));
+			return {
+				main_photo: workingMainPhoto,
+				cheerio_pack: {
+					cheerio_static: $
+				}
+			}
+		}
+
 	}
 	else {
 		workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
