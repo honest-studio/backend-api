@@ -20,7 +20,7 @@ export class SearchService {
         const searchJSON = {
             from: from ? from : 0,
             size: offset ? offset : 40,
-            timeout: '1500ms',
+            timeout: '2000ms',
             min_score: 1.0001,
             query: {
                 bool: {
