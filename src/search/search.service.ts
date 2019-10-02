@@ -48,7 +48,7 @@ export class SearchService {
                                 fields: ['page_title'],
                                 type: 'phrase_prefix',
                                 slop: 5,
-                                max_expansions: 25000
+                                max_expansions: 35000
                             }
                         }
                     ]

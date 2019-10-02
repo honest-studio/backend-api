@@ -223,6 +223,7 @@ export class WikiService {
         if (current_hash && current_hash != ipfs_hash)
             ipfs_hash = current_hash;
 
+
         if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
         // No cache available. Pull and construct it
@@ -258,7 +259,6 @@ export class WikiService {
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
 
-
         // If the page has been modified since the last prerender, recache it
         if ((!desktopCacheToUse && !mobileCacheToUse) 
             || (desktopCacheToUse <= lastmodToUse) 
@@ -269,7 +269,7 @@ export class WikiService {
             flushPrerenders(lang_code, slug, prerenderToken);
 
             // Update the cache timestamps
-            return this.mysql.TryQuery(
+            this.mysql.TryQuery(
                 `
                 UPDATE enterlink_articletable 
                 SET desktop_cache_timestamp = NOW(), mobile_cache_timestamp = NOW()
@@ -280,7 +280,7 @@ export class WikiService {
                 [lang_code, slug, slug]
             );
         }
-
+        
         // Add redirect information, if present
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
 
