@@ -204,6 +204,7 @@ export class WikiService {
         let overrideIsIndexed;
         let db_timestamp;
         let main_redirect_wikilangslug;
+        let lastmodToUse = '1975-01-01 00:00:00', desktopCacheToUse = null, mobileCacheToUse = null;
         if (ipfs_hash_rows.length > 0) {
             if (ignoreRemovalStatus) { /* Do nothing */ }
             else if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
@@ -212,6 +213,9 @@ export class WikiService {
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
+            lastmodToUse = ipfs_hash_rows[0].lastmod_timestamp;
+            desktopCacheToUse = ipfs_hash_rows[0].desktop_cache_timestamp;
+            mobileCacheToUse = ipfs_hash_rows[0].mobile_cache_timestamp;
         };
 
         if (db_hash) this.redis.connection().set(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`, db_hash);
@@ -255,21 +259,17 @@ export class WikiService {
         }
 
 
-        const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp') 
-                                    ? wiki.metadata.find(w => w.key == 'lastmod_timestamp').value 
-                                    : '1919-12-31 00:00:00';
-        const mobile_cache_timestamp = wiki.metadata.find(w => w.key == 'mobile_cache_timestamp') 
-                                    ? wiki.metadata.find(w => w.key == 'mobile_cache_timestamp').value
-                                    : '1919-12-31 00:00:00';
-
         // If the page has been modified since the last prerender, recache it
-        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+        if ((!desktopCacheToUse && !mobileCacheToUse) 
+            || (desktopCacheToUse <= lastmodToUse) 
+            || (mobileCacheToUse <= lastmodToUse) 
+        ){
             // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             flushPrerenders(lang_code, slug, prerenderToken);
 
             // Update the cache timestamp too in the pageview increment query to save overhead
-            this.incrementPageviewCount(lang_code, mysql_slug, false, true);
+            this.incrementPageviewCount(lang_code, mysql_slug, true, true);
         }
         else this.incrementPageviewCount(lang_code, mysql_slug);
 

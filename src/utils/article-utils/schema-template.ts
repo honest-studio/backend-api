@@ -211,7 +211,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         }
     });
     inputJSON.citations.forEach((citation, index) => {
-        let citationText = citation.description
+        let citationText = citation && citation.description && citation.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
