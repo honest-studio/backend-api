@@ -4,6 +4,7 @@ const chalk = require('chalk');
 
 export interface TitlePack {
 	title: Sentence[] | string,
+	raw_title: string,
 	pageid: number
 }
 
@@ -31,10 +32,11 @@ export const getTitle = async (lang_code: string, slug: string): Promise<TitlePa
 		process.stdout.write(chalk.bold.green(` DONE\n`));
 		return {
 			title: [{ type: 'sentence', index: 0, text: title_response.displaytitle.replace(/<[^>]+>/gimu, '') }],
+			raw_title: title_response.displaytitle,
 			pageid: title_response.pageid
 		};
 	}
-	else if (title_response == "TITLE_REQUEST_FAILED") return { title: "TITLE_REQUEST_FAILED", pageid: null };
+	else if (title_response == "TITLE_REQUEST_FAILED") return { title: "TITLE_REQUEST_FAILED", raw_title: null, pageid: null };
 	else return null;
 }
 

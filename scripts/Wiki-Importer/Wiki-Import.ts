@@ -3,6 +3,7 @@ const commander = require('commander');
 import * as elasticsearch from 'elasticsearch';
 import { getTitle, TitlePack } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
+import { createRedirects } from './functions/createRedirects';
 import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox';
 import { getMetaData } from './functions/getMetaData';
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
@@ -38,10 +39,10 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250;
-const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
-// const BATCH_SIZE = 1;
-// const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
+// const BATCH_SIZE = 250;
+// const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
+const BATCH_SIZE = 1;
+const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -78,12 +79,13 @@ export const WikiImport = async (inputString: string) => {
     let url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
 
     // Fetch the page title, metadata, and page
-    let page_title_pack, page_title, wiki_page_id, metadata, page;
+    let page_title_pack, page_title, raw_title, wiki_page_id, metadata, page;
     try{
         page_title_pack = await getTitle(lang_code, slug);
         page_title = page_title_pack.title;
         wiki_page_id = page_title_pack.pageid;
-        
+        raw_title = page_title_pack.raw_title;
+
         // Throw if the title wasn't found
         if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
         else {
@@ -96,6 +98,7 @@ export const WikiImport = async (inputString: string) => {
         page_title_pack = await getTitle(lang_code, slug_alt);
         page_title = page_title_pack.title;
         wiki_page_id = page_title_pack.pageid;
+        raw_title = page_title_pack.raw_title;
 
         // If Wikipedia deleted the page, update the articletable lastmod_timestamp and move on
         // If the request itself 404'd or messed up, just move to the next slug on the list and don't update the table
@@ -118,8 +121,6 @@ export const WikiImport = async (inputString: string) => {
             page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
         }
     }
-
-
 
     // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
@@ -144,7 +145,7 @@ export const WikiImport = async (inputString: string) => {
         })
     }
 
-    logYlw("==============⚙️  ARTICLEJSON ASSEMBLY ⚙️ =============");
+    logYlw("==============⚙️  ARTICLEJSON ASSEMBLY ⚙️ ==============");
     // Assemble the wiki
     process.stdout.write(chalk.yellow(`Creating the ArticleJson object...`));
     let articlejson: ArticleJson = {
@@ -168,7 +169,14 @@ export const WikiImport = async (inputString: string) => {
     process.stdout.write(chalk.yellow(` DONE [${newHash}]\n`));
 
     console.log(chalk.bold.green(`DONE`));
-    logYlw("==================📡 MAIN UPLOAD 📡==================");
+    logYlw("=================🚧 FIND REDIRECTS 🚧=================");
+    await createRedirects(raw_title, lang_code, theMysql);
+
+
+
+
+    return false;
+    logYlw("===================📡 MAIN UPLOAD 📡==================");
 
     // Update the hash cache
     process.stdout.write(chalk.yellow(`Updating the hash cache...`));
