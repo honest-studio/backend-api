@@ -1,8 +1,0 @@
-http://127.0.0.1:7777/wiki/lang_en/East_Liberty_Presbyterian_Church
-https://en.wikipedia.org/wiki/Cathedral_of_Hope_(Pittsburgh)
-http://127.0.0.1:7777/wiki/lang_en/Rebecca_(1997_miniseries)
-https://en.wikipedia.org/wiki/Rebecca_(1997_miniseries)
-http://127.0.0.1:7777/wiki/lang_en/GDebi
-https://en.wikipedia.org/wiki/Debian#GDEBI
-http://127.0.0.1:7777/wiki/lang_en/Great_American_Bash_1996
-https://en.wikipedia.org/wiki/The_Great_American_Bash_(1996)

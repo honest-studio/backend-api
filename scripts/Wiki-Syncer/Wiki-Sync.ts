@@ -5,6 +5,7 @@ import { WikiImport } from '../Wiki-Importer/Wiki-Import';
 import { WIKI_SYNC_RECENTCHANGES_FILTER_REGEX } from '../Wiki-Importer/functions/wiki-constants';
 import { MysqlService } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
+import { calcIPFSHash } from '../../src/utils/article-utils/article-tools';
 import { ArticleJson, Sentence } from '../../src/types/article';
 import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
 const util = require('util');
@@ -113,6 +114,90 @@ export const logYlw = (inputString: string) => {
         if (result) {
             new_slug = result.canonicalurl.replace(`https://${LANG_CODE}.wikipedia.org/wiki/`, '');
             console.log(`NEW SLUG: |${new_slug}|`);
+            console.log(result)
+
+            const page_title = result.title;
+            const slug = new_slug;
+            const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+            let alternateSlug = cleanedSlug;
+
+            // If the two slugs are the same, encode the alternateSlug
+            if (slug === cleanedSlug) alternateSlug = encodeURIComponent(alternateSlug);
+
+            let text_preview = "";
+
+            const photo_url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+            const photo_thumb_url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+            const webp_large = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-original.webp';
+            const webp_medium = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-medium.webp';
+            const webp_small =  'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp';
+            const page_type = 'Thing';
+            const is_adult_content = 0;
+            const is_indexed = 0;
+            const bing_index_override = 1;
+            const page_lang = 'en';
+            const is_removed = 0;
+            const page_note = '|EN_WIKI_IMPORT|';
+
+            // Dummy hash for now
+            const ipfs_hash = calcIPFSHash(`${page_title}${slug}${page_lang}`)
+
+            the below part needs to be scrutinized
+    
+            const article_insertion = await this.mysql.TryQuery(
+                `
+                INSERT INTO enterlink_articletable 
+                    (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits, webp_large, webp_medium, webp_small)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
+                
+                `,
+                [
+                    ipfs_hash,
+                    cleanedSlug,
+                    cleanedSlug,
+                    page_title,
+                    text_preview,
+                    photo_url,
+                    photo_thumb_url,
+                    page_type,
+                    is_adult_content,
+                    page_lang,
+                    webp_large,
+                    webp_medium,
+                    webp_small,
+                    ipfs_hash,
+                    page_title,
+                    text_preview,
+                    photo_url,
+                    photo_thumb_url,
+                    page_type,
+                    is_adult_content,
+                    is_indexed,
+                    is_removed,
+                    webp_large,
+                    webp_medium,
+                    webp_small,
+                ]
+            )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
     return false;
