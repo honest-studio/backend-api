@@ -151,7 +151,8 @@ export const logYlw = (inputString: string) => {
                     INSERT INTO enterlink_articletable 
                         (   ipfs_hash_current, 
                             ipfs_hash_parent, 
-                            slug, slug_alt, 
+                            slug, 
+                            slug_alt, 
                             page_title, 
                             blurb_snippet, 
                             photo_url, 

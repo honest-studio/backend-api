@@ -39,9 +39,9 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-// const BATCH_SIZE = 250;
+const BATCH_SIZE = 250;
 // const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
-const BATCH_SIZE = 1;
+// const BATCH_SIZE = 1;
 const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
@@ -122,10 +122,12 @@ export const WikiImport = async (inputString: string) => {
         }
     }
 
+    logYlw("=================🚧 FIND REDIRECTS 🚧=================");
+    await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
+    return false;
+
     // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
-
-    // return false;
 
     // Try extracting a main photo
     let photo_result = await getMainPhoto(precleaned_cheerio_pack, theMediaUploadService, lang_code, slug);
@@ -169,13 +171,6 @@ export const WikiImport = async (inputString: string) => {
     process.stdout.write(chalk.yellow(` DONE [${newHash}]\n`));
 
     console.log(chalk.bold.green(`DONE`));
-    logYlw("=================🚧 FIND REDIRECTS 🚧=================");
-    await createRedirects(raw_title, lang_code, theMysql);
-
-
-
-
-    return false;
     logYlw("===================📡 MAIN UPLOAD 📡==================");
 
     // Update the hash cache
