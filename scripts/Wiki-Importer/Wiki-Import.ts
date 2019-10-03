@@ -78,10 +78,12 @@ export const WikiImport = async (inputString: string) => {
     let url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
 
     // Fetch the page title, metadata, and page
-    let page_title, metadata, page;
+    let page_title_pack, page_title, wiki_page_id, metadata, page;
     try{
-        page_title = await getTitle(lang_code, slug);
-
+        page_title_pack = await getTitle(lang_code, slug);
+        page_title = page_title_pack.title;
+        wiki_page_id = page_title_pack.pageid;
+        
         // Throw if the title wasn't found
         if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
         else {
@@ -91,7 +93,9 @@ export const WikiImport = async (inputString: string) => {
     }
     catch(err){
         console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
-        page_title = await getTitle(lang_code, slug_alt);
+        page_title_pack = await getTitle(lang_code, slug_alt);
+        page_title = page_title_pack.title;
+        wiki_page_id = page_title_pack.pageid;
 
         // If Wikipedia deleted the page, update the articletable lastmod_timestamp and move on
         // If the request itself 404'd or messed up, just move to the next slug on the list and don't update the table
