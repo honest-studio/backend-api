@@ -1,7 +1,7 @@
 const rp = require('request-promise');
 const commander = require('commander');
 import * as elasticsearch from 'elasticsearch';
-import { getTitle } from './functions/getTitle';
+import { getTitle, TitlePack } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
 import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox';
 import { getMetaData } from './functions/getMetaData';

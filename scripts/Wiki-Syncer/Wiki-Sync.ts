@@ -21,13 +21,14 @@ commander
   .description('Sync an Everipedia page to its corresponding Wikipedia page')
   .usage('[OPTIONS]...')
   .option('-s, --start <timestamp>', 'Lower bound timestamp in format 2019-09-21T00:00:00Z')
+  .option('-e, --end <timestamp>', 'Upper bound timestamp in format 2019-09-21T00:00:00Z')
   .parse(process.argv);
 
 const LANG_CODE = 'en';
 
 const BATCH_SIZE = 5;
-const LASTMOD_CUTOFF_TIME = '2019-07-22 00:00:00';
-const RC_LIMIT = 50; // Max allowed is 500 for non-Wikipedia superusers
+const LASTMOD_CUTOFF_TIME = '2017-01-01 00:00:00';
+const RC_LIMIT = 500; // Max allowed is 500 for non-Wikipedia superusers
 // const EDIT_TYPES = 'edit|new';
 const EDIT_TYPES = 'new'
 // const BATCH_SIZE = 250;
@@ -42,6 +43,7 @@ export const logYlw = (inputString: string) => {
 (async () => {
     logYlw("=================STARTING MAIN SCRIPT=================");
     let start_time = commander.start;
+    let end_time = commander.end;
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Syncer", 'resultlinks.txt'), "");
 
     console.log("\n");
@@ -64,7 +66,7 @@ export const logYlw = (inputString: string) => {
     const limit = `rclimit=${RC_LIMIT}`;
     const type = `rctype=${EDIT_TYPES}`;
     const recent_edits_url = `${wikiMedia}${action}&${list}&${format}&${start}&${type}&${limit}`;
-    // console.log(chalk.yellow(recent_edits_url));
+    console.log(chalk.yellow(recent_edits_url));
 
     let parsed_body = await rp(recent_edits_url)
                     .then(body => JSON.parse(body));
@@ -114,15 +116,18 @@ export const logYlw = (inputString: string) => {
         if (result) {
             new_slug = result.canonicalurl.replace(`https://${LANG_CODE}.wikipedia.org/wiki/`, '');
             console.log(`NEW SLUG: |${new_slug}|`);
-            console.log(result)
+            // console.log(result)
 
             const page_title = result.title;
             const slug = new_slug;
-            const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+            const cleanedSlug = theMysql.cleanSlugForMysql(slug);
             let alternateSlug = cleanedSlug;
 
             // If the two slugs are the same, encode the alternateSlug
-            if (slug === cleanedSlug) alternateSlug = encodeURIComponent(alternateSlug);
+            if (cleanedSlug === slug) alternateSlug = encodeURIComponent(alternateSlug);
+
+            // If the two slugs are still the same, decode the alternateSlug
+            if (cleanedSlug === alternateSlug) alternateSlug = decodeURIComponent(alternateSlug);
 
             let text_preview = "";
 
@@ -133,71 +138,110 @@ export const logYlw = (inputString: string) => {
             const webp_small =  'https://epcdn-vz.azureedge.net/static/images/no-image-slide-thumb.webp';
             const page_type = 'Thing';
             const is_adult_content = 0;
-            const is_indexed = 0;
-            const bing_index_override = 1;
             const page_lang = 'en';
-            const is_removed = 0;
             const page_note = '|EN_WIKI_IMPORT|';
 
             // Dummy hash for now
-            const ipfs_hash = calcIPFSHash(`${page_title}${slug}${page_lang}`)
+            const ipfs_hash = calcIPFSHash(`${page_title}${slug}${page_lang}`);
+            const ipfs_hash_parent = 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR'; // Dummy value
+            let article_insertion;
+            try {
+                article_insertion = await theMysql.TryQuery(
+                    `
+                    INSERT INTO enterlink_articletable 
+                        (   ipfs_hash_current, 
+                            ipfs_hash_parent, 
+                            slug, slug_alt, 
+                            page_title, 
+                            blurb_snippet, 
+                            photo_url, 
+                            photo_thumb_url, 
+                            page_type, 
+                            creation_timestamp, 
+                            lastmod_timestamp, 
+                            is_adult_content, 
+                            page_lang, 
+                            is_new_page, 
+                            pageviews, 
+                            is_removed, 
+                            is_indexed, 
+                            bing_index_override, 
+                            has_pending_edits, 
+                            webp_large, 
+                            webp_medium, 
+                            webp_small, 
+                            page_note
+                        )
+                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 0, 0, 0, 0, 1, 0, ?, ?, ?, ? )
+                    `,
+                    [
+                        ipfs_hash,
+                        ipfs_hash_parent,
+                        cleanedSlug,
+                        alternateSlug,
+                        page_title,
+                        text_preview,
+                        photo_url,
+                        photo_thumb_url,
+                        page_type,
+                        is_adult_content,
+                        page_lang,
+                        webp_large,
+                        webp_medium,
+                        webp_small,
+                        page_note
+                    ]
+                )
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_articletable. IPFS hash already exists'));
+                }
+                else throw e;
+            }
 
-            the below part needs to be scrutinized
-    
-            const article_insertion = await this.mysql.TryQuery(
-                `
-                INSERT INTO enterlink_articletable 
-                    (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits, webp_large, webp_medium, webp_small)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
-                
-                `,
-                [
-                    ipfs_hash,
-                    cleanedSlug,
-                    cleanedSlug,
-                    page_title,
-                    text_preview,
-                    photo_url,
-                    photo_thumb_url,
-                    page_type,
-                    is_adult_content,
-                    page_lang,
-                    webp_large,
-                    webp_medium,
-                    webp_small,
-                    ipfs_hash,
-                    page_title,
-                    text_preview,
-                    photo_url,
-                    photo_thumb_url,
-                    page_type,
-                    is_adult_content,
-                    is_indexed,
-                    is_removed,
-                    webp_large,
-                    webp_medium,
-                    webp_small,
-                ]
-            )
+            let inserted_id = article_insertion && (article_insertion as any).insertId;
 
+            let articlejson: ArticleJson = {
+                page_title: [{ type: 'sentence', index: 0, text: page_title }], 
+                main_photo: [],
+                infobox_html: null,
+                page_body: [],
+                infoboxes: [],
+                citations: [],
+                media_gallery: [],
+                metadata: [],
+                amp_info: [],
+                ipfs_hash: ipfs_hash // Set the dummy hash first
+            } as any;
 
+            let json_insertion;
+            try {
+                json_insertion = await theMysql.TryQuery(
+                    `
+                    INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
+                    VALUES (?, ?, ?, NOW())
+                    `,
+                    [inserted_id, ipfs_hash, JSON.stringify(articlejson)]
+                );
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
+                }
+                else throw e;
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            // Run the import script for the new page
+            if (article_insertion && json_insertion){
+                let concat_string = `lang_${page_lang}/${slug}|lang_${page_lang}/${alternateSlug}|${ipfs_hash}|${page_title.trim()}|${inserted_id}|||`;
+                try{
+                    // console.log(artResult.concatted)
+                    await WikiImport(concat_string);
+                }
+                catch (err){
+                    console.error(`${concat_string} FAILED!!! [${err}]`);
+                    console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
+                }
+            }
         }
     }
     return false;

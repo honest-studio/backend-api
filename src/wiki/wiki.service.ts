@@ -151,6 +151,9 @@ export class WikiService {
         // If the two slugs are the same, encode the alternateSlug
         if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
 
+        // If the two slugs are still the same, decode the alternateSlug
+        if (mysql_slug === alternateSlug) alternateSlug = decodeURIComponent(alternateSlug);
+
         // Get current IPFS hash
         const pipeline = this.redis.connection().pipeline();
         pipeline.get(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
@@ -460,6 +463,7 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
 
@@ -605,6 +609,11 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
 
+        let alternateSlug = decodeURIComponent(cleanedSlug);
+
+        // If the two slugs are the same, encode the alternateSlug
+        if (cleanedSlug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
+
         let text_preview = "";
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
@@ -676,7 +685,7 @@ export class WikiService {
             [
                 ipfs_hash,
                 cleanedSlug,
-                cleanedSlug,
+                alternateSlug,
                 page_title,
                 text_preview,
                 photo_url,
