@@ -22,7 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
     "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Fix-Missing-Wiki-Import-Blurb-Snippets.js -s 128401 -e 128402",
     "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 4473 -e 3526080",
-    "maintenance:run-new-pages-since": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-New-Pages-Since/Wiki-New-Pages-Since.js -s \"2019-08-04T00:00:00Z\" -e \"2019-08-05T00:00:00Z\"",
+    "maintenance:run-new-pages-since": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-New-Pages-Since/Wiki-New-Pages-Since.js -s \"2019-07-04T00:00:00Z\" -e \"2019-07-05T00:00:00Z\"",
     "maintenance:run-wiki-sync": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Syncer/Wiki-Sync.js -s \"2019-09-05T00:00:00Z\" -e \"2019-10-01T00:00:00Z\"",
     "maintenance:create-webp": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Make-WebP-Images.js --input '../../../scripts/Non-Lambda/input/slug-list.txt'",
     "maintenance:batch": "tsc --p ./tsconfig.json && python ./scripts/batch/batch-commands.py &",

@@ -36,6 +36,10 @@ export const logYlw = (inputString: string) => {
 	return console.log(chalk.yellow.bold(inputString));
 }
 
+export const logOrg = (inputString: string) => {
+	return console.log(chalk.rgb(255, 204, 153).bold(inputString));
+}
+
 export const WikiNewPagesSince = async (api_start: number, api_end: number) => { 
     logYlw("=============🧐 CHECKING LOGEVENTS🧐============");
 
@@ -62,26 +66,65 @@ export const WikiNewPagesSince = async (api_start: number, api_end: number) => {
         // Another redirect check
         if(event_obj.tags && event_obj.tags.includes('mw-new-redirect')) return null;
 
+
         // Add the import info to the new_page_array
         new_page_array.push({ title: event_obj.title, id: event_obj.pageid });
 
     }).filter(obj => obj);
 
-    logYlw("===============🆕 PROCESSING NEW PAGES 🆕===============");
-    console.log(chalk.bold.yellow(`New pages found: `));
+    logOrg("===============🆕 PROCESSING NEW PAGES 🆕===============");
+    console.log(chalk.rgb(255, 204, 153)(`New pages found: `));
     console.log(new_page_array);
-    console.log(chalk.bold.yellow(`-------------`));
+    console.log(chalk.rgb(255, 204, 153)(`-------------`));
+    
 
     // Need to make dummy entries in enterlink_articletable and enterlink_hashcache
     for (let index = 0; index < new_page_array.length; index++) {
-        console.log(chalk.bold.yellow(`****`));
-        console.log("Making dummy MySQL entries for: ", new_page_array[index]);
+        let new_page_info = new_page_array[index];
+        logOrg("====================🆕 PROCESSING NEW PAGE 🆕====================");
+        logOrg(`****${new_page_info.title}****`);
+
+        // Make sure the page hasn't been deleted
+        console.log(chalk.yellow(`Verifying that the page has not been deleted`));
+        let is_deleted_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=delete&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
+        let deleted_parsed_body = await rp(is_deleted_url).then(body => JSON.parse(body));
+        deleted_parsed_body = deleted_parsed_body && deleted_parsed_body.query && deleted_parsed_body.query.logevents;
+        if(deleted_parsed_body && deleted_parsed_body.length > 0 ) {
+            console.log("Page was deleted. Skipping...");
+            continue;
+        }
+
+        // Make sure the page hasn't been merged
+        console.log(chalk.yellow(`Verifying that the page has not been merged`));
+        let is_merged_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=merge&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
+        let merged_parsed_body = await rp(is_merged_url).then(body => JSON.parse(body));
+        merged_parsed_body = merged_parsed_body && merged_parsed_body.query && merged_parsed_body.query.logevents;
+        if(merged_parsed_body && merged_parsed_body.length > 0 ) {
+            console.log("Page was merged. Skipping...");
+            console.log(merged_parsed_body);
+            continue;
+        }
+
+        // Make sure the page hasn't been redirected
+        console.log(chalk.yellow(`Verifying that the page has not been redirected`));
+        let is_moved_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&leaction=move%2Fmove_redir&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
+        let moved_parsed_body = await rp(is_moved_url).then(body => JSON.parse(body));
+        moved_parsed_body = moved_parsed_body && moved_parsed_body.query && moved_parsed_body.query.logevents;
+        if(moved_parsed_body && moved_parsed_body.length > 0 ) {
+            console.log("Page was moved or redirected. Skipping...");
+            console.log(moved_parsed_body);
+            continue;
+        }
+
+        // continue
+
+        console.log("Making dummy MySQL entries for: ", new_page_info);
         let new_slug = "";
-        let url = `https://${LANG_CODE}.wikipedia.org/w/api.php?action=query&prop=info&titles=${encodeURIComponent(new_page_array[index].title)}&inprop=url&format=json`;
+        let url = `https://${LANG_CODE}.wikipedia.org/w/api.php?action=query&prop=info&titles=${encodeURIComponent(new_page_info.title)}&inprop=url&format=json`;
         let result = await rp(url)
                         .then(body => {
                             let result = JSON.parse(body);
-                            return result && result.query && result.query.pages && result.query.pages[new_page_array[index].id];
+                            return result && result.query && result.query.pages && result.query.pages[new_page_info.id];
                         })
                         .catch((err) => {
                             console.log(err);
@@ -257,7 +300,7 @@ export const WikiNewPagesSince = async (api_start: number, api_end: number) => {
         console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}`));
 
         // Run the script
-        WikiNewPagesSince(batch_start_unix / 1000, end_unix / 1000);
+        await WikiNewPagesSince(batch_start_unix / 1000, end_unix / 1000);
 
         batchCounter++;
     }
