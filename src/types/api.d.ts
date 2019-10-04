@@ -5,15 +5,12 @@ export interface MimePack {
     mime: string;
 }
 
-export interface PreviewResult {
+interface PreviewResult {
     page_title: string;
     slug: string;
     main_photo: string;
     main_photo_category: CitationCategoryType;
     thumbnail: string;
-    webp_large: string;
-    webp_medium: string;
-    webp_small: string;
     lang_code: string;
     ipfs_hash: string;
     text_preview: string;
@@ -22,8 +19,24 @@ export interface PreviewResult {
     is_adult_content: boolean;
     creation_timestamp: Date;
     lastmod_timestamp: Date;
+    webp_large: string;
+    webp_medium: string;
+    webp_small: string;
+    is_indexed: boolean;
+    is_removed: boolean;
     html_blob?: string;
 }
+
+export interface PageLinkCollection {
+    [link_wikilangslug: string]: PageLinkProps;
+}
+
+export interface PageLinkProps {
+    is_indexed: string;
+    is_removed: boolean;
+    page_note: string;
+}
+
 export type WikiSearchResult = PreviewResult;
 
 export interface BookInfoPack {
