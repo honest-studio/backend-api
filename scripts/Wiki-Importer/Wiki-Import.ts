@@ -86,10 +86,6 @@ export const WikiImport = async (inputString: string) => {
         wiki_page_id = page_title_pack.pageid;
         raw_title = page_title_pack.raw_title;
 
-        logYlw("=================🚧 FIND REDIRECTS 🚧=================");
-        await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
-        return false;
-
         // Throw if the title wasn't found
         if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
         else {
@@ -103,10 +99,6 @@ export const WikiImport = async (inputString: string) => {
         page_title = page_title_pack.title;
         wiki_page_id = page_title_pack.pageid;
         raw_title = page_title_pack.raw_title;
-
-        logYlw("=================🚧 FIND REDIRECTS 🚧=================");
-        await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
-        return false;
 
         // If Wikipedia deleted the page, update the articletable lastmod_timestamp and move on
         // If the request itself 404'd or messed up, just move to the next slug on the list and don't update the table
@@ -129,10 +121,6 @@ export const WikiImport = async (inputString: string) => {
             page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
         }
     }
-
-    logYlw("=================🚧 FIND REDIRECTS 🚧=================");
-    await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
-    return false;
 
     // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
@@ -320,6 +308,11 @@ export const WikiImport = async (inputString: string) => {
     const prerenderToken = theConfig.get('PRERENDER_TOKEN');
     await flushPrerenders(lang_code, slug, prerenderToken);
     console.log(chalk.yellow.bold(`------Flush complete-----`));
+
+    logYlw("=================🚧 FIND REDIRECTS 🚧=================");
+    await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
+    process.stdout.write(chalk.yellow(` DONE\n`));
+
 
     // fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));
