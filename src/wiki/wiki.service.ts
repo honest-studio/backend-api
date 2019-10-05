@@ -16,7 +16,7 @@ import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
 import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageIndexedLinkCollection } from '../types/api';
 import { PreviewService } from '../preview';
-import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
+import { LanguagePack, SeeAlsoType, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex, getPageSentences } from '../utils/article-utils';
 import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
 import { CAPTURE_REGEXES } from '../utils/article-utils/article-converter';
@@ -475,37 +475,39 @@ export class WikiService {
         return lang_packs;
     }
 
-    async getSeeAlsos(inputWiki: ArticleJson): Promise<SeeAlso[]> {
-        let tempSeeAlsos: SeeAlso[] = calculateSeeAlsos(inputWiki);
+    async getSeeAlsos(inputWiki: ArticleJson, lang_to_use: string): Promise<SeeAlsoType[]> {
+        let tempSeeAlsos: SeeAlsoType[] = calculateSeeAlsos(inputWiki);
         if (tempSeeAlsos.length == 0) return [];
 
-        let seeAlsoWhere = tempSeeAlsos
-            .map((value, index) => {
-                // performance is slow when ORing slug_alt for some reason, even though it is indexed
-                return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
-            })
-            .join(' OR ');
+        // Collect the slugs
+        let seealso_slugs = tempSeeAlsos.map(sa => sa.slug);
+
         let seeAlsoRows: any[] = await this.mysql.TryQuery(
             `
             SELECT 
-                art.page_title, 
-                art.slug,
-                art.photo_url AS main_photo, 
-                art.photo_thumb_url AS thumbnail,
-                art.page_lang AS lang_code,
-                art.ipfs_hash_current AS ipfs_hash, 
-                art.blurb_snippet AS text_preview, 
-                art.pageviews, 
-                art.page_note,
-                art.is_adult_content, 
-                art.creation_timestamp,
-                art.lastmod_timestamp
+                COALESCE(art_redir.page_title, art.page_title) page_title, 
+                COALESCE(art_redir.slug, art.slug) AS slug,
+                COALESCE(art_redir.photo_url, art.photo_url) AS main_photo, 
+                COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail, 
+                COALESCE(art_redir.page_lang, art.page_lang) AS lang_code, 
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview, 
+                COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed, 
+                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed 
             FROM enterlink_articletable AS art 
-            WHERE ${seeAlsoWhere};`,
-            []
+            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+            WHERE
+                (art.slug IN (?) OR art.slug_alt IN (?))
+                AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                and (art.is_removed = 0 || art_redir.is_removed = 0)
+            ORDER BY (art_redir.is_indexed || art.is_indexed) DESC
+            ;`,
+            [seealso_slugs, seealso_slugs, lang_to_use, lang_to_use]
         );
 
-        // clean up text previews
+        // Quick slice
+        seeAlsoRows = seeAlsoRows.slice(0, 6);
+
+        // Clean up text previews
         for (let preview of seeAlsoRows) {
             preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
@@ -513,7 +515,7 @@ export class WikiService {
             }
         }
 
-        return seeAlsoRows as SeeAlso[];
+        return seeAlsoRows as SeeAlsoType[];
     }
 
     async submitWiki(wiki: ArticleJson): Promise<any> {
@@ -967,7 +969,7 @@ export class WikiService {
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
         const wiki_promise = this.getWikiBySlug(lang_code, slug, false, false, false);
-        const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki));
+        const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki, lang_code));
         const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
         const link_collection_promise = wiki_promise.then(wiki => this.getPageIndexedLinkCollection(wiki, lang_code));
 

@@ -5,13 +5,15 @@ export interface AMPParseCollection {
     lightboxes: string[];
 }
 
-export interface SeeAlso {
-    lang: string;
+export interface SeeAlsoType {
     slug: string;
-    title: string;
-    photo_url: string;
-    thumbnail_url: string;
-    snippet: string;
+    page_title: string;
+    lang_code: string;
+    thumbnail: string;
+    main_photo: string;
+    text_preview: string;
+    is_indexed: string;
+    is_removed: string;
 }
 
 export interface SeeAlsoCountGroup {
