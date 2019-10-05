@@ -498,6 +498,7 @@ export class WikiService {
             WHERE
                 (art.slug IN (?) OR art.slug_alt IN (?))
                 AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                and (art.is_removed = 0 || art_redir.is_removed = 0)
             ORDER BY (art_redir.is_indexed || art.is_indexed) DESC
             ;`,
             [seealso_slugs, seealso_slugs, lang_to_use, lang_to_use]
