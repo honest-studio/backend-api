@@ -13,9 +13,9 @@ import endianness from 'endianness';
 import bs58 from 'bs58';
 const css_escape = require('css.escape');
 
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType } from '../../types/article';
-import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
-import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles } from './article-converter';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType, DescList, Samp } from '../../types/article';
+import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection,  } from '../../types/article-helpers';
+import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles, collectNestedContentSentences } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
 var colors = require('colors');
@@ -392,36 +392,8 @@ export const ConstructAMPImage = (
 };
 
 export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
-    let allSentences: Sentence[] = [];
-    passedJSON.page_body.forEach((section, index) => {
-        section.paragraphs.forEach((paragraph, index) => {
-            allSentences.push(...(paragraph.items as Sentence[]));
-        });
-    });
-    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
-    allSentences.push(...theCaptionSentences);
-    // passedJSON.infoboxes.forEach((infobox, index) => {
-    //     infobox.values.forEach(val => {
-    //         val.sentences.forEach(sent => {
-    //             allSentences.push(sent);
-    //         })
-    //     })
-    // });
-    passedJSON.media_gallery.forEach((media, index) => {
-        allSentences.push(...(media.caption as Sentence[]));
-    });
-    passedJSON.citations.forEach((citation, index) => {
-        let theDescription: Sentence[] = [];
-        if(citation.description){
-            theDescription = citation.description;
-        }
-        else {
-            theDescription = [{ index: 0, type: 'sentence', text: ''}]
-        }
-        allSentences.push(...theDescription);
-    });
+    let allSentences: Sentence[] = getPageSentences(passedJSON);
     let tempSeeAlsos: SeeAlso[] = [];
-
     allSentences.forEach((sentence, index) => {
         let text = sentence.text;
         let result;
@@ -1032,3 +1004,116 @@ export function linkCategoryFromText(input_text: string): CitationCategoryType{
     // Return the result
     return working_category;
 }
+
+export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
+    let allSentences: Sentence[] = [];
+
+    // Main photo
+    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
+    allSentences.push(...theCaptionSentences);
+
+    // Page body
+    passedJSON.page_body.map(section => {
+        // Get the section image caption sentences
+        section.images.forEach(image => {
+            allSentences.push(...(image.caption as Sentence[]));
+        });
+
+        // Get the sentences from various types of paragraph items
+        section.paragraphs.forEach((paragraph, index) => {
+            const { tag_type, items } = paragraph;
+
+            // These tags are handled alike
+            if (
+                (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4'|| tag_type === 'h5' || tag_type === 'h6') // Headings
+                || tag_type === 'p' // Normal paragraphs
+                || tag_type === 'blockquote' // Blockquotes
+            ) {
+                allSentences.push(...(paragraph.items as Sentence[]));
+            }
+    
+            // Handle lists
+            if (tag_type === 'ul' || tag_type === 'ol') {
+                paragraph.items.map(list_item => {
+                    if (!list_item) return;
+                    else allSentences.push(...((list_item as ListItem).sentences as Sentence[]));
+                });
+            }
+
+            // Handle dl
+            if (tag_type === 'dl') {
+                (items[0] as DescList).items.map(desc_list_item => {
+                    if (!desc_list_item) return;
+                    desc_list_item.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                });
+            }
+
+            // Handle samp
+            if (tag_type === 'samp') {
+                (items[0] as Samp).items.map(nested_item => {
+                    allSentences.push(...collectNestedContentSentences(nested_item));
+                })
+            }
+
+            // Handle tables
+            if (tag_type === 'table') {
+                let the_table = items[0] as Table;
+
+                // Table caption
+                if (the_table.caption) allSentences.push(...the_table.caption.sentences);
+
+                // Table head
+                if (the_table.thead){
+                    the_table.thead.rows && the_table.thead.rows.map(trow => {
+                        trow && trow.cells && trow.cells.map(tcell => {
+                            tcell && tcell.content && tcell.content.map(nested_item => {
+                                allSentences.push(...collectNestedContentSentences(nested_item));
+                            })
+                        })
+                    })
+                }
+
+                // Table body
+                if (the_table.tbody){
+                    the_table.tbody.rows && the_table.tbody.rows.map(trow => {
+                        trow && trow.cells && trow.cells.map(tcell => {
+                            tcell && tcell.content && tcell.content.map(nested_item => {
+                                allSentences.push(...collectNestedContentSentences(nested_item));
+                            })
+                        })
+                    })
+                }
+                // Table footer
+                if (the_table.tfoot){
+                    the_table.tfoot.rows && the_table.tfoot.rows.map(trow => {
+                        trow && trow.cells && trow.cells.map(tcell => {
+                            tcell && tcell.content && tcell.content.map(nested_item => {
+                                allSentences.push(...collectNestedContentSentences(nested_item));
+                            })
+                        })
+                    })
+                }
+            }
+        });
+    });
+
+    // Infobox
+    passedJSON.infoboxes.map(infobox => {
+        infobox.values && infobox.values.map(val => {
+            if(val.sentences) allSentences.push(...val.sentences);
+        })
+    });
+
+    // Media gallery (deprecated)
+    // passedJSON.media_gallery.forEach((media, index) => {
+    //     allSentences.push(...(media.caption as Sentence[]));
+    // });
+
+    // Citations
+    passedJSON.citations.map(citation => {
+        if (citation && citation.description) allSentences.push(...citation.description);
+    });
+    return allSentences;
+}; 

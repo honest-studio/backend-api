@@ -56,7 +56,7 @@ export async function getMetaData(lang_code: string, slug: string, creation_stam
 		},
 		{
 			key:"creation_timestamp",
-			value: creation_stamp
+			value: creation_stamp && creation_stamp != '' ? creation_stamp : getTimeStamp()
 		},
 		{
 			key:"last_modified",

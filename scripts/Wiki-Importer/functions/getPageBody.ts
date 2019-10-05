@@ -43,7 +43,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 
 	// return;
 
-	console.log(chalk.yellow.bold("====================📰 SECTIONS 📰===================="));
+	console.log(chalk.yellow.bold("=====================📰 SECTIONS 📰===================="));
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
 	// Current section

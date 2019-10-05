@@ -14,11 +14,12 @@ import { RedisService, MongoDbService, MysqlService } from '../feature-modules/d
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
-import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageLinkCollection, PageLinkProps } from '../types/api';
 import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
-import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex, getPageSentences } from '../utils/article-utils';
 import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
+import { CAPTURE_REGEXES } from '../utils/article-utils/article-converter';
 import { mergeWikis, parseMergeInfoFromProposal } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
@@ -87,6 +88,67 @@ export class WikiService {
         });
     };
 
+    async getPageLinkCollection(passedJSON: ArticleJson, lang_to_use: string): Promise<PageLinkCollection> {
+        let working_collection: PageLinkCollection = {};
+        let page_sentences = getPageSentences(passedJSON);
+        let found_slugs: string[] = [];
+        page_sentences.forEach(sentence => {
+            let text = sentence.text;
+            let result;
+    
+            // Find the links and create
+            while ((result = CAPTURE_REGEXES.link_match.exec(text)) !== null) {
+                if (!found_slugs.includes(result[2])){
+                    found_slugs.push(result[2]);
+                }
+            }
+        });
+
+        let page_link_rows: any[] = await this.mysql.TryQuery(
+            `
+            SELECT DISTINCT
+                art.slug AS slug,
+                art.slug_alt AS slug_alt,
+                art_redir.slug AS redir_slug,
+                art_redir.slug_alt AS redir_slug_alt,
+                COALESCE(art_redir.slug, art.slug) AS slug,
+                COALESCE(art_redir.slug_alt, art.slug_alt) AS slug_alt,
+                COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed,
+                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
+                COALESCE(art_redir.page_note, art.page_note) AS page_note
+            FROM enterlink_articletable AS art
+            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+            WHERE 
+                (art.slug IN (?) OR art.slug_alt IN (?))
+                AND (art.page_lang = ? OR art_redir.page_lang = ?)
+            `,
+            [found_slugs, found_slugs, lang_to_use, lang_to_use]
+        );
+
+        page_link_rows.forEach(result_row => {
+            // Fill in the collection
+            // Add in slug_alts and redirect slug/slug_alt too to help with matching
+            let link_props_factory = () => {
+                return {
+                    is_indexed: result_row.is_indexed,
+                    is_removed: result_row.is_removed,
+                    page_note: result_row.page_note
+                }
+            }
+
+            // All in all 4 slug variants
+            working_collection[`lang_${lang_to_use}/${result_row.slug}`] = link_props_factory();
+            working_collection[`lang_${lang_to_use}/${result_row.slug_alt}`] = link_props_factory();
+            working_collection[`lang_${lang_to_use}/${result_row.redir_slug}`] = link_props_factory();
+            working_collection[`lang_${lang_to_use}/${result_row.redir_slug_alt}`] = link_props_factory();
+
+        })
+
+        // Remove the null
+        delete working_collection[`lang_${lang_to_use}/null`];
+
+        return working_collection;
+    }
 
 
     async unmergeProposal(rejected_merge_proposal: any){
@@ -122,7 +184,7 @@ export class WikiService {
         flushPrerenders(parsedMergeInfo.target.lang, parsedMergeInfo.target.slug, prerenderToken);
     }
 
-    async getMergedWiki(inputPack: MergeInputPack): Promise<MergeResult>{
+    async getMergedWiki(inputPack: MergeInputPack): Promise<MergeResult> {
         let sourceWiki: ArticleJson;
 
         // Get the source wiki, which might be present in the input pack
@@ -150,6 +212,9 @@ export class WikiService {
 
         // If the two slugs are the same, encode the alternateSlug
         if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
+
+        // If the two slugs are still the same, decode the alternateSlug
+        if (mysql_slug === alternateSlug) alternateSlug = decodeURIComponent(alternateSlug);
 
         // Get current IPFS hash
         const pipeline = this.redis.connection().pipeline();
@@ -460,6 +525,7 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
 
@@ -605,6 +671,11 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
 
+        let alternateSlug = decodeURIComponent(cleanedSlug);
+
+        // If the two slugs are the same, encode the alternateSlug
+        if (cleanedSlug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
+
         let text_preview = "";
         try {
             const first_para = wiki.page_body[0].paragraphs[0];
@@ -676,7 +747,7 @@ export class WikiService {
             [
                 ipfs_hash,
                 cleanedSlug,
-                cleanedSlug,
+                alternateSlug,
                 page_title,
                 text_preview,
                 photo_url,
@@ -900,6 +971,8 @@ export class WikiService {
         const wiki_promise = this.getWikiBySlug(lang_code, slug, false, false, false);
         const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki));
         const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
+        const link_collection_promise = wiki_promise.then(wiki => this.getPageLinkCollection(wiki, lang_code));
+
         const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
         SELECT 
@@ -924,20 +997,21 @@ export class WikiService {
                 else throw e;
             });
 
-        return Promise.all([alt_langs_promise, see_also_promise, pageviews_promise, schema_promise])
+        return Promise.all([alt_langs_promise, see_also_promise, pageviews_promise, schema_promise, link_collection_promise])
         .then(values => {
             const alt_langs: LanguagePack[] = values[0];
             const see_also = values[1];
             const pageviews = values[2];
             const schema = values[3];
-
+            const link_collection = values[4];
             return { 
                 alt_langs, 
                 see_also, 
                 pageviews, 
                 schema, 
                 canonical_lang: lang_code, 
-                canonical_slug: slug  
+                canonical_slug: slug,
+                link_collection
             };
 
         });

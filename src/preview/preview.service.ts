@@ -66,7 +66,8 @@ export class PreviewService {
                 art.is_removed,
                 art.webp_large,
                 art.webp_medium,
-                art.webp_small
+                art.webp_small,
+                art.is_indexed
             FROM enterlink_articletable AS art 
             INNER JOIN enterlink_hashcache AS cache
             ON cache.articletable_id=art.id
@@ -205,7 +206,8 @@ export class PreviewService {
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
                 COALESCE (art_redir.webp_large, art.webp_large) AS webp_large,
                 COALESCE (art_redir.webp_medium, art.webp_medium) AS webp_medium,
-                COALESCE (art_redir.webp_small, art.webp_small) AS webp_small
+                COALESCE (art_redir.webp_small, art.webp_small) AS webp_small,
+                COALESCE (art_redir.is_indexed, art.is_indexed) AS is_indexed
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
             WHERE 
@@ -226,7 +228,8 @@ export class PreviewService {
                 COALESCE (art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
                 COALESCE (art_redir.webp_large, art.webp_large) AS webp_large,
                 COALESCE (art_redir.webp_medium, art.webp_medium) AS webp_medium,
-                COALESCE (art_redir.webp_small, art.webp_small) AS webp_small
+                COALESCE (art_redir.webp_small, art.webp_small) AS webp_small,
+                COALESCE (art_redir.is_indexed, art.is_indexed) AS is_indexed
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL) 
             WHERE 
