@@ -14,7 +14,6 @@ import bs58 from 'bs58';
 const css_escape = require('css.escape');
 
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType, DescList, Samp } from '../../types/article';
-import { PageLinkCollection, PageLinkProps } from '../../types/api';
 import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection,  } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles, collectNestedContentSentences } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
@@ -1116,6 +1115,5 @@ export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
     passedJSON.citations.map(citation => {
         if (citation && citation.description) allSentences.push(...citation.description);
     });
-    
     return allSentences;
 }; 

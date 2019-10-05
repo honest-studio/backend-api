@@ -1,3 +1,5 @@
+import { PageLinkCollection } from './api';
+
 export interface AMPParseCollection {
     text: string;
     lightboxes: string[];
@@ -37,6 +39,7 @@ export interface WikiExtraInfo {
     schema: {[key: string]: any};
     canonical_slug: string;
     canonical_lang: string;
+    link_collection: PageLinkCollection;
 }
 
 export interface LanguagePack {

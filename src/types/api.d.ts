@@ -32,7 +32,7 @@ export interface PageLinkCollection {
 }
 
 export interface PageLinkProps {
-    is_indexed: string;
+    is_indexed: boolean;
     is_removed: boolean;
     page_note: string;
 }
