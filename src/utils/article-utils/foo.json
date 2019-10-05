@@ -9,7 +9,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**The Gateway Pundit** is an alternative [[LINK|lang_en|Right-wing_politics|right-wing]] news website. [[CITE|1|http://thegatewaypundit.com]] [3]"
+						"text": "It's Okay to Be White is a movement started on [[LINK|lang_en|4chan|4chan]] wherein people posted stickers and posters that read the [[LINK|lang_en|Eponym|Eponym]]\"It's Okay to Be White\" around metropolitan areas. [[CITE|5|http://popnewsmagazine.com/4chan-launches-its-ok-to-be-white-campaign-causing-mass-outrage-worldwide]]"
 					}
 				]
 			}
@@ -20,15 +20,15 @@
 		"paragraphs": [
 			{
 				"index": 0,
-				"tag_type": "h2",
+				"tag_type": "h3",
 				"attrs": {
-					"id": "overview"
+					"id": "campaign"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Overview"
+						"text": "Campaign"
 					}
 				]
 			},
@@ -40,7 +40,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The Gateway Pundit began as a blog founded by [[LINK|lang_en|jim-hoft|Jim Hoft]] in November 2004 after the [[LINK|lang_en|2004_US_Presidential_election|2004 US Presidential election]]. As of 2016, The Gateway Pundit has 12 million visits each month. It is consistently ranked as one of the top political blogs in the nation. By 2017, the site was reaching 15 million visits per month. [[CITE|1|http://thegatewaypundit.com]]"
+						"text": "The [[LINK|lang_en|anonymous|Anonymous]] [[LINK|lang_en|Imageboard|Imageboard]] known as 4chan hosted a post in late October where someone outlined a guideline on how to achieve the greatest reach. It contained instructions on where to order stickers and warned participants to avoid violent confrontations with [[LINK|lang_en|Antifa|Antifa]] on November 4th. People were instructed to remain silent in the event of police questioning. [[CITE|5|http://popnewsmagazine.com/4chan-launches-its-ok-to-be-white-campaign-causing-mass-outrage-worldwide]]"
 					}
 				]
 			},
@@ -52,7 +52,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The Gateway Pundit has been cited by [[LINK|lang_en|sean-hannity|Sean Hannity]], [[LINK|lang_en|Rush_Limbaugh|Rush Limbaugh]], [[LINK|lang_en|The_Drudge_Report|The Drudge Report]], The Blaze, [[LINK|lang_en|Mark_Levin|Mark Levin]], [[LINK|lang_en|Fox_Nation|Fox Nation]] and by several international news organizations. [[CITE|1|http://thegatewaypundit.com]]In 2005, The Gateway Pundit caught its first big break after its tsunami coverage was heralded by blogger and columnist Michelle Malkin. She linked The Gateway Pundit to her blog, bringing many new readers to the site. [[CITE|4|https://thegatewaypundit.com/about]]"
+						"text": "A subsequent post instructed the participants of the movement to take down all posters that contained links to far-right websites, claiming them to be [[LINK|lang_en|Counterintelligence|Counterintelligence propaganda]] to create further divide and stifle the movement's reputation. They stressed \"uniformity\" and to avoid adding any [[LINK|lang_en|Url|URL]] s to the posts. [[CITE|7|https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/17039585/b3810___its-okay-to-be-white/post-about-the-protest.jfif]]"
 					}
 				]
 			},
@@ -64,44 +64,50 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The Gateway Pundit's popularity grew rapidly during the 2016 presidential election as a result of their early and continued support of Donald Trump. "
-					},
+						"text": "The message is purportedly against [[LINK|lang_en|White_guilt|White guilt]] and the demonization of white culture."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "criticisms"
+				},
+				"items": [
 					{
 						"type": "sentence",
-						"index": 1,
-						"text": "In 2016, they also hired Lucian Wintrich who was well known for starting the Twinks for Trump movement. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "During the election, The Gateway Pundit reached as many as 1 million visitors per day. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "[[CITE|4|https://thegatewaypundit.com/about]] [7]In February 2017, after Donald Trump was elected President of the United States, Hoft and Wintrich were granted White House press credentials. "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "By 2017, The Gateway Pundit was reaching 15 million visitors monthly. "
-					},
-					{
-						"type": "sentence",
-						"index": 5,
-						"text": "[[CITE|4|https://thegatewaypundit.com/about]] [5][7]"
+						"index": 0,
+						"text": "Criticisms"
 					}
 				]
 			},
 			{
-				"index": 4,
+				"index": 1,
 				"tag_type": "p",
 				"attrs": {},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "In March 2017, [[LINK|lang_en|Fox_News_Radio|Fox News Radio]] reporter [[LINK|lang_en|jon-decker-1|Jon Decker]] confronted former Gateway Pundit reporter [[LINK|lang_en|lucian-wintrich|Lucian Wintrich]] at a White House press conference. Decker yelled that Gateway Pundit \"hates blacks, Jews, Hispanics\". [[CITE|2|https://politico.com/blogs/on-media/2017/03/fox-news-radio-correspondent-gateway-pundit-writer-235942]]"
+						"text": "It's Okay to Be White has faced criticism for promoting minor [[LINK|lang_en|Vandalism|Vandalism]] such as posting stickers on others'[[LINK|lang_en|property|Property]]. [[CITE|5|http://popnewsmagazine.com/4chan-launches-its-ok-to-be-white-campaign-causing-mass-outrage-worldwide]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Some have declared the statement to be a form of [[LINK|lang_en|Hate_speech|Hate speech]]. [[CITE|5|http://popnewsmagazine.com/4chan-launches-its-ok-to-be-white-campaign-causing-mass-outrage-worldwide]]People have shared videos on [[LINK|lang_en|twitter|Twitter]] tearing down the signs. Ironically, this has been celebrated by the It's Okay to Be White activists for proving their claim that there is intolerance for whiteness."
 					}
 				]
 			}
@@ -114,13 +120,13 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "controversies"
+					"id": "see-also"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Controversies"
+						"text": "See Also"
 					}
 				]
 			},
@@ -132,17 +138,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The Gateway Pundit has been accused by Media Matters for America a progressive media watchdog of spreading false information on more than twenty occasions. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Many of the incidents involve publishing incorrect suspect names and information during mass shootings. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "[[CITE|6|https://mediamatters.org/research/2017/01/25/22-times-jim-hoft-and-gateway-pundit-were-absurdly-wrong/215106#trump]] [7]"
+						"text": "[[LINK|lang_en|Kony2012|Kony2012]]"
 					}
 				]
 			},
@@ -154,27 +150,7 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "When asked by The Washington Post in February 2018, if The Gateway Pundit spread false information, Hoft denied the allegations. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "“Our track record is comparable or better than mainstream media,” he wrote. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "For example? "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "“We didn’t fall for the false Trump-Russia collusion scandal.” "
-					},
-					{
-						"type": "sentence",
-						"index": 4,
-						"text": "[[CITE|7|https://washingtonpost.com/lifestyle/style/what-is-gateway-pundit-the-conspiracy-hawking-site-at-the-center-of-the-bogus-florida-crisis-actors-hype/2018/02/23/dded562a-174e-11e8-b681-2d4d462a1921_story.html]]"
+						"text": "[[LINK|lang_en|Arab_Spring|Arab Spring]]"
 					}
 				]
 			}
