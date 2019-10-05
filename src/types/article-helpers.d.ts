@@ -12,13 +12,13 @@ export interface SeeAlsoType {
     thumbnail: string;
     main_photo: string;
     text_preview: string;
-    is_indexed: string;
-    is_removed: string;
+    is_indexed: boolean;
+    is_removed: boolean;
 }
 
 export interface SeeAlsoCountGroup {
     count: number;
-    data: SeeAlso;
+    data: SeeAlsoType;
 }
 
 export interface SeeAlsoCollection {
@@ -36,7 +36,7 @@ export interface InlineImage {
 
 export interface WikiExtraInfo {
     pageviews: number;
-    see_also: SeeAlso[];
+    see_also: SeeAlsoType[];
     alt_langs: LanguagePack[];
     schema: {[key: string]: any};
     canonical_slug: string;

@@ -14,7 +14,7 @@ import bs58 from 'bs58';
 const css_escape = require('css.escape');
 
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType, DescList, Samp } from '../../types/article';
-import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection,  } from '../../types/article-helpers';
+import { AMPParseCollection, InlineImage, SeeAlsoType, SeeAlsoCollection,  } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles, collectNestedContentSentences } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
@@ -391,20 +391,22 @@ export const ConstructAMPImage = (
     return ``;
 };
 
-export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
+export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlsoType[] => {
     let allSentences: Sentence[] = getPageSentences(passedJSON);
-    let tempSeeAlsos: SeeAlso[] = [];
+    let tempSeeAlsos: SeeAlsoType[] = [];
     allSentences.forEach((sentence, index) => {
         let text = sentence.text;
         let result;
         while ((result = CAPTURE_REGEXES.link_match.exec(text)) !== null) {
             tempSeeAlsos.push({
-                lang: result[1],
+                lang_code: result[1],
                 slug: result[2],
-                title: '',
-                photo_url: '',
-                thumbnail_url: '',
-                snippet: ''
+                page_title: '',
+                main_photo: '',
+                thumbnail: '',
+                text_preview: '',
+                is_indexed: true,
+                is_removed: false
             });
         }
     });
@@ -412,7 +414,7 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     let seeAlsoTally: SeeAlsoCollection = {};
     let sortedSeeAlsos = [];
     tempSeeAlsos.forEach((value, index) => {
-        let key = `${value.lang}__${value.slug}`;
+        let key = `${value.lang_code}__${value.slug}`;
         if (seeAlsoTally[key]) {
             seeAlsoTally[key].count = seeAlsoTally[key].count + 1;
         } else {
