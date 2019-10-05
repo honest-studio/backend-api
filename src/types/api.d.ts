@@ -27,15 +27,7 @@ interface PreviewResult {
     html_blob?: string;
 }
 
-export interface PageLinkCollection {
-    [link_wikilangslug: string]: PageLinkProps;
-}
-
-export interface PageLinkProps {
-    is_indexed: boolean;
-    is_removed: boolean;
-    page_note: string;
-}
+export type PageIndexedLinkCollection = string[];
 
 export type WikiSearchResult = PreviewResult;
 

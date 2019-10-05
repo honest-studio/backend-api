@@ -14,7 +14,7 @@ import { RedisService, MongoDbService, MysqlService } from '../feature-modules/d
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
-import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageLinkCollection, PageLinkProps } from '../types/api';
+import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageIndexedLinkCollection } from '../types/api';
 import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex, getPageSentences } from '../utils/article-utils';
@@ -88,8 +88,8 @@ export class WikiService {
         });
     };
 
-    async getPageLinkCollection(passedJSON: ArticleJson, lang_to_use: string): Promise<PageLinkCollection> {
-        let working_collection: PageLinkCollection = {};
+    async getPageIndexedLinkCollection(passedJSON: ArticleJson, lang_to_use: string): Promise<PageIndexedLinkCollection> {
+        let working_collection: PageIndexedLinkCollection = [];
         let page_sentences = getPageSentences(passedJSON);
         let found_slugs: string[] = [];
         page_sentences.forEach(sentence => {
@@ -104,6 +104,9 @@ export class WikiService {
             }
         });
 
+
+        // We only care about indexed links
+        // On the frontend, all links will be converted to spans by default, except indexed ones
         let page_link_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT DISTINCT
@@ -121,31 +124,26 @@ export class WikiService {
             WHERE 
                 (art.slug IN (?) OR art.slug_alt IN (?))
                 AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                AND art.is_removed = 0
+                AND art.is_indexed = 1
             `,
             [found_slugs, found_slugs, lang_to_use, lang_to_use]
         );
 
         page_link_rows.forEach(result_row => {
-            // Fill in the collection
-            // Add in slug_alts and redirect slug/slug_alt too to help with matching
-            let link_props_factory = () => {
-                return {
-                    is_indexed: result_row.is_indexed,
-                    is_removed: result_row.is_removed,
-                    page_note: result_row.page_note
-                }
-            }
-
             // All in all 4 slug variants
-            working_collection[`lang_${lang_to_use}/${result_row.slug}`] = link_props_factory();
-            working_collection[`lang_${lang_to_use}/${result_row.slug_alt}`] = link_props_factory();
-            working_collection[`lang_${lang_to_use}/${result_row.redir_slug}`] = link_props_factory();
-            working_collection[`lang_${lang_to_use}/${result_row.redir_slug_alt}`] = link_props_factory();
+            working_collection.push(`lang_${lang_to_use}/${result_row.slug}`);
+            working_collection.push(`lang_${lang_to_use}/${result_row.slug_alt}`);
+            working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug}`);
+            working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug_alt}`);
 
         })
 
-        // Remove the null
-        delete working_collection[`lang_${lang_to_use}/null`];
+        // Remove the nulls
+        working_collection = working_collection.filter(s => s && s != `lang_${lang_to_use}/null`);
+
+        // Remove dupes
+        working_collection = Array.from(new Set(working_collection))
 
         return working_collection;
     }
@@ -971,7 +969,7 @@ export class WikiService {
         const wiki_promise = this.getWikiBySlug(lang_code, slug, false, false, false);
         const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki));
         const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
-        const link_collection_promise = wiki_promise.then(wiki => this.getPageLinkCollection(wiki, lang_code));
+        const link_collection_promise = wiki_promise.then(wiki => this.getPageIndexedLinkCollection(wiki, lang_code));
 
         const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
