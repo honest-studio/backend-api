@@ -425,11 +425,13 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     sortedSeeAlsos = Object.keys(seeAlsoTally).sort(function(a, b) {
         return seeAlsoTally[a].count - seeAlsoTally[b].count;
     });
-    sortedSeeAlsos = sortedSeeAlsos.slice(0, 3);
+
+    sortedSeeAlsos = sortedSeeAlsos.slice(0, 50);
     let newSeeAlsos = [];
     sortedSeeAlsos.forEach((key, index) => {
         newSeeAlsos.push(seeAlsoTally[key].data);
     });
+
     return newSeeAlsos;
 };
 

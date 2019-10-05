@@ -479,6 +479,7 @@ export class WikiService {
         let tempSeeAlsos: SeeAlsoType[] = calculateSeeAlsos(inputWiki);
         if (tempSeeAlsos.length == 0) return [];
 
+        // Collect the slugs
         let seealso_slugs = tempSeeAlsos.map(sa => sa.slug);
 
         let seeAlsoRows: any[] = await this.mysql.TryQuery(
@@ -487,28 +488,31 @@ export class WikiService {
                 COALESCE(art_redir.page_title, art.page_title) page_title, 
                 COALESCE(art_redir.slug, art.slug) AS slug,
                 COALESCE(art_redir.photo_url, art.photo_url) AS main_photo, 
-                COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail,
-                COALESCE(art_redir.page_lang, art.page_lang) AS lang_code,
-                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview 
+                COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail, 
+                COALESCE(art_redir.page_lang, art.page_lang) AS lang_code, 
+                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview, 
+                COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed, 
+                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed 
             FROM enterlink_articletable AS art 
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE
                 (art.slug IN (?) OR art.slug_alt IN (?))
                 AND (art.page_lang = ? OR art_redir.page_lang = ?)
-            ORDER BY (art_redir.is_indexed && art.is_indexed) DESC
+            ORDER BY (art_redir.is_indexed || art.is_indexed) DESC
             ;`,
             [seealso_slugs, seealso_slugs, lang_to_use, lang_to_use]
         );
 
-        // clean up text previews
+        // Quick slice
+        seeAlsoRows = seeAlsoRows.slice(0, 6);
+
+        // Clean up text previews
         for (let preview of seeAlsoRows) {
             preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = sanitizeTextPreview(preview.text_preview);
             }
         }
-
-        console.log(seeAlsoRows)
 
         return seeAlsoRows as SeeAlsoType[];
     }

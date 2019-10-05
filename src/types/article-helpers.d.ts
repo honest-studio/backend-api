@@ -12,6 +12,8 @@ export interface SeeAlsoType {
     thumbnail: string;
     main_photo: string;
     text_preview: string;
+    is_indexed: string;
+    is_removed: string;
 }
 
 export interface SeeAlsoCountGroup {
