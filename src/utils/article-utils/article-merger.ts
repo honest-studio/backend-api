@@ -1,6 +1,6 @@
 import { ArticleJson, Sentence, Citation, Media, Infobox, InfoboxValue, Section } from '../../types/article';
 import { MergeResult, MergeProposalParsePack } from '../../types/api';
-import { LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
+import { LanguagePack, SeeAlsoType, WikiExtraInfo } from '../../types/article-helpers';
 import { convertMediaToCitation, getFirstAvailableCitationIndex, getFirstAvailableInfoboxValueIndex, compareURLs, addAMPInfo } from '../../utils/article-utils';
 var colors = require('colors');
 

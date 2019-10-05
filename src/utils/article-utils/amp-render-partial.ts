@@ -3,7 +3,7 @@ import striptags from 'striptags';
 import urlSlug from 'url-slug';
 import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
 import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
-import { AMPParseCollection, LanguagePack, SeeAlso, WikiExtraInfo } from '../../types/article-helpers';
+import { AMPParseCollection, LanguagePack, SeeAlsoType, WikiExtraInfo } from '../../types/article-helpers';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
 import moment from 'moment';
@@ -875,17 +875,17 @@ export class AmpRenderPartial {
         `;
     };
 
-    renderOneSeeAlso = (seealso: SeeAlso): string => {
+    renderOneSeeAlso = (seealso: SeeAlsoType): string => {
         return `
-            <a class='sa-ancr-wrp' href="/wiki/lang_${seealso.lang}/${seealso.slug}">
-                <amp-img layout="fixed-height" height=80 src="${seealso.photo_url ? seealso.photo_url : seealso.thumbnail_url}" alt="${seealso.title} wiki">
+            <a class='sa-ancr-wrp' href="/wiki/lang_${seealso.lang_code}/${seealso.slug}">
+                <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
-                        seealso.title
+                        seealso.page_title
                     }"></amp-img>
                 </amp-img>
                 <div class="sa-contentwrap">
-                    <div class="sa-title">${seealso.title}</div>
-                    <div class="sa-blurb">${seealso.snippet}</div>
+                    <div class="sa-title">${seealso.page_title}</div>
+                    <div class="sa-blurb">${seealso.text_preview}</div>
                 </div>
             </a>
         `;
