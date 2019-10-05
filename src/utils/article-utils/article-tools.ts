@@ -1106,6 +1106,46 @@ export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
         })
     });
 
+    // Wikipedia Infobox
+    if(passedJSON.infobox_html){
+        let the_table = passedJSON.infobox_html as Table;
+
+        // Table caption
+        if (the_table.caption) allSentences.push(...the_table.caption.sentences);
+
+        // Table head
+        if (the_table.thead){
+            the_table.thead.rows && the_table.thead.rows.map(trow => {
+                trow && trow.cells && trow.cells.map(tcell => {
+                    tcell && tcell.content && tcell.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                })
+            })
+        }
+
+        // Table body
+        if (the_table.tbody){
+            the_table.tbody.rows && the_table.tbody.rows.map(trow => {
+                trow && trow.cells && trow.cells.map(tcell => {
+                    tcell && tcell.content && tcell.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                })
+            })
+        }
+        // Table footer
+        if (the_table.tfoot){
+            the_table.tfoot.rows && the_table.tfoot.rows.map(trow => {
+                trow && trow.cells && trow.cells.map(tcell => {
+                    tcell && tcell.content && tcell.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                })
+            })
+        }
+    }
+    
     // Media gallery (deprecated)
     // passedJSON.media_gallery.forEach((media, index) => {
     //     allSentences.push(...(media.caption as Sentence[]));
