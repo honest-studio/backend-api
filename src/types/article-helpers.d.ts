@@ -1,4 +1,4 @@
-import { PageLinkCollection } from './api';
+import { PageIndexedLinkCollection } from './api';
 
 export interface AMPParseCollection {
     text: string;
@@ -39,7 +39,7 @@ export interface WikiExtraInfo {
     schema: {[key: string]: any};
     canonical_slug: string;
     canonical_lang: string;
-    link_collection: PageLinkCollection;
+    link_collection: PageIndexedLinkCollection;
 }
 
 export interface LanguagePack {
