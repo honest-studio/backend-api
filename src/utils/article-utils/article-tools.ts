@@ -1008,7 +1008,13 @@ export function linkCategoryFromText(input_text: string): CitationCategoryType{
 
 export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
     let allSentences: Sentence[] = [];
-    passedJSON.page_body.forEach((section, index) => {
+
+    // Main photo
+    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
+    allSentences.push(...theCaptionSentences);
+
+    // Page body
+    passedJSON.page_body.map(section => {
         // Get the section image caption sentences
         section.images.forEach(image => {
             allSentences.push(...(image.caption as Sentence[]));
@@ -1093,28 +1099,23 @@ export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
             }
         });
     });
-    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
-    allSentences.push(...theCaptionSentences);
-    // passedJSON.infoboxes.forEach((infobox, index) => {
-    //     infobox.values.forEach(val => {
-    //         val.sentences.forEach(sent => {
-    //             allSentences.push(sent);
-    //         })
-    //     })
+
+    // Infobox
+    passedJSON.infoboxes.map(infobox => {
+        infobox.values && infobox.values.map(val => {
+            if(val.sentences) allSentences.push(...val.sentences);
+        })
+    });
+
+    // Media gallery (deprecated)
+    // passedJSON.media_gallery.forEach((media, index) => {
+    //     allSentences.push(...(media.caption as Sentence[]));
     // });
-    passedJSON.media_gallery.forEach((media, index) => {
-        allSentences.push(...(media.caption as Sentence[]));
+
+    // Citations
+    passedJSON.citations.map(citation => {
+        if (citation && citation.description) allSentences.push(...citation.description);
     });
-    passedJSON.citations.forEach((citation, index) => {
-        let theDescription: Sentence[] = [];
-        if(citation.description){
-            theDescription = citation.description;
-        }
-        else {
-            theDescription = [{ index: 0, type: 'sentence', text: ''}]
-        }
-        allSentences.push(...theDescription);
-    });
-    console.log(allSentences)
+    
     return allSentences;
 }; 
