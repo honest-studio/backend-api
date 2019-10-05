@@ -1357,6 +1357,24 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
     return merged_content;
 }
 
+export function collectNestedContentSentences(input_nested_item: NestedContentItem): Sentence[]{
+    let collected_sentences: Sentence[] = [];
+    switch(input_nested_item.type){
+        case 'text':
+            collected_sentences.push(...(input_nested_item as NestedTextItem).content);
+            break;
+        case 'tag':
+            let nested_tag = input_nested_item as NestedTagItem;
+            if (nested_tag.content && nested_tag.content.length){
+                nested_tag.content.map(inner_nested_item => {
+                    collected_sentences.push(...collectNestedContentSentences(inner_nested_item));
+                })
+            }
+            break;
+    }
+    return collected_sentences;
+}
+
 function parseDescriptionList($dlist: Cheerio): DescList {
     const dlist: DescList = {
         type: 'dl',
