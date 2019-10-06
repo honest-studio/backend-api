@@ -58,8 +58,11 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
         // Check the media gallery of both and 'promote' an image to be the main one
         let sourcePhotoCtns: Citation[] = [], targetPhotoCtns: Citation[] = [], comboPhotoCtns: Citation[] = [];
 
+        // Handle cases where there source page has no citations
+        let source_citations = workingSourceWiki.citations && workingSourceWiki.citations.length ? workingSourceWiki.citations : [];
+
         // Collect the photos from the source
-        sourcePhotoCtns = workingSourceWiki.citations.filter(ctn => {
+        sourcePhotoCtns = source_citations.filter(ctn => {
             if (!ctn.media_props && (ctn.category == 'PICTURE' || ctn.category == 'GIF')) return ctn;
         })
 
@@ -219,12 +222,12 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     resultantWiki.citations.push(...newCitations);
 
     // Make sure the citation merge succeeded
-    if (resultantWiki.citations.length <= theCountBeforePack.citations) throw new Error('Something went wrong merging the two citations');
+    if (workingSourceWiki.citations.length > 0 && resultantWiki.citations.length <= theCountBeforePack.citations) throw new Error('Something went wrong merging the two citations');
 
     // ============================================PAGE BODY============================================
     // Add the source's Sections[] to the end of the target's
-    const sourceLang = sourceWiki.metadata.filter(w => w.key == 'page_lang')[0].value;
-    const sourceSlug = sourceWiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
+    const sourceLang = sourceWiki.metadata ? sourceWiki.metadata.filter(w => w.key == 'page_lang')[0].value : 'unknown';
+    const sourceSlug = sourceWiki.metadata ? sourceWiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value : 'unknown';
     const mergeContentNotice: Section = {  
         "paragraphs":[  
            {  
@@ -249,7 +252,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
     resultantWiki.page_body.push(...workingSourceWiki.page_body);
 
     // Make sure the page_body merge succeeded
-    if (resultantWiki.page_body.length <= theCountBeforePack.page_body) throw new Error('Something went wrong merging the two body paragraphs');
+    if (workingSourceWiki.page_body.length > 0 && resultantWiki.page_body.length <= theCountBeforePack.page_body) throw new Error('Something went wrong merging the two body paragraphs');
 
     // ============================================METADATA=============================================
     // Adjust the metadata
