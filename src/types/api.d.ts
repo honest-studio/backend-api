@@ -27,6 +27,23 @@ interface PreviewResult {
     html_blob?: string;
 }
 
+export interface PageCategory {
+    id: number,
+    lang: string,
+    slug: string,
+    title: string,
+    description: string,
+    img_full: string,
+    img_full_webp: string,
+    img_thumb: string,
+    img_thumb_webp: string
+}
+
+export interface PageCategoryCollection {
+    category: PageCategory,
+    articles: PreviewResult[]
+}
+
 export type PageIndexedLinkCollection = string[];
 
 export type WikiSearchResult = PreviewResult;

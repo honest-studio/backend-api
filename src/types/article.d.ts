@@ -240,23 +240,7 @@ export interface ArticleJson {
     amp_info: AmpInfo;
 
     ipfs_hash?: string;
-    categories?: PageCategory[];
+    categories?: number[];
     redirect_wikilangslug?: string;
 }
 
-export interface PageCategory {
-    id: string,
-    lang: string,
-    slug: string,
-    title: string,
-    description: string,
-    img_full: string,
-    img_full_webp: string,
-    img_thumb: string,
-    img_thumb_webp: string
-}
-
-export interface PageCategoryCollection {
-    category: PageCategory,
-    articles: PreviewResult[]
-}

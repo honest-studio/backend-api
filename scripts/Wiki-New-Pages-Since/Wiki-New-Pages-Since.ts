@@ -25,9 +25,9 @@ commander
   .parse(process.argv);
 
 const LANG_CODE = 'en';
-const BATCH_SIZE_MILLISECONDS = 28800 * 1000; // 8 hours
+const BATCH_SIZE_MILLISECONDS = 7200 * 1000; // 2 hours
 
-const RC_LIMIT = 500; // Max allowed is 500 for non-Wikipedia superusers
+const RC_LIMIT = 499; // Max allowed is 500 for non-Wikipedia superusers
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 // const RC_LIMIT = 500;
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';

@@ -1,1 +1,81 @@
-[]
+[
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "**Ade Oyeyemi** (born November 8, 1995) is a [[LINK|lang_en|instagram-star|Instagram star]]. [[CITE|0|https://famousbirthdays.com/people/ade-oyeyemi.html]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "associations"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Associations"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Oyeyemi is acquainted with [[LINK|lang_en|ian-connor|Ian Connor]]."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "trivia"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Trivia"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Ade's [[LINK|lang_en|Astrological_sign|astrological sign]] is [[LINK|lang_en|Scorpio_(astrology)|Scorpio]]."
+					}
+				]
+			}
+		],
+		"images": []
+	}
+]

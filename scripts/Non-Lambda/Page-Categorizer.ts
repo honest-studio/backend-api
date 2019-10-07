@@ -24,7 +24,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250;
+const BATCH_SIZE = 1;
 const PAGE_TYPES = ['Person', 'Thing'];
 const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
 const KEYS_TO_LOOK_FOR = /Occupation/gimu;
@@ -92,8 +92,6 @@ export const PageCategorizer = async (inputString: string) => {
     if (wiki.infoboxes.length > 0){
         for (let index = 0; !has_the_category && (index < wiki.infoboxes.length); index++) {
             let ibox = wiki.infoboxes[index];
-
-            
             // Search the schema
             if (
                 (ibox.schema && ibox.schema.search(SCHEMAS_TO_LOOK_FOR) >= 0)
@@ -122,18 +120,17 @@ export const PageCategorizer = async (inputString: string) => {
     }
 
     if(has_the_category){
-
         // Update the pagecategory collection
         let pagecategory_collection_insertion;
         try {
             pagecategory_collection_insertion = await theMysql.TryQuery(
                 `
-                    UPDATE enterlink_hashcache
-                    SET html_blob = ?
-                    WHERE ipfs_hash = ? 
+                    INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
+                    VALUES (?, ?)
                 `,
-                [JSON.stringify(wiki), inputIPFS]
+                [CATEGORY_ID, pageID]
             );
+            console.log(chalk.green("Added to pagecategory_collection."));
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY")){
                 console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
@@ -141,23 +138,33 @@ export const PageCategorizer = async (inputString: string) => {
             else throw e;
         }
 
-
         // Update the hashcache
-        let json_insertion;
-        try {
-            json_insertion = await theMysql.TryQuery(
-                `
-                    UPDATE enterlink_hashcache
-                    SET html_blob = ?
-                    WHERE ipfs_hash = ? 
-                `,
-                [JSON.stringify(wiki), inputIPFS]
-            );
-        } catch (e) {
-            if (e.message.includes("ER_DUP_ENTRY")){
-                console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
+        if (pagecategory_collection_insertion){
+            // Prepare the new wiki
+            wiki.categories && wiki.categories.length > 0 
+                ? wiki.categories
+                    .filter(cat => cat != CATEGORY_ID) // Make sure there are no dupe categories
+                    .push(CATEGORY_ID)
+                : wiki.categories = [CATEGORY_ID];
+
+            // Update the hashcache
+            let json_insertion;
+            try {
+                json_insertion = await theMysql.TryQuery(
+                    `
+                        UPDATE enterlink_hashcache
+                        SET html_blob = ?
+                        WHERE ipfs_hash = ? 
+                    `,
+                    [JSON.stringify(wiki), inputIPFS]
+                );
+                console.log(chalk.green("Added to enterlink_hashcache."));
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
+                }
+                else throw e;
             }
-            else throw e;
         }
     }
 
