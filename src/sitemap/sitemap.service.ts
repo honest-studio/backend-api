@@ -9,7 +9,7 @@ var colors = require('colors');
 
 const SITEMAP_ROOT_DIR = path.join(__dirname, '..', '..', 'public', 'sitemaps');
 const ROW_LIMIT = 50000;
-const RECENT_ROW_LIMIT = 250;
+const RECENT_ROW_LIMIT = 1000;
 
 @Injectable()
 export class SitemapService {
@@ -21,7 +21,7 @@ export class SitemapService {
     async getSitemapRecent(res: Response, lang: string = 'en', limit: number = 1000): Promise<any> {
         let find_query;
         let today = new Date();
-        let start_from = new Date().setDate(today.getDate() - 120) / 1000;
+        let start_from = new Date().setDate(today.getDate() - 180) / 1000;
 
         let sitemapPacks: any[] = await this.mysql.TryQuery(
             `

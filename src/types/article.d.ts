@@ -1,3 +1,5 @@
+import { PreviewResult } from './api';
+
 // Link to an Everipedia page
 // The interface is listed here for documentation, but the
 // links are actually marked up inline in sentence text with
@@ -238,6 +240,23 @@ export interface ArticleJson {
     amp_info: AmpInfo;
 
     ipfs_hash?: string;
-    categories?: string[];
+    categories?: PageCategory[];
     redirect_wikilangslug?: string;
+}
+
+export interface PageCategory {
+    id: string,
+    lang: string,
+    slug: string,
+    title: string,
+    description: string,
+    img_full: string,
+    img_full_webp: string,
+    img_thumb: string,
+    img_thumb_webp: string
+}
+
+export interface PageCategoryCollection {
+    category: PageCategory,
+    articles: PreviewResult[]
 }
