@@ -142,9 +142,9 @@ export const PageCategorizer = async (inputString: string) => {
         if (pagecategory_collection_insertion){
             // Prepare the new wiki
             wiki.categories && wiki.categories.length > 0 
-                ? wiki.categories
+                ? wiki.categories = wiki.categories
                     .filter(cat => cat != CATEGORY_ID) // Make sure there are no dupe categories
-                    .push(CATEGORY_ID)
+                    .concat(CATEGORY_ID)
                 : wiki.categories = [CATEGORY_ID];
 
             // Update the hashcache
