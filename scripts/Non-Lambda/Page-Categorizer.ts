@@ -28,9 +28,9 @@ const BATCH_SIZE = 1000;
 const PAGE_TYPES = ['Person', 'Thing'];
 const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
 const KEYS_TO_LOOK_FOR = /Occupation/gimu;
-const VALUES_TO_LOOK_FOR = /Instagram Star/gimu;
+const VALUES_TO_LOOK_FOR = /YouTube Star/gimu;
 const PAGE_NOTES = ['|FAMOUS_BIRTHDAYS_2|'];
-const CATEGORY_ID = 1; // Instagram Stars
+const CATEGORY_ID = 3; // YouTube Stars
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
