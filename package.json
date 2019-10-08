@@ -20,7 +20,7 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
-    "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Page-Categorizer.js -s 46042485 -e 46043486",
+    "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Page-Categorizer.js -s 46045471 -e 55043486",
     "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 18694391 -e 18694392",
     "maintenance:run-new-pages-since": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-New-Pages-Since/Wiki-New-Pages-Since.js -s 1530403200 -e 1530489600",
     "maintenance:run-wiki-sync": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Syncer/Wiki-Sync.js -s \"2019-09-05T00:00:00Z\" -e \"2019-10-01T00:00:00Z\"",

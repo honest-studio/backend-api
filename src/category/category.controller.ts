@@ -1,5 +1,5 @@
-import { Body, Controller, Get, UsePipes, Param } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam } from '@nestjs/swagger';
+import { Body, Controller, Get, UsePipes, Param, Query } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { PageCategoryCollection } from '../types/api';
 import { CategoryService } from './category.service';
@@ -15,12 +15,24 @@ export class CategoryController {
         name: 'category_id',
         description: 'The category id (an integer)'
     })
+    @ApiImplicitQuery({
+        name: 'offset',
+        description: 'Number of records to skip. Default=0',
+        required: false,
+        type: Number
+    })
+    @ApiImplicitQuery({
+        name: 'limit',
+        description: 'Number of records to return. Min=1, Max=100, Default=10',
+        required: false,
+        type: Number
+    })
     @ApiResponse({
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
     })
-    async getPagesByCategoryID(@Param('category_id') category_id): Promise<PageCategoryCollection> {
-        return await this.categoryService.getPagesByCategoryID(category_id);
+    async getPagesByCategoryID(@Param('category_id') category_id, @Query() query): Promise<PageCategoryCollection> {
+        return await this.categoryService.getPagesByCategoryID(category_id, query);
     }
 
     @Get('/bylangslug/lang_:lang_code/:slug')
@@ -33,11 +45,23 @@ export class CategoryController {
         name: 'slug',
         description: 'The category page slug. Each category has a unique (lang_code + slug). Example: instagram-stars'
     })
+    @ApiImplicitQuery({
+        name: 'offset',
+        description: 'Number of records to skip. Default=0',
+        required: false,
+        type: Number
+    })
+    @ApiImplicitQuery({
+        name: 'limit',
+        description: 'Number of records to return. Min=1, Max=100, Default=10',
+        required: false,
+        type: Number
+    })
     @ApiResponse({
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
     })
-    async getPagesByCategoryLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<PageCategoryCollection> {
-        return await this.categoryService.getPagesByCategoryLangSlug(lang_code, slug);
+    async getPagesByCategoryLangSlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() query): Promise<PageCategoryCollection> {
+        return await this.categoryService.getPagesByCategoryLangSlug(lang_code, slug, query);
     }
 }

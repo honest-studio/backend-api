@@ -6,8 +6,9 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 @Injectable()
 export class CategoryService {
     constructor(private mysql: MysqlService) {}
-    async getPagesByCategoryID(category_id: number, limit?: number): Promise<PageCategoryCollection> {
-        let limit_to_use = limit == undefined ? 1000 : limit;
+    async getPagesByCategoryID(category_id: number, query: any): Promise<PageCategoryCollection> {
+        let limit_to_use = query.limit == undefined ? 20 : query.limit;
+        let offset_to_use = query.offset == undefined ? 0 : query.offset;
 
         let category_previews: any[] = await this.mysql.TryQuery(
             `
@@ -51,8 +52,9 @@ export class CategoryService {
                 AND cat_collection.category_id = ?
             ORDER BY art.pageviews DESC
             LIMIT ?
+            OFFSET ?
             `,
-            [category_id, category_id, limit_to_use]
+            [category_id, category_id, limit_to_use, offset_to_use]
         );
 
         // Pull out the info for the category itself
@@ -85,8 +87,9 @@ export class CategoryService {
         }
     }
 
-    async getPagesByCategoryLangSlug(lang_code: string, slug: string, limit?: number): Promise<PageCategoryCollection> {
-        let limit_to_use = limit == undefined ? 1000 : limit;
+    async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
+        let limit_to_use = query.limit == undefined ? 20 : query.limit;
+        let offset_to_use = query.offset == undefined ? 0 : query.offset;
         let category_previews: any[] = await this.mysql.TryQuery(
             `
             SELECT 
@@ -130,8 +133,9 @@ export class CategoryService {
                 AND redirect_page_id IS NULL
             ORDER BY art.pageviews DESC
             LIMIT ?
+            OFFSET ?
             `,
-            [lang_code, slug, limit_to_use]
+            [lang_code, slug, limit_to_use, offset_to_use]
         );
 
         // Pull out the info for the category itself
