@@ -7,8 +7,8 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 export class CategoryService {
     constructor(private mysql: MysqlService) {}
     async getPagesByCategoryID(category_id: number, query: any): Promise<PageCategoryCollection> {
-        let limit_to_use = query.limit == undefined ? 20 : query.limit;
-        let offset_to_use = query.offset == undefined ? 0 : query.offset;
+        let limit_to_use = query.limit == undefined ? 20 : parseInt(query.limit);
+        let offset_to_use = query.offset == undefined ? 0 : parseInt(query.offset);
 
         let category_previews: any[] = await this.mysql.TryQuery(
             `
@@ -76,7 +76,7 @@ export class CategoryService {
                 let the_value = prev[key];
 
                 // Sanitize the text if applicable
-                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value)
+                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value);
                 previewresult_obj[key] = the_value;
             });
             the_previews.push(previewresult_obj);
@@ -88,8 +88,8 @@ export class CategoryService {
     }
 
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
-        let limit_to_use = query.limit == undefined ? 20 : query.limit;
-        let offset_to_use = query.offset == undefined ? 0 : query.offset;
+        let limit_to_use = query.limit == undefined ? 20 : parseInt(query.limit);
+        let offset_to_use = query.offset == undefined ? 0 : parseInt(query.offset);
         let category_previews: any[] = await this.mysql.TryQuery(
             `
             SELECT 
@@ -157,7 +157,7 @@ export class CategoryService {
                 let the_value = prev[key];
 
                 // Sanitize the text if applicable
-                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value)
+                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value);
                 previewresult_obj[key] = the_value;
             });
             the_previews.push(previewresult_obj);
