@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MysqlService } from '../feature-modules/database';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/api';
+import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 
 @Injectable()
 export class CategoryService {
@@ -60,7 +61,7 @@ export class CategoryService {
         if (category_previews.length > 0){
             let first_result = category_previews[0];
             Object.keys(first_result).forEach(key => {
-                if (key.indexOf('cat_') == 0) category_info[key] = first_result[key];
+                if (key.indexOf('cat_') == 0) category_info[key.replace('cat_', '')] = first_result[key];
                 else the_keys.push(key);
             })
         }
@@ -70,11 +71,14 @@ export class CategoryService {
         category_previews.forEach(prev => {
             let previewresult_obj: any = {};
             the_keys.forEach(key => {
-                previewresult_obj[key] = prev[key];
-            })
+                let the_value = prev[key];
+
+                // Sanitize the text if applicable
+                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value)
+                previewresult_obj[key] = the_value;
+            });
             the_previews.push(previewresult_obj);
         })
-
         return {
             category: category_info,
             previews: the_previews
@@ -136,7 +140,7 @@ export class CategoryService {
         if (category_previews.length > 0){
             let first_result = category_previews[0];
             Object.keys(first_result).forEach(key => {
-                if (key.indexOf('cat_') == 0) category_info[key] = first_result[key];
+                if (key.indexOf('cat_') == 0) category_info[key.replace('cat_', '')] = first_result[key];
                 else the_keys.push(key);
             })
         }
@@ -146,8 +150,12 @@ export class CategoryService {
         category_previews.forEach(prev => {
             let previewresult_obj: any = {};
             the_keys.forEach(key => {
-                previewresult_obj[key] = prev[key];
-            })
+                let the_value = prev[key];
+
+                // Sanitize the text if applicable
+                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value)
+                previewresult_obj[key] = the_value;
+            });
             the_previews.push(previewresult_obj);
         })
 
