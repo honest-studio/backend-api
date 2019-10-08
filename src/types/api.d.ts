@@ -41,7 +41,7 @@ export interface PageCategory {
 
 export interface PageCategoryCollection {
     category: PageCategory,
-    articles: PreviewResult[]
+    previews: PreviewResult[]
 }
 
 export type PageIndexedLinkCollection = string[];

@@ -66,18 +66,18 @@ export class CategoryService {
         }
 
         // Pull out the previews
-        let the_articles: PreviewResult[] = [];
+        let the_previews: PreviewResult[] = [];
         category_previews.forEach(prev => {
             let previewresult_obj: any = {};
             the_keys.forEach(key => {
                 previewresult_obj[key] = prev[key];
             })
-            the_articles.push(previewresult_obj);
+            the_previews.push(previewresult_obj);
         })
 
         return {
             category: category_info,
-            articles: the_articles
+            previews: the_previews
         }
     }
 
@@ -142,18 +142,18 @@ export class CategoryService {
         }
 
         // Pull out the previews
-        let the_articles: PreviewResult[] = [];
+        let the_previews: PreviewResult[] = [];
         category_previews.forEach(prev => {
             let previewresult_obj: any = {};
             the_keys.forEach(key => {
                 previewresult_obj[key] = prev[key];
             })
-            the_articles.push(previewresult_obj);
+            the_previews.push(previewresult_obj);
         })
 
         return {
             category: category_info,
-            articles: the_articles
+            previews: the_previews
         };
     }
 }
