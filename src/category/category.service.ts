@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { MysqlService } from '../feature-modules/database';
-import { PreviewResult } from '../types/api';
+import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/api';
 
 @Injectable()
 export class CategoryService {
     constructor(private mysql: MysqlService) {}
-    async getPagesByCategoryID(category_id: number, limit?: number): Promise<PreviewResult[]> {
+    async getPagesByCategoryID(category_id: number, limit?: number): Promise<PageCategoryCollection> {
         let limit_to_use = limit == undefined ? 1000 : limit;
 
         let category_previews: any[] = await this.mysql.TryQuery(
@@ -27,9 +27,20 @@ export class CategoryService {
                 art.webp_large,
                 art.webp_medium,
                 art.webp_small,
-                art.is_indexed
+                art.is_indexed,
+                cat.id AS cat_id,
+                cat.lang AS cat_lang,
+                cat.slug AS cat_slug,
+                cat.title AS cat_title,
+                cat.description AS cat_description,
+                cat.img_full AS cat_img_full,
+                cat.img_full_webp AS cat_img_full_webp,
+                cat.img_thumb AS cat_img_thumb,
+                cat.img_thumb_webp AS cat_img_thumb_webp
             FROM 
                 enterlink_pagecategory_collection cat_collection 
+            INNER JOIN
+                enterlink_pagecategory cat ON cat.id=?
             INNER JOIN
                 enterlink_articletable art ON cat_collection.articletable_id=art.id
             WHERE 
@@ -40,13 +51,37 @@ export class CategoryService {
             ORDER BY art.pageviews DESC
             LIMIT ?
             `,
-            [category_id, limit_to_use]
+            [category_id, category_id, limit_to_use]
         );
 
-        return category_previews;
+        // Pull out the info for the category itself
+        let category_info: any = {};
+        let the_keys = [];
+        if (category_previews.length > 0){
+            let first_result = category_previews[0];
+            Object.keys(first_result).forEach(key => {
+                if (key.indexOf('cat_') == 0) category_info[key] = first_result[key];
+                else the_keys.push(key);
+            })
+        }
+
+        // Pull out the previews
+        let the_articles: PreviewResult[] = [];
+        category_previews.forEach(prev => {
+            let previewresult_obj: any = {};
+            the_keys.forEach(key => {
+                previewresult_obj[key] = prev[key];
+            })
+            the_articles.push(previewresult_obj);
+        })
+
+        return {
+            category: category_info,
+            articles: the_articles
+        }
     }
 
-    async getPagesByCategoryLangSlug(lang_code: string, slug: string, limit?: number): Promise<PreviewResult[]> {
+    async getPagesByCategoryLangSlug(lang_code: string, slug: string, limit?: number): Promise<PageCategoryCollection> {
         let limit_to_use = limit == undefined ? 1000 : limit;
         let category_previews: any[] = await this.mysql.TryQuery(
             `
@@ -67,7 +102,16 @@ export class CategoryService {
                 art.webp_large,
                 art.webp_medium,
                 art.webp_small,
-                art.is_indexed
+                art.is_indexed,
+                cat.id AS cat_id,
+                cat.lang AS cat_lang,
+                cat.slug AS cat_slug,
+                cat.title AS cat_title,
+                cat.description AS cat_description,
+                cat.img_full AS cat_img_full,
+                cat.img_full_webp AS cat_img_full_webp,
+                cat.img_thumb AS cat_img_thumb,
+                cat.img_thumb_webp AS cat_img_thumb_webp
             FROM 
                 enterlink_pagecategory cat 
             INNER JOIN
@@ -86,6 +130,30 @@ export class CategoryService {
             [lang_code, slug, limit_to_use]
         );
 
-        return category_previews;
+        // Pull out the info for the category itself
+        let category_info: any = {};
+        let the_keys = [];
+        if (category_previews.length > 0){
+            let first_result = category_previews[0];
+            Object.keys(first_result).forEach(key => {
+                if (key.indexOf('cat_') == 0) category_info[key] = first_result[key];
+                else the_keys.push(key);
+            })
+        }
+
+        // Pull out the previews
+        let the_articles: PreviewResult[] = [];
+        category_previews.forEach(prev => {
+            let previewresult_obj: any = {};
+            the_keys.forEach(key => {
+                previewresult_obj[key] = prev[key];
+            })
+            the_articles.push(previewresult_obj);
+        })
+
+        return {
+            category: category_info,
+            articles: the_articles
+        };
     }
 }

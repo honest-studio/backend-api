@@ -1,7 +1,7 @@
 import { Body, Controller, Get, UsePipes, Param } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
-import { PreviewResult } from '../types/api';
+import { PageCategoryCollection } from '../types/api';
 import { CategoryService } from './category.service';
 
 @Controller('v2/category')
@@ -19,7 +19,7 @@ export class CategoryController {
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
     })
-    async getPagesByCategoryID(@Param('category_id') category_id): Promise<PreviewResult[]> {
+    async getPagesByCategoryID(@Param('category_id') category_id): Promise<PageCategoryCollection> {
         return await this.categoryService.getPagesByCategoryID(category_id);
     }
 
@@ -37,7 +37,7 @@ export class CategoryController {
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
     })
-    async getPagesByCategoryLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<PreviewResult[]> {
+    async getPagesByCategoryLangSlug(@Param('lang_code') lang_code, @Param('slug') slug): Promise<PageCategoryCollection> {
         return await this.categoryService.getPagesByCategoryLangSlug(lang_code, slug);
     }
 }
