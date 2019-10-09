@@ -278,7 +278,7 @@ export class WikiService {
             throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
 
         // Try and get cached wiki
-        if (current_hash) {
+        if (false && current_hash) {
             const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
             if (cache_wiki) return JSON.parse(cache_wiki);
         }
