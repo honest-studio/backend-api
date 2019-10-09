@@ -25,9 +25,9 @@ commander
   .parse(process.argv);
 
 const LANG_CODE = 'en';
-const BATCH_SIZE_MILLISECONDS = 28800 * 1000; // 8 hours
+const BATCH_SIZE_MILLISECONDS = 7200 * 1000; // 2 hours
 
-const RC_LIMIT = 500; // Max allowed is 500 for non-Wikipedia superusers
+const RC_LIMIT = 499; // Max allowed is 500 for non-Wikipedia superusers
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 // const RC_LIMIT = 500;
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
@@ -46,7 +46,12 @@ export const WikiNewPagesSince = async (api_start: number, api_end: number) => {
     // Check recent edits on Wikipedia
     console.log(chalk.bold.yellow(`Checking logevents ✍️ ...`));
     const wikiMedia = `https://${LANG_CODE}.wikipedia.org/w/api.php?` // Default WikiMedia format
+    // NEW STYLE (POST 07/01/2018)
     const recent_edits_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=create&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
+    
+    // OLD / UNIVERSAL STYLE (may need to use letype=review)
+    // const recent_edits_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
+    
     console.log(chalk.yellow(recent_edits_url));
 
     let parsed_body = await rp(recent_edits_url)
@@ -118,7 +123,7 @@ export const WikiNewPagesSince = async (api_start: number, api_end: number) => {
 
         // continue
 
-        console.log("Making dummy MySQL entries for: ", new_page_info);
+        
         let new_slug = "";
         let url = `https://${LANG_CODE}.wikipedia.org/w/api.php?action=query&prop=info&titles=${encodeURIComponent(new_page_info.title)}&inprop=url&format=json`;
         let result = await rp(url)
@@ -131,6 +136,7 @@ export const WikiNewPagesSince = async (api_start: number, api_end: number) => {
                             return "TITLE_REQUEST_FAILED";
                         });
         if (result) {
+            console.log("Making dummy MySQL entries for: ", new_page_info);
             new_slug = result.canonicalurl.replace(`https://${LANG_CODE}.wikipedia.org/wiki/`, '');
             console.log(`NEW SLUG: |${new_slug}|`);
             // console.log(result)
@@ -267,16 +273,18 @@ export const WikiNewPagesSince = async (api_start: number, api_end: number) => {
 }
 
 
+// NOTE. BEFORE 07/01/2018, the logevents were in a different format!
+
 
 (async () => {
     logYlw("=================STARTING NEW PAGES SINCE SCRIPT=================");
     let batchCounter = 0;
 
-    // Convert the input human-readable dates to Unix epoch dates
-    let start_date = new Date(commander.start);
-    let end_date = new Date(commander.end);
-    let start_unix = start_date.getTime();
-    let end_unix = end_date.getTime();
+    // Get the time frame
+    let start_date = commander.start;
+    let end_date = commander.end;
+    let start_unix = start_date * 1000;
+    let end_unix = end_date * 1000;
 
     // Batch by BATCH_SIZE_MILLISECONDS increments
     let totalBatches = Math.ceil((end_unix - start_unix) / BATCH_SIZE_MILLISECONDS);

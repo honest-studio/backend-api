@@ -111,7 +111,7 @@ export class SearchService {
             [canonical_ids, canonical_ids]
         );
 
-        // clean up text previews
+        // Clean up text previews
         result_rows.forEach((row) => {
             row.page_title = sanitizeTextPreview(row.page_title);
             if (!row.text_preview) return; // continue

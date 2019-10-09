@@ -1,4 +1,4 @@
-import { PageIndexedLinkCollection } from './api';
+import { PageIndexedLinkCollection, PageCategory, PageCategoryCollection } from './api';
 
 export interface AMPParseCollection {
     text: string;
@@ -42,6 +42,7 @@ export interface WikiExtraInfo {
     canonical_slug: string;
     canonical_lang: string;
     link_collection: PageIndexedLinkCollection;
+    page_categories: PageCategory[];
 }
 
 export interface LanguagePack {

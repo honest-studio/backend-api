@@ -14,7 +14,7 @@ import { RedisService, MongoDbService, MysqlService } from '../feature-modules/d
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ChainService } from '../chain';
 import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
-import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageIndexedLinkCollection } from '../types/api';
+import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageIndexedLinkCollection, PageCategory } from '../types/api';
 import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlsoType, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex, getPageSentences } from '../utils/article-utils';
@@ -146,6 +146,47 @@ export class WikiService {
         working_collection = Array.from(new Set(working_collection))
 
         return working_collection;
+    }
+
+    async getPageCategories(passedJSON: ArticleJson, lang_to_use: string): Promise<PageCategory[]> {
+        // Get the categories
+        let the_category_ids = passedJSON.categories ? passedJSON.categories : [];
+
+        // Return empty array if there are no categories
+        if(the_category_ids.length == 0) return [];
+
+        interface PageCategory {
+            id: number,
+            lang: string,
+            slug: string,
+            title: string,
+            description: string,
+            img_full: string,
+            img_full_webp: string,
+            img_thumb: string,
+            img_thumb_webp: string
+        }
+
+        // We only care about indexed links
+        // On the frontend, all links will be converted to spans by default, except indexed ones
+        let category_rows: any[] = await this.mysql.TryQuery(
+            `
+            SELECT DISTINCT
+                cat.id AS id,
+                cat.lang AS lang,
+                cat.slug AS slug,
+                cat.title AS title,
+                cat.description AS description,
+                cat.img_full AS img_full,
+                cat.img_full_webp AS img_full_webp,
+                cat.img_thumb AS img_thumb,
+                cat.img_thumb_webp AS img_thumb_webp
+            FROM enterlink_pagecategory AS cat
+            WHERE cat.id IN (?)
+            `,
+            [the_category_ids]
+        );
+        return category_rows;
     }
 
 
@@ -972,6 +1013,7 @@ export class WikiService {
         const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki, lang_code));
         const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
         const link_collection_promise = wiki_promise.then(wiki => this.getPageIndexedLinkCollection(wiki, lang_code));
+        const page_categories_promise = wiki_promise.then(wiki => this.getPageCategories(wiki, lang_code));
 
         const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
@@ -997,13 +1039,21 @@ export class WikiService {
                 else throw e;
             });
 
-        return Promise.all([alt_langs_promise, see_also_promise, pageviews_promise, schema_promise, link_collection_promise])
+        return Promise.all([
+            alt_langs_promise, 
+            see_also_promise, 
+            pageviews_promise, 
+            schema_promise, 
+            link_collection_promise,
+            page_categories_promise
+        ])
         .then(values => {
             const alt_langs: LanguagePack[] = values[0];
             const see_also = values[1];
             const pageviews = values[2];
             const schema = values[3];
             const link_collection = values[4];
+            const page_categories = values[5];
             return { 
                 alt_langs, 
                 see_also, 
@@ -1011,7 +1061,8 @@ export class WikiService {
                 schema, 
                 canonical_lang: lang_code, 
                 canonical_slug: slug,
-                link_collection
+                link_collection,
+                page_categories
             };
 
         });

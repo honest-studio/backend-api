@@ -311,7 +311,7 @@ export const WikiImport = async (inputString: string) => {
 
     logYlw("=================🚧 FIND REDIRECTS 🚧=================");
     await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
-    process.stdout.write(chalk.yellow(` DONE\n`));
+    console.log(chalk.yellow(`DONE`));
 
 
     // fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
