@@ -24,13 +24,12 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 1000;
-const PAGE_TYPES = ['Person', 'Thing'];
+const BATCH_SIZE = 10000;
+const PAGE_TYPE = 'Person';
 const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
 const KEYS_TO_LOOK_FOR = /Occupation/gimu;
-const VALUES_TO_LOOK_FOR = /Model/gimu;
-const PAGE_NOTES = ['|FAMOUS_BIRTHDAYS_2|'];
-const CATEGORY_ID = 4; // YouTube Stars
+const VALUES_TO_LOOK_FOR = /Reporter/gimu;
+const CATEGORY_ID = 2; // Reporters
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -194,12 +193,12 @@ export const PageCategorizer = async (inputString: string) => {
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
-                    AND art.page_type IN (?)
-                    AND art.page_note IN (?)
+                    AND art.page_type=?
+                    AND art.page_note IS NULL
                     AND collect.id IS NULL
                 GROUP BY art.id
             `,
-            [CATEGORY_ID, currentStart, currentEnd, PAGE_TYPES, PAGE_NOTES]
+            [CATEGORY_ID, currentStart, currentEnd, PAGE_TYPE]
         );
 
         for await (const artResult of fetchedArticles) {
