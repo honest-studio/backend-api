@@ -25,7 +25,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 1000;
 const PAGE_TYPE = 'Person';
 const SCHEMAS_TO_LOOK_FOR = /birthDate/gimu;
 const KEYS_TO_LOOK_FOR = /Born|Birthday/gimu;
