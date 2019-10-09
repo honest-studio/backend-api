@@ -186,8 +186,6 @@ export class WikiService {
             `,
             [the_category_ids]
         );
-
-        console.log(category_rows)
         return category_rows;
     }
 

@@ -1,5 +1,6 @@
 
 const commander = require('commander');
+import moment from 'moment';
 import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
 import * as readline from 'readline';
 const path = require('path');
@@ -24,19 +25,17 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 1000;
-const PAGE_TYPES = ['Person', 'Thing'];
-const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
-const KEYS_TO_LOOK_FOR = /Occupation/gimu;
-const VALUES_TO_LOOK_FOR = /Model/gimu;
-const PAGE_NOTES = ['|FAMOUS_BIRTHDAYS_2|'];
-const CATEGORY_ID = 4; // YouTube Stars
+const BATCH_SIZE = 10;
+const PAGE_TYPE = 'Person';
+const SCHEMAS_TO_LOOK_FOR = /birthDate/gimu;
+const KEYS_TO_LOOK_FOR = /Born|Birthday/gimu;
+const LANGUAGE_CODE = 'en';
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
 
-export const PageCategorizer = async (inputString: string) => {
+export const PageCategorizer_Birthdays = async (inputString: string) => {
     let quickSplit = inputString.split("|");
     let wikiLangSlug = quickSplit[0];
 	let wikiLangSlug_alt = quickSplit[1];
@@ -88,7 +87,7 @@ export const PageCategorizer = async (inputString: string) => {
     }
 
     // Search through the infoboxes
-    let has_the_category = false;
+    let has_the_category = false, calculated_category_slug = null;
     if (wiki.infoboxes.length > 0){
         for (let index = 0; !has_the_category && (index < wiki.infoboxes.length); index++) {
             let ibox = wiki.infoboxes[index];
@@ -104,11 +103,28 @@ export const PageCategorizer = async (inputString: string) => {
                     return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
                 }).join(' ')
 
-                if(combo_value && combo_value.search(VALUES_TO_LOOK_FOR) >= 0){
-                    console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
-                    has_the_category = true;
-                    break;
-                }
+                // Trim the result first
+                let trimmed_value = combo_value.trim();
+
+                // Ignore only years with no month or day
+                // Also remove ages
+                if(trimmed_value.length <= 4) continue;
+                
+                // Try to parse out the date and calculate the corresponding category slug
+                const parsed_date = moment(trimmed_value).format("MMMM D");
+                calculated_category_slug = parsed_date.toLowerCase().replace(" ", "-") + '-birthdays';
+
+                // Ignore unparsable dates
+                if (calculated_category_slug == 'invalid-date-birthdays') continue;
+
+                console.log(chalk.green.bold("FOUND DATE: ", parsed_date));
+                console.log(chalk.green.bold("CALCULATED SLUG: ", calculated_category_slug));
+                console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
+
+                // Mark the category as found
+                has_the_category = true;
+                break;
+
             }
 
         }
@@ -119,18 +135,24 @@ export const PageCategorizer = async (inputString: string) => {
         return;
     }
 
+
     if(has_the_category){
-        // Update the pagecategory collection
-        let pagecategory_collection_insertion;
+
+        // Find what the category ID is from the calculated_category_slug
+        let pagecategory_id_query, found_category_id = null;
         try {
-            pagecategory_collection_insertion = await theMysql.TryQuery(
+            pagecategory_id_query = await theMysql.TryQuery(
                 `
-                    INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
-                    VALUES (?, ?)
+                    SELECT id
+                    FROM enterlink_pagecategory
+                    WHERE 
+                        slug=?
+                        AND lang=?
                 `,
-                [CATEGORY_ID, pageID]
+                [calculated_category_slug, LANGUAGE_CODE]
             );
-            console.log(chalk.green("Added to pagecategory_collection."));
+            if(pagecategory_id_query && pagecategory_id_query.length) found_category_id = parseInt(pagecategory_id_query[0].id);
+            console.log(chalk.green("Page category ID should be: ", found_category_id));
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY")){
                 console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
@@ -138,34 +160,55 @@ export const PageCategorizer = async (inputString: string) => {
             else throw e;
         }
 
-        // Update the hashcache
-        if (pagecategory_collection_insertion){
-            // Prepare the new wiki
-            wiki.categories && wiki.categories.length > 0 
-                ? wiki.categories = wiki.categories
-                    .filter(cat => cat != CATEGORY_ID) // Make sure there are no dupe categories
-                    .concat(CATEGORY_ID)
-                : wiki.categories = [CATEGORY_ID];
-
-            // Update the hashcache
-            let json_insertion;
+        if(found_category_id){
+            // Update the pagecategory collection
+            let pagecategory_collection_insertion;
             try {
-                json_insertion = await theMysql.TryQuery(
+                pagecategory_collection_insertion = await theMysql.TryQuery(
                     `
-                        UPDATE enterlink_hashcache
-                        SET html_blob = ?
-                        WHERE ipfs_hash = ? 
+                        INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
+                        VALUES (?, ?)
                     `,
-                    [JSON.stringify(wiki), inputIPFS]
+                    [found_category_id, pageID]
                 );
-                console.log(chalk.green("Added to enterlink_hashcache."));
+                console.log(chalk.green("Added to pagecategory_collection."));
             } catch (e) {
                 if (e.message.includes("ER_DUP_ENTRY")){
-                    console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
+                    console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
                 }
                 else throw e;
             }
+
+            // Update the hashcache
+            if (pagecategory_collection_insertion){
+                // Prepare the new wiki
+                wiki.categories && wiki.categories.length > 0 
+                    ? wiki.categories = wiki.categories
+                        .filter(cat => cat != found_category_id) // Make sure there are no dupe categories
+                        .concat(found_category_id)
+                    : wiki.categories = [found_category_id];
+
+                // Update the hashcache
+                let json_insertion;
+                try {
+                    json_insertion = await theMysql.TryQuery(
+                        `
+                            UPDATE enterlink_hashcache
+                            SET html_blob = ?
+                            WHERE ipfs_hash = ? 
+                        `,
+                        [JSON.stringify(wiki), inputIPFS]
+                    );
+                    console.log(chalk.green("Added to enterlink_hashcache."));
+                } catch (e) {
+                    if (e.message.includes("ER_DUP_ENTRY")){
+                        console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
+                    }
+                    else throw e;
+                }
+            }
         }
+        
     }
 }
 
@@ -189,22 +232,19 @@ export const PageCategorizer = async (inputString: string) => {
             `
                 SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
-                LEFT JOIN enterlink_pagecategory_collection collect ON collect.category_id=? AND collect.articletable_id=art.id
                 WHERE art.id between ? and ?
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
-                    AND art.page_type IN (?)
-                    AND art.page_note IN (?)
-                    AND collect.id IS NULL
+                    AND art.page_type=?
                 GROUP BY art.id
             `,
-            [CATEGORY_ID, currentStart, currentEnd, PAGE_TYPES, PAGE_NOTES]
+            [currentStart, currentEnd, PAGE_TYPE]
         );
 
         for await (const artResult of fetchedArticles) {
             try{
-                await PageCategorizer(artResult.concatted);
+                await PageCategorizer_Birthdays(artResult.concatted);
             }
             catch (err){
                 console.error(`${artResult.concatted} FAILED!!! [${err}]`);
