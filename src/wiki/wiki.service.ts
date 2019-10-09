@@ -814,6 +814,25 @@ export class WikiService {
             ]
         )
 
+        // Update the pagecategory collection
+        // TODO: HANDLE THIS LATER, ONCE CATEGORIES ARE EDITABLE
+        // let pagecategory_collection_insertion;
+        // try {
+        //     pagecategory_collection_insertion = await this.mysql.TryQuery(
+        //         `
+        //             INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
+        //             VALUES (?, ?)
+        //         `,
+        //         [CATEGORY_ID, pageID]
+        //     );
+        //     console.log(colors.green("Added to pagecategory_collection."));
+        // } catch (e) {
+        //     if (e.message.includes("ER_DUP_ENTRY")){
+        //         console.log(colors.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
+        //     }
+        //     else throw e;
+        // }
+
         // Get the prerender token
         const prerenderToken = this.config.get('PRERENDER_TOKEN');
 
