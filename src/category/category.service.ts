@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MysqlService } from '../feature-modules/database';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/api';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import * as SqlString from 'sqlstring';
 
 @Injectable()
 export class CategoryService {
@@ -9,6 +10,9 @@ export class CategoryService {
     async getPagesByCategoryID(category_id: number, query: any): Promise<PageCategoryCollection> {
         let limit_to_use = query.limit == undefined ? 20 : parseInt(query.limit);
         let offset_to_use = query.offset == undefined ? 0 : parseInt(query.offset);
+        let show_adult = query.show_adult_content == undefined ? 0 : parseInt(query.offset);
+        let show_adult_string = "AND art.is_adult_content=0";
+        if (show_adult) show_adult_string = '';
 
         let category_previews: any[] = await this.mysql.TryQuery(
             `
@@ -50,6 +54,7 @@ export class CategoryService {
                 AND art.is_indexed = 1
                 AND redirect_page_id IS NULL
                 AND cat_collection.category_id = ?
+                ${show_adult_string}
             ORDER BY art.pageviews DESC
             LIMIT ?
             OFFSET ?
@@ -90,6 +95,10 @@ export class CategoryService {
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
         let limit_to_use = query.limit == undefined ? 20 : parseInt(query.limit);
         let offset_to_use = query.offset == undefined ? 0 : parseInt(query.offset);
+        let show_adult = query.show_adult_content == undefined ? 0 : parseInt(query.offset);
+        let show_adult_string = "AND art.is_adult_content=0";
+        if (show_adult) show_adult_string = '';
+
         let category_previews: any[] = await this.mysql.TryQuery(
             `
             SELECT 
@@ -131,6 +140,7 @@ export class CategoryService {
                 AND art.is_removed = 0
                 AND art.is_indexed = 1
                 AND redirect_page_id IS NULL
+                ${show_adult_string}
             ORDER BY art.pageviews DESC
             LIMIT ?
             OFFSET ?

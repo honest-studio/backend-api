@@ -27,6 +27,12 @@ export class CategoryController {
         required: false,
         type: Number
     })
+    @ApiImplicitQuery({
+        name: 'show_adult_content',
+        description: 'Allow adult content to show up in results. Default is no.',
+        required: false,
+        type: Number
+    })
     @ApiResponse({
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
@@ -54,6 +60,12 @@ export class CategoryController {
     @ApiImplicitQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
+        required: false,
+        type: Number
+    })
+    @ApiImplicitQuery({
+        name: 'show_adult_content',
+        description: 'Allow adult content to show up in results. Default is no.',
         required: false,
         type: Number
     })
