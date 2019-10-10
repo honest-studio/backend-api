@@ -38,6 +38,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                 ${arp.renderFirstParagraph()}
                 ${arp.renderInfoboxes()}
                 ${arp.renderMediaGallery()}
+                ${arp.renderCategories()}
                 ${arp.renderPageBody()}
                 ${arp.renderCitations()}
                 <div class="page-times">

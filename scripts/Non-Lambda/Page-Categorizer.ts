@@ -27,9 +27,11 @@ commander
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
-const KEYS_TO_LOOK_FOR = /Position\(s\)/gimu;
-const VALUES_TO_LOOK_FOR = /Midfielder/gimu;
-const CATEGORY_ID = 373; // Football Midfielders
+const KEYS_TO_LOOK_FOR = /Position\(s\)/gimu; // remember to double backslash when using RegExp constructor
+const VALUES_TO_LOOK_FOR = /Goalkeeper/gimu; // remember to double backslash when using RegExp constructor
+const CATEGORY_ID = 376; // Football Defenders
+
+// nano scripts/Non-Lambda/Page-Categorizer.ts
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
