@@ -28,8 +28,8 @@ const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
 const KEYS_TO_LOOK_FOR = /Occupation/gimu;
-const VALUES_TO_LOOK_FOR = /Journalist/gimu;
-const CATEGORY_ID = 371; // Journalists
+const VALUES_TO_LOOK_FOR = /Footballer/gimu;
+const CATEGORY_ID = 372; // Footballers
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
