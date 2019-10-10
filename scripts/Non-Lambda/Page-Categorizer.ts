@@ -27,9 +27,9 @@ commander
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
-const KEYS_TO_LOOK_FOR = /Occupation/gimu;
-const VALUES_TO_LOOK_FOR = /Reporter/gimu;
-const CATEGORY_ID = 2; // Reporters
+const KEYS_TO_LOOK_FOR = /Position\(s\)/gimu;
+const VALUES_TO_LOOK_FOR = /Midfielder/gimu;
+const CATEGORY_ID = 373; // Football Midfielders
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -194,7 +194,6 @@ export const PageCategorizer = async (inputString: string) => {
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
                     AND art.page_type=?
-                    AND art.page_note IS NULL
                     AND collect.id IS NULL
                 GROUP BY art.id
             `,
