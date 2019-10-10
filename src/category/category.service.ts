@@ -59,7 +59,8 @@ export class CategoryService {
             LIMIT ?
             OFFSET ?
             `,
-            [category_id, category_id, limit_to_use, offset_to_use]
+            [category_id, category_id, limit_to_use, offset_to_use],
+            10000
         );
 
         // Pull out the info for the category itself
@@ -145,7 +146,8 @@ export class CategoryService {
             LIMIT ?
             OFFSET ?
             `,
-            [lang_code, slug, limit_to_use, offset_to_use]
+            [lang_code, slug, limit_to_use, offset_to_use],
+            10000
         );
 
         // Pull out the info for the category itself
