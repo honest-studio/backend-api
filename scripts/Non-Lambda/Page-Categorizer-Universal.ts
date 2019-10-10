@@ -1,6 +1,7 @@
 
 const commander = require('commander');
 import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
+import { PageCategory } from '../../src/types/api';
 import * as readline from 'readline';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
@@ -26,18 +27,15 @@ commander
 
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
-const SCHEMAS_TO_LOOK_FOR = /jobTitle/gimu;
-const KEYS_TO_LOOK_FOR = /Position\(s\)/gimu; // remember to double backslash when using RegExp constructor
-const VALUES_TO_LOOK_FOR = /Goalkeeper/gimu; // remember to double backslash when using RegExp constructor
-const CATEGORY_ID = 376; // Football Defenders
+const IGNORE_CATEGORIES_BELOW = 4066; // Used to help speed up categorization for new categories
 
-// nano scripts/Non-Lambda/Page-Categorizer.ts
+// nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
 
-export const PageCategorizer = async (inputString: string) => {
+export const PageCategorizerUniversal = async (inputString: string, regexed_categories: PageCategory[]) => {
     let quickSplit = inputString.split("|");
     let wikiLangSlug = quickSplit[0];
 	let wikiLangSlug_alt = quickSplit[1];
@@ -89,28 +87,33 @@ export const PageCategorizer = async (inputString: string) => {
     }
 
     // Search through the infoboxes
-    let has_the_category = false;
+    let categories_to_add: PageCategory[] = [];
     if (wiki.infoboxes.length > 0){
-        for (let index = 0; !has_the_category && (index < wiki.infoboxes.length); index++) {
+        for (let index = 0; index < wiki.infoboxes.length; index++) {
             let ibox = wiki.infoboxes[index];
             // Search the schema
-            if (
-                (ibox.schema && ibox.schema.search(SCHEMAS_TO_LOOK_FOR) >= 0)
-                || (ibox.key && ibox.key.search(KEYS_TO_LOOK_FOR) >= 0)
-            ){
-                // console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
-                // Search the values
-                // Combine into one big string first
-                let combo_value = ibox.values.map(val => {
-                    return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
-                }).join(' ')
-
-                if(combo_value && combo_value.search(VALUES_TO_LOOK_FOR) >= 0){
-                    console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
-                    has_the_category = true;
-                    break;
+            regexed_categories.forEach(categ => {
+                let schema_keyword_regex = new RegExp(categ.schema_keyword, 'gimu')
+                let key_regex = new RegExp(categ.key_regex, 'gimu');
+                let values_regex = new RegExp(categ.values_regex, 'gimu')
+                if (
+                    (ibox.schema && ibox.schema.search(schema_keyword_regex) >= 0)
+                    || (ibox.key && ibox.key.search(key_regex) >= 0)
+                ){
+                    // console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
+                    // Search the values
+                    // Combine into one big string first
+                    let combo_value = ibox.values.map(val => {
+                        return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
+                    }).join(' ')
+    
+                    if(combo_value && combo_value.search(values_regex) >= 0){
+                        console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
+                        categories_to_add.push(categ)
+                    }
                 }
-            }
+            })
+            
 
         }
         
@@ -120,16 +123,22 @@ export const PageCategorizer = async (inputString: string) => {
         return;
     }
 
-    if(has_the_category){
+
+    if(categories_to_add.length > 0){
+        // Concat the values
+        let values_concatted = categories_to_add.map(cat => {
+            return `(NULL, ${cat.id}, ${pageID})`
+        }).join(', ');
+
         // Update the pagecategory collection
         let pagecategory_collection_insertion;
         try {
             pagecategory_collection_insertion = await theMysql.TryQuery(
                 `
-                    INSERT IGNORE INTO enterlink_pagecategory_collection (category_id, articletable_id) 
-                    VALUES (?, ?)
+                    INSERT IGNORE INTO enterlink_pagecategory_collection
+                    VALUES ${values_concatted}
                 `,
-                [CATEGORY_ID, pageID]
+                [values_concatted]
             );
             console.log(chalk.green("Added to pagecategory_collection."));
         } catch (e) {
@@ -142,11 +151,16 @@ export const PageCategorizer = async (inputString: string) => {
         // Update the hashcache
         if (pagecategory_collection_insertion){
             // Prepare the new wiki
-            wiki.categories && wiki.categories.length > 0 
-                ? wiki.categories = wiki.categories
-                    .filter(cat => cat != CATEGORY_ID) // Make sure there are no dupe categories
-                    .concat(CATEGORY_ID)
-                : wiki.categories = [CATEGORY_ID];
+            let existing_category_ids = wiki.categories && wiki.categories.length > 0 
+                ? wiki.categories
+                : [];
+            let new_category_ids = categories_to_add.map(cat => cat.id);
+
+            // Add the new categories to the old one
+            existing_category_ids = existing_category_ids.concat(new_category_ids);
+
+            // Remove duplicates, then sort
+            wiki.categories = [...new Set(existing_category_ids)].sort();
 
             // Update the hashcache
             let json_insertion;
@@ -175,6 +189,20 @@ export const PageCategorizer = async (inputString: string) => {
     let batchCounter = 0;
     let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
     console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
+
+    const all_regexed_categories: PageCategory[] = await theMysql.TryQuery(
+        `
+            SELECT *
+            FROM enterlink_pagecategory
+            WHERE schema_for = ?
+                AND schema_keyword IS NOT NULL
+                AND key_regex IS NOT NULL
+                AND values_regex IS NOT NULL
+                AND id >= ?
+        `,
+        [PAGE_TYPE, IGNORE_CATEGORIES_BELOW]
+    );
+
     let currentStart, currentEnd;
     for (let i = 0; i < totalBatches; i++) {
         currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
@@ -190,21 +218,19 @@ export const PageCategorizer = async (inputString: string) => {
             `
                 SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
-                LEFT JOIN enterlink_pagecategory_collection collect ON collect.category_id=? AND collect.articletable_id=art.id
                 WHERE art.id between ? and ?
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
                     AND art.page_type=?
-                    AND collect.id IS NULL
                 GROUP BY art.id
             `,
-            [CATEGORY_ID, currentStart, currentEnd, PAGE_TYPE]
+            [currentStart, currentEnd, PAGE_TYPE]
         );
 
         for await (const artResult of fetchedArticles) {
             try{
-                await PageCategorizer(artResult.concatted);
+                await PageCategorizerUniversal(artResult.concatted, all_regexed_categories);
             }
             catch (err){
                 console.error(`${artResult.concatted} FAILED!!! [${err}]`);

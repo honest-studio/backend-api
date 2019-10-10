@@ -28,20 +28,25 @@ interface PreviewResult {
 }
 
 export interface PageCategory {
-    id: number,
-    lang: string,
-    slug: string,
-    title: string,
-    description: string,
-    img_full: string,
-    img_full_webp: string,
-    img_thumb: string,
-    img_thumb_webp: string
+    id: number;
+    lang: string;
+    slug: string;
+    title: string;
+    description: string;
+    img_full: string;
+    img_full_webp: string;
+    img_thumb: string;
+    img_thumb_webp: string;
+
+    schema_for?: string;
+    schema_keyword?: string;
+    key_regex?: string;
+    values_regex?: string;
 }
 
 export interface PageCategoryCollection {
-    category: PageCategory,
-    previews: PreviewResult[]
+    category: PageCategory;
+    previews: PreviewResult[];
 }
 
 export type PageIndexedLinkCollection = string[];
@@ -73,7 +78,7 @@ export interface PeriodicalInfoPack {
 
 
 export interface FileFetchResult {
-    file_buffer: Buffer,
+    file_buffer: Buffer;
     mime_pack: MimePack;
     category: CitationCategoryType;
 }
@@ -95,35 +100,35 @@ export interface MergeProposalParsePack {
         slug: string;
         lang: string;
         ipfs_hash: string;
-    },
+    };
     target: {
         slug: string;
         lang: string;
         ipfs_hash: string;
-    },
+    };
     final_hash: string;
 }
 
 export interface Wikistbl2Item {
-    id: number,
-    slug: string,
-    group_id: number,
-    lang_code: string,
-    ipfs_hash: string,
+    id: number;
+    slug: string;
+    group_id: number;
+    lang_code: string;
+    ipfs_hash: string;
 }
 
 export interface Boost {
-    id: number,
-    slug: string,
-    lang_code: string,
+    id: number;
+    slug: string;
+    lang_code: string;
     booster: string;
-    amount: number,
-    timestamp: number,
+    amount: number;
+    timestamp: number;
 }
 
 export interface BoostsByWikiReturnPack {
     boosts: Boost[];
-    preview: PreviewResult,
+    preview: PreviewResult;
 }
 
 export interface BoostsByUserReturnPack {

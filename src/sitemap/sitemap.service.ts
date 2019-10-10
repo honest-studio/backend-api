@@ -149,4 +149,46 @@ export class SitemapService {
         fs.writeFileSync(path.join(sitemapDirectory, indexFileName), sitemapIndex.toString());
         console.log(colors.green(`Static sitemap for ${lang} completed`));
     }
+
+
+
+    async getCategoriesSitemap(res: Response, lang: string = 'en'): Promise<any> {
+        let sitemapPacks: any[] = await this.mysql.TryQuery(
+            `
+            SELECT 
+                lang, 
+                slug
+            FROM 
+                enterlink_pagecategory 
+            WHERE lang = ?
+            `,
+            [lang],
+            3600000 // 1 hr timeout
+        );
+
+
+        let urlPacks = [];
+        sitemapPacks.forEach((result) => {
+            urlPacks.push({ 
+                url: `/category/lang_${result.lang}/${result.slug}`
+            });
+        });
+
+        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let theMap = sm.createSitemap({
+            hostname: `https://${langPrefix}everipedia.org`,
+            cacheTime: 600000, // 600 sec - cache purge period
+            urls: urlPacks
+        });
+
+        let xml_sitemap = theMap.toXML();
+
+        res
+            .header('Content-Type', 'application/xml')
+            .status(200)
+            .send(xml_sitemap);
+
+        return true;
+    }
+
 }
