@@ -27,6 +27,7 @@ commander
 
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
+const IGNORE_CATEGORIES_BELOW = 4066; // Used to help speed up categorization for new categories
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
@@ -197,8 +198,9 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                 AND schema_keyword IS NOT NULL
                 AND key_regex IS NOT NULL
                 AND values_regex IS NOT NULL
+                AND id >= ?
         `,
-        [PAGE_TYPE]
+        [PAGE_TYPE, IGNORE_CATEGORIES_BELOW]
     );
 
     let currentStart, currentEnd;
