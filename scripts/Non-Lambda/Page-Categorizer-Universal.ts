@@ -92,9 +92,9 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             let ibox = wiki.infoboxes[index];
             // Search the schema
             regexed_categories.forEach(categ => {
-                let schema_keyword_regex = new RegExp(categ.schema_keyword)
-                let key_regex = new RegExp(categ.key_regex);
-                let values_regex = new RegExp(categ.values_regex)
+                let schema_keyword_regex = new RegExp(categ.schema_keyword, 'gimu')
+                let key_regex = new RegExp(categ.key_regex, 'gimu');
+                let values_regex = new RegExp(categ.values_regex, 'gimu')
                 if (
                     (ibox.schema && ibox.schema.search(schema_keyword_regex) >= 0)
                     || (ibox.key && ibox.key.search(key_regex) >= 0)
@@ -134,7 +134,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
         try {
             pagecategory_collection_insertion = await theMysql.TryQuery(
                 `
-                    INSERT INTO enterlink_pagecategory_collection
+                    INSERT IGNORE INTO enterlink_pagecategory_collection
                     VALUES ${values_concatted}
                 `,
                 [values_concatted]
