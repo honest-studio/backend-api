@@ -194,7 +194,6 @@ export const PageCategorizer = async (inputString: string) => {
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
                     AND art.page_type=?
-                    AND art.page_note IS NULL
                     AND collect.id IS NULL
                 GROUP BY art.id
             `,
