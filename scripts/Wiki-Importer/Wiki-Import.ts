@@ -11,7 +11,7 @@ import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
 import lodashSet from 'lodash/fp/set';
 import { ArticleJson, Sentence, ListItem } from '../../src/types/article';
-import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
+import { calcIPFSHash, flushPrerenders, getBlurbSnippetFromArticleJson } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
 import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
@@ -194,46 +194,7 @@ export const WikiImport = async (inputString: string) => {
     const cleanedSlug = theMysql.cleanSlugForMysql(slug);
     let text_preview = "";
     try {
-        const first_para = articlejson.page_body[0].paragraphs[0];
-        text_preview = (first_para.items[0] as Sentence).text;
-        if (text_preview === undefined) text_preview = "";
-        if (first_para.items.length > 1){
-            if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
-                let list_sentences = (first_para.items[1]as ListItem).sentences;
-                if (list_sentences.length <= 2){
-                    list_sentences.forEach(item => {
-                        if (item) text_preview += (item as Sentence).text;
-                    })
-                }
-                else{
-                    list_sentences.slice(0, 2).forEach(item => {
-                        if (item) text_preview += (item as Sentence).text;
-                    })
-                }
-            } else {
-                text_preview += (first_para.items[1] as Sentence).text;
-            }
-        }
-        else if (!text_preview || text_preview == ""){
-            text_preview = "";
-            // Loop through the first section until text is found
-            let sliced_paras = articlejson.page_body[0].paragraphs.slice(1);
-            sliced_paras.forEach(para => {
-                // Only take the first two sentences
-                if (text_preview == ""){
-                    if (para.items.length <= 2){
-                        para.items.forEach(item => {
-                            text_preview += (item as Sentence).text;
-                        })
-                    }
-                    else{
-                        para.items.slice(0, 2).forEach(item => {
-                            text_preview += (item as Sentence).text;
-                        })
-                    }
-                }
-            })
-        }
+        text_preview = getBlurbSnippetFromArticleJson(articlejson);
     } catch (e) {
         text_preview = "";
     }

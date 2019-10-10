@@ -18,7 +18,7 @@ import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, Boo
 import { PreviewService } from '../preview';
 import { LanguagePack, SeeAlsoType, WikiExtraInfo } from '../types/article-helpers';
 import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex, getPageSentences } from '../utils/article-utils';
-import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
+import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper, getBlurbSnippetFromArticleJson } from '../utils/article-utils/article-tools';
 import { CAPTURE_REGEXES } from '../utils/article-utils/article-converter';
 import { mergeWikis, parseMergeInfoFromProposal } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
@@ -717,48 +717,9 @@ export class WikiService {
         // If the two slugs are the same, encode the alternateSlug
         if (cleanedSlug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
 
-        let text_preview = "";
+        let text_preview = "0;"
         try {
-            const first_para = wiki.page_body[0].paragraphs[0];
-            text_preview = (first_para.items[0] as Sentence).text;
-            if (text_preview === undefined) text_preview = "";
-            if (first_para.items.length > 1){
-                if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
-                    let list_sentences = (first_para.items[1]as ListItem).sentences;
-                    if (list_sentences.length <= 2){
-                        list_sentences.forEach(item => {
-                            if (item) text_preview += (item as Sentence).text;
-                        })
-                    }
-                    else{
-                        list_sentences.slice(0, 2).forEach(item => {
-                            if (item) text_preview += (item as Sentence).text;
-                        })
-                    }
-                } else {
-                    text_preview += (first_para.items[1] as Sentence).text;
-                }
-            }
-            else if (!text_preview || text_preview == ""){
-                text_preview = "";
-                // Loop through the first section until text is found
-                let sliced_paras = wiki.page_body[0].paragraphs.slice(1);
-                sliced_paras.forEach(para => {
-                    // Only take the first two sentences
-                    if (text_preview == ""){
-                        if (para.items.length <= 2){
-                            para.items.forEach(item => {
-                                text_preview += (item as Sentence).text;
-                            })
-                        }
-                        else{
-                            para.items.slice(0, 2).forEach(item => {
-                                text_preview += (item as Sentence).text;
-                            })
-                        }
-                    }
-                })
-            }
+            text_preview = getBlurbSnippetFromArticleJson(wiki);
         } catch (e) {
             text_preview = "";
         }

@@ -1161,3 +1161,48 @@ export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
     });
     return allSentences;
 }; 
+
+
+export function getBlurbSnippetFromArticleJson(wiki: ArticleJson): string {
+    const first_para = wiki.page_body[0].paragraphs[0];
+    let text_preview = (first_para.items[0] as Sentence).text;
+    if (text_preview === undefined) text_preview = "";
+    if (first_para.items.length > 1){
+        if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+            let list_sentences = (first_para.items[1]as ListItem).sentences;
+            if (list_sentences.length <= 2){
+                list_sentences.forEach(item => {
+                    if (item) text_preview += (item as Sentence).text;
+                })
+            }
+            else{
+                list_sentences.slice(0, 2).forEach(item => {
+                    if (item) text_preview += (item as Sentence).text;
+                })
+            }
+        } else {
+            text_preview += (first_para.items[1] as Sentence).text;
+        }
+    }
+    else if (!text_preview || text_preview == ""){
+        text_preview = "";
+        // Loop through the first section until text is found
+        let sliced_paras = wiki.page_body[0].paragraphs.slice(1);
+        sliced_paras.forEach(para => {
+            // Only take the first two sentences
+            if (text_preview == ""){
+                if (para.items.length <= 2){
+                    para.items.forEach(item => {
+                        text_preview += (item as Sentence).text;
+                    })
+                }
+                else{
+                    para.items.slice(0, 2).forEach(item => {
+                        text_preview += (item as Sentence).text;
+                    })
+                }
+            }
+        })
+    }
+    return text_preview;
+}
