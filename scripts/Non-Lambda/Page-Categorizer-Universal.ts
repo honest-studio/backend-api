@@ -28,7 +28,7 @@ commander
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 
-// nano scripts/Non-Lambda/Page-Categorizer.ts
+// nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));

@@ -126,7 +126,7 @@ export const PageCategorizer = async (inputString: string) => {
         try {
             pagecategory_collection_insertion = await theMysql.TryQuery(
                 `
-                    INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
+                    INSERT IGNORE INTO enterlink_pagecategory_collection (category_id, articletable_id) 
                     VALUES (?, ?)
                 `,
                 [CATEGORY_ID, pageID]
