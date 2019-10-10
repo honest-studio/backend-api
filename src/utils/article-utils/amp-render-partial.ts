@@ -3,6 +3,7 @@ import striptags from 'striptags';
 import urlSlug from 'url-slug';
 import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
 import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
+import { PageCategory } from '../../types/api';
 import { AMPParseCollection, LanguagePack, SeeAlsoType, WikiExtraInfo } from '../../types/article-helpers';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
@@ -756,6 +757,40 @@ export class AmpRenderPartial {
                 <div class="photo-gallery">
                     ${mediaComboString}
                 </div>
+            </div>
+        `;
+    };
+
+    renderOneCategory = (category: PageCategory): string => {
+        return `
+            <li>
+                <a href="https://${category.lang == 'en' ? '' : category.lang + '.'}everipedia.org/category/lang_${category.lang}/${category.slug}" >
+                    ${category.title}
+                </a>
+            </li>
+            
+        `;
+    };
+
+
+    renderCategories = (): string => {
+        let categories: PageCategory[] = this.wikiExtras && this.wikiExtras.page_categories;
+        if (categories.length == 0) return ``;
+        let categoryComboString = categories
+            .map((cat, index) => {
+                return this.renderOneCategory(cat);
+            })
+            .join('');
+        return `
+            <div class="category-container">
+                <h2 class="category-header" id="categoryList">CATEGORIES
+                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
+                        this.sanitizedVariables.page_title
+                    } categories" />
+                </h2>
+                <ul class="category-list">
+                    ${categoryComboString}
+                </ul>
             </div>
         `;
     };

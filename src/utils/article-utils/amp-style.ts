@@ -45,20 +45,33 @@ amp-accordion.infobox-accordion, amp-accordion.link-list-accordion{
 	float: left;
 	width: 100%;
 }
-.media-gallery-container {
+.media-gallery-container, .category-container {
 	border: 1px solid #d9d9d9;
 	border-radius: 4px;
 	width: calc(100% - 30px);
 	padding: 0 0px 15px 0;
 	float: left;
-	margin: 0 15px 0 15px;
+	margin: 0 15px 15px 15px;
 }
-.media-gallery-container .media-gallery-header {
+.media-gallery-container .media-gallery-header, .category-container .category-header {
 	font-family: OpenSans-SemiBold,'Open Sans SemiBold',sans-serif;
 	font-size: 14px;
 	color: #979797;
 	text-align: left;
 	padding: 0px 15px 0px 15px;
+}
+.category-container ul {
+	font-family: OpenSans-SemiBold,'Open Sans SemiBold',sans-serif;
+    padding: 0px 0px 0px 15px;
+    list-style: none;
+	text-align: left;
+	margin: 0px;
+}
+.category-container ul li {
+	margin-bottom: 5px;
+}
+.category-container ul li a {
+
 }
 amp-accordion>section>:first-child{
 	cursor: pointer;
