@@ -187,7 +187,7 @@ export class AmpRenderPartial {
         // Metadata values
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
-        let ampSanitizedPhotoComment = this.artJSON.main_photo[0].caption
+        let ampSanitizedPhotoComment = this.artJSON.main_photo[0].caption && this.artJSON.main_photo[0].caption
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
