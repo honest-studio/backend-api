@@ -4,6 +4,9 @@ import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/ap
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as SqlString from 'sqlstring';
 
+
+const HOMEPAGE_CATEGORY_IDS = [1, 2, 3, 4, 371]
+
 @Injectable()
 export class CategoryService {
     constructor(private mysql: MysqlService) {}
@@ -179,5 +182,23 @@ export class CategoryService {
             category: category_info,
             previews: the_previews
         };
+    }
+
+    async getHomepageCategories(lang: string): Promise<PageCategory[]> {
+        
+        let categories: any[] = await this.mysql.TryQuery(
+            `
+            SELECT *
+            FROM 
+                enterlink_pagecategory cat 
+            WHERE 
+                cat.lang = ? 
+                AND cat.id IN (?)
+            `,
+            [lang, HOMEPAGE_CATEGORY_IDS],
+            10000
+        );
+
+        return categories;
     }
 }

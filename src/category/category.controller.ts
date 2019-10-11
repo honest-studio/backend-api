@@ -76,4 +76,19 @@ export class CategoryController {
     async getPagesByCategoryLangSlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() query): Promise<PageCategoryCollection> {
         return await this.categoryService.getPagesByCategoryLangSlug(lang_code, slug, query);
     }
+
+    @Get('/homepage/:lang')
+    @ApiOperation({ title: 'Get the category pages to show on the homepage' })
+    @ApiImplicitParam({
+        name: 'lang',
+        description: 'The language of the category page'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `A JSON with a list of all the pages belonging to that category`
+    })
+    async getHomepageCategories(@Param('lang') lang): Promise<PageCategoryCollection> {
+        return await this.categoryService.getHomepageCategories(lang);
+    }
+
 }
