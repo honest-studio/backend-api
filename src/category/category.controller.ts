@@ -1,7 +1,7 @@
 import { Body, Controller, Get, UsePipes, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
-import { PageCategoryCollection } from '../types/api';
+import { PageCategoryCollection, PageCategory } from '../types/api';
 import { CategoryService } from './category.service';
 
 @Controller('v2/category')
@@ -87,7 +87,7 @@ export class CategoryController {
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
     })
-    async getHomepageCategories(@Param('lang') lang): Promise<PageCategoryCollection> {
+    async getHomepageCategories(@Param('lang') lang): Promise<PageCategory[]> {
         return await this.categoryService.getHomepageCategories(lang);
     }
 
