@@ -400,7 +400,7 @@ export class AmpRenderPartial {
     renderFirstParagraph = (): string => {
 
         let firstSection: Section = this.artJSON.page_body[0];
-        let imageBlock = firstSection.images
+        let imageBlock = firstSection && firstSection.images && firstSection.images
             .map((image, imageIndex) => {
                 let result: AMPParseCollection = renderAMPImage(
                     image,
@@ -411,7 +411,7 @@ export class AmpRenderPartial {
                 return result.text;
             })
             .join('');
-        let paraBlock = firstSection.paragraphs
+        let paraBlock = firstSection && firstSection.paragraphs && firstSection.paragraphs
             .map((para, index) => {
                 let result: AMPParseCollection = renderAMPParagraph(
                     para,

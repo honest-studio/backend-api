@@ -107,45 +107,48 @@ export class WikiService {
 
         // We only care about indexed links
         // On the frontend, all links will be converted to spans by default, except indexed ones
-        let page_link_rows: any[] = await this.mysql.TryQuery(
-            `
-            SELECT DISTINCT
-                art.slug AS slug,
-                art.slug_alt AS slug_alt,
-                art_redir.slug AS redir_slug,
-                art_redir.slug_alt AS redir_slug_alt,
-                COALESCE(art_redir.slug, art.slug) AS slug,
-                COALESCE(art_redir.slug_alt, art.slug_alt) AS slug_alt,
-                COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed,
-                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
-                COALESCE(art_redir.page_note, art.page_note) AS page_note
-            FROM enterlink_articletable AS art
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE 
-                (art.slug IN (?) OR art.slug_alt IN (?))
-                AND (art.page_lang = ? OR art_redir.page_lang = ?)
-                AND art.is_removed = 0
-                AND art.is_indexed = 1
-            `,
-            [found_slugs, found_slugs, lang_to_use, lang_to_use]
-        );
-
-        page_link_rows.forEach(result_row => {
-            // All in all 4 slug variants
-            working_collection.push(`lang_${lang_to_use}/${result_row.slug}`);
-            working_collection.push(`lang_${lang_to_use}/${result_row.slug_alt}`);
-            working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug}`);
-            working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug_alt}`);
-
-        })
-
-        // Remove the nulls
-        working_collection = working_collection.filter(s => s && s != `lang_${lang_to_use}/null`);
-
-        // Remove dupes
-        working_collection = Array.from(new Set(working_collection))
-
-        return working_collection;
+        if(found_slugs.length){
+            let page_link_rows: any[] = await this.mysql.TryQuery(
+                `
+                SELECT DISTINCT
+                    art.slug AS slug,
+                    art.slug_alt AS slug_alt,
+                    art_redir.slug AS redir_slug,
+                    art_redir.slug_alt AS redir_slug_alt,
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.slug_alt, art.slug_alt) AS slug_alt,
+                    COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed,
+                    COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
+                    COALESCE(art_redir.page_note, art.page_note) AS page_note
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE 
+                    (art.slug IN (?) OR art.slug_alt IN (?))
+                    AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                    AND art.is_removed = 0
+                    AND art.is_indexed = 1
+                `,
+                [found_slugs, found_slugs, lang_to_use, lang_to_use]
+            );
+    
+            page_link_rows.forEach(result_row => {
+                // All in all 4 slug variants
+                working_collection.push(`lang_${lang_to_use}/${result_row.slug}`);
+                working_collection.push(`lang_${lang_to_use}/${result_row.slug_alt}`);
+                working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug}`);
+                working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug_alt}`);
+    
+            })
+    
+            // Remove the nulls
+            working_collection = working_collection.filter(s => s && s != `lang_${lang_to_use}/null`);
+    
+            // Remove dupes
+            working_collection = Array.from(new Set(working_collection))
+    
+            return working_collection;
+        }
+        else return null;
     }
 
     async getPageCategories(passedJSON: ArticleJson, lang_to_use: string): Promise<PageCategory[]> {
@@ -523,40 +526,43 @@ export class WikiService {
         // Collect the slugs
         let seealso_slugs = tempSeeAlsos.map(sa => sa.slug);
 
-        let seeAlsoRows: any[] = await this.mysql.TryQuery(
-            `
-            SELECT 
-                COALESCE(art_redir.page_title, art.page_title) page_title, 
-                COALESCE(art_redir.slug, art.slug) AS slug,
-                COALESCE(art_redir.photo_url, art.photo_url) AS main_photo, 
-                COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail, 
-                COALESCE(art_redir.page_lang, art.page_lang) AS lang_code, 
-                COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview, 
-                COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed, 
-                COALESCE(art_redir.is_removed, art.is_removed) AS is_removed 
-            FROM enterlink_articletable AS art 
-            LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
-            WHERE
-                (art.slug IN (?) OR art.slug_alt IN (?))
-                AND (art.page_lang = ? OR art_redir.page_lang = ?)
-                and (art.is_removed = 0 || art_redir.is_removed = 0)
-            ORDER BY (art_redir.is_indexed || art.is_indexed) DESC
-            ;`,
-            [seealso_slugs, seealso_slugs, lang_to_use, lang_to_use]
-        );
-
-        // Quick slice
-        seeAlsoRows = seeAlsoRows.slice(0, 6);
-
-        // Clean up text previews
-        for (let preview of seeAlsoRows) {
-            preview.page_title = sanitizeTextPreview(preview.page_title);
-            if (preview.text_preview) {
-                preview.text_preview = sanitizeTextPreview(preview.text_preview);
+        if (seealso_slugs.length){
+            let seeAlsoRows: any[] = await this.mysql.TryQuery(
+                `
+                SELECT 
+                    COALESCE(art_redir.page_title, art.page_title) page_title, 
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.photo_url, art.photo_url) AS main_photo, 
+                    COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail, 
+                    COALESCE(art_redir.page_lang, art.page_lang) AS lang_code, 
+                    COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview, 
+                    COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed, 
+                    COALESCE(art_redir.is_removed, art.is_removed) AS is_removed 
+                FROM enterlink_articletable AS art 
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE
+                    (art.slug IN (?) OR art.slug_alt IN (?))
+                    AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                    and (art.is_removed = 0 || art_redir.is_removed = 0)
+                ORDER BY (art_redir.is_indexed || art.is_indexed) DESC
+                ;`,
+                [seealso_slugs, seealso_slugs, lang_to_use, lang_to_use]
+            );
+    
+            // Quick slice
+            seeAlsoRows = seeAlsoRows.slice(0, 6);
+    
+            // Clean up text previews
+            for (let preview of seeAlsoRows) {
+                preview.page_title = sanitizeTextPreview(preview.page_title);
+                if (preview.text_preview) {
+                    preview.text_preview = sanitizeTextPreview(preview.text_preview);
+                }
             }
+    
+            return seeAlsoRows as SeeAlsoType[];
         }
-
-        return seeAlsoRows as SeeAlsoType[];
+        else return [];
     }
 
     async submitWiki(wiki: ArticleJson): Promise<any> {

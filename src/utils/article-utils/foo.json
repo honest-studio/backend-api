@@ -1,1 +1,68 @@
-[]
+[
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Contrary to popular belief, the Coney Island Ice Cream was an all-Filipino brand. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "But kids who grew up loving its incredible lineup of ice cream flavors didn’t care–they just craved for it."
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "We’ll never forget the bubblegum-flavored ice cream with real bubblegum bits as well as New York! "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "New York!, Pistachio, Mint Chocolate Chip, Choco Pecan Nut, and the iconic ice cream sandwich that started it all–Eskimo Roll. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "[[CITE|-1|https://filipiknow.net/defunct-filipino-foods]]"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The carnival-themed ice cream brand was introduced to the market in the 1970’s by Seamark Enterprises, a company owned by the Trillana – De Ocampo families (the same people who gave us Whammos and Go Nuts Donuts). "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Seamark was later bought by Purefoods, but after a brief stint in PBA (there was, in fact, a basketball team named “Coney Island Ice Cream Stars”), the brand simply disappeared. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "[[CITE|-1|https://filipiknow.net/defunct-filipino-foods]]"
+					}
+				]
+			}
+		],
+		"images": []
+	}
+]
