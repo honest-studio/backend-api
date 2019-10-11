@@ -22,16 +22,16 @@ export class AmpRenderPartial {
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
         let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
-        let comboHreflangs =
-            this.wikiExtras.alt_langs.length > 0
-                ? this.wikiExtras.alt_langs
-                      .map((langPack, index) => {
-                          return `<link rel="alternate" href="https://everipedia.org/wiki/lang_${langPack.lang}/${
-                              langPack.slug
-                          }" hreflang="${langPack.lang}" />`;
-                      })
-                      .join('')
-                : '';
+        // let comboHreflangs =
+        //     this.wikiExtras.alt_langs.length > 0
+        //         ? this.wikiExtras.alt_langs
+        //               .map((langPack, index) => {
+        //                   return `<link rel="alternate" href="https://everipedia.org/wiki/lang_${langPack.lang}/${
+        //                       langPack.slug
+        //                   }" hreflang="${langPack.lang}" />`;
+        //               })
+        //               .join('')
+        //         : '';
 
         // Metadata values
         const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified') ? this.artJSON.metadata.find(w => w.key == 'last_modified').value : '';
@@ -46,7 +46,6 @@ export class AmpRenderPartial {
             <meta name="theme-color" content="#FFFFFF" />
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
-            ${comboHreflangs}
             <script async src="https://cdn.ampproject.org/v0.js"></script>
             <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
             <style amp-boilerplate>
