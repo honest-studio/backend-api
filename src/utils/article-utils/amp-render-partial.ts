@@ -502,7 +502,7 @@ export class AmpRenderPartial {
                         
 
                         // Remove bad tags
-                        $('style').remove();
+                        $('style, section').remove();
                         const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
                         badTagSelectors.forEach((selector) => $(selector).remove());
 
@@ -958,6 +958,11 @@ export class AmpRenderPartial {
 			if (link_collection.includes(test_wikilangslug)) is_indexed = true;
         }
 
+        // Don't use anchor tags for non-indexed pages 
+        let title_tag_to_use = is_indexed ? 
+        `<a class="sa-title"  href="https://everipedia.org/wiki/lang_${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
+        : `<div class="sa-title" >${seealso.page_title}</div>`
+
         return `
             <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${test_wikilangslug}', target=_blank)" tabindex='${passed_index}' role="link">
                 <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
@@ -966,7 +971,7 @@ export class AmpRenderPartial {
                     }"></amp-img>
                 </amp-img>
                 <div class="sa-contentwrap">
-                    <${is_indexed ? 'a' : 'div'} class="sa-title"  href="https://everipedia.org/wiki/lang_${test_wikilangslug}" target="_blank">${seealso.page_title}</${is_indexed ? 'a' : 'div'}>
+                    ${title_tag_to_use}
                     <div class="sa-blurb">${seealso.text_preview}</div>
                 </div>
             </div>
