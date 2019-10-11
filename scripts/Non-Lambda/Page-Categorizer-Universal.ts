@@ -27,7 +27,7 @@ commander
 
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
-const IGNORE_CATEGORIES_BELOW = 4066; // Used to help speed up categorization for new categories
+const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
@@ -82,9 +82,10 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
     try {
         wiki = JSON.parse(hashCacheResult[0].html_blob);
     } catch (e) {
-        wiki = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hashCacheResult[0].html_blob)));
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
+
 
     // Search through the infoboxes
     let categories_to_add: PageCategory[] = [];
@@ -109,7 +110,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
     
                     if(combo_value && combo_value.search(values_regex) >= 0){
                         console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
-                        categories_to_add.push(categ)
+                        categories_to_add.push(categ);
                     }
                 }
             })

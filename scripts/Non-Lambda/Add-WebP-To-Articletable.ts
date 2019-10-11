@@ -8,7 +8,7 @@ import { ConfigService } from '../../src/common';
 import * as axios from 'axios';
 const fetch = require("node-fetch");
 import { WikiService } from '../../src/wiki/wiki.service';
-import { oldHTMLtoJSON, sentenceSplitFixer, flushPrerenders } from '../../src/utils/article-utils';
+import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations, sentenceSplitFixer, flushPrerenders } from '../../src/utils/article-utils';
 const util = require('util');
 const chalk = require('chalk');
 const theConfig = new ConfigService(`.env`);
@@ -80,7 +80,7 @@ export const AddWebPToArticletable = async (inputString: string) => {
     try {
         wiki = JSON.parse(hashCacheResult[0].html_blob);
     } catch (e) {
-        wiki = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hashCacheResult[0].html_blob)));
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
