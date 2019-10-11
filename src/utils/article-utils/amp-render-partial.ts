@@ -50,6 +50,7 @@ export class AmpRenderPartial {
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
             <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap&subset=latin-ext" rel="stylesheet">
             <script async src="https://cdn.ampproject.org/v0.js"></script>
+            <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
             <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
             <style amp-boilerplate>
                 body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}
@@ -501,7 +502,7 @@ export class AmpRenderPartial {
                         
 
                         // Remove bad tags
-                        $('style').remove();
+                        $('style, section').remove();
                         const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
                         badTagSelectors.forEach((selector) => $(selector).remove());
 
@@ -612,7 +613,7 @@ export class AmpRenderPartial {
             })
             .join('');
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
-
+        // console.log(sanitizedCaptionPlaintext)
         return `
             ${
                 media.category == 'PICTURE'
@@ -643,7 +644,7 @@ export class AmpRenderPartial {
                                 </a>`
                                     : ``
                             }
-                            ${sanitizedCaption}
+                            ${sanitizedCaptionPlaintext}
                         </div>` : ''
                     }
                 </div>`
@@ -672,7 +673,7 @@ export class AmpRenderPartial {
                             </a>`
                                 : ``
                         }
-                        ${sanitizedCaption}
+                        ${sanitizedCaptionPlaintext}
                     </div>
                 </div>`
                     : media.category == 'YOUTUBE'
@@ -696,7 +697,7 @@ export class AmpRenderPartial {
                             </a>`
                                 : ``
                         }
-                        ${sanitizedCaption}
+                        ${sanitizedCaptionPlaintext}
                     </div>
                     </a>
                 </div>`
@@ -727,7 +728,7 @@ export class AmpRenderPartial {
                             </a>`
                                 : ``
                         }
-                        ${sanitizedCaption}
+                        ${sanitizedCaptionPlaintext}
                     </div>
                     </a>
                 </div>`
@@ -749,7 +750,7 @@ export class AmpRenderPartial {
                             </a>`
                                 : ``
                         }
-                        ${sanitizedCaption}
+                        ${sanitizedCaptionPlaintext}
                     </div>
                     </a>
                 </div>`
@@ -866,10 +867,11 @@ export class AmpRenderPartial {
         let theDomain = parsedDomain && parsedDomain.domain ? parsedDomain.domain : ""; 
         let theTLD = parsedDomain && parsedDomain.tld ? "." + parsedDomain.tld : "";  
         let domainToShow = (citation.mime == 'None' || citation.mime === undefined || citation.mime == null) ? `${theSubdomain}${theDomain}${theTLD}` : null;
+        let sanitizedDescriptionPlaintext = striptags(sanitizedDescription);
 
         return `                        
             <li>
-                <a class='citation-anchor' href="${citation.url}" rel="nofollow" target="_blank" >
+                <span class='citation-anchor' on="tap:AMP.navigateTo(url='${citation.url}', target=_blank)" tabindex='${index}' role="link">
                     <div class="link-id">[${citation.citation_id}]</div>
                     ${
                         theThumbSrc != null && theThumbSrc != 'None' && theThumbSrc != ''  
@@ -883,12 +885,12 @@ export class AmpRenderPartial {
                     <div class="link-box-details">
                         ${domainToShow ? `<span class='citation-domain'>${domainToShow}</span>` : ``}
                         ${hasFileMime ? `<span class='citation-mime'>${MimeTypes.extension(citation.mime).toString().toUpperCase()}</span>` : ``}
-                        <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescription}</div>
+                        <div id="linksetid${citation.url}" class="link-comment">${sanitizedDescriptionPlaintext}</div>
                         <div class="link-date">
                             ${moment(new Date(citation.timestamp)).locale('en').format('lll')}
                         </div>
                     </div>
-                </a>
+                </span>
             </li>
         `;
         // return `
@@ -949,44 +951,59 @@ export class AmpRenderPartial {
     `;
     };
 
-    renderOneSeeAlso = (seealso: SeeAlsoType): string => {
+    renderOneSeeAlso = (seealso: SeeAlsoType, link_collection: string[], passed_index: number): string => {
+        let is_indexed = false;;
+        let test_wikilangslug = `lang_${seealso.lang_code}/${seealso.slug}`;
+		if(link_collection.length){
+			if (link_collection.includes(test_wikilangslug)) is_indexed = true;
+        }
+
+        // Don't use anchor tags for non-indexed pages 
+        let title_tag_to_use = is_indexed ? 
+        `<a class="sa-title"  href="https://everipedia.org/wiki/lang_${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
+        : `<div class="sa-title" >${seealso.page_title}</div>`
+
         return `
-            <a class='sa-ancr-wrp' href="/wiki/lang_${seealso.lang_code}/${seealso.slug}">
+            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${test_wikilangslug}', target=_blank)" tabindex='${passed_index}' role="link">
                 <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
                         seealso.page_title
                     }"></amp-img>
                 </amp-img>
                 <div class="sa-contentwrap">
-                    <div class="sa-title">${seealso.page_title}</div>
+                    ${title_tag_to_use}
                     <div class="sa-blurb">${seealso.text_preview}</div>
                 </div>
-            </a>
+            </div>
         `;
     };
 
     renderSeeAlso = (): string => {
-        let seeAlsoComboString = this.wikiExtras.see_also
+        let the_see_alsos = this.wikiExtras && this.wikiExtras.see_also;
+        let the_link_collection = this.wikiExtras && this.wikiExtras.link_collection;
+        if (the_see_alsos.length){
+            let seeAlsoComboString = the_see_alsos
             .map((value, index) => {
-                return this.renderOneSeeAlso(value);
+                return this.renderOneSeeAlso(value, the_link_collection, index);
             })
             .join('');
-        return `
-            <span id="seeAlsoPanel" class="toc-span-fix"></span>
-            <amp-accordion id="seeAlsoPanelContainer" >
-            <section expanded>
-                <h2 class="acc-header" >See Also
-                    <span class="icon"><i class="fa fa-chevron-down"></i>
-                        <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="See related encyclopedia articles, biographies, reviews, and historical facts." />
-                    </span>
-                </h2>
-                <div>
-                    <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
-                    ${seeAlsoComboString}
-                </div>
-            </section>
-            </amp-accordion>
-        `;
+            return `
+                <span id="seeAlsoPanel" class="toc-span-fix"></span>
+                <amp-accordion id="seeAlsoPanelContainer" >
+                <section expanded>
+                    <h2 class="acc-header" >See Also
+                        <span class="icon"><i class="fa fa-chevron-down"></i>
+                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="See related encyclopedia articles, biographies, reviews, and historical facts." />
+                        </span>
+                    </h2>
+                    <div>
+                        <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
+                        ${seeAlsoComboString}
+                    </div>
+                </section>
+                </amp-accordion>
+            `;
+        }
     };
 
     renderFooter = (): string => {
