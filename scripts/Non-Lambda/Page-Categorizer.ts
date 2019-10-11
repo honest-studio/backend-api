@@ -84,7 +84,7 @@ export const PageCategorizer = async (inputString: string) => {
     try {
         wiki = JSON.parse(hashCacheResult[0].html_blob);
     } catch (e) {
-        wiki = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hashCacheResult[0].html_blob)));
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 

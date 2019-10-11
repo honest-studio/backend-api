@@ -3,6 +3,7 @@ const commander = require('commander');
 import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
 import { PageCategory } from '../../src/types/api';
 import * as readline from 'readline';
+import moment from 'moment';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
@@ -27,7 +28,8 @@ commander
 
 const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
-const IGNORE_CATEGORIES_BELOW = 4066; // Used to help speed up categorization for new categories
+const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
+const LANGUAGE_CODE = 'en';
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
@@ -82,9 +84,10 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
     try {
         wiki = JSON.parse(hashCacheResult[0].html_blob);
     } catch (e) {
-        wiki = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hashCacheResult[0].html_blob)));
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
+
 
     // Search through the infoboxes
     let categories_to_add: PageCategory[] = [];
@@ -92,10 +95,13 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
         for (let index = 0; index < wiki.infoboxes.length; index++) {
             let ibox = wiki.infoboxes[index];
             // Search the schema
-            regexed_categories.forEach(categ => {
+            for (let c_idx = 0; c_idx < regexed_categories.length; c_idx++) {
+                let categ = regexed_categories[c_idx];
                 let schema_keyword_regex = new RegExp(categ.schema_keyword, 'gimu')
                 let key_regex = new RegExp(categ.key_regex, 'gimu');
-                let values_regex = new RegExp(categ.values_regex, 'gimu')
+                let values_regex = new RegExp(categ.values_regex, 'gimu');
+
+                // Normal regexes
                 if (
                     (ibox.schema && ibox.schema.search(schema_keyword_regex) >= 0)
                     || (ibox.key && ibox.key.search(key_regex) >= 0)
@@ -109,12 +115,75 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
     
                     if(combo_value && combo_value.search(values_regex) >= 0){
                         console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
-                        categories_to_add.push(categ)
+                        categories_to_add.push(categ);
                     }
                 }
-            })
-            
+            }
 
+            // Handle birthdays
+            if (
+                (ibox.schema && ibox.schema.search(/birthDate/gimu) >= 0)
+                || (ibox.key && ibox.key.search(/Born|Birthday/gimu) >= 0)
+            ){
+                // console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
+                // Search the values
+                // Combine into one big string first
+                let combo_value = ibox.values.map(val => {
+                    return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
+                }).join(' ')
+
+                // Trim the result first
+                let trimmed_value = combo_value.trim();
+
+                // Ignore only years with no month or day
+                // Also remove ages
+                if(trimmed_value.length >= 5){
+                    // Try to parse out the date and calculate the corresponding category slug
+                    const parsed_date = moment(trimmed_value).format("MMMM D");
+                    let calculated_category_slug = parsed_date.toLowerCase().replace(" ", "-") + '-birthdays';
+
+                    // Ignore unparsable dates
+                    if (calculated_category_slug != 'invalid-date-birthdays'){
+                        console.log(chalk.green.bold("FOUND BIRTHDATE: ", parsed_date));
+                        console.log(chalk.green.bold("CALCULATED SLUG: ", calculated_category_slug));
+                        console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
+
+                        // Find what the birthday's category ID is from the calculated_category_slug
+                        let pagecategory_id_query, found_category_id = null;
+                        try {
+                            pagecategory_id_query = await theMysql.TryQuery(
+                                `
+                                    SELECT *
+                                    FROM enterlink_pagecategory
+                                    WHERE 
+                                        slug=?
+                                        AND lang=?
+                                `,
+                                [calculated_category_slug, LANGUAGE_CODE]
+                            );
+                            if(pagecategory_id_query && pagecategory_id_query.length) {
+                                let found_categ = pagecategory_id_query[0];
+                                categories_to_add.push(found_categ);
+                                console.log(chalk.green("Page category ID should be: ", found_categ.id));
+                            }
+                            
+                            
+                        } catch (e) {
+                            if (e.message.includes("ER_DUP_ENTRY")){
+                                console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
+                            }
+                            else throw e;
+                        }
+
+
+                    }
+
+
+                }
+                
+                
+
+            }
         }
         
     } 
@@ -122,7 +191,6 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
         console.log(chalk.yellow("No infoboxes. Skipping..."));
         return;
     }
-
 
     if(categories_to_add.length > 0){
         // Concat the values
@@ -223,9 +291,10 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
                     AND art.page_type=?
+                    AND art.page_lang=?
                 GROUP BY art.id
             `,
-            [currentStart, currentEnd, PAGE_TYPE]
+            [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE]
         );
 
         for await (const artResult of fetchedArticles) {

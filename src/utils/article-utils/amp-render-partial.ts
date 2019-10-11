@@ -1,12 +1,15 @@
 import CleanCSS from 'clean-css';
+import cheerio from 'cheerio';
 import striptags from 'striptags';
 import urlSlug from 'url-slug';
 import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
 import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
 import { PageCategory } from '../../types/api';
 import { AMPParseCollection, LanguagePack, SeeAlsoType, WikiExtraInfo } from '../../types/article-helpers';
+import { NON_AMP_BAD_TAGS } from '../article-utils/article-converter';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
+import { isWebUri } from 'valid-url';
 import moment from 'moment';
 import * as MimeTypes from 'mime-types';
 
@@ -187,7 +190,7 @@ export class AmpRenderPartial {
         // Metadata values
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
-        let ampSanitizedPhotoComment = this.artJSON.main_photo[0].caption
+        let ampSanitizedPhotoComment = this.artJSON.main_photo[0].caption && this.artJSON.main_photo[0].caption
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
@@ -219,9 +222,9 @@ export class AmpRenderPartial {
                     ${
                         OVERRIDE_MAIN_THUMB
                             ? `<amp-anim id="mainphoto" itemprop="image" width='${
-                                  this.artJSON.main_photo[0].width
+                                  this.artJSON.main_photo[0].width || '300px'
                               }' height='${
-                                  this.artJSON.main_photo[0].height
+                                  this.artJSON.main_photo[0].height || '300px'
                               }' layout='responsive' src="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
@@ -242,8 +245,8 @@ export class AmpRenderPartial {
                         </amp-anim>`
                             : true
                             ? `<amp-img id="mainphoto" itemprop="image" width='${
-                                  this.artJSON.main_photo[0].width
-                              }' height='${this.artJSON.main_photo[0].height}' layout='responsive' src="${
+                                  this.artJSON.main_photo[0].width || '300px'
+                              }' height='${this.artJSON.main_photo[0].height || '300px'}' layout='responsive' src="${
                                   this.artJSON.main_photo[0].url
                               }?nocache=${RANDOMSTRING}" 
                             alt="
@@ -400,7 +403,7 @@ export class AmpRenderPartial {
     renderFirstParagraph = (): string => {
 
         let firstSection: Section = this.artJSON.page_body[0];
-        let imageBlock = firstSection.images
+        let imageBlock = firstSection && firstSection.images && firstSection.images
             .map((image, imageIndex) => {
                 let result: AMPParseCollection = renderAMPImage(
                     image,
@@ -411,7 +414,7 @@ export class AmpRenderPartial {
                 return result.text;
             })
             .join('');
-        let paraBlock = firstSection.paragraphs
+        let paraBlock = firstSection && firstSection.paragraphs && firstSection.paragraphs
             .map((para, index) => {
                 let result: AMPParseCollection = renderAMPParagraph(
                     para,
@@ -493,6 +496,24 @@ export class AmpRenderPartial {
                             this.allLightBoxes.push(...parsePack.lightboxes);
                         })
                         
+
+                        let $ = cheerio.load(`<div id='bogus_div' >${comboText}</div>`);
+                        
+
+                        // Remove bad tags
+                        $('style').remove();
+                        const badTagSelectors = ['.thumbcaption .magnify', '.blurbimage-caption .magnify', '.blurb-wrap .thumbinner'];
+                        badTagSelectors.forEach((selector) => $(selector).remove());
+
+                        // Remove more bad tags
+                        $(NON_AMP_BAD_TAGS.join(", ")).remove();
+
+                        // Remove the style attribute
+                        $("[style]").removeAttr('style');
+
+                        // Hack to prevent useless html and head tags
+                        comboText = $('#bogus_div').html();
+                        
                         // return result.text;
                         return `
                         <div class="info-an">
@@ -571,6 +592,9 @@ export class AmpRenderPartial {
     };
 
     renderOneMedia = (media: Citation, index: number): string => {
+        // Don't render invalid URLs
+        if (media.url && !isWebUri(media.url)) return "";
+
         // const RANDOMSTRING = Math.random()
         //     .toString(36)
         //     .substring(7);
@@ -595,7 +619,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${
+                            <a rel='nofollow' target="_blank" class="photo-gallery-anchor" href="${media.url}" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -627,7 +651,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' class="photo-gallery-anchor" href="${media.url}" data-target="${
+                            <a rel='nofollow' target="_blank" class="photo-gallery-anchor" href="${media.url}" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -653,7 +677,7 @@ export class AmpRenderPartial {
                 </div>`
                     : media.category == 'YOUTUBE'
                     ? `<div class="tile-ct">
-                    <a rel='nofollow' href="${media.url}" title="Link to video">
+                    <a rel='nofollow' target="_blank" href="${media.url}" title="Link to video">
                     <span>
                         <amp-youtube
                             data-videoid="${getYouTubeID(media.url)}"
@@ -676,9 +700,9 @@ export class AmpRenderPartial {
                     </div>
                     </a>
                 </div>`
-                    : media.category == 'NORMAL_VIDEO'
+                    : media.category == 'NORMAL_VIDEO' && media.url && media.url.search("https://") == 0
                     ? `<div class="tile-ct">
-                    <a rel='nofollow' href="${media.url}" title='Link to video'>
+                    <a rel='nofollow' target="_blank" href="${media.url}" title='Link to video'>
                     <span>
                         <div id="video-${media.url}" class="video-wrapper">
                             <div class="video-overlay"></div>
@@ -709,7 +733,7 @@ export class AmpRenderPartial {
                 </div>`
                     : media.category == 'AUDIO'
                     ? `<div class="tile-ct">
-                    <a rel='nofollow' href="${media.url}" title="Link to recording">
+                    <a rel='nofollow' target="_blank" href="${media.url}" title="Link to recording">
                     <span>
                         <amp-img width=150 height=150 layout="responsive" src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-image="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                             <amp-img placeholder width=150 height=150 src="https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png" layout="fill"></amp-img>
@@ -795,6 +819,9 @@ export class AmpRenderPartial {
     };
 
     renderOneCitation = (citation: Citation, index: number): string => {
+        // Don't render invalid URLs
+        if (citation.url && !isWebUri(citation.url)) return "";
+
         let sanitizedDescription = citation.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
@@ -842,7 +869,7 @@ export class AmpRenderPartial {
 
         return `                        
             <li>
-                <a class='citation-anchor' href="${citation.url}" rel="nofollow">
+                <a class='citation-anchor' href="${citation.url}" rel="nofollow" target="_blank" >
                     <div class="link-id">[${citation.citation_id}]</div>
                     ${
                         theThumbSrc != null && theThumbSrc != 'None' && theThumbSrc != ''  
@@ -892,21 +919,34 @@ export class AmpRenderPartial {
             })
             .join('');
 
+        // return `
+        //     <span id="referenceList" class="toc-span-fix"></span>
+        //     <amp-accordion class='link-list-accordion'>
+        //     <section expanded>
+        //         <h2 class="acc-header">References</h2>
+        //         <div class="l-lst-header" id="link_list_container">
+        //             <div class="ll-wrapper">
+        //                 <ul class="l-lst">
+        //                     ${citationComboString}
+        //                 </ul>
+        //             </div>
+        //         </div>
+        //     </section>
+        //     </amp-accordion>
+        // `;
         return `
-            <span id="referenceList" class="toc-span-fix"></span>
-            <amp-accordion class='link-list-accordion'>
-            <section expanded>
-                <h2 class="acc-header">References</h2>
-                <div class="l-lst-header" id="link_list_container">
-                    <div class="ll-wrapper">
-                        <ul class="l-lst">
-                            ${citationComboString}
-                        </ul>
-                    </div>
-                </div>
-            </section>
-            </amp-accordion>
-        `;
+        <span id="referenceList" class="toc-span-fix"></span>
+        <div class='link-list-main-wrap'>
+        <h2 class="acc-header">References</h2>
+        <div class="l-lst-header" id="link_list_container">
+            <div class="ll-wrapper">
+                <ul class="l-lst">
+                    ${citationComboString}
+                </ul>
+            </div>
+        </div>
+        </div>
+    `;
     };
 
     renderOneSeeAlso = (seealso: SeeAlsoType): string => {

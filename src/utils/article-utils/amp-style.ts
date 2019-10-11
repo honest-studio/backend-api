@@ -41,7 +41,7 @@ img{
 amp-accordion, .toc-button, button, a{
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-amp-accordion.infobox-accordion, amp-accordion.link-list-accordion{
+amp-accordion.infobox-accordion, .link-list-main-wrap{
 	float: left;
 	width: 100%;
 }
@@ -1341,6 +1341,9 @@ article .flagicon{
 	margin-right: auto;
 	width: 100%;
 	top: 10px;
+}
+.amp-header-logo a {
+	display: inline-block;
 }
 .amp-header-search {
 	float:right;

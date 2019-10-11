@@ -1,1 +1,813 @@
-[]
+[
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "**Null** may refer to:"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "science-technology-and-mathematics"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Science, technology, and mathematics"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "computing"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Computing"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(SQL)|Null (SQL)]] (or NULL), a special marker and keyword in SQL indicating that something has no value"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_character|Null character]], the zero-valued ASCII character, also designated by NUL , often used as a terminator, separator or filler. This symbol has no visual representation."
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_device|Null device]], a special computer file that discards all data written to it"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_modem|Null modem]], a specially wired serial communications cable"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_object_pattern|Null object pattern]], a software design pattern using an object with defined neutral behavior"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_pointer|Null pointer]] (sometimes written NULL , nil , or None ), used in computer programming for an uninitialized, undefined, empty, or meaningless value"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_route|Null route]], a network route that goes nowhere"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_string|Null string]], the unique string of length zero (in computer science and formal language theory)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null-terminated_string|Null-terminated string]], a character string of which the length is determined by the first null-character (in programming language C and related languages)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nullable_type|Nullable type]], a feature of some statically-typed programming languages which allows a data type to be set to the special value NULL"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "mathematics"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Mathematics"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(mathematics)|Null (mathematics)]], a zero value in several branches of mathematics"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_set|Null set]], a set that is negligible in some sense Also an older term for the [[LINK|lang_en|Empty_set|empty set]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "physics"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Physics"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(physics)|Null (physics)]], a point in a field where the field quantity is zero"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(radio)|Null (radio)]], a concept in electromagnetism"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Causal_structure#Tangent_vectors|Null vectors or curves]] in the causal structure of a Lorentzian manifold such as a Minkowski space-time"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "other-uses-in-science-and-technology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other uses in science and technology"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_allele|Null allele]], in genetics"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_cipher|Null cipher]], a ciphertext symbol"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_hypothesis|Null hypothesis]], a concept in statistical hypothesis testing"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_morpheme|Null morpheme]], a concept in linguistics"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_result|Null result]], the absence of a hypothesized effect in the outcome of a scientific experiment"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "arts-and-media"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Arts and media"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "music"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Music"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|The_Null_Corporation|The Null Corporation]], an imprint of the band Nine Inch Nails"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(Intronaut_EP)|Null (Intronaut EP)]], 2006"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(Foetus_EP)|Null (Foetus EP)]], 1995"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "other-media"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other media"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Null, an identity of the character [[LINK|lang_en|Gray_Fox_(Metal_Gear)|Gray Fox]] in the *Metal Gear Solid: Portable Ops* video game"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Null, man-eating sentients in the *Downs-Lord Triptich* books by [[LINK|lang_en|John_Whitbourn|John Whitbourn]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null,_the_Living_Darkness|Null, the Living Darkness]], a Marvel Comics character"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Null, a villain from *[[LINK|lang_en|Teenage_Mutant_Ninja_Turtles_Adventures|Teenage Mutant Ninja Turtles Adventures]] *"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Nulls, worm-like remains of defeated characters in the animated program *[[LINK|lang_en|ReBoot|ReBoot]] *"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Type:_Null|Type: Null]], a Gen VII *Pokémon* species introduced in *Pokémon Sun and Moon*"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "people"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "People"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Christopher_Null|Christopher Null]] (born 1971), American film critic"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Eduard_van_der_Nüll|Eduard van der Nüll]] (1812–1868), Austrian architect"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Gary_Null|Gary Null]] (born 1945), American radio host and author on alternative medicine"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Keith_Null|Keith Null]] (born 1985), American football player"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "other-uses"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other uses"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_and_void|Null and void]], having no legal validity"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null-A|Null-A]], a term used in science fiction, referring to Korzybski's notation [[INLINE_IMAGE|https://wikimedia.org/api/rest_v1/media/math/render/svg/92efef0e89bdc77f6a848764195ef5b9d9bfcc6a||{overline {A}}|hundefined|wundefined|mwe-math-fallback-image-inline]] as an abbreviation for \"non-Aristotelian\" logic"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Stunde_Null|Stunde Null]], a term used in Germany to mark the end of the Second World War"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "see-also"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "See also"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Ø_(disambiguation)|Ø (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_symbol_(disambiguation)|Null symbol (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|0_(disambiguation)|0 (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nil_(disambiguation)|Nil (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nul_(disambiguation)|Nul (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	}
+]

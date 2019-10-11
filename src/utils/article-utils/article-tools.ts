@@ -54,7 +54,6 @@ const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string
     for (const key of keys) {
         if (inputAttrs[key] && inputAttrs[key] != ''){
             try {
-                
                 reversedAttrs[ReactAttrConvertMap[key]] = inputAttrs[key];
             }
             catch (e) {
@@ -66,6 +65,10 @@ const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string
     // if (reversedAttrs['style']){
     //     reversedAttrs['style'] = parseStyles(reversedAttrs['style']);
     // } 
+
+    // Filter out undefined attributes
+    delete reversedAttrs['undefined'];
+
     return reversedAttrs;
 }
 
