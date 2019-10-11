@@ -83,6 +83,7 @@ export const REPLACEMENTS = [
 ];
 
 export const NON_AMP_BAD_TAGS = [
+    'font',
     'head',
     'noscript',
     'map',
@@ -101,7 +102,8 @@ export const NON_AMP_BAD_TAGS = [
     'xml',
     'worddocument',
     'mathpr',
-    'mathfont'
+    'mathfont',
+    'kno-share-button'
 ];
 
 export const VALID_VIDEO_EXTENSIONS = [

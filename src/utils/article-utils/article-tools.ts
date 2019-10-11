@@ -65,12 +65,10 @@ const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string
     // if (reversedAttrs['style']){
     //     reversedAttrs['style'] = parseStyles(reversedAttrs['style']);
     // } 
-    
-    
+
     // Filter out undefined attributes
     delete reversedAttrs['undefined'];
 
-    console.log(reversedAttrs)
     return reversedAttrs;
 }
 
