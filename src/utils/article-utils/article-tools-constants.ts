@@ -501,3 +501,21 @@ export const AMP_BAD_CLASSES = [
     'timeline-wrapper',
     'PopUpMediaTransform'
 ];
+export const AMP_BAD_ATTRIBUTES = [
+    'undefined',
+    'scope',
+    'summary',
+    'item',
+    'align',
+    'valign',
+    'rules',
+    'nowrap',
+    'type',
+    'onclick',
+    'onmouseout',
+    'target',
+    'color',
+    'size',
+    'face',
+    'usemap'
+];

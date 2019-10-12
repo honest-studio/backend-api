@@ -7,6 +7,7 @@ import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } f
 import { PageCategory } from '../../types/api';
 import { AMPParseCollection, LanguagePack, SeeAlsoType, WikiExtraInfo } from '../../types/article-helpers';
 import { NON_AMP_BAD_TAGS } from '../article-utils/article-converter';
+import { AMP_REGEXES_PRE } from '../article-utils/article-tools-constants';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
 import { isWebUri } from 'valid-url';
@@ -514,6 +515,11 @@ export class AmpRenderPartial {
 
                         // Hack to prevent useless html and head tags
                         comboText = $('#bogus_div').html();
+
+                        // RegEx cleanup
+                        AMP_REGEXES_PRE.forEach(function(element) {
+                            comboText = comboText.replace(element, '');
+                        });
                         
                         // return result.text;
                         return `
