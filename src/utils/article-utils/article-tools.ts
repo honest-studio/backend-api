@@ -16,7 +16,7 @@ const css_escape = require('css.escape');
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType, DescList, Samp } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlsoType, SeeAlsoCollection,  } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles, collectNestedContentSentences } from './article-converter';
-import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
+import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST, AMP_BAD_ATTRIBUTES } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
 var colors = require('colors');
 
@@ -66,8 +66,10 @@ const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string
     //     reversedAttrs['style'] = parseStyles(reversedAttrs['style']);
     // } 
 
-    // Filter out undefined attributes
-    delete reversedAttrs['undefined'];
+    // Filter out bad attributes
+    AMP_BAD_ATTRIBUTES.forEach(attr => {
+        delete reversedAttrs[attr];
+    })
 
     return reversedAttrs;
 }
