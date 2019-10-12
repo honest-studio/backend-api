@@ -7,7 +7,7 @@ import os
 
 commands = [
 'export PYTHONIOENCODING=utf-8',
-'node --max-old-space-size=2500 dist/scripts/Non-Lambda/AMP-Info-Adder.js -s 1 -e 373334 >> scripts/batch/log/batch_00.log 2>&1',
+'node --max-old-space-size=2500 dist/scripts/Non-Lambda/AMP-Info-Adder.js -s 42162 -e 373334 >> scripts/batch/log/batch_00.log 2>&1',
 'node --max-old-space-size=2500 dist/scripts/Non-Lambda/AMP-Info-Adder.js -s 373334 -e 746667 >> scripts/batch/log/batch_01.log 2>&1',
 'node --max-old-space-size=2500 dist/scripts/Non-Lambda/AMP-Info-Adder.js -s 746667 -e 1120000 >> scripts/batch/log/batch_02.log 2>&1',
 'node --max-old-space-size=2500 dist/scripts/Non-Lambda/AMP-Info-Adder.js -s 1120000 -e 1493333 >> scripts/batch/log/batch_03.log 2>&1',
