@@ -565,30 +565,28 @@ export class AmpRenderPartial {
             .join('');
         return `
             <span id='infoboxHeader'></span>
-            <amp-accordion class="infobox-accordion">
-                <section id="infobox_section" class="infobox-main-wrap" expanded>
-                    <h2 class="qf-header qf-infobox">
-                    </h2>
-                    <div class='amp-wrap'>
-                        ${
-                            this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length != 0
-                                ? `<div id="blbx_ct" class='infbx-ct'>
-                                ${blobBoxResult.text}
-                            </div>`
-                                : ``
-                        }
-                        <div class="infbx-ct">
-                        ${
-                            infoboxes.length != 0
-                                ? `<ul class="list-unstyled list-spaced list-plural infobox">
-                                ${infoboxComboString}
-                            </ul>`
-                                : ``
-                        }
-                        </div>
-                    <div>
-                </section>
-            </amp-accordion>
+            <section id="infobox_section" class="infobox-main-wrap">
+                <h2 class="qf-header qf-infobox">
+                </h2>
+                <div class='amp-wrap'>
+                    ${
+                        this.artJSON.infobox_html && this.artJSON.infobox_html.tbody.rows.length != 0
+                            ? `<div id="blbx_ct" class='infbx-ct'>
+                            ${blobBoxResult.text}
+                        </div>`
+                            : ``
+                    }
+                    <div class="infbx-ct">
+                    ${
+                        infoboxes.length != 0
+                            ? `<ul class="list-unstyled list-spaced list-plural infobox">
+                            ${infoboxComboString}
+                        </ul>`
+                            : ``
+                    }
+                    </div>
+                <div>
+            </section>
         `;
     };
 

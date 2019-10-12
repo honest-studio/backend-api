@@ -41,7 +41,7 @@ img{
 amp-accordion, .toc-button, button, a{
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-amp-accordion.infobox-accordion, .link-list-main-wrap{
+.infobox-main-wrap, .link-list-main-wrap{
 	float: left;
 	width: 100%;
 }
@@ -164,6 +164,10 @@ ul.infobox.list-plural > .row .info-an button {
 	background: rgb(253, 253, 253);
 	border: 1px solid #d9d9d9;
 	margin-bottom: 20px;
+}
+.infobox-main-wrap .amp-wrap{
+	float: left;
+	width: 100%;
 }
 .infobox-main-wrap .infbx-ct {
 	font-size: 14px;
