@@ -40,7 +40,7 @@ export const logOrg = (inputString: string) => {
 	return console.log(chalk.rgb(255, 204, 153).bold(inputString));
 }
 
-export const WikiSyncSince = async (api_start: number, api_end: number, process_type: 'new-pages' | 'revisions') => { 
+export const WikiSyncSince = async (api_start: number, api_end: number, process_type: 'new-pages' | 'recent-changes') => { 
     // Determine which API endpoint to use
     let wiki_api_url = '';
     const wikiMedia = `https://${LANG_CODE}.wikipedia.org/w/api.php?` // Default WikiMedia format
@@ -58,17 +58,17 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
             break;
         }
 
-        case 'revisions': {
-            // Check for revisions
+        case 'recent-changes': {
+            // Check for recent changes
             // https://www.mediawiki.org/wiki/API:Revisions
-            console.log(chalk.bold.yellow(`Checking revisions for recent edits ✍️ ...`));
-
-            // NEED TO USE API:Revisions HERE, ALONG WITH LOGEVENTS TOO, TO LOOK FOR REDIRECTS
-            // wiki_api_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=create&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
+            console.log(chalk.bold.yellow(`Checking recent changes for edits ✍️ ...`));
+            wiki_api_url = `${wikiMedia}action=query&list=recentchanges&format=json&rcstart=${api_end}&rend=${api_start}`;
             break;
         }
     }
     console.log(chalk.yellow(wiki_api_url));
+
+    return false;
     
     // Fetch data from the API
     let parsed_body = await rp(wiki_api_url).then(body => JSON.parse(body));
@@ -286,8 +286,9 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
             break;
         }
 
-        case 'revisions': {
-            // NEED TO USE API:Revisions HERE, ALONG WITH LOGEVENTS TOO, TO LOOK FOR REDIRECTS
+        case 'recent-changes': {
+            // NEED TO USE Recentchanges API here. Logevents is not very helpful except for major page events
+            
             // wiki_api_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=create&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
             break;
         }
@@ -327,23 +328,48 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 
     // First, get all new pages
     let batch_start_unix, batch_end_unix, batch_start_iso8601, batch_end_iso8601;
-    for (let i = 0; i < totalBatches; i++) {
-        batch_start_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS);
-        batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
-        batch_end_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS) + BATCH_SIZE_MILLISECONDS - 1;
-        batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
+    // for (let i = 0; i < totalBatches; i++) {
+    //     batch_start_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS);
+    //     batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
+    //     batch_end_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS) + BATCH_SIZE_MILLISECONDS - 1;
+    //     batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
 
-        console.log("\n");
-        logYlw("---------------------------------------------------------------------------------------");
-        logYlw("---------------------------------------------------------------------------------------");
-        logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
-        logOrg("===============🆕 PROCESSING NEW PAGES 🆕===============");
-        console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}`));
+    //     console.log("\n");
+    //     logYlw("---------------------------------------------------------------------------------------");
+    //     logYlw("---------------------------------------------------------------------------------------");
+    //     logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
+    //     logOrg("===============🆕 PROCESSING NEW PAGES 🆕===============");
+    //     console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}`));
 
-        // Run the script
-        await WikiSyncSince(batch_start_unix / 1000, end_unix / 1000, 'new-pages');
+    //     // Run the script
+    //     await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'new-pages');
 
-        batchCounter++;
-    }
+    //     batchCounter++;
+    // }
+
+        // Next, get all recent edits
+        // Make sure to iterate from newest to oldest
+        batch_start_unix = 0, batch_end_unix = 0, batch_start_iso8601 = 0, batch_end_iso8601 = 0;
+        batchCounter = 0;
+        for (let i = 0; i < totalBatches; i++) {
+            batch_start_unix = end_unix - (batchCounter * BATCH_SIZE_MILLISECONDS);
+            batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
+            batch_end_unix = end_unix - (batchCounter * BATCH_SIZE_MILLISECONDS) - BATCH_SIZE_MILLISECONDS + 1;
+            batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
+    
+            console.log("\n");
+            logYlw("---------------------------------------------------------------------------------------");
+            logYlw("---------------------------------------------------------------------------------------");
+            logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
+            logOrg("===============🆕 PROCESSING RECENT CHANGES 🆕===============");
+            console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}, going newest to oldest`));
+    
+            continue;
+
+            // Run the script
+            await WikiSyncSince(batch_start_unix / 1000, end_unix / 1000, 'recent-changes');
+    
+            batchCounter++;
+        }
     return;
 })();
