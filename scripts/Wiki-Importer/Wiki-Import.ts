@@ -1,16 +1,17 @@
 const rp = require('request-promise');
 const commander = require('commander');
 import * as elasticsearch from 'elasticsearch';
-import { getTitle } from './functions/getTitle';
+import { getTitle, TitlePack } from './functions/getTitle';
 import { getPageBodyPack } from './functions/getPageBody';
+import { createRedirects } from './functions/createRedirects';
 import { getWikipediaStyleInfoBox } from './functions/getWikipediaStyleInfoBox';
 import { getMetaData } from './functions/getMetaData';
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { getMainPhoto } from './functions/getMainPhoto';
 import lodashSet from 'lodash/fp/set';
-import { ArticleJson, Sentence } from '../../src/types/article';
-import { calcIPFSHash, flushPrerenders } from '../../src/utils/article-utils/article-tools';
+import { ArticleJson, Sentence, ListItem } from '../../src/types/article';
+import { calcIPFSHash, flushPrerenders, getBlurbSnippetFromArticleJson } from '../../src/utils/article-utils/article-tools';
 import { preCleanHTML } from './functions/pagebodyfunctionalities/cleaners';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
 import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
@@ -32,14 +33,14 @@ const theMediaUploadService = new MediaUploadService(theAWSS3);
 
 commander
   .version('1.0.0', '-v, --version')
-  .description('Add WebP data to enterlink_articletable')
+  .description('Import a page from Wikipedia')
   .usage('[OPTIONS]...')
   .option('-s, --start <pageid>', 'Starting ID')
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 100;
-const LASTMOD_CUTOFF_TIME = '2019-09-13 21:08:14';
+const BATCH_SIZE = 250;
+const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
 // const BATCH_SIZE = 1;
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
@@ -56,6 +57,7 @@ export const WikiImport = async (inputString: string) => {
     let pageTitle = quickSplit[3].trim();
     let pageID = quickSplit[4];
     let redirectPageID = quickSplit[5];
+    let creationTimestamp = quickSplit[6];
     if (redirectPageID == "") redirectPageID = null;
 
     let lang_code, slug, slug_alt;
@@ -69,7 +71,7 @@ export const WikiImport = async (inputString: string) => {
         slug_alt = wikiLangSlug_alt;
     }
 
-    console.log(chalk.blue.bold(`Starting to process: ${inputString}`));
+    console.log(chalk.blue.bold(`Starting to import: ${inputString}`));
     console.log(chalk.blue.bold(`Page ID: |${pageID}|`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
     console.log(chalk.blue.bold(`Page Slug: |${slug}| alt: |${slug_alt}|`));
@@ -77,23 +79,51 @@ export const WikiImport = async (inputString: string) => {
     let url = `https://${lang_code}.wikipedia.org/wiki/${slug}`;
 
     // Fetch the page title, metadata, and page
-    let page_title, metadata, page;
+    let page_title_pack, page_title, raw_title, wiki_page_id, metadata, page;
     try{
-        page_title = await getTitle(lang_code, slug);
-        metadata = await getMetaData(lang_code, slug);
-        page = await rp(url);
+        page_title_pack = await getTitle(lang_code, slug);
+        page_title = page_title_pack.title;
+        wiki_page_id = page_title_pack.pageid;
+        raw_title = page_title_pack.raw_title;
+
+        // Throw if the title wasn't found
+        if (page_title === undefined || page_title == null || page_title == "TITLE_REQUEST_FAILED") throw 'slug not found. Trying slug_alt soon';
+        else {
+            metadata = await getMetaData(lang_code, slug, creationTimestamp);
+            page = await rp(url);
+        }
     }
     catch(err){
         console.log(chalk.yellow(`Fetching with slug ${slug} failed. Trying slug_alt: |${slug_alt}|`));
-        page_title = await getTitle(lang_code, slug_alt);
-        metadata = await getMetaData(lang_code, slug_alt);
-        page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+        page_title_pack = await getTitle(lang_code, slug_alt);
+        page_title = page_title_pack.title;
+        wiki_page_id = page_title_pack.pageid;
+        raw_title = page_title_pack.raw_title;
+
+        // If Wikipedia deleted the page, update the articletable lastmod_timestamp and move on
+        // If the request itself 404'd or messed up, just move to the next slug on the list and don't update the table
+        if (page_title == "TITLE_REQUEST_FAILED") return null;
+        else if (page_title === undefined || page_title == null) {
+            try {
+                const article_update = await theMysql.TryQuery(
+                    `
+                        UPDATE enterlink_articletable 
+                        SET lastmod_timestamp = NOW()
+                        WHERE ipfs_hash_current = ? 
+                    `,
+                    [inputIPFS]
+                );
+            } catch (e) {}
+            return null;
+        }
+        else {
+            metadata = await getMetaData(lang_code, slug_alt, creationTimestamp);
+            page = await rp(`https://${lang_code}.wikipedia.org/wiki/${slug_alt}`);
+        }
     }
 
     // Pre-cleaning
     let precleaned_cheerio_pack = preCleanHTML(page);
-
-    // return false;
 
     // Try extracting a main photo
     let photo_result = await getMainPhoto(precleaned_cheerio_pack, theMediaUploadService, lang_code, slug);
@@ -113,7 +143,7 @@ export const WikiImport = async (inputString: string) => {
         })
     }
 
-    logYlw("==============⚙️  ARTICLEJSON ASSEMBLY ⚙️ =============");
+    logYlw("==============⚙️  ARTICLEJSON ASSEMBLY ⚙️ ==============");
     // Assemble the wiki
     process.stdout.write(chalk.yellow(`Creating the ArticleJson object...`));
     let articlejson: ArticleJson = {
@@ -125,12 +155,7 @@ export const WikiImport = async (inputString: string) => {
         citations: page_body_pack.citations,
         media_gallery: [],
         metadata: metadata,
-        amp_info: { 
-            load_youtube_js: false,
-            load_audio_js: false,
-            load_video_js: false,
-            lightboxes: []
-        },
+        amp_info: page_body_pack.amp_info,
         ipfs_hash: 'QmQCeAYSbKut79Uvw2wPHzBnsVpuLCjpbE5sm7nBXwJerR' // Set the dummy hash first
     } as ArticleJson;
     process.stdout.write(chalk.yellow(` DONE\n`));
@@ -142,7 +167,7 @@ export const WikiImport = async (inputString: string) => {
     process.stdout.write(chalk.yellow(` DONE [${newHash}]\n`));
 
     console.log(chalk.bold.green(`DONE`));
-    logYlw("==================📡 MAIN UPLOAD 📡==================");
+    logYlw("===================📡 MAIN UPLOAD 📡==================");
 
     // Update the hash cache
     process.stdout.write(chalk.yellow(`Updating the hash cache...`));
@@ -167,15 +192,13 @@ export const WikiImport = async (inputString: string) => {
     // Update the article cache
     process.stdout.write(chalk.yellow(`Updating the article cache...`));
     const cleanedSlug = theMysql.cleanSlugForMysql(slug);
-    let text_preview;
+    let text_preview = "";
     try {
-        const first_para = articlejson.page_body[0].paragraphs[0];
-        text_preview = (first_para.items[0] as Sentence).text;
-        if (first_para.items.length > 1)
-            text_preview += (first_para.items[1] as Sentence).text;
+        text_preview = getBlurbSnippetFromArticleJson(articlejson);
     } catch (e) {
         text_preview = "";
     }
+
     const title_to_use = page_title.map(sent => sent.text).join();
     const photo_url = articlejson.main_photo[0].url;
     const photo_thumb_url = articlejson.main_photo[0].thumb;
@@ -247,7 +270,12 @@ export const WikiImport = async (inputString: string) => {
     await flushPrerenders(lang_code, slug, prerenderToken);
     console.log(chalk.yellow.bold(`------Flush complete-----`));
 
-    fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
+    logYlw("=================🚧 FIND REDIRECTS 🚧=================");
+    await createRedirects(raw_title, lang_code, theMysql, theElasticsearch, slug, pageID);
+    console.log(chalk.yellow(`DONE`));
+
+
+    // fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'test.json'), JSON.stringify(articlejson, null, 2));
     // console.log(util.inspect(resultjson, {showHidden: false, depth: null, chalk: true}));
 
     fs.appendFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'resultlinks.txt'), `http://127.0.0.1:7777/wiki/lang_${lang_code}/${slug}\n`);
@@ -255,8 +283,6 @@ export const WikiImport = async (inputString: string) => {
 
     logYlw("🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏁 END 🏁🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅🏅");
     return null;
-    
-
 
 }
 
@@ -280,7 +306,7 @@ export const WikiImport = async (inputString: string) => {
         // The HAVING statement makes sure that human edited wikiscrapes are not affected.
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, '') ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
                 INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
                 WHERE art.id between ? and ?
@@ -311,6 +337,7 @@ export const WikiImport = async (inputString: string) => {
     return;
 })();
 
+// TOTAL ARTICLES FOR EN_WIKI_IMPORT: 5293982
 
 // TO SEE PROGRESS
 // SELECT count(*)

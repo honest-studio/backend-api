@@ -6,6 +6,7 @@ import { SitemapService } from './sitemap.service';
 @ApiUseTags('Sitemap')
 export class SitemapController {
     constructor(private readonly sitemapService: SitemapService) {}
+
     @Get('recent/:lang')
     @ApiProduces('application/xml')
     @ApiOperation({
@@ -55,4 +56,28 @@ export class SitemapController {
     async getStaticSitemap(@Param('lang') lang: string): Promise<any> {
         return this.sitemapService.generateStaticSitemaps(lang);
     }
+
+    @Get('categories/:lang')
+    @ApiProduces('application/xml')
+    @ApiOperation({
+        title: 'Sitemap of category pages',
+        description: ''
+    })
+    @ApiImplicitParam({
+        name: 'lang',
+        description: "An ISO 639-1 language code. Defaults to 'en'",
+        required: false,
+        type: String
+    })
+    @ApiResponse({
+        status: 200,
+        type: 'application/xml',
+        description: `An XML sitemap`
+    })
+    // @UsePipes(new JoiValidationPipe(SitemapQuerySchema))
+    async getCategoriesSitemapXML(@Res() res, @Param('lang') lang: string, @Query() options): Promise<any> {
+        if (lang.slice(-4) == ".xml") lang = lang.slice(0, -4);
+        return this.sitemapService.getCategoriesSitemap(res, lang);
+    }
+
 }

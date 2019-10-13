@@ -124,6 +124,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
         url: startingURL,
         method: 'GET',
         responseType: 'arraybuffer',
+        timeout: 5000
     }).then(response => {
         let fileBuffer = response.data;
         let mimePack: MimePack = fileType(fileBuffer);
@@ -310,12 +311,9 @@ export const MakeWebPImages = async (inputString: string, processMediaGallery: b
     try {
         wiki = JSON.parse(hashCacheResult[0].html_blob);
     } catch (e) {
-        wiki = oldHTMLtoJSON(hashCacheResult[0].html_blob);
+        wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hashCacheResult[0].html_blob)));
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
-
-    // Run the patches for now
-    wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
 
     // If it is an import, prefix with AuxiliaryImports and the page note
     const pageNoteFilter = wiki.metadata.filter(w => w.key == 'page_note');

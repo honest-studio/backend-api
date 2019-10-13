@@ -20,7 +20,7 @@ export class SearchService {
         const searchJSON = {
             from: from ? from : 0,
             size: offset ? offset : 40,
-            timeout: '1500ms',
+            timeout: '2000ms',
             min_score: 1.0001,
             query: {
                 bool: {
@@ -48,7 +48,7 @@ export class SearchService {
                                 fields: ['page_title'],
                                 type: 'phrase_prefix',
                                 slop: 5,
-                                max_expansions: 25000
+                                max_expansions: 35000
                             }
                         }
                     ]
@@ -111,7 +111,7 @@ export class SearchService {
             [canonical_ids, canonical_ids]
         );
 
-        // clean up text previews
+        // Clean up text previews
         result_rows.forEach((row) => {
             row.page_title = sanitizeTextPreview(row.page_title);
             if (!row.text_preview) return; // continue

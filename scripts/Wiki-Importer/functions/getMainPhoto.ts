@@ -6,6 +6,7 @@ import { Media } from '../../../src/types/article';
 import { linkCategorizer } from '../../../src/utils/article-utils/article-converter';
 import { CheerioPack } from './pagebodyfunctionalities/cleaners';
 import * as mimePackage from 'mime';
+import { IMAGE_MAX_PIXELS } from './wiki-constants';
 const chalk = require('chalk');
 const path = require('path');
 
@@ -79,8 +80,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			theWorkingURL = theWorkingURL.replace("/thumb", "");
 			let quickSplit = theWorkingURL.split("/");
 			if (quickSplit[quickSplit.length - 1] 
-				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
+				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
 			){
 				theWorkingURL = quickSplit.slice(0, -1).join("/");
 			}
@@ -99,9 +100,11 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			}
 
 			// Check the size to max sure it isn't a crappy flagicon or something
+			// Also make sure it isn't gigantic ( >= 5000 x 5000)
 			let theHeight = parseInt(theAttribs.height);
 			let theWidth = parseInt(theAttribs.width);
-			if (theHeight * theWidth >= 5000){
+			let pixelCount = theHeight * theWidth;
+			if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
 
 				// Add the height and width, if present
 				if(theAttribs && theAttribs['data-file-width'] && theAttribs['data-file-height']){
@@ -109,39 +112,45 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
 				}
 				else if(theAttribs && theAttribs.width && theAttribs.height){
-					workingMainPhoto.media_props.height = parseInt(theAttribs.height);
-					workingMainPhoto.media_props.width = parseInt(theAttribs.width);
+					workingMainPhoto.media_props.height = theHeight;
+					workingMainPhoto.media_props.width = theWidth;
 				}
 
-				// If there is more than one image in the nearest tr, do not extract
-				let $extractTD = $(img_anchor).parents("td, th");
-				let $extractTR = $($extractTD).parents("tr");
 
-				// Look for multiple images within the td
-				let rowImages = $($extractTR).find('img');
-				if (rowImages.length > 1){
-					console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
+				// Inner pixel count check
+				pixelCount = workingMainPhoto.media_props.height * workingMainPhoto.media_props.width;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+
+					// If there is more than one image in the nearest tr, do not extract
+					let $extractTD = $(img_anchor).parents("td, th");
+					let $extractTR = $($extractTD).parents("tr");
+
+					// Look for multiple images within the td
+					let rowImages = $($extractTR).find('img');
+					if (rowImages.length > 1){
+						console.log("Found multiple images in the parent <tr> of the blobbox profile image. Will not extract() it, but will still use it as the profile photo.");
+					}
+					else {
+						// Remove the img's parent <a> first
+						$(img_anchor).remove();
+
+						// Try to get a caption
+						workingMainPhoto.caption = accumulateText($extractTD, $, []);
+
+						// Remove the surrounding <td>
+						$($extractTD).remove();
+
+						// If the <tr> is now empty, remove it too
+						let inner_contents = $($extractTR).html();
+						if (!inner_contents || inner_contents == ''){
+							$($extractTR).remove();
+						} 
+					}
+					
+					main_photo_found = true;
+					let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+					console.log(chalk.green.bold(`Found a main image from the infobox: ${imgString}`));
 				}
-				else {
-					// Remove the img's parent <a> first
-					$(img_anchor).remove();
-
-					// Try to get a caption
-					workingMainPhoto.caption = accumulateText($extractTD, $, []);
-
-					// Remove the surrounding <td>
-					$($extractTD).remove();
-
-					// If the <tr> is now empty, remove it too
-					let inner_contents = $($extractTR).html();
-					if (!inner_contents || inner_contents == ''){
-						$($extractTR).remove();
-					} 
-				}
-				
-				main_photo_found = true;
-				let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
-				console.log(chalk.green.bold(`Found a main image from the infobox: ${imgString}`));
 			}
 			else{
 				// console.log(`Image is too small (${theWidth}x${theHeight}). Skipping...`);
@@ -158,25 +167,37 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			if (main_photo_found) return;
 			let parsed_section_img = getImage(sect_img, $, [], true);
 			let theAttribs = sect_img.attribs;
-			
-			// Add the height and width, if present
-			if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
-				workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
-				workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
-			}
-			else if(theAttribs.width && theAttribs.height){
-				workingMainPhoto.media_props.height = parseInt(theAttribs.height);
-				workingMainPhoto.media_props.width = parseInt(theAttribs.width);
-			}
 
-			// Make sure a full Media was returned and not just a string
-			if ((parsed_section_img as Media).url) {
-				workingMainPhoto = parsed_section_img as Media;
-				workingMainPhoto.media_props.type = 'main_photo';
-				workingMainPhoto.type = 'main_photo';
-				main_photo_found = true;
-				let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
-				console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
+
+			// Check the size to max sure it isn't a crappy flagicon or something
+			// Also make sure it isn't gigantic ( >= 5000 x 5000)
+			let theHeight = parseInt(theAttribs.height);
+			let theWidth = parseInt(theAttribs.width);
+			let pixelCount = theHeight * theWidth;
+			if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+				// Add the height and width, if present
+				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
+					workingMainPhoto.media_props.height = parseInt(theAttribs['data-file-height']);
+					workingMainPhoto.media_props.width = parseInt(theAttribs['data-file-width']);
+				}
+				else if(theAttribs.width && theAttribs.height){
+					workingMainPhoto.media_props.height = theHeight;
+					workingMainPhoto.media_props.width = theWidth;
+				}
+
+				// Inner pixel count check
+				pixelCount = workingMainPhoto.media_props.height * workingMainPhoto.media_props.width;
+				if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
+					// Make sure a full Media was returned and not just a string
+					if (parsed_section_img && (parsed_section_img as Media).url) {
+						workingMainPhoto = parsed_section_img as Media;
+						workingMainPhoto.media_props.type = 'main_photo';
+						workingMainPhoto.type = 'main_photo';
+						main_photo_found = true;
+						let imgString = `|${workingMainPhoto.url}| [${workingMainPhoto.media_props.width}x${workingMainPhoto.media_props.height}]`;
+						console.log(chalk.green.bold(`Found a main image from the body: ${imgString}`));
+					}
+				}
 			}
 		});
 	}
@@ -214,8 +235,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 	// 			theWorkingURL = theWorkingURL.replace("/thumb", "");
 	// 			let quickSplit = theWorkingURL.split("/");
 	// 			if (quickSplit[quickSplit.length - 1] 
-	// 				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-	// 				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+	// 				&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
+	// 				&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
 	// 			){
 	// 				theWorkingURL = quickSplit.slice(0, -1).join("/");
 	// 			}
@@ -236,7 +257,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 	// 			// Check the size to max sure it isn't a crappy flagicon or something
 	// 			let theHeight = parseInt(theAttribs.height);
 	// 			let theWidth = parseInt(theAttribs.width);
-	// 			if (theHeight * theWidth >= 5000){
+	// let pixelCount = theHeight * theWidth;
+	// if (pixelCount >= 5000 && pixelCount <= IMAGE_MAX_PIXELS){
 
 	// 				// Add the height and width, if present
 	// 				if(theAttribs['data-file-width'] && theAttribs['data-file-height']){
@@ -259,18 +281,70 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 	// 	})
 	// }
 
-	// Categorize and get the MIME types
-	workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
-	workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
+	if(main_photo_found){
+		// Categorize and get the MIME types
+		workingMainPhoto.category = linkCategorizer(workingMainPhoto.url);
+		workingMainPhoto.mime = mimePackage.getType(workingMainPhoto.url);
 
-	// Default thumbnail
-	if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
+		// Default thumbnail
+		if (!workingMainPhoto.thumb) workingMainPhoto.thumb = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide.png';
 
-	// If no main photo was found. 
-	if (!workingMainPhoto.url){
+		// Upload the main image
+		let resultBuffer;
+		resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
+		let filename = path.basename(workingMainPhoto.url);
+		let up_res = await theMediaUploadService.processMedia(
+			resultBuffer,
+			lang,
+			slug,
+			filename,
+			'ProfilePicture',
+			''
+		);
+
+		if(up_res){
+			// Update the main photo info with the storage bucket URLs
+			workingMainPhoto = {
+				...workingMainPhoto,
+				url: up_res.mainPhotoURL,
+				thumb: up_res.thumbnailPhotoURL,
+				mime: up_res.mime,
+				media_props: {
+					...workingMainPhoto.media_props,
+					webp_original: up_res.webp_original,
+					webp_medium: up_res.webp_medium,
+					webp_thumb: up_res.webp_thumb,
+				}
+
+			};
+
+			// Return main photo
+			console.log(chalk.bold.green(`DONE`));
+			return {
+				main_photo: workingMainPhoto,
+				cheerio_pack: {
+					cheerio_static: $
+				}
+			}
+		}
+		else {
+			workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
+	
+			// Return the default main photo
+			console.log(chalk.bold.green(`DONE`));
+			return {
+				main_photo: workingMainPhoto,
+				cheerio_pack: {
+					cheerio_static: $
+				}
+			}
+		}
+
+	}
+	else {
 		workingMainPhoto.url = 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png';
 
-		// Return main photo
+		// Return the default main photo
 		console.log(chalk.bold.green(`DONE`));
 		return {
 			main_photo: workingMainPhoto,
@@ -278,42 +352,6 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 				cheerio_static: $
 			}
 		}
-
-	} 
-	
-	// Upload the main image
-	let resultBuffer = await theMediaUploadService.getImageBufferFromURL(workingMainPhoto.url);
-	let filename = path.basename(workingMainPhoto.url);
-	let up_res = await theMediaUploadService.processMedia(
-		resultBuffer,
-		lang,
-		slug,
-		filename,
-		'ProfilePicture',
-		''
-	);
-
-	// Update the main photo info with the storage bucket URLs
-	workingMainPhoto = {
-		...workingMainPhoto,
-		url: up_res.mainPhotoURL,
-		thumb: up_res.thumbnailPhotoURL,
-		mime: up_res.mime,
-		media_props: {
-			...workingMainPhoto.media_props,
-			webp_original: up_res.webp_original,
-			webp_medium: up_res.webp_medium,
-			webp_thumb: up_res.webp_thumb,
-		}
-
-	};
-
-	// Return main photo
-	console.log(chalk.bold.green(`DONE`));
-	return {
-		main_photo: workingMainPhoto,
-		cheerio_pack: {
-			cheerio_static: $
-		}
 	}
+
 };

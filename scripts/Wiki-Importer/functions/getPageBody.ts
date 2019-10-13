@@ -26,7 +26,13 @@ export interface PageBodyPack {
 	sections: Section[],
 	citations: Citation[],
 	internal_citations: any,
-	cheerio_pack: CheerioPack
+	cheerio_pack: CheerioPack,
+	amp_info: {
+		load_youtube_js: boolean,
+		load_audio_js: boolean,
+		load_video_js: boolean,
+		lightboxes: any[]
+	},
 }
 
 export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUploadService: MediaUploadService): Promise<PageBodyPack> => {
@@ -37,7 +43,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 
 	// return;
 
-	console.log(chalk.yellow.bold("====================📰 SECTIONS 📰===================="));
+	console.log(chalk.yellow.bold("=====================📰 SECTIONS 📰===================="));
 	const sections: Section[] = []; // Return object: array of {paragraphs: Paragraph[] , images: Media[]} objects
 
 	// Current section
@@ -71,7 +77,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 
 		// Process headlines / headers
 		// Create new section when h tag is reached
-		process.stdout.write(chalk.yellow(`Adding ${tag_name}...`));
+		// process.stdout.write(chalk.yellow(`Adding ${tag_name}...`));
 		if($el.prop('tagName').indexOf("H") > -1 && $el.find('.mw-headline').length > 0){ 
 			// Remove the single section body flag
 			single_section_body = false;
@@ -158,7 +164,8 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 				if (divClass !== undefined) {
 					// If section image found
 					if (divClass.includes("thumb")) {
-						images.push(getImage(el, $, internalCitations) as Media);
+						let gotten_image = getImage(el, $, internalCitations) as Media;
+						if (gotten_image) images.push(gotten_image);
 					}
 				}
 			}
@@ -196,7 +203,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 			})
 			paragraphIndex++;
 		}
-		process.stdout.write(chalk.yellow(` DONE\n`));
+		// process.stdout.write(chalk.yellow(` DONE\n`));
 	})
 
 	// Push any leftover paragraphs and/or images into a headerless section
@@ -220,6 +227,7 @@ export const getPageBodyPack = async (input_pack: CheerioPack, url, theMediaUplo
 		internal_citations: internalCitations,
 		cheerio_pack: {
 			cheerio_static: $
-		}
+		},
+		amp_info: ctn_return_pack.amp_info
 	}
 }

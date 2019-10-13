@@ -3,19 +3,30 @@ import striptags from 'striptags';
 import { CheckForLinksOrCitationsAMP } from '.';
 import { ArticleJson, Sentence } from '../../types/article';
 import { getYouTubeID } from './article-converter';
-import { renderAMPParagraph, sanitizeTextPreview } from './article-tools';
+import { renderAMPParagraph, sanitizeTextPreview, getBlurbSnippetFromArticleJson } from './article-tools';
 
 
 export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'): any => {
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
-    const BLURB_SNIPPET_PLAINTEXT = '',
-        OVERRIDE_MAIN_THUMB = false;
+    const OVERRIDE_MAIN_THUMB = false;
+
+    let pageBodyText = inputJSON.page_body
+    .map((section, indexSection) => {
+        return section.paragraphs
+            .map((para, indexPara) => {
+                return (striptags as any)(renderAMPParagraph(para, inputJSON.citations, inputJSON.ipfs_hash, true).text);
+            })
+            .join('');
+    })
+    .join('');
+
+    let BLURB_SNIPPET_PLAINTEXT = sanitizeTextPreview(pageBodyText);
 
     // Metadata values
     const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified') ? inputJSON.metadata.find(w => w.key == 'last_modified').value : '';
     const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
     const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value 
-                    ? inputJSON.metadata.find(w => w.key == 'page_lang') 
+                    ? inputJSON.metadata.find(w => w.key == 'page_lang').value  
                     : 'en';
     const url_slug = inputJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
     const page_type = inputJSON.metadata.find(w => w.key == 'page_type').value;
@@ -211,7 +222,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         }
     });
     inputJSON.citations.forEach((citation, index) => {
-        let citationText = citation.description
+        let citationText = citation && citation.description && citation.description
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
                     value.text,
@@ -233,16 +244,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             description: citationText
         });
     });
-    let pageBodyText = inputJSON.page_body
-        .map((section, indexSection) => {
-            return section.paragraphs
-                .map((para, indexPara) => {
-                    return (striptags as any)(renderAMPParagraph(para, inputJSON.citations, inputJSON.ipfs_hash, true).text);
-                })
-                .join('');
-        })
-        .join('');
-    schemaJSON['articleBody'] = sanitizeTextPreview(pageBodyText);
+    schemaJSON['articleBody'] = BLURB_SNIPPET_PLAINTEXT;
     switch (returnType) {
         case 'JSON':
             return schemaJSON;

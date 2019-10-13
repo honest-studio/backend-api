@@ -1,20 +1,24 @@
+import { PageIndexedLinkCollection, PageCategory, PageCategoryCollection } from './api';
+
 export interface AMPParseCollection {
     text: string;
     lightboxes: string[];
 }
 
-export interface SeeAlso {
-    lang: string;
+export interface SeeAlsoType {
     slug: string;
-    title: string;
-    photo_url: string;
-    thumbnail_url: string;
-    snippet: string;
+    page_title: string;
+    lang_code: string;
+    thumbnail: string;
+    main_photo: string;
+    text_preview: string;
+    is_indexed: boolean;
+    is_removed: boolean;
 }
 
 export interface SeeAlsoCountGroup {
     count: number;
-    data: SeeAlso;
+    data: SeeAlsoType;
 }
 
 export interface SeeAlsoCollection {
@@ -32,11 +36,13 @@ export interface InlineImage {
 
 export interface WikiExtraInfo {
     pageviews: number;
-    see_also: SeeAlso[];
+    see_also: SeeAlsoType[];
     alt_langs: LanguagePack[];
     schema: {[key: string]: any};
     canonical_slug: string;
     canonical_lang: string;
+    link_collection: PageIndexedLinkCollection;
+    page_categories: PageCategory[];
 }
 
 export interface LanguagePack {

@@ -83,6 +83,7 @@ export const REPLACEMENTS = [
 ];
 
 export const NON_AMP_BAD_TAGS = [
+    'font',
     'head',
     'noscript',
     'map',
@@ -101,7 +102,8 @@ export const NON_AMP_BAD_TAGS = [
     'xml',
     'worddocument',
     'mathpr',
-    'mathfont'
+    'mathfont',
+    'kno-share-button'
 ];
 
 export const VALID_VIDEO_EXTENSIONS = [
@@ -151,6 +153,7 @@ function pyToJS(inputItem: any) {
  * @returns {Object}
  */
 export const parseStyles = (styles: string): {} => {
+    if (!styles) return null;
     return styles
     .split(';')
     .filter(style => style.split(':')[0] && style.split(':')[1])
@@ -266,6 +269,7 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
         load_video_js: false,
         lightboxes: []
     };
+    
     media_gallery.forEach((value, index) => {
         switch (value.category) {
             case 'YOUTUBE': {
@@ -1353,6 +1357,24 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
     }
 
     return merged_content;
+}
+
+export function collectNestedContentSentences(input_nested_item: NestedContentItem): Sentence[]{
+    let collected_sentences: Sentence[] = [];
+    switch(input_nested_item.type){
+        case 'text':
+            collected_sentences.push(...(input_nested_item as NestedTextItem).content);
+            break;
+        case 'tag':
+            let nested_tag = input_nested_item as NestedTagItem;
+            if (nested_tag.content && nested_tag.content.length){
+                nested_tag.content.map(inner_nested_item => {
+                    collected_sentences.push(...collectNestedContentSentences(inner_nested_item));
+                })
+            }
+            break;
+    }
+    return collected_sentences;
 }
 
 function parseDescriptionList($dlist: Cheerio): DescList {

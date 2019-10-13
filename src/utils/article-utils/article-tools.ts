@@ -13,10 +13,10 @@ import endianness from 'endianness';
 import bs58 from 'bs58';
 const css_escape = require('css.escape');
 
-import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType } from '../../types/article';
-import { AMPParseCollection, InlineImage, SeeAlso, SeeAlsoCollection } from '../../types/article-helpers';
-import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType } from './article-converter';
-import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST } from './article-tools-constants';
+import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType, DescList, Samp } from '../../types/article';
+import { AMPParseCollection, InlineImage, SeeAlsoType, SeeAlsoCollection,  } from '../../types/article-helpers';
+import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles, collectNestedContentSentences } from './article-converter';
+import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST, AMP_BAD_ATTRIBUTES } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
 var colors = require('colors');
 
@@ -45,15 +45,15 @@ export const getYouTubeIdIfPresent = (inputURL: string) => {
 }
 
 // Convert React attributes back into HTML ones
-const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+const reverseAttributes = (inputAttrs: { [attr: string]: any }, amp_specific_sanitize?: boolean): { [attr: string]: any } => {
     if (!inputAttrs) return {};
-    if (!(Object.keys(inputAttrs).length === 0 && inputAttrs.constructor === Object)) return {};
+    if (Object.keys(inputAttrs).length == 0) return {};
+    
     let reversedAttrs = {};
     const keys = Object.keys(inputAttrs);
     for (const key of keys) {
         if (inputAttrs[key] && inputAttrs[key] != ''){
             try {
-                
                 reversedAttrs[ReactAttrConvertMap[key]] = inputAttrs[key];
             }
             catch (e) {
@@ -65,6 +65,17 @@ const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string
     // if (reversedAttrs['style']){
     //     reversedAttrs['style'] = parseStyles(reversedAttrs['style']);
     // } 
+
+
+
+    if (amp_specific_sanitize !== undefined && amp_specific_sanitize == true){
+        // Filter out bad attributes
+        AMP_BAD_ATTRIBUTES.forEach(attr => {
+            delete reversedAttrs[attr];
+        })
+    }
+
+
     return reversedAttrs;
 }
 
@@ -390,41 +401,22 @@ export const ConstructAMPImage = (
     return ``;
 };
 
-export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
-    let allSentences: Sentence[] = [];
-    passedJSON.page_body.forEach((section, index) => {
-        section.paragraphs.forEach((paragraph, index) => {
-            allSentences.push(...(paragraph.items as Sentence[]));
-        });
-    });
-    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
-    allSentences.push(...theCaptionSentences);
-    // passedJSON.infoboxes.forEach((infobox, index) => {
-    //     infobox.values.forEach(val => {
-    //         val.sentences.forEach(sent => {
-    //             allSentences.push(sent);
-    //         })
-    //     })
-    // });
-    passedJSON.media_gallery.forEach((media, index) => {
-        allSentences.push(...(media.caption as Sentence[]));
-    });
-    passedJSON.citations.forEach((citation, index) => {
-        allSentences.push(...(citation.description as Sentence[]));
-    });
-    let tempSeeAlsos: SeeAlso[] = [];
-
+export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlsoType[] => {
+    let allSentences: Sentence[] = getPageSentences(passedJSON);
+    let tempSeeAlsos: SeeAlsoType[] = [];
     allSentences.forEach((sentence, index) => {
         let text = sentence.text;
         let result;
         while ((result = CAPTURE_REGEXES.link_match.exec(text)) !== null) {
             tempSeeAlsos.push({
-                lang: result[1],
+                lang_code: result[1],
                 slug: result[2],
-                title: '',
-                photo_url: '',
-                thumbnail_url: '',
-                snippet: ''
+                page_title: '',
+                main_photo: '',
+                thumbnail: '',
+                text_preview: '',
+                is_indexed: true,
+                is_removed: false
             });
         }
     });
@@ -432,7 +424,7 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     let seeAlsoTally: SeeAlsoCollection = {};
     let sortedSeeAlsos = [];
     tempSeeAlsos.forEach((value, index) => {
-        let key = `${value.lang}__${value.slug}`;
+        let key = `${value.lang_code}__${value.slug}`;
         if (seeAlsoTally[key]) {
             seeAlsoTally[key].count = seeAlsoTally[key].count + 1;
         } else {
@@ -445,11 +437,13 @@ export const calculateSeeAlsos = (passedJSON: ArticleJson): SeeAlso[] => {
     sortedSeeAlsos = Object.keys(seeAlsoTally).sort(function(a, b) {
         return seeAlsoTally[a].count - seeAlsoTally[b].count;
     });
-    sortedSeeAlsos = sortedSeeAlsos.slice(0, 3);
+
+    sortedSeeAlsos = sortedSeeAlsos.slice(0, 50);
     let newSeeAlsos = [];
     sortedSeeAlsos.forEach((key, index) => {
         newSeeAlsos.push(seeAlsoTally[key].data);
     });
+
     return newSeeAlsos;
 };
 
@@ -495,7 +489,7 @@ export const blobBoxPreSanitize = (passedBlobBox: string): string => {
 
 
 
-export const resolveNestedContentToHTMLString = (inputContent: NestedContentItem[], returnContent: string = '') => {
+export const resolveNestedContentToHTMLString = (inputContent: NestedContentItem[], returnContent: string = '', amp_sanitize: boolean) => {
     inputContent.forEach((contentItem) => {
             // USE THE tag() FUNCTION HERE!!!;
         switch (contentItem.type){
@@ -507,10 +501,10 @@ export const resolveNestedContentToHTMLString = (inputContent: NestedContentItem
                 break;
             case 'tag':
                 if (contentItem.content.length) {
-                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs), resolveNestedContentToHTMLString(contentItem.content, ''))
+                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs, amp_sanitize), resolveNestedContentToHTMLString(contentItem.content, '', amp_sanitize))
                 }
                 else {
-                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs))
+                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs, amp_sanitize))
                 }
                 break;
         }
@@ -531,7 +525,7 @@ export const renderAMPParagraph = (
     if (!snippetMode && (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4' || tag_type === 'h5' || tag_type === 'h6')) {
         const text: string = (items[0] as Sentence).text;
         returnCollection.text = `<${tag_type} id=${urlSlug(text).slice(0, 15)}>${text}</${tag_type}>`;
-    } else if (tag_type === 'p') {
+    } else if (tag_type === 'p' || tag_type === 'blockquote') {
         let sanitizedText = (items as Sentence[])
             .map((sentenceItem: Sentence, sentenceIndex) => {
                 let result = CheckForLinksOrCitationsAMP(sentenceItem.text, passedCitations, passedIPFS, [], true);
@@ -539,8 +533,8 @@ export const renderAMPParagraph = (
                 return result.text;
             })
             .join(' ');
-        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs), sanitizedText);
-    } else if (!snippetMode && (tag_type === 'ul')) {
+        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs, true), sanitizedText);
+    } else if (!snippetMode && (tag_type === 'ol'|| tag_type === 'ul')) {
         let sanitizedText = (items as ListItem[])
             .map((liItem: ListItem, listIndex) => {
                 return liItem.sentences
@@ -552,7 +546,7 @@ export const renderAMPParagraph = (
                     .join('');
             })
             .join('');
-        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs), sanitizedText);
+        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs, true), sanitizedText);
     } else if (!snippetMode && (tag_type === 'table')) {
         let sanitizedText = (items as Table[]).map((tableItem: Table, tableIndex) => {
             // Create the thead if present
@@ -562,18 +556,21 @@ export const renderAMPParagraph = (
                           let sanitizedCells = row.cells
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content)
+                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content, '', true)
                                         let result = CheckForLinksOrCitationsAMP(sanitizedCellContents, passedCitations, passedIPFS, [], false);
+                                        let reversed_attributes_cell = reverseAttributes(cell.attrs, true);
                                         returnCollection.lightboxes.push(...result.lightboxes);
-                                        return tag(cell.tag_type, reverseAttributes(cell.attrs), result.text);
+                                        return tag(cell.tag_type, reversed_attributes_cell, result.text);
                                     })
                                     .join('')
                               : '';
-                          return tag('tr', reverseAttributes(row.attrs), sanitizedCells);
+                          let reversed_attributes_tr = reverseAttributes(row.attrs, true);
+                          return tag('tr', reversed_attributes_tr, sanitizedCells);
                       })
                       .join('')
                 : '';
-            let sanitizedHead = tableItem.thead ? tag('thead', reverseAttributes(tableItem.thead.attrs), sanitizedHeadRows) : '';
+            let reversed_attributes_thead = reverseAttributes(tableItem.thead && tableItem.thead.attrs, true);
+            let sanitizedHead = tableItem.thead ? tag('thead', reversed_attributes_thead, sanitizedHeadRows) : '';
 
             // Create the tbody
             let sanitizedBodyRows = tableItem.tbody
@@ -582,18 +579,21 @@ export const renderAMPParagraph = (
                           let sanitizedCells = row.cells
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content)
+                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content, '', true)
                                         let result = CheckForLinksOrCitationsAMP(sanitizedCellContents, passedCitations, passedIPFS, [], false);
+                                        let reversed_attributes_cell = reverseAttributes(cell.attrs, true);
                                         returnCollection.lightboxes.push(...result.lightboxes);
-                                        return tag(cell.tag_type, reverseAttributes(cell.attrs), result.text);
+                                        return tag(cell.tag_type, reversed_attributes_cell, result.text);
                                     })
                                     .join('')
                               : '';
-                          return tag('tr', reverseAttributes(row.attrs), sanitizedCells);
+                          let reversed_attributes_tr = reverseAttributes(row.attrs, true);
+                          return tag('tr', reversed_attributes_tr, sanitizedCells);
                       })
                       .join('')
                 : '';
-            let sanitizedBody = tableItem.tbody ? tag('tbody', reverseAttributes(tableItem.tbody.attrs), sanitizedBodyRows) : '';
+            let reversed_attributes_tbody = reverseAttributes(tableItem.tbody && tableItem.tbody.attrs, true);
+            let sanitizedBody = tableItem.tbody ? tag('tbody', reversed_attributes_tbody, sanitizedBodyRows) : '';
 
             // Create the tfoot if present
             let sanitizedFootRows = tableItem.tfoot
@@ -602,18 +602,21 @@ export const renderAMPParagraph = (
                           let sanitizedCells = row.cells
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content)
+                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content, '', true)
                                         let result = CheckForLinksOrCitationsAMP(sanitizedCellContents, passedCitations, passedIPFS, [], false);
+                                        let reversed_attributes_cell = reverseAttributes(cell.attrs, true);
                                         returnCollection.lightboxes.push(...result.lightboxes);
-                                        return tag(cell.tag_type, reverseAttributes(cell.attrs), result.text);
+                                        return tag(cell.tag_type, reversed_attributes_cell, result.text);
                                     })
                                     .join('')
                               : '';
-                          return tag('tr', reverseAttributes(row.attrs), sanitizedCells);
+                          let reversed_attributes_tr = reverseAttributes(row.attrs, true);
+                          return tag('tr', reversed_attributes_tr, sanitizedCells);
                       })
                       .join('')
                 : '';
-            let sanitizedFoot = tableItem.tfoot ? tag('tfoot', reverseAttributes(tableItem.tfoot.attrs), sanitizedFootRows) : '';
+            let reversed_attributes_tfoot = reverseAttributes(tableItem.tfoot && tableItem.tfoot.attrs, true);
+            let sanitizedFoot = tableItem.tfoot ? tag('tfoot', reversed_attributes_tfoot, sanitizedFootRows) : '';
 
             // Create the caption if present
             let sanitizedCaptionText = tableItem.caption
@@ -625,10 +628,12 @@ export const renderAMPParagraph = (
                     })
                     .join('')
                 : '';
-            let sanitizedCaption = tag('caption', reverseAttributes(tableItem.caption.attrs), sanitizedCaptionText);
+            let reversed_attributes_caption = reverseAttributes(tableItem.caption && tableItem.caption.attrs, true);
+            let sanitizedCaption = tag('caption', reversed_attributes_caption, sanitizedCaptionText);
             return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join('');
         });
-        returnCollection.text = tag('table', reverseAttributes(paragraph.attrs), sanitizedText.join(''));
+        let reversed_attributes_table = reverseAttributes(paragraph.attrs, true);
+        returnCollection.text = tag('table', reversed_attributes_table, sanitizedText.join(''));
     }
 
     // const sentences: Sentence[] = this.renderSentences(items, tag_type, index);
@@ -743,7 +748,7 @@ export function infoboxDtoPatcher(inputWiki: ArticleJson): ArticleJson {
     let modifiedWiki = inputWiki;
     if (modifiedWiki && modifiedWiki.infoboxes && modifiedWiki.infoboxes.length) {
         modifiedWiki.infoboxes = modifiedWiki.infoboxes.map(ibox => {
-            return {...ibox, values: ibox.values.map((val, valIdx) => {
+            return {...ibox, values: ibox.values && ibox.values.map((val, valIdx) => {
                 // Check for Sentence instead of InfoboxValue
                 if(val.hasOwnProperty('type')){
                     // Convert to InfoboxValue
@@ -1012,4 +1017,202 @@ export function linkCategoryFromText(input_text: string): CitationCategoryType{
 
     // Return the result
     return working_category;
+}
+
+export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
+    let allSentences: Sentence[] = [];
+
+    // Main photo
+    let theCaptionSentences: Sentence[] = passedJSON.main_photo[0].caption ? passedJSON.main_photo[0].caption : [];
+    allSentences.push(...theCaptionSentences);
+
+    // Page body
+    passedJSON.page_body.map(section => {
+        // Get the section image caption sentences
+        section.images.forEach(image => {
+            allSentences.push(...(image.caption as Sentence[]));
+        });
+
+        // Get the sentences from various types of paragraph items
+        section.paragraphs.forEach((paragraph, index) => {
+            const { tag_type, items } = paragraph;
+
+            // These tags are handled alike
+            if (
+                (tag_type === 'h2' || tag_type === 'h3' || tag_type === 'h4'|| tag_type === 'h5' || tag_type === 'h6') // Headings
+                || tag_type === 'p' // Normal paragraphs
+                || tag_type === 'blockquote' // Blockquotes
+            ) {
+                allSentences.push(...(paragraph.items as Sentence[]));
+            }
+    
+            // Handle lists
+            if (tag_type === 'ul' || tag_type === 'ol') {
+                paragraph.items.map(list_item => {
+                    if (!list_item) return;
+                    else allSentences.push(...((list_item as ListItem).sentences as Sentence[]));
+                });
+            }
+
+            // Handle dl
+            if (tag_type === 'dl') {
+                (items[0] as DescList).items.map(desc_list_item => {
+                    if (!desc_list_item) return;
+                    desc_list_item.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                });
+            }
+
+            // Handle samp
+            if (tag_type === 'samp') {
+                (items[0] as Samp).items.map(nested_item => {
+                    allSentences.push(...collectNestedContentSentences(nested_item));
+                })
+            }
+
+            // Handle tables
+            if (tag_type === 'table') {
+                let the_table = items[0] as Table;
+
+                // Table caption
+                if (the_table.caption) allSentences.push(...the_table.caption.sentences);
+
+                // Table head
+                if (the_table.thead){
+                    the_table.thead.rows && the_table.thead.rows.map(trow => {
+                        trow && trow.cells && trow.cells.map(tcell => {
+                            tcell && tcell.content && tcell.content.map(nested_item => {
+                                allSentences.push(...collectNestedContentSentences(nested_item));
+                            })
+                        })
+                    })
+                }
+
+                // Table body
+                if (the_table.tbody){
+                    the_table.tbody.rows && the_table.tbody.rows.map(trow => {
+                        trow && trow.cells && trow.cells.map(tcell => {
+                            tcell && tcell.content && tcell.content.map(nested_item => {
+                                allSentences.push(...collectNestedContentSentences(nested_item));
+                            })
+                        })
+                    })
+                }
+                // Table footer
+                if (the_table.tfoot){
+                    the_table.tfoot.rows && the_table.tfoot.rows.map(trow => {
+                        trow && trow.cells && trow.cells.map(tcell => {
+                            tcell && tcell.content && tcell.content.map(nested_item => {
+                                allSentences.push(...collectNestedContentSentences(nested_item));
+                            })
+                        })
+                    })
+                }
+            }
+        });
+    });
+
+    // Infobox
+    passedJSON.infoboxes.map(infobox => {
+        infobox.values && infobox.values.map(val => {
+            if(val.sentences) allSentences.push(...val.sentences);
+        })
+    });
+
+    // Wikipedia Infobox
+    if(passedJSON.infobox_html){
+        let the_table = passedJSON.infobox_html as Table;
+
+        // Table caption
+        if (the_table.caption) allSentences.push(...the_table.caption.sentences);
+
+        // Table head
+        if (the_table.thead){
+            the_table.thead.rows && the_table.thead.rows.map(trow => {
+                trow && trow.cells && trow.cells.map(tcell => {
+                    tcell && tcell.content && tcell.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                })
+            })
+        }
+
+        // Table body
+        if (the_table.tbody){
+            the_table.tbody.rows && the_table.tbody.rows.map(trow => {
+                trow && trow.cells && trow.cells.map(tcell => {
+                    tcell && tcell.content && tcell.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                })
+            })
+        }
+        // Table footer
+        if (the_table.tfoot){
+            the_table.tfoot.rows && the_table.tfoot.rows.map(trow => {
+                trow && trow.cells && trow.cells.map(tcell => {
+                    tcell && tcell.content && tcell.content.map(nested_item => {
+                        allSentences.push(...collectNestedContentSentences(nested_item));
+                    })
+                })
+            })
+        }
+    }
+    
+    // Media gallery (deprecated)
+    // passedJSON.media_gallery.forEach((media, index) => {
+    //     allSentences.push(...(media.caption as Sentence[]));
+    // });
+
+    // Citations
+    passedJSON.citations.map(citation => {
+        if (citation && citation.description) allSentences.push(...citation.description);
+    });
+    return allSentences;
+}; 
+
+
+export function getBlurbSnippetFromArticleJson(wiki: ArticleJson): string {
+    const first_para = wiki.page_body[0].paragraphs[0];
+    let text_preview = (first_para.items[0] as Sentence).text;
+    if (text_preview === undefined) text_preview = "";
+    if (first_para.items.length > 1){
+        if(first_para.tag_type && first_para.tag_type.search(/ul|ol/) >= 0){
+            let list_sentences = (first_para.items[1]as ListItem).sentences;
+            if (list_sentences.length <= 2){
+                list_sentences.forEach(item => {
+                    if (item) text_preview += (item as Sentence).text;
+                })
+            }
+            else{
+                list_sentences.slice(0, 2).forEach(item => {
+                    if (item) text_preview += (item as Sentence).text;
+                })
+            }
+        } else {
+            text_preview += (first_para.items[1] as Sentence).text;
+        }
+    }
+    else if (!text_preview || text_preview == ""){
+        text_preview = "";
+        // Loop through the first section until text is found
+        let sliced_paras = wiki.page_body[0].paragraphs.slice(1);
+        sliced_paras.forEach(para => {
+            // Only take the first two sentences
+            if (text_preview == ""){
+                if (para.items.length <= 2){
+                    para.items.forEach(item => {
+                        text_preview += (item as Sentence).text;
+                    })
+                }
+                else{
+                    para.items.slice(0, 2).forEach(item => {
+                        text_preview += (item as Sentence).text;
+                    })
+                }
+            }
+        })
+    }
+    return text_preview;
 }

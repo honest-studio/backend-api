@@ -36,6 +36,9 @@ export const getImage = (element, $: CheerioStatic, internal_citations, delete_w
 			url = 'https:' + src;
 		}
 
+		// Skip invalid URLs
+		if (!url || url == "") return null;
+
 		// Get media attributes
 		let attributes = getMediaAttributes(url);
 
@@ -59,8 +62,8 @@ export const getImage = (element, $: CheerioStatic, internal_citations, delete_w
 		url = url.replace("/thumb", "");
 		let quickSplit = url.split("/");
 		if (quickSplit[quickSplit.length - 1] 
-			&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
-			&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|px-)/gimu) >= 0
+			&& quickSplit[quickSplit.length - 1].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
+			&& quickSplit[quickSplit.length - 2].search(/(\.svg|\.jpeg|\.jpg|\.png|\.gif|\.tif|px-)/gimu) >= 0
 		){
 			url = quickSplit.slice(0, -1).join("/");
 		}

@@ -8,6 +8,8 @@ import { SitemapPack } from '../types/article-helpers';
 var colors = require('colors');
 
 const SITEMAP_ROOT_DIR = path.join(__dirname, '..', '..', 'public', 'sitemaps');
+const ROW_LIMIT = 50000;
+const RECENT_ROW_LIMIT = 1000;
 
 @Injectable()
 export class SitemapService {
@@ -18,39 +20,37 @@ export class SitemapService {
 
     async getSitemapRecent(res: Response, lang: string = 'en', limit: number = 1000): Promise<any> {
         let find_query;
-        const now = (Date.now() / 1000) | 0;
+        let today = new Date();
+        let start_from = new Date().setDate(today.getDate() - 180) / 1000;
 
-        find_query = {
-            'trace.act.account': 'eparticlectr',
-            'trace.act.name': 'logpropinfo',
-            'trace.act.data.lang_code': lang,
-            'trace.act.data.endtime': { $lt: now }
-        };
-        
-        const approved_edits = await this.mongo
-            .connection()
-            .actions.find(find_query, { projection: { 
-                'trace.act.data.proposal_id': 1, 
-                'trace.act.data.slug': '',
-                'trace.act.data.page_lang': '' } 
-            })
-            .sort({ 'trace.act.data.proposal_id': -1 })
-            .limit(limit)
-            .toArray();
+        let sitemapPacks: any[] = await this.mysql.TryQuery(
+            `
+            SELECT 
+                id, 
+                page_lang AS lang, 
+                slug
+            FROM 
+                enterlink_articletable art 
+            WHERE 
+                art.is_removed = 0
+                AND art.is_indexed = 1
+                AND redirect_page_id IS NULL
+                AND art.page_lang = ?
+                AND lastmod_timestamp >= FROM_UNIXTIME(?)
+            ORDER BY lastmod_timestamp DESC
+            LIMIT ?
+            `,
+            [lang, start_from, RECENT_ROW_LIMIT],
+            3600000 // 1 hr timeout
+        );
 
-        let seenSlugs = [], urlPacks = [];
-        approved_edits
-            .forEach((doc) => {
-                let theSlug = doc.trace.act.data.slug;
-                if (seenSlugs.indexOf(theSlug) == -1){
-                    urlPacks.push({ 
-                        url: `/wiki/lang_${lang}/${theSlug}`,
-                        changefreq: 'daily',
-                        priority: 1
-                    });
-                    seenSlugs.push(theSlug);
-                }
+
+        let urlPacks = [];
+        sitemapPacks.forEach((result) => {
+            urlPacks.push({ 
+                url: `/wiki/lang_${result.lang}/${result.slug}`
             });
+        });
 
         let langPrefix = lang == 'en' ? '' : `${lang}.`;
         let theMap = sm.createSitemap({
@@ -59,23 +59,23 @@ export class SitemapService {
             urls: urlPacks
         });
 
-        // theMap.toXML( function(err, xml){ 
-        //     if (err){ 
-        //         console.log(err) 
-        //     }
-        //     else{
+        let xml_sitemap = theMap.toXML();
 
-        //     }
-        // });
+        res
+            .header('Content-Type', 'application/xml')
+            .status(200)
+            .send(xml_sitemap);
 
-        res.header('Content-Type', 'application/xml');
-        // res.send(xml);
-
-        return theMap.toString();
+        return true;
     }
 
     async generateStaticSitemaps(lang: string = 'en'): Promise<any> {
-        const ROW_LIMIT = 50000;
+
+        // To prevent DDOS attacks
+        // return null;
+
+        // curl -m 600 http://127.0.0.1:3001/v2/sitemap/generate-static/en 
+
         let sitemapPacks: Array<SitemapPack> = [];
         let currentLoop = 0, lastID = 0;
         let sitemapURLs = [];
@@ -127,8 +127,7 @@ export class SitemapService {
             let urlPacks = sitemapPacks.map((pack) => {
                 return { 
                     url: `/wiki/lang_${pack.lang}/${pack.slug}`,
-                    changefreq: 'monthly',
-                    priority: 0.3
+                    changefreq: 'monthly'
                 };
             });
     
@@ -150,4 +149,46 @@ export class SitemapService {
         fs.writeFileSync(path.join(sitemapDirectory, indexFileName), sitemapIndex.toString());
         console.log(colors.green(`Static sitemap for ${lang} completed`));
     }
+
+
+
+    async getCategoriesSitemap(res: Response, lang: string = 'en'): Promise<any> {
+        let sitemapPacks: any[] = await this.mysql.TryQuery(
+            `
+            SELECT 
+                lang, 
+                slug
+            FROM 
+                enterlink_pagecategory 
+            WHERE lang = ?
+            `,
+            [lang],
+            3600000 // 1 hr timeout
+        );
+
+
+        let urlPacks = [];
+        sitemapPacks.forEach((result) => {
+            urlPacks.push({ 
+                url: `/category/lang_${result.lang}/${result.slug}`
+            });
+        });
+
+        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let theMap = sm.createSitemap({
+            hostname: `https://${langPrefix}everipedia.org`,
+            cacheTime: 600000, // 600 sec - cache purge period
+            urls: urlPacks
+        });
+
+        let xml_sitemap = theMap.toXML();
+
+        res
+            .header('Content-Type', 'application/xml')
+            .status(200)
+            .send(xml_sitemap);
+
+        return true;
+    }
+
 }

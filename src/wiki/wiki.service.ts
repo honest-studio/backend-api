@@ -13,12 +13,13 @@ import { ConfigService, IpfsService } from '../common';
 import { RedisService, MongoDbService, MysqlService } from '../feature-modules/database';
 import { MediaUploadService, PhotoExtraData } from '../media-upload';
 import { ChainService } from '../chain';
-import { ArticleJson, Sentence, Citation, Media } from '../types/article';
-import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { ArticleJson, Sentence, Citation, Media, ListItem } from '../types/article';
+import { MergeResult, MergeProposalParsePack, Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, PageIndexedLinkCollection, PageCategory } from '../types/api';
 import { PreviewService } from '../preview';
-import { LanguagePack, SeeAlso, WikiExtraInfo } from '../types/article-helpers';
-import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex } from '../utils/article-utils';
-import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper } from '../utils/article-utils/article-tools';
+import { LanguagePack, SeeAlsoType, WikiExtraInfo } from '../types/article-helpers';
+import { calculateSeeAlsos, infoboxDtoPatcher, mergeMediaIntoCitations, oldHTMLtoJSON, flushPrerenders, addAMPInfo, renderAMP, renderSchema, convertMediaToCitation, getFirstAvailableCitationIndex, getPageSentences } from '../utils/article-utils';
+import { sanitizeTextPreview, sha256ToChecksum256EndianSwapper, getBlurbSnippetFromArticleJson } from '../utils/article-utils/article-tools';
+import { CAPTURE_REGEXES } from '../utils/article-utils/article-converter';
 import { mergeWikis, parseMergeInfoFromProposal } from '../utils/article-utils/article-merger';
 import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
@@ -87,6 +88,109 @@ export class WikiService {
         });
     };
 
+    async getPageIndexedLinkCollection(passedJSON: ArticleJson, lang_to_use: string): Promise<PageIndexedLinkCollection> {
+        let working_collection: PageIndexedLinkCollection = [];
+        let page_sentences = getPageSentences(passedJSON);
+        let found_slugs: string[] = [];
+        page_sentences.forEach(sentence => {
+            let text = sentence.text;
+            let result;
+    
+            // Find the links and create
+            while ((result = CAPTURE_REGEXES.link_match.exec(text)) !== null) {
+                if (!found_slugs.includes(result[2])){
+                    found_slugs.push(result[2]);
+                }
+            }
+        });
+
+
+        // We only care about indexed links
+        // On the frontend, all links will be converted to spans by default, except indexed ones
+        if(found_slugs.length){
+            let page_link_rows: any[] = await this.mysql.TryQuery(
+                `
+                SELECT DISTINCT
+                    art.slug AS slug,
+                    art.slug_alt AS slug_alt,
+                    art_redir.slug AS redir_slug,
+                    art_redir.slug_alt AS redir_slug_alt,
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.slug_alt, art.slug_alt) AS slug_alt,
+                    COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed,
+                    COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
+                    COALESCE(art_redir.page_note, art.page_note) AS page_note
+                FROM enterlink_articletable AS art
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE 
+                    (art.slug IN (?) OR art.slug_alt IN (?))
+                    AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                    AND art.is_removed = 0
+                    AND art.is_indexed = 1
+                `,
+                [found_slugs, found_slugs, lang_to_use, lang_to_use]
+            );
+    
+            page_link_rows.forEach(result_row => {
+                // All in all 4 slug variants
+                working_collection.push(`lang_${lang_to_use}/${result_row.slug}`);
+                working_collection.push(`lang_${lang_to_use}/${result_row.slug_alt}`);
+                working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug}`);
+                working_collection.push(`lang_${lang_to_use}/${result_row.redir_slug_alt}`);
+    
+            })
+    
+            // Remove the nulls
+            working_collection = working_collection.filter(s => s && s != `lang_${lang_to_use}/null`);
+    
+            // Remove dupes
+            working_collection = Array.from(new Set(working_collection))
+    
+            return working_collection;
+        }
+        else return null;
+    }
+
+    async getPageCategories(passedJSON: ArticleJson, lang_to_use: string): Promise<PageCategory[]> {
+        // Get the categories
+        let the_category_ids = passedJSON.categories ? passedJSON.categories : [];
+
+        // Return empty array if there are no categories
+        if(the_category_ids.length == 0) return [];
+
+        interface PageCategory {
+            id: number,
+            lang: string,
+            slug: string,
+            title: string,
+            description: string,
+            img_full: string,
+            img_full_webp: string,
+            img_thumb: string,
+            img_thumb_webp: string
+        }
+
+        // We only care about indexed links
+        // On the frontend, all links will be converted to spans by default, except indexed ones
+        let category_rows: any[] = await this.mysql.TryQuery(
+            `
+            SELECT DISTINCT
+                cat.id AS id,
+                cat.lang AS lang,
+                cat.slug AS slug,
+                cat.title AS title,
+                cat.description AS description,
+                cat.img_full AS img_full,
+                cat.img_full_webp AS img_full_webp,
+                cat.img_thumb AS img_thumb,
+                cat.img_thumb_webp AS img_thumb_webp
+            FROM enterlink_pagecategory AS cat
+            WHERE cat.id IN (?)
+            `,
+            [the_category_ids]
+        );
+        return category_rows;
+    }
 
 
     async unmergeProposal(rejected_merge_proposal: any){
@@ -122,7 +226,7 @@ export class WikiService {
         flushPrerenders(parsedMergeInfo.target.lang, parsedMergeInfo.target.slug, prerenderToken);
     }
 
-    async getMergedWiki(inputPack: MergeInputPack): Promise<MergeResult>{
+    async getMergedWiki(inputPack: MergeInputPack): Promise<MergeResult> {
         let sourceWiki: ArticleJson;
 
         // Get the source wiki, which might be present in the input pack
@@ -151,6 +255,9 @@ export class WikiService {
         // If the two slugs are the same, encode the alternateSlug
         if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
 
+        // If the two slugs are still the same, decode the alternateSlug
+        if (mysql_slug === alternateSlug) alternateSlug = decodeURIComponent(alternateSlug);
+
         // Get current IPFS hash
         const pipeline = this.redis.connection().pipeline();
         pipeline.get(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`);
@@ -174,7 +281,7 @@ export class WikiService {
             throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
 
         // Try and get cached wiki
-        if (current_hash) {
+        if (false && current_hash) {
             const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
             if (cache_wiki) return JSON.parse(cache_wiki);
         }
@@ -189,7 +296,9 @@ export class WikiService {
                 art_redir.is_indexed as is_idx_redir,
                 COALESCE(art_redir.is_removed, art.is_removed) AS is_removed,
                 COALESCE(art_redir.lastmod_timestamp, art.lastmod_timestamp) AS lastmod_timestamp,
-                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug
+                CONCAT('lang_', art_redir.page_lang, '/', art_redir.slug) AS redirect_wikilangslug,
+                COALESCE(art_redir.desktop_cache_timestamp, art.desktop_cache_timestamp) AS desktop_cache_timestamp,
+                COALESCE(art_redir.mobile_cache_timestamp, art.mobile_cache_timestamp) AS mobile_cache_timestamp
             FROM enterlink_articletable AS art
             LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
             WHERE 
@@ -202,6 +311,7 @@ export class WikiService {
         let overrideIsIndexed;
         let db_timestamp;
         let main_redirect_wikilangslug;
+        let lastmodToUse = '1975-01-01 00:00:00', desktopCacheToUse = null, mobileCacheToUse = null;
         if (ipfs_hash_rows.length > 0) {
             if (ignoreRemovalStatus) { /* Do nothing */ }
             else if (ipfs_hash_rows[0].is_removed) throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
@@ -210,12 +320,16 @@ export class WikiService {
             // Account for the boolean flipping issue being in old articles
             overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
+            lastmodToUse = ipfs_hash_rows[0].lastmod_timestamp;
+            desktopCacheToUse = ipfs_hash_rows[0].desktop_cache_timestamp;
+            mobileCacheToUse = ipfs_hash_rows[0].mobile_cache_timestamp;
         };
 
         if (db_hash) this.redis.connection().set(`wiki:lang_${lang_code}:${mysql_slug}:db_hash`, db_hash);
         let ipfs_hash = db_hash;
         if (current_hash && current_hash != ipfs_hash)
             ipfs_hash = current_hash;
+
 
         if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
 
@@ -237,7 +351,6 @@ export class WikiService {
                 else return obj;
             });
             
-            wiki = infoboxDtoPatcher(mergeMediaIntoCitations(wiki));
             // some wikis don't have page langs set
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         } catch {
@@ -253,25 +366,28 @@ export class WikiService {
             if (!wiki.metadata.find((w) => w.key == 'page_lang')) wiki.metadata.push({ key: 'page_lang', value: lang_code });
         }
 
-
-        const lastmod_timestamp = wiki.metadata.find(w => w.key == 'lastmod_timestamp') 
-                                    ? wiki.metadata.find(w => w.key == 'lastmod_timestamp').value 
-                                    : '1919-12-31 00:00:00';
-        const mobile_cache_timestamp = wiki.metadata.find(w => w.key == 'mobile_cache_timestamp') 
-                                    ? wiki.metadata.find(w => w.key == 'mobile_cache_timestamp').value
-                                    : '1919-12-31 00:00:00';
-
         // If the page has been modified since the last prerender, recache it
-        if (!mobile_cache_timestamp || (mobile_cache_timestamp && mobile_cache_timestamp <= lastmod_timestamp)){
+        if ((!desktopCacheToUse && !mobileCacheToUse) 
+            || (desktopCacheToUse <= lastmodToUse) 
+            || (mobileCacheToUse <= lastmodToUse) 
+        ){
             // console.log("Refreshing prerender")
             const prerenderToken = this.config.get('PRERENDER_TOKEN');
             flushPrerenders(lang_code, slug, prerenderToken);
 
-            // Update the cache timestamp too in the pageview increment query to save overhead
-            this.incrementPageviewCount(lang_code, mysql_slug, false, true);
+            // Update the cache timestamps
+            this.mysql.TryQuery(
+                `
+                UPDATE enterlink_articletable 
+                SET desktop_cache_timestamp = NOW(), mobile_cache_timestamp = NOW()
+                WHERE 
+                    page_lang= ? 
+                    AND (slug = ? OR slug_alt = ?) 
+                `,
+                [lang_code, slug, slug]
+            );
         }
-        else this.incrementPageviewCount(lang_code, mysql_slug);
-
+        
         // Add redirect information, if present
         wiki.redirect_wikilangslug = main_redirect_wikilangslug;
 
@@ -365,7 +481,6 @@ export class WikiService {
                     json_wiki = oldHTMLtoJSON(r.html_blob);
                     json_wiki.ipfs_hash = r.ipfs_hash;
                 }
-                json_wiki = infoboxDtoPatcher(mergeMediaIntoCitations(json_wiki));
                 json_wikis.push(json_wiki);
                 pipeline.set(`wiki:${r.ipfs_hash}`, JSON.stringify(json_wiki));
             });
@@ -404,45 +519,50 @@ export class WikiService {
         return lang_packs;
     }
 
-    async getSeeAlsos(inputWiki: ArticleJson): Promise<SeeAlso[]> {
-        let tempSeeAlsos: SeeAlso[] = calculateSeeAlsos(inputWiki);
+    async getSeeAlsos(inputWiki: ArticleJson, lang_to_use: string): Promise<SeeAlsoType[]> {
+        let tempSeeAlsos: SeeAlsoType[] = calculateSeeAlsos(inputWiki);
         if (tempSeeAlsos.length == 0) return [];
 
-        let seeAlsoWhere = tempSeeAlsos
-            .map((value, index) => {
-                // performance is slow when ORing slug_alt for some reason, even though it is indexed
-                return SqlString.format('(art.slug=? AND art.page_lang=?)', [value.slug, value.lang]);
-            })
-            .join(' OR ');
-        let seeAlsoRows: any[] = await this.mysql.TryQuery(
-            `
-            SELECT 
-                art.page_title, 
-                art.slug,
-                art.photo_url AS main_photo, 
-                art.photo_thumb_url AS thumbnail,
-                art.page_lang AS lang_code,
-                art.ipfs_hash_current AS ipfs_hash, 
-                art.blurb_snippet AS text_preview, 
-                art.pageviews, 
-                art.page_note,
-                art.is_adult_content, 
-                art.creation_timestamp,
-                art.lastmod_timestamp
-            FROM enterlink_articletable AS art 
-            WHERE ${seeAlsoWhere};`,
-            []
-        );
+        // Collect the slugs
+        let seealso_slugs = tempSeeAlsos.map(sa => sa.slug);
 
-        // clean up text previews
-        for (let preview of seeAlsoRows) {
-            preview.page_title = sanitizeTextPreview(preview.page_title);
-            if (preview.text_preview) {
-                preview.text_preview = sanitizeTextPreview(preview.text_preview);
+        if (seealso_slugs.length){
+            let seeAlsoRows: any[] = await this.mysql.TryQuery(
+                `
+                SELECT 
+                    COALESCE(art_redir.page_title, art.page_title) page_title, 
+                    COALESCE(art_redir.slug, art.slug) AS slug,
+                    COALESCE(art_redir.photo_url, art.photo_url) AS main_photo, 
+                    COALESCE(art_redir.photo_thumb_url, art.photo_thumb_url) AS thumbnail, 
+                    COALESCE(art_redir.page_lang, art.page_lang) AS lang_code, 
+                    COALESCE(art_redir.blurb_snippet, art.blurb_snippet) AS text_preview, 
+                    COALESCE(art_redir.is_indexed, art.is_indexed) AS is_indexed, 
+                    COALESCE(art_redir.is_removed, art.is_removed) AS is_removed 
+                FROM enterlink_articletable AS art 
+                LEFT JOIN enterlink_articletable art_redir ON (art_redir.id=art.redirect_page_id AND art.redirect_page_id IS NOT NULL)
+                WHERE
+                    (art.slug IN (?) OR art.slug_alt IN (?))
+                    AND (art.page_lang = ? OR art_redir.page_lang = ?)
+                    and (art.is_removed = 0 || art_redir.is_removed = 0)
+                ORDER BY (art_redir.is_indexed || art.is_indexed) DESC
+                ;`,
+                [seealso_slugs, seealso_slugs, lang_to_use, lang_to_use]
+            );
+    
+            // Quick slice
+            seeAlsoRows = seeAlsoRows.slice(0, 6);
+    
+            // Clean up text previews
+            for (let preview of seeAlsoRows) {
+                preview.page_title = sanitizeTextPreview(preview.page_title);
+                if (preview.text_preview) {
+                    preview.text_preview = sanitizeTextPreview(preview.text_preview);
+                }
             }
+    
+            return seeAlsoRows as SeeAlsoType[];
         }
-
-        return seeAlsoRows as SeeAlso[];
+        else return [];
     }
 
     async submitWiki(wiki: ArticleJson): Promise<any> {
@@ -452,6 +572,7 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         if (slug.indexOf('/') > -1) throw new BadRequestException('slug cannot contain a /');
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
+
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
 
@@ -597,15 +718,18 @@ export class WikiService {
         const slug = wiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const cleanedSlug = this.mysql.cleanSlugForMysql(slug);
 
-        let text_preview;
+        let alternateSlug = decodeURIComponent(cleanedSlug);
+
+        // If the two slugs are the same, encode the alternateSlug
+        if (cleanedSlug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
+
+        let text_preview = "0;"
         try {
-            const first_para = wiki.page_body[0].paragraphs[0];
-            text_preview = (first_para.items[0] as Sentence).text;
-            if (first_para.items.length > 1)
-                text_preview += (first_para.items[1] as Sentence).text;
+            text_preview = getBlurbSnippetFromArticleJson(wiki);
         } catch (e) {
             text_preview = "";
         }
+        
         const photo_url = wiki.main_photo[0].url;
         const photo_thumb_url = wiki.main_photo[0].thumb;
         const media_props = wiki.main_photo[0].media_props || null;
@@ -631,7 +755,7 @@ export class WikiService {
             [
                 ipfs_hash,
                 cleanedSlug,
-                cleanedSlug,
+                alternateSlug,
                 page_title,
                 text_preview,
                 photo_url,
@@ -656,6 +780,25 @@ export class WikiService {
                 webp_small,
             ]
         )
+
+        // Update the pagecategory collection
+        // TODO: HANDLE THIS LATER, ONCE CATEGORIES ARE EDITABLE
+        // let pagecategory_collection_insertion;
+        // try {
+        //     pagecategory_collection_insertion = await this.mysql.TryQuery(
+        //         `
+        //             INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
+        //             VALUES (?, ?)
+        //         `,
+        //         [CATEGORY_ID, pageID]
+        //     );
+        //     console.log(colors.green("Added to pagecategory_collection."));
+        // } catch (e) {
+        //     if (e.message.includes("ER_DUP_ENTRY")){
+        //         console.log(colors.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
+        //     }
+        //     else throw e;
+        // }
 
         // Get the prerender token
         const prerenderToken = this.config.get('PRERENDER_TOKEN');
@@ -812,15 +955,24 @@ export class WikiService {
     // increment the pageview counter for a page
     // optionally update the mobile and desktop cache timestamps at the same time
     async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
+        let mysql_slug = this.mysql.cleanSlugForMysql(slug);
+        // console.log("mysql slug: ", mysql_slug)
+        let alternateSlug = decodeURIComponent(mysql_slug);
+
+        // If the two slugs are the same, encode the alternateSlug
+        if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
+        
         let desktopCacheString = setDesktopCache ? ", desktop_cache_timestamp = NOW()": "";
         let mobileCacheString = setMobileCache ? ", mobile_cache_timestamp = NOW()": "";
         return this.mysql.TryQuery(
             `
-            UPDATE enterlink_articletable 
-            SET pageviews = pageviews + 1${desktopCacheString}${mobileCacheString} 
-            WHERE page_lang= ? AND slug = ? 
+            UPDATE enterlink_articletable art
+            SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
+            WHERE 
+                ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                AND art.page_lang = ?
             `,
-            [lang_code, slug]
+            [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
         );
     }
 
@@ -844,8 +996,11 @@ export class WikiService {
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
         const wiki_promise = this.getWikiBySlug(lang_code, slug, false, false, false);
-        const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki));
+        const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki, lang_code));
         const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
+        const link_collection_promise = wiki_promise.then(wiki => this.getPageIndexedLinkCollection(wiki, lang_code));
+        const page_categories_promise = wiki_promise.then(wiki => this.getPageCategories(wiki, lang_code));
+
         const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
         SELECT 
@@ -870,20 +1025,30 @@ export class WikiService {
                 else throw e;
             });
 
-        return Promise.all([alt_langs_promise, see_also_promise, pageviews_promise, schema_promise])
+        return Promise.all([
+            alt_langs_promise, 
+            see_also_promise, 
+            pageviews_promise, 
+            schema_promise, 
+            link_collection_promise,
+            page_categories_promise
+        ])
         .then(values => {
             const alt_langs: LanguagePack[] = values[0];
             const see_also = values[1];
             const pageviews = values[2];
             const schema = values[3];
-
+            const link_collection = values[4];
+            const page_categories = values[5];
             return { 
                 alt_langs, 
                 see_also, 
                 pageviews, 
                 schema, 
                 canonical_lang: lang_code, 
-                canonical_slug: slug  
+                canonical_slug: slug,
+                link_collection,
+                page_categories
             };
 
         });

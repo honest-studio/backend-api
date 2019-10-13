@@ -25,9 +25,10 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
             ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
         </head>
         <body>
+            ${arp.renderHeaderBar()}
             ${arp.renderNavBar()}
             <amp-sidebar id='sidebar' layout="nodisplay" side="left">
-                <ul class="heading-collection">
+                <ul class="hdr-clct">
                     ${arp.renderTableOfContents()}
                 </ul>
             </amp-sidebar>
@@ -36,8 +37,10 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                 ${arp.renderNameContainer()}
                 ${arp.renderFirstParagraph()}
                 ${arp.renderInfoboxes()}
-                ${arp.renderPageBody()}
                 ${arp.renderMediaGallery()}
+                ${arp.renderCategories()}
+                ${arp.renderPageBody()}
+                ${arp.renderSeeAlso()}
                 ${arp.renderCitations()}
                 <div class="page-times">
                     <div>Created: <span id="page_create_time">${creation_timestamp}</span></div>
@@ -48,7 +51,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                 </div>
                 ${arp.renderSchemaHTML()}
             </main>
-            <footer class="footer everi_footer">
+            <footer class="ftr everi_footer">
                 ${arp.renderFooter()}
             </footer>
             <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
