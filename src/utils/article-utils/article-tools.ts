@@ -45,7 +45,7 @@ export const getYouTubeIdIfPresent = (inputURL: string) => {
 }
 
 // Convert React attributes back into HTML ones
-const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string]: any } => {
+const reverseAttributes = (inputAttrs: { [attr: string]: any }, amp_specific_sanitize?: boolean): { [attr: string]: any } => {
     if (!inputAttrs) return {};
     if (Object.keys(inputAttrs).length == 0) return {};
     
@@ -66,10 +66,15 @@ const reverseAttributes = (inputAttrs: { [attr: string]: any }): { [attr: string
     //     reversedAttrs['style'] = parseStyles(reversedAttrs['style']);
     // } 
 
-    // Filter out bad attributes
-    AMP_BAD_ATTRIBUTES.forEach(attr => {
-        delete reversedAttrs[attr];
-    })
+
+
+    if (amp_specific_sanitize !== undefined && amp_specific_sanitize == true){
+        // Filter out bad attributes
+        AMP_BAD_ATTRIBUTES.forEach(attr => {
+            delete reversedAttrs[attr];
+        })
+    }
+
 
     return reversedAttrs;
 }
@@ -484,7 +489,7 @@ export const blobBoxPreSanitize = (passedBlobBox: string): string => {
 
 
 
-export const resolveNestedContentToHTMLString = (inputContent: NestedContentItem[], returnContent: string = '') => {
+export const resolveNestedContentToHTMLString = (inputContent: NestedContentItem[], returnContent: string = '', amp_sanitize: boolean) => {
     inputContent.forEach((contentItem) => {
             // USE THE tag() FUNCTION HERE!!!;
         switch (contentItem.type){
@@ -496,10 +501,10 @@ export const resolveNestedContentToHTMLString = (inputContent: NestedContentItem
                 break;
             case 'tag':
                 if (contentItem.content.length) {
-                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs), resolveNestedContentToHTMLString(contentItem.content, ''))
+                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs, amp_sanitize), resolveNestedContentToHTMLString(contentItem.content, '', amp_sanitize))
                 }
                 else {
-                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs))
+                    returnContent += tag(contentItem.tag_type, reverseAttributes(contentItem.attrs, amp_sanitize))
                 }
                 break;
         }
@@ -528,7 +533,7 @@ export const renderAMPParagraph = (
                 return result.text;
             })
             .join(' ');
-        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs), sanitizedText);
+        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs, true), sanitizedText);
     } else if (!snippetMode && (tag_type === 'ol'|| tag_type === 'ul')) {
         let sanitizedText = (items as ListItem[])
             .map((liItem: ListItem, listIndex) => {
@@ -541,7 +546,7 @@ export const renderAMPParagraph = (
                     .join('');
             })
             .join('');
-        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs), sanitizedText);
+        returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs, true), sanitizedText);
     } else if (!snippetMode && (tag_type === 'table')) {
         let sanitizedText = (items as Table[]).map((tableItem: Table, tableIndex) => {
             // Create the thead if present
@@ -551,20 +556,20 @@ export const renderAMPParagraph = (
                           let sanitizedCells = row.cells
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content)
+                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content, '', true)
                                         let result = CheckForLinksOrCitationsAMP(sanitizedCellContents, passedCitations, passedIPFS, [], false);
-                                        let reversed_attributes_cell = reverseAttributes(cell.attrs);
+                                        let reversed_attributes_cell = reverseAttributes(cell.attrs, true);
                                         returnCollection.lightboxes.push(...result.lightboxes);
                                         return tag(cell.tag_type, reversed_attributes_cell, result.text);
                                     })
                                     .join('')
                               : '';
-                          let reversed_attributes_tr = reverseAttributes(row.attrs);
+                          let reversed_attributes_tr = reverseAttributes(row.attrs, true);
                           return tag('tr', reversed_attributes_tr, sanitizedCells);
                       })
                       .join('')
                 : '';
-            let reversed_attributes_thead = reverseAttributes(tableItem.thead && tableItem.thead.attrs);
+            let reversed_attributes_thead = reverseAttributes(tableItem.thead && tableItem.thead.attrs, true);
             let sanitizedHead = tableItem.thead ? tag('thead', reversed_attributes_thead, sanitizedHeadRows) : '';
 
             // Create the tbody
@@ -574,20 +579,20 @@ export const renderAMPParagraph = (
                           let sanitizedCells = row.cells
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content)
+                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content, '', true)
                                         let result = CheckForLinksOrCitationsAMP(sanitizedCellContents, passedCitations, passedIPFS, [], false);
-                                        let reversed_attributes_cell = reverseAttributes(cell.attrs);
+                                        let reversed_attributes_cell = reverseAttributes(cell.attrs, true);
                                         returnCollection.lightboxes.push(...result.lightboxes);
                                         return tag(cell.tag_type, reversed_attributes_cell, result.text);
                                     })
                                     .join('')
                               : '';
-                          let reversed_attributes_tr = reverseAttributes(row.attrs);
+                          let reversed_attributes_tr = reverseAttributes(row.attrs, true);
                           return tag('tr', reversed_attributes_tr, sanitizedCells);
                       })
                       .join('')
                 : '';
-            let reversed_attributes_tbody = reverseAttributes(tableItem.tbody && tableItem.tbody.attrs);
+            let reversed_attributes_tbody = reverseAttributes(tableItem.tbody && tableItem.tbody.attrs, true);
             let sanitizedBody = tableItem.tbody ? tag('tbody', reversed_attributes_tbody, sanitizedBodyRows) : '';
 
             // Create the tfoot if present
@@ -597,20 +602,20 @@ export const renderAMPParagraph = (
                           let sanitizedCells = row.cells
                               ? row.cells
                                     .map((cell: TableCell, cellIndex) => {
-                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content)
+                                        let sanitizedCellContents = resolveNestedContentToHTMLString(cell.content, '', true)
                                         let result = CheckForLinksOrCitationsAMP(sanitizedCellContents, passedCitations, passedIPFS, [], false);
-                                        let reversed_attributes_cell = reverseAttributes(cell.attrs);
+                                        let reversed_attributes_cell = reverseAttributes(cell.attrs, true);
                                         returnCollection.lightboxes.push(...result.lightboxes);
                                         return tag(cell.tag_type, reversed_attributes_cell, result.text);
                                     })
                                     .join('')
                               : '';
-                          let reversed_attributes_tr = reverseAttributes(row.attrs);
+                          let reversed_attributes_tr = reverseAttributes(row.attrs, true);
                           return tag('tr', reversed_attributes_tr, sanitizedCells);
                       })
                       .join('')
                 : '';
-            let reversed_attributes_tfoot = reverseAttributes(tableItem.tfoot && tableItem.tfoot.attrs);
+            let reversed_attributes_tfoot = reverseAttributes(tableItem.tfoot && tableItem.tfoot.attrs, true);
             let sanitizedFoot = tableItem.tfoot ? tag('tfoot', reversed_attributes_tfoot, sanitizedFootRows) : '';
 
             // Create the caption if present
@@ -623,11 +628,11 @@ export const renderAMPParagraph = (
                     })
                     .join('')
                 : '';
-            let reversed_attributes_caption = reverseAttributes(tableItem.caption && tableItem.caption.attrs);
+            let reversed_attributes_caption = reverseAttributes(tableItem.caption && tableItem.caption.attrs, true);
             let sanitizedCaption = tag('caption', reversed_attributes_caption, sanitizedCaptionText);
             return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join('');
         });
-        let reversed_attributes_table = reverseAttributes(paragraph.attrs);
+        let reversed_attributes_table = reverseAttributes(paragraph.attrs, true);
         returnCollection.text = tag('table', reversed_attributes_table, sanitizedText.join(''));
     }
 

@@ -517,5 +517,8 @@ export const AMP_BAD_ATTRIBUTES = [
     'color',
     'size',
     'face',
-    'usemap'
+    'usemap',
+    'height',
+    'width',
+    'name',
 ];
