@@ -441,6 +441,9 @@ function paragraphToLines(paragraph: Paragraph): string {
 function sentenceToLines(sentence: Sentence) {
     let text = sentence.text;
 
+    // remove newlines
+    text = text.replace(/\n/g, ' ');
+
     // replace all spaces within [[special|tags]] 
     text = text.replace(
         /\[\[(LINK|CITE|INLINE_IMAGE)[^\]]*\]\]/g,
@@ -454,6 +457,7 @@ function sentenceToLines(sentence: Sentence) {
     );
 
     // split into words
+    if (text.includes('Iqbal')) console.log(text);
     const blocks = text.split(' ');
 
     // re-include spaces in [[special]] **tags**
