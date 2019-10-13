@@ -22,7 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
     "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Page-Categorizer-Universal.js -s 25191174 -e 25191175",
     "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 1529596 -e 1529597",
-    "maintenance:run-sync-since": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Sync-Since/Wiki-Sync-Since.js -s 1530403200 -e 1530489600",
+    "maintenance:run-sync-since": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Sync-Since/Wiki-Sync-Since.js -s 1568505600 -e 1571097600",
     "maintenance:create-webp": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Make-WebP-Images.js --input '../../../scripts/Non-Lambda/input/slug-list.txt'",
     "maintenance:batch": "tsc --p ./tsconfig.json && python ./scripts/batch/batch-commands.py &",
     "maintenance:batch-2": "tsc --p ./tsconfig.json && python ./scripts/batch/batch-commands-2.py &",

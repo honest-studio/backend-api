@@ -3,10 +3,11 @@ const commander = require('commander');
 import * as elasticsearch from 'elasticsearch';
 import { WikiImport } from '../Wiki-Importer/Wiki-Import';
 import { WIKI_SYNC_RECENTCHANGES_FILTER_REGEX } from '../Wiki-Importer/functions/wiki-constants';
-import { MysqlService } from '../../src/feature-modules/database';
+import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { calcIPFSHash } from '../../src/utils/article-utils/article-tools';
 import { ArticleJson, Sentence } from '../../src/types/article';
+import { MediaUploadService, UrlPack } from '../../src/media-upload';
 import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
 const util = require('util');
 const chalk = require('chalk');
@@ -15,6 +16,14 @@ const path = require('path');
 
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
+const theAWSS3 = new AWSS3Service(theConfig);
+const theElasticsearch = new elasticsearch.Client({
+    host: `${theConfig.get('ELASTICSEARCH_PROTOCOL')}://${theConfig.get('ELASTICSEARCH_HOST')}:${theConfig.get('ELASTICSEARCH_PORT')}${theConfig.get('ELASTICSEARCH_URL_PREFIX')}`,
+    httpAuth: `${theConfig.get('ELASTICSEARCH_USERNAME')}:${theConfig.get('ELASTICSEARCH_PASSWORD')}`,
+    apiVersion: '7.1'
+});
+const theMediaUploadService = new MediaUploadService(theAWSS3);
+
 
 commander
   .version('1.0.0', '-v, --version')
@@ -27,9 +36,9 @@ commander
 const LANG_CODE = 'en';
 const BATCH_SIZE_MILLISECONDS = 7200 * 1000; // 2 hours
 
-const RC_LIMIT = 499; // Max allowed is 500 for non-Wikipedia superusers
+const API_RESULT_LIMIT = 499; // Max allowed is 500 for non-Wikipedia superusers
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
-// const RC_LIMIT = 500;
+// const API_RESULT_LIMIT = 500;
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {
@@ -51,10 +60,10 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
             console.log(chalk.bold.yellow(`Checking logevents for new pages ✍️ ...`));
         
             // OLD / UNIVERSAL STYLE (may need to use letype=review)
-            // const recent_edits_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
+            // const recent_edits_url = `${wikiMedia}action=query&list=logevents&lelimit=${API_RESULT_LIMIT}&format=json&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
     
             // NEW STYLE (POST 07/01/2018)
-            wiki_api_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=create&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
+            wiki_api_url = `${wikiMedia}action=query&list=logevents&lelimit=${API_RESULT_LIMIT}&format=json&letype=create&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
             break;
         }
 
@@ -62,14 +71,12 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
             // Check for recent changes
             // https://www.mediawiki.org/wiki/API:Revisions
             console.log(chalk.bold.yellow(`Checking recent changes for edits ✍️ ...`));
-            wiki_api_url = `${wikiMedia}action=query&list=recentchanges&format=json&rcstart=${api_end}&rend=${api_start}`;
+            wiki_api_url = `${wikiMedia}action=query&list=recentchanges&format=json&rclimit=${API_RESULT_LIMIT}&rctype=edit&rcstart=${api_start}&rcend=${api_end}`;
             break;
         }
     }
     console.log(chalk.yellow(wiki_api_url));
 
-    return false;
-    
     // Fetch data from the API
     let parsed_body = await rp(wiki_api_url).then(body => JSON.parse(body));
 
@@ -108,7 +115,7 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 
                 // Make sure the page hasn't been deleted
                 console.log(chalk.yellow(`Verifying that the page has not been deleted`));
-                let is_deleted_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=delete&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
+                let is_deleted_url = `${wikiMedia}action=query&list=logevents&lelimit=${API_RESULT_LIMIT}&format=json&letype=delete&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
                 let deleted_parsed_body = await rp(is_deleted_url).then(body => JSON.parse(body));
                 deleted_parsed_body = deleted_parsed_body && deleted_parsed_body.query && deleted_parsed_body.query.logevents;
                 if(deleted_parsed_body && deleted_parsed_body.length > 0 ) {
@@ -118,7 +125,7 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 
                 // Make sure the page hasn't been merged
                 console.log(chalk.yellow(`Verifying that the page has not been merged`));
-                let is_merged_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=merge&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
+                let is_merged_url = `${wikiMedia}action=query&list=logevents&lelimit=${API_RESULT_LIMIT}&format=json&letype=merge&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
                 let merged_parsed_body = await rp(is_merged_url).then(body => JSON.parse(body));
                 merged_parsed_body = merged_parsed_body && merged_parsed_body.query && merged_parsed_body.query.logevents;
                 if(merged_parsed_body && merged_parsed_body.length > 0 ) {
@@ -129,7 +136,7 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 
                 // Make sure the page hasn't been redirected
                 console.log(chalk.yellow(`Verifying that the page has not been redirected`));
-                let is_moved_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&leaction=move%2Fmove_redir&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
+                let is_moved_url = `${wikiMedia}action=query&list=logevents&lelimit=${API_RESULT_LIMIT}&format=json&leaction=move%2Fmove_redir&lestart=${api_start}&letitle=${encodeURIComponent(new_page_info.title)}`;
                 let moved_parsed_body = await rp(is_moved_url).then(body => JSON.parse(body));
                 moved_parsed_body = moved_parsed_body && moved_parsed_body.query && moved_parsed_body.query.logevents;
                 if(moved_parsed_body && moved_parsed_body.length > 0 ) {
@@ -273,7 +280,13 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
                         let concat_string = `lang_${page_lang}/${slug}|lang_${page_lang}/${alternateSlug}|${ipfs_hash}|${page_title.trim()}|${inserted_id}|||`;
                         try{
                             // console.log(artResult.concatted)
-                            await WikiImport(concat_string);
+                            await WikiImport(concat_string,
+                                theConfig,
+                                theMysql,
+                                theAWSS3,
+                                theElasticsearch,
+                                theMediaUploadService
+                            );
                         }
                         catch (err){
                             console.error(`${concat_string} FAILED!!! [${err}]`);
@@ -288,20 +301,25 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 
         case 'recent-changes': {
             // NEED TO USE Recentchanges API here. Logevents is not very helpful except for major page events
-            
-            // wiki_api_url = `${wikiMedia}action=query&list=logevents&lelimit=${RC_LIMIT}&format=json&letype=create&lenamespace=0&ledir=newer&lestart=${api_start}&leend=${api_end}&leprop=ids|title|type|user|timestamp|comment|details|tags`;
+            parsed_body = parsed_body && parsed_body.query && parsed_body.query.recentchanges;
+
+            // Clean up redirects and bad titles
+            let new_changes_array = [];
+            parsed_body = parsed_body.map(change_obj => {
+                // Remove useless titles (lenamespace should handle this, but this is a backup check)
+                if (change_obj.title && change_obj.title.search(WIKI_SYNC_RECENTCHANGES_FILTER_REGEX) >= 0) return null;
+
+                // Add the import info to the new_page_array
+                new_changes_array.push({ title: change_obj.title, id: change_obj.pageid });
+
+            }).filter(obj => obj);
+
+            console.log(chalk.rgb(255, 204, 153)(`New changes found: `));
+            console.log(new_changes_array);
+            console.log(chalk.rgb(255, 204, 153)(`-------------`));
             break;
         }
     }
-    
-    
-         
-
-    
-
-    
-
-
 }
 
 
@@ -350,11 +368,10 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
         // Next, get all recent edits
         // Make sure to iterate from newest to oldest
         batch_start_unix = 0, batch_end_unix = 0, batch_start_iso8601 = 0, batch_end_iso8601 = 0;
-        batchCounter = 0;
         for (let i = 0; i < totalBatches; i++) {
-            batch_start_unix = end_unix - (batchCounter * BATCH_SIZE_MILLISECONDS);
+            batch_start_unix = end_unix - (i * BATCH_SIZE_MILLISECONDS);
             batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
-            batch_end_unix = end_unix - (batchCounter * BATCH_SIZE_MILLISECONDS) - BATCH_SIZE_MILLISECONDS + 1;
+            batch_end_unix = end_unix - (i * BATCH_SIZE_MILLISECONDS) - BATCH_SIZE_MILLISECONDS + 1;
             batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
     
             console.log("\n");
@@ -363,13 +380,10 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
             logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
             logOrg("===============🆕 PROCESSING RECENT CHANGES 🆕===============");
             console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}, going newest to oldest`));
-    
-            continue;
-
+                
             // Run the script
-            await WikiSyncSince(batch_start_unix / 1000, end_unix / 1000, 'recent-changes');
-    
-            batchCounter++;
+            await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'recent-changes');
+
         }
     return;
 })();
