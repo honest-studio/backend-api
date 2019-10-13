@@ -133,8 +133,6 @@ export const AMPInfoAdder = async (inputString: string) => {
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
-                    AND art.pageviews >= 50
-                    AND art.page_note IS NULL
                 GROUP BY art.id
             `,
             [currentStart, currentEnd]

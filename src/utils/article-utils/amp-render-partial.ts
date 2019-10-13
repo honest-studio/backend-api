@@ -1370,10 +1370,11 @@ export class AmpRenderPartial {
     };
 
     renderSchemaHTML = (): string => {
-        return `
+        let schema_to_show = this.wikiExtras && this.wikiExtras.schema;
+        return schema_to_show ? `
             <script type="application/ld+json">
                 ${JSON.stringify(this.wikiExtras && this.wikiExtras.schema)}
             </script>
-        `;
+        ` : '';
     };
 }
