@@ -51,7 +51,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                 </div>
                 ${arp.renderSchemaHTML()}
             </main>
-            <footer class="footer everi_footer">
+            <footer class="ftr everi_footer">
                 ${arp.renderFooter()}
             </footer>
             <amp-lightbox id="usermenu-lightbox" layout="nodisplay">

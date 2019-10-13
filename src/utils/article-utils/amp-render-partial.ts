@@ -1009,6 +1009,8 @@ export class AmpRenderPartial {
         }
     };
 
+    
+
     renderFooter = (): string => {
         return `
             <div class="footer-wrapper">
@@ -1021,18 +1023,17 @@ export class AmpRenderPartial {
                     </amp-img>
                 </amp-anim>
                 <div class="footer-links">
-                    <a href="/everipedia/">About</a>
-                    <a href="/wiki/everipedia-faq/">FAQ</a>
-                    <a href="/contact/">Contact</a>
-                    <a rel="nofollow" href="https://www.reddit.com/r/Everipedia/">Forum</a>
-                    <a href="/wiki/everipedia-terms/">Terms</a>
-                    <a href="/exchange-listings/">Get IQ</a>
-                    <a rel="nofollow" href="/investor-relations/">Investors</a>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/about', target=_blank)" tabindex='1' role="link" >About</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/faq', target=_blank)" tabindex='2' role="link">FAQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/contact', target=_blank)" tabindex='3' role="link" >Contact</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='4' role="link" >Forum</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='5' role="link" >Terms</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/iq-info', target=_blank)" tabindex='6' role="link" >Get IQ</span>
                 </div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
                     <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>
-                    <span class="disclaimer">By using this website, you agree to the <a href="/wiki/everipedia-terms/">Terms of Use</a>. Everipedia® is a trademark of Everipedia International.</span>
+                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='6' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
                 </div>
             </div>
             <div class="footer-social">
