@@ -1,2 +1,0 @@
-http://127.0.0.1:7777/wiki/lang_en/S%C3%A8vres
-https://en.wikipedia.org/wiki/S%C3%A8vres
