@@ -39,10 +39,10 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250;
-const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
-// const BATCH_SIZE = 1;
-// const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
+// const BATCH_SIZE = 250;
+// const LASTMOD_CUTOFF_TIME = '2019-09-18 02:35:19';
+const BATCH_SIZE = 1;
+const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
 
 export const logYlw = (inputString: string) => {

@@ -1185,12 +1185,6 @@ export class AmpRenderPartial {
                                 <div class="fixed-items-description">Feed</div>
                             </a>
                         </li>
-                        <li>
-                            <a rel="nofollow" href="/language-selector/">
-                                <span class="icon"><i class="fa fa-language"></i></span>
-                                <div class="fixed-items-description">Language</div>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
