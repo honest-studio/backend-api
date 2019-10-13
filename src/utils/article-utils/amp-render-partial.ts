@@ -1289,23 +1289,7 @@ export class AmpRenderPartial {
                             </ul>
                         </div>
                     </div>
-                    <div class="share-pad"></div>
-                    <div class="share-ct-link qr-code-container">
-                        <h4>QR Code</h4>
-                        <amp-iframe
-                            sandbox="allow-scripts allow-pointer-lock allow-popups allow-top-navigation"
-                            layout="fixed"
-                            height="225"
-                            width="216"
-                            frameborder="0"
-                            src="https://www.everipedia.org/AJAX-REQUEST/AJAX_QR_Code_Iframe/lang_${
-                                page_lang
-                            }/${url_slug}">
-                            <div placeholder></div>
-                        </amp-iframe>
-                    </div>
-        
-        
+                    <div class="share-pad"></div>        
                 </div>
             </nav>
         `;
