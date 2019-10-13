@@ -403,7 +403,6 @@ export class AmpRenderPartial {
     };
 
     renderFirstParagraph = (): string => {
-
         let firstSection: Section = this.artJSON.page_body[0];
         let imageBlock = firstSection && firstSection.images && firstSection.images
             .map((image, imageIndex) => {
@@ -964,11 +963,11 @@ export class AmpRenderPartial {
 
         // Don't use anchor tags for non-indexed pages 
         let title_tag_to_use = is_indexed ? 
-        `<a class="sa-title"  href="https://everipedia.org/wiki/lang_${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
+        `<a class="sa-title"  href="https://everipedia.org/wiki/${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
         : `<div class="sa-title" >${seealso.page_title}</div>`
 
         return `
-            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${test_wikilangslug}', target=_blank)" tabindex='${passed_index}' role="link">
+            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='${passed_index}' role="link">
                 <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
                         seealso.page_title
@@ -1289,23 +1288,7 @@ export class AmpRenderPartial {
                             </ul>
                         </div>
                     </div>
-                    <div class="share-pad"></div>
-                    <div class="share-ct-link qr-code-container">
-                        <h4>QR Code</h4>
-                        <amp-iframe
-                            sandbox="allow-scripts allow-pointer-lock allow-popups allow-top-navigation"
-                            layout="fixed"
-                            height="225"
-                            width="216"
-                            frameborder="0"
-                            src="https://www.everipedia.org/AJAX-REQUEST/AJAX_QR_Code_Iframe/lang_${
-                                page_lang
-                            }/${url_slug}">
-                            <div placeholder></div>
-                        </amp-iframe>
-                    </div>
-        
-        
+                    <div class="share-pad"></div>        
                 </div>
             </nav>
         `;
