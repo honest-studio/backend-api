@@ -95,7 +95,7 @@ export const AMPInfoAdder = async (inputString: string) => {
         json_insertion = await theMysql.TryQuery(
             `
                 UPDATE enterlink_hashcache
-                SET html_blob = ?
+                SET html_blob = ?, timestamp = NOW()
                 WHERE ipfs_hash = ? 
             `,
             [JSON.stringify(wiki), inputIPFS]
