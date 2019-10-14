@@ -10,7 +10,7 @@ const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
-
+const HTMLDecoderEncoder = require("html-encoder-decoder");
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
@@ -136,35 +136,93 @@ export const logOrg = (inputString: string) => {
 
         logOrg("*****PROSPECTIVE PAGES*****")
         console.log(removed_titles);
+
+        // Move on if there are no results
+        if(removed_titles.length == 0) continue;
+
         console.log('RUNNING ADDITIONAL CHECKS');
 
+        let good_titles = [];
         for (let n = 0; n < removed_titles.length; n++) {
             let title_to_check = removed_titles[n];
-            console.log("CHECKING: ", title_to_check)
+            let html_decoded_title_to_check = HTMLDecoderEncoder.decode(title_to_check);
+            let html_decoded_and_escaped_title_to_check = encodeURIComponent(html_decoded_title_to_check);
+            console.log(`CHECKING: ${title_to_check} [${html_decoded_title_to_check}] (${html_decoded_and_escaped_title_to_check})`)
 
             // Fetch the info from the Wikipedia API
-            const url = `${wikiMedia}action=query&format=json&list=logevents&letype=delete&letitle=${title_to_check}`;
+            let url = `${wikiMedia}action=query&format=json&list=logevents&letype=delete&letitle=${title_to_check}`;
 
-            let logevent_response = await rp(url)
+            let check_1 = await rp(url)
                                 .then(body => {
                                     let result = JSON.parse(body);
+                                    if (result.warnings) return [];
                                     return result && result.query && result.query.logevents;
                                 })
                                 .catch((err) => {
                                     console.log(err);
                                     return "TITLE_REQUEST_FAILED";
                                 });
-            if(logevent_response.length > 0) delete removed_titles[title_to_check];
+            if(check_1.length > 0) {
+                good_titles.push(title_to_check)
+                continue;
+            }
 
+
+            // Check the html-decoded title too
+            url = `${wikiMedia}action=query&format=json&list=logevents&letype=delete&letitle=${html_decoded_title_to_check}`;
+
+            let check_2 = await rp(url)
+                                .then(body => {
+                                    let result = JSON.parse(body);
+                                    if (result.warnings) return [];
+                                    return result && result.query && result.query.logevents;
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    return "TITLE_REQUEST_FAILED";
+                                });
+
+            if(check_2.length > 0) {
+                good_titles.push(title_to_check)
+                continue;
+            }
+
+            // Check the URL-escaped, html-decoded title too
+            url = `${wikiMedia}action=query&format=json&list=logevents&letype=delete&letitle=${html_decoded_and_escaped_title_to_check}`;
+
+            let check_3 = await rp(url)
+                                .then(body => {
+                                    let result = JSON.parse(body);
+                                    if (result.warnings) return [];
+                                    return result && result.query && result.query.logevents;
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    return "TITLE_REQUEST_FAILED";
+                                });
+
+            if(check_3.length > 0) {
+                good_titles.push(title_to_check)
+                continue;
+            }
+
+            // To be safe, if there is no logevent for the title being deleted, consider it still a live page
+            // DO NOTHING
         }
 
+
         logOrg("*****CLEARED PAGES*****")
-        console.log(removed_titles);
+        console.log(good_titles);
+
+
+        // Move on if there are no results
+        if(good_titles.length == 0) continue;
+
         let cleared_article_ids = fetchedArticles && fetchedArticles
-                                .filter(row => removed_titles.includes(row.page_title))
+                                .filter(row => good_titles.includes(row.page_title))
                                 .map(row => row.id);
         let cleared_article_ipfs_hash_currents = fetchedArticles && fetchedArticles
-                                .filter(row => removed_titles.includes(row.page_title))
+                                .filter(row => good_titles.includes(row.page_title))
                                 .map(row => row.ipfs_hash_current);
         
         // Update the articles themselves
@@ -176,11 +234,11 @@ export const logOrg = (inputString: string) => {
                     is_indexed = 1,
                     bing_index_override = 0,
                     lastmod_timestamp = NOW()
-                FROM enterlink_articletable art
                 WHERE 
-                    art.id IN (?)
+                    id IN (?) 
+                    AND page_note = ?
             `,
-            [NEW_PAGE_NOTE, cleared_article_ids]
+            [NEW_PAGE_NOTE, cleared_article_ids, PAGE_NOTE]
         );  
 
         // Update the redirects
@@ -190,11 +248,11 @@ export const logOrg = (inputString: string) => {
                 SET 
                     page_note = ?,
                     lastmod_timestamp = NOW()
-                FROM enterlink_articletable art
                 WHERE 
-                    art.redirect_page_id IN (?)
+                    redirect_page_id IN (?) 
+                    AND page_note = ?
             `,
-            [NEW_PAGE_NOTE, cleared_article_ids]
+            [NEW_PAGE_NOTE, cleared_article_ids, PAGE_NOTE]
         );
         
         // Get the article jsons
@@ -202,7 +260,8 @@ export const logOrg = (inputString: string) => {
             `
                 SELECT * 
                 FROM enterlink_hashcache 
-                WHERE ipfs_hash IN (?)
+                WHERE 
+                    ipfs_hash IN (?)
             `,
             [cleared_article_ipfs_hash_currents]
         );
@@ -212,6 +271,7 @@ export const logOrg = (inputString: string) => {
             return;
         }
 
+        // Update the hashcaches
         for (let h = 0; h < hash_cache_results.length; h++) {
             // Get the article JSON
             let wiki: ArticleJson;
@@ -224,13 +284,12 @@ export const logOrg = (inputString: string) => {
 
             // Update some of the metadata values
             wiki.metadata = wiki.metadata.map(meta => {
-                if(meta.key == 'page_note') return { key: '', value: LANG_CODE }
+                if(meta.key == 'page_note') return { key: '', value: NEW_PAGE_NOTE }
                 else if(meta.key == 'is_indexed') return { key: 'is_indexed', value: 1 }
                 else if(meta.key == 'bing_index_override') return { key: 'bing_index_override', value: 0 }
                 else if(meta.key == 'lastmod_timestamp') return { key: 'lastmod_timestamp', value: new Date() }
                 else return meta;
             })
-
 
             // Update the hashcache
             let json_insertion;
@@ -250,6 +309,8 @@ export const logOrg = (inputString: string) => {
                 }
                 else throw e;
             }
+
+            console.log(chalk.green.bold(`${wiki.page_title.map(s => s.text).join()} added!`));
 
         }
         
