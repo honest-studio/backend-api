@@ -31,7 +31,7 @@ commander
   .parse(process.argv);
 
 const LANG_CODE = 'en';
-const BATCH_SIZE_MILLISECONDS = 7200 * 1000; // 2 hours
+const BATCH_SIZE_MILLISECONDS = 3600 * 1000; // 1 hours
 
 const API_RESULT_LIMIT = 499; // Max allowed is 500 for non-Wikipedia superusers
 // const LASTMOD_CUTOFF_TIME = '2099-09-14 00:00:00';
@@ -307,13 +307,87 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
                 if (change_obj.title && change_obj.title.search(WIKI_SYNC_RECENTCHANGES_FILTER_REGEX) >= 0) return null;
 
                 // Add the import info to the new_page_array
-                new_changes_array.push({ title: change_obj.title, id: change_obj.pageid });
+                new_changes_array.push({ title: change_obj.title, id: change_obj.pageid, timestamp: change_obj.timestamp });
 
             }).filter(obj => obj);
 
-            console.log(chalk.rgb(255, 204, 153)(`New changes found: `));
-            console.log(new_changes_array);
-            console.log(chalk.rgb(255, 204, 153)(`-------------`));
+            // console.log(chalk.rgb(255, 204, 153)(`New changes found: `));
+            // console.log(new_changes_array);
+            // console.log(chalk.rgb(255, 204, 153)(`-------------`));
+
+            for (let index = 0; index < new_changes_array.length; index++) {
+                let the_new_change = new_changes_array[index];
+
+                // Fetch the article id with the given title
+                // Handle the redirects after the fetch, as processing them in the query has proven to be too slow
+                const fetchedID: any[] = await theMysql.TryQuery(
+                    `
+                        SELECT DISTINCT
+                            COALESCE(redirect_page_id, id) AS id
+                        FROM enterlink_articletable AS art 
+                        WHERE 
+                            is_removed = 0
+                            AND is_indexed = 0
+                            AND page_note = ?
+                            AND page_title = ?
+                            AND page_lang = ?
+                        LIMIT 1
+                    `,
+                    [PAGE_NOTE, the_new_change.title, LANG_CODE]
+                );
+
+                let the_fetched_id = fetchedID && fetchedID.length && fetchedID[0] && fetchedID[0].id;
+
+                if (the_fetched_id){
+                    // Fetch the article with the given id
+                    const fetchedArticle: any[] = await theMysql.TryQuery(
+                        `
+                            SELECT 
+                                id,
+                                page_title,
+                                slug,
+                                slug_alt,
+                                page_lang,
+                                ipfs_hash_current,
+                                is_indexed,
+                                creation_timestamp
+                            FROM enterlink_articletable AS art 
+                            WHERE 
+                                id = ?
+                                AND lastmod_timestamp <= ?
+                        `,
+                        [the_fetched_id, the_new_change.timestamp]
+                    );
+
+                    // Update the page
+                    if(fetchedArticle && fetchedArticle.length){
+                        let { page_lang, slug, slug_alt, ipfs_hash_current, page_title, id, creation_timestamp } = fetchedArticle[0]
+                        let concat_string = `lang_${page_lang}/${slug}|lang_${page_lang}/${slug_alt}|${ipfs_hash_current}|${page_title.trim()}|${id}||${creation_timestamp}|`;
+                        try{
+                            // console.log(artResult.concatted)
+                            await WikiImport(concat_string,
+                                theConfig,
+                                theMysql,
+                                theAWSS3,
+                                theElasticsearch,
+                                theMediaUploadService
+                            );
+                        }
+                        catch (err){
+                            console.error(`${concat_string} FAILED!!! [${err}]`);
+                            console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
+                        }
+                    }
+                    else{
+                        console.log(chalk.red(`FAIL, ARTICLE ALREADY UPDATED [${the_new_change.title}]|${the_fetched_id}|`));
+                    }
+                    
+                }
+                else{
+                    console.log(chalk.red(`FAIL, NO ARTICLE FETCHED FOR ${the_new_change.title}`));
+                }
+
+            }
             break;
         }
     }
@@ -343,44 +417,44 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 
     // First, get all new pages
     let batch_start_unix, batch_end_unix, batch_start_iso8601, batch_end_iso8601;
-    // for (let i = 0; i < totalBatches; i++) {
-    //     batch_start_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS);
-    //     batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
-    //     batch_end_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS) + BATCH_SIZE_MILLISECONDS - 1;
-    //     batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
+    for (let i = 0; i < totalBatches; i++) {
+        batch_start_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS);
+        batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
+        batch_end_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS) + BATCH_SIZE_MILLISECONDS - 1;
+        batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
 
-    //     console.log("\n");
-    //     logYlw("---------------------------------------------------------------------------------------");
-    //     logYlw("---------------------------------------------------------------------------------------");
-    //     logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
-    //     logOrg("===============🆕 PROCESSING NEW PAGES 🆕===============");
-    //     console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}`));
+        console.log("\n");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
+        logOrg("===============🆕 PROCESSING NEW PAGES 🆕===============");
+        console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}`));
 
-    //     // Run the script
-    //     await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'new-pages');
+        // Run the script
+        await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'new-pages');
 
-    //     batchCounter++;
-    // }
+        batchCounter++;
+    }
 
-        // Next, get all recent edits
-        // Make sure to iterate from newest to oldest
-        batch_start_unix = 0, batch_end_unix = 0, batch_start_iso8601 = 0, batch_end_iso8601 = 0;
-        for (let i = 0; i < totalBatches; i++) {
-            batch_start_unix = end_unix - (i * BATCH_SIZE_MILLISECONDS);
-            batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
-            batch_end_unix = end_unix - (i * BATCH_SIZE_MILLISECONDS) - BATCH_SIZE_MILLISECONDS + 1;
-            batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
-    
-            console.log("\n");
-            logYlw("---------------------------------------------------------------------------------------");
-            logYlw("---------------------------------------------------------------------------------------");
-            logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
-            logOrg("===============🆕 PROCESSING RECENT CHANGES 🆕===============");
-            console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}, going newest to oldest`));
-                
-            // Run the script
-            await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'recent-changes');
+    // Next, get all recent edits
+    // Make sure to iterate from newest to oldest
+    batch_start_unix = 0, batch_end_unix = 0, batch_start_iso8601 = 0, batch_end_iso8601 = 0;
+    for (let i = 0; i < totalBatches; i++) {
+        batch_start_unix = end_unix - (i * BATCH_SIZE_MILLISECONDS);
+        batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
+        batch_end_unix = end_unix - (i * BATCH_SIZE_MILLISECONDS) - BATCH_SIZE_MILLISECONDS + 1;
+        batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
 
-        }
+        console.log("\n");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("---------------------------------------------------------------------------------------");
+        logYlw("🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏁 START 🏁🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇🏇");
+        logOrg("===============🆕 PROCESSING RECENT CHANGES 🆕===============");
+        console.log(chalk.yellow.bold(`Trying ${batch_start_iso8601} to ${batch_end_iso8601}, going newest to oldest`));
+            
+        // Run the script
+        await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'recent-changes');
+
+    }
     return;
 })();
