@@ -39,14 +39,14 @@ export const logYlw = (inputString: string) => {
 
 (async () => {
     logYlw("=================STARTING MAIN SCRIPT=================");
-    let batchCounter = 0;
+    
     let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
     console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
     let currentStart, currentEnd;
     fs.writeFileSync(path.join(__dirname,"../../../scripts/Wiki-Importer", 'resultlinks.txt'), "");
     for (let i = 0; i < totalBatches; i++) {
-        currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
-        currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;
+        currentStart = parseInt(commander.start) + (i * BATCH_SIZE);
+        currentEnd = parseInt(commander.start) + (i * BATCH_SIZE) + BATCH_SIZE - 1;
 
         console.log("\n");
         logYlw("---------------------------------------------------------------------------------------");
@@ -89,7 +89,7 @@ export const logYlw = (inputString: string) => {
             }
         }
 
-        batchCounter++;
+        
     }
     return;
 })();

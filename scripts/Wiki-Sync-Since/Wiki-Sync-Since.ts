@@ -400,7 +400,7 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
 // NEXT, GET ALL EDITS FROM start_date to end_date, starting from end_date AND WORKING BACKWARDS
 (async () => {
     logYlw("=================STARTING SYNC SINCE SCRIPT=================");
-    let batchCounter = 0;
+    
 
     // Get the time frame
     let start_date = commander.start;
@@ -418,9 +418,9 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
     // First, get all new pages
     let batch_start_unix, batch_end_unix, batch_start_iso8601, batch_end_iso8601;
     for (let i = 0; i < totalBatches; i++) {
-        batch_start_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS);
+        batch_start_unix = start_unix + (i * BATCH_SIZE_MILLISECONDS);
         batch_start_iso8601 = (new Date(batch_start_unix)).toISOString();
-        batch_end_unix = start_unix + (batchCounter * BATCH_SIZE_MILLISECONDS) + BATCH_SIZE_MILLISECONDS - 1;
+        batch_end_unix = start_unix + (i * BATCH_SIZE_MILLISECONDS) + BATCH_SIZE_MILLISECONDS - 1;
         batch_end_iso8601 = (new Date(batch_end_unix)).toISOString();
 
         console.log("\n");
@@ -433,7 +433,7 @@ export const WikiSyncSince = async (api_start: number, api_end: number, process_
         // Run the script
         await WikiSyncSince(batch_start_unix / 1000, batch_end_unix / 1000, 'new-pages');
 
-        batchCounter++;
+        
     }
 
     // Next, get all recent edits
