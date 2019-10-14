@@ -3,6 +3,7 @@ import rp from 'request-promise';
 import * as elasticsearch from 'elasticsearch';
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
+import { WIKI_SYNC_RECENTCHANGES_FILTER_REGEX } from '../Wiki-Importer/functions/wiki-constants';
 import { MediaUploadService } from '../../src/media-upload';
 import { ArticleJson } from '../../src/types/article';
 import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations, sentenceSplitFixer, flushPrerenders } from '../../src/utils/article-utils';
@@ -96,6 +97,7 @@ export const logOrg = (inputString: string) => {
             // Concatenate the titles
             let concatted_titles = title_array
                                         .slice(title_slice_start, title_slice_end)
+                                        .filter(title => title.search(WIKI_SYNC_RECENTCHANGES_FILTER_REGEX) == -1)
                                         .join('|');
 
             // URL Encode the concatenated titles
@@ -132,7 +134,11 @@ export const logOrg = (inputString: string) => {
         }
 
         // Find removed titles
-        let removed_titles = title_array.filter(title => !found_titles_lowercase.includes(title.toLowerCase()));
+        let removed_titles = title_array.filter(title => {
+
+            return !found_titles_lowercase.includes(title.toLowerCase()) 
+                    && title.search('&amp;') == -1 ; // &amp causes too many problems and dupes
+        });
 
         logOrg("*****PROSPECTIVE PAGES*****")
         console.log(removed_titles);
@@ -147,6 +153,7 @@ export const logOrg = (inputString: string) => {
             let title_to_check = removed_titles[n];
             let html_decoded_title_to_check = HTMLDecoderEncoder.decode(title_to_check);
             let html_decoded_and_escaped_title_to_check = encodeURIComponent(html_decoded_title_to_check);
+            let test_title_arr = [title_to_check, html_decoded_title_to_check, html_decoded_and_escaped_title_to_check]
             console.log(`CHECKING: ${title_to_check} [${html_decoded_title_to_check}] (${html_decoded_and_escaped_title_to_check})`)
 
             // Fetch the info from the Wikipedia API
@@ -160,9 +167,14 @@ export const logOrg = (inputString: string) => {
                                 })
                                 .catch((err) => {
                                     console.log(err);
-                                    return "TITLE_REQUEST_FAILED";
+                                    return null;
                                 });
-            if(check_1.length > 0) {
+            if (!check_1) continue; // In case the Wikipedia endpoint is down. Don't want false positives slipping through
+            else if(
+                check_1.length > 0 
+                && check_1[0].action == 'delete' // Make sure the latest action is delete/delete and not a restoration
+                && test_title_arr.includes(check_1[0].title) // Make sure a truncated URL parameter does not match unrelated titles
+            ) { 
                 good_titles.push(title_to_check)
                 continue;
             }
@@ -179,10 +191,15 @@ export const logOrg = (inputString: string) => {
                                 })
                                 .catch((err) => {
                                     console.log(err);
-                                    return "TITLE_REQUEST_FAILED";
+                                    return null;
                                 });
 
-            if(check_2.length > 0) {
+            if (!check_2) continue; // In case the Wikipedia endpoint is down. Don't want false positives slipping through
+            else if(
+                check_2.length > 0 
+                && check_2[0].action == 'delete' // Make sure the latest action is delete/delete and not a restoration
+                && test_title_arr.includes(check_2[0].title) // Make sure a truncated URL parameter does not match unrelated titles
+            ) { 
                 good_titles.push(title_to_check)
                 continue;
             }
@@ -198,10 +215,15 @@ export const logOrg = (inputString: string) => {
                                 })
                                 .catch((err) => {
                                     console.log(err);
-                                    return "TITLE_REQUEST_FAILED";
+                                    return null;
                                 });
 
-            if(check_3.length > 0) {
+            if (!check_3) continue; // In case the Wikipedia endpoint is down. Don't want false positives slipping through
+            else if(
+                check_3.length > 0 
+                && check_3[0].action == 'delete' // Make sure the latest action is delete/delete and not a restoration
+                && test_title_arr.includes(check_3[0].title) // Make sure a truncated URL parameter does not match unrelated titles
+            ) { 
                 good_titles.push(title_to_check)
                 continue;
             }
@@ -313,7 +335,8 @@ export const logOrg = (inputString: string) => {
             console.log(chalk.green.bold(`${wiki.page_title.map(s => s.text).join()} added!`));
 
         }
-        
+
+        good_titles = [];
     }
 
     return;
