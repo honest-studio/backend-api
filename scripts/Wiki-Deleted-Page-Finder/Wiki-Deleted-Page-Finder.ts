@@ -4,6 +4,8 @@ import * as elasticsearch from 'elasticsearch';
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 import { MediaUploadService } from '../../src/media-upload';
+import { ArticleJson } from '../../src/types/article';
+import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations, sentenceSplitFixer, flushPrerenders } from '../../src/utils/article-utils';
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -30,6 +32,7 @@ commander
 const BATCH_SIZE = 499; // Wikipedia limit is 500
 const TITLE_CONCAT_SIZE = 49; // Wikipedia limits title param concats to 50 or less. Using 10 because some titles are huge
 const PAGE_NOTE = '|EN_WIKI_IMPORT|';
+const NEW_PAGE_NOTE = '|EN_WIKI_IMPORT_DELETED|';
 const LANG_CODE = 'en';
 
 export const logYlw = (inputString: string) => {
@@ -61,7 +64,8 @@ export const logOrg = (inputString: string) => {
             `
                 SELECT 
                     art.page_title, 
-                    art.id
+                    art.id,
+                    art.ipfs_hash_current
                 FROM enterlink_articletable art
                 INNER JOIN enterlink_hashcache cache on art.id = cache.articletable_id
                 WHERE 
@@ -155,8 +159,99 @@ export const logOrg = (inputString: string) => {
         }
 
         logOrg("*****CLEARED PAGES*****")
-        let cleared_articles = fetchedArticles.filter(row => row.page_title.includes(removed_titles));
-        console.log(cleared_articles);
+        console.log(removed_titles);
+        let cleared_article_ids = fetchedArticles && fetchedArticles
+                                .filter(row => removed_titles.includes(row.page_title))
+                                .map(row => row.id);
+        let cleared_article_ipfs_hash_currents = fetchedArticles && fetchedArticles
+                                .filter(row => removed_titles.includes(row.page_title))
+                                .map(row => row.ipfs_hash_current);
+        
+        // Update the articles themselves
+        const article_update: any[] = await theMysql.TryQuery(
+            `
+                UPDATE enterlink_articletable
+                SET 
+                    page_note = ?,
+                    is_indexed = 1,
+                    bing_index_override = 0,
+                    lastmod_timestamp = NOW()
+                FROM enterlink_articletable art
+                WHERE 
+                    art.id IN (?)
+            `,
+            [NEW_PAGE_NOTE, cleared_article_ids]
+        );  
+
+        // Update the redirects
+        const redirects_update: any[] = await theMysql.TryQuery(
+            `
+                UPDATE enterlink_articletable
+                SET 
+                    page_note = ?,
+                    lastmod_timestamp = NOW()
+                FROM enterlink_articletable art
+                WHERE 
+                    art.redirect_page_id IN (?)
+            `,
+            [NEW_PAGE_NOTE, cleared_article_ids]
+        );
+        
+        // Get the article jsons
+        let hash_cache_results: Array<any> = await theMysql.TryQuery(
+            `
+                SELECT * 
+                FROM enterlink_hashcache 
+                WHERE ipfs_hash IN (?)
+            `,
+            [cleared_article_ipfs_hash_currents]
+        );
+
+        if (hash_cache_results.length == 0) {
+            console.log(chalk.red(`NO HASHES FOUND . Continuing...`));
+            return;
+        }
+
+        for (let h = 0; h < hash_cache_results.length; h++) {
+            // Get the article JSON
+            let wiki: ArticleJson;
+            try {
+                wiki = JSON.parse(hash_cache_results[h].html_blob);
+            } catch (e) {
+                wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hash_cache_results[h].html_blob)));
+                wiki.ipfs_hash = hash_cache_results[h].ipfs_hash;
+            }
+
+            // Update some of the metadata values
+            wiki.metadata = wiki.metadata.map(meta => {
+                if(meta.key == 'page_note') return { key: '', value: LANG_CODE }
+                else if(meta.key == 'is_indexed') return { key: 'is_indexed', value: 1 }
+                else if(meta.key == 'bing_index_override') return { key: 'bing_index_override', value: 0 }
+                else if(meta.key == 'lastmod_timestamp') return { key: 'lastmod_timestamp', value: new Date() }
+                else return meta;
+            })
+
+
+            // Update the hashcache
+            let json_insertion;
+            try {
+                json_insertion = await theMysql.TryQuery(
+                    `
+                        UPDATE enterlink_hashcache
+                        SET html_blob = ?
+                        WHERE ipfs_hash = ? 
+                    `,
+                    [JSON.stringify(wiki), hash_cache_results[h].ipfs_hash]
+                );
+                console.log(chalk.green("Added to enterlink_hashcache."));
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
+                }
+                else throw e;
+            }
+
+        }
         
     }
 
