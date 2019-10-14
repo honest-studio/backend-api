@@ -254,7 +254,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
 
 (async () => {
     logYlw("=================STARTING MAIN SCRIPT=================");
-    let batchCounter = 0;
+    
     let totalBatches = Math.ceil(((parseInt(commander.end) - parseInt(commander.start)) / BATCH_SIZE));
     console.log(chalk.yellow.bold(`Total batches: ${totalBatches}`));
 
@@ -273,8 +273,8 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
 
     let currentStart, currentEnd;
     for (let i = 0; i < totalBatches; i++) {
-        currentStart = parseInt(commander.start) + (batchCounter * BATCH_SIZE);
-        currentEnd = parseInt(commander.start) + (batchCounter * BATCH_SIZE) + BATCH_SIZE - 1;
+        currentStart = parseInt(commander.start) + (i * BATCH_SIZE);
+        currentEnd = parseInt(commander.start) + (i * BATCH_SIZE) + BATCH_SIZE - 1;
 
         console.log("\n");
         console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
@@ -307,7 +307,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             }
         }
 
-        batchCounter++;
+        
     }
     return;
 })();
