@@ -8,11 +8,8 @@ import { ConfigService } from '../../src/common';
 import { calcIPFSHash } from '../../src/utils/article-utils/article-tools';
 import { ArticleJson, Sentence } from '../../src/types/article';
 import { MediaUploadService, UrlPack } from '../../src/media-upload';
-import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
 const util = require('util');
 const chalk = require('chalk');
-const fs = require('fs');
-const path = require('path');
 
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
