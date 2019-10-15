@@ -255,6 +255,7 @@ async function redis_process_actions (actions) {
                 pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
             }
         }
+        pipeline.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
         await pipeline.exec();
     }
 
