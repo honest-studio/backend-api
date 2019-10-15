@@ -491,7 +491,7 @@ export class MediaUploadService {
                 .slice(-5);
 
             // Create a filename
-            let filename = identifier.toString() + '__' + theTimeString;
+            let filename = identifier.toString(); // + '__' + theTimeString;
 
             // Initialize the return dictionaries
             let returnMiniDict = { filename: filename, caption: fileCaption };
@@ -929,7 +929,7 @@ export class MediaUploadService {
             }
 
             // Set the AWS S3 bucket keys
-            let encodedSuffixFirstPart = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}`;
+            let encodedSuffixFirstPart = encodeURIComponent(slugify(slug)) + `/${filename}`;
             let encodedSuffix = `${encodedSuffixFirstPart}.${varPack.suffix}`;
             let theMainKey = `${uploadType}/${lang}/${encodedSuffix}`;
             
@@ -1058,7 +1058,7 @@ export class MediaUploadService {
                             bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
 
                             // Set the AWS S3 bucket key
-                            let theThumbSuffix = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'))) + `/${filename}__thumb.${varPack.thumbSuffix}`;
+                            let theThumbSuffix = encodeURIComponent(slugify(slug)) + `/${filename}__thumb.${varPack.thumbSuffix}`;
                             let theThumbKey = `${uploadType}/${lang}/${theThumbSuffix}`;
 
                             // Specify S3 upload options
