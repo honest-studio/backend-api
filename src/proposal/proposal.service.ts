@@ -49,6 +49,16 @@ export class ProposalService {
                 proposals[i].info = { error: `Proposal ${proposal_id} could not be found` };
             try {
                 proposals[i].votes = values[i + len][1].map(v => JSON.parse(v));
+
+                // Unique votes only
+                const vote_filter = {};
+                proposals[i].votes.filter(vote => {
+                    if (vote_filter[vote.trx_id]) return false;
+                    else {
+                        vote_filter[vote.trx_id] = 1;
+                        return true;
+                    }
+                })
             } catch {
                 proposals[i].votes = [];
             }
