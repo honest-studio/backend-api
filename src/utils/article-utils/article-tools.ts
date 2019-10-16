@@ -861,17 +861,17 @@ export async function flushPrerenders (inputLang: string, inputSlug: string, pre
     // Flush the prerender cache for this page
     try {
         console.log(colors.yellow(`Flushing prerender for lang_${inputLang}/${inputSlug}`));
-        let payload = {
-            "prerenderToken": prerenderToken,
-            "url": `https://everipedia.org/wiki/lang_${inputLang}/${inputSlug}/amp`
-        }
+//         let payload = {
+//             "prerenderToken": prerenderToken,
+//             "url": `https://everipedia.org/wiki/lang_${inputLang}/${inputSlug}/amp`
+//         }
 
-        // Send the recache request for AMP
-        await axios.default.post('https://api.prerender.io/recache', payload)
-        .then(response => {
-            console.log(colors.green(`lang_${inputLang}/${inputSlug}/amp prerender successfully flushed`));
-            return response;
-        })
+//         // Send the recache request for AMP
+//         await axios.default.post('https://api.prerender.io/recache', payload)
+//         .then(response => {
+//             console.log(colors.green(`lang_${inputLang}/${inputSlug}/amp prerender successfully flushed`));
+//             return response;
+//         })
 
         // Construct the payload for desktop
         let payload2 = {
