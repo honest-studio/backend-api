@@ -179,7 +179,7 @@ export class StatService {
                 AND creation_timestamp > ?
             `,
             [mysql_date],
-            3000
+            10000
         );
         doc.total_article_count[0].num_articles += new_article_count[0].num_articles;
 
