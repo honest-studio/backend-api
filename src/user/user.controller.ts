@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UsePipes } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { UserQuerySchema } from './user.query-schema';
@@ -78,5 +78,23 @@ export class UserController {
     })
     async getActivity(@Param('eos_account_name') eos_account_name): Promise<any> {
         return this.userService.getActivity(eos_account_name);
+    }
+
+    @Post('streaks')
+    @ApiOperation({
+        title: 'Get user editing streaks',
+        description: `Body format: An array of users. Example:
+            ["kedartheiyer", "eosiochicken"]`
+    })
+    @ApiResponse({
+        status: 201,
+        description: `Array of objects, one for each user:
+            {
+                current: Current editing streak for user,
+                highest: Longest historical editing streak for user
+            }`
+    })
+    async getStreaks(@Body() users): Promise<any> {
+        return this.userService.getStreaks(users);
     }
 }

@@ -139,4 +139,50 @@ export class UserService {
 
         return { votes, proposals };
     }
+
+    // calculate current and best editing streaks for users
+    async getStreaks(users) {
+        const pipeline = this.redis.connection().pipeline();
+        for (let user of users) {
+            pipeline.smembers(`user:${user}:proposals`);
+        }
+        pipeline.get('eos_actions:last_block_processed');
+        const values = await pipeline.exec();
+
+        const latest_block = values[values.length - 1][1];
+        const streaks = {}
+        for (let i in users) {
+            let current = 0;
+            let best = 0;
+            const user = users[i];
+            if (!values[i]) {
+                streaks[user] = { current, best }
+                continue;
+            }
+            let proposals = values[i][1];
+            proposals = proposals
+                .map(p => JSON.parse(p))
+                .sort((a,b) => a.block_num - b.block_num);
+
+            let streak_start = 0;
+            let last_block = 0;
+            for (let proposal of proposals) {
+                if (proposal.block_num <= last_block + 172000) {
+                    current = Math.ceil((proposal.block_num - streak_start) / 172000);
+                }
+                else {
+                    best = current;
+                    current = 1;
+                    streak_start = proposal.block_num;
+                }
+                last_block = proposal.block_num;
+            }
+            // if the most recent proposal isnt within the last day, current streak is 0
+            if (proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
+            if (current > best) best = current;
+            streaks[user] = { current, best }
+        }
+
+        return streaks;
+    }
 }

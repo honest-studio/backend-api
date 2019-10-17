@@ -185,12 +185,14 @@ async function redis_process_actions (actions) {
         else if (action.trace.act.name == "logpropinfo") {
             const proposal_id = action.trace.act.data.proposal_id;
             const ipfs_hash = action.trace.act.data.ipfs_hash;
+            const proposer = action.trace.act.data.proposer;
             const lang_code = action.trace.act.data.lang_code;
             const slug = action.trace.act.data.slug;
             const endtime = action.trace.act.data.endtime;
             const ttl = endtime - (Date.now() / 1000 | 0);
             pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
             pipeline.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
+            pipeline.sadd(`user:${proposer}:proposals`, JSON.stringify(action));
             if (ttl > 0) {
                 pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
                 pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ttl);
