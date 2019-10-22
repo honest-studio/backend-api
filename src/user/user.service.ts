@@ -178,7 +178,7 @@ export class UserService {
                 last_block = proposal.block_num;
             }
             // if the most recent proposal isnt within the last day, current streak is 0
-            if (proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
+            if (proposals.length > 0 && proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
             if (current > best) best = current;
             streaks[user] = { current, best }
         }
