@@ -738,7 +738,13 @@ export class WikiService {
         const webp_small =  media_props && media_props.webp_thumb || null;
         const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
         const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
-        const is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
+        let is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
+        const page_note = wiki.metadata.find(w => w.key == 'page_note').value  || null;
+
+        // Always deindex Wikipedia imports, but not the |XX_WIKI_IMPORT_DELETED| pages
+        if (is_indexed && page_note && page_note.slice(-13) == '_WIKI_IMPORT|') is_indexed = 0;
+
+        let bing_index_override = !is_indexed;
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
 
@@ -749,7 +755,7 @@ export class WikiService {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
             ON DUPLICATE KEY UPDATE 
                 ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
-                page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, 
+                page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, bing_index_override=?, 
                 is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL, webp_large=?, webp_medium=?, webp_small=? 
             `,
             [
@@ -774,6 +780,7 @@ export class WikiService {
                 page_type,
                 is_adult_content,
                 is_indexed,
+                bing_index_override,
                 is_removed,
                 webp_large,
                 webp_medium,
