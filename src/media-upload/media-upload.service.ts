@@ -435,7 +435,8 @@ export class MediaUploadService {
         slug: string,
         identifier: string,
         uploadType: string,
-        fileCaption: string
+        fileCaption: string,
+        filename_override: string
     ): Promise<MediaUploadResult> {
         try {
             // let bufferToUse: Buffer;
