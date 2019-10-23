@@ -55,7 +55,8 @@ export class MediaUploadController {
             message.slug,
             path.parse(file.originalname).name,
             message.upload_type,
-            message.caption
+            message.caption,
+            message.filename_override
         );
     }
 
@@ -73,7 +74,8 @@ export class MediaUploadController {
             message.slug,
             message.identifier,
             message.upload_type,
-            message.caption
+            message.caption,
+            message.identifier
         );
     }
 }

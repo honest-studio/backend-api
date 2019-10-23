@@ -299,7 +299,8 @@ export const getMainPhoto = async (input_pack: CheerioPack, theMediaUploadServic
 			slug,
 			filename,
 			'ProfilePicture',
-			''
+			'',
+			'mainphoto'
 		);
 
 		if(up_res){

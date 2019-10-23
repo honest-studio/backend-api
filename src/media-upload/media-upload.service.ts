@@ -435,7 +435,8 @@ export class MediaUploadService {
         slug: string,
         identifier: string,
         uploadType: string,
-        fileCaption: string
+        fileCaption: string,
+        filename_override: string
     ): Promise<MediaUploadResult> {
         try {
             // let bufferToUse: Buffer;
@@ -491,7 +492,8 @@ export class MediaUploadService {
                 .slice(-5);
 
             // Create a filename
-            let filename = identifier.toString(); // + '__' + theTimeString;
+            let filename_to_use = slugify(filename_override, {remove: /[*+~.()'"!:@]/g});
+            let filename = filename_to_use; //identifier.toString() // + '__' + theTimeString;
 
             // Initialize the return dictionaries
             let returnMiniDict = { filename: filename, caption: fileCaption };

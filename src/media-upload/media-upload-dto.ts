@@ -31,6 +31,13 @@ export class MediaUploadDto {
     @IsString()
     caption: string;
 
+    @ApiModelProperty({
+        description: 'Name of the file. Will be sanitized later',
+        required: true
+    })
+    @IsString()
+    filename_override: string;
+
     // Can only have specific types of uploads
     @ApiModelProperty({
         description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, NewlinkFiles, or GalleryMediaItem)',
