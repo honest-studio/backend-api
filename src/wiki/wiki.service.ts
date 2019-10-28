@@ -644,7 +644,7 @@ export class WikiService {
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
         let INTERVAL_MSEC = 2000;
         this.updateWikiIntervals[ipfs_hash] = setIntervalAsync(
-            async () => this.updateWiki(wiki, ipfs_hash),
+            async () => this.updateWiki(wiki, ipfs_hash, false),
             INTERVAL_MSEC
         )
         setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC * 30);
@@ -739,7 +739,7 @@ export class WikiService {
         const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
         const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
         let is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
-        const page_note = wiki.metadata.find(w => w.key == 'page_note').value  || null;
+        const page_note = wiki.metadata.find(w => w.key == 'page_note') ? wiki.metadata.find(w => w.key == 'page_note').value : 'Thing';
 
         // Always deindex Wikipedia imports, but not the |XX_WIKI_IMPORT_DELETED| pages
         if (is_indexed && page_note && page_note.slice(-13) == '_WIKI_IMPORT|') is_indexed = 0;
@@ -747,9 +747,7 @@ export class WikiService {
         let bing_index_override = !is_indexed;
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
-
-        console.log(wiki)
-
+        
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
@@ -892,6 +890,18 @@ export class WikiService {
 
             }
 
+            // Make sure the hashcache has the article id
+            const hashcache_update = await this.mysql.TryQuery(
+                `
+                UPDATE enterlink_hashcache
+                SET articletable_id=? 
+                WHERE 
+                    articletable_id is NULL
+                    AND ipfs_hash=?
+                `,
+                [articleResultPacket[0].id, ipfs_hash]
+            );
+
             // Update Elasticsearch for the main article
             await updateElasticsearch(
                 articleResultPacket[0].id, 
@@ -929,22 +939,24 @@ export class WikiService {
         return;
     }
 
-    async updateWiki(wiki: ArticleJson, ipfs_hash: string) {
+    async updateWiki(wiki: ArticleJson, ipfs_hash: string, override_clear_interval: boolean = false) {
         console.log(colors.yellow(`Checking on ${ipfs_hash} to hit the mainnet`));
-        const twoMinutesAgo = (Date.now() / 1000 | 0) - 60*2;
+        // const twoMinutesAgo = (Date.now() / 1000 | 0) - 60*2;
         const submitted_proposal = await this.mongo
             .connection()
             .actions.findOne({
                 'trace.act.account': 'eparticlectr',
                 'trace.act.name': 'logpropinfo',
-                'trace.act.data.ipfs_hash': ipfs_hash,
-                'trace.act.data.starttime': { $gt: twoMinutesAgo }
+                'trace.act.data.ipfs_hash': ipfs_hash
             })
         if (submitted_proposal) {
             // console.log(util.inspect(submitted_proposal, {showHidden: false, depth: null, chalk: true}));
             const trxID = submitted_proposal.trx_id;
             console.log(colors.green(`Transaction found! (${trxID})`));
-            clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
+            if(!override_clear_interval){
+                clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]);
+            }
+            
             // Check for a merge
             const theComment = submitted_proposal.trace.act.data.comment;
             const theMemo = submitted_proposal.trace.act.data.memo;
