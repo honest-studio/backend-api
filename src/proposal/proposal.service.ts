@@ -3,6 +3,7 @@ import { DiffService } from '../diff';
 import { EosAction, MongoDbService, MysqlService, RedisService, ProposalResult, Propose, Vote } from '../feature-modules/database';
 import { PreviewService } from '../preview';
 import { BrowserInfo } from 'detect-browser';
+const chalk = require('chalk');
 
 export type Proposal = {
     proposal_id: number;
@@ -106,5 +107,55 @@ export class ProposalService {
         }
 
         return proposals;
+    }
+
+    async syncOrphanHashes(): Promise<Array<any>> {
+        // Get the article object
+        let orphan_hashes: Array<any> = await this.mysql.TryQuery(
+            `
+                SELECT ipfs_hash 
+                FROM enterlink_hashcache 
+                WHERE articletable_id IS NULL
+            `,
+            []
+        );
+
+        if (orphan_hashes.length == 0) {
+            console.log(chalk.red(`NO ORPHAN HASHES FOUND . Continuing...`));
+            return;
+        }
+
+        let find_query;
+        let sort_direction;
+        const now = (Date.now() / 1000) | 0;
+
+        find_query = {
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo'
+        };
+
+        find_query['trace.act.data.ipfs_hash'] = { $in: orphan_hashes.join(',') }
+
+        const proposal_id_docs = await this.mongo
+            .connection()
+            .actions.find(find_query)
+            .sort({ 'trace.act.data.proposal_id': sort_direction })
+            .toArray();
+
+        const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id)
+            .filter((v, i, a) => a.indexOf(v) === i);
+                
+        // const proposal_options = {
+        //     preview: query.preview,
+        //     diff: query.diff,
+        //     user_agent: query.user_agent,
+        //     cache: query.cache
+        // };
+
+        // return this.proposalService.getProposals(proposal_ids, proposal_options);
+
+        console.log(proposal_ids)
+
+        return null;
     }
 }

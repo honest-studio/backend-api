@@ -9,6 +9,23 @@ import { Proposal, ProposalService } from './proposal.service';
 export class ProposalController {
     constructor(private readonly proposalService: ProposalService) {}
 
+    @Get('sync-orphan-hashes')
+    @ApiOperation({ title: 'Sync confirmed / approved proposals on EOS to the Everipedia cache' })
+    @ApiResponse({
+        status: 200,
+        description: `returns an array of proposal objects: 
+            [{
+                info: proposal information,
+                result: proposal result information,
+                votes: an array of votes cast for a proposal,
+                preview: wiki preview (optional),
+                diff?: information related to the diff created by the proposal
+            }, ... ]`
+    })
+    async syncOrphanHashes(): Promise<Array<any>> {
+        return this.proposalService.syncOrphanHashes();
+    }
+
     @Get(':proposal_ids')
     @ApiOperation({ title: 'Get details of a proposal' })
     @ApiImplicitParam({
@@ -56,4 +73,6 @@ export class ProposalController {
         const proposal_ids = query_ids.split(',').map(Number);
         return this.proposalService.getProposals(proposal_ids, options);
     }
+
+
 }
