@@ -172,8 +172,8 @@ export class ProposalService {
             let the_hash = orphan_hashes[i];
             console.log(`Trying hash: ${the_hash}`)
             let the_pack = orphan_hash_pack[the_hash];
-            let wiki = JSON.parse(the_pack.html_blob);
             try{
+                let wiki = JSON.parse(the_pack.html_blob);
                 await this.wikiService.updateWiki(wiki, the_hash, true);
             }
             catch(e){
