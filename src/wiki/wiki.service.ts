@@ -748,6 +748,8 @@ export class WikiService {
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
 
+        console.log(wiki)
+
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
@@ -787,6 +789,8 @@ export class WikiService {
                 webp_small,
             ]
         )
+
+        console.log(article_insertion)
 
         // Update the pagecategory collection
         // TODO: HANDLE THIS LATER, ONCE CATEGORIES ARE EDITABLE
