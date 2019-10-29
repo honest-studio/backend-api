@@ -79,6 +79,7 @@
     "css.escape": "^1.5.1",
     "cssesc": "^3.0.0",
     "cwebp": "^2.0.3",
+    "dateformat": "^3.0.3",
     "decode-html": "^2.0.0",
     "detect-browser": "^4.7.0",
     "diff": "^4.0.1",

@@ -4,6 +4,7 @@ import { EosAction, MongoDbService, MysqlService, RedisService, ProposalResult, 
 import { PreviewService } from '../preview';
 import { WikiService } from '../wiki';
 import { BrowserInfo } from 'detect-browser';
+const dateFormat = require('dateformat');
 const chalk = require('chalk');
 
 export type Proposal = {
@@ -28,6 +29,8 @@ export interface OrphanHashPack {
         proposal_id: number;
     }
 }
+
+export const SYNC_DAYS_MAX_LOOKBACK = 14;
 
 @Injectable()
 export class ProposalService {
@@ -119,14 +122,20 @@ export class ProposalService {
     }
 
     async syncOrphanHashes(): Promise<Array<any>> {
+        let timestamp_lower_bound =  new Date(new Date().setDate(new Date().getDate()-30));
+        timestamp_lower_bound = dateFormat(timestamp_lower_bound, "yyyy-mm-dd hh:mm:ss");
+
         // Get the article object
         let orphan_hash_caches: Array<any> = await this.mysql.TryQuery(
             `
                 SELECT ipfs_hash, html_blob
                 FROM enterlink_hashcache 
-                WHERE articletable_id IS NULL
+                WHERE 
+                    articletable_id IS NULL
+                    AND timestamp >= ?
+                ORDER BY timestamp DESC
             `,
-            []
+            [timestamp_lower_bound]
         );
 
         if (orphan_hash_caches.length == 0) {

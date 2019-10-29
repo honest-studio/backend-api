@@ -642,12 +642,12 @@ export class WikiService {
 
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
-        let INTERVAL_MSEC = 2000;
+        let INTERVAL_MSEC = 15000;
         this.updateWikiIntervals[ipfs_hash] = setIntervalAsync(
             async () => this.updateWiki(wiki, ipfs_hash, false),
             INTERVAL_MSEC
         )
-        setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC * 30);
+        setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC);
 
         return { ipfs_hash };
     }
