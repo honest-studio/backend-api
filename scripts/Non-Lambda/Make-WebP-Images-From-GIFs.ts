@@ -45,7 +45,7 @@ const LANGUAGES = ['en', 'ko'];
 
 commander
   .version('1.0.0', '-v, --version')
-  .description('Make WebP Images')
+  .description('Make WebP Images From GIFs and also fill in missing non-WebP thumbnails')
   .usage('[OPTIONS]...')
   .option('-s, --start <pageid>', 'Starting ID')
   .option('-e, --end <endid>', 'Ending ID')
