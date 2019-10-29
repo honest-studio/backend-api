@@ -2,7 +2,9 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { DiffService } from '../diff';
 import { EosAction, MongoDbService, MysqlService, RedisService, ProposalResult, Propose, Vote } from '../feature-modules/database';
 import { PreviewService } from '../preview';
+import { WikiService } from '../wiki';
 import { BrowserInfo } from 'detect-browser';
+const chalk = require('chalk');
 
 export type Proposal = {
     proposal_id: number;
@@ -20,6 +22,13 @@ export type ProposalOptions = {
     user_agent: string;
 };
 
+export interface OrphanHashPack {
+    [ipfs_hash: string]: {
+        html_blob: string;
+        proposal_id: number;
+    }
+}
+
 @Injectable()
 export class ProposalService {
     constructor(
@@ -27,7 +36,8 @@ export class ProposalService {
         private mysql: MysqlService,
         @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         private redis: RedisService,
-        @Inject(forwardRef(() => DiffService)) private diffService: DiffService
+        @Inject(forwardRef(() => DiffService)) private diffService: DiffService,
+        @Inject(forwardRef(() => WikiService)) private wikiService: WikiService,
     ) {}
 
     async getProposals(proposal_ids: Array<number>, options: ProposalOptions): Promise<Array<Proposal>> {
@@ -106,5 +116,81 @@ export class ProposalService {
         }
 
         return proposals;
+    }
+
+    async syncOrphanHashes(): Promise<Array<any>> {
+        // Get the article object
+        let orphan_hash_caches: Array<any> = await this.mysql.TryQuery(
+            `
+                SELECT ipfs_hash, html_blob
+                FROM enterlink_hashcache 
+                WHERE articletable_id IS NULL
+            `,
+            []
+        );
+
+        if (orphan_hash_caches.length == 0) {
+            console.log(chalk.red(`NO ORPHAN HASHES FOUND . Continuing...`));
+            return;
+        }
+
+        let find_query;
+        let sort_direction;
+        const now = (Date.now() / 1000) | 0;
+
+        find_query = {
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo'
+        };
+
+        let orphan_hash_pack: OrphanHashPack = {};
+        
+        orphan_hash_caches.forEach(ohc => {
+            orphan_hash_pack[ohc.ipfs_hash] = {
+                html_blob: ohc.html_blob,
+                proposal_id: null
+            }
+        });
+
+        let orphan_hashes = Object.keys(orphan_hash_pack);
+
+        find_query['trace.act.data.ipfs_hash'] = { $in: orphan_hashes };
+
+        const proposal_id_docs = await this.mongo
+            .connection()
+            .actions.find(find_query)
+            .sort({ 'trace.act.data.starttime': 1 })
+            .toArray();
+
+        // Get the proposal ids
+        proposal_id_docs.forEach(doc => {
+            orphan_hash_pack[doc.trace.act.data.ipfs_hash].proposal_id = doc.trace.act.data.proposal_id
+        })
+
+        // Finalize the Wikis
+        for (let i = 0; i < orphan_hashes.length; i++) {
+            let the_hash = orphan_hashes[i];
+            console.log(`Trying hash: ${the_hash}`)
+            let the_pack = orphan_hash_pack[the_hash];
+            try{
+                let wiki = JSON.parse(the_pack.html_blob);
+                await this.wikiService.updateWiki(wiki, the_hash, true);
+            }
+            catch(e){
+
+            }
+            
+
+        }
+                
+        // const proposal_options = {
+        //     preview: query.preview,
+        //     diff: query.diff,
+        //     user_agent: query.user_agent,
+        //     cache: query.cache
+        // };
+
+        // return this.proposalService.getProposals(proposal_ids, proposal_options);
+        return null;
     }
 }

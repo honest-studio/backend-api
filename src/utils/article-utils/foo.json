@@ -5,64 +5,7 @@
 				"index": 0,
 				"tag_type": "p",
 				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "We don’t consider Storck as a favorite childhood [[LINK|lang_en|Candy|candy]], but rather as an ‘adult’ candy we were once forced to eat. Whether as a remedy for motion sickness during a long trip or as an instant breath freshener, Storck was the @menthol candy of choice back in the day. [[CITE|0|https://filipiknow.net/defunct-filipino-foods]]"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Storck outsold all its competitors, so much so that it was being exported to the [[LINK|lang_en|United_States|United States]]. by the mid-’90s. And then the unthinkable happened: the [[LINK|lang_en|United_States|United States]]. Drug Administration discovered in 1996 that the foil-like wrapper of Storck menthol candy had a high amount of lead–toxic enough to cause long-term learning and behavioral problems, among others. [[CITE|0|https://filipiknow.net/defunct-filipino-foods]]"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Storck [[LINK|lang_en|Product|Product]] [[LINK|lang_en|Incorporated|Incorporated]] (SPI), the company behind the candy, refused to back down."
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "With the help of a toxicologist, they let the public know that there’s no scientific evidence to prove that lead from the wrapper could be absorbed by the candy. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "However, the damage had already been done. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Rebisco soon took over the struggling company and the Storck we once loved was renamed Starr. "
-					},
-					{
-						"type": "sentence",
-						"index": 3,
-						"text": "[[CITE|0|https://filipiknow.net/defunct-filipino-foods]]"
-					}
-				]
+				"items": []
 			}
 		],
 		"images": []
