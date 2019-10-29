@@ -747,7 +747,7 @@ export class WikiService {
         let bing_index_override = !is_indexed;
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang') ? wiki.metadata.find((m) => m.key == 'page_lang').value : 'en';
         const is_removed = wiki.metadata.find((m) => m.key == 'is_removed').value;
-        
+
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
@@ -907,13 +907,14 @@ export class WikiService {
                 articleResultPacket[0].id, 
                 articleResultPacket[0].page_title, 
                 page_lang,
-                'PAGE_UPDATED_OR_CREATED' , 
+                is_removed ? 'PAGE_REMOVED' : 'PAGE_UPDATED_OR_CREATED' , 
                 this.elasticSearch
             ).then(() => {
                 console.log(colors.green(`Elasticsearch for lang_${page_lang}/${slug} updated`));
             }).catch(e => {
                 console.log(colors.red(`Elasticsearch for lang_${page_lang}/${slug} failed:`), colors.red(e));
             })
+
 
             // Flush prerender for the main article
             flushPrerenders(page_lang, slug, prerenderToken);
