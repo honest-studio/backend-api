@@ -13,21 +13,12 @@ slugify.extend({'%': '_u_'});
 const util = require('util');
 const chalk = require('chalk');
 const fs = require('fs');
-const sharp = require('sharp');
-const zlib = require('zlib');
-
-const mainWidth = 1201;
-const mainHeight = 1201;
-const mediumWidth = 640;
-const mediumHeight = 640;
-const thumbWidth = 320;
-const thumbHeight = 320;
-
+const readline = require('readline');
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
-const theBucket = theAWSS3.getBucket();
 
+const SCRIPT_ROOT_DIR = path.join(__dirname, '..', '..', '..', 'scripts');
 
 commander
   .version('1.0.0', '-v, --version')
@@ -72,6 +63,7 @@ export const MergeList = async (inputString: string) => {
     console.log(chalk.blue.bold(`Merging: |${from_wikiLangSlug}| into |${to_wikiLangSlug}|`));
 
     // Get the FROM article object
+    // Also make sure it hasn't already been merged
     let from_articletable_row: Array<any> = await theMysql.TryQuery(
         `
             SELECT * 
@@ -79,6 +71,7 @@ export const MergeList = async (inputString: string) => {
             WHERE 
                 page_lang = ?
                 AND slug = ?
+                AND redirect_page_id IS NULL
         `,
         [from_lang_code, from_slug]
     );
@@ -214,19 +207,28 @@ export const MergeList = async (inputString: string) => {
     console.log(chalk.blue.bold("=========================================START========================================="));
 
     let line_collection = [];
-    lineReader.eachLine('/path/to/file', function(line) {
-        line_collection.push(line);
-    });
+    let the_source_path = path.join(SCRIPT_ROOT_DIR, 'Non-Lambda', 'input', 'merge-slug-list.txt');
 
-    for await (const inner_line of line_collection) {
+ 
+    let instream = fs.createReadStream(the_source_path);
+    let outstream = new (require('stream'))();
+    let rl = readline.createInterface(instream, outstream);
+     
+    rl.on('line', async (line) => {
         try{
-            await MergeList(inner_line);
+            await MergeList(line);
         }
         catch (err){
-            console.error(`${inner_line} FAILED!!! [${err}]`);
+            console.error(`${line} FAILED!!! [${err}]`);
             console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
         }
-    }
+    });
+    
+    rl.on('close', function (line) {
+        console.log('Done reading file.');
+    });
+
+
     return;
 })();
 
