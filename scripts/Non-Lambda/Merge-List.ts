@@ -1,13 +1,16 @@
 
 const commander = require('commander');
 import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
+import { MergeResult } from '../../src/types/api';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
 const lineReader = require('line-reader');
 const isSvg = require('is-svg');
+import * as elasticsearch from 'elasticsearch';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from '../../src/media-upload/media-upload-dto';
-import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations, flushPrerenders } from '../../src/utils/article-utils';
+import { oldHTMLtoJSON, infoboxDtoPatcher, mergeMediaIntoCitations, flushPrerenders, mergeWikis } from '../../src/utils/article-utils';
+import { ELASTICSEARCH_INDEX_NAME, ELASTICSEARCH_DOCUMENT_TYPE } from '../../src/utils/elasticsearch-tools/elasticsearch-tools';
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
 const util = require('util');
@@ -17,6 +20,16 @@ const readline = require('readline');
 const theConfig = new ConfigService(`.env`);
 const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
+
+const theElasticsearch = new elasticsearch.Client({
+    host: `${theConfig.get('ELASTICSEARCH_PROTOCOL')}://${theConfig.get('ELASTICSEARCH_HOST')}:${theConfig.get('ELASTICSEARCH_PORT')}${theConfig.get('ELASTICSEARCH_URL_PREFIX')}`,
+    httpAuth: `${theConfig.get('ELASTICSEARCH_USERNAME')}:${theConfig.get('ELASTICSEARCH_PASSWORD')}`,
+    apiVersion: '7.1'
+});
+
+const prerenderToken = theConfig.get('PRERENDER_TOKEN');
+import { updateElasticsearch } from '../../src/utils/elasticsearch-tools';
+var colors = require('colors');
 
 const SCRIPT_ROOT_DIR = path.join(__dirname, '..', '..', '..', 'scripts');
 
@@ -80,6 +93,8 @@ export const MergeList = async (inputString: string) => {
     if(!(from_articletable_row && from_articletable_row.length > 0)) return null;
     let from_article_obj = from_articletable_row[0];
 
+    console.log(chalk.green('PART 1'));
+
     // Get the FROM hashcache
     let from_hashcache_row: Array<any> = await theMysql.TryQuery(
         `
@@ -122,11 +137,13 @@ export const MergeList = async (inputString: string) => {
         [to_article_obj.ipfs_hash_current]
     );
 
+    console.log(chalk.green('PART 2'));
+
     // Make sure the TO hashcache exists
     if(!(to_hashcache_row && to_hashcache_row.length > 0)) return null;
     let to_hash_obj = to_hashcache_row[0];
 
-    // Get the FROM article JSON
+    // Get the FROM ArticleJson
     let from_wiki: ArticleJson;
     try {
         from_wiki = JSON.parse(from_hash_obj.html_blob);
@@ -135,7 +152,7 @@ export const MergeList = async (inputString: string) => {
         from_wiki.ipfs_hash = from_hash_obj.ipfs_hash;
     }
 
-    // Get the TO article JSON
+    // Get the TO ArticleJson
     let to_wiki: ArticleJson;
     try {
         to_wiki = JSON.parse(to_hash_obj.html_blob);
@@ -144,56 +161,77 @@ export const MergeList = async (inputString: string) => {
         to_wiki.ipfs_hash = to_hash_obj.ipfs_hash;
     }
 
+    let merge_result: MergeResult = await mergeWikis(from_wiki, to_wiki);
 
-    // logYlw("=================MAIN UPLOAD=================");
+    console.log(chalk.green('PART 3'));
 
-    // try {
-    //     const json_insertion = await theMysql.TryQuery(
-    //         `
-    //             UPDATE enterlink_hashcache
-    //             SET html_blob = ?
-    //             WHERE ipfs_hash = ? 
-    //         `,
-    //         [JSON.stringify(wiki), inputIPFS]
-    //     );
-    // } catch (e) {
-    //     if (e.message.includes("ER_DUP_ENTRY")){
-    //         console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
-    //     }
-    //     else throw e;
-    // }
+    logYlw("=================MAIN UPLOAD=================");
 
-    // let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
-    // const media_props = main_photo.media_props || null;
-    // const webp_large = media_props && media_props.webp_original || "NULL";
-    // const webp_medium = media_props && media_props.webp_medium || "NULL";
-    // const webp_small =  media_props && media_props.webp_thumb || "NULL";
+    // Update the FROM article to be just a redirect
+    await theMysql.TryQuery(
+        `
+        UPDATE enterlink_articletable 
+            SET is_removed = 0, 
+                is_indexed = 0, 
+                bing_index_override = 0,
+                lastmod_timestamp = NOW(),
+                ipfs_hash_parent = 'REDIRECT',
+                redirect_page_id = ?,
+                desktop_cache_timestamp = NULL,
+                mobile_cache_timestamp = NULL
+            WHERE id = ?
+        `,
+        [to_article_obj.id, from_article_obj.id]
+    );
 
-    // try {
-    //     const article_update = await theMysql.TryQuery(
-    //         `
-    //             UPDATE enterlink_articletable 
-    //             SET lastmod_timestamp = NOW(),
-    //                 desktop_cache_timestamp = NULL,
-    //                 mobile_cache_timestamp = NULL,
-    //                 webp_large = ?,
-    //                 webp_medium = ?,
-    //                 webp_small = ?
-    //             WHERE ipfs_hash_current = ? 
-    //         `,
-    //         [webp_large, webp_medium, webp_small, inputIPFS]
-    //     );
-    // } catch (e) {
-    //     if (e.message.includes("ER_DUP_ENTRY")){
-    //         console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
-    //     }
-    //     else throw e;
-    // }
+    // Update Elasticsearch for the FROM to point it to the canonical article
 
-    // // Flush the prerenders
-    // const prerenderToken = theConfig.get('PRERENDER_TOKEN');
-    // flushPrerenders(lang_code, slug, prerenderToken);
-    
+    let jsonRequest = {
+        "id": from_article_obj.id,
+        "page_title": from_article_obj.page_title,
+        "canonical_id": to_article_obj.id,    
+        "lang": to_article_obj.page_lang
+    }
+
+    console.log(chalk.green('PART 4'));
+
+    await theElasticsearch.index({
+        index: `${ELASTICSEARCH_INDEX_NAME}`,
+        type: ELASTICSEARCH_DOCUMENT_TYPE,
+        id: from_article_obj.id,
+        body: jsonRequest
+    }).then(() => {
+        console.log(colors.green(`Elasticsearch for lang_${from_article_obj.page_lang}/${from_article_obj.slug} updated`));
+    }).catch(e => {
+        console.log(colors.red(`Elasticsearch for lang_${from_article_obj.page_lang}/${from_article_obj.slug} failed:`), colors.red(e));
+    })
+
+    // Flush prerender for the FROM article
+    flushPrerenders(from_article_obj.page_lang, from_article_obj.slug, prerenderToken);
+
+    // Update the hashcache for the article
+    try {
+        const json_insertion = await theMysql.TryQuery(
+            `
+                UPDATE enterlink_hashcache
+                SET html_blob = ?,
+                    timestamp = NOW() 
+                WHERE ipfs_hash = ? 
+            `,
+            [JSON.stringify(merge_result.merged_json), to_article_obj.ipfs_hash_current]
+        );
+    } catch (e) {
+        if (e.message.includes("ER_DUP_ENTRY")){
+            console.log(chalk.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
+        }
+        else throw e;
+    }
+
+    console.log(chalk.green('PART 5'));
+
+    // Flush prerender for the TO article
+    flushPrerenders(to_article_obj.page_lang, to_article_obj.slug, prerenderToken);
+        
     console.log(chalk.blue.bold("========================================COMPLETE======================================="));
     return null;
 }
@@ -206,15 +244,11 @@ export const MergeList = async (inputString: string) => {
     console.log(chalk.blue.bold("---------------------------------------------------------------------------------------"));
     console.log(chalk.blue.bold("=========================================START========================================="));
 
-    let line_collection = [];
     let the_source_path = path.join(SCRIPT_ROOT_DIR, 'Non-Lambda', 'input', 'merge-slug-list.txt');
+    let the_lines = fs.readFileSync(the_source_path).toString().split("\n");
 
- 
-    let instream = fs.createReadStream(the_source_path);
-    let outstream = new (require('stream'))();
-    let rl = readline.createInterface(instream, outstream);
-     
-    rl.on('line', async (line) => {
+    for (let i = 0; i < the_lines.length; i++) {
+        let line = the_lines[i];
         try{
             await MergeList(line);
         }
@@ -222,13 +256,10 @@ export const MergeList = async (inputString: string) => {
             console.error(`${line} FAILED!!! [${err}]`);
             console.log(util.inspect(err, {showHidden: false, depth: null, chalk: true}));
         }
-    });
+    }
+
+    console.log(the_lines)
     
-    rl.on('close', function (line) {
-        console.log('Done reading file.');
-    });
-
-
     return;
 })();
 

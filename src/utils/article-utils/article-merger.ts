@@ -226,7 +226,7 @@ export async function mergeWikis(sourceWiki: ArticleJson, targetWiki: ArticleJso
 
     // ============================================PAGE BODY============================================
     // Add the source's Sections[] to the end of the target's
-    const sourceLang = sourceWiki.metadata ? sourceWiki.metadata.filter(w => w.key == 'page_lang')[0].value : 'unknown';
+    const sourceLang = sourceWiki.metadata && sourceWiki.metadata.filter(w => w.key == 'page_lang').length ? sourceWiki.metadata.filter(w => w.key == 'page_lang')[0].value : 'unknown';
     const sourceSlug = sourceWiki.metadata ? sourceWiki.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value : 'unknown';
     const mergeContentNotice: Section = {  
         "paragraphs":[  
