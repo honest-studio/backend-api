@@ -42,12 +42,12 @@ async function get_start_block(account) {
         .limit(1)
         .toArray()
         .then((result) => {
-        const config_start_block = Number(config.get("DFUSE_START_BLOCK"));
-        if (result.length == 0)
-            return config_start_block;
-        const db_block = result[0].block_num;
-        return Math.max(config_start_block, db_block);
-    });
+            const config_start_block = Number(config.get("DFUSE_START_BLOCK"));
+            if (result.length == 0)
+                return config_start_block;
+            const db_block = result[0].block_num;
+            return Math.max(config_start_block, db_block);
+        });
 }
 
 async function start() {
@@ -82,8 +82,18 @@ async function start() {
             },
             start_block: await get_start_block('everipediaiq')
         };
+        const profile_req = {
+            type: 'get_actions',
+            req_id: 'profile_req',
+            listen: true,
+            data: {
+                account: 'epsovreignid'
+            },
+            start_block: await get_start_block('epsovreignid')
+        };
         dfuse.send(JSON.stringify(article_req));
         dfuse.send(JSON.stringify(token_req));
+        dfuse.send(JSON.stringify(profile_req));
     });
     dfuse.on('error', (err) => {
         console.log('-- error connecting to dfuse: ', err);
@@ -105,17 +115,20 @@ async function start() {
             })
             .catch((err) => {
                 if (err.code == 11000) {
-                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
+                    const block_num = msg.data.block_num;
+                    const account = msg.data.trace.act.account;
+                    const name = msg.data.trace.act.name;
+                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Duplicate ${account}:${name} @ block ${block_num}`);
                 }
                 else {
                     if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', msg, ' \n Error message on insert: ', err);
                     throw err;
                 }
             });
-        redis_process_actions([msg.data])
+        //redis_process_actions([msg.data])
 
         // publish proposal results
-        if (msg.data.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(msg.data));
+        //if (msg.data.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(msg.data));
     });
     dfuse.on('error', (e) => {
         console.log('DFUSE: ERROR: ', e);
@@ -312,12 +325,12 @@ async function catchupMongo () {
 
 
 async function main () {
-    await catchupMongo();
-    if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
-        await redis.flushdb();
-        console.log(`REDIS: Flushed DB. Replaying...`);
-    }
-    await catchupRedis();
+    //await catchupMongo();
+    //if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
+    //    await redis.flushdb();
+    //    console.log(`REDIS: Flushed DB. Replaying...`);
+    //}
+    //await catchupRedis();
     start();
     setInterval(() => restartIfFailing.apply(this), 15 * 1000);
 }

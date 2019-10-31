@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import * as fetch from 'node-fetch';
 import { ConfigService } from '../common';
+import { MongoDbService } from '../feature-modules/database';
 
 @Injectable()
 export class ChainService {
-    constructor(private config: ConfigService) {}
+    constructor(private config: ConfigService, private mongo: MongoDbService) {}
 
     async forward(eos_api_endpoint, body): Promise<any> {
         const dfuseRestEndpoint = this.config.get("DFUSE_API_REST_ENDPOINT");
@@ -40,5 +41,18 @@ export class ChainService {
             },
             body: JSON.stringify(body)
         }).then((r) => r.json());
+    }
+
+    async getEpActions(contract: string, since: number) {
+        const query = {
+            'trace.act.account': contract,
+            'block_num': { $gte: since }
+        };
+        const projection: any = { _id: 0 };
+        return this.mongo.connection().actions
+            .find(query, projection)
+            .sort({ 'block_num': 1 })
+            .limit(100000)
+            .toArray();
     }
 }

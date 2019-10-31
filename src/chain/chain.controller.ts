@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { ChainService } from './chain.service';
 
 @Controller('v2/chain')
@@ -50,5 +50,24 @@ export class ChainController {
     })
     async forward(@Param('eos_api_endpoint') eos_api_endpoint, @Body() body): Promise<any> {
         return this.chainService.forward(eos_api_endpoint, body);
+    }
+
+    @Get('epactions/:contract')
+    @ApiOperation({
+        title: 'Catch-up endpoint for Everipedia chain actions',
+        description: `Get all the actions for a specific contract from the last sync point. There's a hard-coded limit of 100K actions per request, so you may have to run this multiple times with a new start block each time to get the full dataset`
+    })
+    @ApiImplicitParam({
+        name: 'contract',
+        description: 'the contract to search. everipediaiq or eparticlectr',
+    })
+    @ApiImplicitQuery({
+        name: 'since',
+        description: 'the block number from which to start grabbing actions',
+        required: true
+    })
+    async getEpActions(@Param('contract') contract, @Query('since') since): Promise<any> {
+        since = Number(since);
+        return this.chainService.getEpActions(contract, since);
     }
 }
