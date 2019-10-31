@@ -139,6 +139,27 @@ export class UserService {
 
         return { votes, proposals };
     }
+    async getActivity(account_name: string) {
+        const votes = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'vote',
+                'trace.act.data.voter': account_name
+            })
+            .toArray();
+
+        const proposals = await this.mongo
+            .connection()
+            .actions.find({
+                'trace.act.account': 'eparticlectr',
+                'trace.act.name': 'logpropinfo',
+                'trace.act.data.proposer': account_name
+            })
+            .toArray();
+
+        return { votes, proposals };
+    }
 
     // calculate current and best editing streaks for users
     async getStreaks(users) {
@@ -184,5 +205,11 @@ export class UserService {
         }
 
         return streaks;
+    }
+
+    async getProfile(account_name: string) {
+        const profile = await this.redis.connection().get(`user:${account_name}:profile`);
+        if (!profile) throw new NotFoundException({ error: "User has no profile" });
+        return JSON.parse(profile);
     }
 }
