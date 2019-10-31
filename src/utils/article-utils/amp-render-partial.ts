@@ -7,6 +7,7 @@ import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } f
 import { PageCategory } from '../../types/api';
 import { AMPParseCollection, LanguagePack, SeeAlsoType, WikiExtraInfo } from '../../types/article-helpers';
 import { NON_AMP_BAD_TAGS } from '../article-utils/article-converter';
+import { sanitizeTextPreview } from '../article-utils/article-tools';
 import { AMP_REGEXES_PRE } from '../article-utils/article-tools-constants';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
@@ -45,6 +46,25 @@ export class AmpRenderPartial {
         const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
         const is_indexed = (this.artJSON.metadata.find(w => w.key == 'is_indexed').value); // UNTIL THE is_indexed issue in MySQL is fixed
+
+        let extra_keywords = '';
+        if (this.artJSON && this.artJSON.infoboxes && this.artJSON.infoboxes.map)
+            this.artJSON.infoboxes.map((item) => {
+                if (
+                    item.key === 'Occupation' &&
+                    item.values[0] &&
+                    item.values[0].sentences &&
+                    item.values[0].sentences[0]
+                ) {
+                    let { text } = item.values[0].sentences[0];
+
+                    const sanitizedText = sanitizeTextPreview(text);
+
+                    // Check for ultra-long occupations and do nothing if they are present
+                    // Otherwise the title would look very jank
+                    if(sanitizedText && sanitizedText.length <= 30) extra_keywords = ` - ${sanitizedText}`;
+                }
+            });
 
         return `
             <meta charset="utf-8" />
@@ -86,21 +106,21 @@ export class AmpRenderPartial {
             ${is_indexed ? '' : '<meta name="googlebot" content="noindex, nofollow, noarchive" />'}
             ${
                 page_type == 'Person'
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Bio</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Bio${extra_keywords}</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Bio" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Bio${extra_keywords}" />`
                     : page_type == 'Product'
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}" />`
                     : page_type == 'Organization'
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}" />`
                     : page_type
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki${extra_keywords}</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki${extra_keywords}" />`
                     : ''
             }
             <meta property="article:tag" content="${this.sanitizedVariables.page_title}" />
