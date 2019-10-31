@@ -1,4 +1,4 @@
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
 import { MongoDbService, RedisService } from '../feature-modules/database';
 import { PreviewService } from '../preview';
@@ -118,27 +118,6 @@ export class UserService {
         };
     }
 
-    async getActivity(account_name: string) {
-        const votes = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'vote',
-                'trace.act.data.voter': account_name
-            })
-            .toArray();
-
-        const proposals = await this.mongo
-            .connection()
-            .actions.find({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.proposer': account_name
-            })
-            .toArray();
-
-        return { votes, proposals };
-    }
     async getActivity(account_name: string) {
         const votes = await this.mongo
             .connection()
