@@ -82,8 +82,18 @@ async function start() {
             },
             start_block: await get_start_block('everipediaiq')
         };
+        const profile_req = {
+            type: 'get_actions',
+            req_id: 'profile_req',
+            listen: true,
+            data: {
+                account: 'epsovreignid'
+            },
+            start_block: await get_start_block('epsovreignid')
+        };
         dfuse.send(JSON.stringify(article_req));
         dfuse.send(JSON.stringify(token_req));
+        dfuse.send(JSON.stringify(profile_req));
     });
     dfuse.on('error', (err) => {
         console.log('-- error connecting to dfuse: ', err);
@@ -257,6 +267,11 @@ async function redis_process_actions (actions) {
                 pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
             }
         }
+        else if (action.trace.act.name == "userinsert") {
+            const user = action.trace.act.data.user;
+            const profile = action.trace.act.data;
+            pipeline.set(`user:${user}:profile`, JSON.stringify(profile));
+        }
         pipeline.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
         await pipeline.exec();
     }
@@ -275,6 +290,7 @@ async function catchupMongo () {
     }
     const mongo_actions = await mongo_actions_promise;
 
+    // article actions
     let more = true;
     while (more) {
         const article_start_block = await get_start_block('eparticlectr');
@@ -292,6 +308,7 @@ async function catchupMongo () {
         if (article_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
     }
 
+    // token actions
     more = true;
     while (more) {
         const token_start_block = await get_start_block('everipediaiq');
@@ -307,6 +324,24 @@ async function catchupMongo () {
             if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} everipediaiq actions`);
         }
         if (token_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
+    }
+
+    // profile actions
+    more = true;
+    while (more) {
+        const profile_start_block = await get_start_block('epsovreignid');
+        const profile_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/epsovreignid?since=${profile_start_block}`;
+
+        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Catching up on epsovreignid actions since block ${profile_start_block}...`);
+        const profile_actions = await fetch(profile_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
+            .then(response => response.json())
+
+        const filtered_actions = profile_actions.filter(a => a.block_num != profile_start_block);
+        if (filtered_actions.length > 0) {
+            const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
+            if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} epsovreignid actions`);
+        }
+        if (profile_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
     }
 }
 
