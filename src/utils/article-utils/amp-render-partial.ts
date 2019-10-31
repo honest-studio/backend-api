@@ -86,21 +86,21 @@ export class AmpRenderPartial {
             ${is_indexed ? '' : '<meta name="googlebot" content="noindex, nofollow, noarchive" />'}
             ${
                 page_type == 'Person'
-                    ? `<title>${this.sanitizedVariables.page_title} | Wiki & Bio | Everipedia</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Bio</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki & Bio |" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Bio" />`
                     : page_type == 'Product'
-                    ? `<title>${this.sanitizedVariables.page_title} | Wiki & Review | Everipedia</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki & Review |" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review" />`
                     : page_type == 'Organization'
-                    ? `<title>${this.sanitizedVariables.page_title} | Wiki & Review | Everipedia</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki & Review |" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review" />`
                     : page_type
-                    ? `<title>${this.sanitizedVariables.page_title} | Wiki | Everipedia</title>
+                    ? `<title>${this.sanitizedVariables.page_title} Wiki</title>
                 <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} | Wiki |" />`
+                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki" />`
                     : ''
             }
             <meta property="article:tag" content="${this.sanitizedVariables.page_title}" />
