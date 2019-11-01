@@ -23,103 +23,65 @@ export class SearchService {
             timeout: '2000ms',
             min_score: 1.0001,
             query: {
-                bool: {
-                    filter: [],
-                    must: [],
-                    should: [
+                function_score: {
+                    query: {
+                        bool: {
+                            filter: [],
+                            must: [],
+                            should: [
+                                {
+                                    multi_match: {
+                                        query: query,
+                                        fields: ['page_title.keyword'],
+                                        type: 'phrase',
+                                        boost: 5,
+                                    }
+                                },
+                                {
+                                    multi_match: {
+                                        query: query,
+                                        fields: ['page_title'],
+                                        type: 'phrase_prefix',
+                                        slop: 5,
+                                        max_expansions: 35000
+                                    }
+                                }
+                            ],
+                            minimum_should_match: 1
+                        }
+                    },
+                    functions: [
                         {
-                            multi_match: {
-                                query: query,
-                                fields: ['page_title.keyword'],
-                                type: 'phrase',
-                                boost: 4,
+                            script_score:{
+                                script: "doc['pageviews'].value * 0.1"
                             }
                         },
-                        // Elasticsearch 7.0+ does not allow this
-                        // {
-                        //     multi_match: {
-                        //         query: query,
-                        //         fields: ['page_title.keyword'],
-                        //         type: 'phrase_prefix',
-                        //         boost: 2
-                        //     }
-                        // },
-                        {
-                            multi_match: {
-                                query: query,
-                                fields: ['page_title'],
-                                type: 'phrase_prefix',
-                                slop: 5,
-                                max_expansions: 35000
-                            }
-                        }
-                    ]
-                }
+                    ],
+                    boost_mode: 'sum'
+                },
             }
         };
 
-        // const searchJSON = {
-        //     from: from ? from : 0,
-        //     size: offset ? offset : 40,
-        //     timeout: '2000ms',
-        //     min_score: 1.0001,
-        //     query: {
-        //         bool: { 
-        //             must: {
-        //                 bool: {
-        //                     should: [
-        //                         {
-        //                             multi_match: {
-        //                                 query: query,
-        //                                 fields: ['page_title.keyword'],
-        //                                 type: 'phrase',
-        //                                 boost: 4,
-        //                             }
-        //                         },
-        //                         // Elasticsearch 7.0+ does not allow this
-        //                         // {
-        //                         //     multi_match: {
-        //                         //         query: query,
-        //                         //         fields: ['page_title.keyword'],
-        //                         //         type: 'phrase_prefix',
-        //                         //         boost: 2
-        //                         //     }
-        //                         // },
-        //                         {
-        //                             multi_match: {
-        //                                 query: query,
-        //                                 fields: ['page_title'],
-        //                                 type: 'phrase_prefix',
-        //                                 slop: 5,
-        //                                 max_expansions: 35000
-        //                             }
-        //                         }
-        //                     ]
-        //                 }
-        //             }
-        //         }
-        //     }
-        // };
-
         if (langs) {
-            searchJSON.query.bool.must.push({
+            searchJSON.query.function_score.query.bool.must.push({
                 terms: { lang: langs }
             });
         }
 
-        searchJSON.query.bool.filter.push({
+        searchJSON.query.function_score.query.bool.filter.push({
             exists: {
                 field: "pageviews"
             }
         });
-        searchJSON.query.bool.filter.push({
+        searchJSON.query.function_score.query.bool.filter.push({
             exists: {
                 field: "page_title"
             }
         });
+        
 
         // console.log(util.inspect(searchJSON, {showHidden: false, depth: null, chalk: true}));
-        console.log(JSON.stringify(searchJSON, null, 2))
+        // console.log(JSON.stringify(searchJSON, null, 2))
 
         let searchResult;
         try {
