@@ -19,6 +19,7 @@ const RecentActivityQuerySchema = {
         .default('none'),
     expiring: Joi.boolean().default(false),
     completed: Joi.boolean().default(false),
+    approved: Joi.boolean().default(false),
     account_name: Joi.string(),
     langs: Joi.string(),
     range: Joi.string()
