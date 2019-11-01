@@ -97,4 +97,15 @@ export class UserController {
     async getStreaks(@Body() users): Promise<any> {
         return this.userService.getStreaks(users);
     }
+
+    @Get(':eos_account_name/profile')
+    @ApiOperation({ title: 'Get miscellaneous stats for a user' })
+    @ApiImplicitParam({
+        name: 'eos_account_name',
+        description: `Max 12-char EOS account name
+        Example: kedartheiyer`
+    })
+    async getProfile(@Param('eos_account_name') eos_account_name): Promise<any> {
+        return this.userService.getProfile(eos_account_name);
+    }
 }
