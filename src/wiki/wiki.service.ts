@@ -817,7 +817,8 @@ export class WikiService {
             `
             SELECT 
                 id,
-                page_title
+                page_title,
+                pageviews
             FROM enterlink_articletable AS art 
             WHERE 
                 page_lang = ? 
@@ -840,7 +841,8 @@ export class WikiService {
                     `
                     SELECT 
                         id,
-                        page_title
+                        page_title,
+                        pageviews
                     FROM enterlink_articletable AS art 
                     WHERE 
                         page_lang = ? 
@@ -877,6 +879,7 @@ export class WikiService {
                         'MERGE_REDIRECT' , 
                         this.elasticSearch,
                         articleResultPacket[0].id, // canonical id
+                        mergedArticleResult[0].pageviews, // pageviews
                     ).then(() => {
                         console.log(colors.green(`Elasticsearch for lang_${merged_lang}/${merged_slug} updated`));
                     }).catch(e => {
@@ -907,8 +910,10 @@ export class WikiService {
                 articleResultPacket[0].id, 
                 articleResultPacket[0].page_title, 
                 page_lang,
-                is_removed ? 'PAGE_REMOVED' : 'PAGE_UPDATED_OR_CREATED' , 
-                this.elasticSearch
+                is_removed ? 'PAGE_REMOVED' : 'PAGE_UPDATED_OR_CREATED',
+                this.elasticSearch,
+                articleResultPacket[0].id,
+                articleResultPacket[0].pageviews
             ).then(() => {
                 console.log(colors.green(`Elasticsearch for lang_${page_lang}/${slug} updated`));
             }).catch(e => {
@@ -981,23 +986,82 @@ export class WikiService {
     async incrementPageviewCount(lang_code: string, slug: string, setDesktopCache?: boolean, setMobileCache?: boolean): Promise<boolean> {
         let mysql_slug = this.mysql.cleanSlugForMysql(slug);
         // console.log("mysql slug: ", mysql_slug)
+
         let alternateSlug = decodeURIComponent(mysql_slug);
 
         // If the two slugs are the same, encode the alternateSlug
         if (mysql_slug === alternateSlug) alternateSlug = encodeURIComponent(alternateSlug);
-        
+
+        // Set variables
         let desktopCacheString = setDesktopCache ? ", desktop_cache_timestamp = NOW()": "";
         let mobileCacheString = setMobileCache ? ", mobile_cache_timestamp = NOW()": "";
-        return this.mysql.TryQuery(
-            `
-            UPDATE enterlink_articletable art
-            SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
-            WHERE 
-                ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
-                AND art.page_lang = ?
-            `,
-            [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
-        );
+
+        // Occasionally update the Elasticsearch index
+        if(Math.random() <= .20) {
+            // console.log(colors.red("Randomly updating the pageviews"));
+            // Get the info for the page first
+            const fetched_article_rows: any[] = await this.mysql.TryQuery(
+                `
+                    SELECT 
+                        id,
+                        page_title,
+                        page_lang,
+                        is_removed,
+                        pageviews
+                    FROM enterlink_articletable art
+                    WHERE 
+                        ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                        AND art.page_lang = ?
+                `,
+                [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
+            );
+            let fetched_article = fetched_article_rows && fetched_article_rows[0];
+
+            // Update Elasticsearch pageviews for the main article
+            await updateElasticsearch(
+                fetched_article.id, 
+                fetched_article.page_title, 
+                fetched_article.page_lang,
+                'PAGE_UPDATED_OR_CREATED',
+                this.elasticSearch,
+                fetched_article.id,
+                fetched_article.pageviews
+            ).then(() => {
+                console.log(colors.green(`Elasticsearch for lang_${fetched_article.page_lang}/${slug} updated`));
+            }).catch(e => {
+                console.log(colors.red(`Elasticsearch for lang_${fetched_article.page_lang}/${slug} failed:`), colors.red(e));
+            })
+
+            // console.log(colors.red("Elasticsearch pageviews updated"));
+
+            // Update the pageviews on MySQL
+            return this.mysql.TryQuery(
+                `
+                UPDATE enterlink_articletable art
+                SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
+                WHERE 
+                    ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                    AND art.page_lang = ?
+                `,
+                [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
+            );
+        }
+        else {
+
+            // Update the pageviews
+            return this.mysql.TryQuery(
+                `
+                UPDATE enterlink_articletable art
+                SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
+                WHERE 
+                    ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                    AND art.page_lang = ?
+                `,
+                [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
+            );
+        }
+
+
     }
 
     async getCategories(lang_code: string, slug: string) {
