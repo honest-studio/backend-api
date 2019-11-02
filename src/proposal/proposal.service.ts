@@ -3,6 +3,7 @@ import { DiffService } from '../diff';
 import { EosAction, MongoDbService, MysqlService, RedisService, ProposalResult, Propose, Vote } from '../feature-modules/database';
 import { PreviewService } from '../preview';
 import { WikiService } from '../wiki';
+const util = require('util');
 import { BrowserInfo } from 'detect-browser';
 const dateFormat = require('dateformat');
 const chalk = require('chalk');
@@ -53,6 +54,9 @@ export class ProposalService {
         proposal_ids.forEach(proposal_id => pipeline.smembers(`proposal:${proposal_id}:votes`));
         proposal_ids.forEach(proposal_id => pipeline.get(`proposal:${proposal_id}:result`));
         const values = await pipeline.exec();
+
+        // TODO
+        // Fetch the boost information and add it here, alongside the votes
 
         const len = proposal_ids.length;
         for (let i=0; i < len; i++) {
@@ -117,6 +121,12 @@ export class ProposalService {
                 proposal.diff = diff;
             });
         }
+        
+        // proposals.map(prop => {
+        //     console.log(util.inspect(prop.votes, {showHidden: false, depth: null, chalk: true}));
+        // })
+
+        // console.log(util.inspect(proposals, {showHidden: false, depth: null, chalk: true}));
 
         return proposals;
     }
