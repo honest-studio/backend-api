@@ -12,7 +12,8 @@ export const updateElasticsearch = async (
     articleLang: string,
     action: ElasticSearchAction,
     elSearchSvc: ElasticsearchService,
-    canonicalID?: number
+    canonicalID?: number,
+    pageviews?: number
 ): Promise<any> => {
     let jsonRequest = {
         "id": artID,
@@ -20,6 +21,8 @@ export const updateElasticsearch = async (
         "canonical_id": canonicalID ? canonicalID : artID,    
         "lang": articleLang
     }
+
+    if (pageviews !== undefined) jsonRequest['pageviews'] = pageviews;
 
     let paramPack = { 
         index: ELASTICSEARCH_INDEX_NAME, 
