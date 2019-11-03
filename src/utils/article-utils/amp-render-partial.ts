@@ -103,7 +103,7 @@ export class AmpRenderPartial {
             }
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
-            ${is_indexed ? '' : '<meta name="googlebot" content="noindex, nofollow, noarchive" />'}
+            ${is_indexed ? '' : '<meta name="googlebot" content="noindex, noarchive" />'}
             ${
                 page_type == 'Person'
                     ? `<title>${this.sanitizedVariables.page_title} Wiki & Bio${extra_keywords}</title>
