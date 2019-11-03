@@ -34,7 +34,7 @@ export class SearchService {
                                         query: query,
                                         fields: ['page_title.keyword'],
                                         type: 'phrase',
-                                        boost: 5,
+                                        boost: 20,
                                     }
                                 },
                                 {
@@ -43,7 +43,8 @@ export class SearchService {
                                         fields: ['page_title'],
                                         type: 'phrase_prefix',
                                         slop: 5,
-                                        max_expansions: 35000
+                                        max_expansions: 35000,
+                                        boost: 20,
                                     }
                                 }
                             ],
@@ -53,7 +54,7 @@ export class SearchService {
                     functions: [
                         {
                             script_score:{
-                                script: "doc['pageviews'].value * 0.1"
+                                script: "doc['pageviews'].value * 0.02"
                             }
                         },
                     ],
