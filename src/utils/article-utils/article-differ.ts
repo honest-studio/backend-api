@@ -424,7 +424,7 @@ function paragraphToLines(paragraph: Paragraph): string {
                 return sentenceToLines(sentence);
             } else if (item.type == 'list-item' || item.type == 'list_item') {
                 const list_item = item as ListItem;
-                return LIST_ITEM_PREFIX + list_item.sentences.map((s) => s.text.trim()).join(' ');
+                return LIST_ITEM_PREFIX + list_item.sentences.map((s) => s.text.trim().replace('\n', ' ')).join(' ');
             } else if (item.type == 'wikitable' || item.type == 'body-table') {
                 const table = item as Table;
                 return tableToLines(table);
@@ -457,7 +457,6 @@ function sentenceToLines(sentence: Sentence) {
     );
 
     // split into words
-    if (text.includes('Iqbal')) console.log(text);
     const blocks = text.split(' ');
 
     // re-include spaces in [[special]] **tags**
