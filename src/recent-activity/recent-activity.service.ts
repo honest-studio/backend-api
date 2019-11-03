@@ -74,7 +74,15 @@ export class RecentActivityService {
             find_query['trace.act.data.proposer'] = query.account_name;
         }
         if (query.completed) {
-            find_query['trace.act.data.endtime'] = { $lt: now };
+            const last_finalized = await this.mongo.connection()
+                .actions.find({
+                    'trace.act.account': 'eparticlectr',
+                    'trace.act.name': 'logpropres'
+                })
+                .sort({ 'trace.act.data.proposal_id': -1 })
+                .limit(1)
+                .toArray();
+            find_query['trace.act.data.proposal_id'] = { $lt: last_finalized[0].trace.act.data.proposal_id };
         }
         if (query.langs) {
             find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };

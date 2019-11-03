@@ -26,7 +26,7 @@ You will find a `SAMPLE.env` file in the project root. Copy or rename this to `.
 $ npm run start
 
 # watch mode
-$ npm run dev
+$ npm run start:debug
 
 # incremental rebuild (webpack)
 $ npm run webpack
