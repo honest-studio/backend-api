@@ -588,7 +588,7 @@ export class WikiService {
                 body: form,
                 headers: form.getHeaders()
             }).then(response => response.headers.get('ipfs-hash'));
-            if (!ipfs_hash) throw new Error({ "error": "Eternum is down" });
+            if (!ipfs_hash) throw new Error("Eternum is down");
 
             const pin_data = {
                 hash: ipfs_hash,
