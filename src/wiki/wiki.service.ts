@@ -581,24 +581,32 @@ export class WikiService {
         const form = new FormData();
         form.append('path', blob);
         const random_id = Math.random().toString(36).substring(2);
-        let ipfs_hash = await fetch(`https://ipfs.eternum.io/ipfs/QmPCacqc5icpYCuoKKBnChawTK9E732hPWeHc7snezwjLa/${random_id}`, {
-            method: 'PUT',
-            body: form,
-            headers: form.getHeaders()
-        }).then(response => response.headers.get('ipfs-hash'));
+        let ipfs_hash;
+        try {
+            ipfs_hash = await fetch(`https://ipfs.eternum.io/ipfs/QmPCacqc5icpYCuoKKBnChawTK9E732hPWeHc7snezwjLa/${random_id}`, {
+                method: 'PUT',
+                body: form,
+                headers: form.getHeaders()
+            }).then(response => response.headers.get('ipfs-hash'));
+            if (!ipfs_hash) throw new Error({ "error": "Eternum is down" });
 
-        const pin_data = {
-            hash: ipfs_hash,
-            name: `lang_${page_lang}/${slug}`
-        };
-        fetch(`https://www.eternum.io/api/pin/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
-            },
-            body: JSON.stringify(pin_data)
-        })
+            const pin_data = {
+                hash: ipfs_hash,
+                name: `lang_${page_lang}/${slug}`
+            };
+            fetch(`https://www.eternum.io/api/pin/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
+                },
+                body: JSON.stringify(pin_data)
+            })
+        }
+        catch {
+            const pin = await this.ipfs.client().add(blob);
+            ipfs_hash = pin[0].hash;
+        }
 
         if (!ipfs_hash) {
             let submission;
