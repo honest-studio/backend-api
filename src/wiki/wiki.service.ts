@@ -1016,35 +1016,37 @@ export class WikiService {
                 [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
             );
             let fetched_article = fetched_article_rows && fetched_article_rows[0];
+            if (fetched_article){
+                // Update Elasticsearch pageviews for the main article
+                await updateElasticsearch(
+                    fetched_article.id, 
+                    fetched_article.page_title, 
+                    fetched_article.page_lang,
+                    'PAGE_UPDATED_OR_CREATED',
+                    this.elasticSearch,
+                    fetched_article.id,
+                    fetched_article.pageviews
+                ).then(() => {
+                    console.log(colors.green(`Elasticsearch for lang_${fetched_article.page_lang}/${slug} updated`));
+                }).catch(e => {
+                    console.log(colors.red(`Elasticsearch for lang_${fetched_article.page_lang}/${slug} failed:`), colors.red(e));
+                })
 
-            // Update Elasticsearch pageviews for the main article
-            await updateElasticsearch(
-                fetched_article.id, 
-                fetched_article.page_title, 
-                fetched_article.page_lang,
-                'PAGE_UPDATED_OR_CREATED',
-                this.elasticSearch,
-                fetched_article.id,
-                fetched_article.pageviews
-            ).then(() => {
-                console.log(colors.green(`Elasticsearch for lang_${fetched_article.page_lang}/${slug} updated`));
-            }).catch(e => {
-                console.log(colors.red(`Elasticsearch for lang_${fetched_article.page_lang}/${slug} failed:`), colors.red(e));
-            })
+                // console.log(colors.red("Elasticsearch pageviews updated"));
 
-            // console.log(colors.red("Elasticsearch pageviews updated"));
-
-            // Update the pageviews on MySQL
-            return this.mysql.TryQuery(
-                `
-                UPDATE enterlink_articletable art
-                SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
-                WHERE 
-                    ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
-                    AND art.page_lang = ?
-                `,
-                [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
-            );
+                // Update the pageviews on MySQL
+                return this.mysql.TryQuery(
+                    `
+                    UPDATE enterlink_articletable art
+                    SET art.pageviews = art.pageviews + 1${desktopCacheString}${mobileCacheString} 
+                    WHERE 
+                        ((art.slug = ? OR art.slug_alt = ?) OR (art.slug = ? OR art.slug_alt = ?)) 
+                        AND art.page_lang = ?
+                    `,
+                    [mysql_slug, mysql_slug, alternateSlug, alternateSlug, lang_code]
+                );
+            }
+            
         }
         else {
 
