@@ -15,7 +15,7 @@ main{
 	position: relative;
 	z-index: 15;
 	display: block;
-	margin-top: 95px;
+	margin-top: 172px;
 }
 article.schema-wrap{
 	display: block;
@@ -375,21 +375,7 @@ section:not([expanded]) .show-less {
 	font-size: 14px;
 	background-color: #ddd;
 }
-#welcomeBanner {
-	margin: 10px 15px 0 15px;
-	background-color: #4d4d4d;
-	color: #fff;
-	font-size: 14px;
-	font-family: 'OpenSans','Open Sans',sans-serif;
-	text-align: left;
-	padding: 7px 15px 10px 15px;
-	line-height: 20px;
-	float: left;
-	width: calc(100% - 60px);
-	border-radius: 3px;
-	line-height: 24px;
-	display: none;
-}
+
 .toolbox-accordion {
 	border: 0;
 	width: 30px;
@@ -1189,6 +1175,40 @@ article .flagicon{
 	top: -8px;
 	position: relative;
 }
+
+.wel-bnr {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-family: 'Open Sans',sans-serif;
+	align-items: stretch;
+	padding: 10px;
+    background: #E9F2FF;
+    position: absolute;
+    top: 97px;
+    width: calc(100% - 20px);
+    z-index: 1000;
+    color: #206ACB;
+    font-size: 13px;
+}
+
+.wel-bnr .wel-lrnmr, .wel-bnr .wel-bnr-close {
+	background: #2273DD;
+    color: #FFFFFF;
+	cursor: pointer;
+	font-size: 12px;
+	padding: 1px 5px;
+	border-radius: 2px;
+}
+
+.wel-bnr .wel-lrnmr {
+	display: inline-block;
+}
+
+.wel-bnr .wel-bnr-close {
+	max-height: 17px;
+}
+
 .amp-header-bar ul {
 	list-style-type:none;
 	width:100%;
