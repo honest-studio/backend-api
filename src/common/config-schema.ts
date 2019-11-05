@@ -72,6 +72,10 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     GOOGLE_API_CLIENT_ID: Joi.string(),
     GOOGLE_API_CLIENT_SECRET: Joi.string(),
     GOOGLE_API_REFRESH_TOKEN: Joi.string(),
-    GOOGLE_ANALYTICS_VIEW_ID: Joi.string()
+    GOOGLE_ANALYTICS_VIEW_ID: Joi.string(),
+    PAY_CPU_PRIVKEY: Joi.string(),
+    PAY_CPU_PUBKEY: Joi.string(),
+    PAY_CPU_ACCOUNT: Joi.string(),
+
 });
 
