@@ -87,6 +87,8 @@
     "elasticsearch": "^16.3.0",
     "encodeurl": "^1.0.2",
     "endianness": "^8.0.2",
+    "eosjs": "^20.0.0",
+    "eosjs-ecc": "^4.0.7",
     "event-stream": "^4.0.1",
     "express": "^4.17.1",
     "ffmpeg-extract-frame": "^1.0.2",
