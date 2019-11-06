@@ -34,6 +34,7 @@ export class ChainService {
     // Everipedia will pay for CPU that goes through here, so it is limited to 
     // Everipedia actions only
     async sign(transaction): Promise<any> {
+        console.log(sign);
         const privkey = this.config.get("PAY_CPU_PRIVKEY");
         const pubkey = this.config.get("PAY_CPU_PUBKEY");
         const signer = new JsSignatureProvider([privkey]);
