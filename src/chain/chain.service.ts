@@ -37,14 +37,12 @@ export class ChainService {
         const privkey = this.config.get("PAY_CPU_PRIVKEY");
         const pubkey = this.config.get("PAY_CPU_PUBKEY");
         const signer = new JsSignatureProvider([privkey]);
-        const chain_id = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
         const signBuf = Buffer.concat([
-            Buffer.from(chain_id, 'hex'), Buffer.from(transaction.packed_trx, 'hex'), new Buffer(new Uint8Array(32)),
+            Buffer.from(transaction.chain_id, 'hex'), Buffer.from(transaction.serialized_transaction), new Buffer(new Uint8Array(32)),
         ]);
         const sig = ecc.Signature.sign(signBuf, privkey).toString();
-        transaction.signatures.unshift(sig);
 
-        return transaction;
+        return sig;
     }
 
     async getTableRows(body): Promise<any> {
