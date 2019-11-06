@@ -63,6 +63,7 @@ export class ChainService {
         const signatureProvider = new JsSignatureProvider([privkey]);
         const rpc = new JsonRpc('http://api.libertyblock.io', { fetch });
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+        return false;
 
         const result = await api.transact({
             actions: [{
