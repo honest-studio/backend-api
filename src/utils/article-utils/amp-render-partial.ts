@@ -179,6 +179,20 @@ export class AmpRenderPartial {
         `;
     };
 
+    renderWelcomeBanner = (): string => {
+        return `
+            <div id="Welcome_Banner" class="wel-bnr">
+                <span class="wel-msg">
+                    Welcome! Everipedia uses the IQ cryptocurrency token for editing, voting, and article creation. 
+                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://everipedia.org/faq/what-is-iq')" role="link" tabindex="-1">
+                        Learn more
+                    </span>
+                </span>
+                <span class="wel-bnr-close" role='button' on="tap:Welcome_Banner.hide" tabindex="-1">Close</span>
+            </div>
+        `;
+    };
+
     renderHeaderBar = (): string => {
         return `
             <nav class="amp-header-bar">
