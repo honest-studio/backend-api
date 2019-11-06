@@ -33,16 +33,18 @@ export class ChainService {
     // Sign the transaction with the evrpdcronjob account then broadcast it
     // Everipedia will pay for CPU that goes through here, so it is limited to 
     // Everipedia actions only
-    async pushTransaction(transaction): Promise<any> {
-        return fetch(`http://api.libertyblock.io/v1/chain/push_transaction`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                //Authorization: `Bearer: ${dfuseToken.token}`,
-                //'X-Eos-Push-Guarantee': 'in-block'
-            },
-            body: JSON.stringify(transaction)
-        }).then((r) => r.json());
+    async sign(transaction): Promise<any> {
+        const privkey = this.config.get("PAY_CPU_PRIVKEY");
+        const pubkey = this.config.get("PAY_CPU_PUBKEY");
+        const signer = new JsSignatureProvider([privkey]);
+        const chain_id = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
+        const signBuf = Buffer.concat([
+            Buffer.from(chain_id, 'hex'), Buffer.from(transaction.packed_trx, 'hex'), new Buffer(new Uint8Array(32)),
+        ]);
+        const sig = ecc.Signature.sign(signBuf, privkey).toString();
+        transaction.signatures.unshift(sig);
+
+        return transaction;
     }
 
     async getTableRows(body): Promise<any> {
@@ -56,49 +58,5 @@ export class ChainService {
             },
             body: JSON.stringify(body)
         }).then((r) => r.json());
-    }
-
-    async msig(proposer, proposal_name) {
-        const privkey = this.config.get("PAY_CPU_PRIVKEY");
-        const signatureProvider = new JsSignatureProvider([privkey]);
-        const rpc = new JsonRpc('http://api.libertyblock.io', { fetch });
-        const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
-        return false;
-
-        const result = await api.transact({
-            actions: [{
-                account: 'eosio.msig',
-                name: 'approve',
-                authorization: [{
-                    actor: 'evrpdcronjob',
-                    permission: 'active',
-                }],
-                data: {
-                    proposer,
-                    proposal_name,
-                    level: {
-                        actor: "evrpdcronjob", 
-                        permission: "active"
-                    }
-                }
-            },{
-                account: 'eosio.msig',
-                name: 'exec',
-                authorization: [{
-                    actor: 'evrpdcronjob',
-                    permission: 'active',
-                }],
-                data: {
-                    proposer,
-                    proposal_name,
-                    executer: "evrpdcronjob"
-                }
-            }]
-        }, {
-            blocksBehind: 3,
-            expireSeconds: 30
-        });
-
-        return result;
     }
 }
