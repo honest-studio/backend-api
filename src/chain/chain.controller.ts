@@ -54,4 +54,14 @@ export class ChainController {
     async forward(@Param('eos_api_endpoint') eos_api_endpoint, @Body() body): Promise<any> {
         return this.chainService.forward(eos_api_endpoint, body);
     }
+
+    @Post('msig/:proposer/:proposal_name')
+    @ApiOperation({
+        title: 'Pay-for-cpu signature request',
+        description: `Pass in msig details to request that Everipedia pay for the transaction's CPU. 
+            Must include evrpdcronjob@active as the first authorizer.`
+    })
+    async msig(@Param('proposer') proposer, @Param('proposal_name') proposal_name): Promise<any> {
+        return this.chainService.msig(proposer, proposal_name);
+    }
 }
