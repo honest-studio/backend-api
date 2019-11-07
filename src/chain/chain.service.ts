@@ -39,7 +39,7 @@ export class ChainService {
         const pubkey = this.config.get("PAY_CPU_PUBKEY");
         const signer = new JsSignatureProvider([privkey]);
         const signBuf = Buffer.concat([
-            Buffer.from(transaction.chain_id, 'hex'), Buffer.from(transaction.serialized_transaction), new Buffer(new Uint8Array(32)),
+            Buffer.from(transaction.chain_id, 'hex'), Buffer.from(transaction.serialized_transaction.data), new Buffer(new Uint8Array(32)),
         ]);
         const sig = ecc.Signature.sign(signBuf, privkey).toString();
 
