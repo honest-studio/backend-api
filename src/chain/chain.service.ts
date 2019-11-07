@@ -43,7 +43,7 @@ export class ChainService {
         ]);
         const sig = ecc.Signature.sign(signBuf, privkey).toString();
 
-        return sig;
+        return [sig];
     }
 
     async getTableRows(body): Promise<any> {
