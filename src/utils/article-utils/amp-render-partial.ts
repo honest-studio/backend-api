@@ -973,21 +973,21 @@ export class AmpRenderPartial {
                 </div>
             </div>
             <div class="footer-social">
-                <a class='social-logo' href="http://facebook.com/everipedia" title="Everipedia on Facebook">
+                <span class='social-logo' on="tap:AMP.navigateTo(url='http://facebook.com/everipedia', target=_blank)" tabindex='0' role="link" title="Everipedia on Facebook">
                     <amp-img height="26" width="26" layout="fixed" alt="Facebook" src="https://epcdn-vz.azureedge.net/static/images/facebook.png"></amp-img>
-                </a>
-                <a class='social-logo' href="http://twitter.com/everipedia" title="Everipedia on Twitter">
+                </span>
+                <span class='social-logo' on="tap:AMP.navigateTo(url='http://twitter.com/everipedia', target=_blank)" tabindex='0' role="link" title="Everipedia on Twitter">
                     <amp-img height="26" width="26" layout="fixed" alt="Twitter" src="https://epcdn-vz.azureedge.net/static/images/twitter.png"></amp-img>
-                </a>
-                    <a class='social-logo' href="https://www.reddit.com/r/Everipedia/" title="Everipedia on Reddit">
+                </span>
+                    <span class='social-logo' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" title="Everipedia on Reddit">
                     <amp-img height="26" width="26" layout="fixed" alt="Reddit" src="https://epcdn-vz.azureedge.net/static/images/reddit.png"></amp-img>
-                </a>
-                <a class='social-logo' href="https://t.me/everipedia" title="Everipedia on Telegram">
+                </span>
+                <span class='social-logo' on="tap:AMP.navigateTo(url='https://t.me/everipedia', target=_blank)" tabindex='0' role="link" title="Everipedia on Telegram">
                     <amp-img height="26" width="26" layout="fixed" alt="Telegram" src="https://epcdn-vz.azureedge.net/static/images/telegram.png"></amp-img>
-                </a>
-                <a class='social-logo' href="https://blockfolio.com/coin/IQ" title="IQ token on Blockfolio">
+                </span>
+                <span class='social-logo' on="tap:AMP.navigateTo(url='https://blockfolio.com/coin/IQ', target=_blank)" tabindex='0' role="link" title="IQ token on Blockfolio">
                     <amp-img height="26" width="26" layout="fixed" alt="Blockfolio" src="https://epcdn-vz.azureedge.net/static/images/blockfolio.svg"></amp-img>
-                </a>
+                </span>
             </div>
             <div class="eos-powered-line">
                 <span class="pwr-join-txt">Powered by</span>

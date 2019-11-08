@@ -828,6 +828,7 @@ ul.l-lst li .link-box-details > a{
 .social-logo{
 	top: 5px;
 	position: relative;
+	padding: 5px 10px 5px 10px;
 }
 .blurb-photo-container {
 	width: 100%;
