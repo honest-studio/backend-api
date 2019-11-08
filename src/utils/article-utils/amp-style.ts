@@ -23,11 +23,11 @@ article.schema-wrap{
 	position: relative;
 }
 a{
-	color: #3097d1;
+	color: #2273DD;
 	text-decoration: none;
 }
 a:visited{
-	color: #3097d1;
+	color: #2273DD;
 }
 span.tt-wrap{
 	color: #71b8e4;
@@ -56,7 +56,7 @@ amp-accordion, .toc-button, button, a{
 .media-gallery-container .media-gallery-header, .category-container .category-header {
 	font-family: OpenSans-SemiBold,'Open Sans SemiBold',sans-serif;
 	font-size: 14px;
-	color: #979797;
+	color: #636363;
 	text-align: left;
 	padding: 0px 15px 0px 15px;
 }
@@ -68,10 +68,10 @@ amp-accordion, .toc-button, button, a{
 	margin: 0px;
 }
 .category-container ul li {
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 }
 .category-container ul li a {
-
+	
 }
 amp-accordion>section>:first-child{
 	cursor: pointer;
@@ -202,7 +202,7 @@ ul.infobox li {
 ul.infobox li:last-child {
 	border-bottom: 0px;
 }
-.info-qt{
+.infobox .info-qt{
 	float: left;
 	width: 25%;
 	text-align: left;
@@ -222,7 +222,7 @@ ul.infobox li:last-child {
 	line-height: inherit;
 	font-weight: inherit;
 }
-.info-an{
+.infobox .info-an{
 	width: 73%;
 	text-align: left;
 	word-break: normal;
@@ -235,6 +235,10 @@ ul.infobox li:last-child {
 	padding-left: 3px;
 	float: right;
 }
+.infobox .info-an.multiple{
+	margin-top: 5px;
+}
+
 ul.infobox li.plural-infobox:last-child {
 	width:73%;
 	float:right;
@@ -398,15 +402,23 @@ section:not([expanded]) .show-less {
 	margin-top: 6px;
 	margin-left: 10px;
 }
+.tlbx-ct{
+	float: left;
+	width: 100%;
+}
 .tlbx-ct ul {
 	list-style-type: none;
 	float: left;
 	padding: 0px;
 	margin-left: 0px;
-	width: calc(100% - 15px);
+	width: 100%;
 	margin-bottom: 5px;
 	margin-top: 5px;
 	z-index:99999;
+}
+.tlbx-ct .tlbx-ct-wrapper {
+	float: left;
+	width: 100%:
 }
 .tlbx-ct li {
 	float:left;
@@ -421,6 +433,8 @@ section:not([expanded]) .show-less {
 	color: rgb(84, 78, 82);
 	float:left;
 	cursor: pointer;
+	width: 49px;
+	height: 49px;
 }
 .tlbx-ct li.language-tile {
 	margin-left: 2px;
@@ -460,11 +474,11 @@ section:not([expanded]) .show-less {
 .name-container h1 {
 	text-align: left;
 	margin: 0px;
-	font-size: 40px;
+	font-size: 36px;
 	color: #262626;
 	font-weight: 400;
 	float: left;
-	width: calc(100% - 40px);
+	width: calc(100% - 49px);
 }
 .name-container h1 button {
 	border: 0px;
@@ -484,12 +498,6 @@ section:not([expanded]) .show-less {
 #title-buttonset{
 	float: right;
 	position: relative;
-}
-#title-buttonset > .micro-image-top, .name-container .micro-image-top{
-	display: inline;
-}
-#title-buttonset > .micro-image-top img, .name-container .micro-image-top img{
-	overflow: hidden;
 }
 .about-container {
 	float: left;
@@ -525,7 +533,7 @@ section:not([expanded]) .show-less {
 	font-style: normal;
 	margin: 0px 15px 0px 0px;
 	padding-left: 5px;
-	color: #3880E0;
+	color: #2273DD;
 	cursor: inherit;
 	max-height: none;
 	overflow: visible;
@@ -535,7 +543,7 @@ section:not([expanded]) .show-less {
 .l-lst .citation-domain {
 	font-size: 10px;
 	font-style: normal;
-	color: #3880E0;
+	color: #206ACB;
 	font-weight: bold;
 	margin-right: 4px;
 	float: left;
@@ -605,11 +613,11 @@ ul.l-lst li .link-url {
 	width: 100%;
 	float: left;
 	text-align: left;
-	color: #3097d1;
+	color: #2273DD;
 	word-break: normal;
 }
 ul.l-lst li .link-url a{
-	color: #3097d1;
+	color: #2273DD;
 	width: 100%;
 	width: auto;
 	float: left;
@@ -720,7 +728,7 @@ ul.l-lst li .link-box-details > a{
 	float: left;
 	margin-right: 5px;
 	font-size: 11px;
-	color: #3097d1;
+	color: #2273DD;
 	cursor: pointer;
 }
 .photo-gallery .tile-desc .grid-attribution:hover{
@@ -820,6 +828,7 @@ ul.l-lst li .link-box-details > a{
 .social-logo{
 	top: 5px;
 	position: relative;
+	padding: 5px 10px 5px 10px;
 }
 .blurb-photo-container {
 	width: 100%;
@@ -849,7 +858,7 @@ ul.l-lst li .link-box-details > a{
 	width: 100%;
 	margin-top:0px;
 }
-a.photo-gallery-anchor{
+.photo-gallery-anchor{
 	height: 250px;
 	width: 300px;
 }
@@ -1401,7 +1410,7 @@ article .flagicon{
 	vertical-align: bottom;
 	line-height: 11px;
 	display: inline-block;
-	color: #3097d1;
+	color: #2273DD;
 	font-weight: normal;
 }
 #usermenu-lightbox .lb-button, #usermenu-lightbox .lb-button {
@@ -1858,7 +1867,7 @@ button.close-amp-lightbox-btn {
 	background: white;
 }
 button.tooltippable{
-	color: rgb(56, 128, 224);
+	color: #2273dd;
 	border: none;
 	background: none;
 	font-size: inherit;
@@ -1871,7 +1880,7 @@ button.tooltippable{
 	margin: 0px 1px;
 }
 button.tooltippableCarat{
-	color: rgb(56, 128, 224);
+	color: #2273dd;
 	border: 0;
 	background: 0;
 	font-size: 12px;
@@ -1928,12 +1937,12 @@ button.tooltippableCarat{
 	font-size: 14px;
 	font-family: 'OpenSans','Open Sans',sans-serif;
 }
-.footer .cayman-flag-footer {
+.ftr .cayman-flag-footer {
 	position: relative;
 	top: 6px;
 	left: 2px;
 }
-.footer .footer-separator {
+.ftr .footer-separator {
 	width:74%;
 	border-bottom: 1px solid #c6c2c4;
 	margin-left: auto;
@@ -1949,7 +1958,7 @@ button.tooltippableCarat{
 }
 .ftr .copyright .disclaimer a {
 	font-size: 14px;
-	color: #3097d1;
+	color: #2273DD;
 	margin-right: 0px;
 }
 .ftr .copyright .cc-img {
@@ -1970,17 +1979,22 @@ button.tooltippableCarat{
 	color: #666;
 	display: inline-block;
 	margin-right: 10px;
-	font-size: 14px;
+	font-size: 15px;
 	font-family: 'OpenSans','Open Sans',sans-serif;
 	line-height: 20px;
+	padding: 10px 10px 10px 10px;
 }
 .ftr .footer-span-terms-of-use {
-	color: #3097d1;
+	color: #2273DD;
 }
 .ftr .footer-social, .ftr .eos-powered-line {
 	padding-bottom: 30px;
 	font-size: 14px;
 	color: #666;
+}
+.ftr .eos-powered-line .pwr-join-txt {
+	position: relative;
+    top: -8px;
 }
 .ftr .footer-social{
 	padding-bottom: 19px;
@@ -2416,7 +2430,7 @@ h6.accordion-dummy-header{
 .sa-ancr-wrp .sa-blurb {
 	float: left;
 	width: 100%;
-	color: #888888;
+	color: #636363;
 	font-size: 0.8em;
 	white-space: nowrap;
 	overflow: hidden;

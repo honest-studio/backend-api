@@ -183,12 +183,12 @@ export class AmpRenderPartial {
         return `
             <div id="Welcome_Banner" class="wel-bnr">
                 <span class="wel-msg">
-                    Welcome! Everipedia uses the IQ cryptocurrency token for editing, voting, and article creation. 
-                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://everipedia.org/faq/what-is-iq')" role="link" tabindex="-1">
+                    Welcome! Everipedia uses the IQ cryptocurrency token for editing, voting, and article / wiki creation. 
+                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://everipedia.org/faq/what-is-iq')" role="link" tabindex="0">
                         Learn more
                     </span>
                 </span>
-                <span class="wel-bnr-close" role='button' on="tap:Welcome_Banner.hide" tabindex="-1">Close</span>
+                <span class="wel-bnr-close" role='button' on="tap:Welcome_Banner.hide" tabindex="0">Close</span>
             </div>
         `;
     };
@@ -333,28 +333,6 @@ export class AmpRenderPartial {
                 <h1>
                     <span>${page_title}</span>
                 </h1>
-                ${
-                    page_type == 'Person'
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              page_title
-                          } news, who is ${page_title}, where is ${page_title}" ></amp-anim>
-                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        page_title
-                    } real name, how old is ${page_title}" ></amp-anim>`
-                        : page_type == 'Product'
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                            page_title
-                        } news, what is ${page_title}" ></amp-anim>`
-                        : page_type == 'Organization'
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              page_title
-                          } news, what is ${page_title}, where is ${page_title}" ></amp-anim>`
-                        : true
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              page_title
-                          } news, what is ${page_title}" ></amp-anim>`
-                        : ``
-                }
                 <div id="title-buttonset">
                     <div class="tlbx-ct-wrapper">
                         <div class="tlbx-ct">
@@ -364,70 +342,6 @@ export class AmpRenderPartial {
                                         <amp-img width='36' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/share.svg' alt='Sahre' ></amp-img>
                                     </button>
                                 </li>
-                                ${
-                                    page_type == 'Person'
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } religion, ${page_title} interview, ${
-                                              page_title
-                                          } life, ${page_title} website" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wife, ${page_title} family, ${page_title} education, ${
-                                              page_title
-                                          } measurements, ${page_title} email" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } phone, ${page_title} salary, ${page_title} address, ${
-                                              page_title
-                                          } history, ${page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, who is ${
-                                              page_title
-                                          }, where is ${page_title}" ></amp-anim>`
-                                        : page_type == 'Product'
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } designer, ${page_title} sales, ${
-                                              page_title
-                                          } facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, what is ${
-                                              page_title
-                                          }" ></amp-anim>`
-                                        : page_type == 'Organization'
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } ownership, ${page_title} email, ${
-                                              page_title
-                                          } address, ${page_title} phone, ${
-                                              page_title
-                                          } headquarters" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } revenue, ${page_title} employees, ${
-                                              page_title
-                                          } location, ${page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, what is ${
-                                              page_title
-                                          }, where is ${page_title}" ></amp-anim>`
-                                        : true
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } information, ${page_title} definition, ${
-                                              page_title
-                                          } timeline, ${page_title} location" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, what is ${
-                                              page_title
-                                          }" ></amp-anim>`
-                                        : ``
-                                }
                             </ul>
                         </div>
                     </div>
@@ -556,7 +470,7 @@ export class AmpRenderPartial {
                         
                         // return result.text;
                         return `
-                        <div class="info-an">
+                        <div class="info-an${index > 0 ? ' multiple' : ''}">
                             ${comboText}
                         </div>
                     `;
@@ -657,7 +571,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' target="_blank" class="photo-gallery-anchor" href="${media.url}" data-target="${
+                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='0' role="link" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -667,7 +581,7 @@ export class AmpRenderPartial {
                                         media.thumb
                                     }" layout="fill"></amp-img>
                                 </amp-img>
-                            </a>
+                            </span>
                         </span>
                     </div>
                     ${ sanitizedCaption != '' ? 
@@ -689,7 +603,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' target="_blank" class="photo-gallery-anchor" href="${media.url}" data-target="${
+                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='0' role="link" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -697,7 +611,7 @@ export class AmpRenderPartial {
                       }" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                                 <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                                 </amp-anim>
-                            </a>
+                            </span>
                         </span>
                     </div>
                     <div class="tile-desc">
@@ -810,11 +724,7 @@ export class AmpRenderPartial {
             .join('');
         return `
             <div class="media-gallery-container">
-                <h2 class="media-gallery-header" id="mediaGallery">MEDIA
-                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        this.sanitizedVariables.page_title
-                    } images, pictures, and videos" />
-                </h2>
+                <h2 class="media-gallery-header" id="mediaGallery">MEDIA</h2>
                 <div class="photo-gallery">
                     ${mediaComboString}
                 </div>
@@ -844,11 +754,7 @@ export class AmpRenderPartial {
             .join('');
         return `
             <div class="category-container">
-                <h2 class="category-header" id="categoryList">CATEGORIES
-                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        this.sanitizedVariables.page_title
-                    } categories" />
-                </h2>
+                <h2 class="category-header" id="categoryList">CATEGORIES</h2>
                 <ul class="category-list">
                     ${categoryComboString}
                 </ul>
@@ -908,7 +814,7 @@ export class AmpRenderPartial {
 
         return `                        
             <li>
-                <span class='citation-anchor' on="tap:AMP.navigateTo(url='${citation.url}', target=_blank)" tabindex='${index}' role="link">
+                <span class='citation-anchor' on="tap:AMP.navigateTo(url='${citation.url}', target=_blank)" tabindex='0' role="link">
                     <div class="link-id">[${citation.citation_id}]</div>
                     ${
                         theThumbSrc != null && theThumbSrc != 'None' && theThumbSrc != ''  
@@ -1001,7 +907,7 @@ export class AmpRenderPartial {
         : `<div class="sa-title" >${seealso.page_title}</div>`
 
         return `
-            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='${passed_index}' role="link">
+            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='0' role="link">
                 <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
                         seealso.page_title
@@ -1028,11 +934,7 @@ export class AmpRenderPartial {
                 <span id="seeAlsoPanel" class="toc-span-fix"></span>
                 <amp-accordion id="seeAlsoPanelContainer" >
                 <section expanded>
-                    <h2 class="acc-header" >See Also
-                        <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="See related encyclopedia articles, biographies, reviews, and historical facts." />
-                        </span>
-                    </h2>
+                    <h2 class="acc-header" >See Also</h2>
                     <div>
                         <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
                         ${seeAlsoComboString}
@@ -1049,56 +951,59 @@ export class AmpRenderPartial {
         return `
             <div class="footer-wrapper">
                 <div class='footer-img-wrap'>
-                    <amp-img class='footer-logo-img' width=200 height=34 src="https://epcdn-vz.azureedge.net/static/images/EVP-logo-footer.svg">
+                    <amp-img class='footer-logo-img' width=200 height=34 alt="Everipedia Logo" src="https://epcdn-vz.azureedge.net/static/images/EVP-logo-footer.svg">
                     </amp-img>
                 </div>
                 <amp-anim class='gif-pixel-fix' width=1 height=1 alt="GIF Pixel" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
-                    <amp-img placeholder width=1 height=1 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png">
+                    <amp-img placeholder width=1 height=1 alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png">
                     </amp-img>
                 </amp-anim>
                 <div class="footer-links">
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/about', target=_blank)" tabindex='1' role="link" >About</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/faq', target=_blank)" tabindex='2' role="link">FAQ</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/contact', target=_blank)" tabindex='3' role="link" >Contact</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='4' role="link" >Forum</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='5' role="link" >Terms</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/iq-info', target=_blank)" tabindex='6' role="link" >Get IQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/about', target=_blank)" tabindex='0' role="link" >About</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/faq', target=_blank)" tabindex='0' role="link">FAQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/contact', target=_blank)" tabindex='0' role="link" >Contact</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" >Forum</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >Get IQ</span>
                 </div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
                     <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>
-                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='6' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
+                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
                 </div>
             </div>
             <div class="footer-social">
-                <a class='social-logo' href="http://facebook.com/everipedia" title="Everipedia on Facebook">
+                <span class='social-logo' on="tap:AMP.navigateTo(url='http://facebook.com/everipedia', target=_blank)" tabindex='0' role="link" title="Everipedia on Facebook">
                     <amp-img height="26" width="26" layout="fixed" alt="Facebook" src="https://epcdn-vz.azureedge.net/static/images/facebook.png"></amp-img>
-                </a>
-                <a class='social-logo' href="http://twitter.com/everipedia" title="Everipedia on Twitter">
+                </span>
+                <span class='social-logo' on="tap:AMP.navigateTo(url='http://twitter.com/everipedia', target=_blank)" tabindex='0' role="link" title="Everipedia on Twitter">
                     <amp-img height="26" width="26" layout="fixed" alt="Twitter" src="https://epcdn-vz.azureedge.net/static/images/twitter.png"></amp-img>
-                </a>
-                    <a class='social-logo' href="https://www.reddit.com/r/Everipedia/" title="Everipedia on Reddit">
+                </span>
+                    <span class='social-logo' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" title="Everipedia on Reddit">
                     <amp-img height="26" width="26" layout="fixed" alt="Reddit" src="https://epcdn-vz.azureedge.net/static/images/reddit.png"></amp-img>
-                </a>
-                <a class='social-logo' href="https://t.me/everipedia" title="Everipedia on Telegram">
+                </span>
+                <span class='social-logo' on="tap:AMP.navigateTo(url='https://t.me/everipedia', target=_blank)" tabindex='0' role="link" title="Everipedia on Telegram">
                     <amp-img height="26" width="26" layout="fixed" alt="Telegram" src="https://epcdn-vz.azureedge.net/static/images/telegram.png"></amp-img>
-                </a>
-                <a class='social-logo' href="https://blockfolio.com/coin/IQ" title="IQ token on Blockfolio">
+                </span>
+                <span class='social-logo' on="tap:AMP.navigateTo(url='https://blockfolio.com/coin/IQ', target=_blank)" tabindex='0' role="link" title="IQ token on Blockfolio">
                     <amp-img height="26" width="26" layout="fixed" alt="Blockfolio" src="https://epcdn-vz.azureedge.net/static/images/blockfolio.svg"></amp-img>
-                </a>
+                </span>
             </div>
             <div class="eos-powered-line">
-                <span id="powered-by-eos">Powered by <a class="eos-link" href="https://eos.io/">EOS.IO</a></span>
+                <span class="pwr-join-txt">Powered by</span>
                 <a class="eos-link" href="https://eos.io/">
-                    <amp-img class="eos-footer-img" height="26" width="26" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/eos-logo.png" ></amp-img>
+                    <amp-img class="eos-footer-img" height="26" width="26" layout="fixed" alt="EOS.IO" src="https://epcdn-vz.azureedge.net/static/images/eos-logo.png" ></amp-img>
+                    <span id="powered-by-eos">EOS.IO</span>
                 </a>
-                <span id="api-by-libertyblock">API by <a class="liberty-link" href="https://libertyblock.io/">LibertyBlock</a></span>
+                <span class="pwr-join-txt">API by</span>
                 <a class="liberty-link" href="https://eos.io/">
-                    <amp-img class="liberty-footer-img" height="40" width="50" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/libertyblock.png" ></amp-img>
+                    <amp-img class="liberty-footer-img" height="40" width="50" layout="fixed" alt="LibertyBlock" src="https://epcdn-vz.azureedge.net/static/images/libertyblock.png" ></amp-img>
+                    <span id="api-by-libertyblock">LibertyBlock</span>
                 </a>
-                <span id="api-by-scatter">and <a class="scatter-link" href="https://get-scatter.com/">Scatter</a></span>
+                <span class="pwr-join-txt">and</span>
                 <a class="scatter-link" href="https://get-scatter.com/">
-                    <amp-img class="scatter-footer-img" height="35" width="26" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/scatter.png" ></amp-img>
+                    <amp-img class="scatter-footer-img" height="35" width="23" layout="fixed" alt="Scatter" src="https://epcdn-vz.azureedge.net/static/images/scatter.png" ></amp-img>
+                    <span id="api-by-scatter">Scatter</span>
                 </a>
             </div>
         `;
@@ -1186,8 +1091,8 @@ export class AmpRenderPartial {
 
     renderUserMenu = (): string => {
         return `
-            <div class="lightbox" tabindex="1" role="menubar">
-                <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
+            <div class="lightbox" tabindex="0" role="menubar">
+                <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="0" role="menubar">
                 </div>
                 <div class="usr-mnu">
                     <div class="usr-mnu-hdr">
@@ -1227,7 +1132,7 @@ export class AmpRenderPartial {
 
     renderSearchLightbox = (): string => {
         return `  
-        <div class="lightbox" tabindex="3" role="search">
+        <div class="lightbox" tabindex="0" role="search">
             <div class="search-lb-ct">
                 <div class="global-search" id="searchfield_index">
                     <amp-iframe
@@ -1238,7 +1143,7 @@ export class AmpRenderPartial {
                         <div placeholder></div>
                     </amp-iframe>
                 </div>
-                <div class="search-toggle-space-bottom" on='tap:search-lightbox.close' tabindex="5" role="button">
+                <div class="search-toggle-space-bottom" on='tap:search-lightbox.close' tabindex="0" role="button">
                 </div>
             </div>
 	    </div>
@@ -1254,7 +1159,7 @@ export class AmpRenderPartial {
 
         return `  
             <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
-            <nav class="lightbox" tabindex="7" role="widget">
+            <nav class="lightbox" tabindex="0" role="widget">
                 <div class="share-ct">
                     <div class="share-ct-inner">
                         <h2>Share this page</h2>
@@ -1350,7 +1255,7 @@ export class AmpRenderPartial {
 
         return `
             <span class="lb-button cls-lang-lgbx"><button  on='tap:language-lightbox.close'></button></span>
-            <nav class="lightbox" tabindex="7" role="widget">
+            <nav class="lightbox" tabindex="0" role="widget">
                 <div class="lang-ct">
                     <h2>Alternate Languages</h2>
                     <ul class="lang-ul">
