@@ -339,7 +339,7 @@ export class AmpRenderPartial {
                             <ul>
                                 <li>
                                     <button on="tap:share-lightbox" aria-label="Share" class="icon">
-                                        <amp-img width='36' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/share.svg' alt='Sahre' ></amp-img>
+                                        <amp-img width='36' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/share.svg' alt='Share' ></amp-img>
                                     </button>
                                 </li>
                             </ul>
