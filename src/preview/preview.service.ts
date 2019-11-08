@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, forwardRef, Inject } from '@nestjs/common';
 import * as cheerio from 'cheerio';
 import * as SqlString from 'sqlstring';
 import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
@@ -11,6 +11,7 @@ import { PreviewResult } from '../types/api';
 import { ArticleJson } from '../types/article';
 import { BrowserInfo } from 'detect-browser';
 import { oldHTMLtoJSON, PhotoToUse, IsWebPCompatibleBrowser } from '../utils/article-utils';
+const chalk = require('chalk');
 const pid = `PID-${process.pid}`;
 /**
  * Get the delta in ms between a bigint, and now
@@ -25,6 +26,7 @@ export class PreviewService {
     constructor(
         private mysql: MysqlService,
         private redis: RedisService,
+        @Inject(forwardRef(() => WikiService)) private wikiService: WikiService,
         // preview by hash:
         @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,
         @InjectHistogramMetric('get_prev_by_hash_sql_only')
@@ -168,9 +170,11 @@ export class PreviewService {
             else if (values[i*2 + 1][1]) previews.push(JSON.parse(values[i*2 + 1][1]));
             else uncached_previews.push(wiki_identities[i]);
         }
-        if (uncached_previews.length == 0) return previews;
 
-        // strip lang_ prefix in lang_code if it exists
+        // Part of the 'Title Not Available' bug
+        if (uncached_previews.length == 0) return previews;
+        
+        // Strip lang_ prefix in lang_code if it exists
         uncached_previews.forEach((w) => {
             if (w.lang_code.includes('lang_')) w.lang_code = w.lang_code.substring(5);
         });
@@ -237,35 +241,51 @@ export class PreviewService {
         const query = `${query1} UNION ${query2}`;
 
         let mysql_previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
+        let found_slugs = mysql_previews.map(prev => prev.slug)
 
-        mysql_previews = mysql_previews.map(preview => {
-            // clean up text previews
+        // Identify orphan hashes
+        let orphan_hashes = uncached_previews.map(ucp => {
+            if(!(found_slugs.includes(ucp.slug))) return ucp.ipfs_hash;
+        })
+
+        // Sync the orphan hashes if they are present
+        if (orphan_hashes.length){
+
+            // Get the html_blobs
+            let orphan_hash_caches: Array<any> = await this.mysql.TryQuery(
+                `
+                    SELECT ipfs_hash, html_blob
+                    FROM enterlink_hashcache 
+                    WHERE 
+                        articletable_id IS NULL
+                        AND ipfs_hash IN (?)
+                    ORDER BY timestamp DESC
+                `,
+                [orphan_hashes]
+            );
+
+            for (let j = 0; j < orphan_hash_caches.length; j++){
+                try{
+                    let wiki = JSON.parse(orphan_hash_caches[j].html_blob);
+                    await this.wikiService.updateWiki(wiki, orphan_hash_caches[j].ipfs_hash, true);
+                }
+                catch(e){
+                    console.log(chalk.red(`Orphan hash sync failed for: ${orphan_hash_caches[j].ipfs_hash}`));
+                }
+            }
+
+            // Re-run the main query now that things are synced
+            console.log(chalk.red("RE-RUNNING"))
+            mysql_previews = await this.mysql.TryQuery(query);
+
+        }
+
+        mysql_previews = mysql_previews && mysql_previews.map(preview => {
+            // Clean up text previews
             preview.page_title = sanitizeTextPreview(preview.page_title);
             if (preview.text_preview) {
                 preview.text_preview = sanitizeTextPreview(preview.text_preview);
             }
-
-            // // Pull out the WebP main photo and thumb, if present
-            // // Get the article JSON
-            // if (useWebP) {
-            //     let wiki: ArticleJson;
-            //     try {
-            //         wiki = JSON.parse(preview.html_blob);
-            //     } catch (e) {
-            //         // SKIPPING for speed concerns
-            //         wiki = oldHTMLtoJSON(preview.html_blob);
-            //     }
-            //     let main_photo = wiki && wiki.main_photo && wiki.main_photo.length && wiki.main_photo[0];
-
-            //     let photoPack = PhotoToUse(main_photo, user_agent);
-
-            //     preview.main_photo = photoPack.full;
-            //     preview.thumbnail = photoPack.thumb;
-            // }
-
-            // // Remove the html_blob from the preview
-            // const { html_blob, ...newPreview } = preview
-            // preview = newPreview;
 
             // Get the main photo category
             preview.main_photo_category = linkCategorizer(preview.main_photo);
@@ -273,8 +293,7 @@ export class PreviewService {
             return preview;
         });
 
-
-        // save for fast cache
+        // Save for fast cache
         const pipeline2 = this.redis.connection().pipeline();
         for (let preview of mysql_previews) {
             let memkey = `preview:lang_${preview.lang_code}:${preview.slug}`;

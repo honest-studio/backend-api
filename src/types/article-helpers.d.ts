@@ -60,4 +60,5 @@ export interface SitemapPack {
 export interface WikiIdentity {
     lang_code: string;
     slug: string;
+    ipfs_hash?: string; // Useful to find missing / unsynced hashes
 }
