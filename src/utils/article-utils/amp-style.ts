@@ -56,7 +56,7 @@ amp-accordion, .toc-button, button, a{
 .media-gallery-container .media-gallery-header, .category-container .category-header {
 	font-family: OpenSans-SemiBold,'Open Sans SemiBold',sans-serif;
 	font-size: 14px;
-	color: #737373;
+	color: #636363;
 	text-align: left;
 	padding: 0px 15px 0px 15px;
 }
@@ -68,10 +68,10 @@ amp-accordion, .toc-button, button, a{
 	margin: 0px;
 }
 .category-container ul li {
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 }
 .category-container ul li a {
-
+	
 }
 amp-accordion>section>:first-child{
 	cursor: pointer;
@@ -202,7 +202,7 @@ ul.infobox li {
 ul.infobox li:last-child {
 	border-bottom: 0px;
 }
-.info-qt{
+.infobox .info-qt{
 	float: left;
 	width: 25%;
 	text-align: left;
@@ -222,7 +222,7 @@ ul.infobox li:last-child {
 	line-height: inherit;
 	font-weight: inherit;
 }
-.info-an{
+.infobox .info-an{
 	width: 73%;
 	text-align: left;
 	word-break: normal;
@@ -235,6 +235,10 @@ ul.infobox li:last-child {
 	padding-left: 3px;
 	float: right;
 }
+.infobox .info-an.multiple{
+	margin-top: 5px;
+}
+
 ul.infobox li.plural-infobox:last-child {
 	width:73%;
 	float:right;
@@ -485,12 +489,6 @@ section:not([expanded]) .show-less {
 	float: right;
 	position: relative;
 }
-#title-buttonset > .micro-image-top, .name-container .micro-image-top{
-	display: inline;
-}
-#title-buttonset > .micro-image-top img, .name-container .micro-image-top img{
-	overflow: hidden;
-}
 .about-container {
 	float: left;
 	width: 100%;
@@ -535,7 +533,7 @@ section:not([expanded]) .show-less {
 .l-lst .citation-domain {
 	font-size: 10px;
 	font-style: normal;
-	color: #2273DD;
+	color: #206ACB;
 	font-weight: bold;
 	margin-right: 4px;
 	float: left;
@@ -849,7 +847,7 @@ ul.l-lst li .link-box-details > a{
 	width: 100%;
 	margin-top:0px;
 }
-a.photo-gallery-anchor{
+.photo-gallery-anchor{
 	height: 250px;
 	width: 300px;
 }
@@ -1969,7 +1967,7 @@ button.tooltippableCarat{
 .ftr a, .ftr .footer-span-link {
 	color: #666;
 	display: inline-block;
-	margin-right: 10px;
+	margin-right: 20px;
 	font-size: 14px;
 	font-family: 'OpenSans','Open Sans',sans-serif;
 	line-height: 20px;
@@ -1981,6 +1979,10 @@ button.tooltippableCarat{
 	padding-bottom: 30px;
 	font-size: 14px;
 	color: #666;
+}
+.ftr .eos-powered-line .pwr-join-txt {
+	position: relative;
+    top: -8px;
 }
 .ftr .footer-social{
 	padding-bottom: 19px;
@@ -2416,7 +2418,7 @@ h6.accordion-dummy-header{
 .sa-ancr-wrp .sa-blurb {
 	float: left;
 	width: 100%;
-	color: #888888;
+	color: #636363;
 	font-size: 0.8em;
 	white-space: nowrap;
 	overflow: hidden;

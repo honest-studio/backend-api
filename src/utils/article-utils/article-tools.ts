@@ -137,7 +137,6 @@ export const CheckForLinksOrCitationsAMP = (
                 $(openButtonTag).attr('role', 'button');
                 $(openButtonTag).attr('tabindex', "0");
                 $(openButtonTag).attr('aria-label', linkCodeAndSlug);
-                $(openButtonTag).attr('aria-labelledby', `${linkCodeAndSlug}__${unique_id}`);
                 $(openButtonTag).attr('on', `tap:hvrblb-${linkCodeAndSlug}__${unique_id}`);
                 $(openButtonTag).text(linkText);
 
@@ -221,7 +220,6 @@ export const CheckForLinksOrCitationsAMP = (
                 $(openButtonTag).attr('role', 'button');
                 $(openButtonTag).attr('tabindex', "0");
                 $(openButtonTag).attr('aria-label', citationIndex.toString());
-                $(openButtonTag).attr('aria-labelledby', `hvrlnk-${unique_id}`);
                 $(openButtonTag).attr('on', `tap:hvrlnk-${unique_id}`);
                 $(openButtonTag).text(`[${citationIndex}]`);
 

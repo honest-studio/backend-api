@@ -333,28 +333,6 @@ export class AmpRenderPartial {
                 <h1>
                     <span>${page_title}</span>
                 </h1>
-                ${
-                    page_type == 'Person'
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              page_title
-                          } news, who is ${page_title}, where is ${page_title}" ></amp-anim>
-                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        page_title
-                    } real name, how old is ${page_title}" ></amp-anim>`
-                        : page_type == 'Product'
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                            page_title
-                        } news, what is ${page_title}" ></amp-anim>`
-                        : page_type == 'Organization'
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              page_title
-                          } news, what is ${page_title}, where is ${page_title}" ></amp-anim>`
-                        : true
-                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                              page_title
-                          } news, what is ${page_title}" ></amp-anim>`
-                        : ``
-                }
                 <div id="title-buttonset">
                     <div class="tlbx-ct-wrapper">
                         <div class="tlbx-ct">
@@ -364,70 +342,6 @@ export class AmpRenderPartial {
                                         <amp-img width='36' height='36' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/share.svg' alt='Sahre' ></amp-img>
                                     </button>
                                 </li>
-                                ${
-                                    page_type == 'Person'
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } religion, ${page_title} interview, ${
-                                              page_title
-                                          } life, ${page_title} website" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wife, ${page_title} family, ${page_title} education, ${
-                                              page_title
-                                          } measurements, ${page_title} email" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } phone, ${page_title} salary, ${page_title} address, ${
-                                              page_title
-                                          } history, ${page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, who is ${
-                                              page_title
-                                          }, where is ${page_title}" ></amp-anim>`
-                                        : page_type == 'Product'
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } designer, ${page_title} sales, ${
-                                              page_title
-                                          } facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, what is ${
-                                              page_title
-                                          }" ></amp-anim>`
-                                        : page_type == 'Organization'
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } ownership, ${page_title} email, ${
-                                              page_title
-                                          } address, ${page_title} phone, ${
-                                              page_title
-                                          } headquarters" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } revenue, ${page_title} employees, ${
-                                              page_title
-                                          } location, ${page_title} facts" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, what is ${
-                                              page_title
-                                          }, where is ${page_title}" ></amp-anim>`
-                                        : true
-                                        ? `<amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                              page_title
-                                          } information, ${page_title} definition, ${
-                                              page_title
-                                          } timeline, ${page_title} location" ></amp-anim>
-                                    <amp-anim height='1' width='1' layout='fixed' class='micro-image-top' alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                                        page_title
-                                    } wikipedia, ${page_title} news, what is ${
-                                              page_title
-                                          }" ></amp-anim>`
-                                        : ``
-                                }
                             </ul>
                         </div>
                     </div>
@@ -556,7 +470,7 @@ export class AmpRenderPartial {
                         
                         // return result.text;
                         return `
-                        <div class="info-an">
+                        <div class="info-an${index > 0 ? ' multiple' : ''}">
                             ${comboText}
                         </div>
                     `;
@@ -657,7 +571,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' target="_blank" class="photo-gallery-anchor" href="${media.url}" data-target="${
+                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='${index}' role="link" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -667,7 +581,7 @@ export class AmpRenderPartial {
                                         media.thumb
                                     }" layout="fill"></amp-img>
                                 </amp-img>
-                            </a>
+                            </span>
                         </span>
                     </div>
                     ${ sanitizedCaption != '' ? 
@@ -689,7 +603,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <a rel='nofollow' target="_blank" class="photo-gallery-anchor" href="${media.url}" data-target="${
+                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='${index}' role="link" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -697,7 +611,7 @@ export class AmpRenderPartial {
                       }" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                                 <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                                 </amp-anim>
-                            </a>
+                            </span>
                         </span>
                     </div>
                     <div class="tile-desc">
@@ -810,11 +724,7 @@ export class AmpRenderPartial {
             .join('');
         return `
             <div class="media-gallery-container">
-                <h2 class="media-gallery-header" id="mediaGallery">MEDIA
-                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" alt="Placeholder White Dot" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        this.sanitizedVariables.page_title
-                    } images, pictures, and videos" />
-                </h2>
+                <h2 class="media-gallery-header" id="mediaGallery">MEDIA</h2>
                 <div class="photo-gallery">
                     ${mediaComboString}
                 </div>
@@ -844,11 +754,7 @@ export class AmpRenderPartial {
             .join('');
         return `
             <div class="category-container">
-                <h2 class="category-header" id="categoryList">CATEGORIES
-                    <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="${
-                        this.sanitizedVariables.page_title
-                    } categories" />
-                </h2>
+                <h2 class="category-header" id="categoryList">CATEGORIES</h2>
                 <ul class="category-list">
                     ${categoryComboString}
                 </ul>
@@ -1028,11 +934,7 @@ export class AmpRenderPartial {
                 <span id="seeAlsoPanel" class="toc-span-fix"></span>
                 <amp-accordion id="seeAlsoPanelContainer" >
                 <section expanded>
-                    <h2 class="acc-header" >See Also
-                        <span class="icon"><i class="fa fa-chevron-down"></i>
-                            <amp-anim class='micro-image' height="10" width="10" layout="fixed" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="See related encyclopedia articles, biographies, reviews, and historical facts." />
-                        </span>
-                    </h2>
+                    <h2 class="acc-header" >See Also</h2>
                     <div>
                         <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
                         ${seeAlsoComboString}
@@ -1088,17 +990,20 @@ export class AmpRenderPartial {
                 </a>
             </div>
             <div class="eos-powered-line">
-                <span id="powered-by-eos">Powered by <a class="eos-link" href="https://eos.io/">EOS.IO</a></span>
+                <span class="pwr-join-txt">Powered by</span>
                 <a class="eos-link" href="https://eos.io/">
                     <amp-img class="eos-footer-img" height="26" width="26" layout="fixed" alt="EOS.IO" src="https://epcdn-vz.azureedge.net/static/images/eos-logo.png" ></amp-img>
+                    <span id="powered-by-eos">EOS.IO</span>
                 </a>
-                <span id="api-by-libertyblock">API by <a class="liberty-link" href="https://libertyblock.io/">LibertyBlock</a></span>
+                <span class="pwr-join-txt">API by</span>
                 <a class="liberty-link" href="https://eos.io/">
                     <amp-img class="liberty-footer-img" height="40" width="50" layout="fixed" alt="LibertyBlock" src="https://epcdn-vz.azureedge.net/static/images/libertyblock.png" ></amp-img>
+                    <span id="api-by-libertyblock">LibertyBlock</span>
                 </a>
-                <span id="api-by-scatter">and <a class="scatter-link" href="https://get-scatter.com/">Scatter</a></span>
+                <span class="pwr-join-txt">and</span>
                 <a class="scatter-link" href="https://get-scatter.com/">
                     <amp-img class="scatter-footer-img" height="35" width="26" layout="fixed" alt="Scatter" src="https://epcdn-vz.azureedge.net/static/images/scatter.png" ></amp-img>
+                    <span id="api-by-scatter">Scatter</span>
                 </a>
             </div>
         `;
