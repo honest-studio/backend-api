@@ -20,7 +20,8 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
     })
     .join('');
 
-    let BLURB_SNIPPET_PLAINTEXT = sanitizeTextPreview(pageBodyText);
+    let sanitized_body = sanitizeTextPreview(pageBodyText);
+    let BLURB_SNIPPET_PLAINTEXT = sanitized_body.slice(0, 320);
 
     // Metadata values
     const last_modified = inputJSON.metadata.find(w => w.key == 'last_modified') ? inputJSON.metadata.find(w => w.key == 'last_modified').value : '';
@@ -67,7 +68,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
     
     switch (page_type) {
         case 'Person':
-            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['description'] = `${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
                 page_title
             } bio, ${page_title} encyclopedia, ${page_title} news, who is ${
@@ -77,7 +78,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             
             break;
         case 'Product':
-            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['description'] = `${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
                 page_title
             } encyclopedia, ${page_title} review, ${page_title} news, what is ${
@@ -86,7 +87,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             schemaJSON['headline'] = `${page_title}'s wiki & review on Everipedia`;
             break;
         case 'Organization':
-            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['description'] = `${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
                 page_title
             } history, ${page_title} encyclopedia, ${page_title} news, what is ${
@@ -95,7 +96,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             schemaJSON['headline'] = `${page_title}'s wiki & review on Everipedia`;
             break;
         default:
-            schemaJSON['description'] = `${page_title}'s wiki: ${BLURB_SNIPPET_PLAINTEXT}`;
+            schemaJSON['description'] = `${BLURB_SNIPPET_PLAINTEXT}`;
             schemaJSON['keywords'] = `${page_title}, ${page_title} wiki, ${
                 page_title
             } encyclopedia, ${page_title} news, what is ${page_title}`;
@@ -244,7 +245,7 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             description: citationText
         });
     });
-    schemaJSON['articleBody'] = BLURB_SNIPPET_PLAINTEXT;
+    schemaJSON['articleBody'] = sanitized_body;
     switch (returnType) {
         case 'JSON':
             return schemaJSON;

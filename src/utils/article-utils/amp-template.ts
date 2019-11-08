@@ -8,8 +8,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
     // TODO: REMEMBER TO PRE-SELECT STRINGS LIKE inputJSON.page_title AND USE VARIBLES BELOW, FOR SPEED REASONS
     const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
     let arp = new AmpRenderPartial(inputJSON, wikiExtras);
-    let BLURB_SNIPPET_PLAINTEXT = '',
-        OVERRIDE_MAIN_THUMB = null;
+    let OVERRIDE_MAIN_THUMB = null;
     let CURRENT_IPFS_HASH = '';
 
     // Metadata values
@@ -17,6 +16,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
     const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : "";
     const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
     const url_slug = inputJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
+    const BLURB_SNIPPET_PLAINTEXT = wikiExtras && wikiExtras.schema ? wikiExtras.schema['description'] : "";
 
     const theHTML = `
     <!DOCTYPE html>
