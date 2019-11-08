@@ -123,6 +123,7 @@ export class AmpRenderPartial {
                 <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki${extra_keywords}" />`
                     : ''
             }
+            <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta property="article:tag" content="${this.sanitizedVariables.page_title}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
