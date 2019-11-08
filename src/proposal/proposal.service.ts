@@ -86,8 +86,13 @@ export class ProposalService {
 
         if (options.preview) {
             const packs = proposals
-                .filter((p) => !p.info.error)
-                .map((p) => ({ lang_code: p.info.trace.act.data.lang_code, slug: p.info.trace.act.data.slug }));
+                .filter(p => !p.info.error)
+                .map(p => ({ 
+                        lang_code: p.info.trace.act.data.lang_code, 
+                        slug: p.info.trace.act.data.slug, 
+                        ipfs_hash: p.info.trace.act.data.ipfs_hash
+                }));
+
             let previews;
             try {
                 previews = await this.previewService.getPreviewsBySlug(packs, options.user_agent as any);
@@ -103,8 +108,14 @@ export class ProposalService {
                 })
             });
 
-            // mark unfound previews
+            // Mark unfound previews and missing titles
             proposals.forEach(p => {
+                // Handle missing titles
+                if (!(p.preview && p.preview.page_title && p.preview.page_title != '')) {
+                    p.preview = { error: `Non-existent proposal` };
+                };
+
+                // Non-existant pages
                 if (p.info.error)
                     p.preview = { error: `Non-existent proposal` };
                 else if (!p.preview) 

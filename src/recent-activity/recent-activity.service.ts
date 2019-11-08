@@ -5,6 +5,7 @@ import { PreviewService } from '../preview/preview.service';
 import { Proposal, ProposalService } from '../proposal';
 import { ActivityType } from '../types/article';
 import { ConfigService } from '../common';
+const util = require('util');
 
 @Injectable()
 export class RecentActivityService {
