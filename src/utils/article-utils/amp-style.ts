@@ -402,15 +402,23 @@ section:not([expanded]) .show-less {
 	margin-top: 6px;
 	margin-left: 10px;
 }
+.tlbx-ct{
+	float: left;
+	width: 100%;
+}
 .tlbx-ct ul {
 	list-style-type: none;
 	float: left;
 	padding: 0px;
 	margin-left: 0px;
-	width: calc(100% - 15px);
+	width: 100%;
 	margin-bottom: 5px;
 	margin-top: 5px;
 	z-index:99999;
+}
+.tlbx-ct .tlbx-ct-wrapper {
+	float: left;
+	width: 100%:
 }
 .tlbx-ct li {
 	float:left;
@@ -425,6 +433,8 @@ section:not([expanded]) .show-less {
 	color: rgb(84, 78, 82);
 	float:left;
 	cursor: pointer;
+	width: 49px;
+	height: 49px;
 }
 .tlbx-ct li.language-tile {
 	margin-left: 2px;
@@ -464,11 +474,11 @@ section:not([expanded]) .show-less {
 .name-container h1 {
 	text-align: left;
 	margin: 0px;
-	font-size: 40px;
+	font-size: 36px;
 	color: #262626;
 	font-weight: 400;
 	float: left;
-	width: calc(100% - 40px);
+	width: calc(100% - 49px);
 }
 .name-container h1 button {
 	border: 0px;
@@ -1926,12 +1936,12 @@ button.tooltippableCarat{
 	font-size: 14px;
 	font-family: 'OpenSans','Open Sans',sans-serif;
 }
-.footer .cayman-flag-footer {
+.ftr .cayman-flag-footer {
 	position: relative;
 	top: 6px;
 	left: 2px;
 }
-.footer .footer-separator {
+.ftr .footer-separator {
 	width:74%;
 	border-bottom: 1px solid #c6c2c4;
 	margin-left: auto;
@@ -1967,10 +1977,11 @@ button.tooltippableCarat{
 .ftr a, .ftr .footer-span-link {
 	color: #666;
 	display: inline-block;
-	margin-right: 20px;
-	font-size: 14px;
+	margin-right: 10px;
+	font-size: 15px;
 	font-family: 'OpenSans','Open Sans',sans-serif;
 	line-height: 20px;
+	padding: 10px 10px 10px 10px;
 }
 .ftr .footer-span-terms-of-use {
 	color: #2273DD;

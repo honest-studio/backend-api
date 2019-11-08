@@ -184,11 +184,11 @@ export class AmpRenderPartial {
             <div id="Welcome_Banner" class="wel-bnr">
                 <span class="wel-msg">
                     Welcome! Everipedia uses the IQ cryptocurrency token for editing, voting, and article / wiki creation. 
-                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://everipedia.org/faq/what-is-iq')" role="link" tabindex="-1">
+                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://everipedia.org/faq/what-is-iq')" role="link" tabindex="0">
                         Learn more
                     </span>
                 </span>
-                <span class="wel-bnr-close" role='button' on="tap:Welcome_Banner.hide" tabindex="-1">Close</span>
+                <span class="wel-bnr-close" role='button' on="tap:Welcome_Banner.hide" tabindex="0">Close</span>
             </div>
         `;
     };
@@ -571,7 +571,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='${index}' role="link" data-target="${
+                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='0' role="link" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-img width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -603,7 +603,7 @@ export class AmpRenderPartial {
                     ? `<div class="tile-ct">
                     <div class="">
                         <span>
-                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='${index}' role="link" data-target="${
+                            <span rel='nofollow' class="photo-gallery-anchor" on="tap:AMP.navigateTo(url='${media.url}', target=_blank)" tabindex='0' role="link" data-target="${
                           media.url
                       }" title="${sanitizedCaptionPlaintext}">
                                 <amp-anim width=150 height=150 layout="responsive" src="${media.url}" data-image="${
@@ -814,7 +814,7 @@ export class AmpRenderPartial {
 
         return `                        
             <li>
-                <span class='citation-anchor' on="tap:AMP.navigateTo(url='${citation.url}', target=_blank)" tabindex='${index}' role="link">
+                <span class='citation-anchor' on="tap:AMP.navigateTo(url='${citation.url}', target=_blank)" tabindex='0' role="link">
                     <div class="link-id">[${citation.citation_id}]</div>
                     ${
                         theThumbSrc != null && theThumbSrc != 'None' && theThumbSrc != ''  
@@ -907,7 +907,7 @@ export class AmpRenderPartial {
         : `<div class="sa-title" >${seealso.page_title}</div>`
 
         return `
-            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='${passed_index}' role="link">
+            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='0' role="link">
                 <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
                         seealso.page_title
@@ -959,17 +959,17 @@ export class AmpRenderPartial {
                     </amp-img>
                 </amp-anim>
                 <div class="footer-links">
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/about', target=_blank)" tabindex='1' role="link" >About</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/faq', target=_blank)" tabindex='2' role="link">FAQ</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/contact', target=_blank)" tabindex='3' role="link" >Contact</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='4' role="link" >Forum</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='5' role="link" >Terms</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/iq-info', target=_blank)" tabindex='6' role="link" >Get IQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/about', target=_blank)" tabindex='0' role="link" >About</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/faq', target=_blank)" tabindex='0' role="link">FAQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/contact', target=_blank)" tabindex='0' role="link" >Contact</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" >Forum</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >Get IQ</span>
                 </div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
                     <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>
-                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='6' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
+                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
                 </div>
             </div>
             <div class="footer-social">
@@ -1002,7 +1002,7 @@ export class AmpRenderPartial {
                 </a>
                 <span class="pwr-join-txt">and</span>
                 <a class="scatter-link" href="https://get-scatter.com/">
-                    <amp-img class="scatter-footer-img" height="35" width="26" layout="fixed" alt="Scatter" src="https://epcdn-vz.azureedge.net/static/images/scatter.png" ></amp-img>
+                    <amp-img class="scatter-footer-img" height="35" width="23" layout="fixed" alt="Scatter" src="https://epcdn-vz.azureedge.net/static/images/scatter.png" ></amp-img>
                     <span id="api-by-scatter">Scatter</span>
                 </a>
             </div>
@@ -1091,8 +1091,8 @@ export class AmpRenderPartial {
 
     renderUserMenu = (): string => {
         return `
-            <div class="lightbox" tabindex="1" role="menubar">
-                <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="3" role="menubar">
+            <div class="lightbox" tabindex="0" role="menubar">
+                <div class="usermenu-toggle-space" on='tap:usermenu-lightbox.close' tabindex="0" role="menubar">
                 </div>
                 <div class="usr-mnu">
                     <div class="usr-mnu-hdr">
@@ -1132,7 +1132,7 @@ export class AmpRenderPartial {
 
     renderSearchLightbox = (): string => {
         return `  
-        <div class="lightbox" tabindex="3" role="search">
+        <div class="lightbox" tabindex="0" role="search">
             <div class="search-lb-ct">
                 <div class="global-search" id="searchfield_index">
                     <amp-iframe
@@ -1143,7 +1143,7 @@ export class AmpRenderPartial {
                         <div placeholder></div>
                     </amp-iframe>
                 </div>
-                <div class="search-toggle-space-bottom" on='tap:search-lightbox.close' tabindex="5" role="button">
+                <div class="search-toggle-space-bottom" on='tap:search-lightbox.close' tabindex="0" role="button">
                 </div>
             </div>
 	    </div>
@@ -1159,7 +1159,7 @@ export class AmpRenderPartial {
 
         return `  
             <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
-            <nav class="lightbox" tabindex="7" role="widget">
+            <nav class="lightbox" tabindex="0" role="widget">
                 <div class="share-ct">
                     <div class="share-ct-inner">
                         <h2>Share this page</h2>
@@ -1255,7 +1255,7 @@ export class AmpRenderPartial {
 
         return `
             <span class="lb-button cls-lang-lgbx"><button  on='tap:language-lightbox.close'></button></span>
-            <nav class="lightbox" tabindex="7" role="widget">
+            <nav class="lightbox" tabindex="0" role="widget">
                 <div class="lang-ct">
                     <h2>Alternate Languages</h2>
                     <ul class="lang-ul">
