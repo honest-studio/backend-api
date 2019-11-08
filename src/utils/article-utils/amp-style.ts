@@ -23,11 +23,11 @@ article.schema-wrap{
 	position: relative;
 }
 a{
-	color: #3097d1;
+	color: #2273DD;
 	text-decoration: none;
 }
 a:visited{
-	color: #3097d1;
+	color: #2273DD;
 }
 span.tt-wrap{
 	color: #71b8e4;
@@ -56,7 +56,7 @@ amp-accordion, .toc-button, button, a{
 .media-gallery-container .media-gallery-header, .category-container .category-header {
 	font-family: OpenSans-SemiBold,'Open Sans SemiBold',sans-serif;
 	font-size: 14px;
-	color: #979797;
+	color: #737373;
 	text-align: left;
 	padding: 0px 15px 0px 15px;
 }
@@ -525,7 +525,7 @@ section:not([expanded]) .show-less {
 	font-style: normal;
 	margin: 0px 15px 0px 0px;
 	padding-left: 5px;
-	color: #3880E0;
+	color: #2273DD;
 	cursor: inherit;
 	max-height: none;
 	overflow: visible;
@@ -535,7 +535,7 @@ section:not([expanded]) .show-less {
 .l-lst .citation-domain {
 	font-size: 10px;
 	font-style: normal;
-	color: #3880E0;
+	color: #2273DD;
 	font-weight: bold;
 	margin-right: 4px;
 	float: left;
@@ -605,11 +605,11 @@ ul.l-lst li .link-url {
 	width: 100%;
 	float: left;
 	text-align: left;
-	color: #3097d1;
+	color: #2273DD;
 	word-break: normal;
 }
 ul.l-lst li .link-url a{
-	color: #3097d1;
+	color: #2273DD;
 	width: 100%;
 	width: auto;
 	float: left;
@@ -720,7 +720,7 @@ ul.l-lst li .link-box-details > a{
 	float: left;
 	margin-right: 5px;
 	font-size: 11px;
-	color: #3097d1;
+	color: #2273DD;
 	cursor: pointer;
 }
 .photo-gallery .tile-desc .grid-attribution:hover{
@@ -1401,7 +1401,7 @@ article .flagicon{
 	vertical-align: bottom;
 	line-height: 11px;
 	display: inline-block;
-	color: #3097d1;
+	color: #2273DD;
 	font-weight: normal;
 }
 #usermenu-lightbox .lb-button, #usermenu-lightbox .lb-button {
@@ -1858,7 +1858,7 @@ button.close-amp-lightbox-btn {
 	background: white;
 }
 button.tooltippable{
-	color: rgb(56, 128, 224);
+	color: #2273dd;
 	border: none;
 	background: none;
 	font-size: inherit;
@@ -1871,7 +1871,7 @@ button.tooltippable{
 	margin: 0px 1px;
 }
 button.tooltippableCarat{
-	color: rgb(56, 128, 224);
+	color: #2273dd;
 	border: 0;
 	background: 0;
 	font-size: 12px;
@@ -1949,7 +1949,7 @@ button.tooltippableCarat{
 }
 .ftr .copyright .disclaimer a {
 	font-size: 14px;
-	color: #3097d1;
+	color: #2273DD;
 	margin-right: 0px;
 }
 .ftr .copyright .cc-img {
@@ -1975,7 +1975,7 @@ button.tooltippableCarat{
 	line-height: 20px;
 }
 .ftr .footer-span-terms-of-use {
-	color: #3097d1;
+	color: #2273DD;
 }
 .ftr .footer-social, .ftr .eos-powered-line {
 	padding-bottom: 30px;

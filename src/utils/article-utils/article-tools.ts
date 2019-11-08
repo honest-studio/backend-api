@@ -170,6 +170,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(placeholderTag).attr('placeholder', '');
                 $(placeholderTag).attr('layout', 'fill');
                 $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
+                $(placeholderTag).attr('alt', 'Placeholder White Dot');
 
                 // Put the placeholder inside the iframe
                 $(iframeTag).append(placeholderTag);
@@ -254,6 +255,7 @@ export const CheckForLinksOrCitationsAMP = (
                 $(placeholderTag).attr('placeholder', '');
                 $(placeholderTag).attr('layout', 'fill');
                 $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
+                $(placeholderTag).attr('alt', 'Placeholder White Dot');
 
                 // Put the placeholder inside the iframe
                 $(iframeTag).append(placeholderTag);
@@ -310,6 +312,7 @@ export const CheckForLinksOrCitationsAMP = (
                     $(ampImgTag).attr('layout', 'fixed');
                     $(placeholderTag).attr('src', 'https://epcdn-vz.azureedge.net/static/images/white_dot.png');
                     $(placeholderTag).attr('placeholder', '');
+                    $(placeholderTag).attr('alt', 'Placeholder White Dot');
 
                     // Put the placeholder inside the amp-img
                     $(ampImgTag).append(placeholderTag);
