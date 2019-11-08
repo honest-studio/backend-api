@@ -18,17 +18,16 @@ export class ChainController {
         return this.chainService.forward('get_info', body);
     }
 
-    @Post('push_transaction')
+    @Post('sign')
     @ApiOperation({
         title: 'Guaranteed transaction execution',
         description: `
-            An improved version of the EOS HTTP API push_transaction endpoint that offers guaranteed transaction execution.
+            Sign a transaction with evrpdcronjob account. Use it to pay for a user's CPU. 
             The 'Content-Type: application/json' header must be set to use this endpoint.
-            This is a slow endpoint that does not return until the transaction has been included in a block.
-            Details for using the endpoint can be found at https://developers.eos.io/eosio-nodeos/reference#push_transaction.`
+            The body format is the same as https://developers.eos.io/eosio-nodeos/reference#push_transaction.`
     })
-    async pushTransaction(@Body() transaction): Promise<any> {
-        return this.chainService.pushTransaction(transaction);
+    async sign(@Body() transaction): Promise<any> {
+        return this.chainService.sign(transaction);
     }
 
     @Post('get_table_rows')
