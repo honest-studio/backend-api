@@ -192,7 +192,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
     });
 
     // Set the AWS S3 bucket keys
-    let encodedSuffixFirstPart = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex')));
+    let encodedSuffixFirstPart = encodeURIComponent(slugify(slug + "__" + crypto.randomBytes(3).toString('hex'), { remove: /[*+~.()'"#%?!:@]/g }));
     let encodedSuffixWebpOriginal = `${encodedSuffixFirstPart}_original.webp`;
     let encodedSuffixWebpMedium = `${encodedSuffixFirstPart}_medium.webp`;
     let encodedSuffixWebpThumb = `${encodedSuffixFirstPart}_thumb.webp`;
