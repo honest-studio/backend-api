@@ -91,7 +91,7 @@ export class CategoryController {
         return await this.categoryService.getHomepageCategories(lang);
     }
 
-    @Post('/search/')
+    @Post('search')
     @ApiOperation({ 
         title: `Search the categories title`
     })

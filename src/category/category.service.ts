@@ -208,7 +208,6 @@ export class CategoryService {
     }
 
     async search(pack: CategorySearchPack): Promise<PageCategory[]> {
-        
         let categories: any[] = await this.mysql.TryQuery(
             `
             SELECT *

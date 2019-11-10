@@ -287,13 +287,14 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             `
                 SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
+                INNER JOIN enterlink_hashcache hsc ON art.ipfs_hash_current=hsc.ipfs_hash
                 WHERE art.id between ? and ?
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
                     AND art.page_type = ?
                     AND art.page_lang = ?
-                    AND art.lastmod_timestamp >= ?
+                    AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,
             [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE, TIMESTAMP_FLOOR]
