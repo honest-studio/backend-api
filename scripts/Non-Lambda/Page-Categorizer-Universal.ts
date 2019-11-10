@@ -30,9 +30,11 @@ const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
-const TIMESTAMP_FLOOR = '2019-10-13 21:45:19'; 
+const TIMESTAMP_FLOOR = '2014-10-13 21:45:19'; 
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
+
+const CTN_REGEX = /\[\[CITE\|\-?.*?\|([^\]]{0,300})(\]\])/gim;
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -112,7 +114,9 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     // Combine into one big string first
                     let combo_value = ibox.values.map(val => {
                         return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
-                    }).join(' ')
+                    })
+                    .join(' ')
+                    .replace(CTN_REGEX, "") // Remove any citations, if present
     
                     if(combo_value && combo_value.search(values_regex) >= 0){
                         console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
@@ -131,7 +135,9 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                 // Combine into one big string first
                 let combo_value = ibox.values.map(val => {
                     return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
-                }).join(' ')
+                })
+                .join(' ')
+                .replace(CTN_REGEX, "") // Remove any citations, if present
 
                 // Trim the result first
                 let trimmed_value = combo_value.trim();
