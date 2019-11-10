@@ -4,8 +4,13 @@ import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/ap
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as SqlString from 'sqlstring';
 
-
 const HOMEPAGE_CATEGORY_IDS = [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070];
+
+export interface CategorySearchPack {
+    lang: string,
+    schema_for: string, 
+    searchterm: string
+}
 
 @Injectable()
 export class CategoryService {
@@ -199,6 +204,30 @@ export class CategoryService {
             10000
         );
 
+        return categories;
+    }
+
+    async search(pack: CategorySearchPack): Promise<PageCategory[]> {
+        
+        let categories: any[] = await this.mysql.TryQuery(
+            `
+            SELECT *
+            FROM 
+                enterlink_pagecategory cat 
+            WHERE 
+                cat.lang = ? 
+                AND cat.schema_for = ?
+                AND (
+                    cat.title REGEXP ? 
+                    OR cat.schema_keyword REGEXP ? 
+                    OR cat.key_regex REGEXP ? 
+                    OR cat.values_regex REGEXP ?    
+                )
+            `,
+            [pack.lang, pack.schema_for, pack.searchterm, pack.searchterm, pack.searchterm, pack.searchterm]
+        );
+        
+        console.log(categories)
         return categories;
     }
 }

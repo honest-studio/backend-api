@@ -30,6 +30,7 @@ const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
+const TIMESTAMP_FLOOR = '2019-10-13 21:45:19'; 
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
@@ -290,11 +291,12 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
-                    AND art.page_type=?
-                    AND art.page_lang=?
+                    AND art.page_type = ?
+                    AND art.page_lang = ?
+                    AND art.lastmod_timestamp >= ?
                 GROUP BY art.id
             `,
-            [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE]
+            [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE, TIMESTAMP_FLOOR]
         );
 
         for await (const artResult of fetchedArticles) {
