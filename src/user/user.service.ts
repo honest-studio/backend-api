@@ -183,6 +183,16 @@ export class UserService {
             streaks[user] = { current, best }
         }
 
+        // Add profiles to user
+        const pipeline2 = this.redis.connection().pipeline();
+        for (let user of users) {
+            pipeline2.get(`user:${user}:profile`);
+        }
+        const values2 = await pipeline2.exec();
+        for (let i in values2) {
+            streaks[users[i]].profile = JSON.parse(values2[i][1]);
+        }
+
         return streaks;
     }
 
