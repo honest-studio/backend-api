@@ -93,7 +93,7 @@ export class CategoryController {
 
     @Post('search')
     @ApiOperation({ 
-        title: `Search the categories title`
+        title: `Search category titles`
     })
     @ApiResponse({
         status: 200,
@@ -101,6 +101,18 @@ export class CategoryController {
     })
     async search(@Body() pack: CategorySearchPack): Promise<PageCategory[]> {
         return this.categoryService.search(pack);
+    }
+
+    @Post('categoriesbyids')
+    @ApiOperation({ 
+        title: `Get categories by their IDs`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns an array of categories`
+    })
+    async categoriesByIDs(@Body() ids: number[]): Promise<PageCategory[]> {
+        return this.categoryService.categoriesByIDs(ids);
     }
 
 }

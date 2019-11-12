@@ -215,7 +215,7 @@ export class CategoryService {
                 enterlink_pagecategory cat 
             WHERE 
                 cat.lang = ? 
-                AND cat.schema_for = ?
+                AND (cat.schema_for = ? OR cat.schema_for = 'Thing')
                 AND (
                     cat.title REGEXP ? 
                     OR cat.schema_keyword REGEXP ? 
@@ -225,8 +225,22 @@ export class CategoryService {
             `,
             [pack.lang, pack.schema_for, pack.searchterm, pack.searchterm, pack.searchterm, pack.searchterm]
         );
-        
-        console.log(categories)
         return categories;
     }
+
+    async categoriesByIDs(ids: number[]): Promise<PageCategory[]> {
+        if (ids.length == 0) return [];
+        let categories: any[] = await this.mysql.TryQuery(
+            `
+            SELECT *
+            FROM 
+                enterlink_pagecategory cat 
+            WHERE 
+                cat.id IN (?)
+            `,
+            [ids]
+        );
+        return categories;
+    }
+
 }
