@@ -576,37 +576,35 @@ export class WikiService {
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
 
+        // NOTE 11/8/2019: Eternum seems broken. Disabling for now.
         // Pin to Eternum
-        let blob = JSON.stringify(wiki);
-        const form = new FormData();
-        form.append('path', blob);
-        const random_id = Math.random().toString(36).substring(2);
-        let ipfs_hash;
-        try {
-            ipfs_hash = await fetch(`https://ipfs.eternum.io/ipfs/QmPCacqc5icpYCuoKKBnChawTK9E732hPWeHc7snezwjLa/${random_id}`, {
-                method: 'PUT',
-                body: form,
-                headers: form.getHeaders()
-            }).then(response => response.headers.get('ipfs-hash'));
-            if (!ipfs_hash) throw new Error("Eternum is down");
+        //let blob = JSON.stringify(wiki);
+        //const form = new FormData();
+        //form.append('path', blob);
+        //const random_id = Math.random().toString(36).substring(2);
 
-            const pin_data = {
-                hash: ipfs_hash,
-                name: `lang_${page_lang}/${slug}`
-            };
-            fetch(`https://www.eternum.io/api/pin/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
-                },
-                body: JSON.stringify(pin_data)
-            })
-        }
-        catch {
-            const pin = await this.ipfs.client().add(blob);
-            ipfs_hash = pin[0].hash;
-        }
+        //ipfs_hash = await fetch(`https://ipfs.eternum.io/ipfs/QmPCacqc5icpYCuoKKBnChawTK9E732hPWeHc7snezwjLa/${random_id}`, {
+        //    method: 'PUT',
+        //    body: form,
+        //    headers: form.getHeaders()
+        //}).then(response => response.headers.get('ipfs-hash'));
+        //if (!ipfs_hash) throw new Error("Eternum is down");
+        //
+        //const pin_data = {
+        //    hash: ipfs_hash,
+        //    name: `lang_${page_lang}/${slug}`
+        //};
+        //fetch(`https://www.eternum.io/api/pin/`, {
+        //    method: 'POST',
+        //    headers: {
+        //        'Content-Type': 'application/json',
+        //        Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
+        //    },
+        //    body: JSON.stringify(pin_data)
+        //})
+        let blob = JSON.stringify(wiki);
+        const pin = await this.ipfs.client().add(blob);
+        let ipfs_hash = pin[0].hash;
 
         if (!ipfs_hash) {
             let submission;

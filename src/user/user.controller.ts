@@ -91,7 +91,8 @@ export class UserController {
         description: `Array of objects, one for each user:
             {
                 current: Current editing streak for user,
-                highest: Longest historical editing streak for user
+                best: Longest historical editing streak for user,
+                profile: User profile if it exists. null if not.
             }`
     })
     async getStreaks(@Body() users): Promise<any> {

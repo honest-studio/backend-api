@@ -42,7 +42,7 @@ export class ChainService {
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
 
         // Make sure actions are only directed at Everipedia contracts
-        const WHITELISTED_CONTRACTS = ["everipediaiq", "eparticlectr", "epsovreignid"];
+        const WHITELISTED_CONTRACTS = ["everipediaiq", "eparticlectr", "epsovreignid", "prediqtpedia", "prediqtmarke"];
         const transaction_buffer = Buffer.from(transaction.serializedTransaction.data);
         const tx = api.deserializeTransaction(transaction_buffer);
         for (let action of tx.actions) {
