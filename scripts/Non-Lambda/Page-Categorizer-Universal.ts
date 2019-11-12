@@ -30,8 +30,11 @@ const BATCH_SIZE = 10000;
 const PAGE_TYPE = 'Person';
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
+const TIMESTAMP_FLOOR = '2014-10-13 21:45:19'; 
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
+
+const CTN_REGEX = /\[\[CITE\|\-?.*?\|([^\]]{0,300})(\]\])/gim;
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -111,7 +114,9 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     // Combine into one big string first
                     let combo_value = ibox.values.map(val => {
                         return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
-                    }).join(' ')
+                    })
+                    .join(' ')
+                    .replace(CTN_REGEX, "") // Remove any citations, if present
     
                     if(combo_value && combo_value.search(values_regex) >= 0){
                         console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
@@ -130,7 +135,9 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                 // Combine into one big string first
                 let combo_value = ibox.values.map(val => {
                     return val && val.sentences && val.sentences.map(sent => sent.text).join(' ');
-                }).join(' ')
+                })
+                .join(' ')
+                .replace(CTN_REGEX, "") // Remove any citations, if present
 
                 // Trim the result first
                 let trimmed_value = combo_value.trim();
@@ -286,15 +293,17 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             `
                 SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
                 FROM enterlink_articletable art
+                INNER JOIN enterlink_hashcache hsc ON art.ipfs_hash_current=hsc.ipfs_hash
                 WHERE art.id between ? and ?
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
-                    AND art.page_type=?
-                    AND art.page_lang=?
+                    AND art.page_type = ?
+                    AND art.page_lang = ?
+                    AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,
-            [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE]
+            [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE, TIMESTAMP_FLOOR]
         );
 
         for await (const artResult of fetchedArticles) {
