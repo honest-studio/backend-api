@@ -1,8 +1,8 @@
-import { Body, Controller, Get, UsePipes, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { PageCategoryCollection, PageCategory } from '../types/api';
-import { CategoryService } from './category.service';
+import { CategoryService, CategorySearchPack } from './category.service';
 
 @Controller('v2/category')
 @ApiUseTags('Contact Us')
@@ -89,6 +89,30 @@ export class CategoryController {
     })
     async getHomepageCategories(@Param('lang') lang): Promise<PageCategory[]> {
         return await this.categoryService.getHomepageCategories(lang);
+    }
+
+    @Post('search')
+    @ApiOperation({ 
+        title: `Search category titles`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns search results`
+    })
+    async search(@Body() pack: CategorySearchPack): Promise<PageCategory[]> {
+        return this.categoryService.search(pack);
+    }
+
+    @Post('categoriesbyids')
+    @ApiOperation({ 
+        title: `Get categories by their IDs`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns an array of categories`
+    })
+    async categoriesByIDs(@Body() ids: number[]): Promise<PageCategory[]> {
+        return this.categoryService.categoriesByIDs(ids);
     }
 
 }
