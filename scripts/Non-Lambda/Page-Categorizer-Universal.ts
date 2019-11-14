@@ -27,7 +27,7 @@ commander
   .parse(process.argv);
 
 const BATCH_SIZE = 10000;
-const PAGE_TYPE = 'Person';
+const PAGE_TYPES = ['Person', 'Organization'];
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
 const TIMESTAMP_FLOOR = '2014-10-13 21:45:19'; 
@@ -49,6 +49,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
     let pageID = quickSplit[4];
     let redirectPageID = quickSplit[5];
     let creationTimestamp = quickSplit[6];
+    let page_type = quickSplit[7];
     if (redirectPageID == "") redirectPageID = null;
 
     let lang_code, slug, slug_alt;
@@ -66,6 +67,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
     console.log(chalk.blue.bold(`Page ID: |${pageID}|`));
     console.log(chalk.blue.bold(`Page Title: |${pageTitle}|`));
     console.log(chalk.blue.bold(`Page Slug: |${slug}| alt: |${slug_alt}|`));
+    console.log(chalk.blue.bold(`Page Type: |${page_type}|`));
 
     // Get the article object
     let hashCacheResult: Array<any> = await theMysql.TryQuery(
@@ -94,12 +96,17 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
 
     // Search through the infoboxes
     let categories_to_add: PageCategory[] = [];
+
+
+    // Filter the categories appropriately
+    let filtered_categories_to_check = regexed_categories.filter(cat => cat.schema_for == page_type || cat.schema_for == 'Thing') 
+
     if (wiki.infoboxes.length > 0){
         for (let index = 0; index < wiki.infoboxes.length; index++) {
             let ibox = wiki.infoboxes[index];
             // Search the schema
-            for (let c_idx = 0; c_idx < regexed_categories.length; c_idx++) {
-                let categ = regexed_categories[c_idx];
+            for (let c_idx = 0; c_idx < filtered_categories_to_check.length; c_idx++) {
+                let categ = filtered_categories_to_check[c_idx];
                 let schema_keyword_regex = new RegExp(categ.schema_keyword, 'gimu')
                 let key_regex = new RegExp(categ.key_regex, 'gimu');
                 let values_regex = new RegExp(categ.values_regex, 'gimu');
@@ -127,8 +134,11 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
 
             // Handle birthdays
             if (
-                (ibox.schema && ibox.schema.search(/birthDate/gimu) >= 0)
-                || (ibox.key && ibox.key.search(/Born|Birthday/gimu) >= 0)
+                page_type == 'Person'
+                && (
+                    (ibox.schema && ibox.schema.search(/birthDate/gimu) >= 0)
+                    || (ibox.key && ibox.key.search(/Born|Birthday/gimu) >= 0)
+                )
             ){
                 // console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
                 // Search the values
@@ -269,13 +279,13 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
         `
             SELECT *
             FROM enterlink_pagecategory
-            WHERE schema_for = ?
+            WHERE schema_for in (?)
                 AND schema_keyword IS NOT NULL
                 AND key_regex IS NOT NULL
                 AND values_regex IS NOT NULL
                 AND id >= ?
         `,
-        [PAGE_TYPE, IGNORE_CATEGORIES_BELOW]
+        [PAGE_TYPES, IGNORE_CATEGORIES_BELOW]
     );
 
     let currentStart, currentEnd;
@@ -291,19 +301,19 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
 
         const fetchedArticles: any[] = await theMysql.TryQuery(
             `
-                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp ) as concatted
+                SELECT CONCAT_WS('|', CONCAT('lang_', art.page_lang, '/', art.slug), CONCAT('lang_', art.page_lang, '/', art.slug_alt), art.ipfs_hash_current, TRIM(art.page_title), art.id, IFNULL(art.redirect_page_id, ''), art.creation_timestamp, art.page_type ) as concatted
                 FROM enterlink_articletable art
                 INNER JOIN enterlink_hashcache hsc ON art.ipfs_hash_current=hsc.ipfs_hash
                 WHERE art.id between ? and ?
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
                     AND art.is_indexed = 1
-                    AND art.page_type = ?
+                    AND art.page_type IN (?)
                     AND art.page_lang = ?
                     AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,
-            [currentStart, currentEnd, PAGE_TYPE, LANGUAGE_CODE, TIMESTAMP_FLOOR]
+            [currentStart, currentEnd, PAGE_TYPES, LANGUAGE_CODE, TIMESTAMP_FLOOR]
         );
 
         for await (const artResult of fetchedArticles) {
