@@ -153,7 +153,7 @@ export class UserService {
 
         const latest_block = values[values.length - 1][1];
         const info = {}
-        for (let i in users) {
+        for (let i=0; i < users.length; i++) {
             let current = 0;
             let best = 0;
             let edits = 0;
