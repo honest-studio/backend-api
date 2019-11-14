@@ -25,7 +25,7 @@ async function bootstrap() {
     const options = new DocumentBuilder()
         .setTitle('Everipedia API')
         .setDescription('Data access API for the Everipedia dapp on EOS')
-        .setVersion('0.1')
+        .setVersion('2.1')
         .setSchemes('https')
         .setHost('api.everipedia.org')
         .addTag('Proposals')
