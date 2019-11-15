@@ -42,7 +42,7 @@ export class ChainService {
         const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
 
         // Make sure actions are only directed at Everipedia contracts
-        const WHITELISTED_CONTRACTS = ["everipediaiq", "eparticlectr", "epsovreignid", "prediqtpedia", "prediqtmarke"];
+        const WHITELISTED_CONTRACTS = ["everipediaiq", "eparticlectr", "epsovreignid", "prediqtpedia", "prediqtmarke", "eosio.token"];
         const transaction_buffer = Buffer.from(transaction.serializedTransaction.data);
         const tx = api.deserializeTransaction(transaction_buffer);
         for (let action of tx.actions) {
@@ -60,6 +60,15 @@ export class ChainService {
                 console.warn("============= HACKER ALERT ===========");
                 console.warn(message);
                 console.warn("============= HACKER ALERT ===========");
+                throw new BadRequestException(message);
+            }
+
+            // Only EOS transfers to prediqtpedia and prediqtmarke are supported
+            if (action.account == "eosio.token" && action.data.toLowerCase().slice(16,32) != "605c52355b97d4ad") {
+                const message = `FREELOADER ALERT: EOS transfers only supported to prediqtpedia`;
+                console.warn("============= FREELOADER ALERT ===========");
+                console.warn(message);
+                console.warn("============= FREELOADER ALERT ===========");
                 throw new BadRequestException(message);
             }
         }

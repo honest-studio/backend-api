@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation, ApiUseTags } from '@nestjs/swagger';
+import { ApiOperation, ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
 import { ChainService } from './chain.service';
 
 @Controller('v1/chain')
@@ -20,11 +20,24 @@ export class ChainController {
 
     @Post('sign')
     @ApiOperation({
-        title: 'Guaranteed transaction execution',
+        title: 'Pay-for-CPU signing utility',
         description: `
             Sign a transaction with evrpdcronjob account. Use it to pay for a user's CPU. 
-            The 'Content-Type: application/json' header must be set to use this endpoint.
-            The body format is the same as https://developers.eos.io/eosio-nodeos/reference#push_transaction.`
+            The 'Content-Type: application/json' header must be set to use this endpoint.`
+    })
+    @ApiImplicitBody({
+        name: 'chainId',
+        description: `The chain ID for the EOSIO chain you want to use. 
+            Ex: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906" for EOS mainnet`,
+        type: String,
+        required: true
+    })
+    @ApiImplicitBody({
+        name: 'serializedTransaction',
+        description: `The serialized transaction as a Buffer object. 
+            Ex: { type: "Buffer", data: [123,234,...] }`,
+        type: Buffer,
+        required: true
     })
     async sign(@Body() transaction): Promise<any> {
         return this.chainService.sign(transaction);

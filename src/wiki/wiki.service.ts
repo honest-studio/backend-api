@@ -25,6 +25,8 @@ import { updateElasticsearch } from '../utils/elasticsearch-tools';
 const util = require('util');
 var colors = require('colors');
 import FormData from 'form-data';
+import crypto from 'crypto';
+import multihash from 'multihashes';
 
 const MAX_SLUG_SIZE = 256;
 const MAX_LANG_CODE_SIZE = 7;
@@ -576,51 +578,14 @@ export class WikiService {
         let page_lang = wiki.metadata.find((m) => m.key == 'page_lang');
         page_lang = page_lang ? page_lang.value : 'en';
 
-        // NOTE 11/8/2019: Eternum seems broken. Disabling for now.
-        // Pin to Eternum
-        //let blob = JSON.stringify(wiki);
-        //const form = new FormData();
-        //form.append('path', blob);
-        //const random_id = Math.random().toString(36).substring(2);
-
-        //ipfs_hash = await fetch(`https://ipfs.eternum.io/ipfs/QmPCacqc5icpYCuoKKBnChawTK9E732hPWeHc7snezwjLa/${random_id}`, {
-        //    method: 'PUT',
-        //    body: form,
-        //    headers: form.getHeaders()
-        //}).then(response => response.headers.get('ipfs-hash'));
-        //if (!ipfs_hash) throw new Error("Eternum is down");
-        //
-        //const pin_data = {
-        //    hash: ipfs_hash,
-        //    name: `lang_${page_lang}/${slug}`
-        //};
-        //fetch(`https://www.eternum.io/api/pin/`, {
-        //    method: 'POST',
-        //    headers: {
-        //        'Content-Type': 'application/json',
-        //        Authorization: `Token: ${this.config.get("ETERNUM_API_KEY")}`,
-        //    },
-        //    body: JSON.stringify(pin_data)
-        //})
         let blob = JSON.stringify(wiki);
-        const pin = await this.ipfs.client().add(blob);
-        let ipfs_hash = pin[0].hash;
-
-        if (!ipfs_hash) {
-            let submission;
-            try {
-                submission = await this.ipfs.client().add(Buffer.from(blob, 'utf8'));
-            } catch (err) {
-                if (err.code == 'ECONNREFUSED') {
-                    console.log(`WARNING: IPFS could not be accessed. Is it running?`);
-                    throw new InternalServerErrorException(`Server error: The IPFS node is down`);
-                } else throw err;
-            }
-            const ipfs_hash = submission[0].hash;
-        }
+        const hash = crypto.createHash('sha256');
+        hash.update(blob);
+        const hash_buffer = hash.digest();
+        const multihash_buffer = multihash.encode(hash_buffer, "sha2-256");
+        const ipfs_hash = multihash.toB58String(multihash_buffer);
 
         // Save submission immediately so we don't lose data
-        // TODO: change ipfs_hash to eternum_hash
         let wikiCopy: ArticleJson = addAMPInfo(wiki);
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);
@@ -640,8 +605,6 @@ export class WikiService {
             }
             else throw e;
         }
-
-
 
         // Cache to Redis
         this.redis.connection().set(`wiki:${ipfs_hash}`, JSON.stringify(wiki));

@@ -141,25 +141,31 @@ export class UserService {
     }
 
     // calculate current and best editing streaks for users
-    async getStreaks(users) {
+    async getProfiles (users) {
         const pipeline = this.redis.connection().pipeline();
         for (let user of users) {
             pipeline.smembers(`user:${user}:proposals`);
+            pipeline.get(`user:${user}:num_edits`);
+            pipeline.get(`user:${user}:profile`);
         }
         pipeline.get('eos_actions:last_block_processed');
         const values = await pipeline.exec();
 
         const latest_block = values[values.length - 1][1];
-        const streaks = {}
-        for (let i in users) {
+        const info = {}
+        for (let i=0; i < users.length; i++) {
             let current = 0;
             let best = 0;
+            let edits = 0;
+            let profile = null;
+            if (values[i*3 + 1][1]) edits = Number(values[i*3 + 1][1]);
+            if (values[i*3 + 2][1]) profile = JSON.parse(values[i*3 + 2][1]);
             const user = users[i];
-            if (!values[i]) {
-                streaks[user] = { current, best }
+            if (!values[i*3]) {
+                info[user] = { current, best }
                 continue;
             }
-            let proposals = values[i][1];
+            let proposals = values[i*3][1];
             proposals = proposals
                 .map(p => JSON.parse(p))
                 .sort((a,b) => a.block_num - b.block_num);
@@ -180,20 +186,10 @@ export class UserService {
             // if the most recent proposal isnt within the last day, current streak is 0
             if (proposals.length > 0 && proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
             if (current > best) best = current;
-            streaks[user] = { current, best }
+            info[user] = { current, best, edits, profile }
         }
 
-        // Add profiles to user
-        const pipeline2 = this.redis.connection().pipeline();
-        for (let user of users) {
-            pipeline2.get(`user:${user}:profile`);
-        }
-        const values2 = await pipeline2.exec();
-        for (let i in values2) {
-            streaks[users[i]].profile = JSON.parse(values2[i][1]);
-        }
-
-        return streaks;
+        return info;
     }
 
     async getProfile(account_name: string) {

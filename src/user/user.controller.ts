@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Body, Param, Query, UsePipes } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiImplicitParam, ApiImplicitBody, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { UserQuerySchema } from './user.query-schema';
 import { UserService } from './user.service';
@@ -82,7 +82,15 @@ export class UserController {
 
     @Post('streaks')
     @ApiOperation({
-        title: 'Get user editing streaks',
+        title: 'Deprecated'
+    })
+    async getStreaks(@Body() users): Promise<any> {
+        return this.userService.getProfiles(users);
+    }
+
+    @Post('profiles')
+    @ApiOperation({
+        title: 'Get user info',
         description: `Body format: An array of users. Example:
             ["kedartheiyer", "eosiochicken"]`
     })
@@ -92,11 +100,12 @@ export class UserController {
             {
                 current: Current editing streak for user,
                 best: Longest historical editing streak for user,
-                profile: User profile if it exists. null if not.
+                profile: User profile if it exists. null if not,
+                edits: total number of edits user has made
             }`
     })
-    async getStreaks(@Body() users): Promise<any> {
-        return this.userService.getStreaks(users);
+    async getProfiles(@Body() users): Promise<any> {
+        return this.userService.getProfiles(users);
     }
 
     @Get(':eos_account_name/profile')
