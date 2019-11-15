@@ -16,7 +16,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
     const creation_timestamp = inputJSON.metadata.find(w => w.key == 'creation_timestamp') ? inputJSON.metadata.find(w => w.key == 'creation_timestamp').value : "";
     const page_lang = inputJSON.metadata.find(w => w.key == 'page_lang').value;
     const url_slug = inputJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
-    let BLURB_SNIPPET_PLAINTEXT = wikiExtras && wikiExtras.schema ? wikiExtras.schema['description'].replace(/"/gimu, "\'") : "";
+    let BLURB_SNIPPET_PLAINTEXT = wikiExtras && wikiExtras.schema ? wikiExtras.schema['description'].replace(/["“”‘’]/gmiu, "\'") : "";
     
     const theHTML = `
     <!DOCTYPE html>
