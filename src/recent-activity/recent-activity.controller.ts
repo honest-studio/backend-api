@@ -172,12 +172,6 @@ export class RecentActivityController {
         type: Number
     })
     @ApiImplicitQuery({
-        name: 'cache',
-        type: 'boolean',
-        required: false,
-        description: 'set false to bypass cache. default: true'
-    })
-    @ApiImplicitQuery({
         name: 'preview',
         description: `Include page title, main photo, thumbnail, and text preview for each proposal.`,
         required: false,
@@ -188,17 +182,6 @@ export class RecentActivityController {
         description: `Filter by EOS account name`,
         required: false,
         type: String
-    })
-    @ApiImplicitQuery({
-        name: 'diff',
-        description: `Include diff data in the proposals. Takes one of three values:
-            'none': (default) Don't include diff data.
-            'metadata': Only return metadata about the such as diff_percent, old_hash, new_hash, etc.
-            'full': Return the full wiki diff between the proposal and its parent. Warning: this can lead to large responses that lag on low-bandwidth connections. 
-
-            Setting this option to 'metadata' or 'full' can add 1-2 seconds to the response time.`,
-        required: false,
-        type: Boolean
     })
     @ApiImplicitQuery({
         name: 'langs',
