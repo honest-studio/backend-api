@@ -43,6 +43,7 @@ export interface WikiExtraInfo {
     canonical_lang: string;
     link_collection: PageIndexedLinkCollection;
     page_categories: PageCategory[];
+    boosts: Boost[];
 }
 
 export interface LanguagePack {

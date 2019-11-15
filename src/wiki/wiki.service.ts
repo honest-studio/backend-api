@@ -449,6 +449,33 @@ export class WikiService {
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;
 
+        return [
+            {
+                id: 1,
+                slug: 'travismoore5036459',
+                lang_code: 'en',
+                booster: 'abc123abc123',
+                amount: 77777,
+                timestamp: 1573854499
+            },
+            {
+                id: 2,
+                slug: 'travismoore5036459',
+                lang_code: 'en',
+                booster: 'bbb456bbb456',
+                amount: 5000,
+                timestamp: 1573854399
+            },
+            {
+                id: 3,
+                slug: 'travismoore5036459',
+                lang_code: 'en',
+                booster: 'ccc789ccc789',
+                amount: 250,
+                timestamp: 1573852499
+            }
+        ]
+
         return theBoosts;
     }
 
@@ -1054,11 +1081,13 @@ export class WikiService {
     }
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
-        const wiki_promise = this.getWikiBySlug(lang_code, slug, false, false, false);
-        const see_also_promise = wiki_promise.then(wiki => this.getSeeAlsos(wiki, lang_code));
-        const schema_promise = wiki_promise.then(wiki => renderSchema(wiki, 'JSON'));
-        const link_collection_promise = wiki_promise.then(wiki => this.getPageIndexedLinkCollection(wiki, lang_code));
-        const page_categories_promise = wiki_promise.then(wiki => this.getPageCategories(wiki, lang_code));
+        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
+        const article_boosts_promise = this.getBoostsByWikiLangSlug(slug, lang_code);
+        const see_also_promise = this.getSeeAlsos(wiki, lang_code);
+        const schema_promise = renderSchema(wiki, 'JSON');
+        const link_collection_promise = this.getPageIndexedLinkCollection(wiki, lang_code);
+        const page_categories_promise = this.getPageCategories(wiki, lang_code);
+        
 
         const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
@@ -1090,7 +1119,8 @@ export class WikiService {
             pageviews_promise, 
             schema_promise, 
             link_collection_promise,
-            page_categories_promise
+            page_categories_promise,
+            article_boosts_promise
         ])
         .then(values => {
             const alt_langs: LanguagePack[] = values[0];
@@ -1099,6 +1129,7 @@ export class WikiService {
             const schema = values[3];
             const link_collection = values[4];
             const page_categories = values[5];
+            const boosts = values[6];
             return { 
                 alt_langs, 
                 see_also, 
@@ -1107,7 +1138,8 @@ export class WikiService {
                 canonical_lang: lang_code, 
                 canonical_slug: slug,
                 link_collection,
-                page_categories
+                page_categories,
+                boosts
             };
 
         });
