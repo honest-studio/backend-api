@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { MongoDbService, MysqlService, RedisService } from '../feature-modules/database';
 import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { PreviewService } from '../preview/preview.service';
@@ -6,7 +6,7 @@ import { Proposal, ProposalService } from '../proposal';
 import { ActivityType } from '../types/article';
 import { ConfigService } from '../common';
 const util = require('util');
-
+import { Boost, BoostActivityPack } from '../types/api';
 @Injectable()
 export class RecentActivityService {
     private readonly TRENDING_CACHE_EXPIRE_MS = 10 * 60 * 1000;
@@ -17,6 +17,7 @@ export class RecentActivityService {
         private proposalService: ProposalService,
         private config: ConfigService,
         private mysql: MysqlService,
+        @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService
     ) {}
 
     async getAll(query): Promise<Array<EosAction<any>>> {
@@ -107,6 +108,69 @@ export class RecentActivityService {
         };
 
         return this.proposalService.getProposals(proposal_ids, proposal_options);
+    }
+
+    async getRecentBoosts(query): Promise<BoostActivityPack[]> {
+        let find_query;
+        let sort_direction;
+        const now = (Date.now() / 1000) | 0;
+        sort_direction = -1;
+
+        find_query = {
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logboostinv'
+        };
+        if (query.account_name) {
+            find_query['trace.act.data.booster'] = query.account_name;
+        }
+        if (query.langs) {
+            find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };
+        }
+        const boost_docs = await this.mongo
+            .connection()
+            .actions.find(find_query)
+            .sort({ 'trace.act.data.timestamp': sort_direction })
+            .skip(query.offset)
+            .limit(query.limit)
+            .toArray();
+
+        // Prepare the skeleton for returning 
+        let return_packs = boost_docs.map(doc => {
+            return {
+                boost: doc.trace.act.data,
+                preview: null
+            }
+        })
+
+        // Fetch previews and add them to the return pack, if applicable
+        if (query.preview){
+            let wiki_identities = return_packs.map(rtp => {
+                return {
+                    lang_code: rtp.boost.lang_code,
+                    slug: rtp.boost.slug
+                }
+            })
+
+            // Get the previews
+            let preview_results = await this.previewService.getPreviewsBySlug(wiki_identities, query.user_agent);
+
+            // Fill the return packs with the previews
+            return_packs = return_packs.map(rtp => {
+                let current_pack = rtp;
+                for (let i = 0; i < preview_results.length; i++){
+                    let prev = preview_results[i];
+                    if (rtp.boost.slug == prev.slug && rtp.boost.lang_code == prev.lang_code){
+                        current_pack.preview = prev;
+                        break;
+                    }
+                };
+                return current_pack;
+            })
+            
+            return return_packs;
+        }
+        else return return_packs;
+
     }
 
     async getTrendingWikis(langs: string[] = [], range: string = 'today', limit: number = 10) {

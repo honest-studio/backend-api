@@ -22,7 +22,7 @@ export class AmpRenderPartial {
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
-        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
+        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'");
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -58,7 +58,7 @@ export class AmpRenderPartial {
                 ) {
                     let { text } = item.values[0].sentences[0];
 
-                    const sanitizedText = sanitizeTextPreview(text);
+                    const sanitizedText = sanitizeTextPreview(text).replace(/["“”‘’]/gm, "\'");
 
                     // Check for ultra-long occupations and do nothing if they are present
                     // Otherwise the title would look very jank
@@ -564,8 +564,8 @@ export class AmpRenderPartial {
                 return result.text;
             })
             .join('');
-        let sanitizedCaptionPlaintext = striptags(sanitizedCaption);
-        // console.log(sanitizedCaptionPlaintext)
+        let sanitizedCaptionPlaintext = striptags(sanitizedCaption).replace(/["“”‘’]/gmiu, "\'");
+
         return `
             ${
                 media.category == 'PICTURE'
@@ -628,7 +628,7 @@ export class AmpRenderPartial {
                         ${sanitizedCaptionPlaintext}
                     </div>
                 </div>`
-                    : media.category == 'YOUTUBE'
+                    : media.category == 'YOUTUBE' && getYouTubeID(media.url) 
                     ? `<div class="tile-ct">
                     <a rel='nofollow' target="_blank" href="${media.url}" title="Link to video">
                     <span>
@@ -811,7 +811,7 @@ export class AmpRenderPartial {
         let theDomain = parsedDomain && parsedDomain.domain ? parsedDomain.domain : ""; 
         let theTLD = parsedDomain && parsedDomain.tld ? "." + parsedDomain.tld : "";  
         let domainToShow = (citation.mime == 'None' || citation.mime === undefined || citation.mime == null) ? `${theSubdomain}${theDomain}${theTLD}` : null;
-        let sanitizedDescriptionPlaintext = striptags(sanitizedDescription);
+        let sanitizedDescriptionPlaintext = striptags(sanitizedDescription).replace(/["“”‘’]/gmiu, "\'");
 
         return `                        
             <li>
@@ -902,6 +902,8 @@ export class AmpRenderPartial {
 			if (link_collection.includes(test_wikilangslug)) is_indexed = true;
         }
 
+        let sanitized_sa_page_title = seealso.page_title.replace(/["“”‘’]/gmiu, "\'");
+
         // Don't use anchor tags for non-indexed pages 
         let title_tag_to_use = is_indexed ? 
         `<a class="sa-title"  href="https://everipedia.org/wiki/${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
@@ -909,14 +911,14 @@ export class AmpRenderPartial {
 
         return `
             <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='0' role="link">
-                <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${seealso.page_title} wiki">
+                <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${sanitized_sa_page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
-                        seealso.page_title
+                        sanitized_sa_page_title
                     }"></amp-img>
                 </amp-img>
                 <div class="sa-contentwrap">
                     ${title_tag_to_use}
-                    <div class="sa-blurb">${seealso.text_preview}</div>
+                    <div class="sa-blurb">${seealso.text_preview.replace(/["“”‘’]/gmiu, "\'")}</div>
                 </div>
             </div>
         `;

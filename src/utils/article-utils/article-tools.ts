@@ -356,7 +356,7 @@ export const ConstructAMPImage = (
                       }" data-description="${sanitizedCaptionPlaintext}" alt="${sanitizedCaptionPlaintext}" data-width="640" data-height="640">
                         <amp-img placeholder width=150 height=150 src="${media.thumb}" layout="fill"></amp-img>
                     </amp-anim>`
-                    : media.category == 'YOUTUBE'
+                    : media.category == 'YOUTUBE' && getYouTubeID(media.url)
                     ? `<amp-youtube
                         data-videoid="${getYouTubeID(media.url)}"
                         layout="responsive"

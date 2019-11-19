@@ -1,12 +1,15 @@
-import { Controller, Get, Query, UsePipes } from '@nestjs/common';
+import { Controller, Get, Query, UsePipes, Inject, forwardRef } from '@nestjs/common';
 import { ApiImplicitQuery, ApiOperation, ApiUseTags } from '@nestjs/swagger';
 import { RecentActivityQuerySchema, RecentActivityService } from '.';
 import { JoiValidationPipe } from '../common';
+import { BoostActivityPack } from '../types/api';
 
 @Controller('v2/recent-activity')
 @ApiUseTags('Recent Activity')
 export class RecentActivityController {
-    constructor(private readonly recentActivityService: RecentActivityService) {}
+    constructor(
+        private readonly recentActivityService: RecentActivityService
+    ) {}
     @Get('all')
     @ApiOperation({
         title: 'Recent actions on the Everipedia Network smart contracts',
@@ -152,6 +155,52 @@ export class RecentActivityController {
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getProposals(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getProposals(query);
+    }
+
+    @Get('boosts')
+    @ApiOperation({ title: 'Recent boosts' })
+    @ApiImplicitQuery({
+        name: 'offset',
+        description: 'Number of records to skip. Default=0',
+        required: false,
+        type: Number
+    })
+    @ApiImplicitQuery({
+        name: 'limit',
+        description: 'Number of records to return. Min=1, Max=100, Default=10',
+        required: false,
+        type: Number
+    })
+    @ApiImplicitQuery({
+        name: 'preview',
+        description: `Include page title, main photo, thumbnail, and text preview for each proposal.`,
+        required: false,
+        type: Boolean
+    })
+    @ApiImplicitQuery({
+        name: 'account_name',
+        description: `Filter by EOS account name`,
+        required: false,
+        type: String
+    })
+    @ApiImplicitQuery({
+        name: 'langs',
+        description: `Language(s) if you wish to restrict the return output.
+            Default: Return all languages
+            Example: /v2/recent-activity/proposals?langs=en,es`,
+        required: false,
+        isArray: true,
+        type: 'string'
+    })
+    @ApiImplicitQuery({
+        name: 'user_agent',
+        description: 'User agent. Needed for WebP. Use "chrome" to serve WebP (if available) or "safari" to serve normal',
+        required: false,
+        type: String
+    })
+    @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
+    async getRecentBoosts(@Query() query): Promise<BoostActivityPack[]> {
+        return await this.recentActivityService.getRecentBoosts(query);
     }
 
     @Get('trending')
