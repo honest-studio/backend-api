@@ -84,8 +84,18 @@ export class UserService {
                 booster: 'eosiochicken',
                 amount: 5750,
                 timestamp: 1573802499
+            },
+            {
+                id: 15,
+                slug: 'list-of-prominent-everipedia-editors',
+                lang_code: 'en',
+                booster: 'eosiochicken',
+                amount: 15750,
+                timestamp: 1573202499
             }
         ]
+
+        
 
         // Order the boosts by highest amount first
         theBoosts = _.orderBy(theBoosts, ['amount'],['desc']); 
