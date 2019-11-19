@@ -126,6 +126,11 @@ export interface Boost {
     timestamp: number;
 }
 
+export interface BoostActivityPack {
+    boost: Boost;
+    preview: PreviewResult;
+}
+
 export interface BoostsByWikiReturnPack {
     boosts: Boost[];
     preview: PreviewResult;
