@@ -918,7 +918,7 @@ export class AmpRenderPartial {
                 </amp-img>
                 <div class="sa-contentwrap">
                     ${title_tag_to_use}
-                    <div class="sa-blurb">${seealso.text_preview}</div>
+                    <div class="sa-blurb">${seealso.text_preview.replace(/["“”‘’]/gmiu, "\'")}</div>
                 </div>
             </div>
         `;
