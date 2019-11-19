@@ -37,6 +37,11 @@ export class StatService {
             return doc;
         }
 
+        const cache = await this.redis.connection().get(`editor-leaderboard:${options.period}`);
+        if (cache && options.cache) {
+            return JSON.parse(cache).editor_rewards.slice(0, options.limit);
+        }
+
         const approx_head_block_res = await this.mongo.connection().actions.find({
             'trace.act.account': 'everipediaiq',
             'trace.act.name': 'transfer'
@@ -132,7 +137,8 @@ export class StatService {
             timestamp: new Date(),
             editor_rewards
         };
-        this.mongo.connection().statistics.replaceOne({ key: 'editor_leaderboard', period: options.period }, doc, { upsert: true });
+        this.redis.connection().set(`editor-leaderboard:${options.period}`, JSON.stringify(doc));
+        this.redis.connection().expire(`editor-leaderboard:${options.period}`, 3600);
 
         return editor_rewards.slice(0, options.limit);
     }
