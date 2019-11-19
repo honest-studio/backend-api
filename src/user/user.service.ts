@@ -162,25 +162,25 @@ export class UserService {
             let current = 0;
             let best = 0;
             let profile = null;
-            let rewards = { 
+            let activity = { 
                 today: { edits: 0, votes: 0, cumulative_iq_rewards: 0}, 
                 this_week: { edits: 0, votes: 0, cumulative_iq_rewards: 0}, 
                 this_month: { edits: 0, votes: 0, cumulative_iq_rewards: 0}, 
                 all_time: { edits: 0, votes: 0, cumulative_iq_rewards: 0}
             }
-            if (values[i*5 + 1][1]) rewards.all_time.edits = Number(values[i*5 + 1][1]);
+            if (values[i*5 + 1][1]) activity.all_time.edits = Number(values[i*5 + 1][1]);
             if (values[i*5 + 2][1]) profile = JSON.parse(values[i*5 + 2][1]);
-            if (values[i*5 + 3][1]) rewards.all_time.votes = Number(values[i*5 + 3][1]);
-            if (values[i*5 + 4][1]) rewards.all_time.cumulative_iq_rewards = Number(values[i*5 + 4][1]);
+            if (values[i*5 + 3][1]) activity.all_time.votes = Number(values[i*5 + 3][1]);
+            if (values[i*5 + 4][1]) activity.all_time.cumulative_iq_rewards = Number(values[i*5 + 4][1]);
 
             // Pull IQ rewards for time frames from editor leaderboards
             console.log(values);
             if (values[values.length - 3][1])
-                rewards.today = JSON.parse(values[values.length - 3][1]).editor_rewards.find(row => row.user == user);
+                activity.today = JSON.parse(values[values.length - 3][1]).editor_rewards.find(row => row.user == user);
             if (values[values.length - 2][1])
-                rewards.this_week = JSON.parse(values[values.length - 2][1]).editor_rewards.find(row => row.user == user);
+                activity.this_week = JSON.parse(values[values.length - 2][1]).editor_rewards.find(row => row.user == user);
             if (values[values.length - 1][1])
-                rewards.this_month = JSON.parse(values[values.length - 1][1]).editor_rewards.find(row => row.user == user);
+                activity.this_month = JSON.parse(values[values.length - 1][1]).editor_rewards.find(row => row.user == user);
 
             if (values[i*5][1]) {
                 let proposals = values[i*5][1];
@@ -205,7 +205,7 @@ export class UserService {
                 if (proposals.length > 0 && proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
                 if (current > best) best = current;
             }
-            info[user] = { current, best, rewards }
+            info[user] = { current, best, activity }
         }
 
         return info;
