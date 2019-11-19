@@ -602,9 +602,9 @@ export class WikiService {
     
             // Clean up text previews
             for (let preview of seeAlsoRows) {
-                preview.page_title = sanitizeTextPreview(preview.page_title);
+                preview.page_title = sanitizeTextPreview(preview.page_title).replace(/["“”‘’]/gmiu, "\'");
                 if (preview.text_preview) {
-                    preview.text_preview = sanitizeTextPreview(preview.text_preview);
+                    preview.text_preview = sanitizeTextPreview(preview.text_preview).slice(0, 200).replace(/["“”‘’]/gmiu, "\'");
                 }
             }
     
