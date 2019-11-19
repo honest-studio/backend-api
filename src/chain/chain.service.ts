@@ -81,7 +81,7 @@ export class ChainService {
     }
 
     async getTableRows(body): Promise<any> {
-        console.log(body);
+        // console.log(body);
         return fetch(`${this.config.get("DFUSE_API_REST_ENDPOINT")}/v1/chain/get_table_rows`, {
             method: 'POST',
             headers: {

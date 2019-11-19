@@ -24,7 +24,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 10000;
+const BATCH_SIZE = 2;
 
 // nano scripts/Non-Lambda/Page-Categorizer.ts
 
