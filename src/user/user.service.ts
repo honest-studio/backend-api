@@ -205,7 +205,7 @@ export class UserService {
                 if (proposals.length > 0 && proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
                 if (current > best) best = current;
             }
-            info[user] = { current, best, activity }
+            info[user] = { current, best, activity, profile }
         }
 
         return info;
