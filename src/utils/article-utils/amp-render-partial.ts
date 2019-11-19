@@ -58,7 +58,7 @@ export class AmpRenderPartial {
                 ) {
                     let { text } = item.values[0].sentences[0];
 
-                    const sanitizedText = sanitizeTextPreview(text);
+                    const sanitizedText = sanitizeTextPreview(text).replace(/["“”‘’]/gm, "\'");
 
                     // Check for ultra-long occupations and do nothing if they are present
                     // Otherwise the title would look very jank
