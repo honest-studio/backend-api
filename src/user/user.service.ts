@@ -1,9 +1,12 @@
 import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
 import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { WikiIdentity } from '../types/article-helpers';
 import { MongoDbService, RedisService } from '../feature-modules/database';
 import { PreviewService } from '../preview';
 import { WikiService } from '../wiki/';
 import { ChainService } from '../chain';
+const util = require('util');
+const _ = require('lodash');
 
 export interface UserServiceOptions {
     limit: number;
@@ -56,22 +59,70 @@ export class UserService {
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;
 
-        // Get the previews
-        let theWikis: BoostsByWikiReturnPack[] = await Promise.all(theBoosts.map(async (boost) => {
-            let thePreview = await this.previewService.getPreviewsBySlug([{
-                lang_code: boost.lang_code,
-                slug: boost.slug
-            }], "safari")[0];
-            return {
-                boosts: [boost],
-                preview: thePreview,
+        // Change later
+        theBoosts = theBoosts = [
+            {
+                id: 1,
+                slug: 'travismoore5036459',
+                lang_code: 'en',
+                booster: 'eosiochicken',
+                amount: 77777,
+                timestamp: 1573854499
+            },
+            {
+                id: 8,
+                slug: 'everipedia',
+                lang_code: 'en',
+                booster: 'eosiochicken',
+                amount: 500,
+                timestamp: 1573812499
+            },
+            {
+                id: 9,
+                slug: 'samkazemian12',
+                lang_code: 'en',
+                booster: 'eosiochicken',
+                amount: 5750,
+                timestamp: 1573802499
             }
-        }))
+        ]
+
+        // Order the boosts by highest amount first
+        theBoosts = _.orderBy(theBoosts, ['amount'],['desc']); 
+
+        // Get the WikiIdentities
+        let the_wiki_identities: WikiIdentity[] = theBoosts.map(boost => {
+            return { slug: boost.slug, lang_code: boost.lang_code }
+        })
+
+        // Get the previews
+        let thePreviews = await this.previewService.getPreviewsBySlug(the_wiki_identities, "safari");
+
+        // Fill in the packs
+        let theWikiPacks: BoostsByWikiReturnPack[] = theBoosts.map(boost => {
+            let return_pack = {
+                boost: boost,
+                preview: null,
+            };
+            for (let p = 0; p < thePreviews.length; p++){
+                let the_prev = thePreviews[p];
+                if (the_prev.slug == boost.slug && the_prev.lang_code == boost.lang_code){
+                    return {
+                        ...return_pack,
+                        preview: the_prev
+                    }
+                }
+            } 
+            return return_pack;
+        })
+        
+
+        console.log(util.inspect(theWikiPacks, {showHidden: false, depth: null, chalk: true}));
 
         // Prepare the BoostsByUserReturnPack
         let returnPack: BoostsByUserReturnPack = {
             user: account_name,
-            wikis: theWikis
+            wiki_packs: theWikiPacks
         }
         return returnPack;
     }

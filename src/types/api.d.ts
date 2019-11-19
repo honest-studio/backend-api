@@ -132,13 +132,13 @@ export interface BoostActivityPack {
 }
 
 export interface BoostsByWikiReturnPack {
-    boosts: Boost[];
+    boost: Boost;
     preview: PreviewResult;
 }
 
 export interface BoostsByUserReturnPack {
     user: string;
-    wikis: BoostsByWikiReturnPack[]
+    wiki_packs: BoostsByWikiReturnPack[]
 }
 
 /**
