@@ -109,7 +109,7 @@ export class UserController {
     }
 
     @Get(':eos_account_name/profile')
-    @ApiOperation({ title: 'Get miscellaneous stats for a user' })
+    @ApiOperation({ title: 'Deprecated' })
     @ApiImplicitParam({
         name: 'eos_account_name',
         description: `Max 12-char EOS account name
