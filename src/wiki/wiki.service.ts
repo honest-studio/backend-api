@@ -7,6 +7,7 @@ import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async/dynamic
 import * as SqlString from 'sqlstring';
 import { URL } from 'url';
 import * as fs from 'fs';
+const _ = require('lodash');
 import * as path from 'path';
 import { sha256 } from 'js-sha256';
 import { ConfigService, IpfsService } from '../common';
@@ -449,7 +450,7 @@ export class WikiService {
         let boostResults = await this.chain.getTableRows(theBoostsBody);
         let theBoosts: Boost[] = boostResults.rows;
 
-        return [
+        theBoosts = [
             {
                 id: 1,
                 slug: 'travismoore5036459',
@@ -473,8 +474,26 @@ export class WikiService {
                 booster: 'ccc789ccc789',
                 amount: 250,
                 timestamp: 1573852499
+            },
+            {
+                id: 4,
+                slug: 'travismoore5036459',
+                lang_code: 'en',
+                booster: '111111111111',
+                amount: 6432,
+                timestamp: 1573853499
+            },
+            {
+                id: 5,
+                slug: 'travismoore5036459',
+                lang_code: 'en',
+                booster: '222222222222',
+                amount: 100,
+                timestamp: 1573812499
             }
         ]
+
+        theBoosts = _.orderBy(theBoosts, ['amount'],['desc']); 
 
         return theBoosts;
     }
@@ -1088,7 +1107,6 @@ export class WikiService {
         const link_collection_promise = this.getPageIndexedLinkCollection(wiki, lang_code);
         const page_categories_promise = this.getPageCategories(wiki, lang_code);
         
-
         const pageviews_rows_promise: Promise<any> = this.mysql.TryQuery(
             `
         SELECT 
