@@ -22,7 +22,7 @@ export class AmpRenderPartial {
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
-        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'")
+        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'");
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -565,7 +565,7 @@ export class AmpRenderPartial {
             })
             .join('');
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption).replace(/["“”‘’]/gmiu, "\'");
-        // console.log(sanitizedCaptionPlaintext)
+
         return `
             ${
                 media.category == 'PICTURE'
@@ -628,7 +628,7 @@ export class AmpRenderPartial {
                         ${sanitizedCaptionPlaintext}
                     </div>
                 </div>`
-                    : media.category == 'YOUTUBE'
+                    : media.category == 'YOUTUBE' && getYouTubeID(media.url) 
                     ? `<div class="tile-ct">
                     <a rel='nofollow' target="_blank" href="${media.url}" title="Link to video">
                     <span>
