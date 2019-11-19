@@ -455,7 +455,7 @@ export class WikiService {
                 id: 1,
                 slug: 'travismoore5036459',
                 lang_code: 'en',
-                booster: 'abc123abc123',
+                booster: 'eosiochicken',
                 amount: 77777,
                 timestamp: 1573854499
             },
@@ -493,6 +493,7 @@ export class WikiService {
             }
         ]
 
+        // Order the boosts by highest amount first
         theBoosts = _.orderBy(theBoosts, ['amount'],['desc']); 
 
         return theBoosts;
