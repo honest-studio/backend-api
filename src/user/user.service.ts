@@ -257,7 +257,6 @@ export class UserService {
                 let last_date = Math.floor(new Date(proposals[proposals.length - 1].block_time).getTime() / 86400000);
                 for (let proposal of proposals) {
                     let prop_date = Math.floor(new Date(proposal.block_time).getTime() / 86400000);
-                    console.log(prop_date);
                     if (prop_date - last_date <= 1) {
                         current = prop_date - streak_start + 1;
                     }
