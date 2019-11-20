@@ -1311,59 +1311,48 @@ export class AmpRenderPartial {
         if (categories.length == 0) return `
             <script type="application/ld+json">
                 {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [{
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Books",
-                    "item": "https://example.com/books"
-                },{
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Authors",
-                    "item": "https://example.com/books/authors"
-                },{
-                    "@type": "ListItem",
-                    "position": 3,
-                    "name": "Ann Leckie",
-                    "item": "https://example.com/books/authors/annleckie"
-                },{
-                    "@type": "ListItem",
-                    "position": 4,
-                    "name": "Ancillary Justice",
-                    "item": "https://example.com/books/authors/ancillaryjustice"
-                }]
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [{
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Everipedia",
+                        "item": "https://everipedia.org"
+                    },{
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "${this.cleanedVars.page_title}",
+                        "item": "https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
+                    }]
                 }
             </script>
         `;
 
+        let first_category = categories[0];
+
         return `
             <script type="application/ld+json">
                 {
-                "@context": "https://schema.org",
-                "@type": "BreadcrumbList",
-                "itemListElement": [{
-                    "@type": "ListItem",
-                    "position": 1,
-                    "name": "Books",
-                    "item": "https://example.com/books"
-                },{
-                    "@type": "ListItem",
-                    "position": 2,
-                    "name": "Authors",
-                    "item": "https://example.com/books/authors"
-                },{
-                    "@type": "ListItem",
-                    "position": 3,
-                    "name": "Ann Leckie",
-                    "item": "https://example.com/books/authors/annleckie"
-                },{
-                    "@type": "ListItem",
-                    "position": 4,
-                    "name": "Ancillary Justice",
-                    "item": "https://example.com/books/authors/ancillaryjustice"
-                }]
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [{
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Everipedia",
+                        "item": "https://everipedia.org"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "${first_category.title}",
+                        "item": "https://everipedia.org/category/lang_${first_category.lang}/${first_category.slug}"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "${this.cleanedVars.page_title}",
+                        "item": "https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
+                    }]
                 }
             </script>
         `
