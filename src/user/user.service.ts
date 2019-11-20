@@ -127,7 +127,7 @@ export class UserService {
         })
         
 
-        console.log(util.inspect(theWikiPacks, {showHidden: false, depth: null, chalk: true}));
+        // console.log(util.inspect(theWikiPacks, {showHidden: false, depth: null, chalk: true}));
 
         // Prepare the BoostsByUserReturnPack
         let returnPack: BoostsByUserReturnPack = {
@@ -235,7 +235,7 @@ export class UserService {
             if (values[i*5 + 4][1]) activity.all_time.cumulative_iq_rewards = Number(values[i*5 + 4][1]);
 
             // Pull IQ rewards for time frames from editor leaderboards
-            console.log(values);
+            // console.log(values);
             if (values[values.length - 3][1])
                 activity.today = JSON.parse(values[values.length - 3][1]).editor_rewards.find(row => row.user == user);
             if (values[values.length - 2][1])
