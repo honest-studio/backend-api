@@ -127,7 +127,7 @@ export class UserService {
         })
         
 
-        console.log(util.inspect(theWikiPacks, {showHidden: false, depth: null, chalk: true}));
+        // console.log(util.inspect(theWikiPacks, {showHidden: false, depth: null, chalk: true}));
 
         // Prepare the BoostsByUserReturnPack
         let returnPack: BoostsByUserReturnPack = {

@@ -9,13 +9,29 @@ export class SearchController {
 
     @Post('title')
     @ApiOperation({ 
-        title: `Search the Everipedia database by article title`
+        title: `Search the Everipedia database by article title, POST version`
     })
     @ApiResponse({
         status: 200,
         description: `Returns search results`
     })
-    async searchTitleCtrl(@Body() pack: SearchQueryPack): Promise<any> {
+    async searchTitleCtrlPost(@Body() pack: SearchQueryPack): Promise<any> {
+        return this.searchService.searchTitle(pack);
+    }
+
+    @Get('title/lang_:lang_code/:searchterm')
+    @ApiOperation({ 
+        title: `Search the Everipedia database by article title, GET version`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns search results`
+    })
+    async searchTitleCtrlGet(@Param('lang_code') lang_code, @Param('searchterm') searchterm): Promise<any> {
+        let pack = {
+            query: searchterm,
+            langs: [lang_code]
+        };
         return this.searchService.searchTitle(pack);
     }
 
