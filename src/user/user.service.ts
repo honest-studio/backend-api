@@ -235,7 +235,6 @@ export class UserService {
             if (values[i*5 + 4][1]) activity.all_time.cumulative_iq_rewards = Number(values[i*5 + 4][1]);
 
             // Pull IQ rewards for time frames from editor leaderboards
-            console.log(values);
             if (values[values.length - 3][1])
                 activity.today = JSON.parse(values[values.length - 3][1]).editor_rewards.find(row => row.user == user);
             if (values[values.length - 2][1])
@@ -243,20 +242,22 @@ export class UserService {
             if (values[values.length - 1][1])
                 activity.this_month = JSON.parse(values[values.length - 1][1]).editor_rewards.find(row => row.user == user);
 
-            if (values[i*5][1]) {
+            if (values[i*5][1] && values[i*5][1].length > 0) {
                 let proposals = values[i*5][1];
+
+                // sort proposals from earliest to newest
                 proposals = proposals
                     .map(p => JSON.parse(p))
                     .sort((a,b) => a.block_num - b.block_num);
 
-                let streak_start = 0;
-                let last_block = 0;
+                let streak_start = proposals[proposals.length - 1].block_num;
+                let last_block = proposals[proposals.length - 1].block_num;
                 for (let proposal of proposals) {
                     if (proposal.block_num <= last_block + 172000) {
                         current = Math.ceil((proposal.block_num - streak_start) / 172000);
                     }
                     else {
-                        best = current;
+                        best = Math.max(best, current);
                         current = 1;
                         streak_start = proposal.block_num;
                     }
