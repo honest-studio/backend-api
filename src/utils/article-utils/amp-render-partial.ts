@@ -17,7 +17,7 @@ import * as MimeTypes from 'mime-types';
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];
-    public cleanVars = {
+    public cleanedVars = {
         page_title: "",
         url_slug: "",
         page_lang: "",
@@ -25,16 +25,16 @@ export class AmpRenderPartial {
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
-        this.cleanVars.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'");
+        this.cleanedVars.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'");
 
         let page_lang = artJSON.metadata.find(w => w.key == 'page_lang').value;
         page_lang = page_lang && page_lang != '' ? page_lang : 'en';
         const url_slug = artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
-        this.cleanVars.page_lang = page_lang;
-        this.cleanVars.url_slug = url_slug;
-        this.cleanVars.page_type = page_type;
+        this.cleanedVars.page_lang = page_lang;
+        this.cleanedVars.url_slug = url_slug;
+        this.cleanedVars.page_type = page_type;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -115,45 +115,45 @@ export class AmpRenderPartial {
             <meta name="twitter:card" content="summary" />
             ${is_indexed ? '' : '<meta name="googlebot" content="noindex, noarchive" />'}
             ${
-                this.cleanVars.page_type == 'Person'
-                    ? `<title>${this.cleanVars.page_title} Wiki & Bio${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanVars.page_title} Wiki & Bio${extra_keywords}" />`
-                    : this.cleanVars.page_type == 'Product'
-                    ? `<title>${this.cleanVars.page_title} Wiki & Review${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanVars.page_title} Wiki & Review${extra_keywords}" />`
-                    : this.cleanVars.page_type == 'Organization'
-                    ? `<title>${this.cleanVars.page_title} Wiki & Review${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanVars.page_title} Wiki & Review${extra_keywords}" />`
-                    : this.cleanVars.page_type
-                    ? `<title>${this.cleanVars.page_title} Wiki${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanVars.page_title} Wiki${extra_keywords}" />`
+                this.cleanedVars.page_type == 'Person'
+                    ? `<title>${this.cleanedVars.page_title} Wiki & Bio${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Bio${extra_keywords}" />`
+                    : this.cleanedVars.page_type == 'Product'
+                    ? `<title>${this.cleanedVars.page_title} Wiki & Review${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Review${extra_keywords}" />`
+                    : this.cleanedVars.page_type == 'Organization'
+                    ? `<title>${this.cleanedVars.page_title} Wiki & Review${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Review${extra_keywords}" />`
+                    : this.cleanedVars.page_type
+                    ? `<title>${this.cleanedVars.page_title} Wiki${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki${extra_keywords}" />`
                     : ''
             }
             <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta property="article:tag" content="${this.cleanVars.page_title}" />
+            <meta property="article:tag" content="${this.cleanedVars.page_title}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
             <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
             <meta property="og:image" content="${this.artJSON.main_photo[0].thumb}" />
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta name="og:url" content="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${
-            this.cleanVars.url_slug
+            <meta name="og:url" content="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
         }">
             <meta name="twitter:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
             <meta name="twitter:image" content="${this.artJSON.main_photo[0].thumb}" />
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
-            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${
-            this.cleanVars.url_slug
+            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
         }">
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia" />
-            <link rel="canonical" href="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${
-            this.cleanVars.url_slug
+            <link rel="canonical" href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
         }" />
             <style amp-custom>${compressedCSS}</style>
         `;
@@ -164,19 +164,19 @@ export class AmpRenderPartial {
             <div class="amp-nav-bar">
                 <div class="nav-container" >
                     <div class="nav-read nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${this.cleanVars.url_slug}?from_amp=read">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=read">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
                             <span class='nav-text'>Read</span>
                         </a>
                     </div>
                     <div class="nav-edit nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${this.cleanVars.url_slug}?from_amp=edit">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
                             <span class='nav-text'>Edit</span>
                         </a>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${this.cleanVars.url_slug}?from_amp=vote">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
                         </a>
@@ -270,16 +270,16 @@ export class AmpRenderPartial {
                               }' layout='responsive' src="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
-                                    this.cleanVars.page_type == 'Person'
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} bio`
-                                        : this.cleanVars.page_type == 'Product'
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} review`
-                                        : this.cleanVars.page_type == 'Organization'
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} review, ${
-                                              this.cleanVars.page_title
+                                    this.cleanedVars.page_type == 'Person'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} bio`
+                                        : this.cleanedVars.page_type == 'Product'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review`
+                                        : this.cleanedVars.page_type == 'Organization'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review, ${
+                                              this.cleanedVars.page_title
                                           } history`
                                         : true
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} history`
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} history`
                                         : ``
                                 }
                         ">
@@ -293,16 +293,16 @@ export class AmpRenderPartial {
                               }?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
-                                    this.cleanVars.page_type == 'Person'
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} bio`
-                                        : this.cleanVars.page_type == 'Product'
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} review`
-                                        : this.cleanVars.page_type == 'Organization'
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} review, ${
-                                              this.cleanVars.page_title
+                                    this.cleanedVars.page_type == 'Person'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} bio`
+                                        : this.cleanedVars.page_type == 'Product'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review`
+                                        : this.cleanedVars.page_type == 'Organization'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review, ${
+                                              this.cleanedVars.page_title
                                           } history`
                                         : true
-                                        ? `${this.cleanVars.page_title} wiki, ${this.cleanVars.page_title} history`
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} history`
                                         : ``
                                 }
                         ">
@@ -328,7 +328,7 @@ export class AmpRenderPartial {
     };
 
     renderNameContainer = (): string => {
-        const page_title = this.cleanVars.page_title;
+        const page_title = this.cleanedVars.page_title;
 
         return `
             <div class="name-container">
@@ -937,7 +937,7 @@ export class AmpRenderPartial {
                 <section expanded>
                     <h2 class="acc-header" >See Also</h2>
                     <div>
-                        <div class="disclaimer">Other wiki pages related to ${this.cleanVars.page_title}.</div>
+                        <div class="disclaimer">Other wiki pages related to ${this.cleanedVars.page_title}.</div>
                         ${seeAlsoComboString}
                     </div>
                 </section>
@@ -1015,7 +1015,7 @@ export class AmpRenderPartial {
         let comboString: string = `
             <li class='toc-header-description' data-blurb-id="top_header">
                 <a rel="nofollow" class='toc-header-description' href="#toc-top">
-                    <div class="fixed-items-description">${this.cleanVars.page_title}</div>
+                    <div class="fixed-items-description">${this.cleanedVars.page_title}</div>
                 </a>
             </li>
         `;
@@ -1025,7 +1025,7 @@ export class AmpRenderPartial {
                     <a rel="nofollow" class='toc-header-infobox' href="#infoboxHeader">
                         <div class="fixed-items-description">
                             ${
-                                this.cleanVars.page_type == 'Person'
+                                this.cleanedVars.page_type == 'Person'
                                     ? `Quick Biography`
                                     : true
                                     ? `Quick Facts For This Wiki`
@@ -1160,26 +1160,26 @@ export class AmpRenderPartial {
                         <div class="social-share-block-wrap">
                             <div class="social-share-block">
                                 <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://everipedia.org/wiki/lang_${
-                                    this.cleanVars.page_lang
-                                }/${this.cleanVars.url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                                 <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://everipedia.org/wiki/lang_${
-                                    this.cleanVars.page_lang
-                                }/${this.cleanVars.url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                                 <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://everipedia.org/wiki/lang_${
-                                    this.cleanVars.page_lang
-                                }/${this.cleanVars.url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                                 <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://everipedia.org/wiki/lang_${
-                                    this.cleanVars.page_lang
-                                }/${this.cleanVars.url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                             </div>
                         </div>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-ct-link">
                         <h4>DIRECT LINK</h4>
-                        <a href="https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${
-            this.cleanVars.url_slug
-        }">https://everipedia.org/wiki/lang_${this.cleanVars.page_lang}/${this.cleanVars.url_slug}</a>
+                        <a href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
+        }">https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-hshtgs">
@@ -1187,30 +1187,30 @@ export class AmpRenderPartial {
                         <div class="social-share-block-wrap">
                             <ul class="tag-list">
                                 ${
-                                    this.cleanVars.page_type == 'Person'
-                                        ? `<li>${this.cleanVars.page_title} wiki</li>
-                                    <li>${this.cleanVars.page_title} bio</li>
-                                    <li>${this.cleanVars.page_title} net worth</li>
-                                    <li>${this.cleanVars.page_title} age</li>
-                                    <li>${this.cleanVars.page_title} married</li>`
-                                        : this.cleanVars.page_type == 'Product'
-                                        ? `<li>${this.cleanVars.page_title} wiki</li>
-                                    <li>${this.cleanVars.page_title} review</li>
-                                    <li>${this.cleanVars.page_title} history</li>
-                                    <li>${this.cleanVars.page_title} sales</li>
-                                    <li>${this.cleanVars.page_title} facts</li>`
-                                        : this.cleanVars.page_type == 'Organization'
-                                        ? `<li>${this.cleanVars.page_title} wiki</li>
-                                    <li>${this.cleanVars.page_title} review</li>
-                                    <li>${this.cleanVars.page_title} history</li>
-                                    <li>${this.cleanVars.page_title} founders</li>
-                                    <li>${this.cleanVars.page_title} facts</li>`
+                                    this.cleanedVars.page_type == 'Person'
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} bio</li>
+                                    <li>${this.cleanedVars.page_title} net worth</li>
+                                    <li>${this.cleanedVars.page_title} age</li>
+                                    <li>${this.cleanedVars.page_title} married</li>`
+                                        : this.cleanedVars.page_type == 'Product'
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} review</li>
+                                    <li>${this.cleanedVars.page_title} history</li>
+                                    <li>${this.cleanedVars.page_title} sales</li>
+                                    <li>${this.cleanedVars.page_title} facts</li>`
+                                        : this.cleanedVars.page_type == 'Organization'
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} review</li>
+                                    <li>${this.cleanedVars.page_title} history</li>
+                                    <li>${this.cleanedVars.page_title} founders</li>
+                                    <li>${this.cleanedVars.page_title} facts</li>`
                                         : true
-                                        ? `<li>${this.cleanVars.page_title} wiki</li>
-                                    <li>${this.cleanVars.page_title} review</li>
-                                    <li>${this.cleanVars.page_title} history</li>
-                                    <li>${this.cleanVars.page_title} encyclopedia</li>
-                                    <li>${this.cleanVars.page_title} facts</li>`
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} review</li>
+                                    <li>${this.cleanedVars.page_title} history</li>
+                                    <li>${this.cleanedVars.page_title} encyclopedia</li>
+                                    <li>${this.cleanedVars.page_title} facts</li>`
                                         : ``
                                 }
                             </ul>
@@ -1273,7 +1273,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "${this.cleanVars.page_title}"
+                        "title": "${this.cleanedVars.page_title}"
                         }
                     }
                     }
