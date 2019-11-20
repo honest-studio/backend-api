@@ -50,6 +50,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                     <div>IPFS: <span id="ipfs_hash">${inputJSON.ipfs_hash}</span></div>
                 </div>
                 ${arp.renderSchemaHTML()}
+                ${arp.renderBreadcrumbs()}
             </main>
             <footer class="ftr everi_footer">
                 ${arp.renderFooter()}

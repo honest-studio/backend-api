@@ -9,9 +9,15 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "The following is a list of [[LINK|lang_en|editor|Editors]] who are a part of the global [[LINK|lang_en|everipedia|Everipedia]] community. These editors have made a substantial contribution by editing and creating thousands of pages. We are here to help you the reader - better understand what you want or would like to understand better, more clearly and as concisely as possible - and thereby increase your [[LINK|lang_en|iq-1|IQ]]:"
+						"text": "**Null** may refer to:"
 					}
 				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
 			}
 		],
 		"images": []
@@ -22,13 +28,32 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "staff"
+					"id": "science-technology-and-mathematics"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Staff"
+						"text": "Science, technology, and mathematics"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "computing"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Computing"
 					}
 				]
 			},
@@ -44,7 +69,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|alephordaz|Angel Ordaz]] (aka ordazdon) -[[LINK|lang_en|executive-editor|Executive Editor]] and Writer"
+								"text": "[[LINK|lang_en|Null_(SQL)|Null (SQL)]] (or NULL), a special marker and keyword in SQL indicating that something has no value"
 							}
 						],
 						"tag_type": "li"
@@ -56,7 +81,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|dave-liebowitz-1|Dave Liebowitz]] [[CITE|13|https://everipedia.com/editor/DaveLiebowitz]]- Executive Editor and Independent Writer"
+								"text": "[[LINK|lang_en|Null_character|Null character]], the zero-valued ASCII character, also designated by NUL , often used as a terminator, separator or filler. This symbol has no visual representation."
 							}
 						],
 						"tag_type": "li"
@@ -68,7 +93,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|knpiterman|Konstantine Nikka-Sher Piterman]] (aka Nikka) - Executive Editor, Musician & [[LINK|lang_en|everipedia-español|Everipedia Español]] Admin"
+								"text": "[[LINK|lang_en|Null_device|Null device]], a special computer file that discards all data written to it"
 							}
 						],
 						"tag_type": "li"
@@ -80,7 +105,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|mahbod.moghadam|Mahbod Moghadam]] (aka maboo) - Co-founder of [[LINK|lang_en|genius|Genius]] and [[LINK|lang_en|everipedia|Everipedia]]"
+								"text": "[[LINK|lang_en|Null_modem|Null modem]], a specially wired serial communications cable"
 							}
 						],
 						"tag_type": "li"
@@ -92,7 +117,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|navin-vethanayagam|Navin Vethanayagam]] [[CITE|14|https://everipedia.com/editor/NavinV]]- Executive Editor and Student"
+								"text": "[[LINK|lang_en|Null_object_pattern|Null object pattern]], a software design pattern using an object with defined neutral behavior"
 							}
 						],
 						"tag_type": "li"
@@ -104,7 +129,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|romiezzo|Romi Ezzo]] (aka Ezzo) -[[LINK|lang_en|executive-editor|Executive Editor]] and [[LINK|lang_en|Rap_Genius|Rap Genius]] Moderator"
+								"text": "[[LINK|lang_en|Null_pointer|Null pointer]] (sometimes written NULL , nil , or None ), used in computer programming for an uninitialized, undefined, empty, or meaningless value"
 							}
 						],
 						"tag_type": "li"
@@ -116,7 +141,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|samkazemian12|Sam Kazemian]] (aka EazyC) - Co-founder and President of [[LINK|lang_en|everipedia|Everipedia]] [[LINK|lang_en|everipedia|]]"
+								"text": "[[LINK|lang_en|Null_route|Null route]], a network route that goes nowhere"
 							}
 						],
 						"tag_type": "li"
@@ -128,7 +153,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|teddeforselius|Theodor Forselius]]- Co-founder and CEO for [[LINK|lang_en|everipedia|Everipedia]]"
+								"text": "[[LINK|lang_en|Null_string|Null string]], the unique string of length zero (in computer science and formal language theory)"
 							}
 						],
 						"tag_type": "li"
@@ -140,7 +165,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|travismoore5036459|Travis Moore]] [[CITE|18|https://everipedia.com/editor/FortisFortuna]] (aka FortisFortuna) - Co-Founder & CTO of [[LINK|lang_en|everipedia|Everipedia]], Entrepreneur"
+								"text": "[[LINK|lang_en|Null-terminated_string|Null-terminated string]], a character string of which the length is determined by the first null-character (in programming language C and related languages)"
 							}
 						],
 						"tag_type": "li"
@@ -152,7 +177,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|violetta-ziborova|Violetta Ziborova]]- Everipedia Intern"
+								"text": "[[LINK|lang_en|Nullable_type|Nullable type]], a feature of some statically-typed programming languages which allows a data type to be set to the special value NULL"
 							}
 						],
 						"tag_type": "li"
@@ -166,15 +191,15 @@
 		"paragraphs": [
 			{
 				"index": 0,
-				"tag_type": "h2",
+				"tag_type": "h3",
 				"attrs": {
-					"id": "non-staff"
+					"id": "mathematics"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Non-Staff"
+						"text": "Mathematics"
 					}
 				]
 			},
@@ -190,7 +215,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|druss_smith|Druss Smith]] [[CITE|16|https://everipedia.com/editor/HipHOP]] (aka HipHOP) - Master Editor and Rapper"
+								"text": "[[LINK|lang_en|Null_(mathematics)|Null (mathematics)]], a zero value in several branches of mathematics"
 							}
 						],
 						"tag_type": "li"
@@ -202,7 +227,57 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|elijah-asaad|Elijah Asaad]] Webster- Master Editor and [[LINK|lang_en|Sneakerhead|Sneakerhead]]"
+								"text": "[[LINK|lang_en|Null_set|Null set]], a set that is negligible in some sense Also an older term for the [[LINK|lang_en|Empty_set|empty set]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "physics"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Physics"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(physics)|Null (physics)]], a point in a field where the field quantity is zero"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(radio)|Null (radio)]], a concept in electromagnetism"
 							}
 						],
 						"tag_type": "li"
@@ -214,7 +289,69 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|fawzan-nagal|Fawzan Nagal]] [[CITE|17|https://everipedia.com/editor/FawzanNagal]]- Master Editor and Student"
+								"text": "[[LINK|lang_en|Causal_structure#Tangent_vectors|Null vectors or curves]] in the causal structure of a Lorentzian manifold such as a Minkowski space-time"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "other-uses-in-science-and-technology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other uses in science and technology"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_allele|Null allele]], in genetics"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_cipher|Null cipher]], a ciphertext symbol"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_hypothesis|Null hypothesis]], a concept in statistical hypothesis testing"
 							}
 						],
 						"tag_type": "li"
@@ -226,7 +363,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "Fourstargeneralreporter [[CITE|7|https://everipedia.com/editor/Fourstargeneralreporter]]- Master Editor"
+								"text": "[[LINK|lang_en|Null_morpheme|Null morpheme]], a concept in linguistics"
 							}
 						],
 						"tag_type": "li"
@@ -238,130 +375,10 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|maziarzz|Maziar Zarea-]] Master Editor and Student"
+								"text": "[[LINK|lang_en|Null_result|Null result]], the absence of a hypothesized effect in the outcome of a scientific experiment"
 							}
 						],
 						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|miles-anthony|Miles Anthony]] [[CITE|1|https://everipedia.com/editor/Baus]] (aka Baus) - Master Editor and Founder of [[LINK|lang_en|fluxchargers|Flux Chargers]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 6,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|millieefraim|Millie Efraim]] [[CITE|10|https://everipedia.com/editor/08672]]- Master Editor and Media personality"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 7,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Nick Schutz [[CITE|12|https://facebook.com/nick.schutz.1]]-[[LINK|lang_en|master-editor|Master Editor]] and [[LINK|lang_en|Atlantis,_Florida|Atlantis, Florida]] Resident"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 8,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Rob Wallick [[CITE|3|https://everipedia.com/editor/KnowledgeCurator]] (aka KnowledgeCurator) - Editor and Researcher"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 9,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Rupika [[CITE|4|https://everipedia.com/editor/rupika]]- Master Editor and Independent writer"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 10,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|satdeep-gill|Satdeep Gill]] [11]- Master Editor and Free-knowledge enthusiast"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 11,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|shikhar-srivastava|Shikhar Srivastava]] [[CITE|8|https://everipedia.com/editor/ShikharSrivastava]]- Master Editor and Community Manager"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 12,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "theScholarlySentinel [[CITE|6|https://everipedia.com/editor/theScholarlySentinel]] (aka Luis Lopez) - Master Editor and philosopher"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 13,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Christin Thomas - Master Editor and Student"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			},
-			{
-				"index": 2,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "[[CITE|0|https://crunchbase.com/organization/everipedia#/entity]]"
 					}
 				]
 			}
@@ -374,142 +391,423 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "what-does-an-editor-do"
+					"id": "arts-and-media"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "What does an editor do?"
+						"text": "Arts and media"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "music"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Music"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "p",
+				"tag_type": "ul",
 				"attrs": {},
 				"items": [
 					{
-						"type": "sentence",
+						"type": "list-item",
 						"index": 0,
-						"text": "An editor polishes and refines; he or she directs the **focus** of the person, place, process, object, company, news, story, article or movie along a particular course. "
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
+							}
+						],
+						"tag_type": "li"
 					},
 					{
-						"type": "sentence",
+						"type": "list-item",
 						"index": 1,
-						"text": "He or she may trim out what doesn’t fit or what is nonessential to the purpose of the article, but editors at Everipedia are much less deletion-minded and much more **content additive, knowledge expansion-minded**. "
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|The_Null_Corporation|The Null Corporation]], an imprint of the band Nine Inch Nails"
+							}
+						],
+						"tag_type": "li"
 					},
 					{
-						"type": "sentence",
+						"type": "list-item",
 						"index": 2,
-						"text": "Human knowledge is growing exponentially, see [[LINK|lang_en|Growth_of_knowledge|Growth of knowledge]], so we are more focused on giving humanity a central place to learn about topics and explore. The editors at Everipedia enhance and augment (add to) the major points, drawing attention to places where the reader might best focus. [[CITE|9|http://theeditorsblog.net/2011/02/01/duties-of-an-editor-how-editors-help-writers]] We also add references in case you the reader want to read more about certain sub-topics or explore a certain perspective. Lastly, we try to make knowledge more interesting to you the reader!"
-					}
-				]
-			},
-			{
-				"index": 3,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "As a benefit of being editors at Everipedia, we also learn extensively about any number of wide-ranging and/or focused topics. "
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(Intronaut_EP)|Null (Intronaut EP)]], 2006"
+							}
+						],
+						"tag_type": "li"
 					},
 					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Over time our work adds up to the equivalent of another college degree. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "By reading and editing our work and becoming an [[LINK|lang_en|editor|Editor]] yourself, you likewise become an expert! The work we do, including our ever-expanding number of published pages, can make for some very interesting conversation at parties, events, [[LINK|lang_en|Seminar|seminars]] and as guest speakers in the classroom."
-					}
-				]
-			},
-			{
-				"index": 4,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Some of us are focused on academia, some on celebrities, others exotic places, fine dining, current events, politics, and some focus on important people and causes. "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "We also have illustrators, animators, artists and highly creative minds in our midst. "
-					},
-					{
-						"type": "sentence",
-						"index": 2,
-						"text": "Creating a great online encyclopedia involves more than what your parents or grandparents found in their [[LINK|lang_en|World_Book_Encyclopedia|World Book Encyclopedia]] or [[LINK|lang_en|Encyclopedia_Britannica_Inc.|Encyclopedia Britannica]]. Today it is a collective multi-media experience and the pace of growth is [[LINK|lang_en|Exponential|exponential]]. Whatever your interest, we have talented prominent editors; yet Everipedia is always looking to ever-broaden its editor base!"
-					}
-				]
-			},
-			{
-				"index": 5,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Thank you for reading, learning, contributing, discussing, messaging and editing at [[LINK|lang_en|everipedia|Everipedia]] ! Editing is a passion - 'recensere est passio' in Latin."
-					}
-				]
-			},
-			{
-				"index": 6,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Get published and learn something new or review a treasured topic in the process! "
-					},
-					{
-						"type": "sentence",
-						"index": 1,
-						"text": "Become an [[LINK|lang_en|everipedia-editor|Everipedia Editor]] today! Why wait? Join the Knowledge Generation! And don't forget to pass this along to a friend..."
-					}
-				]
-			},
-			{
-				"index": 7,
-				"tag_type": "p",
-				"attrs": {},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "See also: [[LINK|lang_en|famous-editors|Famous Editors]]"
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_(Foetus_EP)|Null (Foetus EP)]], 1995"
+							}
+						],
+						"tag_type": "li"
 					}
 				]
 			}
 		],
-		"images": [
+		"images": []
+	},
+	{
+		"paragraphs": [
 			{
-				"type": "section_image",
-				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/16735689/b871f97c-6/Editing-verus-Proofreading.gif",
-				"mime": "image/gif",
-				"thumb": null,
-				"caption": [
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "other-media"
+				},
+				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Editing versus Proofreading."
+						"text": "Other media"
 					}
-				],
-				"category": "GIF",
-				"media_props": {
-					"type": "section_image"
-				}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Null, an identity of the character [[LINK|lang_en|Gray_Fox_(Metal_Gear)|Gray Fox]] in the *Metal Gear Solid: Portable Ops* video game"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Null, man-eating sentients in the *Downs-Lord Triptich* books by [[LINK|lang_en|John_Whitbourn|John Whitbourn]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null,_the_Living_Darkness|Null, the Living Darkness]], a Marvel Comics character"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Null, a villain from *[[LINK|lang_en|Teenage_Mutant_Ninja_Turtles_Adventures|Teenage Mutant Ninja Turtles Adventures]] *"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "Nulls, worm-like remains of defeated characters in the animated program *[[LINK|lang_en|ReBoot|ReBoot]] *"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Type:_Null|Type: Null]], a Gen VII *Pokémon* species introduced in *Pokémon Sun and Moon*"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
 			}
-		]
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "people"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "People"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Christopher_Null|Christopher Null]] (born 1971), American film critic"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Eduard_van_der_Nüll|Eduard van der Nüll]] (1812–1868), Austrian architect"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Gary_Null|Gary Null]] (born 1945), American radio host and author on alternative medicine"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Keith_Null|Keith Null]] (born 1985), American football player"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "other-uses"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other uses"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_and_void|Null and void]], having no legal validity"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null-A|Null-A]], a term used in science fiction, referring to Korzybski's notation [[INLINE_IMAGE|https://wikimedia.org/api/rest_v1/media/math/render/svg/92efef0e89bdc77f6a848764195ef5b9d9bfcc6a||{overline {A}}|hundefined|wundefined|mwe-math-fallback-image-inline]] as an abbreviation for \"non-Aristotelian\" logic"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Stunde_Null|Stunde Null]], a term used in Germany to mark the end of the Second World War"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "see-also"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "See also"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Ø_(disambiguation)|Ø (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Null_symbol_(disambiguation)|Null symbol (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|0_(disambiguation)|0 (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nil_(disambiguation)|Nil (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Nul_(disambiguation)|Nul (disambiguation)]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			}
+		],
+		"images": []
 	}
 ]

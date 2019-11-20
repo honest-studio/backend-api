@@ -17,12 +17,24 @@ import * as MimeTypes from 'mime-types';
 
 export class AmpRenderPartial {
     public allLightBoxes: string[] = [];
-    public sanitizedVariables = {
-        page_title: ""
+    public cleanedVars = {
+        page_title: "",
+        url_slug: "",
+        page_lang: "",
+        page_type: ""
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
-        this.sanitizedVariables.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'");
+        this.cleanedVars.page_title = artJSON.page_title[0].text.replace(/["“”‘’]/gm, "\'");
+
+        let page_lang = artJSON.metadata.find(w => w.key == 'page_lang').value;
+        page_lang = page_lang && page_lang != '' ? page_lang : 'en';
+        const url_slug = artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
+        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
+        this.cleanedVars.page_lang = page_lang;
+        this.cleanedVars.url_slug = url_slug;
+        this.cleanedVars.page_type = page_type;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -41,10 +53,8 @@ export class AmpRenderPartial {
         // Metadata values
         const last_modified = this.artJSON.metadata.find(w => w.key == 'last_modified') ? this.artJSON.metadata.find(w => w.key == 'last_modified').value : '';
         const creation_timestamp = this.artJSON.metadata.find(w => w.key == 'creation_timestamp') ? this.artJSON.metadata.find(w => w.key == 'creation_timestamp').value : '';
-        let page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        page_lang = page_lang && page_lang != '' ? page_lang : 'en';
-        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
+
+        
         const is_indexed = (this.artJSON.metadata.find(w => w.key == 'is_indexed').value); // UNTIL THE is_indexed issue in MySQL is fixed
 
         let extra_keywords = '';
@@ -105,72 +115,68 @@ export class AmpRenderPartial {
             <meta name="twitter:card" content="summary" />
             ${is_indexed ? '' : '<meta name="googlebot" content="noindex, noarchive" />'}
             ${
-                page_type == 'Person'
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Bio${extra_keywords}</title>
-                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Bio${extra_keywords}" />`
-                    : page_type == 'Product'
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}</title>
-                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}" />`
-                    : page_type == 'Organization'
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}</title>
-                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki & Review${extra_keywords}" />`
-                    : page_type
-                    ? `<title>${this.sanitizedVariables.page_title} Wiki${extra_keywords}</title>
-                <meta property="og:title" content="${this.sanitizedVariables.page_title}"/>
-                <meta name="twitter:title" content="${this.sanitizedVariables.page_title} Wiki${extra_keywords}" />`
+                this.cleanedVars.page_type == 'Person'
+                    ? `<title>${this.cleanedVars.page_title} Wiki & Bio${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Bio${extra_keywords}" />`
+                    : this.cleanedVars.page_type == 'Product'
+                    ? `<title>${this.cleanedVars.page_title} Wiki & Review${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Review${extra_keywords}" />`
+                    : this.cleanedVars.page_type == 'Organization'
+                    ? `<title>${this.cleanedVars.page_title} Wiki & Review${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Review${extra_keywords}" />`
+                    : this.cleanedVars.page_type
+                    ? `<title>${this.cleanedVars.page_title} Wiki${extra_keywords}</title>
+                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
+                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki${extra_keywords}" />`
                     : ''
             }
             <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta property="article:tag" content="${this.sanitizedVariables.page_title}" />
+            <meta property="article:tag" content="${this.cleanedVars.page_title}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
             <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
             <meta property="og:image" content="${this.artJSON.main_photo[0].thumb}" />
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta name="og:url" content="https://everipedia.org/wiki/lang_${page_lang}/${
-            url_slug
+            <meta name="og:url" content="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
         }">
             <meta name="twitter:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
             <meta name="twitter:image" content="${this.artJSON.main_photo[0].thumb}" />
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
-            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${page_lang}/${
-            url_slug
+            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
         }">
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia" />
-            <link rel="canonical" href="https://everipedia.org/wiki/lang_${page_lang}/${
-            url_slug
+            <link rel="canonical" href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
         }" />
             <style amp-custom>${compressedCSS}</style>
         `;
     };
 
-    renderNavBar = (): string => {
-        let page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        page_lang = page_lang && page_lang != '' ? page_lang : 'en';
-        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
-        
+    renderNavBar = (): string => {        
         return `
             <div class="amp-nav-bar">
                 <div class="nav-container" >
                     <div class="nav-read nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=read">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=read">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
                             <span class='nav-text'>Read</span>
                         </a>
                     </div>
                     <div class="nav-edit nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=edit">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
                             <span class='nav-text'>Edit</span>
                         </a>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${page_lang}/${url_slug}?from_amp=vote">
+                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
                         </a>
@@ -226,9 +232,6 @@ export class AmpRenderPartial {
     };
 
     renderMainPhoto = (OVERRIDE_MAIN_THUMB: string | null, RANDOMSTRING: string): string => {
-        // Metadata values
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
-
         let ampSanitizedPhotoComment = this.artJSON.main_photo[0].caption && this.artJSON.main_photo[0].caption
             .map((value, index) => {
                 let result = CheckForLinksOrCitationsAMP(
@@ -267,16 +270,16 @@ export class AmpRenderPartial {
                               }' layout='responsive' src="${OVERRIDE_MAIN_THUMB}?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
-                                    page_type == 'Person'
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} bio`
-                                        : page_type == 'Product'
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review`
-                                        : page_type == 'Organization'
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review, ${
-                                              this.sanitizedVariables.page_title
+                                    this.cleanedVars.page_type == 'Person'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} bio`
+                                        : this.cleanedVars.page_type == 'Product'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review`
+                                        : this.cleanedVars.page_type == 'Organization'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review, ${
+                                              this.cleanedVars.page_title
                                           } history`
                                         : true
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} history`
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} history`
                                         : ``
                                 }
                         ">
@@ -290,16 +293,16 @@ export class AmpRenderPartial {
                               }?nocache=${RANDOMSTRING}" 
                             alt="
                                 ${
-                                    page_type == 'Person'
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} bio`
-                                        : page_type == 'Product'
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review`
-                                        : page_type == 'Organization'
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} review, ${
-                                              this.sanitizedVariables.page_title
+                                    this.cleanedVars.page_type == 'Person'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} bio`
+                                        : this.cleanedVars.page_type == 'Product'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review`
+                                        : this.cleanedVars.page_type == 'Organization'
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} review, ${
+                                              this.cleanedVars.page_title
                                           } history`
                                         : true
-                                        ? `${this.sanitizedVariables.page_title} wiki, ${this.sanitizedVariables.page_title} history`
+                                        ? `${this.cleanedVars.page_title} wiki, ${this.cleanedVars.page_title} history`
                                         : ``
                                 }
                         ">
@@ -325,9 +328,7 @@ export class AmpRenderPartial {
     };
 
     renderNameContainer = (): string => {
-        // Metadata values
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
-        const page_title = this.sanitizedVariables.page_title;
+        const page_title = this.cleanedVars.page_title;
 
         return `
             <div class="name-container">
@@ -482,9 +483,6 @@ export class AmpRenderPartial {
     };
 
     renderInfoboxes = (): string => {
-        // Metadata values
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
-
         let infoboxes: Infobox[] = this.artJSON.infoboxes;
         if (
             !(
@@ -939,7 +937,7 @@ export class AmpRenderPartial {
                 <section expanded>
                     <h2 class="acc-header" >See Also</h2>
                     <div>
-                        <div class="disclaimer">Other wiki pages related to ${this.sanitizedVariables.page_title}.</div>
+                        <div class="disclaimer">Other wiki pages related to ${this.cleanedVars.page_title}.</div>
                         ${seeAlsoComboString}
                     </div>
                 </section>
@@ -1013,12 +1011,11 @@ export class AmpRenderPartial {
     };
 
     renderTableOfContents = (): string => {
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
         let comboString: string = `
             <li class='toc-header-description' data-blurb-id="top_header">
                 <a rel="nofollow" class='toc-header-description' href="#toc-top">
-                    <div class="fixed-items-description">${this.sanitizedVariables.page_title}</div>
+                    <div class="fixed-items-description">${this.cleanedVars.page_title}</div>
                 </a>
             </li>
         `;
@@ -1028,7 +1025,7 @@ export class AmpRenderPartial {
                     <a rel="nofollow" class='toc-header-infobox' href="#infoboxHeader">
                         <div class="fixed-items-description">
                             ${
-                                page_type == 'Person'
+                                this.cleanedVars.page_type == 'Person'
                                     ? `Quick Biography`
                                     : true
                                     ? `Quick Facts For This Wiki`
@@ -1154,12 +1151,6 @@ export class AmpRenderPartial {
     };
 
     renderShareLightbox = (): string => {
-        // Metadata values
-        let page_lang = this.artJSON.metadata.find(w => w.key == 'page_lang').value;
-        page_lang = page_lang && page_lang != '' ? page_lang : 'en';
-        const url_slug = this.artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
-        const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
-
         return `  
             <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
             <nav class="lightbox" tabindex="0" role="widget">
@@ -1169,26 +1160,26 @@ export class AmpRenderPartial {
                         <div class="social-share-block-wrap">
                             <div class="social-share-block">
                                 <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://everipedia.org/wiki/lang_${
-                                    page_lang
-                                }/${url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                                 <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://everipedia.org/wiki/lang_${
-                                    page_lang
-                                }/${url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                                 <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://everipedia.org/wiki/lang_${
-                                    page_lang
-                                }/${url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                                 <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://everipedia.org/wiki/lang_${
-                                    page_lang
-                                }/${url_slug}"></a>
+                                    this.cleanedVars.page_lang
+                                }/${this.cleanedVars.url_slug}"></a>
                             </div>
                         </div>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-ct-link">
                         <h4>DIRECT LINK</h4>
-                        <a href="https://everipedia.org/wiki/lang_${page_lang}/${
-            url_slug
-        }">https://everipedia.org/wiki/lang_${page_lang}/${url_slug}</a>
+                        <a href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            this.cleanedVars.url_slug
+        }">https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-hshtgs">
@@ -1196,30 +1187,30 @@ export class AmpRenderPartial {
                         <div class="social-share-block-wrap">
                             <ul class="tag-list">
                                 ${
-                                    page_type == 'Person'
-                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
-                                    <li>${this.sanitizedVariables.page_title} bio</li>
-                                    <li>${this.sanitizedVariables.page_title} net worth</li>
-                                    <li>${this.sanitizedVariables.page_title} age</li>
-                                    <li>${this.sanitizedVariables.page_title} married</li>`
-                                        : page_type == 'Product'
-                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
-                                    <li>${this.sanitizedVariables.page_title} review</li>
-                                    <li>${this.sanitizedVariables.page_title} history</li>
-                                    <li>${this.sanitizedVariables.page_title} sales</li>
-                                    <li>${this.sanitizedVariables.page_title} facts</li>`
-                                        : page_type == 'Organization'
-                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
-                                    <li>${this.sanitizedVariables.page_title} review</li>
-                                    <li>${this.sanitizedVariables.page_title} history</li>
-                                    <li>${this.sanitizedVariables.page_title} founders</li>
-                                    <li>${this.sanitizedVariables.page_title} facts</li>`
+                                    this.cleanedVars.page_type == 'Person'
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} bio</li>
+                                    <li>${this.cleanedVars.page_title} net worth</li>
+                                    <li>${this.cleanedVars.page_title} age</li>
+                                    <li>${this.cleanedVars.page_title} married</li>`
+                                        : this.cleanedVars.page_type == 'Product'
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} review</li>
+                                    <li>${this.cleanedVars.page_title} history</li>
+                                    <li>${this.cleanedVars.page_title} sales</li>
+                                    <li>${this.cleanedVars.page_title} facts</li>`
+                                        : this.cleanedVars.page_type == 'Organization'
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} review</li>
+                                    <li>${this.cleanedVars.page_title} history</li>
+                                    <li>${this.cleanedVars.page_title} founders</li>
+                                    <li>${this.cleanedVars.page_title} facts</li>`
                                         : true
-                                        ? `<li>${this.sanitizedVariables.page_title} wiki</li>
-                                    <li>${this.sanitizedVariables.page_title} review</li>
-                                    <li>${this.sanitizedVariables.page_title} history</li>
-                                    <li>${this.sanitizedVariables.page_title} encyclopedia</li>
-                                    <li>${this.sanitizedVariables.page_title} facts</li>`
+                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
+                                    <li>${this.cleanedVars.page_title} review</li>
+                                    <li>${this.cleanedVars.page_title} history</li>
+                                    <li>${this.cleanedVars.page_title} encyclopedia</li>
+                                    <li>${this.cleanedVars.page_title} facts</li>`
                                         : ``
                                 }
                             </ul>
@@ -1282,7 +1273,7 @@ export class AmpRenderPartial {
                         "on": "visible",
                         "request": "pageview",
                         "vars": {
-                        "title": "${this.sanitizedVariables.page_title}"
+                        "title": "${this.cleanedVars.page_title}"
                         }
                     }
                     }
@@ -1314,4 +1305,56 @@ export class AmpRenderPartial {
             </script>
         ` : '';
     };
+
+    renderBreadcrumbs = (): string => {
+        let categories: PageCategory[] = this.wikiExtras && this.wikiExtras.page_categories;
+        if (categories.length == 0) return `
+            <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [{
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Everipedia",
+                        "item": "https://everipedia.org"
+                    },{
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "${this.cleanedVars.page_title}",
+                        "item": "https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
+                    }]
+                }
+            </script>
+        `;
+
+        let first_category = categories[0];
+
+        return `
+            <script type="application/ld+json">
+                {
+                    "@context": "https://schema.org",
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [{
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Everipedia",
+                        "item": "https://everipedia.org"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "${first_category.title}",
+                        "item": "https://everipedia.org/category/lang_${first_category.lang}/${first_category.slug}"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "${this.cleanedVars.page_title}",
+                        "item": "https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
+                    }]
+                }
+            </script>
+        `
+    }
 }

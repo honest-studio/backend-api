@@ -802,49 +802,108 @@ export class WikiService {
                 webp_medium,
                 webp_small,
             ]
-        )
-
-        console.log(article_insertion)
-
-        // Update the pagecategory collection
-        // TODO: HANDLE THIS LATER, ONCE CATEGORIES ARE EDITABLE
-        // let pagecategory_collection_insertion;
-        // try {
-        //     pagecategory_collection_insertion = await this.mysql.TryQuery(
-        //         `
-        //             INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
-        //             VALUES (?, ?)
-        //         `,
-        //         [CATEGORY_ID, pageID]
-        //     );
-        //     console.log(colors.green("Added to pagecategory_collection."));
-        // } catch (e) {
-        //     if (e.message.includes("ER_DUP_ENTRY")){
-        //         console.log(colors.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
-        //     }
-        //     else throw e;
-        // }
-
-        // Get the prerender token
-        const prerenderToken = this.config.get('PRERENDER_TOKEN');
+        );
 
         // Get the article object
         let articleResultPacket: Array<any> = await this.mysql.TryQuery(
             `
-            SELECT 
-                id,
-                page_title,
-                pageviews
-            FROM enterlink_articletable AS art 
-            WHERE 
-                page_lang = ? 
-                AND (slug = ? OR slug_alt = ?)
-                AND art.is_removed = 0
+                SELECT 
+                    id,
+                    page_title,
+                    pageviews
+                FROM enterlink_articletable AS art 
+                WHERE 
+                    page_lang = ? 
+                    AND (slug = ? OR slug_alt = ?)
+                    AND art.is_removed = 0
             `,
             [page_lang, cleanedSlug, cleanedSlug]
         );
 
+        let pageID = articleResultPacket[0].id;
 
+        // Update the pagecategory collection
+        // TODO: HANDLE THIS LATER, ONCE CATEGORIES ARE EDITABLE
+        let new_categories = wiki.categories;
+        let old_categories_row: any[] = await this.mysql.TryQuery(
+            `
+                SELECT 
+                    cat_collect.category_id
+                FROM enterlink_pagecategory_collection AS cat_collect
+                WHERE
+                    cat_collect.articletable_id = ?
+            ;`,
+            [pageID]
+        ) || [];
+
+        // Initialize variables
+        let categories_to_add = [], categories_to_delete = [];
+        let old_categories = old_categories_row.map(old => old.category_id);
+
+        console.log("New categories: ", util.inspect(new_categories, {showHidden: false, depth: null, chalk: true}));
+        console.log("Old categories: ", util.inspect(old_categories, {showHidden: false, depth: null, chalk: true}));
+
+        // See if any categories need to be deleted
+        old_categories.forEach(oldcat => {
+            // If a category stayed the same, do nothing
+            if (new_categories.includes(oldcat)) {}
+            // Delete the old category if it isn't in the list of new categories
+            else if (!new_categories.includes(oldcat)) categories_to_delete.push(oldcat);
+        })
+
+        // See if any categories need to be added
+        new_categories.forEach(newcat => {
+            if (!old_categories.includes(newcat)) categories_to_add.push(newcat);
+        })
+
+        // Add the new categories
+        if (categories_to_add.length > 0) {
+            let values_string = categories_to_add.map(cat => {
+                return `(${cat}, ${pageID})`
+            }).join(", ");
+
+            try {
+                let pagecategory_collection_insertion = await this.mysql.TryQuery(
+                    `
+                        INSERT INTO enterlink_pagecategory_collection (category_id, articletable_id) 
+                        VALUES ${values_string}
+                    `,
+                    []
+                );
+                console.log(colors.green("Added to pagecategory_collection: "));
+                console.log(util.inspect(categories_to_add, {showHidden: false, depth: null, chalk: true}));
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(colors.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
+                }
+                else throw e;
+            }
+        }
+
+        // Delete the old categories
+        if (categories_to_delete.length > 0) {
+            try {
+                let pagecategory_collection_insertion = await this.mysql.TryQuery(
+                    `
+                        DELETE FROM enterlink_pagecategory_collection
+                        WHERE
+                            category_id IN (?)
+                            AND articletable_id = ?
+                    `,
+                    [categories_to_delete, pageID]
+                );
+                console.log(colors.green("Deleted from pagecategory_collection: "));
+                console.log(util.inspect(categories_to_delete, {showHidden: false, depth: null, chalk: true}));
+            } catch (e) {
+                if (e.message.includes("ER_DUP_ENTRY")){
+                    console.log(colors.yellow('WARNING: Duplicate submission for enterlink_pagecategory_collection. Category collection already exists'));
+                }
+                else throw e;
+            }
+        }
+        
+        // Get the prerender token
+        const prerenderToken = this.config.get('PRERENDER_TOKEN');
 
         if (articleResultPacket.length > 0) {
             // Handle the merge redirect, if present
@@ -872,7 +931,7 @@ export class WikiService {
                 console.log(colors.blue(`merged_slug: ${merged_slug}`));
 
                 if (mergedArticleResult.length > 0) {
-                    console.log(colors.blue(`articleResultPacket[0].id: ${articleResultPacket[0].id}`));
+                    console.log(colors.blue(`pageID: ${pageID}`));
                     console.log(colors.blue(`mergedArticleResult[0].id: ${mergedArticleResult[0].id}`));
                     await this.mysql.TryQuery(
                         `
@@ -884,7 +943,7 @@ export class WikiService {
                                 redirect_page_id = ?
                             WHERE id = ?
                         `,
-                        [articleResultPacket[0].id, mergedArticleResult[0].id]
+                        [pageID, mergedArticleResult[0].id]
                     );
 
                     // Update Elasticsearch for the merged article to point it to the canonical article
@@ -894,7 +953,7 @@ export class WikiService {
                         merged_lang,
                         'MERGE_REDIRECT' , 
                         this.elasticSearch,
-                        articleResultPacket[0].id, // canonical id
+                        pageID, // canonical id
                         mergedArticleResult[0].pageviews, // pageviews
                     ).then(() => {
                         console.log(colors.green(`Elasticsearch for lang_${merged_lang}/${merged_slug} updated`));
@@ -918,17 +977,17 @@ export class WikiService {
                     articletable_id is NULL
                     AND ipfs_hash=?
                 `,
-                [articleResultPacket[0].id, ipfs_hash]
+                [pageID, ipfs_hash]
             );
 
             // Update Elasticsearch for the main article
             await updateElasticsearch(
-                articleResultPacket[0].id, 
+                pageID, 
                 articleResultPacket[0].page_title, 
                 page_lang,
                 is_removed ? 'PAGE_REMOVED' : 'PAGE_UPDATED_OR_CREATED',
                 this.elasticSearch,
-                articleResultPacket[0].id,
+                pageID,
                 articleResultPacket[0].pageviews
             ).then(() => {
                 console.log(colors.green(`Elasticsearch for lang_${page_lang}/${slug} updated`));
