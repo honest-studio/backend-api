@@ -211,12 +211,13 @@ export class UserService {
             pipeline.get(`user:${user}:num_votes`);
             pipeline.zscore(`editor-leaderboard:all-time:rewards`, user);
         }
+        pipeline.get('eos_actions:last_block_processed');
         pipeline.get('editor-leaderboard:today');
         pipeline.get('editor-leaderboard:this-week');
         pipeline.get('editor-leaderboard:this-month');
         const values = await pipeline.exec();
 
-        const latest_block = values[values.length - 1][1];
+        const latest_block = values[values.length - 4][1];
         const info = {}
         for (let i=0; i < users.length; i++) {
             const user = users[i];
@@ -235,7 +236,6 @@ export class UserService {
             if (values[i*5 + 4][1]) activity.all_time.cumulative_iq_rewards = Number(values[i*5 + 4][1]);
 
             // Pull IQ rewards for time frames from editor leaderboards
-            // console.log(values);
             if (values[values.length - 3][1])
                 activity.today = JSON.parse(values[values.length - 3][1]).editor_rewards.find(row => row.user == user);
             if (values[values.length - 2][1])
@@ -243,28 +243,33 @@ export class UserService {
             if (values[values.length - 1][1])
                 activity.this_month = JSON.parse(values[values.length - 1][1]).editor_rewards.find(row => row.user == user);
 
-            if (values[i*5][1]) {
+            if (values[i*5][1] && values[i*5][1].length > 0) {
                 let proposals = values[i*5][1];
+
+                // sort proposals from earliest to newest
                 proposals = proposals
                     .map(p => JSON.parse(p))
                     .sort((a,b) => a.block_num - b.block_num);
 
-                let streak_start = 0;
-                let last_block = 0;
+                // streaks are calculated based on UTC calendar days
+                // if you go 24 hours without editing, your streak ends
+                let streak_start = Math.floor(new Date(proposals[proposals.length - 1].block_time).getTime() / 86400000);
+                let last_date = Math.floor(new Date(proposals[proposals.length - 1].block_time).getTime() / 86400000);
                 for (let proposal of proposals) {
-                    if (proposal.block_num <= last_block + 172000) {
-                        current = Math.ceil((proposal.block_num - streak_start) / 172000);
+                    let prop_date = Math.floor(new Date(proposal.block_time).getTime() / 86400000);
+                    if (prop_date - last_date <= 1) {
+                        current = prop_date - streak_start + 1;
                     }
                     else {
-                        best = current;
+                        best = Math.max(best, current);
                         current = 1;
-                        streak_start = proposal.block_num;
+                        streak_start = prop_date;
                     }
-                    last_block = proposal.block_num;
+                    last_date = prop_date;
                 }
                 // if the most recent proposal isnt within the last day, current streak is 0
-                if (proposals.length > 0 && proposals[proposals.length - 1].block_num + 172000 <= latest_block) current = 0;
-                if (current > best) best = current;
+                if (proposals.length > 0 && proposals[proposals.length - 1].block_num + 250000 <= latest_block) current = 0;
+                best = Math.max(best, current);
             }
             info[user] = { current, best, activity, profile }
         }
