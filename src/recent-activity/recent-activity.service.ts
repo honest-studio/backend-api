@@ -64,8 +64,11 @@ export class RecentActivityService {
 
         find_query = {
             'trace.act.account': 'eparticlectr',
-            'trace.act.name': 'logpropinfo'
         };
+        if (query.voter) {
+            find_query['trace.act.name'] = 'vote';
+            find_query['trace.act.data.voter'] = query.voter;
+        }
         if (query.expiring) {
             find_query['trace.act.data.endtime'] = { $gt: now };
             sort_direction = 1;
