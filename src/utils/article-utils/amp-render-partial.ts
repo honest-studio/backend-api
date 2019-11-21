@@ -164,7 +164,7 @@ export class AmpRenderPartial {
             <div class="amp-nav-bar">
                 <div class="nav-container" >
                     <div class="nav-read nav-item">
-                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=read', target=_blank)" tabindex='0' role="link">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
                             <span class='nav-text'>Read</span>
                         </span>
@@ -1100,26 +1100,19 @@ export class AmpRenderPartial {
                     </div>
                     <ul>
                         <li>
-                            <a rel="nofollow" href="/login/">
+                            <a rel="nofollow" href="/faq/login-methods?from_amp=login">
                                 <span class="icon"><i class="fa fa-key"></i></span>
                                 <div class="fixed-items-description">Log In / Register</div>
                             </a>
                         </li>
                         <li>
-                            <a rel="nofollow" href="/wiki/everipedia-faq/">
+                            <a rel="nofollow" href="/faq">
                                 <span class="icon"><i class="fa fa-question"></i></span>
                                 <div class="fixed-items-description">Help</div>
                             </a>
                         </li>
-
                         <li>
-                            <a rel="nofollow" href="https://www.reddit.com/r/Everipedia/">
-                                <span class="icon"><i class="fa fa-list"></i></span>
-                                <div class="fixed-items-description">Forum</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a rel="nofollow" href="/recent-activity/">
+                            <a rel="nofollow" href="/activity">
                                 <span class="icon"><i class="fa fa-bolt"></i></span>
                                 <div class="fixed-items-description">Feed</div>
                             </a>
