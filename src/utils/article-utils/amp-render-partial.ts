@@ -164,22 +164,22 @@ export class AmpRenderPartial {
             <div class="amp-nav-bar">
                 <div class="nav-container" >
                     <div class="nav-read nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=read">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=read', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
                             <span class='nav-text'>Read</span>
-                        </a>
+                        </span>
                     </div>
                     <div class="nav-edit nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
                             <span class='nav-text'>Edit</span>
-                        </a>
+                        </span>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>
