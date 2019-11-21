@@ -26,7 +26,6 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
         <body>
             ${arp.renderHeaderBar()}
             ${arp.renderNavBar()}
-            ${arp.renderWelcomeBanner()}
             <amp-sidebar id='sidebar' layout="nodisplay" side="left">
                 <ul class="hdr-clct">
                     ${arp.renderTableOfContents()}
@@ -58,9 +57,6 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
             <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
                 ${arp.renderUserMenu()}
             </amp-lightbox> 
-            <amp-lightbox id="search-lightbox" layout="nodisplay">
-                ${arp.renderSearchLightbox()}
-            </amp-lightbox>
             <amp-lightbox id="share-lightbox" layout="nodisplay">
                 ${arp.renderShareLightbox()}
             </amp-lightbox>

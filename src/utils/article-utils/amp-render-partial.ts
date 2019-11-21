@@ -164,22 +164,22 @@ export class AmpRenderPartial {
             <div class="amp-nav-bar">
                 <div class="nav-container" >
                     <div class="nav-read nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=read">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
                             <span class='nav-text'>Read</span>
-                        </a>
+                        </span>
                     </div>
                     <div class="nav-edit nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
                             <span class='nav-text'>Edit</span>
-                        </a>
+                        </span>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <a rel='nofollow' href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -222,7 +222,7 @@ export class AmpRenderPartial {
                         </button>
                     </li>
                     <li class="amp-header-search">
-                        <button on="tap:search-lightbox" data-description="Search Bar">
+                        <button on="tap:AMP.navigateTo(url='https://everipedia.org/search', target=_blank)" tabindex='0' role="link" data-description="Search">
                         <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_black.svg" ></amp-img>
                         </button>
                     </li>
@@ -1063,6 +1063,13 @@ export class AmpRenderPartial {
                     .join('');
             })
             .join('');
+        comboString += `
+            <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
+                <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
+                    <div class="fixed-items-description">See Also</div>
+                </a>
+            </li>
+        `;
         if (this.artJSON.media_gallery.length > 0) {
             comboString += `
                 <li class='toc-header-gallery' data-blurb-id="Gallery_Pseudo_ID">
@@ -1079,13 +1086,7 @@ export class AmpRenderPartial {
                 </a>
             </li>
         `;
-        // comboString += `
-        //     <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
-        //         <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
-        //             <div class="fixed-items-description">See Also</div>
-        //         </a>
-        //     </li>
-        // `;
+
         return comboString;
     };
 
@@ -1100,28 +1101,27 @@ export class AmpRenderPartial {
                     </div>
                     <ul>
                         <li>
-                            <a rel="nofollow" href="/login/">
+                            <a rel="nofollow" href="/faq/login-methods?from_amp=login">
                                 <span class="icon"><i class="fa fa-key"></i></span>
                                 <div class="fixed-items-description">Log In / Register</div>
                             </a>
                         </li>
                         <li>
-                            <a rel="nofollow" href="/wiki/everipedia-faq/">
+                            <a rel="nofollow" href="/about">
+                                <span class="icon"><i class="fa fa-globe"></i></span>
+                                <div class="fixed-items-description">About Everipedia</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="/activity">
+                                <span class="icon"><i class="fa fa-bolt"></i></span>
+                                <div class="fixed-items-description">Recent Activity</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="/faq">
                                 <span class="icon"><i class="fa fa-question"></i></span>
                                 <div class="fixed-items-description">Help</div>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a rel="nofollow" href="https://www.reddit.com/r/Everipedia/">
-                                <span class="icon"><i class="fa fa-list"></i></span>
-                                <div class="fixed-items-description">Forum</div>
-                            </a>
-                        </li>
-                        <li>
-                            <a rel="nofollow" href="/recent-activity/">
-                                <span class="icon"><i class="fa fa-bolt"></i></span>
-                                <div class="fixed-items-description">Feed</div>
                             </a>
                         </li>
                     </ul>
