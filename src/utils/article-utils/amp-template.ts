@@ -65,6 +65,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
             </amp-lightbox>
             ${arp.renderLightboxes()}
             ${arp.renderAnalyticsBlock()}
+
         </body>
     </html>
    `;
