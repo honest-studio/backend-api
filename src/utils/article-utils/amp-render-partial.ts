@@ -170,13 +170,13 @@ export class AmpRenderPartial {
                         </span>
                     </div>
                     <div class="nav-edit nav-item">
-                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=edit', target=_blank)" tabindex='0' role="link">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki-edit/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
                             <span class='nav-text'>Edit</span>
                         </span>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}?from_amp=vote', target=_blank)" tabindex='0' role="link">
+                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki-vote/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
                         </span>
