@@ -1106,15 +1106,21 @@ export class AmpRenderPartial {
                             </a>
                         </li>
                         <li>
-                            <a rel="nofollow" href="/faq">
-                                <span class="icon"><i class="fa fa-question"></i></span>
-                                <div class="fixed-items-description">Help</div>
+                            <a rel="nofollow" href="/about">
+                                <span class="icon"><i class="fa fa-globe"></i></span>
+                                <div class="fixed-items-description">About Everipedia</div>
                             </a>
                         </li>
                         <li>
                             <a rel="nofollow" href="/activity">
                                 <span class="icon"><i class="fa fa-bolt"></i></span>
-                                <div class="fixed-items-description">Feed</div>
+                                <div class="fixed-items-description">Recent Activity</div>
+                            </a>
+                        </li>
+                        <li>
+                            <a rel="nofollow" href="/faq">
+                                <span class="icon"><i class="fa fa-question"></i></span>
+                                <div class="fixed-items-description">Help</div>
                             </a>
                         </li>
                     </ul>
