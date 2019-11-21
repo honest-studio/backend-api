@@ -222,7 +222,7 @@ export class AmpRenderPartial {
                         </button>
                     </li>
                     <li class="amp-header-search">
-                        <button on="tap:search-lightbox" data-description="Search Bar">
+                        <button on="tap:AMP.navigateTo(url='https://everipedia.org/search', target=_blank)" tabindex='0' role="link" data-description="Search">
                         <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_black.svg" ></amp-img>
                         </button>
                     </li>
@@ -1063,6 +1063,13 @@ export class AmpRenderPartial {
                     .join('');
             })
             .join('');
+        comboString += `
+            <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
+                <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
+                    <div class="fixed-items-description">See Also</div>
+                </a>
+            </li>
+        `;
         if (this.artJSON.media_gallery.length > 0) {
             comboString += `
                 <li class='toc-header-gallery' data-blurb-id="Gallery_Pseudo_ID">
@@ -1079,13 +1086,7 @@ export class AmpRenderPartial {
                 </a>
             </li>
         `;
-        // comboString += `
-        //     <li class="toc-header-seealso" data-blurb-id="seeAlsoPanelContainer">
-        //         <a rel="nofollow" class="toc-header-seealso" href="#seeAlsoPanel">
-        //             <div class="fixed-items-description">See Also</div>
-        //         </a>
-        //     </li>
-        // `;
+
         return comboString;
     };
 

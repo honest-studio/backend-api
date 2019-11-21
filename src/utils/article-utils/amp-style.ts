@@ -15,7 +15,7 @@ main{
 	position: relative;
 	z-index: 15;
 	display: block;
-	margin-top: 172px;
+	margin-top: 96px;
 }
 article.schema-wrap{
 	display: block;
@@ -1391,6 +1391,7 @@ article .flagicon{
 }
 .amp-header-search .svgIcon {
 	opacity:0.7;
+	cursor: pointer;
 }
 #amp-header-bar{
 	position: fixed;
