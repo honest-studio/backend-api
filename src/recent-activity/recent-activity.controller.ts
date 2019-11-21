@@ -152,6 +152,12 @@ export class RecentActivityController {
         isArray: true,
         type: 'string'
     })
+    @ApiImplicitQuery({
+        name: 'voter',
+        description: `Specify a username to filter by proposals that a user has voted on`,
+        required: false,
+        type: 'string'
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getProposals(@Query() query): Promise<Array<any>> {
         return await this.recentActivityService.getProposals(query);
