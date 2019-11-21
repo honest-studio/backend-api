@@ -2243,10 +2243,7 @@ h5 > .icon{
 	font-family: inherit;
 	font-style:italic;
 }
-section .machine-infobox{
-	padding: 5px 0px;
-	border-bottom: 0px solid rgba(128, 128, 128, 0.21);
-}
+
 section h6 div{
 	line-height: 11px;
 	padding: 2px 0px 1px 0px;
