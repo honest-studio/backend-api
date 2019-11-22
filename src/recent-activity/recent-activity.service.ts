@@ -98,7 +98,6 @@ export class RecentActivityService {
         if (query.langs && !query.voter) {
             find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };
         }
-        console.log(find_query);
         let proposal_id_docs = await this.mongo
             .connection()
             .actions.find(find_query, { projection: { 'trace.act.data': 1 } })
@@ -110,7 +109,6 @@ export class RecentActivityService {
         const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id)
             .filter((v, i, a) => a.indexOf(v) === i);
 
-        console.log(proposal_ids);
                 
         const proposal_options = {
             preview: query.preview,
