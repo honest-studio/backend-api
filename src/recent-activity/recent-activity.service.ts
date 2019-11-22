@@ -105,6 +105,7 @@ export class RecentActivityService {
 
         const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id)
             .filter((v, i, a) => a.indexOf(v) === i);
+
                 
         const proposal_options = {
             preview: query.preview,
@@ -113,7 +114,13 @@ export class RecentActivityService {
             cache: query.cache
         };
 
-        return this.proposalService.getProposals(proposal_ids, proposal_options);
+        let proposals = await this.proposalService.getProposals(proposal_ids, proposal_options);
+        if (query.voter && query.langs) {
+            const langs = query.langs.split(' ');
+            proposals = proposals.filter(p => langs.includes(p.info.trace.act.data.lang_code));
+        }
+
+        return proposals;
     }
 
     async getRecentBoosts(query): Promise<BoostActivityPack[]> {
