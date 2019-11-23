@@ -4,7 +4,7 @@ import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/ap
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import * as SqlString from 'sqlstring';
 
-const HOMEPAGE_CATEGORY_IDS = [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070];
+const HOMEPAGE_CATEGORY_IDS = [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070, 16926];
 
 export interface CategorySearchPack {
     lang: string,
