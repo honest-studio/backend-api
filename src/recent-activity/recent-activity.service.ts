@@ -1,4 +1,4 @@
-import { Injectable, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, Inject, forwardRef, BadRequestException } from '@nestjs/common';
 import { MongoDbService, MysqlService, RedisService } from '../feature-modules/database';
 import { EosAction } from '../feature-modules/database/mongodb-schema';
 import { PreviewService } from '../preview/preview.service';
@@ -58,6 +58,9 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<Proposal>> {
+        if (query.voter && query.account_name)
+            throw new BadRequestException("voter and account_name cannot be used together");
+
         let find_query;
         let sort_direction;
         const now = (Date.now() / 1000) | 0;
@@ -68,6 +71,9 @@ export class RecentActivityService {
         if (query.voter) {
             find_query['trace.act.name'] = 'vote';
             find_query['trace.act.data.voter'] = query.voter;
+        }
+        else {
+            find_query['trace.act.name'] = 'logpropinfo';
         }
         if (query.expiring) {
             find_query['trace.act.data.endtime'] = { $gt: now };
@@ -89,12 +95,12 @@ export class RecentActivityService {
                 .toArray();
             find_query['trace.act.data.proposal_id'] = { $lt: last_finalized[0].trace.act.data.proposal_id };
         }
-        if (query.langs) {
+        if (query.langs && !query.voter) {
             find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };
         }
-        const proposal_id_docs = await this.mongo
+        let proposal_id_docs = await this.mongo
             .connection()
-            .actions.find(find_query, { projection: { 'trace.act.data.proposal_id': 1 } })
+            .actions.find(find_query, { projection: { 'trace.act.data': 1 } })
             .sort({ 'trace.act.data.proposal_id': sort_direction })
             .skip(query.offset)
             .limit(query.limit)
@@ -102,6 +108,7 @@ export class RecentActivityService {
 
         const proposal_ids = proposal_id_docs.map((doc) => doc.trace.act.data.proposal_id)
             .filter((v, i, a) => a.indexOf(v) === i);
+
                 
         const proposal_options = {
             preview: query.preview,
@@ -110,7 +117,13 @@ export class RecentActivityService {
             cache: query.cache
         };
 
-        return this.proposalService.getProposals(proposal_ids, proposal_options);
+        let proposals = await this.proposalService.getProposals(proposal_ids, proposal_options);
+        if (query.voter && query.langs) {
+            const langs = query.langs.split(' ');
+            proposals = proposals.filter(p => langs.includes(p.info.trace.act.data.lang_code));
+        }
+
+        return proposals;
     }
 
     async getRecentBoosts(query): Promise<BoostActivityPack[]> {

@@ -253,7 +253,7 @@ export class UserService {
 
                 // streaks are calculated based on UTC calendar days
                 // if you go 24 hours without editing, your streak ends
-                let streak_start = Math.floor(new Date(proposals[proposals.length - 1].block_time).getTime() / 86400000);
+                let streak_start = Math.floor(new Date(proposals[0].block_time).getTime() / 86400000);
                 let last_date = Math.floor(new Date(proposals[proposals.length - 1].block_time).getTime() / 86400000);
                 for (let proposal of proposals) {
                     let prop_date = Math.floor(new Date(proposal.block_time).getTime() / 86400000);
