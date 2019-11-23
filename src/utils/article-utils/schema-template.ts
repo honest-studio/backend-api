@@ -245,9 +245,9 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         }
 
 
-        if (citation.thumb && citation.thumb != '') citation_to_push['thumb'] = citation.thumb;
+        if (citation.thumb && citation.thumb != '') citation_to_push['image'] = citation.thumb;
         schemaJSON.citation.push(citation_to_push);
-        
+
     });
     schemaJSON['articleBody'] = sanitized_body;
     switch (returnType) {
