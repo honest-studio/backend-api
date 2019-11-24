@@ -39,7 +39,7 @@ export interface PageCategory {
     img_thumb_webp: string;
 
     schema_for?: string;
-    schema_keyword?: string;
+    schema_regex?: string;
     key_regex?: string;
     values_regex?: string;
 }

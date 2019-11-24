@@ -218,7 +218,7 @@ export class CategoryService {
                 AND (cat.schema_for = ? OR cat.schema_for = 'Thing')
                 AND (
                     cat.title REGEXP ? 
-                    OR cat.schema_keyword REGEXP ? 
+                    OR cat.schema_regex REGEXP ? 
                     OR cat.key_regex REGEXP ? 
                     OR cat.values_regex REGEXP ?    
                 )
