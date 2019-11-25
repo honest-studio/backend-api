@@ -77,7 +77,7 @@ export class ChainService {
         ]);
         const sig = ecc.Signature.sign(signBuf, privkey).toString();
 
-        return { signatures: [sig], serializedTransaction: transaction.serializedTransaction.data }
+        return { signatures: [sig], serializedTransaction: transaction_buffer.toString('hex') }
     }
 
     async getTableRows(body): Promise<any> {
