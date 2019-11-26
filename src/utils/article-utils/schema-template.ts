@@ -236,14 +236,18 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
             })
             .join('');
 
-        schemaJSON.citation.push({
+        let citation_to_push = {
             '@type': 'CreativeWork',
             url: citation.url,
             encodingFormat: citation.mime,
             datePublished: citation.timestamp,
-            image: citation.thumb,
             description: citationText
-        });
+        }
+
+
+        if (citation.thumb && citation.thumb != '') citation_to_push['image'] = citation.thumb;
+        schemaJSON.citation.push(citation_to_push);
+
     });
     schemaJSON['articleBody'] = sanitized_body;
     switch (returnType) {

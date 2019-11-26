@@ -27,7 +27,9 @@ commander
   .parse(process.argv);
 
 const BATCH_SIZE = 10000;
-const PAGE_TYPES = ['Person', 'Organization'];
+const ARTICLE_PAGE_TYPES = ['Person'];
+const CATEGORY_PAGE_TYPES = ['Person'];
+const SET_TO_INDEXED = 1;
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
 const TIMESTAMP_FLOOR = '2014-10-13 21:45:19'; 
@@ -107,13 +109,13 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             // Search the schema
             for (let c_idx = 0; c_idx < filtered_categories_to_check.length; c_idx++) {
                 let categ = filtered_categories_to_check[c_idx];
-                let schema_keyword_regex = new RegExp(categ.schema_keyword, 'gimu')
+                let schema_regex = new RegExp(categ.schema_regex, 'gimu')
                 let key_regex = new RegExp(categ.key_regex, 'gimu');
                 let values_regex = new RegExp(categ.values_regex, 'gimu');
 
                 // Normal regexes
                 if (
-                    (ibox.schema && ibox.schema.search(schema_keyword_regex) >= 0)
+                    (ibox.schema && ibox.schema.search(schema_regex) >= 0)
                     || (ibox.key && ibox.key.search(key_regex) >= 0)
                 ){
                     // console.log(util.inspect(ibox, {showHidden: false, depth: null, chalk: true}));
@@ -247,6 +249,23 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             // Remove duplicates, then sort
             wiki.categories = [...new Set(existing_category_ids)].sort();
 
+            // Set as indexed, if applicable
+            if (SET_TO_INDEXED) {
+                wiki.metadata = wiki.metadata.map(meta => {
+                    if(meta.key == 'is_indexed') return { key: 'is_indexed', value: true }
+                    else return meta;
+                })   
+
+                await theMysql.TryQuery(
+                    `
+                        UPDATE enterlink_articletable 
+                        SET is_indexed = 1
+                        WHERE id = ?
+                    `,
+                    [pageID]
+                );
+            }
+
             // Update the hashcache
             let json_insertion;
             try {
@@ -280,12 +299,12 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
             SELECT *
             FROM enterlink_pagecategory
             WHERE schema_for in (?)
-                AND schema_keyword IS NOT NULL
+                AND schema_regex IS NOT NULL
                 AND key_regex IS NOT NULL
                 AND values_regex IS NOT NULL
                 AND id >= ?
         `,
-        [PAGE_TYPES, IGNORE_CATEGORIES_BELOW]
+        [CATEGORY_PAGE_TYPES, IGNORE_CATEGORIES_BELOW]
     );
 
     let currentStart, currentEnd;
@@ -313,7 +332,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,
-            [currentStart, currentEnd, PAGE_TYPES, LANGUAGE_CODE, TIMESTAMP_FLOOR]
+            [currentStart, currentEnd, ARTICLE_PAGE_TYPES, LANGUAGE_CODE, TIMESTAMP_FLOOR]
         );
 
         for await (const artResult of fetchedArticles) {
