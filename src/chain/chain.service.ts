@@ -82,7 +82,7 @@ export class ChainService {
 
     async getTableRows(body): Promise<any> {
         // console.log(body);
-        return fetch(`${this.config.get("DFUSE_API_REST_ENDPOINT")}/v1/chain/get_table_rows`, {
+        return fetch(`http://api.libertyblock.io/v1/chain/get_table_rows`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

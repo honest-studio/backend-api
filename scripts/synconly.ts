@@ -122,7 +122,11 @@ async function start() {
                     throw err;
                 }
             });
-        redis_process_actions([msg.data])
+
+        // Process actions to Redis
+        await redis_process_actions([msg.data])
+        let last_block_processed = msg.data.block_num; 
+        await redis.set(`eos_actions:last_block_processed`, last_block_processed);
 
         // publish proposal results
         if (msg.data.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(msg.data));
