@@ -189,7 +189,7 @@ export class RecentActivityService {
 
     }
 
-    async getTrendingWikis(langs: string[] = [], range: string = 'today', limit: number = 10) {
+    async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 10) {
         if (range == 'today') {
             // check cache first
             const cache = await this.redis.connection().get(`trending_pages:today`);
@@ -230,7 +230,7 @@ export class RecentActivityService {
                             filters: [{
                                 dimensionName: "ga:pagePath",
                                 operator: "BEGINS_WITH",
-                                expressions: "/wiki/",
+                                expressions: `/wiki/lang_${lang}`,
                             }]
                         }],
                         orderBys: [{ "fieldName": "ga:pageviews", "sortOrder": "DESCENDING" }],
@@ -282,9 +282,10 @@ export class RecentActivityService {
                     art.ipfs_hash_current AS ipfs_hash, 
                     art.pageviews AS pageviews
                 FROM enterlink_articletable AS art 
+                WHERE art.page_lang = ?
                 ORDER BY pageviews DESC
                 LIMIT ?`,
-                [limit]
+                [limit, lang]
             );
 
             return top_pages;
