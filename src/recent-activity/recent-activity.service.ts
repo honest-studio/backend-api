@@ -285,7 +285,7 @@ export class RecentActivityService {
                 WHERE art.page_lang = ?
                 ORDER BY pageviews DESC
                 LIMIT ?`,
-                [limit, lang]
+                [lang, limit]
             );
 
             return top_pages;

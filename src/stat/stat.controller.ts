@@ -18,6 +18,12 @@ export class StatController {
         required: false
     })
     @ApiImplicitQuery({
+        name: 'lang',
+        description: 'Filter by language',
+        required: false,
+        type: String
+    })
+    @ApiImplicitQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`,
         required: false
@@ -34,8 +40,14 @@ export class StatController {
 
     @Get('site-usage')
     @ApiOperation({ title: 'All-time site usage' })
-    async siteUsage(): Promise<any> {
-        return await this.statService.siteUsage();
+    @ApiImplicitQuery({
+        name: 'lang',
+        description: 'Filter by language',
+        required: false,
+        type: String
+    })
+    async siteUsage(@Query() query): Promise<any> {
+        return await this.statService.siteUsage(query);
     }
 
     @Get('edits')

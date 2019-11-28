@@ -28,6 +28,12 @@ export class RecentActivityController {
         required: false,
         type: Number
     })
+    @ApiImplicitQuery({
+        name: 'lang',
+        description: 'Filter by language',
+        required: false,
+        type: String
+    })
     @ApiOperation({
         title: 'All recent on-chain activity',
         description: 'Returns 100 most recent actions on the eparticlectr smart contract'
@@ -215,7 +221,6 @@ export class RecentActivityController {
         name: 'lang',
         description: `Language if you wish to restrict the return output.`,
         required: false,
-        isArray: true,
         type: 'string'
     })
     @ApiImplicitQuery({

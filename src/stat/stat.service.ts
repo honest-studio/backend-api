@@ -6,6 +6,7 @@ export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
     cache: boolean;
     limit: number;
+    lang: string;
 }
 
 @Injectable()
@@ -17,6 +18,7 @@ export class StatService {
     private readonly GENESIS_BLOCK_TIMESTAMP = 1528470488;
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
+        const lang = options && options.lang ? options.lang : 'en';
         if (options.period == 'all-time') {
             const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 1, options.limit + 1, 'WITHSCORES');
             let doc = [];
@@ -143,7 +145,8 @@ export class StatService {
         return editor_rewards.slice(0, options.limit);
     }
 
-    async siteUsage(): Promise<any> {
+    async siteUsage(options: any): Promise<any> {
+        const lang = options && options.lang ? options.lang : 'en';
         let doc: any = await this.redis.connection().get('site_usage');
 
         if (doc) {
@@ -183,8 +186,9 @@ export class StatService {
                 art.is_removed = 0
                 AND art.redirect_page_id IS NULL
                 AND creation_timestamp > ?
+                AND art.page_lang = ?
             `,
-            [mysql_date],
+            [mysql_date, lang],
             10000
         );
         doc.total_article_count[0].num_articles += new_article_count[0].num_articles;
@@ -196,8 +200,9 @@ export class StatService {
                 WHERE 
                     art.is_removed = 0
                     AND art.redirect_page_id IS NULL
+                    AND art.page_lang = ?
                 `,
-                [],
+                [lang],
                 180000
             );
         }
@@ -223,8 +228,10 @@ export class StatService {
                 WHERE 
                     page_note IS NULL
                     AND redirect_page_id IS NULL
-                    AND is_removed = 0`,
-                [mysql_date],
+                    AND is_removed = 0
+                    AND art.page_lang = ?
+                    `,
+                [mysql_date, lang],
                 60000
             );
             doc.original_pages = original_pages[0].count;
@@ -237,8 +244,10 @@ export class StatService {
                     page_note IS NULL
                     AND creation_timestamp > ?
                     AND redirect_page_id IS NULL
-                    AND is_removed = 0`,
-                [mysql_date],
+                    AND is_removed = 0
+                    AND page_lang = ?
+                    `,
+                [mysql_date, lang],
                 60000
             )
             doc.original_pages += new_original_pages[0].count;
