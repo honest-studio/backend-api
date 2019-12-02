@@ -21,6 +21,7 @@ const RecentActivityQuerySchema = {
     completed: Joi.boolean().default(false),
     approved: Joi.boolean().default(false),
     account_name: Joi.string(),
+    lang: Joi.string(),
     langs: Joi.string(),
     voter: Joi.string(),
     range: Joi.string()

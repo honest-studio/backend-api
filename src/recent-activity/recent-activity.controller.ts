@@ -28,6 +28,12 @@ export class RecentActivityController {
         required: false,
         type: Number
     })
+    @ApiImplicitQuery({
+        name: 'lang',
+        description: 'Filter by language',
+        required: false,
+        type: String
+    })
     @ApiOperation({
         title: 'All recent on-chain activity',
         description: 'Returns 100 most recent actions on the eparticlectr smart contract'
@@ -212,12 +218,9 @@ export class RecentActivityController {
     @Get('trending')
     @ApiOperation({ title: 'Trending wikis' })
     @ApiImplicitQuery({
-        name: 'langs',
-        description: `Language(s) if you wish to restrict the return output.
-            Default: Return all languages
-            Example: /v2/recent-activity/trending?langs=en,es`,
+        name: 'lang',
+        description: `Language if you wish to restrict the return output.`,
         required: false,
-        isArray: true,
         type: 'string'
     })
     @ApiImplicitQuery({
@@ -240,8 +243,6 @@ export class RecentActivityController {
     })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getTrendingWikis(@Query() query): Promise<Array<any>> {
-        let langs = [];
-        if (query.langs) langs = query.langs.split(',');
-        return await this.recentActivityService.getTrendingWikis(langs, query.range, query.limit);
+        return await this.recentActivityService.getTrendingWikis(query.lang, query.range, query.limit);
     }
 }
