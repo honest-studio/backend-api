@@ -190,10 +190,12 @@ export class RecentActivityService {
     }
 
     async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 20) {
+        let langToUse = lang;
+        if (lang == 'zh') langToUse == 'zh-hans';
         if (range == 'today') {
             try {
                 // check cache first
-                const cache = await this.redis.connection().get(`trending_pages:${lang}:today`);
+                const cache = await this.redis.connection().get(`trending_pages:${langToUse}:today`);
                 if (cache) {
                     return JSON.parse(cache).slice(0, limit);
                 }
@@ -231,7 +233,7 @@ export class RecentActivityService {
                                 filters: [{
                                     dimensionName: "ga:pagePath",
                                     operator: "BEGINS_WITH",
-                                    expressions: `/wiki/lang_${lang}`,
+                                    expressions: `/wiki/lang_${langToUse}`,
                                 }]
                             }],
                             orderBys: [{ "fieldName": "ga:pageviews", "sortOrder": "DESCENDING" }],
@@ -266,8 +268,8 @@ export class RecentActivityService {
                 .sort((a,b) => b.unique_pageviews - a.unique_pageviews);
 
                 const pipeline = this.redis.connection().pipeline();
-                pipeline.set(`trending_pages:${lang}:today`, JSON.stringify(trending));
-                pipeline.expire(`trending_pages:${lang}:today`, 3600);
+                pipeline.set(`trending_pages:${langToUse}:today`, JSON.stringify(trending));
+                pipeline.expire(`trending_pages:${langToUse}:today`, 3600);
                 pipeline.exec();
 
                 return trending.slice(0, limit);
@@ -284,14 +286,14 @@ export class RecentActivityService {
                     WHERE art.page_lang = ?
                     ORDER BY pageviews DESC
                     LIMIT ?`,
-                    [lang, 1000]
+                    [langToUse, 1000]
                 );
 
                 let cache_slice = top_pages.slice(0, 100);
 
                 const pipeline = this.redis.connection().pipeline();
-                pipeline.set(`trending_pages:${lang}:today`, JSON.stringify(cache_slice));
-                pipeline.expire(`trending_pages:${lang}:today`, 3600);
+                pipeline.set(`trending_pages:${langToUse}:today`, JSON.stringify(cache_slice));
+                pipeline.expire(`trending_pages:${langToUse}:today`, 3600);
                 pipeline.exec();
     
                 return top_pages.slice(0, limit);
@@ -309,7 +311,7 @@ export class RecentActivityService {
                 WHERE art.page_lang = ?
                 ORDER BY pageviews DESC
                 LIMIT ?`,
-                [lang, limit]
+                [langToUse, limit]
             );
 
             return top_pages;
