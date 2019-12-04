@@ -39,6 +39,7 @@ export class StatService {
                 if (i % 2 == 0) doc[Math.floor(i/2)].edits = Number(edits_votes[i][1]);
                 else doc[Math.floor(i/2)].votes = Number(edits_votes[i][1]);
             }
+            doc = doc.sort((a,b) => b[sortby] - a[sortby])
             return doc;
         }
 
