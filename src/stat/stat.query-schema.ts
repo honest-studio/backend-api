@@ -11,7 +11,8 @@ const StatQuerySchema = {
         .default('iq'),
     starttime: Joi.number().integer().min(1),
     endtime: Joi.number().integer().min(1),
-    lang: Joi.string()
+    lang: Joi.string(),
+    user: Joi.string()
 };
 
 export { StatQuerySchema };

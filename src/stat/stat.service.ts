@@ -8,6 +8,7 @@ export interface LeaderboardOptions {
     limit: number;
     lang: string;
     sortby: 'iq' | 'votes' | 'edits';
+    user: string;
 }
 
 @Injectable()
@@ -45,9 +46,22 @@ export class StatService {
 
         const cache = await this.redis.connection().get(`editor-leaderboard:${options.period}`);
         if (cache && options.cache) {
-            return JSON.parse(cache).editor_rewards
+            const sorted = JSON.parse(cache).editor_rewards
                 .sort((a,b) => b[sortby] - a[sortby])
-                .slice(0, options.limit)
+            if (!options.user) return sorted.slice(0, options.limit);
+
+            // if a user is specified, include it at the end
+            let user;
+            const index = sorted.findIndex(row => row.user == options.user);
+            if (!index) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
+            else {
+                user = JSON.parse(JSON.stringify(sorted[index])); // clone the object
+                user.rank = index + 1;
+            }
+
+            const leaders = sorted.slice(0, options.limit);
+            leaders.push(user);
+            return leaders;
         }
 
         const approx_head_block_res = await this.mongo.connection().actions.find({
@@ -148,8 +162,23 @@ export class StatService {
         this.redis.connection().set(`editor-leaderboard:${options.period}`, JSON.stringify(doc));
         this.redis.connection().expire(`editor-leaderboard:${options.period}`, 3600);
 
-        return editor_rewards.slice(0, options.limit)
+        const sorted = editor_rewards
             .sort((a,b) => b[sortby] - a[sortby])
+        if (!options.user) return editor_rewards.slice(0, options.limit);
+
+        // if a user is specified, include it at the end
+        let user;
+        const index = sorted.findIndex(row => row.user == options.user);
+        if (!index) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
+        else {
+            user = JSON.parse(JSON.stringify(sorted[index])); // clone the object
+            user.rank = index + 1;
+        }
+
+        const leaders = sorted.slice(0, options.limit);
+        leaders.push(user);
+        return leaders;
+
     }
 
     async siteUsage(options: any): Promise<any> {

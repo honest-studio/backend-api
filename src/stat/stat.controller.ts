@@ -38,6 +38,11 @@ export class StatController {
         description: `Sort by a field. 'iq', 'votes', or 'edits'. Default: 'iq'`,
         required: false
     })
+    @ApiImplicitQuery({
+        name: 'user',
+        description: `If specified, the user provided will be listed in the returned array with their rank as the last item in the array`,
+        required: false
+    })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
     async editorLeaderboard(@Query() query): Promise<any> {
         return await this.statService.editorLeaderboard(query);
