@@ -33,6 +33,11 @@ export class StatController {
         description: `Number of rows to return. Default: 10`,
         required: false
     })
+    @ApiImplicitQuery({
+        name: 'sortby',
+        description: `Sort by a field. 'iq', 'votes', or 'edits'. Default: 'iq'`,
+        required: false
+    })
     @UsePipes(new JoiValidationPipe(StatQuerySchema, ['query']))
     async editorLeaderboard(@Query() query): Promise<any> {
         return await this.statService.editorLeaderboard(query);
