@@ -6,6 +6,9 @@ const StatQuerySchema = {
     period: Joi.boolean()
         .valid('today', 'this-week', 'this-month', 'all-time')
         .default('today'),
+    sortby: Joi.boolean()
+        .valid('iq', 'votes', 'edits')
+        .default('iq'),
     starttime: Joi.number().integer().min(1),
     endtime: Joi.number().integer().min(1),
     lang: Joi.string()

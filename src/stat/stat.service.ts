@@ -7,6 +7,7 @@ export interface LeaderboardOptions {
     cache: boolean;
     limit: number;
     lang: string;
+    sortby: 'iq' | 'votes' | 'edits';
 }
 
 @Injectable()
@@ -19,6 +20,8 @@ export class StatService {
 
     async editorLeaderboard(options: LeaderboardOptions): Promise<any> {
         const lang = options && options.lang ? options.lang : 'en';
+        const sortby = options && options.sortby == 'iq' ? 'cumulative_iq_rewards' : options.sortby;
+
         if (options.period == 'all-time') {
             const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 1, options.limit + 1, 'WITHSCORES');
             let doc = [];
@@ -41,7 +44,9 @@ export class StatService {
 
         const cache = await this.redis.connection().get(`editor-leaderboard:${options.period}`);
         if (cache && options.cache) {
-            return JSON.parse(cache).editor_rewards.slice(0, options.limit);
+            return JSON.parse(cache).editor_rewards
+                .sort((a,b) => b[sortby] - a[sortby])
+                .slice(0, options.limit)
         }
 
         const approx_head_block_res = await this.mongo.connection().actions.find({
@@ -142,7 +147,8 @@ export class StatService {
         this.redis.connection().set(`editor-leaderboard:${options.period}`, JSON.stringify(doc));
         this.redis.connection().expire(`editor-leaderboard:${options.period}`, 3600);
 
-        return editor_rewards.slice(0, options.limit);
+        return editor_rewards.slice(0, options.limit)
+            .sort((a,b) => b[sortby] - a[sortby])
     }
 
     async siteUsage(options: any): Promise<any> {
