@@ -53,7 +53,7 @@ export class StatService {
             // if a user is specified, include it at the end
             let user;
             const index = sorted.findIndex(row => row.user == options.user);
-            if (!index) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
+            if (index == -1) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
             else {
                 user = JSON.parse(JSON.stringify(sorted[index])); // clone the object
                 user.rank = index + 1;
@@ -169,7 +169,7 @@ export class StatService {
         // if a user is specified, include it at the end
         let user;
         const index = sorted.findIndex(row => row.user == options.user);
-        if (!index) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
+        if (index == -1) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
         else {
             user = JSON.parse(JSON.stringify(sorted[index])); // clone the object
             user.rank = index + 1;
