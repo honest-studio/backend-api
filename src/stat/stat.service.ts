@@ -40,28 +40,31 @@ export class StatService {
                 if (i % 2 == 0) doc[Math.floor(i/2)].edits = Number(edits_votes[i][1]);
                 else doc[Math.floor(i/2)].votes = Number(edits_votes[i][1]);
             }
-            doc = doc.sort((a,b) => b[sortby] - a[sortby])
-            return doc;
+            let sorted = doc.sort((a,b) => b[sortby] - a[sortby])
+            if (options.user) {
+                const pipeline_user = this.redis.connection().pipeline();
+                pipeline_user.zrevrank('editor-leaderboard:all-time:rewards', options.user);
+                pipeline_user.zscore('editor-leaderboard:all-time:rewards', options.user);
+                pipeline_user.get(`user:${options.user}:num_edits`);
+                pipeline_user.get(`user:${options.user}:num_votes`);
+                const user_values = await pipeline_user.exec();
+
+                const rank = user_values[0][1] ? user_values[0][1] : 1000;
+                const cumulative_iq_rewards = user_values[1][1] ? user_values[1][1] : 0;
+                const edits = user_values[2][1] ? user_values[2][1] : 0;
+                const votes = user_values[3][1] ? user_values[3][1] : 0;
+
+                sorted.push({ user: options.user, rank, cumulative_iq_rewards, edits, votes });
+            }
+            return sorted;
         }
 
         const cache = await this.redis.connection().get(`editor-leaderboard:${options.period}`);
         if (cache && options.cache) {
             const sorted = JSON.parse(cache).editor_rewards
                 .sort((a,b) => b[sortby] - a[sortby])
-            if (!options.user) return sorted.slice(0, options.limit);
-
-            // if a user is specified, include it at the end
-            let user;
-            const index = sorted.findIndex(row => row.user == options.user);
-            if (index == -1) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
-            else {
-                user = JSON.parse(JSON.stringify(sorted[index])); // clone the object
-                user.rank = index + 1;
-            }
-
-            const leaders = sorted.slice(0, options.limit);
-            leaders.push(user);
-            return leaders;
+            if (options.user) return this.addUserToLeaderboard(sorted, options);
+            else return sorted.slice(0, options.limit);
         }
 
         const approx_head_block_res = await this.mongo.connection().actions.find({
@@ -164,21 +167,23 @@ export class StatService {
 
         const sorted = editor_rewards
             .sort((a,b) => b[sortby] - a[sortby])
-        if (!options.user) return editor_rewards.slice(0, options.limit);
+        if (options.user) return this.addUserToLeaderboard(sorted, options);
+        else return sorted.slice(0, options.limit);
+    }
 
-        // if a user is specified, include it at the end
+    // Helper function to add a specified user to the end of the leaderboard
+    addUserToLeaderboard(sorted_leaders, options: LeaderboardOptions) {
         let user;
-        const index = sorted.findIndex(row => row.user == options.user);
+        const index = sorted_leaders.findIndex(row => row.user == options.user);
         if (index == -1) user = { user: options.user, edits: 0, votes: 0, cumulative_iq_rewards: 0, rank: 1000 };
         else {
-            user = JSON.parse(JSON.stringify(sorted[index])); // clone the object
+            user = JSON.parse(JSON.stringify(sorted_leaders[index])); // clone the object
             user.rank = index + 1;
         }
 
-        const leaders = sorted.slice(0, options.limit);
+        const leaders = sorted_leaders.slice(0, options.limit);
         leaders.push(user);
         return leaders;
-
     }
 
     async siteUsage(options: any): Promise<any> {
