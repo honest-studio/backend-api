@@ -11,6 +11,21 @@ const SITEMAP_ROOT_DIR = path.join(__dirname, '..', '..', 'public', 'sitemaps');
 const ROW_LIMIT = 50000;
 const RECENT_ROW_LIMIT = 1000;
 
+export const getLangPrefix = (lang: string) => {
+    let langPrefix = '';
+    switch(lang){
+        case 'en':
+            langPrefix = '';
+            break;
+        case 'zh-hans':
+            langPrefix = 'zh.';
+            break;
+        default:
+            langPrefix = `${lang}.`;
+    };
+    return langPrefix;
+}
+
 @Injectable()
 export class SitemapService {
     constructor(
@@ -52,7 +67,7 @@ export class SitemapService {
             });
         });
 
-        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let langPrefix = getLangPrefix(lang);
         let theMap = sm.createSitemap({
             hostname: `https://${langPrefix}everipedia.org`,
             cacheTime: 600000, // 600 sec - cache purge period
@@ -79,7 +94,7 @@ export class SitemapService {
         let sitemapPacks: Array<SitemapPack> = [];
         let currentLoop = 0, lastID = 0;
         let sitemapURLs = [];
-        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let langPrefix = getLangPrefix(lang);
         let hostName = `https://${langPrefix}everipedia.org`;
         let sitemapDirectory = path.join(SITEMAP_ROOT_DIR, lang);
         if (!fs.existsSync(sitemapDirectory)){
@@ -174,7 +189,7 @@ export class SitemapService {
             });
         });
 
-        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let langPrefix = getLangPrefix(lang);
         let theMap = sm.createSitemap({
             hostname: `https://${langPrefix}everipedia.org`,
             cacheTime: 600000, // 600 sec - cache purge period
