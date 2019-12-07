@@ -165,7 +165,18 @@ export class SitemapService {
         console.log(colors.green(`Static sitemap for ${lang} completed`));
     }
 
+    async serveStaticSitemap(res: Response, lang: string = 'en', filename: string): Promise<any> {
+        let sitemapDirectory = path.join(SITEMAP_ROOT_DIR, lang);
+        let read_file: string = fs.readFileSync(path.join(sitemapDirectory, filename), { encoding: 'utf-8' });
 
+        res
+            .header('Content-Type', 'application/xml')
+            .status(200)
+            .send(read_file);
+
+        return true;
+
+    }
 
     async getCategoriesSitemap(res: Response, lang: string = 'en'): Promise<any> {
         let sitemapPacks: any[] = await this.mysql.TryQuery(
