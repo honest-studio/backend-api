@@ -210,16 +210,10 @@ export class CategoryService {
                 <body>
                     ${arp.renderHeaderBar()}
                     ${arp.renderNavBar()}
-                    <amp-sidebar id='sidebar' layout="nodisplay" side="left">
-                        <ul class="hdr-clct">
-                            ${arp.renderTableOfContents()}
-                        </ul>
-                    </amp-sidebar>
                     <main id="mainEntityId">
                         ${arp.renderMainBar(the_category)}
                         ${arp.renderCategories(the_previews)}
-                        ${arp.renderSchemaHTML()}
-                        ${arp.renderBreadcrumbs()}
+                        ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">
                         ${arp.renderFooter()}
