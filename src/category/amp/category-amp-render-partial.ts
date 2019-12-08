@@ -2,9 +2,8 @@ import CleanCSS from 'clean-css';
 import cheerio from 'cheerio';
 import striptags from 'striptags';
 import urlSlug from 'url-slug';
-import { CheckForLinksOrCitationsAMP, getYouTubeID, renderAMPImage, renderAMPParagraph } from '.';
 import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
-import { PageCategory, PageCategoryCollection } from '../../types/api';
+import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { getLangPrefix } from '../../sitemap/sitemap.service';
 import { styleNugget } from './category-amp-style';
 const parseDomain = require('parse-domain');
@@ -18,8 +17,7 @@ export class CategoryAMPRenderPartial {
         url_slug: "",
         domain_prefix: "",
         page_lang: "",
-        page_type: "",
-        category: null
+        page_type: ""
     }
 
     constructor(private category_collection: PageCategoryCollection) {
@@ -35,7 +33,6 @@ export class CategoryAMPRenderPartial {
         this.cleanedVars.page_lang = page_lang;
         this.cleanedVars.url_slug = url_slug;
         this.cleanedVars.page_type = page_type;
-        this.cleanedVars.category = category;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -67,12 +64,12 @@ export class CategoryAMPRenderPartial {
             <meta name="twitter:title" content="${this.cleanedVars.page_title} - Everipedia" />
             <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta property="article:tag" content="${this.cleanedVars.page_title} - Everipedia" />
-            <meta property="og:image" content="${this.cleanedVars.category.img_full}?nocache=${RANDOMSTRING}" />
-            <meta property="og:image" content="${this.cleanedVars.category.img_thumb}" />
+            <meta property="og:image" content="${this.category_collection.category.img_full}?nocache=${RANDOMSTRING}" />
+            <meta property="og:image" content="${this.category_collection.category.img_thumb}" />
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
-            <meta name="twitter:image" content="${this.cleanedVars.category.img_full}?nocache=${RANDOMSTRING}" />
-            <meta name="twitter:image" content="${this.cleanedVars.category.img_thumb}" />
+            <meta name="twitter:image" content="${this.category_collection.category.img_full}?nocache=${RANDOMSTRING}" />
+            <meta name="twitter:image" content="${this.category_collection.category.img_thumb}" />
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
             <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
             <meta property="fb:app_id" content="1617004011913755" />
@@ -114,11 +111,11 @@ export class CategoryAMPRenderPartial {
         `;
     };
 
-    renderOneCategory = (category: PageCategory): string => {
+    renderOneCategory = (preview: PreviewResult): string => {
         return `
             <li>
                 <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${category.lang}/${category.slug}" >
-                    ${category.title}
+                    ${preview.page_title}
                 </a>
             </li>
             
@@ -127,16 +124,15 @@ export class CategoryAMPRenderPartial {
 
 
     renderCategories = (): string => {
-        let categories: PageCategory[] = this.wikiExtras && this.wikiExtras.page_categories;
-        if (categories.length == 0) return ``;
-        let categoryComboString = categories
-            .map((cat, index) => {
-                return this.renderOneCategory(cat);
+        let category_previews: PreviewResult[] = this.category_collection.previews;
+        if (category_previews.length == 0) return ``;
+        let categoryComboString = category_previews
+            .map((prev, index) => {
+                return this.renderOneCategory(prev);
             })
             .join('');
         return `
             <div class="category-container">
-                <h2 class="category-header" id="categoryList">CATEGORIES</h2>
                 <ul class="category-list">
                     ${categoryComboString}
                 </ul>
