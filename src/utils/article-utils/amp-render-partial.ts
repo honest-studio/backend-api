@@ -23,7 +23,9 @@ export class AmpRenderPartial {
         url_slug: "",
         domain_prefix: "",
         page_lang: "",
-        page_type: ""
+        page_type: "",
+        img_full: "",
+        img_thumb: ""
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
@@ -38,6 +40,8 @@ export class AmpRenderPartial {
         this.cleanedVars.page_lang = page_lang;
         this.cleanedVars.url_slug = url_slug;
         this.cleanedVars.page_type = page_type;
+        this.cleanedVars.img_full = (artJSON.main_photo[0].url || artJSON.main_photo[0].url == 'null') ? artJSON.main_photo[0].url : null;
+        this.cleanedVars.img_thumb = (artJSON.main_photo[0].thumb || artJSON.main_photo[0].thumb == 'null') ? artJSON.main_photo[0].thumb : null;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -140,14 +144,14 @@ export class AmpRenderPartial {
             <meta property="article:tag" content="${this.cleanedVars.page_title}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
-            <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
-            <meta property="og:image" content="${this.artJSON.main_photo[0].thumb}" />
+            ${this.cleanedVars.img_full ? `<meta property="og:image" content="${this.cleanedVars.img_full}?nocache=${RANDOMSTRING}" />` : ""}
+            ${this.cleanedVars.img_thumb ? `<meta property="og:image" content="${this.cleanedVars.img_thumb}?nocache=${RANDOMSTRING}" />` : ""}
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
             this.cleanedVars.url_slug
         }">
-            <meta name="twitter:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
-            <meta name="twitter:image" content="${this.artJSON.main_photo[0].thumb}" />
+            ${this.cleanedVars.img_full ? `<meta property="twitter:image" content="${this.cleanedVars.img_full}?nocache=${RANDOMSTRING}" />` : ""}
+            ${this.cleanedVars.img_thumb ? `<meta property="twitter:image" content="${this.cleanedVars.img_thumb}?nocache=${RANDOMSTRING}" />` : ""}
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
             <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
             this.cleanedVars.url_slug

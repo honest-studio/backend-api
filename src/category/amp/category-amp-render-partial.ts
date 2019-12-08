@@ -9,7 +9,9 @@ export class CategoryAMPRenderPartial {
         url_slug: "",
         domain_prefix: "",
         page_lang: "",
-        page_type: ""
+        page_type: "",
+        img_full: "",
+        img_thumb: ""
     }
 
     constructor(private category_collection: PageCategoryCollection) {
@@ -25,6 +27,8 @@ export class CategoryAMPRenderPartial {
         this.cleanedVars.page_lang = page_lang;
         this.cleanedVars.url_slug = url_slug;
         this.cleanedVars.page_type = page_type;
+        this.cleanedVars.img_full = (category.img_full || category.img_full == 'null') ? category.img_full : null;
+        this.cleanedVars.img_thumb = (category.img_thumb  || category.img_thumb == 'null') ? category.img_thumb : null;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -56,18 +60,18 @@ export class CategoryAMPRenderPartial {
             <meta name="twitter:title" content="${this.cleanedVars.page_title} - Everipedia" />
             <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
             <meta property="article:tag" content="${this.cleanedVars.page_title} - Everipedia" />
-            <meta property="og:image" content="${this.category_collection.category.img_full}?nocache=${RANDOMSTRING}" />
-            <meta property="og:image" content="${this.category_collection.category.img_thumb}" />
+            ${this.cleanedVars.img_full ? `<meta property="og:image" content="${this.cleanedVars.img_full}?nocache=${RANDOMSTRING}" />` : ""}
+            ${this.cleanedVars.img_thumb ? `<meta property="og:image" content="${this.cleanedVars.img_thumb}?nocache=${RANDOMSTRING}" />` : ""}
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
-            <meta name="twitter:image" content="${this.category_collection.category.img_full}?nocache=${RANDOMSTRING}" />
-            <meta name="twitter:image" content="${this.category_collection.category.img_thumb}" />
+            <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
+            ${this.cleanedVars.img_full ? `<meta property="twitter:image" content="${this.cleanedVars.img_full}?nocache=${RANDOMSTRING}" />` : ""}
+            ${this.cleanedVars.img_thumb ? `<meta property="twitter:image" content="${this.cleanedVars.img_thumb}?nocache=${RANDOMSTRING}" />` : ""}
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
-            <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
+            <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia" />
-            <link rel="canonical" href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}" />
+            <link rel="canonical" href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}" />
             <style amp-custom>${compressedCSS}</style>
         `;
     };
@@ -103,23 +107,28 @@ export class CategoryAMPRenderPartial {
         `;
     };
 
-    renderMainBar = (): string => {
-        return `
-            <div class="cat-hdr">
-                COIN
-            </div>
-            
-        `;
-    };
-
     renderOneCategory = (preview: PreviewResult): string => {
+        let test_wikilangslug = `lang_${preview.lang_code}/${preview.slug}`;
+        let is_indexed = preview.is_indexed;
+        let sanitized_sa_page_title = preview.page_title.replace(/["“”‘’]/gmiu, "\'");
+
+        // Don't use anchor tags for non-indexed pages 
+        let title_tag_to_use = is_indexed ? 
+        `<a class="cat-title"  href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${preview.lang_code}/${preview.slug}" target="_blank">${preview.page_title}</a>`
+        : `<div class="cat-title" >${preview.page_title}</div>`
+
         return `
-            <li>
-                <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${preview.slug}" >
-                    ${preview.page_title}
-                </a>
-            </li>
-            
+            <div class='cat-ancr-wrp' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='0' role="link">
+                <amp-img layout="fixed" height="40px" width="40px" src="${preview.main_photo ? preview.main_photo : preview.thumbnail}" alt="${sanitized_sa_page_title} wiki">
+                    <amp-img placeholder layout="fixed" height="40px" width="40px" src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
+                        sanitized_sa_page_title
+                    }"></amp-img>
+                </amp-img>
+                <div class="cat-contentwrap">
+                    ${title_tag_to_use}
+                    <div class="cat-blurb">${preview.text_preview.replace(/["“”‘’]/gmiu, "\'")}</div>
+                </div>
+            </div>
         `;
     };
 
@@ -134,6 +143,9 @@ export class CategoryAMPRenderPartial {
             .join('');
         return `
             <div class="category-container">
+                <div class="cat-hdr">
+                    ${this.category_collection.category.title}
+                </div>
                 <ul class="category-list">
                     ${categoryComboString}
                 </ul>

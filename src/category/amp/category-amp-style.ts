@@ -659,6 +659,101 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 :focus{
 	outline: none;
 }
+.category-container, .category-container .category-list {
+	float: left;
+    width: 100%;
+}
+.category-container .category-list {
+	padding: 0px 10px;
+}
+.cat-hdr {
+	float: left;
+    width: 100%;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 20px;
+}
+.cat-ancr-wrp{
+	float: left;
+	width: calc(100% - 20px);
+	padding: 0;
+	background: #fbfbfb;
+	margin: 0px 0px 15px 0px;
+	border: 1px solid rgba(0,0,0,0.1);
+	border-radius: 2px 2px 0 0;
+}
+.cat-ancr-wrp:last-child {
+	border-bottom:1px solid rgba(0,0,0,0.1);
+	margin-bottom: 10px;
+}
+.cat-ancr-wrp .seealso-spacer{
+	margin: 10px 0px;
+	float: left;
+	width: 100%;
+	border-bottom: 1px solid #e6e6e6;
+}
+.cat-ancr-wrp amp-img{
+	float: left;
+	margin-right: 10px;
+}
+.cat-ancr-wrp amp-anim{
+	float: left;
+	margin-right: 10px;
+}
+.cat-ancr-wrp img{
+	object-fit: cover;
+	float:left;
+}
+.cat-ancr-wrp .cat-contentwrap {
+	height: 80px;
+    font-family: OpenSans,'Open Sans',sans-serif;
+    float: left;
+    width: calc(100% - 65px);
+    margin-top: 5px;
+}
+.cat-ancr-wrp .cat-title{
+	color:#222222;
+	text-align: left;
+	position: relative;
+	float: left;
+	font-family: inherit;
+	font-size: 1em;
+	max-height: 2.6em;
+	line-height: 1.3;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: relative;
+	font-weight: 500;
+	width:100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.cat-ancr-wrp .cat-blurb {
+    float: left;
+    width: 100%;
+    color: #636363;
+    font-size: .8em;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+    text-align: left;
+    max-height: 55px;
+}
+.cat-ancr-wrp .cat-blurb p {
+	margin: 3px 0px;
+}
+.cat-ancr-wrp .cat-noimg {
+	background:url("https://epcdn-vz.azureedge.net/static/images/no-image-slide.png");
+	background-size: cover;
+	height: 80px;
+	width: 80px;
+	float: left;
+	margin-right: 15px;
+	border-right: 1px solid rgba(0,0,0,0.1);
+}
 .ftr {
     width: calc(100% - 20px);
     padding: 0px 10px 0px 10px;

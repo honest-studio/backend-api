@@ -204,6 +204,8 @@ export class CategoryService {
         let the_previews = category_collection && category_collection.previews;
 
         let BLURB_SNIPPET_PLAINTEXT = (the_category && the_category.description) ? the_category.description.replace(/["“”‘’]/gmiu, "\'") : "";
+        if (BLURB_SNIPPET_PLAINTEXT == '') BLURB_SNIPPET_PLAINTEXT = the_category.title;
+
 
         const theHTML = `
             <!DOCTYPE html>
@@ -214,7 +216,6 @@ export class CategoryService {
                 <body>
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
-                        ${arp.renderMainBar()}
                         ${arp.renderCategories()}
                         ${arp.renderBreadcrumb()}
                     </main>
