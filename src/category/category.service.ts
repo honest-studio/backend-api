@@ -104,9 +104,9 @@ export class CategoryService {
     }
 
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
-        let limit_to_use = (query && query.limit == undefined ? 20 : parseInt(query.limit));
-        let offset_to_use = (query && query.offset == undefined ? 0 : parseInt(query.offset));
-        let show_adult = (query && query.show_adult_content == undefined ? 0 : parseInt(query.offset));
+        let limit_to_use = (query && query.limit && query.limit == undefined) ? 20 : parseInt(query.limit);
+        let offset_to_use = (query && query.offset && query.offset == undefined) ? 0 : parseInt(query.offset);
+        let show_adult = (query && query.show_adult_content && query.show_adult_content) == undefined ? 0 : parseInt(query.offset);
         let show_adult_string = "AND art.is_adult_content=0";
         if (show_adult) show_adult_string = '';
 
@@ -192,14 +192,18 @@ export class CategoryService {
     }
 
     async getAMPCategoryPage(@Res() res, lang_code: string, slug: string): Promise<any> {
-        let category_collection = await this.getPagesByCategoryLangSlug(lang_code, slug, null)
+        let category_collection = await this.getPagesByCategoryLangSlug(
+            lang_code, 
+            slug, 
+            { limit: 40, offset: 0, show_adult_content: false }
+        );
         let category_html_string = '';
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
         let arp = new CategoryAMPRenderPartial(category_collection);
         let the_category = category_collection && category_collection.category;
         let the_previews = category_collection && category_collection.previews;
 
-        let BLURB_SNIPPET_PLAINTEXT = the_category ? the_category.description.replace(/["“”‘’]/gmiu, "\'") : "";
+        let BLURB_SNIPPET_PLAINTEXT = (the_category && the_category.description) ? the_category.description.replace(/["“”‘’]/gmiu, "\'") : "";
 
         const theHTML = `
             <!DOCTYPE html>
@@ -209,10 +213,9 @@ export class CategoryService {
                 </head>
                 <body>
                     ${arp.renderHeaderBar()}
-                    ${arp.renderNavBar()}
                     <main id="mainEntityId">
-                        ${arp.renderMainBar(the_category)}
-                        ${arp.renderCategories(the_previews)}
+                        ${arp.renderMainBar()}
+                        ${arp.renderCategories()}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

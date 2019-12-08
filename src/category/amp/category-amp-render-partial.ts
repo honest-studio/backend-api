@@ -111,10 +111,19 @@ export class CategoryAMPRenderPartial {
         `;
     };
 
+    renderMainBar = (): string => {
+        return `
+            <div class="cat-hdr">
+                COIN
+            </div>
+            
+        `;
+    };
+
     renderOneCategory = (preview: PreviewResult): string => {
         return `
             <li>
-                <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${category.lang}/${category.slug}" >
+                <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${preview.slug}" >
                     ${preview.page_title}
                 </a>
             </li>
