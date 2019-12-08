@@ -1,15 +1,7 @@
 import CleanCSS from 'clean-css';
-import cheerio from 'cheerio';
-import striptags from 'striptags';
-import urlSlug from 'url-slug';
-import { ArticleJson, Citation, Infobox, Media, Paragraph, Section, Sentence } from '../../types/article';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { getLangPrefix } from '../../sitemap/sitemap.service';
 import { styleNugget } from './category-amp-style';
-const parseDomain = require('parse-domain');
-import { isWebUri } from 'valid-url';
-import moment from 'moment';
-import * as MimeTypes from 'mime-types';
 
 export class CategoryAMPRenderPartial {
     public cleanedVars = {
@@ -85,7 +77,7 @@ export class CategoryAMPRenderPartial {
             <nav class="amp-header-bar">
                 <ul>
                     <li class="amp-header-toc">
-                        <button on='tap:sidebar.toggle'>
+                        <button on='tap:share-lightbox'>
                             <amp-img height="24" width="30" layout="fixed" alt="Table of contents and facts for this wiki" src="https://epcdn-vz.azureedge.net/static/images/bull-icon.png" ></amp-img>
                         </button>
                     </li>
@@ -260,64 +252,18 @@ export class CategoryAMPRenderPartial {
                         <h2>Share this page</h2>
                         <div class="social-share-block-wrap">
                             <div class="social-share-block">
-                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
-                                    this.cleanedVars.page_lang
-                                }/${this.cleanedVars.url_slug}"></a>
-                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
-                                    this.cleanedVars.page_lang
-                                }/${this.cleanedVars.url_slug}"></a>
-                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
-                                    this.cleanedVars.page_lang
-                                }/${this.cleanedVars.url_slug}"></a>
-                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
-                                    this.cleanedVars.page_lang
-                                }/${this.cleanedVars.url_slug}"></a>
+                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
+                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
+                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
+                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
                             </div>
                         </div>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-ct-link">
                         <h4>DIRECT LINK</h4>
-                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
-            this.cleanedVars.url_slug
-        }">https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
-                    </div>
-                    <div class="share-pad"></div>
-                    <div class="share-hshtgs">
-                        <div class="suggested-tags">Suggested Hashtags</div>
-                        <div class="social-share-block-wrap">
-                            <ul class="tag-list">
-                                ${
-                                    this.cleanedVars.page_type == 'Person'
-                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
-                                    <li>${this.cleanedVars.page_title} bio</li>
-                                    <li>${this.cleanedVars.page_title} net worth</li>
-                                    <li>${this.cleanedVars.page_title} age</li>
-                                    <li>${this.cleanedVars.page_title} married</li>`
-                                        : this.cleanedVars.page_type == 'Product'
-                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
-                                    <li>${this.cleanedVars.page_title} review</li>
-                                    <li>${this.cleanedVars.page_title} history</li>
-                                    <li>${this.cleanedVars.page_title} sales</li>
-                                    <li>${this.cleanedVars.page_title} facts</li>`
-                                        : this.cleanedVars.page_type == 'Organization'
-                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
-                                    <li>${this.cleanedVars.page_title} review</li>
-                                    <li>${this.cleanedVars.page_title} history</li>
-                                    <li>${this.cleanedVars.page_title} founders</li>
-                                    <li>${this.cleanedVars.page_title} facts</li>`
-                                        : true
-                                        ? `<li>${this.cleanedVars.page_title} wiki</li>
-                                    <li>${this.cleanedVars.page_title} review</li>
-                                    <li>${this.cleanedVars.page_title} history</li>
-                                    <li>${this.cleanedVars.page_title} encyclopedia</li>
-                                    <li>${this.cleanedVars.page_title} facts</li>`
-                                        : ``
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="share-pad"></div>        
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
+                    </div>       
                 </div>
             </nav>
         `;

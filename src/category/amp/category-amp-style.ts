@@ -15,7 +15,7 @@ main{
 	position: relative;
 	z-index: 15;
 	display: block;
-	margin-top: 96px;
+	margin-top: 53px;
 }
 article.schema-wrap{
 	display: block;
