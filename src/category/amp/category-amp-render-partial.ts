@@ -18,7 +18,8 @@ export class CategoryAMPRenderPartial {
         url_slug: "",
         domain_prefix: "",
         page_lang: "",
-        page_type: ""
+        page_type: "",
+        category: null
     }
 
     constructor(private category_collection: PageCategoryCollection) {
@@ -34,6 +35,7 @@ export class CategoryAMPRenderPartial {
         this.cleanedVars.page_lang = page_lang;
         this.cleanedVars.url_slug = url_slug;
         this.cleanedVars.page_type = page_type;
+        this.cleanedVars.category = category;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -61,47 +63,22 @@ export class CategoryAMPRenderPartial {
             <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
-            ${
-                this.cleanedVars.page_type == 'Person'
-                    ? `<title>${this.cleanedVars.page_title} Wiki & Bio${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Bio${extra_keywords}" />`
-                    : this.cleanedVars.page_type == 'Product'
-                    ? `<title>${this.cleanedVars.page_title} Wiki & Review${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Review${extra_keywords}" />`
-                    : this.cleanedVars.page_type == 'Organization'
-                    ? `<title>${this.cleanedVars.page_title} Wiki & Review${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki & Review${extra_keywords}" />`
-                    : this.cleanedVars.page_type
-                    ? `<title>${this.cleanedVars.page_title} Wiki${extra_keywords}</title>
-                <meta property="og:title" content="${this.cleanedVars.page_title}"/>
-                <meta name="twitter:title" content="${this.cleanedVars.page_title} Wiki${extra_keywords}" />`
-                    : ''
-            }
+            <meta property="og:title" content="${this.cleanedVars.page_title} - Everipedia"/>
+            <meta name="twitter:title" content="${this.cleanedVars.page_title} - Everipedia" />
             <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta property="article:tag" content="${this.cleanedVars.page_title}" />
-            <meta property="article:published_time" content="${creation_timestamp}" />
-            <meta property="article:modified_time" content="${last_modified}" />
-            <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
-            <meta property="og:image" content="${this.artJSON.main_photo[0].thumb}" />
+            <meta property="article:tag" content="${this.cleanedVars.page_title} - Everipedia" />
+            <meta property="og:image" content="${this.cleanedVars.category.img_full}?nocache=${RANDOMSTRING}" />
+            <meta property="og:image" content="${this.cleanedVars.category.img_thumb}" />
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
-            this.cleanedVars.url_slug
-        }">
-            <meta name="twitter:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
-            <meta name="twitter:image" content="${this.artJSON.main_photo[0].thumb}" />
+            <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
+            <meta name="twitter:image" content="${this.cleanedVars.category.img_full}?nocache=${RANDOMSTRING}" />
+            <meta name="twitter:image" content="${this.cleanedVars.category.img_thumb}" />
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
-            <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
-            this.cleanedVars.url_slug
-        }">
+            <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia" />
-            <link rel="canonical" href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
-            this.cleanedVars.url_slug
-        }" />
+            <link rel="canonical" href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}" />
             <style amp-custom>${compressedCSS}</style>
         `;
     };
