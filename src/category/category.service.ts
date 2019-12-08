@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Res } from '@nestjs/common';
 import { MysqlService } from '../feature-modules/database';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/api';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { CategoryAMPRenderPartial } from './amp/category-amp-render-partial';
 import * as SqlString from 'sqlstring';
+const crypto = require('crypto');
 
 const HOMEPAGE_CATEGORY_IDS = [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070, 16926];
 
@@ -102,9 +104,9 @@ export class CategoryService {
     }
 
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
-        let limit_to_use = query.limit == undefined ? 20 : parseInt(query.limit);
-        let offset_to_use = query.offset == undefined ? 0 : parseInt(query.offset);
-        let show_adult = query.show_adult_content == undefined ? 0 : parseInt(query.offset);
+        let limit_to_use = (query && query.limit == undefined ? 20 : parseInt(query.limit));
+        let offset_to_use = (query && query.offset == undefined ? 0 : parseInt(query.offset));
+        let show_adult = (query && query.show_adult_content == undefined ? 0 : parseInt(query.offset));
         let show_adult_string = "AND art.is_adult_content=0";
         if (show_adult) show_adult_string = '';
 
@@ -187,6 +189,56 @@ export class CategoryService {
             category: category_info,
             previews: the_previews
         };
+    }
+
+    async getAMPCategoryPage(@Res() res, lang_code: string, slug: string): Promise<any> {
+        let category_collection = await this.getPagesByCategoryLangSlug(lang_code, slug, null)
+        let category_html_string = '';
+        const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
+        let arp = new CategoryAMPRenderPartial(category_collection);
+        let the_category = category_collection && category_collection.category;
+        let the_previews = category_collection && category_collection.previews;
+
+        let BLURB_SNIPPET_PLAINTEXT = the_category ? the_category.description.replace(/["“”‘’]/gmiu, "\'") : "";
+
+        const theHTML = `
+            <!DOCTYPE html>
+            <html amp lang="${lang_code}">
+                <head>
+                    ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
+                </head>
+                <body>
+                    ${arp.renderHeaderBar()}
+                    ${arp.renderNavBar()}
+                    <amp-sidebar id='sidebar' layout="nodisplay" side="left">
+                        <ul class="hdr-clct">
+                            ${arp.renderTableOfContents()}
+                        </ul>
+                    </amp-sidebar>
+                    <main id="mainEntityId">
+                        ${arp.renderMainBar(the_category)}
+                        ${arp.renderCategories(the_previews)}
+                        ${arp.renderSchemaHTML()}
+                        ${arp.renderBreadcrumbs()}
+                    </main>
+                    <footer class="ftr everi_footer">
+                        ${arp.renderFooter()}
+                    </footer>
+                    <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
+                        ${arp.renderUserMenu()}
+                    </amp-lightbox> 
+                    <amp-lightbox id="share-lightbox" layout="nodisplay">
+                        ${arp.renderShareLightbox()}
+                    </amp-lightbox>
+                    ${arp.renderAnalyticsBlock()}
+                </body>
+            </html>
+        `
+
+        res
+            .header('Content-Type', 'text/html')
+            .status(200)
+            .send(theHTML);
     }
 
     async getHomepageCategories(lang: string): Promise<PageCategory[]> {

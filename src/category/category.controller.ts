@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UsePipes, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, UsePipes, Param, Query, Res } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { PageCategoryCollection, PageCategory } from '../types/api';
@@ -89,6 +89,24 @@ export class CategoryController {
     })
     async getHomepageCategories(@Param('lang') lang): Promise<PageCategory[]> {
         return await this.categoryService.getHomepageCategories(lang);
+    }
+
+    @Get('/amp/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Get the AMP version of the category page' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code for the category'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The category page slug. Each category has a unique (lang_code + slug). Example: instagram-stars'
+    })
+    @ApiResponse({
+        status: 200,
+        description: `A JSON with a list of all the pages belonging to that category`
+    })
+    async getAMPCategoryPageCtrl(@Res() res, @Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        return await this.categoryService.getAMPCategoryPage(res, lang_code, slug);
     }
 
     @Post('search')
