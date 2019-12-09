@@ -197,10 +197,11 @@ export class RecentActivityService {
                 // check cache first
                 const cache = await this.redis.connection().get(`trending_pages:${langToUse}:today`);
                 if (cache) {
-                    return JSON.parse(cache).slice(0, limit);
+                    let parsed_cache = JSON.parse(cache);
+                    if (parsed_cache && parsed_cache.length >= 6) return parsed_cache.slice(0, limit);
                 }
 
-                // No cache? Compute it
+                // No cache (or too small)? Compute it
                 const client_id = this.config.get("GOOGLE_API_CLIENT_ID");
                 const client_secret = this.config.get("GOOGLE_API_CLIENT_SECRET");
                 const refresh_token = this.config.get("GOOGLE_API_REFRESH_TOKEN");
