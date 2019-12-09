@@ -9,6 +9,7 @@ import { AMPParseCollection, LanguagePack, SeeAlsoType, WikiExtraInfo } from '..
 import { NON_AMP_BAD_TAGS } from '../article-utils/article-converter';
 import { sanitizeTextPreview } from '../article-utils/article-tools';
 import { AMP_REGEXES_PRE } from '../article-utils/article-tools-constants';
+import { getLangPrefix } from '../../sitemap/sitemap.service';
 import { styleNugget } from './amp-style';
 const parseDomain = require('parse-domain');
 import { isWebUri } from 'valid-url';
@@ -20,8 +21,11 @@ export class AmpRenderPartial {
     public cleanedVars = {
         page_title: "",
         url_slug: "",
+        domain_prefix: "",
         page_lang: "",
-        page_type: ""
+        page_type: "",
+        img_full: "",
+        img_thumb: ""
     }
 
     constructor(private artJSON: ArticleJson, private wikiExtras: WikiExtraInfo) {
@@ -32,9 +36,12 @@ export class AmpRenderPartial {
         const url_slug = artJSON.metadata.filter(w => w.key == 'url_slug' || w.key == 'url_slug_alternate')[0].value;
         const page_type = this.artJSON.metadata.find(w => w.key == 'page_type').value;
 
+        this.cleanedVars.domain_prefix = getLangPrefix(page_lang);
         this.cleanedVars.page_lang = page_lang;
         this.cleanedVars.url_slug = url_slug;
         this.cleanedVars.page_type = page_type;
+        this.cleanedVars.img_full = (artJSON.main_photo[0].url || artJSON.main_photo[0].url == 'null') ? artJSON.main_photo[0].url : null;
+        this.cleanedVars.img_thumb = (artJSON.main_photo[0].thumb || artJSON.main_photo[0].thumb == 'null') ? artJSON.main_photo[0].thumb : null;
     }
 
     renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
@@ -43,7 +50,7 @@ export class AmpRenderPartial {
         //     this.wikiExtras.alt_langs.length > 0
         //         ? this.wikiExtras.alt_langs
         //               .map((langPack, index) => {
-        //                   return `<link rel="alternate" href="https://everipedia.org/wiki/lang_${langPack.lang}/${
+        //                   return `<link rel="alternate" href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${langPack.lang}/${
         //                       langPack.slug
         //                   }" hreflang="${langPack.lang}" />`;
         //               })
@@ -137,22 +144,22 @@ export class AmpRenderPartial {
             <meta property="article:tag" content="${this.cleanedVars.page_title}" />
             <meta property="article:published_time" content="${creation_timestamp}" />
             <meta property="article:modified_time" content="${last_modified}" />
-            <meta property="og:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
-            <meta property="og:image" content="${this.artJSON.main_photo[0].thumb}" />
+            ${this.cleanedVars.img_full ? `<meta property="og:image" content="${this.cleanedVars.img_full}?nocache=${RANDOMSTRING}" />` : ""}
+            ${this.cleanedVars.img_thumb ? `<meta property="og:image" content="${this.cleanedVars.img_thumb}?nocache=${RANDOMSTRING}" />` : ""}
             <meta property="og:description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
-            <meta name="og:url" content="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            <meta name="og:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
             this.cleanedVars.url_slug
         }">
-            <meta name="twitter:image" content="${this.artJSON.main_photo[0].url}?nocache=${RANDOMSTRING}" />
-            <meta name="twitter:image" content="${this.artJSON.main_photo[0].thumb}" />
+            ${this.cleanedVars.img_full ? `<meta property="twitter:image" content="${this.cleanedVars.img_full}?nocache=${RANDOMSTRING}" />` : ""}
+            ${this.cleanedVars.img_thumb ? `<meta property="twitter:image" content="${this.cleanedVars.img_thumb}?nocache=${RANDOMSTRING}" />` : ""}
             <meta name="twitter:description" content="${BLURB_SNIPPET_PLAINTEXT}" />
-            <meta name="twitter:url" content="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            <meta name="twitter:url" content="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
             this.cleanedVars.url_slug
         }">
             <meta property="fb:app_id" content="1617004011913755" />
             <meta property="fb:pages" content="328643504006398"/>
             <meta property="article:author" content="https://www.facebook.com/everipedia" />
-            <link rel="canonical" href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+            <link rel="canonical" href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
             this.cleanedVars.url_slug
         }" />
             <style amp-custom>${compressedCSS}</style>
@@ -164,19 +171,19 @@ export class AmpRenderPartial {
             <div class="amp-nav-bar">
                 <div class="nav-container" >
                     <div class="nav-read nav-item">
-                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
+                        <span on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_view_white.svg' alt='Vote' ></amp-img>
                             <span class='nav-text'>Read</span>
                         </span>
                     </div>
                     <div class="nav-edit nav-item">
-                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki-edit/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
+                        <span on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki-edit/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_edit_white.svg' alt='Edit' ></amp-img>
                             <span class='nav-text'>Edit</span>
                         </span>
                     </div>
                     <div class="nav-view-history nav-item">
-                        <span on="tap:AMP.navigateTo(url='https://everipedia.org/wiki-vote/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
+                        <span on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki-vote/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}', target=_blank)" tabindex='0' role="link">
                             <amp-img width='25' height='25' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/article_icon_vote_white.svg' alt='View' ></amp-img>
                             <span class='nav-text'>View History</span>
                         </span>
@@ -191,7 +198,7 @@ export class AmpRenderPartial {
             <div id="Welcome_Banner" class="wel-bnr">
                 <span class="wel-msg">
                     Welcome! Everipedia uses the IQ cryptocurrency token for editing, voting, and article / wiki creation. 
-                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://everipedia.org/faq/what-is-iq')" role="link" tabindex="0">
+                    <span class="wel-lrnmr" on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq/what-is-iq')" role="link" tabindex="0">
                         Learn more
                     </span>
                 </span>
@@ -210,7 +217,7 @@ export class AmpRenderPartial {
                         </button>
                     </li>
                     <li class="amp-header-logo">
-                        <a rel='nofollow' href="https://everipedia.org">
+                        <a rel='nofollow' href="https://${this.cleanedVars.domain_prefix}everipedia.org">
                             <amp-img width='230' height='30' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/EVP-beta-logo-black.svg' alt='Everipedia Logo' ></amp-img>
                         </a>
                     </li>
@@ -222,7 +229,7 @@ export class AmpRenderPartial {
                         </button>
                     </li>
                     <li class="amp-header-search">
-                        <button on="tap:AMP.navigateTo(url='https://everipedia.org/search', target=_blank)" tabindex='0' role="link" data-description="Search">
+                        <button on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/search', target=_blank)" tabindex='0' role="link" data-description="Search">
                         <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_black.svg" ></amp-img>
                         </button>
                     </li>
@@ -734,7 +741,7 @@ export class AmpRenderPartial {
     renderOneCategory = (category: PageCategory): string => {
         return `
             <li>
-                <a href="https://${category.lang == 'en' ? '' : category.lang + '.'}everipedia.org/category/lang_${category.lang}/${category.slug}" >
+                <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${category.lang}/${category.slug}" >
                     ${category.title}
                 </a>
             </li>
@@ -904,11 +911,11 @@ export class AmpRenderPartial {
 
         // Don't use anchor tags for non-indexed pages 
         let title_tag_to_use = is_indexed ? 
-        `<a class="sa-title"  href="https://everipedia.org/wiki/${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
+        `<a class="sa-title"  href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/${test_wikilangslug}" target="_blank">${seealso.page_title}</a>`
         : `<div class="sa-title" >${seealso.page_title}</div>`
 
         return `
-            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='0' role="link">
+            <div class='sa-ancr-wrp' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/${test_wikilangslug}', target=_blank)" tabindex='0' role="link">
                 <amp-img layout="fixed-height" height=80 src="${seealso.main_photo ? seealso.main_photo : seealso.thumbnail}" alt="${sanitized_sa_page_title} wiki">
                     <amp-img placeholder layout="fixed-height" height=80 src="https://epcdn-vz.azureedge.net/static/images/white_dot.png" alt="Placeholder for ${
                         sanitized_sa_page_title
@@ -960,17 +967,17 @@ export class AmpRenderPartial {
                     </amp-img>
                 </amp-anim>
                 <div class="footer-links">
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/about', target=_blank)" tabindex='0' role="link" >About</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/faq', target=_blank)" tabindex='0' role="link">FAQ</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/contact', target=_blank)" tabindex='0' role="link" >Contact</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/about', target=_blank)" tabindex='0' role="link" >About</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq', target=_blank)" tabindex='0' role="link">FAQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/contact', target=_blank)" tabindex='0' role="link" >Contact</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" >Forum</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >Get IQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >Get IQ</span>
                 </div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
                     <amp-img class='cayman-flag-footer' width="21" height="20" layout='fixed' alt="Cayman Flag" src="https://epcdn-vz.azureedge.net/static/images/flags/cayman_flag.svg"></amp-img>
-                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
+                    <span class="disclaimer">By using this website, you agree to the <span class='footer-span-terms-of-use' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms of Use</span>. Everipedia® is a trademark of Everipedia International.</span>
                 </div>
             </div>
             <div class="footer-social">
@@ -1130,26 +1137,6 @@ export class AmpRenderPartial {
         `;
     };
 
-    renderSearchLightbox = (): string => {
-        return `  
-        <div class="lightbox" tabindex="0" role="search">
-            <div class="search-lb-ct">
-                <div class="global-search" id="searchfield_index">
-                    <amp-iframe
-                        sandbox="allow-scripts allow-pointer-lock allow-popups allow-top-navigation allow-same-origin"
-                        layout="flex-item"
-                        frameborder="0"
-                        src="https://www.everipedia.org/search/iframe/">
-                        <div placeholder></div>
-                    </amp-iframe>
-                </div>
-                <div class="search-toggle-space-bottom" on='tap:search-lightbox.close' tabindex="0" role="button">
-                </div>
-            </div>
-	    </div>
-        `;
-    };
-
     renderShareLightbox = (): string => {
         return `  
             <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
@@ -1159,16 +1146,16 @@ export class AmpRenderPartial {
                         <h2>Share this page</h2>
                         <div class="social-share-block-wrap">
                             <div class="social-share-block">
-                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://everipedia.org/wiki/lang_${
+                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
                                     this.cleanedVars.page_lang
                                 }/${this.cleanedVars.url_slug}"></a>
-                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://everipedia.org/wiki/lang_${
+                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
                                     this.cleanedVars.page_lang
                                 }/${this.cleanedVars.url_slug}"></a>
-                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://everipedia.org/wiki/lang_${
+                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
                                     this.cleanedVars.page_lang
                                 }/${this.cleanedVars.url_slug}"></a>
-                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://everipedia.org/wiki/lang_${
+                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${
                                     this.cleanedVars.page_lang
                                 }/${this.cleanedVars.url_slug}"></a>
                             </div>
@@ -1177,9 +1164,9 @@ export class AmpRenderPartial {
                     <div class="share-pad"></div>
                     <div class="share-ct-link">
                         <h4>DIRECT LINK</h4>
-                        <a href="https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${
             this.cleanedVars.url_slug
-        }">https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
+        }">https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-hshtgs">
@@ -1317,12 +1304,12 @@ export class AmpRenderPartial {
                         "@type": "ListItem",
                         "position": 1,
                         "name": "Everipedia",
-                        "item": "https://everipedia.org"
+                        "item": "https://${this.cleanedVars.domain_prefix}everipedia.org"
                     },{
                         "@type": "ListItem",
                         "position": 2,
                         "name": "${this.cleanedVars.page_title}",
-                        "item": "https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
+                        "item": "https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
                     }]
                 }
             </script>
@@ -1339,19 +1326,19 @@ export class AmpRenderPartial {
                         "@type": "ListItem",
                         "position": 1,
                         "name": "Everipedia",
-                        "item": "https://everipedia.org"
+                        "item": "https://${this.cleanedVars.domain_prefix}everipedia.org"
                     },
                     {
                         "@type": "ListItem",
                         "position": 2,
                         "name": "${first_category.title}",
-                        "item": "https://everipedia.org/category/lang_${first_category.lang}/${first_category.slug}"
+                        "item": "https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${first_category.lang}/${first_category.slug}"
                     },
                     {
                         "@type": "ListItem",
                         "position": 3,
                         "name": "${this.cleanedVars.page_title}",
-                        "item": "https://everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
+                        "item": "https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
                     }]
                 }
             </script>

@@ -11,6 +11,21 @@ const SITEMAP_ROOT_DIR = path.join(__dirname, '..', '..', 'public', 'sitemaps');
 const ROW_LIMIT = 50000;
 const RECENT_ROW_LIMIT = 1000;
 
+export const getLangPrefix = (lang: string) => {
+    let langPrefix = '';
+    switch(lang){
+        case 'en':
+            langPrefix = '';
+            break;
+        case 'zh-hans':
+            langPrefix = 'zh.';
+            break;
+        default:
+            langPrefix = `${lang}.`;
+    };
+    return langPrefix;
+}
+
 @Injectable()
 export class SitemapService {
     constructor(
@@ -52,7 +67,7 @@ export class SitemapService {
             });
         });
 
-        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let langPrefix = getLangPrefix(lang);
         let theMap = sm.createSitemap({
             hostname: `https://${langPrefix}everipedia.org`,
             cacheTime: 600000, // 600 sec - cache purge period
@@ -79,7 +94,7 @@ export class SitemapService {
         let sitemapPacks: Array<SitemapPack> = [];
         let currentLoop = 0, lastID = 0;
         let sitemapURLs = [];
-        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let langPrefix = getLangPrefix(lang);
         let hostName = `https://${langPrefix}everipedia.org`;
         let sitemapDirectory = path.join(SITEMAP_ROOT_DIR, lang);
         if (!fs.existsSync(sitemapDirectory)){
@@ -150,7 +165,18 @@ export class SitemapService {
         console.log(colors.green(`Static sitemap for ${lang} completed`));
     }
 
+    async serveStaticSitemap(res: Response, lang: string = 'en', filename: string): Promise<any> {
+        let sitemapDirectory = path.join(SITEMAP_ROOT_DIR, lang);
+        let read_file: string = fs.readFileSync(path.join(sitemapDirectory, filename), { encoding: 'utf-8' });
 
+        res
+            .header('Content-Type', 'application/xml')
+            .status(200)
+            .send(read_file);
+
+        return true;
+
+    }
 
     async getCategoriesSitemap(res: Response, lang: string = 'en'): Promise<any> {
         let sitemapPacks: any[] = await this.mysql.TryQuery(
@@ -174,7 +200,7 @@ export class SitemapService {
             });
         });
 
-        let langPrefix = lang == 'en' ? '' : `${lang}.`;
+        let langPrefix = getLangPrefix(lang);
         let theMap = sm.createSitemap({
             hostname: `https://${langPrefix}everipedia.org`,
             cacheTime: 600000, // 600 sec - cache purge period

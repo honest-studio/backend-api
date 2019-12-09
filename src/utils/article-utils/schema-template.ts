@@ -239,13 +239,13 @@ export const renderSchema = (inputJSON: ArticleJson, returnType: 'html' | 'JSON'
         let citation_to_push = {
             '@type': 'CreativeWork',
             url: citation.url,
-            encodingFormat: citation.mime,
             datePublished: citation.timestamp,
             description: citationText
         }
 
-
-        if (citation.thumb && citation.thumb != '') citation_to_push['image'] = citation.thumb;
+        // Prevent Google from crawling /null and /None
+        if (citation.thumb && citation.thumb != '' && citation.thumb != 'None') citation_to_push['image'] = citation.thumb;
+        if (citation.mime && citation.mime != '' && citation.mime != 'None') citation_to_push['encodingFormat'] = citation.mime;
         schemaJSON.citation.push(citation_to_push);
 
     });

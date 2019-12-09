@@ -37,6 +37,31 @@ export class SitemapController {
         return this.sitemapService.getSitemapRecent(res, lang, options.limit);
     }
 
+    @Get('serve-sitemap/:lang/:filename')
+    @ApiOperation({
+        title: 'Serve a previously-generated static sitemap',
+        description:
+            'Serve a previously-generated static sitemap'
+    })
+    @ApiImplicitParam({
+        name: 'lang',
+        description: "An ISO 639-1 language code. Defaults to 'en'",
+        type: String
+    })
+    @ApiImplicitParam({
+        name: 'filename',
+        description: "The name of the file",
+        type: String
+    })
+    @ApiResponse({
+        status: 200,
+        type: 'text/plain',
+        description: `Sitemaps have been served`
+    })
+    async serveStaticSitemapCtrl(@Res() res, @Param('lang') lang: string, @Param('filename') filename: string): Promise<any> {
+        return this.sitemapService.serveStaticSitemap(res, lang, filename);
+    }
+
     @Get('generate-static/:lang')
     @ApiOperation({
         title: 'Generate a static sitemap',
