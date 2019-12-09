@@ -58,6 +58,10 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<Proposal>> {
+        let langsToUse = query.langs.split(',').map(lang => {
+            if (lang == 'zh') return 'zh-hans';
+            else return lang;
+        });
         if (query.voter && query.account_name)
             throw new BadRequestException("voter and account_name cannot be used together");
 
@@ -96,7 +100,7 @@ export class RecentActivityService {
             find_query['trace.act.data.proposal_id'] = { $lt: last_finalized[0].trace.act.data.proposal_id };
         }
         if (query.langs && !query.voter) {
-            find_query['trace.act.data.lang_code'] = { $in: query.langs.split(',') };
+            find_query['trace.act.data.lang_code'] = { $in: langsToUse };
         }
         let proposal_id_docs = await this.mongo
             .connection()
@@ -191,7 +195,8 @@ export class RecentActivityService {
 
     async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 20) {
         let langToUse = lang;
-        if (lang == 'zh') langToUse == 'zh-hans';
+        if (lang == 'zh') langToUse = 'zh-hans';
+        console.log(langToUse)
         if (range == 'today') {
             try {
                 // check cache first
