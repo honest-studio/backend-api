@@ -56,6 +56,7 @@ export class CategoryAMPRenderPartial {
             <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
+            <title>${this.cleanedVars.page_title} - Everipedia</title>
             <meta property="og:title" content="${this.cleanedVars.page_title} - Everipedia"/>
             <meta name="twitter:title" content="${this.cleanedVars.page_title} - Everipedia" />
             <meta name="description" content="${BLURB_SNIPPET_PLAINTEXT}"/>
