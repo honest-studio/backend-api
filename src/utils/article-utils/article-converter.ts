@@ -220,19 +220,13 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     // Quick trim
     oldHTML = oldHTML.trim();
 
-    console.log(chalk.yellow('PART 1'))
-
     // Load the HTML into htmlparser2 beforehand since it is more forgiving
     // Then load the HTML into cheerio for parsing
     let dom = htmlparser2.parseDOM(oldHTML, { decodeEntities: true });
     let $ = cheerio.load(dom as any);
 
-    console.log(chalk.yellow('PART 2'))
-
     // Need to extract citations before sanitizing so the citation ID can be marked
     const citations = extractCitations($);
-
-    console.log(chalk.yellow('PART 3'))
 
     // Remove useless and empty tags and HTML
     // Convert text formatting to pseudo-markdown
@@ -364,27 +358,18 @@ function extractCitations($: CheerioStatic): Citation[] {
             thumb: $thumbs.eq(i).attr('src')
         };
 
-        console.log('Part 4');
-
         let href = $hrefs.eq(i).attr('href');
         if (!href){
-            console.log('Part 4a');
             href = $href_wraps.eq(i).text().trim().replace(" ", "");
-            console.log('Part 4b');
         }
         if (href) {
-            console.log('Part 4c');
             citation.url = urlCleaner(href);
-            console.log('Part 4d');
             citation.social_type = socialURLType(citation.url);
-            console.log('Part 4e');
         }
-        console.log('Part 5');
 
         // Find the url category
         citation.category = linkCategorizer(citation.url);
-        
-        console.log('Part 6');
+
         citations.push(citation);
     }
 
