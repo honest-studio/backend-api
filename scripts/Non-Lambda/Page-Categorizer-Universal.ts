@@ -26,7 +26,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 10000;
+const BATCH_SIZE = 250;
 const ARTICLE_PAGE_TYPES = ['Person'];
 const CATEGORY_PAGE_TYPES = ['Person'];
 const SET_TO_INDEXED = 1;
@@ -86,14 +86,19 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
         return;
     }
 
+    
+
     // Get the article JSON
     let wiki: ArticleJson;
     try {
         wiki = JSON.parse(hashCacheResult[0].html_blob);
+        console.log(wiki)
     } catch (e) {
+        console.log(chalk.red(`PARSING ${inputIPFS} HTML_BLOB FAILED. TRYING OLD METHOD`));
         wiki = infoboxDtoPatcher(mergeMediaIntoCitations(oldHTMLtoJSON(hashCacheResult[0].html_blob)));
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
+
 
 
     // Search through the infoboxes

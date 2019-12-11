@@ -220,13 +220,19 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     // Quick trim
     oldHTML = oldHTML.trim();
 
+    console.log(chalk.yellow('PART 1'))
+
     // Load the HTML into htmlparser2 beforehand since it is more forgiving
     // Then load the HTML into cheerio for parsing
     let dom = htmlparser2.parseDOM(oldHTML, { decodeEntities: true });
     let $ = cheerio.load(dom as any);
 
+    console.log(chalk.yellow('PART 2'))
+
     // Need to extract citations before sanitizing so the citation ID can be marked
     const citations = extractCitations($);
+
+    console.log(chalk.yellow('PART 3'))
 
     // Remove useless and empty tags and HTML
     // Convert text formatting to pseudo-markdown
@@ -260,7 +266,6 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     const main_photo = extractMainPhoto($);
     let infobox_html = extractInfoboxHtml($);
     const infoboxes = extractInfoboxes($);
-
 
     // AMP info
     const amp_info = {
@@ -359,17 +364,27 @@ function extractCitations($: CheerioStatic): Citation[] {
             thumb: $thumbs.eq(i).attr('src')
         };
 
+        console.log('Part 4');
+
         let href = $hrefs.eq(i).attr('href');
-        if (!href)
+        if (!href){
+            console.log('Part 4a');
             href = $href_wraps.eq(i).text().trim().replace(" ", "");
-        if (href) {
-            citation.url = urlCleaner(href);
-            citation.social_type = socialURLType(citation.url);
+            console.log('Part 4b');
         }
+        if (href) {
+            console.log('Part 4c');
+            citation.url = urlCleaner(href);
+            console.log('Part 4d');
+            citation.social_type = socialURLType(citation.url);
+            console.log('Part 4e');
+        }
+        console.log('Part 5');
 
         // Find the url category
         citation.category = linkCategorizer(citation.url);
         
+        console.log('Part 6');
         citations.push(citation);
     }
 
@@ -1030,6 +1045,8 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
                         .replace(/(\(|\'|\"|\“|\”|\‘|\’|\-)\s(\*|\[\[)/g, '$1$2') // remove space between a mark or inline and certain things
 
 
+        
+
         // Make sure that no sentences start with a space
         if (sentence.text.charAt(0) == " " && !bypass_trim) sentence.text = sentence.text.slice(1);
 
@@ -1048,6 +1065,8 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
             }
         }
 
+        // console.log(`sentence.text: |${sentence.text}|`)
+
         // If it is the last sentence, trim it
         if (index == sentenceTokens.length - 1 && !bypass_trim) sentence.text = sentence.text.trim();
 
@@ -1056,7 +1075,6 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
         // Return the object
         returnTokens.push(sentence);
     });
-
     // Don't split inside a LINK, CITE, or INLINE IMAGE
     for (let i = 0; i < returnTokens.length; i++) {
         // const lastWord = returnTokens[i].split(' ').pop();
@@ -1064,6 +1082,7 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
             returnTokens[i].text = `${returnTokens[i].text}${returnTokens[i + 1].text}`;
             returnTokens.splice(i + 1, 1);
             i--; // re-check this sentence in case there's multiple bad splits
+            
         }
     }
 
