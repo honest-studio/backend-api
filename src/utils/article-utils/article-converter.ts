@@ -261,7 +261,6 @@ export function oldHTMLtoJSON(oldHTML: string): ArticleJson {
     let infobox_html = extractInfoboxHtml($);
     const infoboxes = extractInfoboxes($);
 
-
     // AMP info
     const amp_info = {
         load_youtube_js: false,
@@ -360,8 +359,9 @@ function extractCitations($: CheerioStatic): Citation[] {
         };
 
         let href = $hrefs.eq(i).attr('href');
-        if (!href)
+        if (!href){
             href = $href_wraps.eq(i).text().trim().replace(" ", "");
+        }
         if (href) {
             citation.url = urlCleaner(href);
             citation.social_type = socialURLType(citation.url);
@@ -369,7 +369,7 @@ function extractCitations($: CheerioStatic): Citation[] {
 
         // Find the url category
         citation.category = linkCategorizer(citation.url);
-        
+
         citations.push(citation);
     }
 
@@ -1030,6 +1030,8 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
                         .replace(/(\(|\'|\"|\“|\”|\‘|\’|\-)\s(\*|\[\[)/g, '$1$2') // remove space between a mark or inline and certain things
 
 
+        
+
         // Make sure that no sentences start with a space
         if (sentence.text.charAt(0) == " " && !bypass_trim) sentence.text = sentence.text.slice(1);
 
@@ -1048,6 +1050,8 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
             }
         }
 
+        // console.log(`sentence.text: |${sentence.text}|`)
+
         // If it is the last sentence, trim it
         if (index == sentenceTokens.length - 1 && !bypass_trim) sentence.text = sentence.text.trim();
 
@@ -1056,7 +1060,6 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
         // Return the object
         returnTokens.push(sentence);
     });
-
     // Don't split inside a LINK, CITE, or INLINE IMAGE
     for (let i = 0; i < returnTokens.length; i++) {
         // const lastWord = returnTokens[i].split(' ').pop();
@@ -1064,6 +1067,7 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
             returnTokens[i].text = `${returnTokens[i].text}${returnTokens[i + 1].text}`;
             returnTokens.splice(i + 1, 1);
             i--; // re-check this sentence in case there's multiple bad splits
+            
         }
     }
 

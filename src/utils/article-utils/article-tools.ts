@@ -771,7 +771,21 @@ export function infoboxDtoPatcher(inputWiki: ArticleJson): ArticleJson {
 }
 
 export function urlCleaner (inputURL: string): string {
-    let cleanedURL = inputURL.trim().replace(" ", "");
+    let cleanedURL = "";
+    try {
+        cleanedURL = inputURL.trim().replace(" ", "");
+        if(cleanedURL.slice(-1) == '.') cleanedURL = cleanedURL.slice(0, -1);
+    }
+    catch (e){
+        console.log(e);
+        return "";
+    }
+
+    // Make sure there is a domain, at least
+    if(cleanedURL.indexOf('.') == -1) return '';
+
+    console.log(cleanedURL)
+
     try {
         cleanedURL = normalizeUrl(cleanedURL);
         if (URL_REGEX_TEST.test(cleanedURL)) return cleanedURL;
@@ -781,7 +795,6 @@ export function urlCleaner (inputURL: string): string {
         console.log(e);
         return "";
     }
-
 }
 
 export function sentenceSplitFixer(inputWiki: ArticleJson): ArticleJson {
