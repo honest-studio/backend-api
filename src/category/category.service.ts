@@ -6,7 +6,12 @@ import { CategoryAMPRenderPartial } from './amp/category-amp-render-partial';
 import * as SqlString from 'sqlstring';
 const crypto = require('crypto');
 
-const HOMEPAGE_CATEGORY_IDS = [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070, 16926];
+const HOMEPAGE_CATEGORY_IDS = {
+    en: [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070, 16926],
+    es: [],
+    ko: [],
+    'zh-hans': [],
+};
 
 export interface CategorySearchPack {
     lang: string,
@@ -250,7 +255,7 @@ export class CategoryService {
                 cat.lang = ? 
                 AND cat.id IN (?)
             `,
-            [lang, HOMEPAGE_CATEGORY_IDS],
+            [lang, HOMEPAGE_CATEGORY_IDS[lang]],
             10000
         );
 
