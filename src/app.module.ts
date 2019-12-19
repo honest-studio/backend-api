@@ -13,6 +13,7 @@ import { SearchController, SearchService } from './search';
 import { ContactUsController, ContactUsService } from './contact-us';
 import { HistoryController, HistoryService } from './history';
 import { CategoryController, CategoryService } from './category';
+import { HomepageController, HomepageService } from './homepage';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
@@ -151,7 +152,8 @@ const histogramLabelBuckets = ['pid']
         ContactUsController,
         SitemapController,
         StatusController,
-        CategoryController
+        CategoryController,
+        HomepageController
     ],
     providers: [
         ProposalService,
@@ -167,7 +169,8 @@ const histogramLabelBuckets = ['pid']
         StatService,
         ContactUsService,
         SitemapService,
-        CategoryService
+        CategoryService,
+        HomepageService
     ]
 })
 export class AppModule implements NestModule {

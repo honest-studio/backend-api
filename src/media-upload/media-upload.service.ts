@@ -265,7 +265,7 @@ export class MediaUploadService {
 
         // Test for YouTube first
         if (theCategory == 'YOUTUBE'){
-            urlToUse = `https://i.ytimg.com/vi/${getYouTubeID(urlToUse)}/hqdefault.jpg`;
+            urlToUse = `https://i.ytimg.com/vi/${getYouTubeID(urlToUse)}/maxresdefault.jpg`;
         }
 
         // console.log("TESTING HERE!!!");

@@ -32,7 +32,10 @@ export function compareURLs (firstURL: string, secondURL: string): boolean {
 export const getYouTubeIdIfPresent = (inputURL: string) => {
     try {
         // Also handle image URLs
-        inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
+        inputURL = inputURL
+                    .replace("https://img.youtube.com/vi/", "https://youtu.be/")
+                    .replace('https://i.ytimg.com/vi/', 'https://youtu.be/')
+                    .replace('/hqdefault.jpg', '');
 
         // Get the ID
         let result = getYouTubeID(inputURL);
