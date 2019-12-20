@@ -8,7 +8,7 @@ export interface LeaderboardOptions {
     limit: number;
     lang: string;
     sortby: 'iq' | 'votes' | 'edits';
-    user: string;
+    user?: string;
 }
 
 @Injectable()

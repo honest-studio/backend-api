@@ -3,6 +3,7 @@ import moment from 'moment';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { styleNugget } from './homepage-amp-style';
 import { formatNumber } from '../../utils/article-utils/article-tools';
+import { LeaderboardPack } from '../homepage.service';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {
@@ -248,37 +249,38 @@ export class HomepageAMPRenderPartial {
         `;
     }
 
-    renderLeaderboardCarousel = (): string => {
-        let carouselComboString = featuredPreviews && featuredPreviews.map(preview => {
-            return `   
-                <div class="slide">             
-                    <amp-img
-                        src="${preview.main_photo}"
-                        layout="fill"
-                        alt="${preview.page_title}"
-                    ></amp-img>
-                    <div 
-                        class="caption"
-                        on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${preview.lang_code}/${preview.slug}', target=_blank)" 
-                        tabindex='0' 
-                        role="link"
-                    >
-                        ${preview.page_title}
-                    </div>
-                </div>
-            `
-        }).join("");
+    renderLeaderboardCarousel = (leaderboardPack: LeaderboardPack): string => {
+        return ``;
+        // let carouselComboString = featuredPreviews && featuredPreviews.map(preview => {
+        //     return `   
+        //         <div class="slide">             
+        //             <amp-img
+        //                 src="${preview.main_photo}"
+        //                 layout="fill"
+        //                 alt="${preview.page_title}"
+        //             ></amp-img>
+        //             <div 
+        //                 class="caption"
+        //                 on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${preview.lang_code}/${preview.slug}', target=_blank)" 
+        //                 tabindex='0' 
+        //                 role="link"
+        //             >
+        //                 ${preview.page_title}
+        //             </div>
+        //         </div>
+        //     `
+        // }).join("");
 
-        return `
-            <amp-carousel
-                id="Leaderboard_Carousel"
-                height="500"
-                layout="fixed-height"
-                type="slides"
-            >
-                ${carouselComboString}
-            </amp-carousel>
-        `
+        // return `
+        //     <amp-carousel
+        //         id="Leaderboard_Carousel"
+        //         height="500"
+        //         layout="fixed-height"
+        //         type="slides"
+        //     >
+        //         ${carouselComboString}
+        //     </amp-carousel>
+        // `
     }
 
     renderCategories = (homepageCategories: PageCategory[]): string => {

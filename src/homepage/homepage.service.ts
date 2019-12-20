@@ -13,6 +13,28 @@ import { getLangPrefix } from '../sitemap/sitemap.service';
 import { ConfigService } from '../common';
 import * as SqlString from 'sqlstring';
 const crypto = require('crypto');
+const util = require('util');
+
+export interface LeaderboardPack {
+    iq: {
+        today: any,
+        this_week: any,
+        this_month: any,
+        all_time: any,
+    },
+    votes: {
+        today: any,
+        this_week: any,
+        this_month: any,
+        all_time: any,
+    },
+    edits: {
+        today: any,
+        this_week: any,
+        this_month: any,
+        all_time: any,
+    },
+}
 
 @Injectable()
 export class HomepageService {
@@ -29,20 +51,66 @@ export class HomepageService {
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
         let _butter = this.butter.getButter();
 
-        const [blog, content, trending, recent, site_usage, today_iq, week_iq, month_iq, all_time_iq ] = await Promise.all([
+        const [
+            blog, 
+            content, 
+            trending, recent, 
+            site_usage, 
+            today_iq, 
+            week_iq, 
+            month_iq, 
+            all_time_iq, 
+            today_edits, 
+            week_edits, 
+            month_edits, 
+            all_time_edits, 
+            today_votes, 
+            week_votes, 
+            month_votes, 
+            all_time_votes 
+        ] = await Promise.all([
             _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
             _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data),
             this.recentActivityService.getTrendingWikis(lang_code),
             this.recentActivityService.getProposals({ expiring: false, completed: true, preview: true, user_agent: 'safari', diff: null, limit: 15, offset: 0, langs: lang_code}),
             this.statService.siteUsage(lang_code),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
         ]);
 
-        console.log(today_iq)
+        // Assemble the leaderboard info
+        let leaderboardPack: LeaderboardPack = {
+            iq: {
+                today: today_iq,
+                this_week: week_iq,
+                this_month: month_iq,
+                all_time: all_time_iq
+            },
+            edits: {
+                today: today_edits,
+                this_week: week_edits,
+                this_month: month_edits,
+                all_time: all_time_edits
+            },
+            votes: {
+                today: today_votes,
+                this_week: week_votes,
+                this_month: month_votes,
+                all_time: all_time_votes
+            }
+        };
 
+        console.log(util.inspect(leaderboardPack, {showHidden: false, depth: null, chalk: true}));
 
         // Extract the data
         let { popular, in_the_news, featured_content, excluded_list, in_the_press } = content;
@@ -181,7 +249,7 @@ export class HomepageService {
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderIntro()}
                         ${arp.renderInTheNewsTabList(inTheNewPreviews)}
-                        ${arp.renderLeaderboardCarousel()}
+                        ${arp.renderLeaderboardCarousel(leaderboardPack)}
                         ${arp.renderCategories(homepageCategories)}
                         ${arp.renderBreadcrumb()}
                     </main>
