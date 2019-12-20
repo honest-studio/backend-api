@@ -48,6 +48,7 @@ export class HomepageAMPRenderPartial {
             <script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>
             <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
             <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.2.js"></script>
+            <script async custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js"></script>
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
             <title>${this.cleanedVars.page_title} - Everipedia</title>
@@ -130,6 +131,51 @@ export class HomepageAMPRenderPartial {
                 ${carouselComboString}
             </amp-carousel>
         `
+    }
+
+    renderTrendingRecentPopularTab = (previews: PreviewResult[]): string => {
+        return ``;
+    }
+
+    renderTrendingRecentPopularTabList = (
+        trendingPreviews: PreviewResult[],
+        recentPreviews: PreviewResult[],
+        popularPreviews: PreviewResult[]
+    ): string => {
+
+
+        return `
+            <amp-selector id="Trend_Rec_Pop" class="tabs-with-flex" role="tablist">
+                <div id="tab1"
+                    role="tab"
+                    aria-controls="tabpanel1"
+                    option
+                    selected
+                >TRENDING</div>
+                <div id="tabpanel1"
+                    role="tabpanel"
+                    aria-labelledby="tab1"
+                >${this.renderTrendingRecentPopularTab(trendingPreviews)}aaa</div>
+                <div id="tab2"
+                    role="tab"
+                    aria-controls="tabpanel2"
+                    option
+                >RECENT</div>
+                <div id="tabpanel2"
+                    role="tabpanel"
+                    aria-labelledby="tab2"
+                >${this.renderTrendingRecentPopularTab(recentPreviews)}bbb</div>
+                <div id="tab3"
+                    role="tab"
+                    aria-controls="tabpanel3"
+                    option
+                >POPULAR</div>
+                <div id="tabpanel3"
+                    role="tabpanel"
+                    aria-labelledby="tab3"
+                >${this.renderTrendingRecentPopularTab(popularPreviews)}ccc</div>
+            </amp-selector>
+        `;
     }
 
     renderFooter = (): string => {

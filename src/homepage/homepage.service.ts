@@ -25,7 +25,7 @@ export class HomepageService {
         const [blog, content] = await Promise.all([
             _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
             _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data)
-          ]);
+        ]);
 
         // Extract the data
         let { excluded_list, popular, in_the_news, featured_content, in_the_press } = content;
@@ -47,7 +47,9 @@ export class HomepageService {
         .slice(0, 5);
 
         // Get the featured image previews.
-        let theFeaturedPreviews = await this.previewService.getPreviewsBySlug(featuredItems, 'safari');
+        const [theFeaturedPreviews] = await Promise.all([
+            this.previewService.getPreviewsBySlug(featuredItems, 'safari'),
+        ]);
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
         let domain_prefix = getLangPrefix(lang_code);
@@ -92,6 +94,7 @@ export class HomepageService {
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
                         ${arp.renderFeaturedCarousel(theFeaturedPreviews)}
+                        ${arp.renderTrendingRecentPopularTabList([], [], [])}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

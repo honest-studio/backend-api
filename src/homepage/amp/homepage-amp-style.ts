@@ -673,6 +673,52 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 #Featured_Carousel img {
 	object-fit: cover;
 }
+#Trend_Rec_Pop{
+	margin-top: 15px;
+}
+amp-selector[role=tablist].tabs-with-flex {
+	display: flex;
+	flex-wrap: wrap;
+}
+amp-selector[role=tablist].tabs-with-flex [role=tab] {
+	flex-grow: 1;
+	text-align: center;
+	padding: var(--space-1);
+	color: rgb(108, 108, 108);
+	font-family: OpenSans,'Open Sans',sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: bold;
+	padding: 10px 0px;
+	cursor: pointer;
+}
+amp-selector[role=tablist].tabs-with-flex [role=tab][selected] {
+	color: rgb(32, 106, 203);
+	border-bottom: 3px solid rgb(34, 115, 221);
+	outline: none;
+}
+amp-selector[role=tablist].tabs-with-flex [role=tabpanel] {
+	display: none;
+	width: 100%;
+	order: 1;
+	padding: var(--space-4);
+}
+amp-selector[role=tablist].tabs-with-flex [role=tab][selected] + [role=tabpanel] {
+	display: block;
+}
+amp-selector.tabpanels [role=tabpanel] {
+  display: none;
+  padding: var(--space-4);
+}
+amp-selector.tabpanels [role=tabpanel][selected] {
+  outline: none;
+  display: block;
+}
+amp-selector[role=tablist] [role=tab] {
+	font-family: OpenSans,'Open Sans',sans-serif;
+	font-size: 12px;
+    font-style: normal;
+}
 .ftr {
     width: calc(100% - 20px);
     padding: 0px 10px 0px 10px;
