@@ -60,7 +60,6 @@ export class HomepageService {
                 <body>
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
-                        ${arp.renderCategories()}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

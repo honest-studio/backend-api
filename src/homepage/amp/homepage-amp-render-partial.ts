@@ -212,17 +212,17 @@ export class HomepageAMPRenderPartial {
                         <h2>Share this page</h2>
                         <div class="social-share-block-wrap">
                             <div class="social-share-block">
-                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
-                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
-                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
-                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"></a>
+                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
+                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
+                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
+                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
                             </div>
                         </div>
                     </div>
                     <div class="share-pad"></div>
                     <div class="share-ct-link">
                         <h4>DIRECT LINK</h4>
-                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}">https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}</a>
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org">https://${this.cleanedVars.domain_prefix}everipedia.org</a>
                     </div>       
                 </div>
             </nav>
@@ -273,11 +273,6 @@ export class HomepageAMPRenderPartial {
                         "position": 1,
                         "name": "Everipedia",
                         "item": "https://${this.cleanedVars.domain_prefix}everipedia.org"
-                    },{
-                        "@type": "ListItem",
-                        "position": 2,
-                        "name": "${this.cleanedVars.page_title}",
-                        "item": "https://${this.cleanedVars.domain_prefix}everipedia.org/category/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}"
                     }]
                 }
             </script>
