@@ -6,6 +6,7 @@ import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { PreviewService } from '../preview';
 import { CategoryService } from '../category';
 import { RecentActivityService } from '../recent-activity';
+import { StatService } from '../stat';
 import { HomepageAMPRenderPartial } from './amp/homepage-amp-render-partial';
 import { GetLangAndSlug } from '../utils/article-utils/article-tools';
 import { getLangPrefix } from '../sitemap/sitemap.service';
@@ -22,26 +23,26 @@ export class HomepageService {
         @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         @Inject(forwardRef(() => RecentActivityService)) private recentActivityService: RecentActivityService,
         @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
+        @Inject(forwardRef(() => StatService)) private statService: StatService,
     ) {}
     
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
         let _butter = this.butter.getButter();
 
-        const [blog, content, trending, recent] = await Promise.all([
+        const [blog, content, trending, recent, site_usage, today_iq, week_iq, month_iq, all_time_iq ] = await Promise.all([
             _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
             _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data),
             this.recentActivityService.getTrendingWikis(lang_code),
-            this.recentActivityService.getProposals({
-                expiring: false,
-                completed: true,
-                preview: true,
-                user_agent: 'safari',
-                diff: null,
-                limit: 15,
-                offset: 0,
-                langs: lang_code
-            })
+            this.recentActivityService.getProposals({ expiring: false, completed: true, preview: true, user_agent: 'safari', diff: null, limit: 15, offset: 0, langs: lang_code}),
+            this.statService.siteUsage(lang_code),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'iq', limit: null, user: null }),
         ]);
+
+        console.log(today_iq)
+
 
         // Extract the data
         let { popular, in_the_news, featured_content, excluded_list, in_the_press } = content;
@@ -180,7 +181,7 @@ export class HomepageService {
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderIntro()}
                         ${arp.renderInTheNewsTabList(inTheNewPreviews)}
-                        ${arp.renderLeaderboard()}
+                        ${arp.renderLeaderboardCarousel()}
                         ${arp.renderCategories(homepageCategories)}
                         ${arp.renderBreadcrumb()}
                     </main>
