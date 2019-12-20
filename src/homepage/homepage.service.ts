@@ -25,14 +25,24 @@ export class HomepageService {
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
         let _butter = this.butter.getButter();
 
-        const [blog, content, trending] = await Promise.all([
+        const [blog, content, trending, recent] = await Promise.all([
             _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
             _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data),
-            this.recentActivityService.getTrendingWikis(lang_code)
+            this.recentActivityService.getTrendingWikis(lang_code),
+            this.recentActivityService.getProposals({
+                expiring: false,
+                completed: true,
+                preview: true,
+                user_agent: 'safari',
+                diff: null,
+                limit: 15,
+                offset: 0,
+                langs: lang_code
+            })
         ]);
 
         // Extract the data
-        let { excluded_list, popular, in_the_news, featured_content, in_the_press } = content;
+        let { popular, in_the_news, featured_content, excluded_list, in_the_press } = content;
 
         // Get the excluded items
         let excludedList = excluded_list && excluded_list.map(item => item.wikilangslug && item.wikilangslug.toLowerCase());
@@ -62,11 +72,37 @@ export class HomepageService {
         .filter(f => f)
         .slice(0, 4);
 
+        // Filter the popular items
+        let popularItems: WikiIdentity[] = popular && popular.map(item => {
+            const { lang_code, slug } = GetLangAndSlug(item.wikilangslug, true);
+
+            // Do nothing for empty wikilangslugs and also remove excluded wikilangslugs
+            if (!item.wikilangslug || item.wikilangslug == '') return null;
+            else return { lang_code, slug };
+        })
+        .filter(f => f)
+        .slice(0, 4);
+
+        // Filter the recent items
+        let seen: string[] = [];
+        let recentPreviews: PreviewResult[] = recent && recent.map(item => {
+            if (!item.preview) return null;
+
+            if(seen.indexOf(item.preview.slug) == -1){
+                seen.push(item.preview.slug);
+                return item.preview;
+            }
+            else return null;
+        })
+        .filter(f => f)
+        .slice(0, 4);
+
         // Get the previews
         // Inefficient: you could pass all the WikiIdentity[]'s at once and loop through the results to assign to the source arrays
-        const [featuredPreviews, trendingPreviews] = await Promise.all([
+        const [featuredPreviews, trendingPreviews, popularPreviews] = await Promise.all([
             this.previewService.getPreviewsBySlug(featuredItems, 'safari'),
             this.previewService.getPreviewsBySlug(trendingItems, 'safari'),
+            this.previewService.getPreviewsBySlug(popularItems, 'safari'),
         ]);
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -112,7 +148,7 @@ export class HomepageService {
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
                         ${arp.renderFeaturedCarousel(featuredPreviews)}
-                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews, [], [])}
+                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">
