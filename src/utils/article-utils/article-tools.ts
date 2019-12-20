@@ -1244,3 +1244,13 @@ export function GetLangAndSlug(wikiLangSlug: string, force_lowercase: boolean = 
     if (lang_code && force_lowercase) lang_code = lang_code.toLowerCase();
     return { lang_code, slug };
 }
+
+export function formatNumber(number: number, decimals: number) {
+    let toReturn;
+    if (!number) return null;
+    return number > 999999
+        ? (number / 1000000).toFixed(decimals) + 'm'
+        : number > 999
+        ? (number / 1000).toFixed(decimals) + 'k'
+        : number.toFixed(decimals);
+};

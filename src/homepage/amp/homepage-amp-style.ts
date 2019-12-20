@@ -673,8 +673,74 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 #Featured_Carousel img {
 	object-fit: cover;
 }
-#Trend_Rec_Pop{
+#Trend_Rec_Pop {
 	margin-top: 15px;
+	margin: 20px;
+}
+#Trend_Rec_Pop .trp-list {
+	padding: 0px;
+	list-style: none;
+}
+#Trend_Rec_Pop .trp-list .main-item {
+	margin-bottom: 12px; 
+}
+#Trend_Rec_Pop .trp-list .main-item img {
+	object-fit: cover;
+	border-radius: 5px;
+}
+#Trend_Rec_Pop .trp-list .main-item .title {
+	font-family: 'Libre Baskerville', serif;
+	text-align: left;
+	color: rgb(45, 45, 45);
+	font-size: 24px;
+	margin: 12px 0px 5px 0px;
+    flex: 1;
+    display: flex;
+}
+#Trend_Rec_Pop .trp-list .snippet {
+	font-family: OpenSans,'Open Sans',sans-serif;
+	font-size: 14px;
+    text-align: left;
+    font-style: normal;
+	color: rgb(108, 108, 108);
+}
+#Trend_Rec_Pop .trp-list .main-item .snippet {
+    margin-top: 10px;
+}
+#Trend_Rec_Pop .trp-list .other-item .snippet {
+	max-height: 40px;
+    overflow: hidden;
+    margin-top: 3px;
+}
+#Trend_Rec_Pop .trp-list .time-pageviews {
+	font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    text-align: left;
+    font-style: normal;
+    color: rgb(115, 115, 115);
+}
+#Trend_Rec_Pop .trp-list .other-item {
+	display: flex;
+	flex-direction: horizontal;
+	margin-bottom: 12px; 
+}
+#Trend_Rec_Pop .trp-list .other-item amp-img {
+	flex: 0 0 75px;
+}
+#Trend_Rec_Pop .trp-list .other-item amp-img img {
+	object-fit: cover;
+	border-radius: 5px;
+}
+#Trend_Rec_Pop .trp-list .other-item .title {
+	font-family: "Libre Baskerville", serif;
+    font-size: 16px;
+    text-align: left;
+    color: rgb(45, 45, 45);
+}
+#Trend_Rec_Pop .trp-list .other-item .content-block {
+	padding-left: 15px;
+	text-align: left;
 }
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
@@ -691,6 +757,7 @@ amp-selector[role=tablist].tabs-with-flex [role=tab] {
 	font-weight: bold;
 	padding: 10px 0px;
 	cursor: pointer;
+	border-bottom: 1px solid black;
 }
 amp-selector[role=tablist].tabs-with-flex [role=tab][selected] {
 	color: rgb(32, 106, 203);

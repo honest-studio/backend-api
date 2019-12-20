@@ -1,8 +1,10 @@
 import { Injectable, Res, Inject, forwardRef } from '@nestjs/common';
 import { MysqlService, ButterCMSService } from '../feature-modules/database';
-import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/api';
+import { PreviewResult } from '../types/api';
+import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { PreviewService } from '../preview';
+import { RecentActivityService } from '../recent-activity';
 import { HomepageAMPRenderPartial } from './amp/homepage-amp-render-partial';
 import { GetLangAndSlug } from '../utils/article-utils/article-tools';
 import { getLangPrefix } from '../sitemap/sitemap.service';
@@ -17,14 +19,16 @@ export class HomepageService {
         private butter: ButterCMSService,
         private config: ConfigService,
         @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
+        @Inject(forwardRef(() => RecentActivityService)) private recentActivityService: RecentActivityService,
     ) {}
     
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
         let _butter = this.butter.getButter();
 
-        const [blog, content] = await Promise.all([
+        const [blog, content, trending] = await Promise.all([
             _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
-            _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data)
+            _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data),
+            this.recentActivityService.getTrendingWikis(lang_code)
         ]);
 
         // Extract the data
@@ -34,10 +38,10 @@ export class HomepageService {
         let excludedList = excluded_list && excluded_list.map(item => item.wikilangslug && item.wikilangslug.toLowerCase());
 
         // Filter the featured items
-        let featuredItems = featured_content && featured_content.map(item => {
+        let featuredItems: WikiIdentity[] = featured_content && featured_content.map(item => {
             const { lang_code, slug } = GetLangAndSlug(item.wikilangslug, true);
 
-            // Do nothing for empty rows and also remove excluded wikilangslugs
+            // Do nothing for empty wikilangslugs and also remove excluded wikilangslugs
             if (!item.wikilangslug || item.wikilangslug == '') return null;
             else if (excludedList.indexOf(item.wikilangslug.toLowerCase()) >= 0) return null;
             else return { lang_code, slug };
@@ -46,9 +50,23 @@ export class HomepageService {
         .filter(f => f)
         .slice(0, 5);
 
-        // Get the featured image previews.
-        const [theFeaturedPreviews] = await Promise.all([
+        // Filter the trending items
+        let trendingItems: WikiIdentity[] = trending && trending.map(item => {
+            const { lang_code, slug } = item;
+
+            // Do nothing for empty slugs and also remove excluded wikilangslugs
+            if (!item.slug || item.slug == '') return null;
+            else return { lang_code, slug };
+
+        })
+        .filter(f => f)
+        .slice(0, 4);
+
+        // Get the previews
+        // Inefficient: you could pass all the WikiIdentity[]'s at once and loop through the results to assign to the source arrays
+        const [featuredPreviews, trendingPreviews] = await Promise.all([
             this.previewService.getPreviewsBySlug(featuredItems, 'safari'),
+            this.previewService.getPreviewsBySlug(trendingItems, 'safari'),
         ]);
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -93,8 +111,8 @@ export class HomepageService {
                 <body>
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
-                        ${arp.renderFeaturedCarousel(theFeaturedPreviews)}
-                        ${arp.renderTrendingRecentPopularTabList([], [], [])}
+                        ${arp.renderFeaturedCarousel(featuredPreviews)}
+                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews, [], [])}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

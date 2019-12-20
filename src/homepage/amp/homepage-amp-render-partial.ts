@@ -1,6 +1,8 @@
 import CleanCSS from 'clean-css';
+import moment from 'moment';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { styleNugget } from './homepage-amp-style';
+import { formatNumber } from '../../utils/article-utils/article-tools';
 import { PreviewService } from '../../preview';
 
 export class HomepageAMPRenderPartial {
@@ -98,10 +100,8 @@ export class HomepageAMPRenderPartial {
         `;
     };
 
-    renderFeaturedCarousel = (theFeaturedPreviews: PreviewResult[]): string => {
-        console.log(theFeaturedPreviews)
-
-        let carouselComboString = theFeaturedPreviews && theFeaturedPreviews.map(preview => {
+    renderFeaturedCarousel = (featuredPreviews: PreviewResult[]): string => {
+        let carouselComboString = featuredPreviews && featuredPreviews.map(preview => {
             return `   
                 <div class="slide">             
                     <amp-img
@@ -134,7 +134,57 @@ export class HomepageAMPRenderPartial {
     }
 
     renderTrendingRecentPopularTab = (previews: PreviewResult[]): string => {
-        return ``;
+        if (!previews || previews.length == 0) return "";
+        let main_prev = previews[0];
+        let mainPicString = `
+            <li class="main-item">
+                <amp-img
+                    src="${main_prev.main_photo}"
+                    layout="fixed-height"
+                    height="250"
+                    alt="${main_prev.page_title}"
+                ></amp-img>
+                <div class="content-block">
+                    <a class="title" href="/lang_${main_prev.lang_code}/${main_prev.slug}" >${main_prev.page_title}</a>
+                    <div class="time-pageviews">
+                        <span class="updated">${moment(main_prev.lastmod_timestamp).locale(main_prev.lang_code).fromNow()} • </span>
+                        <span class="pageviews">${formatNumber(main_prev.pageviews, 1)}</span>
+                    </div>
+                    <div class="snippet">${main_prev.text_preview}</div>
+                </div>
+                
+            </li>
+        `;
+
+        let otherPicsComboString = previews.slice(1).map(prev => {
+            return `
+                <li class="other-item">
+                    <amp-img
+                        src="${prev.main_photo}"
+                        layout="fixed"
+                        height="70"
+                        width="70"
+                        alt="${prev.page_title}"
+                    ></amp-img>
+                    <div class="content-block">
+                        <a class="title" href="/lang_${prev.lang_code}/${prev.slug}" >${prev.page_title}</a>
+                        <div class="snippet">${prev.text_preview}</div>
+                        <div class="time-pageviews">
+                            <span class="updated">${moment(prev.lastmod_timestamp).locale(prev.lang_code).fromNow()} • </span>
+                            <span class="pageviews">${formatNumber(prev.pageviews, 1)}</span>
+                        </div>
+                    </div>
+                    
+                </li>
+            `
+        }).join("");
+
+        return `
+            <ul class='trp-list'>
+                ${mainPicString}
+                ${otherPicsComboString}
+            </ul>
+        `;
     }
 
     renderTrendingRecentPopularTabList = (
@@ -142,38 +192,14 @@ export class HomepageAMPRenderPartial {
         recentPreviews: PreviewResult[],
         popularPreviews: PreviewResult[]
     ): string => {
-
-
         return `
             <amp-selector id="Trend_Rec_Pop" class="tabs-with-flex" role="tablist">
-                <div id="tab1"
-                    role="tab"
-                    aria-controls="tabpanel1"
-                    option
-                    selected
-                >TRENDING</div>
-                <div id="tabpanel1"
-                    role="tabpanel"
-                    aria-labelledby="tab1"
-                >${this.renderTrendingRecentPopularTab(trendingPreviews)}aaa</div>
-                <div id="tab2"
-                    role="tab"
-                    aria-controls="tabpanel2"
-                    option
-                >RECENT</div>
-                <div id="tabpanel2"
-                    role="tabpanel"
-                    aria-labelledby="tab2"
-                >${this.renderTrendingRecentPopularTab(recentPreviews)}bbb</div>
-                <div id="tab3"
-                    role="tab"
-                    aria-controls="tabpanel3"
-                    option
-                >POPULAR</div>
-                <div id="tabpanel3"
-                    role="tabpanel"
-                    aria-labelledby="tab3"
-                >${this.renderTrendingRecentPopularTab(popularPreviews)}ccc</div>
+                <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>TRENDING</div>
+                <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">${this.renderTrendingRecentPopularTab(trendingPreviews)}</div>
+                <div id="tab2" role="tab" aria-controls="tabpanel2" option>RECENT</div>
+                <div id="tabpanel2" role="tabpanel" aria-labelledby="tab2">${this.renderTrendingRecentPopularTab(recentPreviews)}</div>
+                <div id="tab3" role="tab" aria-controls="tabpanel3" option>POPULAR</div>
+                <div id="tabpanel3" role="tabpanel" aria-labelledby="tab3">${this.renderTrendingRecentPopularTab(popularPreviews)}</div>
             </amp-selector>
         `;
     }
