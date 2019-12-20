@@ -60,6 +60,19 @@ export class HomepageService {
         .filter(f => f)
         .slice(0, 5);
 
+        // Filter the in_the_news items
+        let inTheNewsItems: WikiIdentity[] = in_the_news && in_the_news.map(item => {
+            const { lang_code, slug } = GetLangAndSlug(item.wikilangslug, true);
+
+            // Do nothing for empty wikilangslugs and also remove excluded wikilangslugs
+            if (!item.wikilangslug || item.wikilangslug == '') return null;
+            else if (excludedList.indexOf(item.wikilangslug.toLowerCase()) >= 0) return null;
+            else return { lang_code, slug };
+
+        })
+        .filter(f => f)
+        .slice(0, 4);
+
         // Filter the trending items
         let trendingItems: WikiIdentity[] = trending && trending.map(item => {
             const { lang_code, slug } = item;
@@ -99,10 +112,11 @@ export class HomepageService {
 
         // Get the previews
         // Inefficient: you could pass all the WikiIdentity[]'s at once and loop through the results to assign to the source arrays
-        const [featuredPreviews, trendingPreviews, popularPreviews] = await Promise.all([
+        const [featuredPreviews, trendingPreviews, popularPreviews, inTheNewPreviews] = await Promise.all([
             this.previewService.getPreviewsBySlug(featuredItems, 'safari'),
             this.previewService.getPreviewsBySlug(trendingItems, 'safari'),
             this.previewService.getPreviewsBySlug(popularItems, 'safari'),
+            this.previewService.getPreviewsBySlug(inTheNewsItems, 'safari'),
         ]);
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -159,6 +173,7 @@ export class HomepageService {
                         ${arp.renderFeaturedCarousel(featuredPreviews)}
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderIntro()}
+                        ${arp.renderInTheNewsTabList(inTheNewPreviews)}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

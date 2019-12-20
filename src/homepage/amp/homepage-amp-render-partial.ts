@@ -133,7 +133,7 @@ export class HomepageAMPRenderPartial {
         `
     }
 
-    renderTrendingRecentPopularTab = (previews: PreviewResult[]): string => {
+    renderTab = (previews: PreviewResult[]): string => {
         if (!previews || previews.length == 0) return "";
         let main_prev = previews[0];
         let mainPicString = `
@@ -193,13 +193,13 @@ export class HomepageAMPRenderPartial {
         popularPreviews: PreviewResult[]
     ): string => {
         return `
-            <amp-selector id="Trend_Rec_Pop" class="tabs-with-flex" role="tablist">
+            <amp-selector id="Trend_Rec_Pop" class="tabs-with-flex preview-tablist" role="tablist">
                 <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>TRENDING</div>
-                <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">${this.renderTrendingRecentPopularTab(trendingPreviews)}</div>
+                <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">${this.renderTab(trendingPreviews)}</div>
                 <div id="tab2" role="tab" aria-controls="tabpanel2" option>RECENT</div>
-                <div id="tabpanel2" role="tabpanel" aria-labelledby="tab2">${this.renderTrendingRecentPopularTab(recentPreviews)}</div>
+                <div id="tabpanel2" role="tabpanel" aria-labelledby="tab2">${this.renderTab(recentPreviews)}</div>
                 <div id="tab3" role="tab" aria-controls="tabpanel3" option>POPULAR</div>
-                <div id="tabpanel3" role="tabpanel" aria-labelledby="tab3">${this.renderTrendingRecentPopularTab(popularPreviews)}</div>
+                <div id="tabpanel3" role="tabpanel" aria-labelledby="tab3">${this.renderTab(popularPreviews)}</div>
             </amp-selector>
         `;
     }
@@ -221,6 +221,16 @@ export class HomepageAMPRenderPartial {
                     </div>
                 </div>
             </div>
+        `;
+    }
+
+    renderInTheNewsTabList = (inTheNewsPreviews: PreviewResult[]): string => {
+
+        return `
+            <amp-selector id="In_The_News" class="tabs-with-flex preview-tablist" role="tablist">
+                <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>IN THE NEWS</div>
+                <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">${this.renderTab(inTheNewsPreviews)}</div>
+            </amp-selector>
         `;
     }
 
