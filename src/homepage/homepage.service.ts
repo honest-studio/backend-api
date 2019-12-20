@@ -100,9 +100,6 @@ export class HomepageService {
                     <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
                         ${arp.renderUserMenu()}
                     </amp-lightbox> 
-                    <amp-lightbox id="share-lightbox" layout="nodisplay">
-                        ${arp.renderShareLightbox()}
-                    </amp-lightbox>
                     ${arp.renderAnalyticsBlock()}
                 </body>
             </html>

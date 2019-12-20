@@ -87,11 +87,11 @@ amp-accordion, .toc-button, button, a{
 }
 .amp-header-bar {
 	position: fixed;
-	background-color: white;
+	background-color: rgba(0, 0, 0, .85);
 	z-index: 20;
 	width: 100%;
 	height: 52px;
-	border-bottom: 1px solid #e9e9e9;
+	border-bottom: 1px solid rgba(0, 0, 0, .85);
 	top: 0;
 }
 .amp-nav-bar {
@@ -669,6 +669,9 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     font-family: OpenSans,'Open Sans',sans-serif;
     line-height: 20px;
     padding: 10px 10px 10px 10px;
+}
+#Featured_Carousel img {
+	object-fit: cover;
 }
 .ftr {
     width: calc(100% - 20px);

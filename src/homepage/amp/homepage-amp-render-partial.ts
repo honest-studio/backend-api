@@ -75,26 +75,21 @@ export class HomepageAMPRenderPartial {
         return `
             <nav class="amp-header-bar">
                 <ul>
-                    <li class="amp-header-toc">
-                        <button on='tap:share-lightbox'>
-                            <amp-img height="24" width="30" layout="fixed" alt="Table of contents and facts for this wiki" src="https://epcdn-vz.azureedge.net/static/images/bull-icon.png" ></amp-img>
-                        </button>
-                    </li>
                     <li class="amp-header-logo">
                         <a rel='nofollow' href="https://${this.cleanedVars.domain_prefix}everipedia.org">
-                            <amp-img width='230' height='30' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/EVP-beta-logo-black.svg' alt='Everipedia Logo' ></amp-img>
+                            <amp-img width='230' height='30' layout='fixed' src='https://epcdn-vz.azureedge.net/static/images/EVP-beta-logo-white.svg' alt='Everipedia Logo' ></amp-img>
                         </a>
                     </li>
                     <li class="amp-header-menu">
                         <button on='tap:usermenu-lightbox'>
                         <span class="bull-menu">
-                            <amp-img height="25" width="7" layout="fixed" alt="Bullet" src="https://epcdn-vz.azureedge.net/static/images/bull-menu.png" ></amp-img>
+                            <amp-img height="25" width="7" layout="fixed" alt="Bullet" src="https://epcdn-vz.azureedge.net/static/images/bull-menu-white.png" ></amp-img>
                         </span>
                         </button>
                     </li>
                     <li class="amp-header-search">
                         <button on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/search', target=_blank)" tabindex='0' role="link" data-description="Search">
-                        <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_black.svg" ></amp-img>
+                        <amp-img height="28" width="28" layout="fixed" alt="Search" src="https://epcdn-vz.azureedge.net/static/images/search_white.svg" ></amp-img>
                         </button>
                     </li>
                 </ul>
@@ -128,9 +123,8 @@ export class HomepageAMPRenderPartial {
         return `
             <amp-carousel
                 id="Featured_Carousel"
-                width="400"
-                height="500"
-                layout="responsive"
+                height="350"
+                layout="fixed-height"
                 type="slides"
             >
                 ${carouselComboString}
@@ -237,32 +231,6 @@ export class HomepageAMPRenderPartial {
                     </ul>
                 </div>
             </div>
-        `;
-    };
-
-    renderShareLightbox = (): string => {
-        return `  
-            <span class="lb-button cls-shr-lgbx"><button  on='tap:share-lightbox.close'></button></span>
-            <nav class="lightbox" tabindex="0" role="widget">
-                <div class="share-ct">
-                    <div class="share-ct-inner">
-                        <h2>Share this page</h2>
-                        <div class="social-share-block-wrap">
-                            <div class="social-share-block">
-                                <a class="email social-share-btn" rel='nofollow' href="mailto:email@email.com?&body=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
-                                <a class="facebook social-share-btn" rel='nofollow' href="https://www.facebook.com/sharer/sharer.php?u=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
-                                <a class="twitter social-share-btn" rel='nofollow' href="http://twitter.com/share?text=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
-                                <a class="reddit social-share-btn" rel='nofollow' href="https://reddit.com/submit?url=https://${this.cleanedVars.domain_prefix}everipedia.org"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="share-pad"></div>
-                    <div class="share-ct-link">
-                        <h4>DIRECT LINK</h4>
-                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org">https://${this.cleanedVars.domain_prefix}everipedia.org</a>
-                    </div>       
-                </div>
-            </nav>
         `;
     };
 
