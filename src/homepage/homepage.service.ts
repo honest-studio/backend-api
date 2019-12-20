@@ -4,6 +4,7 @@ import { PreviewResult } from '../types/api';
 import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { PreviewService } from '../preview';
+import { CategoryService } from '../category';
 import { RecentActivityService } from '../recent-activity';
 import { HomepageAMPRenderPartial } from './amp/homepage-amp-render-partial';
 import { GetLangAndSlug } from '../utils/article-utils/article-tools';
@@ -20,6 +21,7 @@ export class HomepageService {
         private config: ConfigService,
         @Inject(forwardRef(() => PreviewService)) private previewService: PreviewService,
         @Inject(forwardRef(() => RecentActivityService)) private recentActivityService: RecentActivityService,
+        @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
     ) {}
     
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
@@ -112,11 +114,12 @@ export class HomepageService {
 
         // Get the previews
         // Inefficient: you could pass all the WikiIdentity[]'s at once and loop through the results to assign to the source arrays
-        const [featuredPreviews, trendingPreviews, popularPreviews, inTheNewPreviews] = await Promise.all([
+        const [featuredPreviews, trendingPreviews, popularPreviews, inTheNewPreviews, homepageCategories] = await Promise.all([
             this.previewService.getPreviewsBySlug(featuredItems, 'safari'),
             this.previewService.getPreviewsBySlug(trendingItems, 'safari'),
             this.previewService.getPreviewsBySlug(popularItems, 'safari'),
             this.previewService.getPreviewsBySlug(inTheNewsItems, 'safari'),
+            this.categoryService.getHomepageCategories(lang_code)
         ]);
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -147,6 +150,7 @@ export class HomepageService {
                 break;
         }
 
+        // Import the Moment.js locale
         if (momentLocaleToUse != 'en') {
             await import(`moment/locale/${momentLocaleToUse}`);
         }
@@ -161,6 +165,8 @@ export class HomepageService {
         // Description
         let BLURB_SNIPPET_PLAINTEXT = "The Wiki Encyclopedia for Everything, Everyone, Everywhere. Everipedia offers a space for you to dive into anything you find interesting, connect with people who share your interests, and contribute your own perspective.";
 
+
+
         const theHTML = `
             <!DOCTYPE html>
             <html amp lang="${lang_code}">
@@ -174,6 +180,8 @@ export class HomepageService {
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderIntro()}
                         ${arp.renderInTheNewsTabList(inTheNewPreviews)}
+                        ${arp.renderLeaderboard()}
+                        ${arp.renderCategories(homepageCategories)}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

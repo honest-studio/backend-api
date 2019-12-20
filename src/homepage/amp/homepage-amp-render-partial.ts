@@ -212,10 +212,10 @@ export class HomepageAMPRenderPartial {
                     <h2>The Wiki Encyclopedia for Everything, Everyone, Everywhere.</h2>
                     <h4>Everipedia offers a space for you to dive into anything you find interesting, connect with people who share your interests, and contribute your own perspective.</h4>
                     <div class="button-box">
-                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/everipedia" class="about-button" >
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/everipedia" class="about-button" title="About Everipedia" >
                             About Everipedia
                         </a>
-                        <a href="/activity" class="activity-button" >
+                        <a href="/activity" class="activity-button" title="Recent Activity" >
                             See Activity
                         </a>
                     </div>
@@ -231,6 +231,29 @@ export class HomepageAMPRenderPartial {
                 <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>IN THE NEWS</div>
                 <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">${this.renderTab(inTheNewsPreviews)}</div>
             </amp-selector>
+        `;
+    }
+
+    renderLeaderboard = (): string => {
+
+        return ``;
+    }
+
+    renderCategories = (homepageCategories: PageCategory[]): string => {
+        let categoriesComboString = homepageCategories && homepageCategories.map(cat => {
+            return `
+                <a href="/category/lang_${cat.lang}/${cat.slug}" title="${cat.title}">
+                    <div class="inner-div">
+                        ${cat.title}
+                    </div>
+                </a>
+            `
+        }).join("");
+
+        return `
+            <div id="Categories_Section">
+                ${categoriesComboString}
+            </div>
         `;
     }
 

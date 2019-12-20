@@ -825,6 +825,42 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     border-color: rgb(32, 106, 203);
     border-style: solid;
 }
+#Categories_Section {
+	display: flex;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    height: initial;
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 30px 0px;
+}
+#Categories_Section a {
+	background: rgb(233, 242, 255);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(34, 115, 221);
+    border-image: initial;
+    border-radius: 8px;
+    padding: 5px 15px;
+    margin: 10px;
+}
+#Categories_Section a .inner-div {
+	font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 22px;
+    text-align: center;
+    font-style: normal;
+    color: rgb(32, 106, 203);
+    margin: 0px;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    overflow: visible;
+}
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
 	flex-wrap: wrap;
