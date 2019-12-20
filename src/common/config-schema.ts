@@ -76,6 +76,6 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     PAY_CPU_PRIVKEY: Joi.string(),
     PAY_CPU_PUBKEY: Joi.string(),
     PAY_CPU_ACCOUNT: Joi.string(),
-
+    BUTTERCMS_KEY: Joi.string(),
 });
 

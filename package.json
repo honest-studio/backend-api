@@ -65,6 +65,7 @@
     "binstring": "^0.2.1",
     "boolean": "^1.0.0",
     "buffer-image-size": "^0.6.4",
+    "buttercms": "^1.2.1",
     "bytes.js": "0.0.2",
     "canvas": "^2.6.0",
     "chalk": "^2.4.2",

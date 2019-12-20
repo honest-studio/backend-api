@@ -1,7 +1,7 @@
 import CleanCSS from 'clean-css';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { getLangPrefix } from '../../sitemap/sitemap.service';
-import { styleNugget } from './category-amp-style';
+import { styleNugget } from './homepage-amp-style';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {

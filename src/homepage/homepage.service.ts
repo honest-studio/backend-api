@@ -1,5 +1,5 @@
 import { Injectable, Res } from '@nestjs/common';
-import { MysqlService } from '../feature-modules/database';
+import { MysqlService, ButterCMSService } from '../feature-modules/database';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../types/api';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { HomepageAMPRenderPartial } from './amp/homepage-amp-render-partial';
@@ -8,49 +8,64 @@ const crypto = require('crypto');
 
 @Injectable()
 export class HomepageService {
-    constructor(private mysql: MysqlService) {}
+    constructor(
+        private mysql: MysqlService,
+        private butter: ButterCMSService
+    ) {}
     
-    async getAMPCategoryPage(@Res() res, lang_code: string, slug: string): Promise<any> {
-        let category_collection = await this.getPagesByCategoryLangSlug(
-            lang_code, 
-            slug, 
-            { limit: 40, offset: 0, show_adult_content: false }
-        );
-        let category_html_string = '';
-        const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
-        let arp = new HomepageAMPRenderPartial(category_collection);
-        let the_category = category_collection && category_collection.category;
-        let the_previews = category_collection && category_collection.previews;
+    async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
+        let _butter = this.butter.getButter();
 
-        let BLURB_SNIPPET_PLAINTEXT = (the_category && the_category.description) ? the_category.description.replace(/["“”‘’]/gmiu, "\'") : "";
-        if (BLURB_SNIPPET_PLAINTEXT == '') BLURB_SNIPPET_PLAINTEXT = the_category.title;
+        const [blog, content] = await Promise.all([
+            _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
+            _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data)
+          ]);
+
+        let { excluded_list, popular, in_the_news, featured_content, in_the_press } = content;
 
 
-        const theHTML = `
-            <!DOCTYPE html>
-            <html amp lang="${lang_code}">
-                <head>
-                    ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
-                </head>
-                <body>
-                    ${arp.renderHeaderBar()}
-                    <main id="mainEntityId">
-                        ${arp.renderCategories()}
-                        ${arp.renderBreadcrumb()}
-                    </main>
-                    <footer class="ftr everi_footer">
-                        ${arp.renderFooter()}
-                    </footer>
-                    <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
-                        ${arp.renderUserMenu()}
-                    </amp-lightbox> 
-                    <amp-lightbox id="share-lightbox" layout="nodisplay">
-                        ${arp.renderShareLightbox()}
-                    </amp-lightbox>
-                    ${arp.renderAnalyticsBlock()}
-                </body>
-            </html>
-        `
+        // let category_collection = await this.getPagesByCategoryLangSlug(
+        //     lang_code, 
+        //     slug, 
+        //     { limit: 40, offset: 0, show_adult_content: false }
+        // );
+        // let category_html_string = '';
+        // const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
+        // let arp = new HomepageAMPRenderPartial(category_collection);
+        // let the_category = category_collection && category_collection.category;
+        // let the_previews = category_collection && category_collection.previews;
+
+        // let BLURB_SNIPPET_PLAINTEXT = (the_category && the_category.description) ? the_category.description.replace(/["“”‘’]/gmiu, "\'") : "";
+        // if (BLURB_SNIPPET_PLAINTEXT == '') BLURB_SNIPPET_PLAINTEXT = the_category.title;
+
+
+        // const theHTML = `
+        //     <!DOCTYPE html>
+        //     <html amp lang="${lang_code}">
+        //         <head>
+        //             ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
+        //         </head>
+        //         <body>
+        //             ${arp.renderHeaderBar()}
+        //             <main id="mainEntityId">
+        //                 ${arp.renderCategories()}
+        //                 ${arp.renderBreadcrumb()}
+        //             </main>
+        //             <footer class="ftr everi_footer">
+        //                 ${arp.renderFooter()}
+        //             </footer>
+        //             <amp-lightbox id="usermenu-lightbox" layout="nodisplay">
+        //                 ${arp.renderUserMenu()}
+        //             </amp-lightbox> 
+        //             <amp-lightbox id="share-lightbox" layout="nodisplay">
+        //                 ${arp.renderShareLightbox()}
+        //             </amp-lightbox>
+        //             ${arp.renderAnalyticsBlock()}
+        //         </body>
+        //     </html>
+        // `
+
+        let theHTML = "BEEE";
 
         res
             .header('Content-Type', 'text/html')
