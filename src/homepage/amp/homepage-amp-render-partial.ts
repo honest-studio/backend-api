@@ -102,38 +102,38 @@ export class HomepageAMPRenderPartial {
         `;
     };
 
-    renderFeatured = (theFeaturedPreviews: PreviewResult[]): string => {
+    renderFeaturedCarousel = (theFeaturedPreviews: PreviewResult[]): string => {
         console.log(theFeaturedPreviews)
+
+        let carouselComboString = theFeaturedPreviews && theFeaturedPreviews.map(preview => {
+            return `   
+                <div class="slide">             
+                    <amp-img
+                        src="${preview.main_photo}"
+                        layout="fill"
+                        alt="${preview.page_title}"
+                    ></amp-img>
+                    <div 
+                        class="caption"
+                        on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${preview.lang_code}/${preview.slug}', target=_blank)" 
+                        tabindex='0' 
+                        role="link"
+                    >
+                        ${preview.page_title}
+                    </div>
+                </div>
+            `
+        }).join("");
 
         return `
             <amp-carousel
-                id="carousel-with-preview"
-                width="450"
-                height="300"
+                id="Featured_Carousel"
+                width="400"
+                height="500"
                 layout="responsive"
                 type="slides"
             >
-                <amp-img
-                    src="/static/inline-examples/images/image1.jpg"
-                    width="450"
-                    height="300"
-                    layout="responsive"
-                    alt="apples"
-                ></amp-img>
-                <amp-img
-                    src="/static/inline-examples/images/image2.jpg"
-                    width="450"
-                    height="300"
-                    layout="responsive"
-                    alt="lemons"
-                ></amp-img>
-                <amp-img
-                    src="/static/inline-examples/images/image3.jpg"
-                    width="450"
-                    height="300"
-                    layout="responsive"
-                    alt="blueberries"
-                ></amp-img>
+                ${carouselComboString}
             </amp-carousel>
         `
     }

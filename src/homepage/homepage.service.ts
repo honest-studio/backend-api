@@ -27,9 +27,13 @@ export class HomepageService {
             _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data)
           ]);
 
+        // Extract the data
         let { excluded_list, popular, in_the_news, featured_content, in_the_press } = content;
+
+        // Get the excluded items
         let excludedList = excluded_list && excluded_list.map(item => item.wikilangslug && item.wikilangslug.toLowerCase());
 
+        // Filter the featured items
         let featuredItems = featured_content && featured_content.map(item => {
             const { lang_code, slug } = GetLangAndSlug(item.wikilangslug, true);
 
@@ -42,6 +46,7 @@ export class HomepageService {
         .filter(f => f)
         .slice(0, 5);
 
+        // Get the featured image previews.
         let theFeaturedPreviews = await this.previewService.getPreviewsBySlug(featuredItems, 'safari');
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
@@ -86,7 +91,7 @@ export class HomepageService {
                 <body>
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
-                        ${arp.renderFeatured(theFeaturedPreviews)}
+                        ${arp.renderFeaturedCarousel(theFeaturedPreviews)}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">
