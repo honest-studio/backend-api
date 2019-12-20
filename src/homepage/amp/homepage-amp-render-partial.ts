@@ -1,6 +1,7 @@
 import CleanCSS from 'clean-css';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { styleNugget } from './homepage-amp-style';
+import { PreviewService } from '../../preview';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {
@@ -46,6 +47,7 @@ export class HomepageAMPRenderPartial {
             <script async custom-element="amp-sidebar" src="https://cdn.ampproject.org/v0/amp-sidebar-0.1.js"></script>
             <script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>
             <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
+            <script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.2.js"></script>
             <meta property="og:type" content="article"/>
             <meta name="twitter:card" content="summary" />
             <title>${this.cleanedVars.page_title} - Everipedia</title>
@@ -100,6 +102,41 @@ export class HomepageAMPRenderPartial {
         `;
     };
 
+    renderFeatured = (theFeaturedPreviews: PreviewResult[]): string => {
+        console.log(theFeaturedPreviews)
+
+        return `
+            <amp-carousel
+                id="carousel-with-preview"
+                width="450"
+                height="300"
+                layout="responsive"
+                type="slides"
+            >
+                <amp-img
+                    src="/static/inline-examples/images/image1.jpg"
+                    width="450"
+                    height="300"
+                    layout="responsive"
+                    alt="apples"
+                ></amp-img>
+                <amp-img
+                    src="/static/inline-examples/images/image2.jpg"
+                    width="450"
+                    height="300"
+                    layout="responsive"
+                    alt="lemons"
+                ></amp-img>
+                <amp-img
+                    src="/static/inline-examples/images/image3.jpg"
+                    width="450"
+                    height="300"
+                    layout="responsive"
+                    alt="blueberries"
+                ></amp-img>
+            </amp-carousel>
+        `
+    }
 
     renderFooter = (): string => {
         return `

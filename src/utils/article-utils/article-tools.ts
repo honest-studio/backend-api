@@ -1233,3 +1233,14 @@ export function getBlurbSnippetFromArticleJson(wiki: ArticleJson): string {
     }
     return text_preview;
 }
+
+export function GetLangAndSlug(wikiLangSlug: string, force_lowercase: boolean = true) {
+    const array = wikiLangSlug.split('/');
+    let slug = array[1];
+    if (slug && force_lowercase) slug = slug.toLowerCase();
+    const first = array[0];
+    const firstArray = first.split('_');
+    let lang_code = firstArray && firstArray[1];
+    if (lang_code && force_lowercase) lang_code = lang_code.toLowerCase();
+    return { lang_code, slug };
+}
