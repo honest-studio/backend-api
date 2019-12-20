@@ -109,23 +109,32 @@ export class HomepageService {
         let domain_prefix = getLangPrefix(lang_code);
 
         // Get the Google Analytics tracking ID
-        let trackingIDToUse;
+        let trackingIDToUse, momentLocaleToUse;
         switch (domain_prefix) {
             case 'en':
                 trackingIDToUse = this.config.get('GOOGLE_ANALYTICS_ID_EN');
+                momentLocaleToUse = 'en';
                 break;
             case 'es':
                 trackingIDToUse = this.config.get('GOOGLE_ANALYTICS_ID_ES');
+                momentLocaleToUse = 'es';
                 break;
             case 'ko':
                 trackingIDToUse = this.config.get('GOOGLE_ANALYTICS_ID_KO');
+                momentLocaleToUse = 'ko';
                 break;
             case 'zh':
                 trackingIDToUse = this.config.get('GOOGLE_ANALYTICS_ID_ZH');
+                momentLocaleToUse = 'zh-hk';
                 break;
             default:
                 trackingIDToUse = this.config.get('GOOGLE_ANALYTICS_ID_EN');
+                momentLocaleToUse = 'en';
                 break;
+        }
+
+        if (momentLocaleToUse != 'en') {
+            await import(`moment/locale/${momentLocaleToUse}`);
         }
 
         // Get the function template
@@ -149,6 +158,7 @@ export class HomepageService {
                     <main id="mainEntityId">
                         ${arp.renderFeaturedCarousel(featuredPreviews)}
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
+                        ${arp.renderIntro()}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">

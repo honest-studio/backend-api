@@ -145,9 +145,9 @@ export class HomepageAMPRenderPartial {
                     alt="${main_prev.page_title}"
                 ></amp-img>
                 <div class="content-block">
-                    <a class="title" href="/lang_${main_prev.lang_code}/${main_prev.slug}" >${main_prev.page_title}</a>
+                    <a class="title" href="/wiki/lang_${main_prev.lang_code}/${main_prev.slug}" >${main_prev.page_title}</a>
                     <div class="time-pageviews">
-                        <span class="updated">${moment(main_prev.lastmod_timestamp).locale(main_prev.lang_code).fromNow()} • </span>
+                        <span class="updated">${(moment(main_prev.lastmod_timestamp).locale(main_prev.lang_code)).fromNow()} • </span>
                         <span class="pageviews">${formatNumber(main_prev.pageviews, 1)}</span>
                     </div>
                     <div class="snippet">${main_prev.text_preview}</div>
@@ -167,10 +167,10 @@ export class HomepageAMPRenderPartial {
                         alt="${prev.page_title}"
                     ></amp-img>
                     <div class="content-block">
-                        <a class="title" href="/lang_${prev.lang_code}/${prev.slug}" >${prev.page_title}</a>
+                        <a class="title" href="/wiki/lang_${prev.lang_code}/${prev.slug}" >${prev.page_title}</a>
                         <div class="snippet">${prev.text_preview}</div>
                         <div class="time-pageviews">
-                            <span class="updated">${moment(prev.lastmod_timestamp).locale(prev.lang_code).fromNow()} • </span>
+                            <span class="updated">${(moment(prev.lastmod_timestamp).locale(prev.lang_code)).fromNow()} • </span>
                             <span class="pageviews">${formatNumber(prev.pageviews, 1)}</span>
                         </div>
                     </div>
@@ -201,6 +201,26 @@ export class HomepageAMPRenderPartial {
                 <div id="tab3" role="tab" aria-controls="tabpanel3" option>POPULAR</div>
                 <div id="tabpanel3" role="tabpanel" aria-labelledby="tab3">${this.renderTrendingRecentPopularTab(popularPreviews)}</div>
             </amp-selector>
+        `;
+    }
+
+    renderIntro = (): string => {
+
+        return `
+            <div id="Intro_Section">
+                <div class="inner-wrap">
+                    <h2>The Wiki Encyclopedia for Everything, Everyone, Everywhere.</h2>
+                    <h4>Everipedia offers a space for you to dive into anything you find interesting, connect with people who share your interests, and contribute your own perspective.</h4>
+                    <div class="button-box">
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/everipedia" class="about-button" >
+                            About Everipedia
+                        </a>
+                        <a href="/activity" class="activity-button" >
+                            See Activity
+                        </a>
+                    </div>
+                </div>
+            </div>
         `;
     }
 

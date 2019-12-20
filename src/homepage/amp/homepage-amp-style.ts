@@ -742,6 +742,98 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 	padding-left: 15px;
 	text-align: left;
 }
+#Intro_Section {
+	display: flex;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    position: relative;
+    width: 100%;
+    height: 670px;
+    margin: initial;
+    background: url(https://epcdn-vz.azureedge.net/static/images/homepage_learn_more_mobile.png) 50% 50% / cover no-repeat rgb(239, 239, 239);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+#Intro_Section .inner-wrap {
+	display: flex;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    height: initial;
+    position: relative;
+    width: 100vw;
+    max-width: 525px;
+	margin: 4% 5% 10%;
+	text-align: left;
+}
+#Intro_Section h2 {
+	font-family: "Libre Baskerville", serif;
+    font-size: 30px;
+    background-color: inherit;
+    text-align: left;
+    color: rgb(45, 45, 45);
+    line-height: 40px;
+    margin: 0px;
+    max-height: none;
+    width: 100%;
+    overflow: visible;
+}
+#Intro_Section h4 {
+	font-family: "Open Sans", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: left;
+    font-style: normal;
+    color: rgb(108, 108, 108);
+    margin-top: 20px 0px 20px 0px;
+    line-height: inherit;
+    cursor: inherit;
+    max-height: none;
+    max-width: none;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    width: 100%;
+    overflow: visible;
+}
+#Intro_Section .button-box .about-button {
+	width: 150px;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500;
+    background-color: rgb(32, 106, 203);
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    min-height: 41px;
+    max-height: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 0px 5px 0px 0px;
+    border-color: rgb(32, 106, 203);
+    border-style: solid;
+}
+#Intro_Section .button-box .activity-button {
+	width: 150px;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 500;
+    background-color: rgb(233, 242, 255);
+    color: rgb(32, 106, 203);
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    min-height: 41px;
+    max-height: none;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 0px 5px 0px 0px;
+    border-color: rgb(32, 106, 203);
+    border-style: solid;
+}
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
 	flex-wrap: wrap;
