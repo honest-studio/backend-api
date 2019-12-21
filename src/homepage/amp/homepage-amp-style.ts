@@ -861,6 +861,12 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     flex-grow: 0;
     overflow: visible;
 }
+#Leaderboard_Carousel {
+
+}
+#Leaderboard_Carousel ul.account-list {
+	list-style-type: decimal 
+}
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
 	flex-wrap: wrap;

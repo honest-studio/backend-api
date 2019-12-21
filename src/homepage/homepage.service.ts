@@ -16,10 +16,25 @@ import * as SqlString from 'sqlstring';
 const crypto = require('crypto');
 const util = require('util');
 
+export interface UserProfile {
+    about_me: string,
+    display_name: string,
+    img: string,
+    languages: any[],
+    location: {
+        city: string,
+        country: string,
+        state: string
+    },
+    platforms: any,
+    user: string
+
+}
 export interface LeaderboardStat {
-    prop1: any,
-    prop2: any,
-    prop3: any
+    user: string,
+    cumulative_iq_rewards: number,
+    edits: number,
+    votes: number
 }
 
 export interface LeaderboardPack {
@@ -222,8 +237,6 @@ export class HomepageService {
             this.userService.getProfiles(userProfileAccountnameArray)
         ]);
 
-        console.log(userProfileMegaObj)
-
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
         let domain_prefix = getLangPrefix(lang_code);
 
@@ -267,8 +280,7 @@ export class HomepageService {
         // Description
         let BLURB_SNIPPET_PLAINTEXT = "The Wiki Encyclopedia for Everything, Everyone, Everywhere. Everipedia offers a space for you to dive into anything you find interesting, connect with people who share your interests, and contribute your own perspective.";
 
-
-
+        // Fill in the template
         const theHTML = `
             <!DOCTYPE html>
             <html amp lang="${lang_code}">
@@ -282,7 +294,7 @@ export class HomepageService {
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderIntro()}
                         ${arp.renderInTheNewsTabList(inTheNewPreviews)}
-                        ${arp.renderLeaderboardCarousel(leaderboardPack)}
+                        ${arp.renderLeaderboardCarousel(leaderboardPack, userProfileMegaObj)}
                         ${arp.renderCategories(homepageCategories)}
                         ${arp.renderBreadcrumb()}
                     </main>

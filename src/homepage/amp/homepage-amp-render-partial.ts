@@ -3,7 +3,7 @@ import moment from 'moment';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { styleNugget } from './homepage-amp-style';
 import { formatNumber } from '../../utils/article-utils/article-tools';
-import { LeaderboardPack, LeaderboardStat } from '../homepage.service';
+import { LeaderboardPack, LeaderboardStat, UserProfile } from '../homepage.service';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {
@@ -233,12 +233,29 @@ export class HomepageAMPRenderPartial {
         `;
     }
 
-    renderLeaderboardAccountList = (stats_list: LeaderboardStat[]): string => {
-        // console.log(stats_list)
+    renderLeaderboardAccountList = (stats_list: LeaderboardStat[], userProfileMegaObj: any): string => {
         let accountListComboString = stats_list && stats_list.map(stat => {
+            let user_profile: UserProfile = (userProfileMegaObj[stat.user] && userProfileMegaObj[stat.user].profile) || null;
+            if (!user_profile) user_profile = {
+                about_me: null,
+                display_name: stat.user,
+                img: 'https://everipedia.org/images/profiles/no_profile_image.svg',
+                languages: ['en'],
+                location: null,
+                platforms: [],
+                user: stat.user
+            };
+            console.log(user_profile)
             return `
                 <li>
-                    ${stat}
+                    <amp-img
+                        src="${user_profile.img}"
+                        layout="fixed"
+                        height="40"
+                        width="40"
+                        alt="${user_profile.display_name}"
+                    ></amp-img>
+                    ${user_profile.display_name}
                 </li>
             `;
         }).join("");
@@ -251,35 +268,35 @@ export class HomepageAMPRenderPartial {
         `;
     }
 
-    renderLeaderboardTabList = (metric: string, leaderboardPack: LeaderboardPack): string => {
+    renderLeaderboardTabList = (metric: string, leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
         return `
             <amp-selector id="Leaderboard_${metric}" class="tabs-with-flex preview-tablist" role="tablist">
                 <div id="tab1-leaderboard-today-${metric}" role="tab" aria-controls="tabpanel1-leaderboard-today-${metric}" option selected>DAY</div>
                 <div id="tabpanel1-leaderboard-today-${metric}" role="tabpanel" aria-labelledby="tab1-leaderboard-today-${metric}">
-                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].today)}
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].today, userProfileMegaObj)}
                 </div>
                 <div id="tab2-leaderboard-week-${metric}" role="tab" aria-controls="tabpanel2-leaderboard-week-${metric}" option>WEEK</div>
                 <div id="tabpanel2-leaderboard-week-${metric}" role="tabpanel" aria-labelledby="tab2-leaderboard-week-${metric}">
-                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_week)}
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_week, userProfileMegaObj)}
                 </div>
                 <div id="tab3-leaderboard-month-${metric}" role="tab" aria-controls="tabpanel3-leaderboard-month-${metric}" option>MONTH</div>
                 <div id="tabpanel3-leaderboard-month-${metric}" role="tabpanel" aria-labelledby="tab3-leaderboard-month-${metric}">
-                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_month)}
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_month, userProfileMegaObj)}
                 </div>
                 <div id="tab4-leaderboard-all-time-${metric}" role="tab" aria-controls="tabpanel4-leaderboard-all-time-${metric}" option>ALL TIME</div>
                 <div id="tabpanel4-leaderboard-all-time-${metric}" role="tabpanel" aria-labelledby="tab4-leaderboard-all-time-${metric}">
-                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].all_time)}
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].all_time, userProfileMegaObj)}
                 </div>
             </amp-selector>
         `;
     }
 
-    renderLeaderboardCarousel = (leaderboardPack: LeaderboardPack): string => {
+    renderLeaderboardCarousel = (leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
         let carouselComboString = `   
             <div class="slide">             
-                <div class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack )}</div>
-                <div class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack )}</div>
-                <div class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack )}</div>
+                <div class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
+                <div class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
+                <div class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack, userProfileMegaObj )}</div>
             </div>
         `;
 
