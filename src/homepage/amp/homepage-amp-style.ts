@@ -864,6 +864,10 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 #Leaderboard {
 
 }
+#Leaderboard amp-selector {
+	display: flex;
+	justify-content: space-evenly;
+}
 #Leaderboard ul.account-list {
 	list-style-type: decimal;
 	padding: 0px; 
@@ -898,7 +902,7 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 	flex: 1;
 	-webkit-box-pack: justify;
 	justify-content: space-between;
-	text-align: center;
+	text-align: left;
 	font-style: normal;
 	font-family: "Open Sans", sans-serif;
 }

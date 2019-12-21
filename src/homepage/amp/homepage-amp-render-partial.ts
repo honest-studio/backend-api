@@ -245,7 +245,7 @@ export class HomepageAMPRenderPartial {
                 platforms: [],
                 user: stat.user
             };
-            console.log(user_profile)
+            if (!user_profile.display_name || user_profile.display_name == "") user_profile.display_name = stat.user;
             return `
                 <li>
                     <span class="list-idx">${idx + 1}.</span>
@@ -259,11 +259,11 @@ export class HomepageAMPRenderPartial {
                     <div class="profile-box">
                         <div class="left-box">
                             <div class="account-name">${user_profile.display_name}</div>
-                            <div class="number-counts">1111 | 2222</div>
+                            <div class="number-counts">${stat.edits} edits | ${stat.votes} votes</div>
                         </div>
                         <div class="right-box">
                             <div class="iq-count"> 
-                                <span class="iq-number">66K</span>
+                                <span class="iq-number">${formatNumber(stat.cumulative_iq_rewards, 1)}</span>
                                 <span class="iq-symbol"> IQ</span>
                             </div>
                         </div>
@@ -311,9 +311,22 @@ export class HomepageAMPRenderPartial {
                 id="Leaderboard"
                 class="slide"
             >             
-                <div class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
-                <div class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
-                <div class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack, userProfileMegaObj )}</div>
+                <h2>Leaderboard of <code [text]="selectedOption">IQ</code></h2>
+                <amp-selector 
+                    class="radio-selector"
+                    layout="container"
+                    name="my-selector"
+                    on="select: AMP.setState({
+                        selectedOption: event.targetOption
+                    })"
+                >
+                    <div option="IQ">IQ</div>
+                    <div option="Edits">Edits</div>
+                    <div option="Votes">Votes</div>
+                </amp-selector>
+                <div id="ldr_slide_iq" class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
+                <div id="ldr_slide_edits" class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
+                <div id="ldr_slide_votes" class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack, userProfileMegaObj )}</div>
             </div>
         `;
 
