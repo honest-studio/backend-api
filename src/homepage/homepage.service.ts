@@ -294,7 +294,7 @@ export class HomepageService {
                         ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
                         ${arp.renderIntro()}
                         ${arp.renderInTheNewsTabList(inTheNewPreviews)}
-                        ${arp.renderLeaderboardCarousel(leaderboardPack, userProfileMegaObj)}
+                        ${arp.renderLeaderboard(leaderboardPack, userProfileMegaObj)}
                         ${arp.renderCategories(homepageCategories)}
                         ${arp.renderBreadcrumb()}
                     </main>

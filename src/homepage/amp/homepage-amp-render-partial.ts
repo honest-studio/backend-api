@@ -234,7 +234,7 @@ export class HomepageAMPRenderPartial {
     }
 
     renderLeaderboardAccountList = (stats_list: LeaderboardStat[], userProfileMegaObj: any): string => {
-        let accountListComboString = stats_list && stats_list.map(stat => {
+        let accountListComboString = stats_list && stats_list.map((stat, idx) => {
             let user_profile: UserProfile = (userProfileMegaObj[stat.user] && userProfileMegaObj[stat.user].profile) || null;
             if (!user_profile) user_profile = {
                 about_me: null,
@@ -248,6 +248,7 @@ export class HomepageAMPRenderPartial {
             console.log(user_profile)
             return `
                 <li>
+                    <span class="list-idx">${idx + 1}.</span>
                     <amp-img
                         src="${user_profile.img}"
                         layout="fixed"
@@ -255,7 +256,17 @@ export class HomepageAMPRenderPartial {
                         width="40"
                         alt="${user_profile.display_name}"
                     ></amp-img>
-                    ${user_profile.display_name}
+                    <div class="profile-box">
+                        <div class="left-box">
+                            <div class="account-name">${user_profile.display_name}</div>
+                            <div class="number-counts"></div>
+                        </div>
+                        <div class="right-box">
+                            <div class="iq-count"> 66K IQ</div>
+                        </div>
+                    </div>
+                    
+                    
                 </li>
             `;
         }).join("");
@@ -291,25 +302,19 @@ export class HomepageAMPRenderPartial {
         `;
     }
 
-    renderLeaderboardCarousel = (leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
+    renderLeaderboard = (leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
         let carouselComboString = `   
-            <div class="slide">             
+            <div 
+                id="Leaderboard"
+                class="slide"
+            >             
                 <div class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
                 <div class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
                 <div class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack, userProfileMegaObj )}</div>
             </div>
         `;
 
-        return `
-            <amp-carousel
-                id="Leaderboard_Carousel"
-                height="500"
-                layout="fixed-height"
-                type="slides"
-            >
-                ${carouselComboString}
-            </amp-carousel>
-        `;
+        return `${carouselComboString}`;
     }
 
     renderCategories = (homepageCategories: PageCategory[]): string => {

@@ -861,11 +861,48 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     flex-grow: 0;
     overflow: visible;
 }
-#Leaderboard_Carousel {
+#Leaderboard {
 
 }
-#Leaderboard_Carousel ul.account-list {
-	list-style-type: decimal 
+#Leaderboard ul.account-list {
+	list-style-type: decimal;
+	padding: 0px; 
+}
+#Leaderboard ul.account-list li {
+	display: flex;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
+	padding: 7px 0px;
+	width: 100%;
+}
+#Leaderboard ul.account-list li .list-idx {
+	margin-right: 5px;
+	width: 15px;
+	flex: 0 0 20px;
+}
+#Leaderboard ul.account-list li amp-img {
+	height: 40px;
+    width: 40px;
+    margin: 0px 10px 0px 0px;
+    flex: 0 0 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+#Leaderboard ul.account-list li .profile-box {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	flex: 1;
+}
+#Leaderboard ul.account-list li .profile-box .left-box  {
+	background: blue;
+}
+#Leaderboard ul.account-list li .profile-box .right-box {
+	background: red;
+	align-self: flex-end;
 }
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
