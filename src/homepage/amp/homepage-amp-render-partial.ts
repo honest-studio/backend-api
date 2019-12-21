@@ -259,10 +259,13 @@ export class HomepageAMPRenderPartial {
                     <div class="profile-box">
                         <div class="left-box">
                             <div class="account-name">${user_profile.display_name}</div>
-                            <div class="number-counts"></div>
+                            <div class="number-counts">1111 | 2222</div>
                         </div>
                         <div class="right-box">
-                            <div class="iq-count"> 66K IQ</div>
+                            <div class="iq-count"> 
+                                <span class="iq-number">66K</span>
+                                <span class="iq-symbol"> IQ</span>
+                            </div>
                         </div>
                     </div>
                     

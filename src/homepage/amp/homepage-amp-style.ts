@@ -896,13 +896,31 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 	flex-direction: row;
 	align-items: flex-start;
 	flex: 1;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	text-align: center;
+	font-style: normal;
+	font-family: "Open Sans", sans-serif;
 }
-#Leaderboard ul.account-list li .profile-box .left-box  {
-	background: blue;
+#Leaderboard ul.account-list li .profile-box .account-name  {
+    font-size: 14px;
+	color: rgb(56, 128, 224);
+	font-weight: 600;
 }
-#Leaderboard ul.account-list li .profile-box .right-box {
-	background: red;
-	align-self: flex-end;
+#Leaderboard ul.account-list li .profile-box .number-counts  {
+    font-weight: 400;
+    font-size: 12px;
+    color: rgb(115, 115, 115);
+}
+#Leaderboard ul.account-list li .profile-box .iq-number {
+    font-size: 14px;
+	color: rgb(0, 128, 100);
+	font-weight: 600;
+}
+#Leaderboard ul.account-list li .profile-box .iq-symbol {
+    font-size: 14px;
+	color: rgb(115, 115, 115);
+	font-weight: 600;
 }
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
