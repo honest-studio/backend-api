@@ -295,6 +295,7 @@ export class HomepageService {
                         ${arp.renderIntro()}
                         ${arp.renderInTheNewsTabList(inTheNewPreviews)}
                         ${arp.renderLeaderboard(leaderboardPack, userProfileMegaObj)}
+                        ${arp.renderStartContributing()}
                         ${arp.renderCategories(homepageCategories)}
                         ${arp.renderBreadcrumb()}
                     </main>

@@ -246,6 +246,7 @@ export class HomepageAMPRenderPartial {
                 user: stat.user
             };
             if (!user_profile.display_name || user_profile.display_name == "") user_profile.display_name = stat.user;
+            if (!user_profile.img || user_profile.img == "") user_profile.img = 'https://everipedia.org/images/profiles/no_profile_image.svg';
             return `
                 <li>
                     <span class="list-idx">${idx + 1}.</span>
@@ -284,7 +285,7 @@ export class HomepageAMPRenderPartial {
 
     renderLeaderboardTabList = (metric: string, leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
         return `
-            <amp-selector id="Leaderboard_${metric}" class="tabs-with-flex preview-tablist" role="tablist">
+            <amp-selector id="Leaderboard_${metric}" class="tabs-with-flex" role="tablist">
                 <div id="tab1-leaderboard-today-${metric}" role="tab" aria-controls="tabpanel1-leaderboard-today-${metric}" option selected>DAY</div>
                 <div id="tabpanel1-leaderboard-today-${metric}" role="tabpanel" aria-labelledby="tab1-leaderboard-today-${metric}">
                     ${this.renderLeaderboardAccountList(leaderboardPack[metric].today, userProfileMegaObj)}
@@ -311,8 +312,9 @@ export class HomepageAMPRenderPartial {
                 id="Leaderboard"
                 class="slide"
             >             
-                <h2>Leaderboard of <code [text]="selectedOption">IQ</code></h2>
+                <h2>Leaderboard</h2>
                 <amp-selector 
+                    id="IQ_Edits_Votes"
                     class="radio-selector"
                     layout="container"
                     name="my-selector"
@@ -320,17 +322,34 @@ export class HomepageAMPRenderPartial {
                         selectedOption: event.targetOption
                     })"
                 >
-                    <div option="IQ">IQ</div>
-                    <div option="Edits">Edits</div>
-                    <div option="Votes">Votes</div>
+                    <div selected option="1">IQ</div>
+                    <div option="2">Edits</div>
+                    <div option="3">Votes</div>
                 </amp-selector>
-                <div id="ldr_slide_iq" class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
-                <div id="ldr_slide_edits" class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
-                <div id="ldr_slide_votes" class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack, userProfileMegaObj )}</div>
+                <div [hidden]="selectedOption != 1" class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
+                <div hidden [hidden]="selectedOption != 2" class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
+                <div hidden [hidden]="selectedOption != 3" class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack, userProfileMegaObj )}</div>
             </div>
         `;
 
         return `${carouselComboString}`;
+    }
+
+    renderStartContributing = (): string => {
+        return `
+            <div id="Start_Contributing">
+                <div class="slogan-wrap">
+                    <span>A universe of knowledge.</span>
+                    <span>Powered by you.</span>
+                </div>
+
+                <button
+                    on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq/create-an-article', target=_blank)" tabindex='0' role="link"
+                >
+                    Start Contributing
+                </button>
+            </div>
+        `;
     }
 
     renderCategories = (homepageCategories: PageCategory[]): string => {
