@@ -3,7 +3,7 @@ import moment from 'moment';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { styleNugget } from './homepage-amp-style';
 import { formatNumber } from '../../utils/article-utils/article-tools';
-import { LeaderboardPack } from '../homepage.service';
+import { LeaderboardPack, LeaderboardStat } from '../homepage.service';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {
@@ -233,54 +233,66 @@ export class HomepageAMPRenderPartial {
         `;
     }
 
-    renderLeaderboardTabList = (metric: string): string => {
+    renderLeaderboardAccountList = (stats_list: LeaderboardStat[]): string => {
+        // console.log(stats_list)
+        let accountListComboString = stats_list && stats_list.map(stat => {
+            return `
+                <li>
+                    ${stat}
+                </li>
+            `;
+        }).join("");
+
 
         return `
+            <ul class="account-list">
+                ${accountListComboString}
+            </ul>
+        `;
+    }
+
+    renderLeaderboardTabList = (metric: string, leaderboardPack: LeaderboardPack): string => {
+        return `
             <amp-selector id="Leaderboard_${metric}" class="tabs-with-flex preview-tablist" role="tablist">
-                <div id="tab1-leaderboard-day-${metric}" role="tab" aria-controls="tabpanel1-leaderboard-day-${metric}" option selected>DAY</div>
-                <div id="tabpanel1-leaderboard-day-${metric}" role="tabpanel" aria-labelledby="tab1-leaderboard-day-${metric}">AAA-${metric}/div>
+                <div id="tab1-leaderboard-today-${metric}" role="tab" aria-controls="tabpanel1-leaderboard-today-${metric}" option selected>DAY</div>
+                <div id="tabpanel1-leaderboard-today-${metric}" role="tabpanel" aria-labelledby="tab1-leaderboard-today-${metric}">
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].today)}
+                </div>
                 <div id="tab2-leaderboard-week-${metric}" role="tab" aria-controls="tabpanel2-leaderboard-week-${metric}" option>WEEK</div>
-                <div id="tabpanel2-leaderboard-week-${metric}" role="tabpanel" aria-labelledby="tab2-leaderboard-week-${metric}">BBB-${metric}</div>
+                <div id="tabpanel2-leaderboard-week-${metric}" role="tabpanel" aria-labelledby="tab2-leaderboard-week-${metric}">
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_week)}
+                </div>
                 <div id="tab3-leaderboard-month-${metric}" role="tab" aria-controls="tabpanel3-leaderboard-month-${metric}" option>MONTH</div>
-                <div id="tabpanel3-leaderboard-month-${metric}" role="tabpanel" aria-labelledby="tab3-leaderboard-month-${metric}">CCC-${metric}</div>
+                <div id="tabpanel3-leaderboard-month-${metric}" role="tabpanel" aria-labelledby="tab3-leaderboard-month-${metric}">
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_month)}
+                </div>
                 <div id="tab4-leaderboard-all-time-${metric}" role="tab" aria-controls="tabpanel4-leaderboard-all-time-${metric}" option>ALL TIME</div>
-                <div id="tabpanel4-leaderboard-all-time-${metric}" role="tabpanel" aria-labelledby="tab4-leaderboard-all-time-${metric}">DDD-${metric}</div>
+                <div id="tabpanel4-leaderboard-all-time-${metric}" role="tabpanel" aria-labelledby="tab4-leaderboard-all-time-${metric}">
+                    ${this.renderLeaderboardAccountList(leaderboardPack[metric].all_time)}
+                </div>
             </amp-selector>
         `;
     }
 
     renderLeaderboardCarousel = (leaderboardPack: LeaderboardPack): string => {
-        return ``;
-        // let carouselComboString = featuredPreviews && featuredPreviews.map(preview => {
-        //     return `   
-        //         <div class="slide">             
-        //             <amp-img
-        //                 src="${preview.main_photo}"
-        //                 layout="fill"
-        //                 alt="${preview.page_title}"
-        //             ></amp-img>
-        //             <div 
-        //                 class="caption"
-        //                 on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${preview.lang_code}/${preview.slug}', target=_blank)" 
-        //                 tabindex='0' 
-        //                 role="link"
-        //             >
-        //                 ${preview.page_title}
-        //             </div>
-        //         </div>
-        //     `
-        // }).join("");
+        let carouselComboString = `   
+            <div class="slide">             
+                <div class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack )}</div>
+                <div class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack )}</div>
+                <div class="leader-slide">${this.renderLeaderboardTabList('votes', leaderboardPack )}</div>
+            </div>
+        `;
 
-        // return `
-        //     <amp-carousel
-        //         id="Leaderboard_Carousel"
-        //         height="500"
-        //         layout="fixed-height"
-        //         type="slides"
-        //     >
-        //         ${carouselComboString}
-        //     </amp-carousel>
-        // `
+        return `
+            <amp-carousel
+                id="Leaderboard_Carousel"
+                height="500"
+                layout="fixed-height"
+                type="slides"
+            >
+                ${carouselComboString}
+            </amp-carousel>
+        `;
     }
 
     renderCategories = (homepageCategories: PageCategory[]): string => {

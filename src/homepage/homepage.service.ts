@@ -5,6 +5,7 @@ import { WikiIdentity } from '../types/article-helpers';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
 import { PreviewService } from '../preview';
 import { CategoryService } from '../category';
+import { UserService } from '../user';
 import { RecentActivityService } from '../recent-activity';
 import { StatService } from '../stat';
 import { HomepageAMPRenderPartial } from './amp/homepage-amp-render-partial';
@@ -15,24 +16,30 @@ import * as SqlString from 'sqlstring';
 const crypto = require('crypto');
 const util = require('util');
 
+export interface LeaderboardStat {
+    prop1: any,
+    prop2: any,
+    prop3: any
+}
+
 export interface LeaderboardPack {
     iq: {
-        today: any,
-        this_week: any,
-        this_month: any,
-        all_time: any,
+        today: LeaderboardStat[],
+        this_week: LeaderboardStat[],
+        this_month: LeaderboardStat[],
+        all_time: LeaderboardStat[],
     },
     votes: {
-        today: any,
-        this_week: any,
-        this_month: any,
-        all_time: any,
+        today: LeaderboardStat[],
+        this_week: LeaderboardStat[],
+        this_month: LeaderboardStat[],
+        all_time: LeaderboardStat[],
     },
     edits: {
-        today: any,
-        this_week: any,
-        this_month: any,
-        all_time: any,
+        today: LeaderboardStat[],
+        this_week: LeaderboardStat[],
+        this_month: LeaderboardStat[],
+        all_time: LeaderboardStat[],
     },
 }
 
@@ -46,6 +53,7 @@ export class HomepageService {
         @Inject(forwardRef(() => RecentActivityService)) private recentActivityService: RecentActivityService,
         @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
         @Inject(forwardRef(() => StatService)) private statService: StatService,
+        @Inject(forwardRef(() => UserService)) private userService: UserService,
     ) {}
     
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
@@ -74,18 +82,18 @@ export class HomepageService {
             this.recentActivityService.getTrendingWikis(lang_code),
             this.recentActivityService.getProposals({ expiring: false, completed: true, preview: true, user_agent: 'safari', diff: null, limit: 15, offset: 0, langs: lang_code}),
             this.statService.siteUsage(lang_code),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'iq', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'edits', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'votes', limit: 20 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
         ]);
 
         // Assemble the leaderboard info
@@ -110,7 +118,29 @@ export class HomepageService {
             }
         };
 
-        console.log(util.inspect(leaderboardPack, {showHidden: false, depth: null, chalk: true}));
+        // Get all the user profile info
+        let userProfileAccountnameArray = [];
+
+        // IQ
+        today_iq && today_iq.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        week_iq && week_iq.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        month_iq && month_iq.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        all_time_iq && all_time_iq.forEach(stat => userProfileAccountnameArray.push(stat.user));
+
+        // Edits
+        today_edits && today_edits.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        week_edits && week_edits.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        month_edits && month_edits.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        all_time_edits && all_time_edits.forEach(stat => userProfileAccountnameArray.push(stat.user));
+
+        // Votes
+        today_votes && today_votes.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        week_votes && week_votes.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        month_votes && month_votes.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        all_time_votes && all_time_votes.forEach(stat => userProfileAccountnameArray.push(stat.user));
+        
+        // Remove duplicates
+        userProfileAccountnameArray = [...new Set(userProfileAccountnameArray)];
 
         // Extract the data
         let { popular, in_the_news, featured_content, excluded_list, in_the_press } = content;
@@ -183,13 +213,16 @@ export class HomepageService {
 
         // Get the previews
         // Inefficient: you could pass all the WikiIdentity[]'s at once and loop through the results to assign to the source arrays
-        const [featuredPreviews, trendingPreviews, popularPreviews, inTheNewPreviews, homepageCategories] = await Promise.all([
+        const [featuredPreviews, trendingPreviews, popularPreviews, inTheNewPreviews, homepageCategories, userProfileMegaObj] = await Promise.all([
             this.previewService.getPreviewsBySlug(featuredItems, 'safari'),
             this.previewService.getPreviewsBySlug(trendingItems, 'safari'),
             this.previewService.getPreviewsBySlug(popularItems, 'safari'),
             this.previewService.getPreviewsBySlug(inTheNewsItems, 'safari'),
-            this.categoryService.getHomepageCategories(lang_code)
+            this.categoryService.getHomepageCategories(lang_code),
+            this.userService.getProfiles(userProfileAccountnameArray)
         ]);
+
+        console.log(userProfileMegaObj)
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
         let domain_prefix = getLangPrefix(lang_code);
