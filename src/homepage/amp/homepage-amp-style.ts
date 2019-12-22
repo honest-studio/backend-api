@@ -668,10 +668,20 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     font-size: 16px;
     font-family: OpenSans,'Open Sans',sans-serif;
     line-height: 20px;
-    padding: 10px 10px 10px 10px;
+	padding: 10px 10px 10px 10px;
+}
+#Featured_Carousel .caption .icon {
+    width: 15px;
+    position: absolute;
+}
+#Featured_Carousel .caption .title {
+	text-align: center;
 }
 #Featured_Carousel img {
 	object-fit: cover;
+}
+#Featured_Carousel .amp-carousel-button{
+	background-color: rgba(0,0,0,0.85);
 }
 .preview-tablist {
 	margin-top: 15px;
@@ -790,7 +800,7 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     text-align: left;
     font-style: normal;
     color: rgb(108, 108, 108);
-    margin-top: 20px 0px 20px 0px;
+    margin: 10px 0px 10px 0px;
     line-height: inherit;
     cursor: inherit;
     max-height: none;
@@ -799,6 +809,9 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     flex-grow: 0;
     width: 100%;
     overflow: visible;
+}
+#Intro_Section .button-box {
+	margin-top: 15px;
 }
 #Intro_Section .button-box a {
 	width: 150px;

@@ -115,7 +115,10 @@ export class HomepageAMPRenderPartial {
                         tabindex='0' 
                         role="link"
                     >
-                        ${preview.page_title}
+                        <div class="icon">
+                            <i class="fa fa-external-link"></i>
+                        </div>
+                        <div class="title">${preview.page_title}</div>
                     </div>
                 </div>
             `
@@ -307,7 +310,7 @@ export class HomepageAMPRenderPartial {
     }
 
     renderLeaderboard = (leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
-        let carouselComboString = `   
+        let leaderboardComboString = `   
             <div 
                 id="Leaderboard"
                 class="slide"
@@ -332,7 +335,7 @@ export class HomepageAMPRenderPartial {
             </div>
         `;
 
-        return `${carouselComboString}`;
+        return `${leaderboardComboString}`;
     }
 
     renderStartContributing = (): string => {
