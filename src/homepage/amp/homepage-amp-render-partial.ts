@@ -3,7 +3,7 @@ import moment from 'moment';
 import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types/api';
 import { styleNugget } from './homepage-amp-style';
 import { formatNumber } from '../../utils/article-utils/article-tools';
-import { LeaderboardPack, LeaderboardStat, UserProfile } from '../homepage.service';
+import { LeaderboardPack, LeaderboardStat, UserProfile, SiteStats } from '../homepage.service';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {
@@ -344,6 +344,7 @@ export class HomepageAMPRenderPartial {
                 </div>
 
                 <button
+                    class="create-article-button"
                     on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq/create-an-article', target=_blank)" tabindex='0' role="link"
                 >
                     Start Contributing
@@ -368,6 +369,25 @@ export class HomepageAMPRenderPartial {
                 ${categoriesComboString}
             </div>
         `;
+    }
+
+    renderStatsBox = (site_usage: SiteStats): string => {
+        return `
+            <div id="Stats_Box">
+                <span class="stat-nugget">
+                    <div class="value">${formatNumber(site_usage.total_article_count[0].num_articles, 1)}</div>
+                    <div class="label">WIKIS</div>
+                </span>
+                <span class="stat-nugget">
+                    <div class="value">${formatNumber(site_usage.total_pageviews[0].pageviews, 1)}</div>
+                    <div class="label">VIEWS</div>
+                </span>
+                <span class="stat-nugget">
+                    <div class="value">${formatNumber(162303, 1)}</div>
+                    <div class="label">IQ HOLDERS</div>
+                </span>
+            </div>
+        `
     }
 
     renderFooter = (): string => {

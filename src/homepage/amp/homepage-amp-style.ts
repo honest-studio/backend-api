@@ -985,6 +985,51 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 	color: rgb(32, 106, 203);
 	line-height: 34px;
 }
+#Start_Contributing .create-article-button { 
+	width: auto;
+    cursor: pointer;
+    font-family: "Open Sans", sans-serif;
+    letter-spacing: 0.1px;
+    min-height: 41px;
+    max-height: none;
+    color: rgb(32, 106, 203);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 10px 35px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(32, 106, 203);
+    border-image: initial;
+    background: rgb(233, 242, 255);
+    border-radius: 5px;
+    padding: 10px 50px;
+}
+#Stats_Box {
+	display: flex;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+	flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 0px 0px 30px;
+}
+#Stats_Box .stat-nugget {
+	width: 150px;
+}
+#Stats_Box .stat-nugget .value {
+	font-family: "Libre Baskerville", serif;
+    font-size: 26px;
+    text-align: center;
+    color: rgb(45, 45, 45);
+}
+#Stats_Box .stat-nugget .label {
+	font-family: "Open Sans", sans-serif;
+    font-size: 10px;
+    text-align: center;
+    font-style: normal;
+    color: rgb(45, 45, 45);
+}
 amp-selector[role=tablist].tabs-with-flex {
 	display: flex;
 	flex-wrap: wrap;

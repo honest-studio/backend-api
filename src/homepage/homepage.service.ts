@@ -16,6 +16,18 @@ import * as SqlString from 'sqlstring';
 const crypto = require('crypto');
 const util = require('util');
 
+export interface SiteStats {
+    timestamp: string,
+    total_article_count: [{ num_articles: number }],
+    total_pageviews: [ { pageviews: number } ],
+    total_editors: number,
+    total_iq_rewards: string,
+    original_pages: number,
+    total_edits: number,
+    block_num: number
+  
+}
+
 export interface UserProfile {
     about_me: string,
     display_name: string,
@@ -297,6 +309,7 @@ export class HomepageService {
                         ${arp.renderLeaderboard(leaderboardPack, userProfileMegaObj)}
                         ${arp.renderStartContributing()}
                         ${arp.renderCategories(homepageCategories)}
+                        ${arp.renderStatsBox(site_usage)}
                         ${arp.renderBreadcrumb()}
                     </main>
                     <footer class="ftr everi_footer">
