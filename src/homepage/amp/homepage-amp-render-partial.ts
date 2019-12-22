@@ -415,7 +415,7 @@ export class HomepageAMPRenderPartial {
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/about', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.About"]}</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq', target=_blank)" tabindex='0' role="link">${this.TL["Footer.FAQ"]}</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/contact', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.Contact"]}</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/blog', target=_blank)" tabindex='0' role="link" >${this.TL["Index.Blog"]}Blog</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/blog', target=_blank)" tabindex='0' role="link" >${this.TL["Index.Blog"]}</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.Terms"]}</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.GetIQ"]}</span>
                 </div>
