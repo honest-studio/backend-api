@@ -4,15 +4,17 @@ import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types
 import { styleNugget } from './homepage-amp-style';
 import { formatNumber } from '../../utils/article-utils/article-tools';
 import { LeaderboardPack, LeaderboardStat, UserProfile, SiteStats } from '../homepage.service';
-import { TranslationPack } from '../../locale/translations';
+import { TranslationsPack } from '../../locale/translations';
 
 export class HomepageAMPRenderPartial {
+    private TL;
+
     public cleanedVars = {
         page_title: "",
         domain_prefix: "",
         img_full: "",
         img_thumb: "",
-        trackingIDToUse: ""
+        trackingIDToUse: "",
     }
 
     constructor(
@@ -25,10 +27,14 @@ export class HomepageAMPRenderPartial {
         this.cleanedVars.img_full = 'https://epcdn-vz.azureedge.net/static/images/logo_new_full_1201x833.jpg';
         this.cleanedVars.img_thumb = 'https://epcdn-vz.azureedge.net/static/images/logo_new_thumb_250x173.jpg';
         this.cleanedVars.trackingIDToUse = ga_id;
+        this.TL = TranslationsPack[lang_code];
     }
 
-    renderHead = (BLURB_SNIPPET_PLAINTEXT: string, RANDOMSTRING: string): string => {
+    renderHead = (RANDOMSTRING: string): string => {
         let compressedCSS = new CleanCSS({}).minify(styleNugget).styles;
+
+        // Description
+        let BLURB_SNIPPET_PLAINTEXT = `${this.TL["Homepage.TheEncylopediaOfEverything"]} ${this.TL["Homepage.EveripediaOffersASpace"]}`;
 
         return `
             <meta charset="utf-8" />
@@ -198,11 +204,11 @@ export class HomepageAMPRenderPartial {
     ): string => {
         return `
             <amp-selector id="Trend_Rec_Pop" class="tabs-with-flex preview-tablist" role="tablist">
-                <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>TRENDING</div>
+                <div id="tab1" role="tab" aria-controls="tabpanel1" option selected>${this.TL["RecentPopularContent.TRENDING"]}</div>
                 <div id="tabpanel1" role="tabpanel" aria-labelledby="tab1">${this.renderTab(trendingPreviews)}</div>
-                <div id="tab2" role="tab" aria-controls="tabpanel2" option>RECENT</div>
+                <div id="tab2" role="tab" aria-controls="tabpanel2" option>${this.TL["RecentPopularContent.RECENT"]}</div>
                 <div id="tabpanel2" role="tabpanel" aria-labelledby="tab2">${this.renderTab(recentPreviews)}</div>
-                <div id="tab3" role="tab" aria-controls="tabpanel3" option>POPULAR</div>
+                <div id="tab3" role="tab" aria-controls="tabpanel3" option>${this.TL["RecentPopularContent.POPULAR"]}</div>
                 <div id="tabpanel3" role="tabpanel" aria-labelledby="tab3">${this.renderTab(popularPreviews)}</div>
             </amp-selector>
         `;
@@ -213,14 +219,13 @@ export class HomepageAMPRenderPartial {
         return `
             <div id="Intro_Section">
                 <div class="inner-wrap">
-                    <h2>The Wiki Encyclopedia for Everything, Everyone, Everywhere.</h2>
-                    <h4>Everipedia offers a space for you to dive into anything you find interesting, connect with people who share your interests, and contribute your own perspective.</h4>
+                    <h2>${this.TL["Homepage.TheEncylopediaOfEverything"]}</h2>
+                    <h4>${this.TL["Homepage.EveripediaOffersASpace"]}</h4>
                     <div class="button-box">
-                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/everipedia" class="about-button" title="About Everipedia" >
-                            About Everipedia
+                            ${this.TL["LearnMore.AboutEveripedia"]}
                         </a>
-                        <a href="/activity" class="activity-button" title="Recent Activity" >
-                            See Activity
+                        <a href="/activity" class="activity-button" title="${this.TL["RecentActivity.ContainerTitle"]}" >
+                            ${this.TL["LearnMore.SeeActivity"]}
                         </a>
                     </div>
                 </div>
@@ -231,7 +236,7 @@ export class HomepageAMPRenderPartial {
     renderInTheNewsTabList = (inTheNewsPreviews: PreviewResult[]): string => {
         return `
             <amp-selector id="In_The_News" class="tabs-with-flex preview-tablist" role="tablist">
-                <div id="tab1-itn" role="tab" aria-controls="tabpanel1-itn" option selected>IN THE NEWS</div>
+                <div id="tab1-itn" role="tab" aria-controls="tabpanel1-itn" option selected>${this.TL["InTheNews.InTheNews"]}</div>
                 <div id="tabpanel1-itn" role="tabpanel" aria-labelledby="tab1-itn">${this.renderTab(inTheNewsPreviews)}</div>
             </amp-selector>
         `;
@@ -264,7 +269,7 @@ export class HomepageAMPRenderPartial {
                     <div class="profile-box">
                         <div class="left-box">
                             <div class="account-name">${user_profile.display_name}</div>
-                            <div class="number-counts">${stat.edits} edits | ${stat.votes} votes</div>
+                            <div class="number-counts">${stat.edits} ${this.TL["Leaderboard.Edits"]} | ${stat.votes} ${this.TL["Leaderboard.Votes"]}</div>
                         </div>
                         <div class="right-box">
                             <div class="iq-count"> 
@@ -290,19 +295,19 @@ export class HomepageAMPRenderPartial {
     renderLeaderboardTabList = (metric: string, leaderboardPack: LeaderboardPack, userProfileMegaObj: any): string => {
         return `
             <amp-selector id="Leaderboard_${metric}" class="tabs-with-flex" role="tablist">
-                <div id="tab1-leaderboard-today-${metric}" role="tab" aria-controls="tabpanel1-leaderboard-today-${metric}" option selected>DAY</div>
+                <div id="tab1-leaderboard-today-${metric}" role="tab" aria-controls="tabpanel1-leaderboard-today-${metric}" option selected>${this.TL["Leaderboard.DayCap"]}</div>
                 <div id="tabpanel1-leaderboard-today-${metric}" role="tabpanel" aria-labelledby="tab1-leaderboard-today-${metric}">
                     ${this.renderLeaderboardAccountList(leaderboardPack[metric].today, userProfileMegaObj)}
                 </div>
-                <div id="tab2-leaderboard-week-${metric}" role="tab" aria-controls="tabpanel2-leaderboard-week-${metric}" option>WEEK</div>
+                <div id="tab2-leaderboard-week-${metric}" role="tab" aria-controls="tabpanel2-leaderboard-week-${metric}" option>${this.TL["Leaderboard.WeekCap"]}</div>
                 <div id="tabpanel2-leaderboard-week-${metric}" role="tabpanel" aria-labelledby="tab2-leaderboard-week-${metric}">
                     ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_week, userProfileMegaObj)}
                 </div>
-                <div id="tab3-leaderboard-month-${metric}" role="tab" aria-controls="tabpanel3-leaderboard-month-${metric}" option>MONTH</div>
+                <div id="tab3-leaderboard-month-${metric}" role="tab" aria-controls="tabpanel3-leaderboard-month-${metric}" option>${this.TL["Leaderboard.MonthCap"]}</div>
                 <div id="tabpanel3-leaderboard-month-${metric}" role="tabpanel" aria-labelledby="tab3-leaderboard-month-${metric}">
                     ${this.renderLeaderboardAccountList(leaderboardPack[metric].this_month, userProfileMegaObj)}
                 </div>
-                <div id="tab4-leaderboard-all-time-${metric}" role="tab" aria-controls="tabpanel4-leaderboard-all-time-${metric}" option>ALL TIME</div>
+                <div id="tab4-leaderboard-all-time-${metric}" role="tab" aria-controls="tabpanel4-leaderboard-all-time-${metric}" option>${this.TL["Leaderboard.AllTimeCap"]}</div>
                 <div id="tabpanel4-leaderboard-all-time-${metric}" role="tabpanel" aria-labelledby="tab4-leaderboard-all-time-${metric}">
                     ${this.renderLeaderboardAccountList(leaderboardPack[metric].all_time, userProfileMegaObj)}
                 </div>
@@ -343,15 +348,15 @@ export class HomepageAMPRenderPartial {
         return `
             <div id="Start_Contributing">
                 <div class="slogan-wrap">
-                    <span>A universe of knowledge.</span>
-                    <span>Powered by you.</span>
+                    <span>${this.TL["Homepage.UniverseOfKnowledge"]}</span>
+                    <span>${this.TL["Homepage.PoweredByYou"]}</span>
                 </div>
 
                 <button
                     class="create-article-button"
                     on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq/create-an-article', target=_blank)" tabindex='0' role="link"
                 >
-                    Start Contributing
+                    ${this.TL["Homepage.StartContributing"]}
                 </button>
             </div>
         `;
@@ -380,15 +385,15 @@ export class HomepageAMPRenderPartial {
             <div id="Stats_Box">
                 <span class="stat-nugget">
                     <div class="value">${formatNumber(site_usage.total_article_count[0].num_articles, 1)}</div>
-                    <div class="label">WIKIS</div>
+                    <div class="label">${this.TL["Stats.ArticlesTwo"]}</div>
                 </span>
                 <span class="stat-nugget">
                     <div class="value">${formatNumber(site_usage.total_pageviews[0].pageviews, 1)}</div>
-                    <div class="label">VIEWS</div>
+                    <div class="label">${this.TL["Stats.ArticleViewsTwo"]}</div>
                 </span>
                 <span class="stat-nugget">
                     <div class="value">${formatNumber(162303, 1)}</div>
-                    <div class="label">IQ HOLDERS</div>
+                    <div class="label">${this.TL["Stats.IqHoldersTwo"]}</div>
                 </span>
             </div>
         `
@@ -406,12 +411,12 @@ export class HomepageAMPRenderPartial {
                     </amp-img>
                 </amp-anim>
                 <div class="footer-links">
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/about', target=_blank)" tabindex='0' role="link" >About</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq', target=_blank)" tabindex='0' role="link">FAQ</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/contact', target=_blank)" tabindex='0' role="link" >Contact</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" >Forum</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >Get IQ</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/about', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.About"]}</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq', target=_blank)" tabindex='0' role="link">${this.TL["Footer.FAQ"]}</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/contact', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.Contact"]}</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/blog', target=_blank)" tabindex='0' role="link" >${this.TL["Index.Blog"]}Blog</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.Terms"]}</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >${this.TL["Footer.GetIQ"]}</span>
                 </div>
                 <div class="copyright">
                 <amp-img class='cc-img' width="15" height="15" layout='fixed' alt="Creative Commons" src="https://epcdn-vz.azureedge.net/static/images/cc.png"></amp-img>&nbsp;<span>2019 Everipedia International</span>
@@ -475,13 +480,13 @@ export class HomepageAMPRenderPartial {
                         <li>
                             <a rel="nofollow" href="/about">
                                 <span class="icon"><i class="fa fa-globe"></i></span>
-                                <div class="fixed-items-description">About Everipedia</div>
+                                <div class="fixed-items-description">${this.TL["LearnMore.AboutEveripedia"]}</div>
                             </a>
                         </li>
                         <li>
                             <a rel="nofollow" href="/activity">
                                 <span class="icon"><i class="fa fa-bolt"></i></span>
-                                <div class="fixed-items-description">Recent Activity</div>
+                                <div class="fixed-items-description">${this.TL["RecentActivity.ContainerTitle"]}</div>
                             </a>
                         </li>
                         <li>

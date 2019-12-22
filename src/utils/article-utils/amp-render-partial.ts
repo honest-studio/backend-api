@@ -970,7 +970,7 @@ export class AmpRenderPartial {
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/about', target=_blank)" tabindex='0' role="link" >About</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/faq', target=_blank)" tabindex='0' role="link">FAQ</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/contact', target=_blank)" tabindex='0' role="link" >Contact</span>
-                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://www.reddit.com/r/Everipedia/', target=_blank)" tabindex='0' role="link" >Forum</span>
+                    <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/blog', target=_blank)" tabindex='0' role="link" >Blog</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/everipedia-terms', target=_blank)" tabindex='0' role="link" >Terms</span>
                     <span class='footer-span-link' on="tap:AMP.navigateTo(url='https://${this.cleanedVars.domain_prefix}everipedia.org/iq-info', target=_blank)" tabindex='0' role="link" >Get IQ</span>
                 </div>

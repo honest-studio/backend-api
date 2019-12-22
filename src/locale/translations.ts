@@ -1,4 +1,4 @@
-export const TranslationPack = {
+export const TranslationsPack = {
     "en": {
       "RecentActivity.Title": "Recent Activity",
       "ActivityCard.Voted": "Voted",

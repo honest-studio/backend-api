@@ -25,7 +25,6 @@ export interface SiteStats {
     original_pages: number,
     total_edits: number,
     block_num: number
-  
 }
 
 export interface UserProfile {
@@ -289,15 +288,12 @@ export class HomepageService {
             trackingIDToUse
         );
 
-        // Description
-        let BLURB_SNIPPET_PLAINTEXT = "The Wiki Encyclopedia for Everything, Everyone, Everywhere. Everipedia offers a space for you to dive into anything you find interesting, connect with people who share your interests, and contribute your own perspective.";
-
         // Fill in the template
         const theHTML = `
             <!DOCTYPE html>
             <html amp lang="${lang_code}">
                 <head>
-                    ${arp.renderHead(BLURB_SNIPPET_PLAINTEXT, RANDOMSTRING)}
+                    ${arp.renderHead(RANDOMSTRING)}
                 </head>
                 <body>
                     ${arp.renderHeaderBar()}
