@@ -13,8 +13,10 @@ import { GetLangAndSlug } from '../utils/article-utils/article-tools';
 import { getLangPrefix } from '../sitemap/sitemap.service';
 import { ConfigService } from '../common';
 import * as SqlString from 'sqlstring';
+import featuredArray from './amp/featuredArray';
 const crypto = require('crypto');
 const util = require('util');
+const shuffle = require('shuffle-array');
 
 export interface SiteStats {
     timestamp: string,
@@ -237,6 +239,11 @@ export class HomepageService {
         .filter(f => f)
         .slice(0, 4);
 
+        // Manual override for English featured articles
+        if (lang_code == 'en'){
+            featuredItems = shuffle(featuredArray).slice(0, 8);
+        };
+
         // Get the previews
         // Inefficient: you could pass all the WikiIdentity[]'s at once and loop through the results to assign to the source arrays
         const [featuredPreviews, trendingPreviews, popularPreviews, inTheNewPreviews, homepageCategories, userProfileMegaObj] = await Promise.all([
@@ -247,6 +254,7 @@ export class HomepageService {
             this.categoryService.getHomepageCategories(lang_code),
             this.userService.getProfiles(userProfileAccountnameArray)
         ]);
+
 
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
         let domain_prefix = getLangPrefix(lang_code);

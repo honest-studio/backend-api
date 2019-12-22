@@ -222,7 +222,7 @@ export class HomepageAMPRenderPartial {
                     <h2>${this.TL["Homepage.TheEncylopediaOfEverything"]}</h2>
                     <h4>${this.TL["Homepage.EveripediaOffersASpace"]}</h4>
                     <div class="button-box">
-                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/Everipedia" class="activity-button" title="${this.TL["LearnMore.AboutEveripedia"]}" >
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/Everipedia" class="about-button" title="${this.TL["LearnMore.AboutEveripedia"]}" >
                             ${this.TL["LearnMore.AboutEveripedia"]}
                         </a>
                         <a href="/activity" class="activity-button" title="${this.TL["RecentActivity.ContainerTitle"]}" >
@@ -322,7 +322,7 @@ export class HomepageAMPRenderPartial {
                 id="Leaderboard"
                 class="slide"
             >             
-                <h2>Leaderboard</h2>
+                <h2>${this.TL["Leaderboard.LeaderboardOf"]}</h2>
                 <amp-selector 
                     id="IQ_Edits_Votes"
                     class="radio-selector"
