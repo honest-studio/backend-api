@@ -90,7 +90,8 @@ export class HomepageService {
         const [
             blog, 
             content, 
-            trending, recent, 
+            trending, 
+            recent, 
             site_usage, 
             today_iq, 
             week_iq, 
