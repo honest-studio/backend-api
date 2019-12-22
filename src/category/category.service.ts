@@ -245,6 +245,8 @@ export class CategoryService {
     }
 
     async getHomepageCategories(lang: string): Promise<PageCategory[]> {
+        let cat_ids = HOMEPAGE_CATEGORY_IDS[lang];
+        if (cat_ids.length == 0) return [];
         
         let categories: any[] = await this.mysql.TryQuery(
             `
@@ -255,7 +257,7 @@ export class CategoryService {
                 cat.lang = ? 
                 AND cat.id IN (?)
             `,
-            [lang, HOMEPAGE_CATEGORY_IDS[lang]],
+            [lang, cat_ids],
             10000
         );
 

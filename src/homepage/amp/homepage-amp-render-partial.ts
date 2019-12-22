@@ -4,6 +4,7 @@ import { PageCategory, PageCategoryCollection, PreviewResult } from '../../types
 import { styleNugget } from './homepage-amp-style';
 import { formatNumber } from '../../utils/article-utils/article-tools';
 import { LeaderboardPack, LeaderboardStat, UserProfile, SiteStats } from '../homepage.service';
+import { TranslationPack } from '../../locale/translations';
 
 export class HomepageAMPRenderPartial {
     public cleanedVars = {
