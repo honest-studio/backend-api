@@ -124,7 +124,7 @@ export class HomepageAMPRenderPartial {
         return `
             <amp-carousel
                 id="Featured_Carousel"
-                height="350"
+                height="80vh"
                 layout="fixed-height"
                 type="slides"
             >
