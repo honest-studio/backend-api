@@ -222,6 +222,7 @@ export class HomepageAMPRenderPartial {
                     <h2>${this.TL["Homepage.TheEncylopediaOfEverything"]}</h2>
                     <h4>${this.TL["Homepage.EveripediaOffersASpace"]}</h4>
                     <div class="button-box">
+                        <a href="https://${this.cleanedVars.domain_prefix}everipedia.org/wiki/lang_${this.lang_code}/Everipedia" class="activity-button" title="${this.TL["LearnMore.AboutEveripedia"]}" >
                             ${this.TL["LearnMore.AboutEveripedia"]}
                         </a>
                         <a href="/activity" class="activity-button" title="${this.TL["RecentActivity.ContainerTitle"]}" >
@@ -332,8 +333,8 @@ export class HomepageAMPRenderPartial {
                     })"
                 >
                     <div selected option="1">IQ</div>
-                    <div option="2">Edits</div>
-                    <div option="3">Votes</div>
+                    <div option="2">${this.TL["DashboardComponent.Edits"]}</div>
+                    <div option="3">${this.TL["DashboardComponent.Votes"]}</div>
                 </amp-selector>
                 <div [hidden]="selectedOption != 1" class="leader-slide">${this.renderLeaderboardTabList('iq', leaderboardPack, userProfileMegaObj )}</div>
                 <div hidden [hidden]="selectedOption != 2" class="leader-slide">${this.renderLeaderboardTabList('edits', leaderboardPack, userProfileMegaObj )}</div>
