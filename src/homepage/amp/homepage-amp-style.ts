@@ -876,7 +876,6 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
 }
 #Leaderboard {
 	min-width: 300px;
-    max-width: 400px;
     height: 100%;
 	margin: 20px;
     border-width: 1px;
