@@ -6,4 +6,5 @@ export * from './mongodb-schema';
 export * from './mongodb-service';
 export * from './mysql-service';
 export * from './redis-service';
+export * from './buttercms-service';
 

@@ -32,7 +32,10 @@ export function compareURLs (firstURL: string, secondURL: string): boolean {
 export const getYouTubeIdIfPresent = (inputURL: string) => {
     try {
         // Also handle image URLs
-        inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
+        inputURL = inputURL
+                    .replace("https://img.youtube.com/vi/", "https://youtu.be/")
+                    .replace('https://i.ytimg.com/vi/', 'https://youtu.be/')
+                    .replace('/hqdefault.jpg', '');
 
         // Get the ID
         let result = getYouTubeID(inputURL);
@@ -1230,3 +1233,24 @@ export function getBlurbSnippetFromArticleJson(wiki: ArticleJson): string {
     }
     return text_preview;
 }
+
+export function GetLangAndSlug(wikiLangSlug: string, force_lowercase: boolean = true) {
+    const array = wikiLangSlug.split('/');
+    let slug = array[1];
+    if (slug && force_lowercase) slug = slug.toLowerCase();
+    const first = array[0];
+    const firstArray = first.split('_');
+    let lang_code = firstArray && firstArray[1];
+    if (lang_code && force_lowercase) lang_code = lang_code.toLowerCase();
+    return { lang_code, slug };
+}
+
+export function formatNumber(number: number, decimals: number) {
+    let toReturn;
+    if (!number) return null;
+    return number > 999999
+        ? (number / 1000000).toFixed(decimals) + 'm'
+        : number > 999
+        ? (number / 1000).toFixed(decimals) + 'k'
+        : number.toFixed(decimals);
+};

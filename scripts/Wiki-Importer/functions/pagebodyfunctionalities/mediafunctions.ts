@@ -78,7 +78,10 @@ export function getYouTubeID(url) {
 export const getYouTubeIdIfPresent = (inputURL) => {
     try {
         // Also handle image URLs
-        inputURL = inputURL.replace('https://i.ytimg.com/vi/', 'https://youtu.be/').replace('/hqdefault.jpg', '');
+        inputURL = inputURL
+                        .replace("https://img.youtube.com/vi/", "https://youtu.be/")
+                        .replace('https://i.ytimg.com/vi/', 'https://youtu.be/')
+                        .replace('/hqdefault.jpg', '');
 
         // Get the ID
         let result = getYouTubeID(inputURL);

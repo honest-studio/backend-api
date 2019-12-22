@@ -241,7 +241,7 @@ export class PreviewService {
         const query = `${query1} UNION ${query2}`;
 
         let mysql_previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
-        let found_slugs = mysql_previews.map(prev => prev.slug)
+        let found_slugs = mysql_previews.map(prev => prev.slug);
 
         // Identify orphan hashes
         let orphan_hashes = uncached_previews.map(ucp => {
@@ -305,8 +305,6 @@ export class PreviewService {
 
         previews.push(...mysql_previews);
         if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
-
-
 
         return previews;
     }

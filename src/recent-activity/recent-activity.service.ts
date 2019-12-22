@@ -196,7 +196,6 @@ export class RecentActivityService {
     async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 20) {
         let langToUse = lang;
         if (lang == 'zh') langToUse = 'zh-hans';
-        console.log(langToUse)
         if (range == 'today') {
             try {
                 // check cache first
