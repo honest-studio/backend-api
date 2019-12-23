@@ -211,8 +211,6 @@ export class HomepageService {
         let trendingItems: WikiIdentity[] = trending && trending.map(item => {
             const { lang_code, slug } = item;
 
-            console.log(item)
-
             // Do nothing for empty slugs and also remove excluded wikilangslugs
             if (!item.slug || item.slug == '') return null;
             else return { lang_code, slug };
