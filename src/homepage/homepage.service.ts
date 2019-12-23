@@ -86,6 +86,10 @@ export class HomepageService {
     
     async getAMPHomepage(@Res() res, lang_code: string): Promise<any> {
         let _butter = this.butter.getButter();
+        let langToUse = lang_code;
+        let butter_lang_to_use = lang_code;
+        if (lang_code == 'zh-hans') butter_lang_to_use = 'zh';
+        if (lang_code == 'zh') langToUse = 'zh-hans';
 
         const [
             blog, 
@@ -106,23 +110,23 @@ export class HomepageService {
             month_votes, 
             all_time_votes 
         ] = await Promise.all([
-            _butter.post.list({ page: 1, page_size: 21, locale: lang_code }).then(result => result.data.data),
-            _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: lang_code }).then(result => result.data.data),
-            this.recentActivityService.getTrendingWikis(lang_code),
-            this.recentActivityService.getProposals({ expiring: false, completed: true, preview: true, user_agent: 'safari', diff: null, limit: 15, offset: 0, langs: lang_code}),
-            this.statService.siteUsage(lang_code),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'iq', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'edits', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'today', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'this-week', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'this-month', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
-            this.statService.editorLeaderboard({ period: 'all-time', lang: lang_code, cache: true, sortby: 'votes', limit: 8 }),
+            _butter.post.list({ page: 1, page_size: 21, locale: butter_lang_to_use }).then(result => result.data.data),
+            _butter.content.retrieve(['popular', 'in_the_news', 'featured_content', 'excluded_list', 'in_the_press'], { locale: butter_lang_to_use }).then(result => result.data.data),
+            this.recentActivityService.getTrendingWikis(langToUse),
+            this.recentActivityService.getProposals({ expiring: false, completed: true, preview: true, user_agent: 'safari', diff: null, limit: 15, offset: 0, langs: langToUse}),
+            this.statService.siteUsage(langToUse),
+            this.statService.editorLeaderboard({ period: 'today', lang: langToUse, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: langToUse, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: langToUse, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: langToUse, cache: true, sortby: 'iq', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: langToUse, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: langToUse, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: langToUse, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: langToUse, cache: true, sortby: 'edits', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'today', lang: langToUse, cache: true, sortby: 'votes', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-week', lang: langToUse, cache: true, sortby: 'votes', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'this-month', lang: langToUse, cache: true, sortby: 'votes', limit: 8 }),
+            this.statService.editorLeaderboard({ period: 'all-time', lang: langToUse, cache: true, sortby: 'votes', limit: 8 }),
         ]);
 
         // Assemble the leaderboard info
@@ -207,6 +211,8 @@ export class HomepageService {
         let trendingItems: WikiIdentity[] = trending && trending.map(item => {
             const { lang_code, slug } = item;
 
+            console.log(item)
+
             // Do nothing for empty slugs and also remove excluded wikilangslugs
             if (!item.slug || item.slug == '') return null;
             else return { lang_code, slug };
@@ -241,7 +247,7 @@ export class HomepageService {
         .slice(0, 4);
 
         // Manual override for English featured articles
-        if (lang_code == 'en'){
+        if (langToUse == 'en'){
             featuredItems = shuffle(featuredArray).slice(0, 8);
         };
 
@@ -252,13 +258,12 @@ export class HomepageService {
             this.previewService.getPreviewsBySlug(trendingItems, 'safari'),
             this.previewService.getPreviewsBySlug(popularItems, 'safari'),
             this.previewService.getPreviewsBySlug(inTheNewsItems, 'safari'),
-            this.categoryService.getHomepageCategories(lang_code),
+            this.categoryService.getHomepageCategories(langToUse),
             this.userService.getProfiles(userProfileAccountnameArray)
         ]);
 
-
         const RANDOMSTRING = crypto.randomBytes(5).toString('hex');
-        let domain_prefix = getLangPrefix(lang_code);
+        let domain_prefix = getLangPrefix(langToUse);
 
         // Get the Google Analytics tracking ID
         let trackingIDToUse, momentLocaleToUse;
@@ -292,7 +297,7 @@ export class HomepageService {
 
         // Get the function template
         let arp = new HomepageAMPRenderPartial(
-            lang_code, 
+            langToUse, 
             domain_prefix, 
             trackingIDToUse
         );
@@ -300,7 +305,7 @@ export class HomepageService {
         // Fill in the template
         const theHTML = `
             <!DOCTYPE html>
-            <html amp lang="${lang_code}">
+            <html amp lang="${langToUse}">
                 <head>
                     ${arp.renderHead(RANDOMSTRING)}
                 </head>
