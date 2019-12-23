@@ -304,7 +304,10 @@ export class PreviewService {
         await pipeline2.exec();
 
         previews.push(...mysql_previews);
-        if (previews.length == 0) throw new NotFoundException({ error: `Could not find wikis` });
+        if (previews.length == 0) {
+            return [];
+            // throw new NotFoundException({ error: `Could not find wikis` })
+        };
 
         return previews;
     }
