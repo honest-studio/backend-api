@@ -87,7 +87,7 @@ export class SitemapService {
     async generateStaticSitemaps(lang: string = 'en'): Promise<any> {
 
         // To prevent DDOS attacks
-        // return null;
+        return null;
 
         // curl -m 600 http://127.0.0.1:3001/v2/sitemap/generate-static/en 
 

@@ -26,7 +26,8 @@ commander
 
 const BATCH_SIZE = 250;
 const PAGE_LANG = 'en';
-const short_list_path = path.resolve(__dirname, 'output', 'short_files.txt');
+const short_list_path = path.resolve(__dirname, '../../../scripts/Non-Lambda', 'output', 'short_files.txt');
+const indexMinimimum = 275; // # of characters required for indexing
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -87,7 +88,6 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
     let noIndexArticle = true;
 
     let noIndexCounter = 0, pageBodyCounter = 0, infoboxCounter = 0;
-    const indexMinimimum = 200; // # of characters required for indexing
 
     // Calculate whether thin content.
     wiki.page_body &&
@@ -105,7 +105,6 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
                 });
     });
     noIndexCounter += pageBodyCounter;
-    if (noIndexCounter >= indexMinimimum) noIndexArticle = false;
     console.log('CALCULATED PAGE BODY LENGTH IS: ', pageBodyCounter);
 
     // If it still isn't marked to be index, tally up the infoboxes
@@ -120,9 +119,7 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
             });
         });
     });
-
     noIndexCounter += infoboxCounter;
-    if (noIndexCounter >= indexMinimimum) noIndexArticle = false;
 
     // A picture is worth a 1000 words (50 in this case)
     let main_photo_test =  wiki.main_photo
@@ -142,13 +139,21 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
 
     console.log('CALCULATED INFOBOX LENGTH IS: ', infoboxCounter);
     console.log('CALCULATED TOTAL LENGTH IS: ', noIndexCounter);
-    console.log("---------------------------------");
-    return false;
-
+    if (noIndexCounter >= indexMinimimum) {
+        noIndexArticle = false;
+        console.log(chalk.green.bold("ARTICLE IS LONG ENOUGH. KEEPING IT..."));
+        console.log("---------------------------------");
+        return;
+    } 
+    else {
+        console.log(chalk.red.bold("ARTICLE IS TOO SHORT. DEINDEXING IT..."));
+        console.log("---------------------------------");
+    }
+    
     // Update some of the metadata values
     wiki.metadata = wiki.metadata.map(meta => {
-        if(meta.key == 'is_indexed') return { key: 'is_indexed', value: 0 }
-        else if(meta.key == 'bing_index_override') return { key: 'bing_index_override', value: 1 }
+        if(meta.key == 'is_indexed') return { key: 'is_indexed', value: false }
+        else if(meta.key == 'bing_index_override') return { key: 'bing_index_override', value: true }
         else return meta;
     })
 
@@ -158,20 +163,11 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
             UPDATE enterlink_articletable
             SET 
                 is_indexed = 0,
-                bing_index_override = 1,
-            WHERE 
-                id = ? 
+                bing_index_override = 1
+            WHERE id = ? 
         `,
-        [pageID]
+        [parseInt(pageID)]
     );  
-
-    // Append the short file to a list
-    fs.appendFile(short_list_path, "BEEE", function(err) {
-        if(err) {
-            return console.log(err);
-        }
-        // console.log("The team links were appended!");
-    }); 
 
     // Update the hashcache
     let json_insertion;
@@ -190,7 +186,15 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
             console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
         }
         else throw e;
-    }
+    };
+
+    // Append the short file to a list
+    fs.appendFile(short_list_path, `https://everipedia.org/wiki/lang_en/${slug}\n`, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        // console.log("The team links were appended!");
+    }); 
 
 }
 
