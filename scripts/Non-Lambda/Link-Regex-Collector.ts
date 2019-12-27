@@ -26,14 +26,15 @@ commander
 
 const BATCH_SIZE = 250;
 const PAGE_LANG = 'en';
-const output_file_path = path.resolve(__dirname, '../../../scripts/Non-Lambda', 'output', 'short_files.txt');
-const indexMinimimum = 275; // # of characters required for indexing
+const output_file_path = path.resolve(__dirname, '../../../scripts/Non-Lambda', 'output', '247sports_player_links.txt');
+const PAGE_NOTE = '|24_7_SPORTS|';
+const LINK_REGEX = /247sports.com\/Player\//gimu;
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
 }
 
-export const MinimumLengthDeindexer = async (inputString: string) => {
+export const LinkRegexCollector = async (inputString: string) => {
     let quickSplit = inputString.split("|");
     let wikiLangSlug = quickSplit[0];
 	let wikiLangSlug_alt = quickSplit[1];
@@ -84,117 +85,25 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
-     // No index if article is 'thin content'.
-    let noIndexArticle = true;
-
-    let noIndexCounter = 0, pageBodyCounter = 0, infoboxCounter = 0;
-
-    // Calculate whether thin content.
-    wiki.page_body &&
-        wiki.page_body.map((section) => {
-            noIndexArticle &&
-                section &&
-                section.paragraphs &&
-                (section.paragraphs as Paragraph[]).map((paragraph) => {
-                    noIndexArticle &&
-                        paragraph &&
-                        paragraph.items &&
-                        (paragraph.items as Sentence[]).map((item) => {
-                            if (item && item.text && item.text.length) pageBodyCounter += item.text.length;
-                        });
-                });
-    });
-    noIndexCounter += pageBodyCounter;
-    console.log('CALCULATED PAGE BODY LENGTH IS: ', pageBodyCounter);
-
-    // If it still isn't marked to be index, tally up the infoboxes
-    wiki.infoboxes && (wiki as ArticleJson).infoboxes.map((ibox) => {
-        ibox &&
-        ibox.values &&
-        ibox.values.map((value) => {
-            value &&
-            value.sentences &&
-            value.sentences.map((sent) => {
-                if (sent && sent.text && sent.text.length) infoboxCounter += sent.text.length;
-            });
-        });
-    });
-    noIndexCounter += infoboxCounter;
-
-    // A picture is worth a 1000 words (50 in this case)
-    let main_photo_test =  wiki.main_photo
-    && wiki.main_photo.length
-    && (wiki as ArticleJson).main_photo[0];
-
-    if (
-        main_photo_test 
-        && main_photo_test.url
-        && main_photo_test.url != ""
-        && main_photo_test.url != "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png" 
-        && main_photo_test.url != "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png"
-    ){
-        noIndexCounter += 50;
-        console.log("MAIN PHOTO FOUND, COUNT ADDED: ", 50);
+    // Find the link, if present
+    let the_link;
+    for (let i = 0; i < wiki.citations.length; i++) {
+        if (LINK_REGEX.test(wiki.citations[i].url)) {
+            the_link = wiki.citations[i].url;
+            break;
+        }
     }
 
-    console.log('CALCULATED INFOBOX LENGTH IS: ', infoboxCounter);
-    console.log('CALCULATED TOTAL LENGTH IS: ', noIndexCounter);
-    if (noIndexCounter >= indexMinimimum) {
-        noIndexArticle = false;
-        console.log(chalk.green.bold("ARTICLE IS LONG ENOUGH. KEEPING IT..."));
-        console.log("---------------------------------");
-        return;
-    } 
-    else {
-        console.log(chalk.red.bold("ARTICLE IS TOO SHORT. DEINDEXING IT..."));
-        console.log("---------------------------------");
+    if (the_link){
+        // Append the link to a list
+        fs.appendFile(output_file_path, `${the_link}\n`, function(err) {
+            if(err) {
+                return console.log(err);
+            }
+            // console.log("The team links were appended!");
+        }); 
     }
-    
-    // Update some of the metadata values
-    wiki.metadata = wiki.metadata.map(meta => {
-        if(meta.key == 'is_indexed') return { key: 'is_indexed', value: false }
-        else if(meta.key == 'bing_index_override') return { key: 'bing_index_override', value: true }
-        else return meta;
-    })
 
-    // Update the articles themselves
-    const article_update: any[] = await theMysql.TryQuery(
-        `
-            UPDATE enterlink_articletable
-            SET 
-                is_indexed = 0,
-                bing_index_override = 1
-            WHERE id = ? 
-        `,
-        [parseInt(pageID)]
-    );  
-
-    // Update the hashcache
-    let json_insertion;
-    try {
-        json_insertion = await theMysql.TryQuery(
-            `
-                UPDATE enterlink_hashcache
-                SET html_blob = ?
-                WHERE ipfs_hash = ? 
-            `,
-            [JSON.stringify(wiki), inputIPFS]
-        );
-        console.log(chalk.green("Added to enterlink_hashcache."));
-    } catch (e) {
-        if (e.message.includes("ER_DUP_ENTRY")){
-            console.log(chalk.yellow('WARNING: Duplicate submission for enterlink_hashcache. IPFS hash already exists'));
-        }
-        else throw e;
-    };
-
-    // Append the short file to a list
-    fs.appendFile(output_file_path, `https://everipedia.org/wiki/lang_en/${slug}\n`, function(err) {
-        if(err) {
-            return console.log(err);
-        }
-        // console.log("The team links were appended!");
-    }); 
 
 }
 
@@ -221,15 +130,15 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
                 WHERE art.id between ? and ?
                     AND art.is_removed = 0
                     AND art.redirect_page_id IS NULL
-                    AND art.is_indexed = 1
                     AND art.page_lang = ?
+                    AND art.page_note = ?
             `,
-            [currentStart, currentEnd, PAGE_LANG]
+            [currentStart, currentEnd, PAGE_LANG, PAGE_NOTE]
         );
 
         for await (const artResult of fetchedArticles) {
             try{
-                await MinimumLengthDeindexer(artResult.concatted);
+                await LinkRegexCollector(artResult.concatted);
             }
             catch (err){
                 console.error(`${artResult.concatted} FAILED!!! [${err}]`);

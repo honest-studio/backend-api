@@ -21,10 +21,13 @@ const normalizeUrl = require('normalize-url');
 var colors = require('colors');
 
 export function compareURLs (firstURL: string, secondURL: string): boolean {
-    if (firstURL == secondURL) return true;
-    else if (firstURL == encodeURIComponent(secondURL)) return true;
-    else if (encodeURIComponent(firstURL) == secondURL) return true;
-    else if (encodeURIComponent(firstURL) == encodeURIComponent(secondURL)) return true;
+    let HTTP_FIRST = firstURL.replace(/^https:\/\//gimu, 'http://');
+    let HTTP_SECOND = secondURL.replace(/^https:\/\//gimu, 'http://');
+
+    if (HTTP_FIRST == HTTP_SECOND) return true;
+    else if (HTTP_FIRST == encodeURIComponent(HTTP_SECOND)) return true;
+    else if (encodeURIComponent(HTTP_FIRST) == HTTP_SECOND) return true;
+    else if (encodeURIComponent(HTTP_FIRST) == encodeURIComponent(HTTP_SECOND)) return true;
     return false;
 }
 
