@@ -21,8 +21,8 @@ const normalizeUrl = require('normalize-url');
 var colors = require('colors');
 
 export function compareURLs (firstURL: string, secondURL: string): boolean {
-    let HTTP_FIRST = firstURL.replace(/^https:\/\//gimu, 'http://');
-    let HTTP_SECOND = secondURL.replace(/^https:\/\//gimu, 'http://');
+    let HTTP_FIRST = firstURL.replace(/^https:\/\//gimu, 'http://').replace(/\/$/gimu, "");
+    let HTTP_SECOND = secondURL.replace(/^https:\/\//gimu, 'http://').replace(/\/$/gimu, "");
 
     if (HTTP_FIRST == HTTP_SECOND) return true;
     else if (HTTP_FIRST == encodeURIComponent(HTTP_SECOND)) return true;
