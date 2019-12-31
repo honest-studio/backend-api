@@ -116,6 +116,13 @@ ul.infobox.list-plural li{
 	width: 100%;
 	min-height: 20px;
 	padding: 5px 0px 5px 0px;
+
+	display: flex;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    align-items: center;
 }
 ul.infobox.list-plural li p {
 	margin:0px;
@@ -204,11 +211,12 @@ ul.infobox li:last-child {
 }
 .infobox .info-qt{
 	float: left;
-	width: 25%;
+	width: 45%;
+    flex-grow: 0;
 	text-align: left;
 	font-weight: bold;
 	font-size: 12px;
-	line-height: 16px;
+	line-height: 18px;
 	display: table-caption;
 	padding: 5px 0px;
 	word-wrap: break-word;
@@ -334,7 +342,8 @@ ul.infobox.list-plural > .row li.plural-infobox {
 	background: #2273DD;
 	color: #FFFFFF;
 	line-height: 20px;
-    text-align: center;
+	text-align: center;
+	font-weight: bold;
 }
 
 .ent-ct .ep-table tfoot {
