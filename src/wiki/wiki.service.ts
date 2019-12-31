@@ -755,7 +755,7 @@ export class WikiService {
         const page_type = wiki.metadata.find((m) => m.key == 'page_type').value;
         const is_adult_content = wiki.metadata.find((m) => m.key == 'is_adult_content').value;
         let is_indexed = wiki.metadata.find(w => w.key == 'is_indexed').value;
-        const page_note = wiki.metadata.find(w => w.key == 'page_note') ? wiki.metadata.find(w => w.key == 'page_note').value : 'Thing';
+        const page_note = wiki.metadata.find(w => w.key == 'page_note') ? wiki.metadata.find(w => w.key == 'page_note').value : null;
 
         // Always deindex Wikipedia imports, but not the |XX_WIKI_IMPORT_DELETED| pages
         if (is_indexed && page_note && page_note.slice(-13) == '_WIKI_IMPORT|') is_indexed = 0;
@@ -767,11 +767,11 @@ export class WikiService {
         const article_insertion = await this.mysql.TryQuery(
             `
             INSERT INTO enterlink_articletable 
-                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits, webp_large, webp_medium, webp_small)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
+                (ipfs_hash_current, slug, slug_alt, page_title, blurb_snippet, photo_url, photo_thumb_url, page_type, page_note, creation_timestamp, lastmod_timestamp, is_adult_content, page_lang, is_new_page, pageviews, is_removed, is_indexed, bing_index_override, has_pending_edits, webp_large, webp_medium, webp_small)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, 1, 0, 0, 1, 0, 0, ?, ?, ?)
             ON DUPLICATE KEY UPDATE 
                 ipfs_hash_parent=ipfs_hash_current, lastmod_timestamp=NOW(), is_new_page=0, ipfs_hash_current=?, 
-                page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, is_adult_content=?, is_indexed=?, bing_index_override=?, 
+                page_title=?, blurb_snippet=?, photo_url=?, photo_thumb_url=?, page_type=?, page_note=?, is_adult_content=?, is_indexed=?, bing_index_override=?, 
                 is_removed=?, desktop_cache_timestamp=NULL, mobile_cache_timestamp=NULL, webp_large=?, webp_medium=?, webp_small=? 
             `,
             [
@@ -783,6 +783,7 @@ export class WikiService {
                 photo_url,
                 photo_thumb_url,
                 page_type,
+                page_note,
                 is_adult_content,
                 page_lang,
                 webp_large,
@@ -794,6 +795,7 @@ export class WikiService {
                 photo_url,
                 photo_thumb_url,
                 page_type,
+                page_note,
                 is_adult_content,
                 is_indexed,
                 bing_index_override,
@@ -824,6 +826,7 @@ export class WikiService {
 
         // Update the pagecategory collection
         // TODO: HANDLE THIS LATER, ONCE CATEGORIES ARE EDITABLE
+        if(!wiki.categories) wiki.categories = [];
         let new_categories = wiki.categories;
         let old_categories_row: any[] = await this.mysql.TryQuery(
             `

@@ -12,19 +12,22 @@ const conv = require('binstring');
 import endianness from 'endianness';
 import bs58 from 'bs58';
 const css_escape = require('css.escape');
+const colors = require('colors');
 
 import { ArticleJson, Citation, ListItem, Media, NestedContentItem, MediaType, Paragraph, Sentence, Table, TableCell, TableRow, Infobox, InfoboxValue, CitationCategoryType, DescList, Samp } from '../../types/article';
 import { AMPParseCollection, InlineImage, SeeAlsoType, SeeAlsoCollection,  } from '../../types/article-helpers';
 import { CAPTURE_REGEXES, getYouTubeID, linkCategorizer, socialURLType, parseStyles, collectNestedContentSentences } from './article-converter';
 import { AMP_BAD_TAGS, AMP_REGEXES_POST, AMP_REGEXES_PRE, ReactAttrConvertMap, URL_REGEX_TEST, AMP_BAD_ATTRIBUTES } from './article-tools-constants';
 const normalizeUrl = require('normalize-url');
-var colors = require('colors');
 
 export function compareURLs (firstURL: string, secondURL: string): boolean {
-    if (firstURL == secondURL) return true;
-    else if (firstURL == encodeURIComponent(secondURL)) return true;
-    else if (encodeURIComponent(firstURL) == secondURL) return true;
-    else if (encodeURIComponent(firstURL) == encodeURIComponent(secondURL)) return true;
+    let HTTP_FIRST = firstURL.replace(/^https:\/\//gimu, 'http://').replace(/\/$/gimu, "");
+    let HTTP_SECOND = secondURL.replace(/^https:\/\//gimu, 'http://').replace(/\/$/gimu, "");
+
+    if (HTTP_FIRST == HTTP_SECOND) return true;
+    else if (HTTP_FIRST == encodeURIComponent(HTTP_SECOND)) return true;
+    else if (encodeURIComponent(HTTP_FIRST) == HTTP_SECOND) return true;
+    else if (encodeURIComponent(HTTP_FIRST) == encodeURIComponent(HTTP_SECOND)) return true;
     return false;
 }
 
@@ -552,6 +555,7 @@ export const renderAMPParagraph = (
             .join('');
         returnCollection.text = tag(tag_type, reverseAttributes(paragraph.attrs, true), sanitizedText);
     } else if (!snippetMode && (tag_type === 'table')) {
+        let reversed_attributes_table;
         let sanitizedText = (items as Table[]).map((tableItem: Table, tableIndex) => {
             // Create the thead if present
             let sanitizedHeadRows = tableItem.thead
@@ -634,10 +638,32 @@ export const renderAMPParagraph = (
                 : '';
             let reversed_attributes_caption = reverseAttributes(tableItem.caption && tableItem.caption.attrs, true);
             let sanitizedCaption = tag('caption', reversed_attributes_caption, sanitizedCaptionText);
+            reversed_attributes_table = reverseAttributes(tableItem.attrs, true);
+            if (sanitizedCaptionText == "") sanitizedCaption = "";
             return [sanitizedHead, sanitizedBody, sanitizedFoot, sanitizedCaption].join('');
         });
-        let reversed_attributes_table = reverseAttributes(paragraph.attrs, true);
-        returnCollection.text = tag('table', reversed_attributes_table, sanitizedText.join(''));
+        let reversed_attributes_paragraph = reverseAttributes(paragraph.attrs, true);
+        // Combine the table and the paragraph attributes
+        let reversed_attributes_combined = {};
+        let table_attr_keys = Object.keys(reversed_attributes_table);
+        let paragraph_attr_keys = Object.keys(reversed_attributes_paragraph);
+        
+        // Set the combined attributes to the paragraph first
+        paragraph_attr_keys.forEach((key) => {
+            reversed_attributes_combined[key] = reversed_attributes_paragraph[key];
+        })
+
+        // Now do the table attributes, merging if necessary
+        table_attr_keys.forEach((key) => {
+            if(reversed_attributes_combined[key]){
+                reversed_attributes_combined[key] += ` ${reversed_attributes_table[key]}`
+            }
+            else{
+                reversed_attributes_combined[key] = reversed_attributes_table[key];
+            }
+        })
+        let table_text = returnCollection.text = tag('table', reversed_attributes_combined, sanitizedText.join(''));
+        returnCollection.text = tag('div', { class: 'ep-tbl-wrap'}, table_text);
     }
 
     // const sentences: Sentence[] = this.renderSentences(items, tag_type, index);
