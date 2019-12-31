@@ -272,10 +272,14 @@ ul.infobox.list-plural > .row li.plural-infobox {
 	overflow-x: hidden;
 	font-family: 'Open Sans',sans-serif;
 }
+.ent-ct .ep-tbl-wrap {
+	overflow-x: scroll;
+}
 
 .ent-ct .ep-table {
 	margin-top: 10px;
 	border-collapse: collapse;
+	word-break: normal;
 }
 
 .ent-ct .ep-table thead > tr,
@@ -329,6 +333,8 @@ ul.infobox.list-plural > .row li.plural-infobox {
 .ent-ct .ep-table thead, .ent-ct .ep-table .ep-table-hdr {
 	background: #2273DD;
 	color: #FFFFFF;
+	line-height: 20px;
+    text-align: center;
 }
 
 .ent-ct .ep-table tfoot {
