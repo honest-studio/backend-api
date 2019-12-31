@@ -273,18 +273,68 @@ ul.infobox.list-plural > .row li.plural-infobox {
 	font-family: 'Open Sans',sans-serif;
 }
 
-.ent-ct table.ep-table {
+.ent-ct .ep-table {
 	margin-top: 10px;
+	border-collapse: collapse;
 }
-.ent-ct table.ep-table .ep-table-hdr {
-	background: #6d6d6d2b;
-	color: #242424;
-	font-weight: bold;
-	font-size: 14px;
+
+.ent-ct .ep-table thead > tr,
+.ent-ct .ep-table thead > tr > td,
+.ent-ct .ep-table thead > tr > th {
+	padding: 0.2em 0.4em;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(45, 45, 45);
+    border-image: initial;
 }
-.ent-ct table.ep-table .ep-table-subhdr{
+
+.ent-ct .ep-table tbody > tr,
+.ent-ct .ep-table tbody > tr > td,
+.ent-ct .ep-table tbody > tr > th {
+	border-width: 1px;
+	border-style: solid;
+	border-color: rgb(162, 169, 177);
+	border-image: initial;
+	padding: 0.2em 0.4em;
+}
+
+.ent-ct .ep-table tfoot > tr,
+.ent-ct .ep-table tfoot > tr > td,
+.ent-ct .ep-table tfoot > tr > th {
+	padding: 0.2em 0.4em;
+    border-width: 2px 1px 1px;
+    border-style: solid;
+    border-color: rgb(45, 45, 45);
+    border-image: initial;
+    border-top: 2px solid rgb(45, 45, 45);
+}
+.ent-ct .ep-table .ep-table-subhdr {
 	background: #f5f5f5;
 	font-size: 13px;
+}
+.ent-ct .ep-table.ep-sports-stats {
+	font-size: 14px;
+}
+.ent-ct .ep-table.ep-sports-stats caption {
+	text-align: left;
+    color: rgb(45, 45, 45);
+    background: rgb(248, 248, 248);
+    padding: 3px 6px;
+    border-width: 1px 1px 1px;
+    border-style: solid solid none;
+    border-color: rgb(45, 45, 45) rgb(45, 45, 45) rgb(45, 45, 45);
+    border-image: initial;
+    border-bottom: none;
+}
+.ent-ct .ep-table thead, .ent-ct .ep-table .ep-table-hdr {
+	background: #2273DD;
+	color: #FFFFFF;
+}
+
+.ent-ct .ep-table tfoot {
+	background: #F8F8F8;
+	color: #2D2D2D;
+	font-weight: bold;
 }
 .ent-ct .ent-ct-inner-wrap{
 	margin-left: 15px;
