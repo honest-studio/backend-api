@@ -32,7 +32,7 @@ const CATEGORY_PAGE_TYPES = ['Person'];
 const SET_TO_INDEXED = 1;
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
-const TIMESTAMP_FLOOR = '2019-12-31 00:00:00'; 
+const TIMESTAMP_FLOOR = '2020-01-02 05:55:05'; 
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
@@ -334,7 +334,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND art.is_indexed = 1
                     AND art.page_type IN (?)
                     AND art.page_lang = ?
-                    AND art.page_note IN ('|24_7_SPORTS|', '|PERFECT_GAME|')
+                    AND art.page_note IN ('|24_7_SPORTS|', '|PERFECT_GAME|', '|TOP_DRAWER_SOCCER|')
                     AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,
