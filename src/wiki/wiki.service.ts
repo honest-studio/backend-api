@@ -599,7 +599,9 @@ export class WikiService {
             );
     
             // Quick slice
-            seeAlsoRows = seeAlsoRows.slice(0, 6);
+            seeAlsoRows = seeAlsoRows
+                        .filter(sa => (sa.slug != "male" && sa.slug != 'female'))
+                        .slice(0, 6);
     
             // Clean up text previews
             for (let preview of seeAlsoRows) {
