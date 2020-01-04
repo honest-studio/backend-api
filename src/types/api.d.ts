@@ -16,6 +16,7 @@ interface PreviewResult {
     text_preview: string;
     pageviews: number;
     page_note: string;
+    page_type: string;
     is_adult_content: boolean;
     creation_timestamp: Date;
     lastmod_timestamp: Date;

@@ -671,7 +671,7 @@ export class WikiService {
     }
 
     async submitWikiViaBot(wiki: ArticleJson, token: string, bypassIPFS: boolean = true): Promise<any> {
-        return null;
+        // return null;
         try{
             // Jank
             if (token != this.config.get('BOT_TOKEN_1')) {
