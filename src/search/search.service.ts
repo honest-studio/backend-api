@@ -119,6 +119,7 @@ export class SearchService {
                 art.blurb_snippet AS text_preview, 
                 art.pageviews, 
                 art.page_note,
+                art.page_type,
                 art.is_adult_content, 
                 art.creation_timestamp,
                 art.lastmod_timestamp
