@@ -284,10 +284,21 @@ export class UserService {
     }
 
     async searchProfiles(pack: ProfileSearchPack): Promise<PublicProfileType[]> {
-        const profile = await this.redis.connection().get(`user:${account_name}:profile`);
-        if (!profile) throw new NotFoundException({ error: "User has no profile" });
-        return JSON.parse(profile);
+        let find_query = {
+            'trace.act.account': 'epsovreignid',
+            'trace.act.name': 'userinsert',
+            $or: [ { 'trace.act.data.user': { $eq: pack.searchterm } }, { some_random_thing: 10 } ]
+        };
+        const profile_docs = await this.mongo
+            .connection()
+            .actions.find(find_query)
+            .sort({ 'trace.act.data.timestamp': -1 })
+            // .limit(query.limit)
+            .toArray();
 
-        
+        console.log(util.inspect(profile_docs, {showHidden: false, depth: null, chalk: true}));
+
+        return null;
+
     }
 }

@@ -37,7 +37,7 @@ export class UserController {
         status: 200,
         description: `returns an array of boosts`
     })
-    async getBoostsByUser(@Param('eos_account_name') eos_account_name): Promise<BoostsByUserReturnPack> {
+    async getBoostsByUser(@Param('eos_account_name') eos_account_name): Promise<any> {
         return this.userService.getBoostsByUser(eos_account_name);
     }
 
@@ -115,7 +115,7 @@ export class UserController {
         description: `Max 12-char EOS account name
         Example: kedartheiyer`
     })
-    async getProfile(@Param('eos_account_name') eos_account_name): Promise<PublicProfileType> {
+    async getProfile(@Param('eos_account_name') eos_account_name): Promise<any> {
         return this.userService.getProfile(eos_account_name);
     }
 
@@ -128,7 +128,7 @@ export class UserController {
         status: 200,
         description: `Returns search results`
     })
-    async searchProfiles(@Body() pack: ProfileSearchPack): Promise<PublicProfileType[]> {
+    async searchProfiles(@Body() pack: any): Promise<any[]> {
         return this.userService.searchProfiles(pack);
     }
 

@@ -21,7 +21,7 @@ export class SearchService {
         private client: ElasticsearchService, 
         private mysql: MysqlService,
         @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
-        @Inject(forwardRef(() => UserService)) private userService: UserService,
+        // @Inject(forwardRef(() => UserService)) private userService: UserService,
     ) {}
 
     async searchTitle(pack: SearchQueryPack): Promise<PreviewResult[]> {
