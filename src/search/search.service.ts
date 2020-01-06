@@ -1,21 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
+import { CategoryService } from '../category';
+import { UserService } from '../user';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { SearchType, ExtendedSearchResult, PreviewResult, ProfileSearchPack } from '../types/api';
 const util = require('util');
 
 export interface SearchQueryPack {
     query: string,
     langs?: string[],
     from?: number,
-    offset?: number
+    offset?: number,
+    filters?: SearchType[]
 }
 
 @Injectable()
 export class SearchService {
-    constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
+    constructor(
+        private client: ElasticsearchService, 
+        private mysql: MysqlService,
+        @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
+        @Inject(forwardRef(() => UserService)) private userService: UserService,
+    ) {}
 
-    async searchTitle(pack: SearchQueryPack): Promise<any> {
+    async searchTitle(pack: SearchQueryPack): Promise<PreviewResult[]> {
         const { query, langs, from, offset } = pack;
         const searchJSON = {
             from: from ? from : 0,
@@ -151,5 +160,22 @@ export class SearchService {
             AND sch.mapped_keyword LIKE ?`,
             [page_type, query + '%']
         );
+    }
+
+    async searchExtended(pack: SearchQueryPack): Promise<ExtendedSearchResult> {
+        const { query, langs, from, offset, filters } = pack;
+        let result_pack: ExtendedSearchResult = {
+            articles: [],
+            categories: [],
+            profiles: []
+        };
+
+        let [articles, categories, profiles ] = await Promise.all([
+            this.searchTitle(pack),
+            this.categoryService.search({ lang: pack.langs[0], schema_for: 'ANYTHING', searchterm: pack.query }),
+            []
+        ])
+
+        return result_pack;
     }
 }

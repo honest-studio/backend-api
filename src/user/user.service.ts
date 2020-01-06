@@ -1,5 +1,5 @@
 import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
-import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, ProfileSearchPack, PublicProfileType } from '../types/api';
 import { WikiIdentity } from '../types/article-helpers';
 import { MongoDbService, RedisService } from '../feature-modules/database';
 import { PreviewService } from '../preview';
@@ -281,5 +281,13 @@ export class UserService {
         const profile = await this.redis.connection().get(`user:${account_name}:profile`);
         if (!profile) throw new NotFoundException({ error: "User has no profile" });
         return JSON.parse(profile);
+    }
+
+    async searchProfiles(pack: ProfileSearchPack): Promise<PublicProfileType[]> {
+        const profile = await this.redis.connection().get(`user:${account_name}:profile`);
+        if (!profile) throw new NotFoundException({ error: "User has no profile" });
+        return JSON.parse(profile);
+
+        
     }
 }

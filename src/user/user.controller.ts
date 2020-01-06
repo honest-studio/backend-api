@@ -3,7 +3,7 @@ import { ApiImplicitParam, ApiImplicitBody, ApiOperation, ApiResponse, ApiUseTag
 import { JoiValidationPipe } from '../common';
 import { UserQuerySchema } from './user.query-schema';
 import { UserService } from './user.service';
-import { BoostsByUserReturnPack } from '../types/api';
+import { BoostsByUserReturnPack, PublicProfileType, ProfileSearchPack } from '../types/api';
 
 @Controller('v2/user')
 @ApiUseTags('User')
@@ -115,7 +115,21 @@ export class UserController {
         description: `Max 12-char EOS account name
         Example: kedartheiyer`
     })
-    async getProfile(@Param('eos_account_name') eos_account_name): Promise<any> {
+    async getProfile(@Param('eos_account_name') eos_account_name): Promise<PublicProfileType> {
         return this.userService.getProfile(eos_account_name);
     }
+
+
+    @Post('search')
+    @ApiOperation({ 
+        title: `Search Everipedia profiles by a search term`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns search results`
+    })
+    async searchProfiles(@Body() pack: ProfileSearchPack): Promise<PublicProfileType[]> {
+        return this.userService.searchProfiles(pack);
+    }
+
 }
