@@ -15,7 +15,609 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**Akeem Williams** is a [[LINK|lang_en|Association_football|footballer]] from [[LINK|lang_en|Chateaubelair|Chateaubelair]], Saint Vincent and the Grenadines. Willams plays for the [[LINK|lang_en|Saint_Vincent_and_the_Grenadines_national_football_team|Saint Vincent and the Grenadines national football team]]. [[CITE|1|https://int.soccerway.com/players/akeem-williams/257518]]"
+						"text": "The **domestic cat** ([[LINK|lang_en|Latin_language|Latin]]: *Felis catus*) or the **[[LINK|lang_en|Feral_cat|feral cat]] ** ([[LINK|lang_en|Latin_language|Latin]]: *Felis silvestris catus*) is a small, typically [[LINK|lang_en|Fur|furry]], [[LINK|lang_en|Carnivore|carnivorous]] [[LINK|lang_en|Mammal|mammal]]. They are often called **house cats** when kept as indoor [[LINK|lang_en|Pet|pets]] or simply **cats** when there is no need to distinguish them from other [[LINK|lang_en|Felidae|felids]] and [[LINK|lang_en|Felinae|felines]]. Cats are often valued by [[LINK|lang_en|Homo_sapiens|humans]] for companionship and for their ability to hunt [[LINK|lang_en|Vermin|vermin]]. There are more than 70 cat breeds; different associations proclaim different numbers according to their standards."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are similar in [[LINK|lang_en|Cat_anatomy|anatomy]] to the other felids, with a strong, flexible body, quick reflexes, sharp retractable claws, and teeth adapted to killing small prey. [[LINK|lang_en|Cat_senses|Cat senses]] fit a [[LINK|lang_en|Crepuscular|crepuscular]] and predatory [[LINK|lang_en|Ecological_niche|ecological niche]]. Cats can hear sounds too faint or too high in [[LINK|lang_en|Frequency|frequency]] for human ears, such as those made by mice and other small animals. They can see in near darkness. Like most other mammals, cats have poorer [[LINK|lang_en|Color_vision|color vision]] and a better [[LINK|lang_en|Olfaction|sense of smell]] than humans. Cats, despite being solitary hunters, are a [[LINK|lang_en|Social_animal|social species]] and [[LINK|lang_en|Cat_communication|cat communication]] includes the use of a variety of [[LINK|lang_en|Animal_communication|vocalizations]] ([[LINK|lang_en|Cat_communication|mewing]], [[LINK|lang_en|Purr|purring]], [[LINK|lang_en|Trill_consonant|trilling]], hissing, [[LINK|lang_en|Growling|growling]], and [[LINK|lang_en|Guttural|grunting]]), as well as [[LINK|lang_en|Cat_pheromone|cat pheromones]] and types of [[LINK|lang_en|Cat_body_language|cat-specific body language]]."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have a high breeding rate. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Under controlled breeding, they can be bred and shown as [[LINK|lang_en|Cat_registry|registered]] pedigree pets, a hobby known as [[LINK|lang_en|Cat_fancy|cat fancy]]. Failure to control the breeding of pet cats by [[LINK|lang_en|Neutering|neutering]] and the [[LINK|lang_en|Abandoned_pets|abandonment of former household pets]] has resulted in large numbers of [[LINK|lang_en|Feral_cat|feral cats]] worldwide, requiring [[LINK|lang_en|Animal_population_control|population control]]. This has contributed, along with habitat destruction and other factors, to the extinction of many bird species. Cats have been known to extirpate a bird species within specific regions and may have contributed to the extinction of isolated island populations. Cats are thought to be primarily, though not solely, responsible for the extinction of 33 species of birds, and the presence of feral and free ranging cats makes some locations unsuitable for attempted [[LINK|lang_en|Species_reintroduction|species reintroduction]] in otherwise suitable locations."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Since cats were [[LINK|lang_en|Cats_in_ancient_Egypt|venerated in ancient Egypt]], they were commonly believed to have been domesticated there, but there may have been instances of domestication as early as the [[LINK|lang_en|Neolithic|Neolithic]] from around 9,500 years ago (7,500 BC). A genetic study in 2007 concluded that domestic cats are descended from Near Eastern wildcats, having diverged around 8,000 BC in [[LINK|lang_en|West_Asia|West Asia]]. A 2016 study found that [[LINK|lang_en|Leopard_cat|leopard cats]] were undergoing domestication independently in China around 5,500 BC, though this line of partially domesticated cats leaves no trace in the domesticated populations of today."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "As of a 2007 study, cats are the second most popular pet in the [[LINK|lang_en|United_States|United States]] by number of pets owned, behind the first, which is [[LINK|lang_en|Fishkeeping#Freshwater|freshwater fish]]."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 8,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/5f3fa2de-a/kitty.gif",
+				"mime": "image/gif",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A cat nicknamed \"Shaman Kitty\""
+					}
+				],
+				"category": "GIF",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "taxonomy-and-evolution"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Taxonomy and evolution"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The felids are a rapidly evolving family of mammals that share a common ancestor only 10–15 million years ago and include [[LINK|lang_en|Lion|lions]], [[LINK|lang_en|Tiger|tigers]], [[LINK|lang_en|Cougar|cougars]] and many others. Within this family, domestic cats (*Felis catus*) are part of the [[LINK|lang_en|Genus|genus]] *[[LINK|lang_en|Felis|Felis]] *, which is a group of small cats containing about seven species (depending upon classification scheme). Members of the genus are found worldwide and include the [[LINK|lang_en|Jungle_cat|jungle cat]] (*Felis chaus*) of southeast Asia, [[LINK|lang_en|European_wildcat|European wildcat]] (*F. silvestris silvestris*), [[LINK|lang_en|African_wildcat|African wildcat]] (*F. s. lybica*), the [[LINK|lang_en|Chinese_mountain_cat|Chinese mountain cat]] (*F. bieti*), and the Arabian [[LINK|lang_en|Sand_cat|sand cat]] (*F. margarita*), among others."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The domestic cat was first classified as *Felis catus* by [[LINK|lang_en|Carl_Linnaeus|Carl Linnaeus]] in the 10th edition of his *[[LINK|lang_en|10th_edition_of_Systema_Naturae|Systema Naturae]] * published in 1758. Because of modern [[LINK|lang_en|Phylogenetics|phylogenetics]], domestic cats are usually regarded as another subspecies of the wildcat, *F. silvestris*. This has resulted in mixed usage of the terms, as the domestic cat can be called by its subspecies name, *Felis silvestris catus*. Wildcats have also been referred to as various subspecies of *F. catus*, but in 2003, the [[LINK|lang_en|International_Commission_on_Zoological_Nomenclature|International Commission on Zoological Nomenclature]] fixed the name for wildcats as *F. silvestris*. The most common name in use for the domestic cat remains *F. catus*, following a [[LINK|lang_en|Convention_(norm)|convention]] for domesticated animals of using the earliest (the senior) [[LINK|lang_en|Synonym_(taxonomy)|synonym]] proposed. Sometimes, the domestic cat has been called *Felis domesticus* or *Felis domestica*, as proposed by German naturalist [[LINK|lang_en|Johann_Christian_Polycarp_Erxleben|J. C. P. Erxleben]] in 1777 but these are not valid taxonomic names and have been used only rarely in scientific literature, because Linnaeus's binomial takes precedence. A population of [[LINK|lang_en|Transcaucasus|Transcaucasian]] black feral cats was once classified as *Felis daemon* ([[LINK|lang_en|Konstantin_Alekseevich_Satunin|Satunin]] 1904) but now this population is considered to be a part of domestic cat."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "All the cats in this genus share a common ancestor that probably lived around 6–7 million years ago in Asia. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The exact relationships within the Felidae are close but still uncertain, e.g. the Chinese mountain cat is sometimes classified (under the name *Felis silvestris bieti*) as a [[LINK|lang_en|Subspecies|subspecies]] of the wildcat, like the North African variety *F. s. lybica*."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In comparison to dogs, cats have not undergone major changes during the domestication process, as the form and behavior of the domestic cat is not radically different from those of wildcats and domestic cats are perfectly capable of surviving in the wild. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Fully domesticated house cats often interbreed with [[LINK|lang_en|Feral|feral]] *F. catus* populations. This limited evolution during domestication means that hybridisation can [[LINK|lang_en|Felid_hybrid#Domestic_cat_and_hybridization|occur with many other felids]], notably the Asian [[LINK|lang_en|Leopard_cat|leopard cat]]. Several natural behaviors and characteristics of wildcats may have [[LINK|lang_en|Preadaptation|predisposed]] them for domestication as pets. These traits include their small size, social nature, obvious body language, love of play and relatively high intelligence. :12–17 Several small felid species may have an inborn tendency towards tameness."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have either a [[LINK|lang_en|Mutualism_(biology)|mutualistic]] or [[LINK|lang_en|Commensalism|commensal]] relationship with humans. Two main theories are given about how cats were domesticated. In one, people deliberately tamed cats in a process of [[LINK|lang_en|Artificial_selection|artificial selection]] as they were useful predators of vermin. This has been criticized as implausible, because the reward for such an effort may have been too little; cats generally do not carry out commands and although they do eat rodents, other species such as [[LINK|lang_en|Ferret|ferrets]] or [[LINK|lang_en|Terrier|terriers]] may be better at controlling these pests. The alternative idea is that cats were simply tolerated by people and gradually diverged from their wild relatives through [[LINK|lang_en|Natural_selection|natural selection]], as they adapted to hunting the vermin found around humans in towns and villages."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592868.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A black cat in snowy weather."
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			},
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592858.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cat with an Alaskan Malamute dog"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "nomenclature-and-etymology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Nomenclature and etymology"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The English word '[[LINK|lang_en|cat#English|cat]]' ([[LINK|lang_en|Old_English|Old English]] *catt*) is in origin a [[LINK|lang_en|Loanword|loanword]], introduced to many [[LINK|lang_en|Languages_of_Europe|languages of Europe]] from Latin *cattus* and [[LINK|lang_en|Byzantine_Greek|Byzantine Greek]] κάττα , including [[LINK|lang_en|Portuguese_language|Portuguese]] and [[LINK|lang_en|Spanish_language|Spanish]] *gato*, [[LINK|lang_en|French_language|French]] *chat*, [[LINK|lang_en|German_language|German]] *Katze*, [[LINK|lang_en|Lithuanian_language|Lithuanian]] *katė*, and [[LINK|lang_en|Old_Church_Slavonic|Old Church Slavonic]] *kotka*, among others. The ultimate source of the word is [[LINK|lang_en|Afroasiatic_languages|Afroasiatic]], presumably from [[LINK|lang_en|Late_Egyptian|Late Egyptian]] *čaute*, the feminine of *čaus*\"wildcat\". An alternative word with cognates in many languages is English '[[LINK|lang_en|puss#English|puss]]' ('pussycat'). Attested only from the 16th century, it may have been introduced from [[LINK|lang_en|Dutch_language|Dutch]] *poes* or from [[LINK|lang_en|Low_German|Low German]] *puuskatte*, related to [[LINK|lang_en|Swedish_language|Swedish]] *kattepus*, or [[LINK|lang_en|Norwegian_language|Norwegian]] *pus*, *pusekatt*. Similar forms exist in Lithuanian *puižė* and [[LINK|lang_en|Irish_language|Irish]] *puiscín*. The etymology of this word is unknown, but it may have simply arisen from a sound used to attract a cat."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A group of cats is referred to as a \"clowder\" or a \"glaring\", a male cat is called a \"tom\" or \"tomcat\" (or a \"gib\", if neutered), an [[LINK|lang_en|Spaying|unaltered]] female is called a \"queen\", and a juvenile cat is referred to as a \"[[LINK|lang_en|Kitten|kitten]]\". The male progenitor of a cat, especially a pedigreed cat, is its \"sire\", and its female progenitor is its \"dam\". In [[LINK|lang_en|Early_Modern_English|Early Modern English]], the word 'kitten' was interchangeable with the now-obsolete word 'catling'."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A [[LINK|lang_en|Pedigree_(cat)|pedigreed cat]] is one whose ancestry is recorded by a [[LINK|lang_en|Cat_fancy|cat fancier]] organization. A [[LINK|lang_en|Purebred_cat|purebred cat]] is one whose ancestry contains only individuals of the same breed. Many pedigreed and especially purebred cats are exhibited as [[LINK|lang_en|Show_cat|show cats]]. Cats of unrecorded, mixed ancestry are referred to as [[LINK|lang_en|Domestic_short-haired_cat|domestic short-haired]] or [[LINK|lang_en|Domestic_long-haired_cat|domestic long-haired cats]], by [[LINK|lang_en|Coat_(animal)|coat]] type, or commonly as random-bred, moggies (chiefly [[LINK|lang_en|British_English|British]]), or (using terms borrowed from [[LINK|lang_en|Dog_breeds|dog breeding]]) mongrels or mutt-cats."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "While the [[LINK|lang_en|African_wildcat|African wildcat]] is the ancestral subspecies from which domestic cats are descended, and wildcats and domestic cats can completely interbreed (Being subspecies of the same species), several intermediate stages occur between domestic pet and pedigree cats on one hand and those entirely wild animals on the other. The semiferal cat, a mostly outdoor cat, is not owned by any one individual, but is generally friendly to people and may be fed by several households. [[LINK|lang_en|Feral_cat|Feral cats]] are associated with human habitation areas and may be fed by people or forage for food, but are typically wary of human interaction."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592855.JPG",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Reflection of camera flash from the tapetum lucidum"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "biology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Biology"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "anatomy"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Anatomy"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Domestic cats are similar in size to the other members of the genus *Felis*, typically weighing between 4 and 5 kg (9 and 10 lb). "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Some [[LINK|lang_en|Cat_breed|breeds]], however, such as the [[LINK|lang_en|Maine_Coon|Maine Coon]], can occasionally exceed 11 kg (24 lb). Conversely, very small cats, less than 2 kg (4 lb), have been reported. The world record for the largest cat is 21 kg (50 lb). The smallest adult cat ever officially recorded weighed around 1 kg (2 lb). Feral cats tend to be lighter as they have more limited access to food than house cats. In the [[LINK|lang_en|Boston|Boston]] area, the average feral adult male will weigh 4 kg (9 lb) and average feral female 3 kg (7 lb). Cats average about 23–25 cm (9–10 in) in height and 46 cm (18 in) in head/body length (males being larger than females), with tails averaging 30 cm (12 in) in length."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have seven [[LINK|lang_en|Cervical_vertebrae|cervical vertebrae]], as do almost all [[LINK|lang_en|Mammals|mammals]]; 13 [[LINK|lang_en|Thoracic_vertebrae|thoracic vertebrae]] (humans have 12); seven [[LINK|lang_en|Lumbar_vertebrae|lumbar vertebrae]] (humans have five); three [[LINK|lang_en|Sacrum|sacral vertebrae]] like most mammals (humans have five); and a variable number of [[LINK|lang_en|Caudal_vertebrae|caudal vertebrae]] in the tail (humans retain three to five caudal vertebrae, fused into an internal [[LINK|lang_en|Coccyx|coccyx]]). :11 The extra lumbar and thoracic vertebrae account for the cat's spinal mobility and flexibility. Attached to the spine are 13 ribs, the shoulder, and the [[LINK|lang_en|Pelvis|pelvis]]. :16 Unlike human arms, cat forelimbs are attached to the shoulder by free-floating [[LINK|lang_en|Clavicle|clavicle]] bones which allow them to pass their body through any space into which they can fit their head."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The cat skull is unusual among mammals in having very large [[LINK|lang_en|Eye_socket|eye sockets]] and a powerful and specialized jaw. :35 Within the jaw, cats have teeth adapted for killing prey and tearing meat. When it overpowers its prey, a cat delivers a lethal neck bite with its two long [[LINK|lang_en|Canine_tooth|canine teeth]], inserting them between two of the prey's vertebrae and severing its [[LINK|lang_en|Spinal_cord|spinal cord]], causing irreversible [[LINK|lang_en|Paralysis|paralysis]] and death. Compared to other felines, domestic cats have narrowly spaced canine teeth, which is an adaptation to their preferred prey of small rodents, which have small vertebrae. The [[LINK|lang_en|Premolar|premolar]] and first [[LINK|lang_en|Molar_(tooth)|molar]] together compose the [[LINK|lang_en|Carnassial|carnassial]] pair on each side of the mouth, which efficiently shears meat into small pieces, like a pair of scissors. These are vital in feeding, since cats' small [[LINK|lang_en|Molar_(tooth)|molars]] cannot chew food effectively, and cats are largely incapable of mastication. :37 Though cats tend to have better teeth than most humans, with decay generally less likely because of a thicker protective layer of enamel, a less damaging saliva, less retention of food particles between teeth, and a diet mostly devoid of sugar, they are nonetheless subject to occasional tooth loss and infection."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats, like dogs, are [[LINK|lang_en|Digitigrade|digitigrades]]. They walk directly on their toes, with the bones of their feet making up the lower part of the visible leg. Cats are capable of walking very precisely, because like all [[LINK|lang_en|Felinae|felines]], they directly register; that is, they place each hind paw (almost) directly in the print of the corresponding fore paw, minimizing noise and visible tracks. This also provides sure footing for their hind paws when they navigate rough terrain. Unlike most mammals, when cats walk, they use a \"pacing\"[[LINK|lang_en|Gait|gait]]; that is, they move the two legs on one side of the body before the legs on the other side. This trait is shared with [[LINK|lang_en|Camel|camels]] and [[LINK|lang_en|Giraffe|giraffes]]. As a walk speeds up into a trot, a cat's gait changes to be a \"diagonal\" gait, similar to that of most other mammals (and many other land animals, such as [[LINK|lang_en|Lizard|lizards]]): the diagonally opposite hind and fore legs move simultaneously."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Like almost all members of the Felidae, cats have protractable and retractable [[LINK|lang_en|Claw|claws]]. In their normal, relaxed position, the claws are sheathed with the skin and [[LINK|lang_en|Fur|fur]] around the [[LINK|lang_en|Paw|paw]]'s toe pads. This keeps the claws sharp by preventing wear from contact with the ground and allows the silent stalking of prey. The claws on the fore feet are typically sharper than those on the hind feet. Cats can voluntarily extend their claws on one or more paws. They may extend their claws in hunting or self-defense, climbing, [[LINK|lang_en|Kneading_(cats)|kneading]], or for extra traction on soft surfaces. Most cats have five claws on their front paws, and four on their rear paws. The fifth front claw (the [[LINK|lang_en|Dewclaw|dewclaw]]) is [[LINK|lang_en|Proximal|proximal]] to the other claws. More proximally is a protrusion which appears to be a sixth \"finger\". This special feature of the front paws, on the inside of the wrists, is the carpal pad, also found on the paws of [[LINK|lang_en|Big_cat|big cats]] and dogs. It has no function in normal walking, but is thought to be an antiskidding device used while jumping. Some breeds of cats are prone to [[LINK|lang_en|Polydactyl_cat|polydactyly]] (extra toes and claws). These are particularly common along the northeast coast of North America."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592851.svg",
+				"mime": "image/svg+xml",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Diagram of the general anatomy of a male"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "physiology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Physiology"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "table",
+				"attrs": {
+					"className": "wikitable"
+				},
+				"items": [
+					{
+						"type": "body-table",
+						"attrs": {
+							"className": "wikitable"
+						},
+						"caption": {
+							"attrs": {},
+							"sentences": [
+								{
+									"type": "sentence",
+									"index": 0,
+									"text": "Normal physiological values <sup class=\"reference\"> :330 </sup>"
+								}
+							]
+						},
+						"thead": {
+							"rows": [],
+							"attrs": {}
+						},
+						"tbody": {
+							"rows": [
+								{
+									"index": 0,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": "[[LINK|lang_en|Body_temperature|Body temperature]] "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": "38.6 °C (101.5 °F)"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 1,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": "[[LINK|lang_en|Heart_rate|Heart rate]] "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": "120–140 beats per minute"
+														}
+													]
+												}
+											]
+										}
+									]
+								},
+								{
+									"index": 2,
+									"tag_type": "tr",
+									"tag_class": "block",
+									"attrs": {},
+									"cells": [
+										{
+											"index": 0,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": "[[LINK|lang_en|Breathing_rate|Breathing rate]] "
+														}
+													]
+												}
+											]
+										},
+										{
+											"index": 1,
+											"attrs": {},
+											"tag_type": "td",
+											"tag_class": "block",
+											"content": [
+												{
+													"type": "text",
+													"content": [
+														{
+															"index": 0,
+															"type": "sentence",
+															"text": "16–40 breaths per minute"
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							],
+							"attrs": {}
+						},
+						"tfoot": {
+							"rows": [],
+							"attrs": {}
+						}
 					}
 				]
 			},
@@ -23,7 +625,1964 @@
 				"index": 2,
 				"tag_type": "p",
 				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are familiar and easily kept animals, and their physiology has been particularly well studied; it generally resembles those of other carnivorous mammals, but displays several unusual features probably attributable to cats' descent from desert-dwelling species. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "For instance, cats are able to tolerate quite high temperatures: Humans generally start to feel uncomfortable when their skin temperature passes about 38 °C (100 °F), but cats show no discomfort until their skin reaches around 52 °C (126 °F), :46 and can tolerate temperatures of up to 56 °C (133 °F) if they have access to water."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats conserve heat by reducing the flow of blood to their skin and lose heat by evaporation through their mouths. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Cats have minimal ability to sweat, with glands located primarily in their paw pads, and [[LINK|lang_en|Thermoregulation#Endothermy|pant for heat relief]] only at very high temperatures (but may also pant when stressed). A cat's body temperature does not vary throughout the day; this is part of cats' general lack of [[LINK|lang_en|Circadian_rhythm|circadian rhythms]] and may reflect their tendency to be active both during the day and at night. :1 Cats' feces are comparatively dry and their urine is highly concentrated, both of which are adaptations to allow cats to retain as much water as possible. Their kidneys are so efficient, they can survive on a diet consisting only of meat, with no additional water, and can even rehydrate by drinking [[LINK|lang_en|Seawater|seawater]]. :29 While domestic cats are able to swim, they are generally reluctant to enter water as it quickly leads to exhaustion."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are [[LINK|lang_en|Obligate_carnivores|obligate carnivores]]: their [[LINK|lang_en|Physiology|physiology]] has evolved to efficiently process meat, and they have difficulty digesting plant matter. In contrast to [[LINK|lang_en|Omnivore|omnivores]] such as [[LINK|lang_en|Rat|rats]], which only require about 4% protein in their diet, about 20% of a cat's diet must be protein. Cats are unusually dependent on a constant supply of the [[LINK|lang_en|Amino_acid|amino acid]] [[LINK|lang_en|Arginine|arginine]], and a diet lacking arginine causes marked weight loss and can be rapidly fatal. Another unusual feature is that the cat cannot produce [[LINK|lang_en|Taurine|taurine]], with taurine deficiency causing [[LINK|lang_en|Macular_degeneration|macular degeneration]], wherein the cat's retina slowly degenerates, causing irreversible blindness."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A cat's [[LINK|lang_en|Gut_(anatomy)|gastrointestinal tract]] is adapted to meat eating, being much shorter than that of omnivores and having low levels of several of the [[LINK|lang_en|Digestive_enzyme|digestive enzymes]] needed to digest carbohydrates. These traits severely limit the cat's ability to digest and use plant-derived nutrients, as well as certain [[LINK|lang_en|Fatty_acid|fatty acids]]. Despite the cat's meat-oriented physiology, several vegetarian or vegan cat foods have been marketed that are supplemented with [[LINK|lang_en|Chemical_synthesis|chemically synthesized]] taurine and other nutrients, in attempts to produce a complete diet. However, some of these products still fail to provide all the nutrients cats require, and diets containing no animal products pose the risk of causing severe nutritional deficiencies."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats do eat [[LINK|lang_en|Grass|grass]] occasionally. A proposed explanation is that cats use grass as a source of [[LINK|lang_en|Folic_acid|folic acid]]. Another proposed explanation is that it is used to supply [[LINK|lang_en|Dietary_fiber|dietary fiber]]."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592864.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A cat that is playing with a caught mouse. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Cats play with their prey to weaken or exhaust them before making a kill."
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "senses"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Senses"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have excellent [[LINK|lang_en|Night_vision|night vision]] and can see at only one-sixth the light level required for human vision. :43 This is partly the result of cat eyes having a [[LINK|lang_en|Tapetum_lucidum|tapetum lucidum]], which reflects any light that passes through the [[LINK|lang_en|Retina|retina]] back into the eye, thereby increasing the eye's sensitivity to dim light. Another adaptation to dim light is the large pupils of cats' eyes. Unlike some big cats, such as tigers, domestic cats have [[LINK|lang_en|Pupil#In_other_animals|slit pupils]]. These slit pupils can focus bright light without [[LINK|lang_en|Chromatic_aberration|chromatic aberration]], and are needed since the domestic cat's pupils are much larger, relative to their eyes, than the pupils of the big cats. At low light levels a cat's pupils will expand to cover most of the exposed surface of its eyes. However, domestic cats have rather poor [[LINK|lang_en|Color_vision|color vision]] and (like most nonprimate mammals) have only two types of [[LINK|lang_en|Cone_cell|cones]], optimized for sensitivity to blue and yellowish green; they have limited ability to distinguish between red and green. A 1993 paper reported a response to middle wavelengths from a system other than the [[LINK|lang_en|Rod_cell|rods]] which might be due to a third type of cone. However, this appears to be an adaptation to low light levels rather than representing true [[LINK|lang_en|Trichromacy|trichromatic]] vision."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have excellent hearing and can detect an extremely broad range of frequencies. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "They can hear higher-pitched sounds than either dogs or humans, detecting frequencies from 55 Hz to 79,000 Hz, a range of 10.5 octaves, while humans and dogs both have ranges of about 9 octaves. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Cats can hear [[LINK|lang_en|Ultrasound|ultrasound]], which is important in hunting because many species of rodents make ultrasonic calls. However, they do not communicate using ultrasound like rodents do. Cats' hearing is also sensitive and among the best of any mammal, being most acute in the range of 500 Hz to 32 kHz. This sensitivity is further enhanced by the cat's large movable outer ears (their [[LINK|lang_en|Pinna_(anatomy)|pinnae]]), which both amplify sounds and help detect the direction of a noise."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have an acute sense of smell, due in part to their well-developed [[LINK|lang_en|Olfactory_bulb|olfactory bulb]] and a large surface of [[LINK|lang_en|Olfactory_mucosa|olfactory mucosa]], about 5.8 cm 2 (0.90 in 2 ) in area, which is about twice that of humans. Cats are sensitive to [[LINK|lang_en|Cat_pheromone|pheromones]] such as [[LINK|lang_en|3-mercapto-3-methylbutan-1-ol|3-mercapto-3-methylbutan-1-ol]], which they use to communicate through [[LINK|lang_en|Urine_spraying|urine spraying]] and marking with [[LINK|lang_en|Scent_glands|scent glands]]. Many cats also respond strongly to plants that contain [[LINK|lang_en|Nepetalactone|nepetalactone]], especially [[LINK|lang_en|Catnip|catnip]], as they can detect that substance at less than one part per billion. About 70—80% of cats are affected by nepetalactone. This response is also produced by other plants, such as silver vine (*[[LINK|lang_en|Actinidia_polygama|Actinidia polygama]] *) and the herb [[LINK|lang_en|Valerian_(herb)|valerian]]; it may be caused by the smell of these plants mimicking a pheromone and stimulating cats' social or sexual behaviors."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats have relatively few taste buds compared to humans (470 or so versus more than 9,000 on the human tongue). "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Domestic and wild cats share a gene mutation that keeps their sweet taste buds from binding to sugary molecules, leaving them with no ability to taste [[LINK|lang_en|Sweetness|sweetness]]. Their [[LINK|lang_en|Taste_bud|taste buds]] instead respond to amino acids, bitter tastes, and acids. Cats and many other animals have a [[LINK|lang_en|Jacobson%27s_organ|Jacobson's organ]] located in their mouths that allows them to taste-smell certain aromas in a way which humans have no experience of. Cats also have a distinct temperature preference for their food, preferring food with a temperature around 100 °F (38 °C) which is similar to that of a fresh kill and routinely rejecting food presented cold or refrigerated (which would signal to the cat that the \"prey\" item is long dead and therefore possibly toxic or decomposing)."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "To aid with navigation and sensation, cats have dozens of movable [[LINK|lang_en|Vibrissa|whiskers (vibrissae)]] over their body, especially their faces. These provide information on the width of gaps and on the location of objects in the dark, both by touching objects directly and by sensing air currents; they also trigger protective [[LINK|lang_en|Blink_reflex|blink reflexes]] to protect the eyes from damage. :47"
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Most breeds of cat have a noted fondness for settling in high places, or perching. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In the wild, a higher place may serve as a concealed site from which to hunt; domestic cats may strike prey by pouncing from a perch such as a tree branch, as does a [[LINK|lang_en|Leopard|leopard]]. Another possible explanation is that height gives the cat a better observation point, allowing it to survey its territory. During a fall from a high place, a cat can reflexively twist its body and right itself using its acute [[LINK|lang_en|Equilibrioception|sense of balance]] and flexibility. This is known as the [[LINK|lang_en|Cat_righting_reflex|cat righting reflex]]. An individual cat always rights itself in the same way, provided it has the time to do so, during a fall. The height required for this to occur is around 90 cm (3.0 ft). Cats without a tail (e.g. [[LINK|lang_en|Manx_(cat)|Manx cats]]) also have this ability, since a cat mostly moves its hind legs and relies on conservation of [[LINK|lang_en|Angular_momentum|angular momentum]] to set up for landing, and the tail is little used for this feat."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592869.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Two pet cats under a car"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "health"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Health"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The average lifespan of pet cats has risen in recent years. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In the early 1980s it was about seven years, :33 rising to 9.4 years in 1995 :33 and 12–15 years in 2014. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "However, cats have been reported as surviving into their 30s, with the oldest known cat, [[LINK|lang_en|Creme_Puff_(cat)|Creme Puff]], dying at a verified age of 38."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Spaying or neutering increases life expectancy: one study found neutered male cats live twice as long as intact males, while spayed female cats live 62% longer than intact females. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": ":35 Having a cat [[LINK|lang_en|Neutering|neutered]] confers health benefits, because castrated males cannot develop [[LINK|lang_en|Testicular_cancer|testicular cancer]], spayed females cannot develop [[LINK|lang_en|Uterine_cancer|uterine]] or [[LINK|lang_en|Ovarian_cancer|ovarian cancer]], and both have a reduced risk of [[LINK|lang_en|Mammary_tumor|mammary cancer]]."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Despite widespread concern about the welfare of free-roaming cats, the lifespans of neutered feral cats in managed colonies compare favorably with those of pet cats. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": ":45 :1358 Neutered cats in managed colonies can also live long lives."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h4",
+				"attrs": {
+					"id": "diseases"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Diseases"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats can suffer from a wide range of health problems, including infectious diseases, parasites, injuries, and chronic disease. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[LINK|lang_en|Feline_vaccination|Vaccinations]] are available for many of these diseases, and domestic cats are regularly given treatments to eliminate parasites such as worms and fleas."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h4",
+				"attrs": {
+					"id": "poisoning"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Poisoning"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In addition to obvious dangers such as [[LINK|lang_en|Rodenticide|rodenticides]], [[LINK|lang_en|Insecticide|insecticides]], and [[LINK|lang_en|Herbicide|herbicides]], cats may be poisoned by many chemicals usually considered safe by their human guardians, because their livers are less effective at some forms of [[LINK|lang_en|Detoxification|detoxification]] than those of many other animals, including humans and dogs. Some of the most common causes of poisoning in cats are antifreeze and rodent baits. Cats may be particularly sensitive to environmental pollutants. When a cat has a sudden or prolonged serious illness without any obvious cause, it has possibly been exposed to a toxin."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Many human medicines should never be given to cats. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "For example, the painkiller [[LINK|lang_en|Paracetamol|paracetamol]] (or acetaminophen, sold as [[LINK|lang_en|Tylenol_(brand)|Tylenol]] and [[LINK|lang_en|Panadol_(brand)|Panadol]]) is extremely toxic to cats: even very small doses need immediate treatment and can be fatal. Even [[LINK|lang_en|Aspirin|aspirin]], which is sometimes used to treat [[LINK|lang_en|Arthritis|arthritis]] in cats, is much more toxic to them than to humans and must be administered cautiously. Similarly, application of [[LINK|lang_en|Minoxidil|minoxidil]] (Rogaine) to the skin of cats, either accidentally or by well-meaning guardians attempting to counter loss of fur, has sometimes been fatal. [[LINK|lang_en|Essential_oil|Essential oils]] can be toxic to cats and cases have been reported of serious illnesses caused by [[LINK|lang_en|Tea_tree_oil|tea tree oil]], including flea treatments and shampoos containing it."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Other common household substances that should be used with caution around cats include [[LINK|lang_en|Mothball|mothballs]] and other [[LINK|lang_en|Naphthalene|naphthalene]] products. [[LINK|lang_en|Phenol|Phenol]]-based products (e.g. [[LINK|lang_en|Pine-Sol|Pine-Sol]], [[LINK|lang_en|Dettol|Dettol]] /Lysol or [[LINK|lang_en|Hexachlorophene|hexachlorophene]]) are often used for cleaning and disinfecting near cats' feeding areas or [[LINK|lang_en|Litter_box|litter boxes]], but these can sometimes be fatal. [[LINK|lang_en|Ethylene_glycol|Ethylene glycol]], often used as an automotive [[LINK|lang_en|Antifreeze|antifreeze]], is particularly appealing to cats, and as little as a teaspoonful can be fatal. Some human foods are toxic to cats; for example chocolate can cause [[LINK|lang_en|Theobromine_poisoning|theobromine poisoning]], although (unlike dogs) few cats will eat chocolate. Large amounts of onions or garlic are also poisonous to cats. Many [[LINK|lang_en|Houseplant|houseplants]] are also dangerous, such as *[[LINK|lang_en|Philodendron|Philodendron]] * species and the leaves of the Easter lily (*[[LINK|lang_en|Lilium_longiflorum|Lilium longiflorum]] *), which can cause permanent and life-threatening kidney damage."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "genetics"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Genetics"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The domesticated cat and its closest wild ancestor are both [[LINK|lang_en|Diploid|diploid]] organisms that possess 38 [[LINK|lang_en|Chromosome|chromosomes]] and roughly 20,000 genes. About 250 heritable [[LINK|lang_en|Genetic_disorder|genetic disorders]] have been identified in cats, many similar to human [[LINK|lang_en|Inborn_error_of_metabolism|inborn errors]]. The high level of similarity among the [[LINK|lang_en|Metabolism|metabolism]] of mammals allows many of these feline diseases to be diagnosed using [[LINK|lang_en|Genetic_testing|genetic tests]] that were originally developed for use in humans, as well as the use of cats as [[LINK|lang_en|Animal_model|animal models]] in the study of the human diseases."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "behavior"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Behavior"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Outdoor cats are active both day and night, although they tend to be slightly more active at night. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The timing of cats' activity is quite flexible and varied, which means house cats may be more [[LINK|lang_en|Crepuscular|active in the morning and evening]], as a response to greater human activity at these times. Although they spend the majority of their time in the vicinity of their home, housecats can range many hundreds of meters from this central point, and are known to establish [[LINK|lang_en|Territory_(animal)|territories]] that vary considerably in size, in one study ranging from 7 to 28 hectares (17–69 acres)."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats conserve energy by sleeping more than most animals, especially as they grow older. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The daily duration of sleep varies, usually between 12 and 16 hours, with 13 and 14 being the average. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Some cats can sleep as much as 20 hours. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "The term \"[[LINK|lang_en|cat_nap|cat nap]]\" for a short rest refers to the cat's tendency to fall asleep (lightly) for a brief period. While asleep, cats experience short periods of [[LINK|lang_en|Rapid_eye_movement_sleep|rapid eye movement sleep]] often accompanied by muscle twitches, which suggests they are [[LINK|lang_en|Dream|dreaming]]."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592870.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Feral farm cat"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "sociability"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Sociability"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Although wildcats are solitary, the social behavior of domestic cats is much more variable and ranges from widely dispersed individuals to [[LINK|lang_en|Feral_cat_colony|feral cat colonies]] that form around a food source, based on groups of co-operating females. Within such groups, one cat is usually dominant over the others. Each cat in a colony holds a distinct territory, with sexually active males having the largest territories, which are about 10 times larger than those of female cats and may overlap with several females' territories. These territories are marked by [[LINK|lang_en|Urine_spraying|urine spraying]], by rubbing objects at head height with secretions from facial glands, and by defecation. Between these territories are neutral areas where cats watch and greet one another without territorial conflicts. Outside these neutral areas, territory holders usually chase away stranger cats, at first by staring, hissing, and [[LINK|lang_en|Growling|growling]], and if that does not work, by short but noisy and violent attacks. Despite some cats cohabiting in colonies, they do not have a social survival strategy, or a [[LINK|lang_en|Herd_behavior|pack mentality]], and always hunt alone."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "However, some pet cats are poorly socialized. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In particular, older cats may show aggressiveness towards newly arrived kittens, which may include biting and scratching; this type of behavior is known as feline asocial aggression."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Though cats and dogs are [[LINK|lang_en|Dog%E2%80%93cat_relationship|believed to be natural enemies]], they can live together if correctly socialized."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Life in proximity to humans and other domestic animals has led to a symbiotic social adaptation in cats, and cats may express great affection toward humans or other animals. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[LINK|lang_en|Ethology|Ethologically]], the human keeper of a cat may function as a sort of surrogate for the cat's mother, and adult housecats live their lives in a kind of extended kittenhood, a form of behavioral [[LINK|lang_en|Neoteny|neoteny]]. The high-pitched sounds housecats make to solicit food may mimic the cries of a hungry human infant, making them particularly hard for humans to ignore."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592858.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cat with an Alaskan Malamute dog"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "communication"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Communication"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Domestic cats use many [[LINK|lang_en|Animal_communication|vocalizations]] for communication, including [[LINK|lang_en|Purr|purring]], [[LINK|lang_en|Trill_consonant|trilling]], hissing, [[LINK|lang_en|Growling|growling]] / [[LINK|lang_en|Snarl|snarling]], [[LINK|lang_en|Guttural|grunting]], and several different forms of [[LINK|lang_en|Meow|meowing]]. By contrast, feral cats are generally silent. :208 Their types of [[LINK|lang_en|Cat_body_language|body language]], including position of ears and tail, relaxation of the whole body, and kneading of the paws, are all indicators of mood. The tail and ears are particularly important social signal mechanisms in cats; for example, a raised tail acts as a friendly greeting, and flattened ears indicates hostility. Tail-raising also indicates the cat's position in the group's [[LINK|lang_en|Social_hierarchy|social hierarchy]], with dominant individuals raising their tails less often than subordinate animals. Nose-to-nose touching is also a common greeting and may be followed by [[LINK|lang_en|Social_grooming|social grooming]], which is solicited by one of the cats raising and tilting its head."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Purring may have developed as an evolutionary advantage as a signalling mechanism of reassurance between mother cats and [[LINK|lang_en|Breastfeeding|nursing]] kittens. Post-nursing cats often purr as a sign of contentment: when being petted, becoming relaxed, or eating. The mechanism by which cats purr is elusive. The cat has no unique anatomical feature that is clearly responsible for the sound. It was, until recent times, believed that only the cats of the *[[LINK|lang_en|Felis|Felis]] * [[LINK|lang_en|Genus|genus]] could purr. However, felids of the *[[LINK|lang_en|Panthera|Panthera]] * genus ([[LINK|lang_en|Tiger|tiger]], [[LINK|lang_en|Lion|lion]], [[LINK|lang_en|Jaguar|jaguar]], and [[LINK|lang_en|Leopard|leopard]]) also produce sounds similar to purring, but only when exhaling."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "grooming"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Grooming"
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are known for spending considerable amounts of time licking their coat to keep it clean. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "The cat's [[LINK|lang_en|Tongue|tongue]] has backwards-facing spines about 500 [[LINK|lang_en|Micrometre|μm]] long, which are called [[LINK|lang_en|Filiform_papilla|papillae]]. These contain [[LINK|lang_en|Keratin|keratin]] which makes them rigid so the papillae act like a hairbrush. Some cats, particularly longhaired cats, occasionally regurgitate [[LINK|lang_en|Hairball|hairballs]] of fur that have collected in their stomachs from grooming. These clumps of fur are usually sausage-shaped and about 2–3 cm (0.8–1.2 in) long. Hairballs can be prevented with remedies that ease elimination of the hair through the [[LINK|lang_en|Gut_(anatomy)|gut]], as well as regular grooming of the coat with a comb or stiff brush."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592860.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The hooked papillae on a cat's tongue act like a hairbrush to help clean and detangle fur."
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "fighting"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Fighting"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Among domestic cats, males are more likely to fight than females. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Among feral cats, the most common reason for [[LINK|lang_en|Catfight_(animal_behavior)|cat fighting]] is competition between two males to mate with a female. In such cases, most fights are won by the heavier male. Another common reason for fighting in domestic cats is the difficulty of establishing territories within a small home. Female cats also fight over territory or to defend their kittens. Neutering will decrease or eliminate this behavior in many cases, suggesting that the behavior is linked to [[LINK|lang_en|Sex_hormone|sex hormones]]."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "When cats become aggressive, they try to make themselves appear larger and more threatening by raising their fur, arching their backs, turning sideways and hissing or spitting. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Often, the ears are pointed down and back to avoid damage to the inner ear and potentially listen for any changes behind them while focused forward. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "They may also vocalize loudly and bare their teeth in an effort to further intimidate their opponent. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Fights usually consist of grappling and delivering powerful slaps to the face and body with the forepaws as well as bites. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "Cats also throw themselves to the ground in a defensive posture to rake their opponent's belly with their powerful hind legs."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Serious damage is rare, as the fights are usually short in duration, with the loser running away with little more than a few scratches to the face and ears. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "However, fights for mating rights are typically more severe and injuries may include deep puncture wounds and lacerations. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Normally, serious injuries from fighting are limited to infections of scratches and bites, though these can occasionally kill cats if untreated. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "In addition, bites are probably the main route of transmission of [[LINK|lang_en|Feline_immunodeficiency_virus|feline immunodeficiency virus]]. Sexually active males are usually involved in many fights during their lives, and often have decidedly battered faces with obvious scars and cuts to their ears and nose."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592863.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Indicating aggression"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "hunting-and-feeding"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Hunting and feeding"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats hunt small prey, primarily birds and rodents, and are often used as a form of pest control. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Domestic cats are a major predator of wildlife in the United States, killing an estimated 1.4–3.7 billion birds and 6.9–20.7 billion mammals annually. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The bulk of predation in the United States is done by 80 million feral and stray cats. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Effective measures to reduce this population are elusive, meeting opposition from cat enthusiasts. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "In the case of free-ranging pets, equipping cats with bells and not letting them out at night will reduce wildlife predation."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Free-fed feral cats and house cats tend to consume many small meals in a single day, although the frequency and size of meals varies between individuals. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Cats use two hunting strategies, either stalking prey actively, or waiting in ambush until an animal comes close enough to be captured. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Although it is not certain, the strategy used may depend on the prey species in the area, with cats waiting in ambush outside burrows, but tending to actively stalk birds. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": ":153"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Perhaps the best known element of cats' hunting behavior, which is commonly misunderstood and often appalls cat owners because it looks like torture, is that cats often appear to \"play\" with prey by releasing it after capture. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "This behavior is due to an instinctive imperative to ensure that the prey is weak enough to be killed without endangering the cat. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "This behavior is referred to in the [[LINK|lang_en|Idiom|idiom]]\"cat-and-mouse game\" or simply \"[[LINK|lang_en|Cat_and_mouse|cat and mouse]]\"."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Another poorly understood element of cat hunting behavior is the presentation of prey to human guardians. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "[[LINK|lang_en|Ethology|Ethologist]] Paul Leyhausen proposed that cats adopt humans into their social group and share excess kill with others in the group according to the [[LINK|lang_en|Dominance_hierarchy|dominance hierarchy]], in which humans are reacted to as if they are at, or near, the top. Anthropologist and zoologist [[LINK|lang_en|Desmond_Morris|Desmond Morris]], in his 1986 book *Catwatching*, suggests, when cats bring home mice or birds, they are attempting to teach their human to hunt, or trying to help their human as if feeding \"an elderly cat, or an inept kitten\". Morris's hypothesis is inconsistent with the fact that male cats also bring home prey, despite males having no involvement with raising kittens. :153"
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Domestic cats select food based on its temperature, smell and texture; they dislike chilled foods and respond most strongly to moist foods rich in amino acids, which are similar to meat. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Cats may reject novel flavors (a response termed [[LINK|lang_en|Neophobia|neophobia]]) and learn quickly to [[LINK|lang_en|Taste_aversion|avoid foods that have tasted unpleasant]] in the past. They may also avoid sugary foods and milk. Most adult cats are [[LINK|lang_en|Lactose_intolerant|lactose intolerant]]; the sugars in milk are not easily digested and may cause soft stools or [[LINK|lang_en|Diarrhea|diarrhea]]. They can also develop odd eating habits. Some cats like to eat or chew on other things, most commonly wool, but also plastic, cables, paper, string, aluminum foil, or even coal. This condition, [[LINK|lang_en|Pica_(disorder)|pica]], can threaten their health, depending on the amount and toxicity of the items eaten."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Though cats usually prey on animals less than half their size, a feral cat in Australia has been photographed killing an adult [[LINK|lang_en|Pademelon|pademelon]] weighing around the cat's size at 4 kg (8.8 lb)."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Since cats lack lips to create suction, they use a lapping method with the tongue to draw liquid upwards into their mouths. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Lapping at a rate of four times a second, the cat touches the smooth tip of its tongue to the surface of the water, and quickly retracts it, drawing water upwards."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "play"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Play"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Domestic cats, especially young kittens, are known for their love of play. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "This behavior mimics hunting and is important in helping kittens learn to [[LINK|lang_en|Predation|stalk, capture, and kill]] prey. Cats also engage in play fighting, with each other and with humans. This behavior may be a way for cats to practice the skills needed for real combat, and might also reduce any fear they associate with launching attacks on other animals."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Owing to the close similarity between play and hunting, cats prefer to play with objects that resemble prey, such as small furry toys that move rapidly, but rapidly lose interest (they become [[LINK|lang_en|Habituation|habituated]]) in a toy they have played with before. Cats also tend to play with toys more when they are hungry. String is often used as a toy, but if it is eaten, it can become caught at the base of the cat's tongue and then move into the [[LINK|lang_en|Intestine|intestines]], a medical emergency which can cause serious illness, even death. Owing to the risks posed by cats eating string, it is sometimes replaced with a [[LINK|lang_en|Laser_pointer|laser pointer]]'s dot, which cats may chase. There are several important issues related to using a laser with a cat; first most, lasers can cause blindness in cats, even lasers which are sold as \"eye safe\" can actually be of much higher power of that proclaimed and can cause damages to the eyes. In addition, the cat thinks of the laser point as prey, but gets frustrated as he is unable to catch it."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "reproduction"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Reproduction"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Female cats are seasonally [[LINK|lang_en|Polyestrous|polyestrous]], which means they may have many periods of [[LINK|lang_en|Estrus|heat]] over the course of a year, the season beginning in spring and ending in late autumn. Heat periods occur about every two weeks and last about 4 to 7 days. Multiple males will be attracted to a female in heat. The males will fight over her, and the victor wins the right to mate. At first, the female rejects the male, but eventually the female allows the male to mate. The female utters a loud yowl as the male pulls out of her because a male cat's penis has a band of about 120–150 backwards-pointing [[LINK|lang_en|Penile_spines|penile spines]], which are about 1 mm long; upon withdrawal of the penis, the spines rake the walls of the female's [[LINK|lang_en|Vagina|vagina]], which is a trigger for [[LINK|lang_en|Ovulation|ovulation]]. This act also occurs to clear the vagina of other sperm in the context of a second (or more) mating, thus giving the later males a larger chance of conception."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "After mating, the female washes her [[LINK|lang_en|Vulva|vulva]] thoroughly. If a male attempts to mate with her at this point, the female will attack him. After about 20 to 30 minutes, once the female is finished grooming, the cycle will repeat."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Because ovulation is not always triggered by a single mating, females may not be impregnated by the first male with which they mate. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Furthermore, cats are [[LINK|lang_en|Superfecundation|superfecund]]; that is, a female may mate with more than one male when she is in heat, with the result that different kittens in a litter may have different fathers."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "At 124 hours after conception, the morula forms. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "At 148 hours, early blastocysts form. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "At 10–12 days, implantation occurs."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The [[LINK|lang_en|Gestation|gestation]] period for cats is between 64 and 67 days, with an average of 66 days. The size of a [[LINK|lang_en|Litter_(animal)|litter]] usually is three to five kittens, with the first litter usually smaller than subsequent litters. Kittens are weaned between six and seven weeks old, and cats normally reach sexual maturity at 5–10 months (females) and to 5–7 months (males), although this can vary depending on breed. Females can have two to three litters per year, so may produce up to 150 kittens in their breeding span of around ten years."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are ready to go to new homes at about 12 weeks of age, when they are ready to leave their mother. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "They can be surgically [[LINK|lang_en|Neutering|sterilized]] (spayed or [[LINK|lang_en|Castration|castrated]]) as early as 7 weeks to limit unwanted reproduction. This surgery also prevents undesirable sex-related behavior, such as aggression, [[LINK|lang_en|Spraying_(animal_behavior)|territory marking]] (spraying urine) in males and yowling (calling) in females. Traditionally, this surgery was performed at around six to nine months of age, but it is increasingly being performed prior to [[LINK|lang_en|Puberty|puberty]], at about three to six months. In the US, about 80% of household cats are neutered."
+					}
+				]
+			}
+		],
+		"images": [
+			{
+				"type": "section_image",
+				"url": "https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592867.jpg",
+				"mime": "image/jpeg",
+				"thumb": null,
+				"caption": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A newborn kitten"
+					}
+				],
+				"category": "PICTURE",
+				"media_props": {
+					"type": "section_image"
+				}
+			}
+		]
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "ecology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Ecology"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "habitats"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Habitats"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are a [[LINK|lang_en|Cosmopolitan_species|cosmopolitan species]] and are found across much of the world. Geneticist Stephen James O'Brien, of the [[LINK|lang_en|National_Cancer_Institute|National Cancer Institute]] in [[LINK|lang_en|Frederick,_Maryland|Frederick, Maryland]], remarked on how successful cats have been in evolutionary terms: \"Cats are one of evolution's most charismatic creatures. They can live on the highest mountains and in the hottest deserts.\" They are extremely adaptable and are now present on all continents except [[LINK|lang_en|Antarctica|Antarctica]], and on 118 of the 131 main groups of islands—even on isolated islands such as the [[LINK|lang_en|Kerguelen_Islands|Kerguelen Islands]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Feral cats can live in forests, grasslands, tundra, coastal areas, agricultural land, scrublands, urban areas, and wetlands. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Their habitats even include small oceanic islands with no human inhabitants. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Further, the close relatives of domestic cats, the [[LINK|lang_en|African_wildcat|African wildcat]] (*Felis silvestris lybica*) and the Arabian [[LINK|lang_en|Sand_cat|sand cat]] (*Felis margarita*) both inhabit desert environments, and domestic cats still show similar adaptations and behaviors. The cat's ability to thrive in almost any terrestrial habitat has led to its designation as one of the world's worst [[LINK|lang_en|Invasive_species|invasive species]]."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "As domestic cats are little altered from wildcats, they can readily interbreed. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "This [[LINK|lang_en|Hybrid_(biology)|hybridization]] poses a danger to the genetic distinctiveness of some wildcat populations, particularly in [[LINK|lang_en|Scotland|Scotland]] and [[LINK|lang_en|Hungary|Hungary]] and possibly also the [[LINK|lang_en|Iberian_Peninsula|Iberian Peninsula]]."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "feral-cats"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Feral cats"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Feral cats are domestic cats that were born in or have reverted to a wild state. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "They are unfamiliar with and wary of humans and roam freely in urban and rural areas. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The numbers of feral cats is not known, but estimates of the US feral population range from 25 to 60 million. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Feral cats may live alone, but most are found in large [[LINK|lang_en|Feral_cat_colony|colonies]], which occupy a specific territory and are usually associated with a source of food. Famous feral cat colonies are found in Rome around the [[LINK|lang_en|Colosseum|Colosseum]] and [[LINK|lang_en|Forum_Romanum|Forum Romanum]], with cats at some of these sites being fed and given medical attention by volunteers."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Public attitudes towards feral cats vary widely, ranging from seeing them as free-ranging pets, to regarding them as vermin. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "One common approach to reducing the feral cat population is termed 'trap-neuter-return', where the cats are trapped, [[LINK|lang_en|Neutering|neutered]], [[LINK|lang_en|Immunization|immunized]] against rabies and the [[LINK|lang_en|Feline_leukemia_virus|feline leukemia virus]], and then released. Before releasing them back into their feral colonies, the attending veterinarian often nips the tip off one ear to mark it as neutered and inoculated, since these cats may be trapped again. Volunteers continue to feed and give care to these cats throughout their lives. Given this support, their lifespans are increased, and behavior and nuisance problems caused by competition for food are reduced."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "impact-on-prey-species"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Impact on prey species"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "To date, little scientific data is available to assess the impact of cat predation on prey populations. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Even well-fed domestic cats may hunt and kill, mainly catching small mammals, but also birds, amphibians, reptiles, fish, and invertebrates. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Hunting by domestic cats may be contributing to the decline in the numbers of birds in urban areas, although the importance of this effect remains controversial. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "In the wild, the introduction of feral cats during human settlement can threaten native species with extinction. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "In many cases, controlling or eliminating the populations of non-native cats can produce a rapid recovery in native animals. "
+					},
+					{
+						"type": "sentence",
+						"index": 5,
+						"text": "However, the ecological role of introduced cats can be more complicated. "
+					},
+					{
+						"type": "sentence",
+						"index": 6,
+						"text": "For example, cats can control the numbers of rats, which also prey on birds' eggs and young, so a cat population can protect an endangered bird species by suppressing [[LINK|lang_en|Mesopredator_release_hypothesis|mesopredators]]."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In isolated landmasses, such as [[LINK|lang_en|Australasia|Australasia]], there are often no other native, medium-sized [[LINK|lang_en|Quadruped|quadrupedal]] predators (including other feline species); this tends to exacerbate the impact of feral cats on small native animals. Native species such as the New Zealand [[LINK|lang_en|Kakapo|kakapo]] and the Australian [[LINK|lang_en|Bettong|bettong]], for example, tend to be more ecologically vulnerable and behaviorally \"naive\", when faced with predation by cats. Feral cats have had a major impact on these native species and have played a leading role in the endangerment and extinction of many animals."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Even in places with ancient and numerous cat populations, such as [[LINK|lang_en|Western_Europe|Western Europe]], cats appear to be growing in number and independently of their environments'[[LINK|lang_en|Carrying_capacity|carrying capacity]] (such as the numbers of prey available). This may be explained, at least in part, by an abundance of food, from sources including feeding by pet owners and scavenging. For instance, research in [[LINK|lang_en|Great_Britain|Britain]] suggests that a high proportion of cats hunt only \"recreationally\". And in [[LINK|lang_en|South_Sweden|South Sweden]], where research in 1982 found that the population density of cats was as high as 2,000 per square kilometre (5,200/sq mi)."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "impact-on-birds"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Impact on birds"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "The domestic cat is a significant predator of birds. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "UK assessments indicate they may be accountable for an estimated 64.8 million bird deaths each year. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "Certain species appear more susceptible than others; for example, 30% of [[LINK|lang_en|House_sparrow|house sparrow]] mortality is linked to the domestic cat. In the recovery of ringed robins (*[[LINK|lang_en|Erithacus_rubecula|Erithacus rubecula]] *) and dunnocks (*[[LINK|lang_en|Prunella_modularis|Prunella modularis]] *), 31% of deaths were a result of cat predation. The presence of larger carnivores such as [[LINK|lang_en|Coyote|coyotes]] which prey on cats and other small predators reduces the effect of predation by cats and other small predators such as [[LINK|lang_en|Opossum|opossums]] and [[LINK|lang_en|Raccoon|raccoons]] on bird numbers and variety. The proposal that cat populations will increase when the numbers of these top predators decline is called the [[LINK|lang_en|Mesopredator_release_hypothesis|mesopredator release hypothesis]]. However, a new study suggests cats are a much greater menace than previously thought and feral cats kill several billion birds each year in the United States."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "On islands, birds can contribute as much as 60% of a cat's diet. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In nearly all cases, however, the cat cannot be identified as the sole cause for reducing the numbers of island birds, and in some instances, eradication of cats has caused a '[[LINK|lang_en|Mesopredator|mesopredator]] release' effect; where the suppression of top carnivores creates an abundance of smaller predators that cause a severe decline in their shared prey. Domestic cats are, however, known to be a contributing factor to the decline of many species, a factor that has ultimately led, in some cases, to extinction. [[LINK|lang_en|Turnagra_capensis|The South Island piopio]], [[LINK|lang_en|Rallus_modestus|Chatham Islands rail]], the [[LINK|lang_en|Mergus_australis|Auckland Islands merganser]], and the [[LINK|lang_en|Pelecanoides_urinatrix|common diving petrel]] are a few from a long list, with the most extreme case being the flightless [[LINK|lang_en|Stephens_Island_wren|Stephens Island wren]], which was driven to extinction only a few years after its discovery."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Some of the same factors that have promoted [[LINK|lang_en|Adaptive_radiation|adaptive radiation]] of island [[LINK|lang_en|Bird|avifauna]] over evolutionary time appear to promote vulnerability to non-native species in modern time. The susceptibility of many island birds is undoubtedly due to evolution in the absence of mainland predators, competitors, diseases, and parasites, in addition to lower reproductive rates and extended incubation periods. The loss of flight, or reduced flying ability is also characteristic of many island endemics. These biological aspects have increased vulnerability to extinction in the presence of [[LINK|lang_en|Introduced_species|introduced species]], such as the domestic cat. Equally, behavioral traits exhibited by island species, such as \"predatory naivety\" and ground-nesting, have also contributed to their susceptibility."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "interaction-with-humans"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Interaction with humans"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Cats are common [[LINK|lang_en|Pet|pets]] in Europe and North America, and their worldwide population exceeds 500 million. Although cat guardianship has commonly been associated with women, a 2007 [[LINK|lang_en|Gallup_poll|Gallup poll]] reported that men and women in the United States of America were equally likely to own a cat."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "As well as being kept as pets, cats are also used in the international [[LINK|lang_en|Fur_trade|fur]] and [[LINK|lang_en|Leather|leather]] industries for making coats, hats, blankets and stuffed toys; and shoes, gloves and musical instruments respectively (about 24 cats are needed to make a cat fur coat). This use has now been outlawed in the United States, Australia, and the European Union. Cat pelts have been used for superstitious purposes as part of the practise of [[LINK|lang_en|Witchcraft|witchcraft]], and are still made into blankets in [[LINK|lang_en|Switzerland|Switzerland]] as [[LINK|lang_en|Traditional_medicine|folk remedies]] believed to help [[LINK|lang_en|Rheumatism|rheumatism]]. In the Western intellectual tradition, the idea of cats as everyday objects have served to illustrate problems of [[LINK|lang_en|Quantum_mechanics|quantum mechanics]] in the [[LINK|lang_en|Schr%C3%B6dinger%27s_cat|Schrödinger's cat]] thought experiment."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "A few attempts to build a cat census have been made over the years, both through associations or national and international organizations (such as the [[LINK|lang_en|Canadian_Federation_of_Humane_Societies|Canadian Federation of Humane Societies]]'s one) and over the net, but such a task does not seem simple to achieve. General estimates for the global population of domestic cats range widely from anywhere between 200 million to 600 million."
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h3",
+				"attrs": {
+					"id": "history-and-mythology"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "History and mythology"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Traditionally, historians tended to think [[LINK|lang_en|Ancient_Egypt|ancient Egypt]] was the site of cat domestication, owing to the clear depictions of house cats in Egyptian paintings about 3,600 years old. However, in 2004, a Neolithic grave excavated in [[LINK|lang_en|Shillourokambos|Shillourokambos]], [[LINK|lang_en|Cyprus|Cyprus]], contained the skeletons, laid close to one another, of both a human and a cat. The grave is estimated to be 9,500 years old, pushing back the earliest known feline–human association significantly. The cat specimen is large and closely resembles the African wildcat, rather than present-day domestic cats. This discovery, combined with genetic studies, suggests cats were probably domesticated in the Middle East, in the [[LINK|lang_en|Fertile_Crescent|Fertile Crescent]] around the time of the [[LINK|lang_en|History_of_agriculture|development of agriculture]] and then they were brought to Cyprus and Egypt."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Direct evidence for the domestication of cats 5,300 years ago in Quanhucun, [[LINK|lang_en|China|China]] has been published by archaeologists and paleontologists from the [[LINK|lang_en|University_of_Washington|University of Washington]] and [[LINK|lang_en|Chinese_Academy_of_Sciences|Chinese Academy of Sciences]]. The cats are believed to have been attracted to the village by rodents, which in turn were attracted by grain cultivated and stored by humans."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In ancient Egypt, cats were [[LINK|lang_en|Animal_worship|sacred animals]], with the goddess [[LINK|lang_en|Bastet|Bastet]] often depicted in cat form, sometimes taking on the war-like aspect of a lioness. :220 The [[LINK|lang_en|Ancient_Rome|Romans]] are often credited with introducing the domestic cat from Egypt to Europe; :223 in [[LINK|lang_en|Gallia_Aquitania|Roman Aquitaine]], a first- or second-century [[LINK|lang_en|Engraving|engraving]] of a young girl holding a cat is one of two earliest depictions of the Roman domesticated cat. However, cats possibly were already kept in Europe prior to the [[LINK|lang_en|Roman_Empire|Roman Empire]], as they may have been present in Britain in the late [[LINK|lang_en|Iron_Age|Iron Age]]. Domestic cats were spread throughout much of the rest of the world during the [[LINK|lang_en|Age_of_Discovery|Age of Discovery]], as they were carried on [[LINK|lang_en|Sailing_ship|sailing ships]] to control shipboard rodents and as good-luck charms (see [[LINK|lang_en|Ship%27s_cat|Ship's cat]]). :223"
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Several ancient religions believed cats are exalted souls, companions or guides for humans, that are all-knowing but mute so they cannot influence decisions made by humans. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In Japan, the *[[LINK|lang_en|Maneki_neko|maneki neko]] * cat is a symbol of good fortune."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Although no species are sacred in Islam, [[LINK|lang_en|Cats_and_Islam|cats are revered by Muslims]]. Some Western writers have stated [[LINK|lang_en|Muhammad|Muhammad]] had a favorite cat, [[LINK|lang_en|Muezza|Muezza]]. He is reported to have loved cats so much, \"he would do without his cloak rather than disturb one that was sleeping on it\". The story has no origin in early Muslim writers, and seems to confuse a story of a later [[LINK|lang_en|Sufi|Sufi]] saint, [[LINK|lang_en|Ahmed_ar-Rifa%27i|Ahmed ar-Rifa'i]], centuries after Muhammad."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "[[LINK|lang_en|Freyja|Freyja]], the goddess of love, beauty, and fertility in [[LINK|lang_en|Norse_mythology|Norse mythology]], is depicted as riding a chariot drawn by cats."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Many cultures have negative [[LINK|lang_en|Superstition|superstitions]] about cats. An example would be the belief that a [[LINK|lang_en|Black_cat|black cat]]\"crossing one's path\" leads to bad luck, or that cats are witches'[[LINK|lang_en|Familiar_spirit|familiars]] used to augment a witch's powers and skills. The killing of cats in Medieval [[LINK|lang_en|Ypres|Ypres]], [[LINK|lang_en|Belgium|Belgium]], is commemorated in the innocuous present-day [[LINK|lang_en|Kattenstoet|Kattenstoet]] (cat parade)."
+					}
+				]
+			},
+			{
+				"index": 8,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "According to a myth in many cultures, cats have multiple lives. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "In many countries, they are believed to have nine lives, but in Italy, Germany, Greece, Brazil and some Spanish-speaking regions, they are said to have seven lives, while in Turkish and Arabic traditions, the number of lives is six. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "The myth is attributed to the natural suppleness and swiftness cats exhibit to escape life-threatening situations. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Also lending credence to this myth is the fact that falling cats often land on their feet, using an instinctive [[LINK|lang_en|Cat_righting_reflex|righting reflex]] to twist their bodies around. Nonetheless, cats can still be injured or killed by a high fall. [[CITE|16|https://everipedia-storage.s3.amazonaws.com/NewlinkFiles/12764649/31592866.jpg]]"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "depictions-in-art"
+				},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Depictions in art"
+					}
+				]
+			}
+		],
+		"images": []
+	},
+	{
+		"paragraphs": [
+			{
+				"index": 0,
+				"tag_type": "h2",
+				"attrs": {
+					"id": "h2-idh2"
+				},
 				"items": []
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 2,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Animal_testing_on_cats|Animal testing on cats]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Animal_track|Animal track]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cancer_in_cats|Cancer in cats]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cat_and_mouse|Cat and mouse]] (cat-and-mouse game)"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 4,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cat_lady|Cat lady]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 5,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cats_on_the_Internet|Cats on the Internet]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 6,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cat_years|Cat years]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 7,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|List_of_cat_breeds|List of cat breeds]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 8,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|List_of_cats|List of cats]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 9,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|List_of_cat_documentaries|List of cat documentaries]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 10,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|List_of_fictional_cats_and_other_felines|List of fictional cats and other felines]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 11,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Pet_door|Pet door]] including cat flap"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 12,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Pet_first_aid|Pet first aid]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 13,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Popular_cat_names|Popular cat names]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 14,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Trap-neuter-return|Trap-neuter-return]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": []
+			},
+			{
+				"index": 4,
+				"tag_type": "dl",
+				"attrs": {},
+				"items": [
+					{
+						"type": "dl",
+						"attrs": {},
+						"items": [
+							{
+								"index": 0,
+								"attrs": {},
+								"tag_type": "dt",
+								"content": [
+									{
+										"type": "text",
+										"content": [
+											{
+												"index": 0,
+												"type": "sentence",
+												"text": "Cats by location"
+											}
+										]
+									}
+								]
+							}
+						]
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "ul",
+				"attrs": {},
+				"items": [
+					{
+						"type": "list-item",
+						"index": 0,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cats_in_ancient_Egypt|Cats in ancient Egypt]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 1,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cats_in_Australia|Cats in Australia]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 2,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cats_in_New_Zealand|Cats in New Zealand]]"
+							}
+						],
+						"tag_type": "li"
+					},
+					{
+						"type": "list-item",
+						"index": 3,
+						"sentences": [
+							{
+								"type": "sentence",
+								"index": 0,
+								"text": "[[LINK|lang_en|Cats_in_the_United_States|Cats in the United States]]"
+							}
+						],
+						"tag_type": "li"
+					}
+				]
 			}
 		],
 		"images": []

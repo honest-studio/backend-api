@@ -68,7 +68,7 @@ export class WikiController {
     @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
     async getWikiBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<ArticleJson> {
         this.wikiService.incrementPageviewCount(lang_code, slug);
-        return this.wikiService.getWikiBySlug(lang_code, slug, options.cache);
+        return this.wikiService.getWikiBySlug(lang_code, slug, options.cache, null, null, false);
     }
 
     @Get('schema/lang_:lang_code/:slug')

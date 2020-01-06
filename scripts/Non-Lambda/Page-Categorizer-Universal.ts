@@ -26,7 +26,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 1000000;
+const BATCH_SIZE = 250000;
 const ARTICLE_PAGE_TYPES = ['Person'];
 const CATEGORY_PAGE_TYPES = ['Person'];
 const SET_TO_INDEXED = 1;
@@ -334,7 +334,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND art.is_indexed = 1
                     AND art.page_type IN (?)
                     AND art.page_lang = ?
-                    AND art.page_note IN ('|24_7_SPORTS|', '|PERFECT_GAME|', '|TOP_DRAWER_SOCCER|')
+                    AND art.page_note IN ('|24_7_SPORTS|', '|PERFECT_GAME|', '|TOP_DRAWER_SOCCER|', '|REALGM_BASKETBALL|', '|TOP_DRAWER_SOCCER|', '|FIELD_LEVEL_SOFTBALL|', '|FIELD_LEVEL_LACROSSE|', '|FIELD_LEVEL_VOLLEYBALL|')
                     AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,
