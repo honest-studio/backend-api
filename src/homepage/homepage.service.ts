@@ -313,13 +313,13 @@ export class HomepageService {
                 <body>
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
-                        ${arp.renderFeaturedCarousel(featuredPreviews)}
-                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
+                        ${arp.renderFeaturedCarousel(featuredPreviews as any)}
+                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews as any, recentPreviews, popularPreviews as any)}
                         ${arp.renderIntro()}
-                        ${arp.renderInTheNewsTabList(inTheNewPreviews)}
+                        ${arp.renderInTheNewsTabList(inTheNewPreviews as any)}
                         ${arp.renderLeaderboard(leaderboardPack, userProfileMegaObj)}
                         ${arp.renderStartContributing()}
-                        ${arp.renderCategories(homepageCategories)}
+                        ${arp.renderCategories(homepageCategories as any)}
                         ${arp.renderStatsBox(site_usage)}
                         ${arp.renderBreadcrumb()}
                     </main>
