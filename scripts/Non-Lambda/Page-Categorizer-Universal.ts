@@ -335,7 +335,7 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND art.is_indexed = 1
                     AND art.page_type IN (?)
                     AND art.page_lang = ?
-                    AND art.page_note IN ('|REALGM_BASKETBALL|', '|FIELD_LEVEL_SOFTBALL|', '|FIELD_LEVEL_LACROSSE|', '|FIELD_LEVEL_VOLLEYBALL|', '|TOP_DRAWER_SOCCER|')
+                    AND art.page_note IN ('|TOP_DRAWER_SOCCER|')
                     AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,

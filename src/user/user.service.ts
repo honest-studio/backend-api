@@ -287,18 +287,30 @@ export class UserService {
         let find_query = {
             'trace.act.account': 'epsovreignid',
             'trace.act.name': 'userinsert',
-            $or: [ { 'trace.act.data.user': { $eq: pack.searchterm } }, { some_random_thing: 10 } ]
+            $or: [ 
+                { 'trace.act.data.user': { $regex: pack.searchterm } }, 
+                { 'trace.act.data.display_name': { $regex: pack.searchterm } }, 
+                { 'trace.act.data.about_me': { $regex: pack.searchterm } },
+            ]
         };
-        const profile_docs = await this.mongo
+
+        let profile_docs = await this.mongo
             .connection()
             .actions.find(find_query)
-            .sort({ 'trace.act.data.timestamp': -1 })
-            // .limit(query.limit)
+            .sort({ block_num: -1 })
             .toArray();
 
-        console.log(util.inspect(profile_docs, {showHidden: false, depth: null, chalk: true}));
+        let seen_usernames: string[] = [];
+        profile_docs = profile_docs && profile_docs.map((doc, doc_idx) => {
+            let raw_profile: PublicProfileType = doc.trace.act.data;
+            if(raw_profile && seen_usernames.indexOf(raw_profile.user) == -1){
+                seen_usernames.push(raw_profile.user);
+                return raw_profile;
+            }
+            else return null;
+        }).filter(p => p);
 
-        return null;
+        return profile_docs;
 
     }
 }

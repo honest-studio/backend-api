@@ -21,7 +21,7 @@ export class SearchService {
         private client: ElasticsearchService, 
         private mysql: MysqlService,
         @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
-        // @Inject(forwardRef(() => UserService)) private userService: UserService,
+        @Inject(forwardRef(() => UserService)) private userService: UserService,
     ) {}
 
     async searchTitle(pack: SearchQueryPack): Promise<PreviewResult[]> {
@@ -163,19 +163,17 @@ export class SearchService {
     }
 
     async searchExtended(pack: SearchQueryPack): Promise<ExtendedSearchResult> {
-        const { query, langs, from, offset, filters } = pack;
-        let result_pack: ExtendedSearchResult = {
-            articles: [],
-            categories: [],
-            profiles: []
-        };
 
         let [articles, categories, profiles ] = await Promise.all([
-            this.searchTitle(pack),
-            this.categoryService.search({ lang: pack.langs[0], schema_for: 'ANYTHING', searchterm: pack.query }),
-            []
+            pack.filters && pack.filters.indexOf('article') ? this.searchTitle(pack) : [],
+            pack.filters && pack.filters.indexOf('category') ? this.categoryService.search({ lang: pack.langs[0], schema_for: 'ANYTHING', searchterm: pack.query }) : [],
+            pack.filters && pack.filters.indexOf('profile') ? this.userService.searchProfiles({ searchterm: pack.query }) : []
         ])
 
-        return result_pack;
+        return {
+            articles,
+            categories,
+            profiles
+        };
     }
 }
