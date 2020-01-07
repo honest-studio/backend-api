@@ -163,17 +163,16 @@ export class SearchService {
     }
 
     async searchExtended(pack: SearchQueryPack): Promise<ExtendedSearchResult> {
-
         let [articles, categories, profiles ] = await Promise.all([
-            pack.filters && pack.filters.indexOf('article') ? this.searchTitle(pack) : [],
-            pack.filters && pack.filters.indexOf('category') ? this.categoryService.search({ lang: pack.langs[0], schema_for: 'ANYTHING', searchterm: pack.query }) : [],
-            pack.filters && pack.filters.indexOf('profile') ? this.userService.searchProfiles({ searchterm: pack.query }) : []
+            pack.filters && pack.filters.indexOf('article') != -1 ? this.searchTitle(pack) : [],
+            pack.filters && pack.filters.indexOf('category') != -1 ? this.categoryService.search({ lang: pack.langs[0], schema_for: 'ANYTHING', searchterm: pack.query }) : [],
+            pack.filters && pack.filters.indexOf('profile') != -1 ? this.userService.searchProfiles({ searchterm: pack.query }) : []
         ])
 
         return {
-            articles,
-            categories,
-            profiles
+            articles: articles && articles.length > 0 ? articles : [],
+            categories: categories && categories.length > 0 ? categories : [],
+            profiles: profiles && profiles.length > 0 ? profiles : []
         };
     }
 }
