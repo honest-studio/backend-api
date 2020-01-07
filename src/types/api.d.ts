@@ -47,6 +47,7 @@ export interface PageCategory {
     schema_regex?: string;
     key_regex?: string;
     values_regex?: string;
+    views?: number
 }
 
 export interface PageCategoryCollection {

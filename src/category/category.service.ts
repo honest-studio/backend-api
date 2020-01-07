@@ -108,6 +108,20 @@ export class CategoryService {
         }
     }
 
+    async incrementViewCount(lang_code: string, slug: string) {
+        // Update the view counter
+        return this.mysql.TryQuery(
+            `
+            UPDATE enterlink_pagecategory cat
+            SET cat.views = cat.views + 1 
+            WHERE 
+                cat.lang = ? 
+                AND cat.slug = ?
+            `,
+            [lang_code, slug]
+        );
+    }
+
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
         let limit_to_use = (query && query.limit && query.limit == undefined) ? 20 : parseInt(query.limit);
         let offset_to_use = (query && query.offset && query.offset == undefined) ? 0 : parseInt(query.offset);
