@@ -69,11 +69,18 @@ export class CategoryController {
         required: false,
         type: Number
     })
+    @ApiImplicitQuery({
+        name: 'increment_view_count',
+        description: 'Whether to increase the page count. Default is no.',
+        required: false,
+        type: Boolean
+    })
     @ApiResponse({
         status: 200,
         description: `A JSON with a list of all the pages belonging to that category`
     })
     async getPagesByCategoryLangSlug(@Param('lang_code') lang_code, @Param('slug') slug, @Query() query): Promise<PageCategoryCollection> {
+        if (query && query.increment_view_count) this.categoryService.incrementViewCount(lang_code, slug);
         return await this.categoryService.getPagesByCategoryLangSlug(lang_code, slug, query);
     }
 
@@ -106,6 +113,7 @@ export class CategoryController {
         description: `A JSON with a list of all the pages belonging to that category`
     })
     async getAMPCategoryPageCtrl(@Res() res, @Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
+        this.categoryService.incrementViewCount(lang_code, slug);
         return await this.categoryService.getAMPCategoryPage(res, lang_code, slug);
     }
 
