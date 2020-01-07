@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { SearchQueryPack, SearchService } from './search.service';
+import { ExtendedSearchResult, PreviewResult } from '../types/api';
 
 @Controller('v2/search')
 @ApiUseTags('Search')
@@ -15,8 +16,20 @@ export class SearchController {
         status: 200,
         description: `Returns search results`
     })
-    async searchTitleCtrlPost(@Body() pack: SearchQueryPack): Promise<any> {
+    async searchTitleCtrlPost(@Body() pack: SearchQueryPack): Promise<PreviewResult[]> {
         return this.searchService.searchTitle(pack);
+    }
+
+    @Post('extended')
+    @ApiOperation({ 
+        title: `Search Everipedia articles, categories, and profiles by a search term`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns search results`
+    })
+    async searchExtendedCtrlPost(@Body() pack: SearchQueryPack): Promise<ExtendedSearchResult> {
+        return this.searchService.searchExtended(pack);
     }
 
     @Get('title/lang_:lang_code/:searchterm')

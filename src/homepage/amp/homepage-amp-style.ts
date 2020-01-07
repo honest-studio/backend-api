@@ -847,7 +847,6 @@ amp-sidebar .toc-button button, amp-sidebar .toc-button button, #pg-opts .toc-bu
     height: initial;
     position: relative;
     width: 100%;
-    max-width: 1100px;
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 30px 0px;

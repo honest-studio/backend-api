@@ -1,21 +1,30 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject, forwardRef } from '@nestjs/common';
+import { CategoryService } from '../category';
+import { UserService } from '../user';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { MysqlService } from '../feature-modules/database';
 import { sanitizeTextPreview } from '../utils/article-utils/article-tools';
+import { SearchType, ExtendedSearchResult, PreviewResult, ProfileSearchPack } from '../types/api';
 const util = require('util');
 
 export interface SearchQueryPack {
     query: string,
     langs?: string[],
     from?: number,
-    offset?: number
+    offset?: number,
+    filters?: SearchType[]
 }
 
 @Injectable()
 export class SearchService {
-    constructor(private client: ElasticsearchService, private mysql: MysqlService) {}
+    constructor(
+        private client: ElasticsearchService, 
+        private mysql: MysqlService,
+        @Inject(forwardRef(() => CategoryService)) private categoryService: CategoryService,
+        @Inject(forwardRef(() => UserService)) private userService: UserService,
+    ) {}
 
-    async searchTitle(pack: SearchQueryPack): Promise<any> {
+    async searchTitle(pack: SearchQueryPack): Promise<PreviewResult[]> {
         const { query, langs, from, offset } = pack;
         const searchJSON = {
             from: from ? from : 0,
@@ -119,6 +128,7 @@ export class SearchService {
                 art.blurb_snippet AS text_preview, 
                 art.pageviews, 
                 art.page_note,
+                art.page_type,
                 art.is_adult_content, 
                 art.creation_timestamp,
                 art.lastmod_timestamp
@@ -150,5 +160,19 @@ export class SearchService {
             AND sch.mapped_keyword LIKE ?`,
             [page_type, query + '%']
         );
+    }
+
+    async searchExtended(pack: SearchQueryPack): Promise<ExtendedSearchResult> {
+        let [articles, categories, profiles ] = await Promise.all([
+            pack.filters && pack.filters.indexOf('article') != -1 ? this.searchTitle(pack) : [],
+            pack.filters && pack.filters.indexOf('category') != -1 ? this.categoryService.search({ lang: pack.langs[0], schema_for: 'ANYTHING', searchterm: pack.query }) : [],
+            pack.filters && pack.filters.indexOf('profile') != -1 ? this.userService.searchProfiles({ searchterm: pack.query }) : []
+        ])
+
+        return {
+            articles: articles && articles.length > 0 ? articles : [],
+            categories: categories && categories.length > 0 ? categories : [],
+            profiles: profiles && profiles.length > 0 ? profiles : []
+        };
     }
 }

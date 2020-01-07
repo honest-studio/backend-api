@@ -123,7 +123,7 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
 
     // Our DB has very specific legacy encoding schemes for slugs
     // This function takes care of that
-    public cleanSlugForMysql(slug: string, encodeToo: boolean = false) {
+    public cleanSlugForMysql(slug: string, encodeToo: boolean = false, includeLongDash?: boolean) {
         let slugToReturn = slug;
         // slugToReturn = decodeURIComponent(slug)
         const replacements = [
@@ -133,6 +133,9 @@ export class MysqlService implements OnApplicationShutdown, OnModuleInit {
             { find: /\)/g, replace: "%29" },
     //        { find: /–/g, replace: "%E2%80%93" },
         ]
+        if (includeLongDash){
+            replacements.push({ find: /–/g, replace: "%E2%80%93" });
+        }
         for (let set of replacements) {
             slugToReturn = slugToReturn.replace(set.find, set.replace);
         }

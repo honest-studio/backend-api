@@ -235,10 +235,10 @@ export class WikiService {
         // Get the source wiki, which might be present in the input pack
         if (inputPack.source.override_articlejson){
             sourceWiki = inputPack.source.override_articlejson;
-        } else sourceWiki = await this.getWikiBySlug(inputPack.source.lang, inputPack.source.slug, false);
+        } else sourceWiki = await this.getWikiBySlug(inputPack.source.lang, inputPack.source.slug, false, null, null, false);
 
         // Get the target ArticleJson, or handle the case where the page is removed
-        let targetWiki = await this.getWikiBySlug(inputPack.target.lang, inputPack.target.slug, false, true);
+        let targetWiki = await this.getWikiBySlug(inputPack.target.lang, inputPack.target.slug, false, true, null, false);
 
         // Get the merged result
         let mergedResult = await mergeWikis(sourceWiki, targetWiki);
@@ -250,8 +250,15 @@ export class WikiService {
         return mergedResult;
     }
 
-    async getWikiBySlug(lang_code: string, slug: string, cache: boolean = false, ignoreRemovalStatus: boolean = false, increment_views: boolean = true): Promise<ArticleJson> {
-        let mysql_slug = this.mysql.cleanSlugForMysql(slug);
+    async getWikiBySlug(
+        lang_code: string, 
+        slug: string, 
+        cache: boolean = false, 
+        ignoreRemovalStatus: boolean = false, 
+        increment_views: boolean = true,
+        last_resort_search?: boolean
+    ): Promise<ArticleJson> {
+        let mysql_slug = this.mysql.cleanSlugForMysql(slug, null, last_resort_search == true);
         // console.log("mysql slug: ", mysql_slug)
         let alternateSlug = decodeURIComponent(mysql_slug);
 
@@ -334,7 +341,13 @@ export class WikiService {
             ipfs_hash = current_hash;
 
 
-        if (!ipfs_hash) throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
+        if (!ipfs_hash && last_resort_search){
+            throw new NotFoundException(`Wiki /lang_${lang_code}/${slug} could not be found`);
+        } 
+        else if (!ipfs_hash && !last_resort_search){
+            // Try one more time 
+            return this.getWikiBySlug(lang_code, slug, cache, ignoreRemovalStatus, increment_views, true)
+        }
 
         // No cache available. Pull and construct it
         // get wiki from MySQL
@@ -404,7 +417,7 @@ export class WikiService {
     }
 
     async getAMPBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<string> {
-        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug, BooleanTools.default(cache));
+        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug, BooleanTools.default(cache), null, null, false);
         let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
         ampWiki.main_photo[0].width = photoExtraData.width;
         ampWiki.main_photo[0].height = photoExtraData.height;
@@ -415,7 +428,7 @@ export class WikiService {
     }
 
     async getSchemaBySlug(lang_code: string, slug: string): Promise<string> {
-        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
+        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false, false);
         const schema = renderSchema(wiki, 'html');
         return schema;
     }
@@ -1166,7 +1179,7 @@ export class WikiService {
     }
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
-        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false);
+        const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false, false);
         const article_boosts_promise = this.getBoostsByWikiLangSlug(slug, lang_code);
         const see_also_promise = this.getSeeAlsos(wiki, lang_code);
         const schema_promise = renderSchema(wiki, 'JSON');

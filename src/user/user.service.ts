@@ -1,5 +1,5 @@
 import { Injectable, forwardRef, Inject, NotFoundException } from '@nestjs/common';
-import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item } from '../types/api';
+import { Boost, BoostsByWikiReturnPack, BoostsByUserReturnPack, Wikistbl2Item, ProfileSearchPack, PublicProfileType } from '../types/api';
 import { WikiIdentity } from '../types/article-helpers';
 import { MongoDbService, RedisService } from '../feature-modules/database';
 import { PreviewService } from '../preview';
@@ -281,5 +281,36 @@ export class UserService {
         const profile = await this.redis.connection().get(`user:${account_name}:profile`);
         if (!profile) throw new NotFoundException({ error: "User has no profile" });
         return JSON.parse(profile);
+    }
+
+    async searchProfiles(pack: ProfileSearchPack): Promise<PublicProfileType[]> {
+        let find_query = {
+            'trace.act.account': 'epsovreignid',
+            'trace.act.name': 'userinsert',
+            $or: [ 
+                { 'trace.act.data.user': { $regex: pack.searchterm } }, 
+                { 'trace.act.data.display_name': { $regex: pack.searchterm } }, 
+                { 'trace.act.data.about_me': { $regex: pack.searchterm } },
+            ]
+        };
+
+        let profile_docs = await this.mongo
+            .connection()
+            .actions.find(find_query)
+            .sort({ block_num: -1 })
+            .toArray();
+
+        let seen_usernames: string[] = [];
+        profile_docs = profile_docs && profile_docs.map((doc, doc_idx) => {
+            let raw_profile: PublicProfileType = doc.trace.act.data;
+            if(raw_profile && seen_usernames.indexOf(raw_profile.user) == -1){
+                seen_usernames.push(raw_profile.user);
+                return raw_profile;
+            }
+            else return null;
+        }).filter(p => p);
+
+        return profile_docs;
+
     }
 }

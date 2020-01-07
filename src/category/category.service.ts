@@ -265,6 +265,16 @@ export class CategoryService {
     }
 
     async search(pack: CategorySearchPack): Promise<PageCategory[]> {
+        let schema_for_clause;
+        if (pack.schema_for  == "ANYTHING") {
+            schema_for_clause = "";
+        }
+        else {
+            schema_for_clause = SqlString.format(
+                " AND (cat.schema_for = ? OR cat.schema_for = 'Thing')",
+                [pack.schema_for]
+            );
+        }
         let categories: any[] = await this.mysql.TryQuery(
             `
             SELECT *
@@ -272,7 +282,7 @@ export class CategoryService {
                 enterlink_pagecategory cat 
             WHERE 
                 cat.lang = ? 
-                AND (cat.schema_for = ? OR cat.schema_for = 'Thing')
+                ${schema_for_clause}
                 AND (
                     cat.title REGEXP ? 
                     OR cat.schema_regex REGEXP ? 

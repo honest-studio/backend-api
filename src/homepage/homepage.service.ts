@@ -210,9 +210,11 @@ export class HomepageService {
         // Filter the trending items
         let trendingItems: WikiIdentity[] = trending && trending.map(item => {
             const { lang_code, slug } = item;
+            let testWikiLangSlug = `lang_${lang_code}/${slug}`;
 
             // Do nothing for empty slugs and also remove excluded wikilangslugs
             if (!item.slug || item.slug == '') return null;
+            else if (excludedList.indexOf(testWikiLangSlug.toLowerCase()) >= 0) return null;
             else return { lang_code, slug };
 
         })
@@ -225,6 +227,7 @@ export class HomepageService {
 
             // Do nothing for empty wikilangslugs and also remove excluded wikilangslugs
             if (!item.wikilangslug || item.wikilangslug == '') return null;
+            else if (excludedList.indexOf(item.wikilangslug.toLowerCase()) >= 0) return null;
             else return { lang_code, slug };
         })
         .filter(f => f)
@@ -310,13 +313,13 @@ export class HomepageService {
                 <body>
                     ${arp.renderHeaderBar()}
                     <main id="mainEntityId">
-                        ${arp.renderFeaturedCarousel(featuredPreviews)}
-                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews, recentPreviews, popularPreviews)}
+                        ${arp.renderFeaturedCarousel(featuredPreviews as any)}
+                        ${arp.renderTrendingRecentPopularTabList(trendingPreviews as any, recentPreviews, popularPreviews as any)}
                         ${arp.renderIntro()}
-                        ${arp.renderInTheNewsTabList(inTheNewPreviews)}
+                        ${arp.renderInTheNewsTabList(inTheNewPreviews as any)}
                         ${arp.renderLeaderboard(leaderboardPack, userProfileMegaObj)}
                         ${arp.renderStartContributing()}
-                        ${arp.renderCategories(homepageCategories)}
+                        ${arp.renderCategories(homepageCategories as any)}
                         ${arp.renderStatsBox(site_usage)}
                         ${arp.renderBreadcrumb()}
                     </main>

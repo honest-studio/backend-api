@@ -16,6 +16,7 @@ interface PreviewResult {
     text_preview: string;
     pageviews: number;
     page_note: string;
+    page_type: string;
     is_adult_content: boolean;
     creation_timestamp: Date;
     lastmod_timestamp: Date;
@@ -25,6 +26,10 @@ interface PreviewResult {
     is_indexed: boolean;
     is_removed: boolean;
     html_blob?: string;
+}
+
+export interface ProfileSearchPack {
+    searchterm: string
 }
 
 export interface PageCategory {
@@ -52,6 +57,14 @@ export interface PageCategoryCollection {
 export type PageIndexedLinkCollection = string[];
 
 export type WikiSearchResult = PreviewResult;
+
+export type SearchType = 'article' | 'profile' | 'category';
+
+export interface ExtendedSearchResult {
+    articles: WikiSearchResult[],
+    categories: PageCategory[],
+    profiles: PublicProfileType[]
+}
 
 export interface BookInfoPack {
     title: string;
@@ -140,6 +153,33 @@ export interface BoostsByUserReturnPack {
     user: string;
     wiki_packs: BoostsByWikiReturnPack[]
 }
+
+export interface ProfileLanguageType {
+    lang_code: string;
+    level: number; // Should be 0-3
+};
+
+export interface ProfileLocationType {
+    city: string;
+    state: string;
+    country: string;
+};
+
+export interface ProfilePlatformsType {
+    platform: string;
+    url: string;
+};
+
+export interface PublicProfileType {
+    user: string; // 'imthemachine'
+    about_me: string; // 'Chief Product Officer'
+    display_name: string; // 'Daniel Liebeskind'
+    img: string; // "https://everipedia.org/images/daniel_liebeskind.jpg"
+    languages: ProfileLanguageType[]; // [{"lang_code":"EN","level":3}]
+    location: ProfileLocationType; // {"city":"los angeles","country":"US","state":"CA"}
+    platforms: ProfilePlatformsType[]; // [{"platform":"Instagram","url":"exploremagic"}]
+    error?: string; // Gets added when user has no public profile instantiated.
+};
 
 /**
  * Describe a successful response to a media upload
