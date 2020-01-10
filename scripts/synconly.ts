@@ -276,6 +276,10 @@ async function redis_process_actions (actions) {
             const profile = action.trace.act.data;
             pipeline.set(`user:${user}:profile`, JSON.stringify(profile));
         }
+        else if (action.trace.act.name == "mkreferendum") {
+            const proposal_id = action.trace.act.data.proposal_id;
+            pipeline.set(`proposal:${proposal_id}:referendum`, 1);
+        }
         pipeline.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
         await pipeline.exec();
     }
