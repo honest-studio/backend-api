@@ -1,4 +1,3 @@
-export * from './base-provider';
 export * from './common-module';
 export * from './config-schema';
 export * from './config-service';
