@@ -2,7 +2,7 @@ import { Module, MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { ProposalController, ProposalService } from './proposal';
 import { WikiController, WikiService } from './wiki';
-import { CommonModule, ConfigService, MetricsModule, MetricType } from './common';
+import { CommonModule, ConfigService } from './common';
 import { RecentActivityController } from './recent-activity/recent-activity.controller';
 import { RecentActivityService } from './recent-activity/recent-activity.service';
 import { SitemapController, SitemapService } from './sitemap';
@@ -35,91 +35,6 @@ const histogramLabelBuckets = ['pid']
     imports: [
         CommonModule,
         DatabaseModule,
-        MetricsModule.forRoot({
-            prefix: `PID_${process.pid}`,
-            withDefaultsMetrics:true,
-            // data available at http://localhost:{restPort}/api/v1/metrics
-            defaultLabels: {
-                // attach PID to this instance
-                app: `PID_${process.pid}`
-            }
-        }),
-        MetricsModule.forMetrics([
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_hash_pre_sql',
-                    help: 'get_prev_by_hash_pre_sql timer for get previews by hash (PRE-SQL QUERY)',
-                    buckets: histogramTimerBuckets,
-                    //labelNames: ['pid']
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_hash_sql_only',
-                    help: 'get_prev_by_hash_sql_only timer for get previews by hash (SQL QUERY ONLY)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_hash_post_sql',
-                    help: 'get_prev_by_hash_post_sql timer for get previews by hash (POST-SQL QUERY)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_hash_total_req',
-                    help: 'get_prev_by_hash_total_req timer for get previews by hash (TOTAL REQUEST)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            // by slug:
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_slug_pre_sql',
-                    help: 'get_prev_by_slug_pre_sql timer for get previews by slug (PRE-SQL QUERY)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_slug_sql_only',
-                    help: 'get_prev_by_slug_sql_only timer for get previews by slug (SQL QUERY ONLY)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_slug_post_sql',
-                    help: 'get_prev_by_slug_post_sql timer for get previews by slug (POST-SQL QUERY)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            },
-            {
-                type: MetricType.Histogram,
-                configuration: {
-                    name: 'get_prev_by_slug_total_req',
-                    help: 'get_prev_by_slug_total_req timer for get previews by slug (TOTAL REQUEST)',
-                    buckets: histogramTimerBuckets,
-                    labelNames: histogramLabelBuckets
-                }
-            }
-        ]),
         ElasticsearchModule.registerAsync({
             imports: [CommonModule],
             useFactory: async (config: ConfigService) => {
