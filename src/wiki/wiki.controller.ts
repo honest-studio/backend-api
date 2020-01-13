@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UsePipes } from '@nestjs/common';
+import { Body, Headers, Controller, Get, Param, Post, Query, UsePipes } from '@nestjs/common';
 import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { ArticleJson } from '../types/article';
@@ -167,8 +167,10 @@ export class WikiController {
         status: 200,
         description: `Returns the ipfs_hash of the submitted wiki`
     })
-    async submitWiki(@Body() wiki): Promise<any> {
-        return this.wikiService.submitWiki(wiki);
+    async submitWiki(@Body() wiki, @Headers('authorization') auth): Promise<any> {
+        let token = null;
+        if (auth.slice(0,6) == "Bearer" && auth.split(' ').length == 2) token = auth.split(' ')[1]
+        return this.wikiService.submitWiki(wiki, token);
     }
 
     @Post('get-merged-result')

@@ -629,7 +629,7 @@ export class WikiService {
         else return [];
     }
 
-    async submitWiki(wiki: ArticleJson): Promise<any> {
+    async submitWiki(wiki: ArticleJson, token: string = null): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
         // get wiki info
@@ -679,6 +679,11 @@ export class WikiService {
             INTERVAL_MSEC
         )
         setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC);
+
+        // If the token is set, relay the transaction on behalf of the user
+        if (token) {
+            
+        }
 
         return { ipfs_hash };
     }
