@@ -288,9 +288,9 @@ export class UserService {
             'trace.act.account': 'epsovreignid',
             'trace.act.name': 'userinsert',
             $or: [ 
-                { 'trace.act.data.user': { $regex: pack.searchterm } }, 
-                { 'trace.act.data.display_name': { $regex: pack.searchterm } }, 
-                { 'trace.act.data.about_me': { $regex: pack.searchterm } },
+                { 'trace.act.data.user': { $regex: pack.searchterm, $options: 'i' } }, 
+                { 'trace.act.data.display_name': { $regex: pack.searchterm, $options: 'i' } }, 
+                { 'trace.act.data.about_me': { $regex: pack.searchterm, $options: 'i' } },
             ]
         };
 

@@ -1,6 +1,6 @@
 
 const commander = require('commander');
-import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType } from '../../src/types/article';
+import { ArticleJson, InfoboxValue, Sentence, Media, Table, Paragraph, Citation, MediaType, ListItem, TableRow, NestedTextItem } from '../../src/types/article';
 import * as readline from 'readline';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
@@ -84,25 +84,68 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
         wiki.ipfs_hash = hashCacheResult[0].ipfs_hash;
     }
 
-     // No index if article is 'thin content'.
-    let noIndexArticle = true;
-
     let noIndexCounter = 0, pageBodyCounter = 0, infoboxCounter = 0;
+    let noIndexArticle = true;
 
     // Calculate whether thin content.
     wiki.page_body &&
         wiki.page_body.map((section) => {
-            noIndexArticle &&
-                section &&
-                section.paragraphs &&
-                (section.paragraphs as Paragraph[]).map((paragraph) => {
-                    noIndexArticle &&
-                        paragraph &&
-                        paragraph.items &&
-                        (paragraph.items as Sentence[]).map((item) => {
-                            if (item && item.text && item.text.length) pageBodyCounter += item.text.length;
+            section &&
+            section.paragraphs &&
+            (section.paragraphs as Paragraph[]).forEach((paragraph) => {
+                if (paragraph && paragraph.items) {
+                    if (['p', 'blockquote', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(paragraph.tag_type)) {
+                        (paragraph.items as Sentence[]).forEach((item) => {
+                            if (item && item.text && item.text.length) noIndexCounter += item.text.length;
                         });
-                });
+                    } else if (['ul', 'ol'].includes(paragraph.tag_type)) {
+                        (paragraph.items as ListItem[]).forEach((list) => {
+                            list.sentences &&
+                                list.sentences.forEach((sent) => {
+                                    if (sent && sent.text && sent.text.length)
+                                        noIndexCounter += sent.text.length;
+                                });
+                        });
+                    } else if (['table'].includes(paragraph.tag_type)) {
+                        (paragraph.items as Table[]).forEach((table) => {
+                            table.caption &&
+                                table.caption.sentences.forEach((sent) => {
+                                    if (sent && sent.text && sent.text.length)
+                                        noIndexCounter += sent.text.length;
+                                });
+
+                            let all_rows: any[] = [
+                                table.thead && table.thead.rows,
+                                table.tbody && table.tbody.rows,
+                                table.tfoot && table.tfoot.rows,
+                            ]
+                            .filter((r) => r);
+
+                            // Merge the rows
+                            all_rows = [].concat.apply([], all_rows);
+
+                            all_rows.length &&
+                                all_rows.forEach((row) => {
+                                    row.cells &&
+                                        row.cells.forEach((cell) => {
+                                            cell.content &&
+                                                cell.content.forEach((content) => {
+                                                    if (content.type == 'text') {
+                                                        (content as NestedTextItem).content.forEach(
+                                                            (sent) => {
+                                                                if (sent && sent.text && sent.text.length)
+                                                                    noIndexCounter += sent.text.length;
+                                                            },
+                                                        );
+                                                    }
+                                                });
+                                        });
+                                });
+                        });
+                    } else {
+                    }
+                }
+            });
     });
     noIndexCounter += pageBodyCounter;
     console.log('CALCULATED PAGE BODY LENGTH IS: ', pageBodyCounter);
@@ -133,8 +176,8 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
         && main_photo_test.url != "https://everipedia-fast-cache.s3.amazonaws.com/images/no-image-slide-big.png" 
         && main_photo_test.url != "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png"
     ){
-        noIndexCounter += 50;
-        console.log("MAIN PHOTO FOUND, COUNT ADDED: ", 50);
+        noIndexCounter += 75;
+        console.log("MAIN PHOTO FOUND, COUNT ADDED: ", 75);
     }
 
     console.log('CALCULATED INFOBOX LENGTH IS: ', infoboxCounter);
