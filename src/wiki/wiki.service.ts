@@ -28,6 +28,8 @@ var colors = require('colors');
 import FormData from 'form-data';
 import crypto from 'crypto';
 import multihash from 'multihashes';
+const { Api, JsonRpc, RpcError } = require('eosjs');
+import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 const MAX_SLUG_SIZE = 256;
 const MAX_LANG_CODE_SIZE = 7;
@@ -682,7 +684,41 @@ export class WikiService {
 
         // If the token is set, relay the transaction on behalf of the user
         if (token) {
+            const privkey = this.config.get("PAY_CPU_PRIVKEY");
+            const pubkey = this.config.get("PAY_CPU_PUBKEY");
+            const signatureProvider = new JsSignatureProvider([privkey]);
+            const rpc = new JsonRpc('https://api.libertyblock.io', { fetch });
+            const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
             
+            try {
+                const result = await api.transact({
+                    actions: [{
+                      account: 'everipediaiq',
+                      name: 'epartpropose',
+                      authorization: [{
+                        actor: 'evrpdcronjob',
+                        permission: 'active',
+                      }],
+                      data: {
+                        proposer: 'evrpdcronjob',
+                        slug: cleanedSlug,
+                        ipfs_hash,
+                        lang_code: page_lang,
+                        group_id: -1,
+                        comment: "Relayed by Everipedia API",
+                        memo: "Relayed by Everipedia API",
+                        permission: "active"
+                      },
+                    }]
+                  }, {
+                    blocksBehind: 3,
+                    expireSeconds: 30,
+                  });
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+            return { ipfs_hash, result }
         }
 
         return { ipfs_hash };
