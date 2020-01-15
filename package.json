@@ -21,6 +21,7 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json --forceExit",
     "maintenance:run-patch": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Page-Categorizer-Universal.js -s 1 -e 58000000",
+    "maintenance:run-patch-2": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Minimum-Length-Deindexer.js -s 1 -e 58000000",
     "maintenance:run-wiki-deindexer": "tsc --p ./tsconfig.json && node ./dist/scripts/Non-Lambda/Wikipedia-Import-Deindexer.js -s 0 -e 1000000",
     "maintenance:run-wiki-deleted-page-finder": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Deleted-Page-Finder/Wiki-Deleted-Page-Finder.js -s 943911 -e 1000000",
     "maintenance:run-wiki-import": "tsc --p ./tsconfig.json && node ./dist/scripts/Wiki-Importer/Wiki-Import.js -s 1529596 -e 1529597",

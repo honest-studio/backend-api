@@ -27,7 +27,7 @@ commander
 const BATCH_SIZE = 250;
 const PAGE_LANG = 'en';
 const output_file_path = path.resolve(__dirname, '../../../scripts/Non-Lambda', 'output', 'short_files.txt');
-const indexMinimimum = 275; // # of characters required for indexing
+const indexMinimimum = 650; // # of characters required for indexing
 
 export const logYlw = (inputString: string) => {
     return console.log(chalk.yellow.bold(inputString));
@@ -96,14 +96,14 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
                 if (paragraph && paragraph.items) {
                     if (['p', 'blockquote', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(paragraph.tag_type)) {
                         (paragraph.items as Sentence[]).forEach((item) => {
-                            if (item && item.text && item.text.length) noIndexCounter += item.text.length;
+                            if (item && item.text && item.text.length) pageBodyCounter += item.text.length;
                         });
                     } else if (['ul', 'ol'].includes(paragraph.tag_type)) {
                         (paragraph.items as ListItem[]).forEach((list) => {
                             list.sentences &&
                                 list.sentences.forEach((sent) => {
                                     if (sent && sent.text && sent.text.length)
-                                        noIndexCounter += sent.text.length;
+                                        pageBodyCounter += sent.text.length;
                                 });
                         });
                     } else if (['table'].includes(paragraph.tag_type)) {
@@ -111,7 +111,7 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
                             table.caption &&
                                 table.caption.sentences.forEach((sent) => {
                                     if (sent && sent.text && sent.text.length)
-                                        noIndexCounter += sent.text.length;
+                                        pageBodyCounter += sent.text.length;
                                 });
 
                             let all_rows: any[] = [
@@ -134,7 +134,7 @@ export const MinimumLengthDeindexer = async (inputString: string) => {
                                                         (content as NestedTextItem).content.forEach(
                                                             (sent) => {
                                                                 if (sent && sent.text && sent.text.length)
-                                                                    noIndexCounter += sent.text.length;
+                                                                    pageBodyCounter += sent.text.length;
                                                             },
                                                         );
                                                     }
