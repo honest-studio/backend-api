@@ -26,7 +26,7 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250000;
+const BATCH_SIZE = 250;
 const ARTICLE_PAGE_TYPES = ['Person'];
 const CATEGORY_PAGE_TYPES = ['Person'];
 const SET_TO_INDEXED = 1;
