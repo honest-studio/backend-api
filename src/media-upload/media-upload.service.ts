@@ -506,6 +506,7 @@ export class MediaUploadService {
             };
 
             // Determine how to move forward based on the MIME type
+            let videoThumbBuffer = null;
             if (mimePack.mime.includes('image')) {
                 switch (mimePack.mime) {
                     // Process SVGs
@@ -817,6 +818,7 @@ export class MediaUploadService {
 
                     // Set the buffer
                     bufferPack.mainBuf = bufferToUse;
+                    videoThumbBuffer = fs.readFileSync(snapshotPath);
 
                     // Resize the snapshot JPEG
                     bufferPack.thumbBuf = await (Jimp as any)
@@ -870,6 +872,7 @@ export class MediaUploadService {
                     || mimePack.mime.indexOf('svg') >= 0
                     || mimePack.mime.indexOf('application/xml') >= 0
                     || mimePack.mime.indexOf('image/svg+xml') >= 0
+                    || (mimePack.mime.includes('video') && videoThumbBuffer)
                 )
             ){
                 let temp_bufferToUse = bufferToUse;
@@ -882,6 +885,9 @@ export class MediaUploadService {
                     temp_bufferToUse = await svg2png(bufferToUse, { width: PHOTO_CONSTANTS.CROPPED_WIDTH, height: PHOTO_CONSTANTS.CROPPED_HEIGHT })
                         .then(buffer => buffer)
                         .catch(e => console.error(e));
+                }
+                else if (mimePack.mime.includes('video')){
+                    temp_bufferToUse = videoThumbBuffer;
                 }
 
                 // Get the original image in WEBP form
@@ -920,10 +926,13 @@ export class MediaUploadService {
 
 
             // gzip the main files (and the webp's, if present)
-            if (!mimePack.mime.includes('video') && useMediaRoute){
+            if (!mimePack.mime.includes('video')){
                 bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });
+            }
+            
+            if (useMediaRoute){
                 bufferPack.webpOriginalBuf = zlib.gzipSync(bufferPack.webpOriginalBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });
@@ -933,7 +942,6 @@ export class MediaUploadService {
                 bufferPack.webpThumbBuf = zlib.gzipSync(bufferPack.webpThumbBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });
-
             }
 
             // Set the AWS S3 bucket keys
@@ -963,7 +971,7 @@ export class MediaUploadService {
                 let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
                 let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
 
-                if (!mimePack.mime.includes('video')){
+                if (!mimePack.mime.includes('video') || videoThumbBuffer){
                     // Specify S3 upload options for the webp'd original
                     let uploadParamsMainWebpOriginal = {
                         Bucket: this.awsS3Service.getBucket(),
@@ -1064,7 +1072,6 @@ export class MediaUploadService {
                             // Create and upload the thumbnail
                             // gzip the thumbnail
                             bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
-
 
                             // Set the AWS S3 bucket key
                             let theThumbSuffix = encodeURIComponent(slugify(slug, { remove: /[*+~.()'"#%?!:@]/g })) + `/${filename}__thumb.${varPack.thumbSuffix}`;
