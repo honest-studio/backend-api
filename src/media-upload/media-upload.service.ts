@@ -793,6 +793,7 @@ export class MediaUploadService {
                 }
             } else if (mimePack.mime.includes('video')) {
                 // Because of various shenanigans, you need to write the buffer to /tmp first...
+
                 var tempFileNameInput =
                     crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.' + mimePack.ext;
                 var tempFileNameOutput = crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.jpeg';
@@ -818,7 +819,8 @@ export class MediaUploadService {
                     bufferPack.mainBuf = bufferToUse;
 
                     // Resize the snapshot JPEG
-                    bufferPack.thumbBuf = await (Jimp as any).read(fs.readFileSync(snapshotPath))
+                    bufferPack.thumbBuf = await (Jimp as any)
+                        .read(fs.readFileSync(snapshotPath))
                         .then((image) =>
                             image
                                 .background(0xffffffff)
@@ -957,86 +959,86 @@ export class MediaUploadService {
                 let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
                 let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
 
-                // Specify S3 upload options for the webp'd original
-                let uploadParamsMainWebpOriginal = {
-                    Bucket: this.awsS3Service.getBucket(),
-                    Key: theMainKeyWebpOriginal,
-                    Body: bufferPack.webpOriginalBuf,
-                    ACL: 'public-read',
-                    ContentType: "image/webp",
-                    CacheControl: 'max-age=31536000',
-                };
-
-                // Specify S3 upload options for the medium webp
-                let uploadParamsMainWebpMedium = {
-                    Bucket: this.awsS3Service.getBucket(),
-                    Key: theMainKeyWebpMedium,
-                    Body: bufferPack.webpMediumBuf,
-                    ACL: 'public-read',
-                    ContentType: "image/webp",
-                    CacheControl: 'max-age=31536000',
-                };
-
-                // Specify S3 upload options for the thumb webp
-                let uploadParamsMainWebpThumb = {
-                    Bucket: this.awsS3Service.getBucket(),
-                    Key: theMainKeyWebpThumb,
-                    Body: bufferPack.webpThumbBuf,
-                    ACL: 'public-read',
-                    ContentType: "image/webp",
-                    CacheControl: 'max-age=31536000',
-                };
-
                 if (!mimePack.mime.includes('video')){
+                    // Specify S3 upload options for the webp'd original
+                    let uploadParamsMainWebpOriginal = {
+                        Bucket: this.awsS3Service.getBucket(),
+                        Key: theMainKeyWebpOriginal,
+                        Body: bufferPack.webpOriginalBuf,
+                        ACL: 'public-read',
+                        ContentType: "image/webp",
+                        CacheControl: 'max-age=31536000',
+                    };
+
+                    // Specify S3 upload options for the medium webp
+                    let uploadParamsMainWebpMedium = {
+                        Bucket: this.awsS3Service.getBucket(),
+                        Key: theMainKeyWebpMedium,
+                        Body: bufferPack.webpMediumBuf,
+                        ACL: 'public-read',
+                        ContentType: "image/webp",
+                        CacheControl: 'max-age=31536000',
+                    };
+
+                    // Specify S3 upload options for the thumb webp
+                    let uploadParamsMainWebpThumb = {
+                        Bucket: this.awsS3Service.getBucket(),
+                        Key: theMainKeyWebpThumb,
+                        Body: bufferPack.webpThumbBuf,
+                        ACL: 'public-read',
+                        ContentType: "image/webp",
+                        CacheControl: 'max-age=31536000',
+                    };
+
                     uploadParamsMainWebpOriginal['ContentEncoding'] = 'gzip';
                     uploadParamsMainWebpMedium['ContentEncoding'] = 'gzip';
                     uploadParamsMainWebpThumb['ContentEncoding'] = 'gzip';
-                };
 
-                // Upload the original in webp form
-                returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
-                    this.awsS3Service.upload(uploadParamsMainWebpOriginal, (s3ErrOuter, dataOuter) => {
-                        if (s3ErrOuter){
-                            console.log(colors.yellow('ERROR: s3ErrOuter for webp original image'));
-                            console.log(s3ErrOuter);
-                            reject(s3ErrOuter);
-                        }
-                        else {
-                            returnPack.webp_original = dataOuter.Location;
-                            resolve(returnPack);
-                        }
+                    // Upload the original in webp form
+                    returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                        this.awsS3Service.upload(uploadParamsMainWebpOriginal, (s3ErrOuter, dataOuter) => {
+                            if (s3ErrOuter){
+                                console.log(colors.yellow('ERROR: s3ErrOuter for webp original image'));
+                                console.log(s3ErrOuter);
+                                reject(s3ErrOuter);
+                            }
+                            else {
+                                returnPack.webp_original = dataOuter.Location;
+                                resolve(returnPack);
+                            }
+                        });
                     });
-                });
 
-                // Upload the medium webp
-                returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
-                    this.awsS3Service.upload(uploadParamsMainWebpMedium, (s3ErrOuter, dataOuter) => {
-                        if (s3ErrOuter){
-                            console.log(colors.yellow('ERROR: s3ErrOuter for webp medium image'));
-                            console.log(s3ErrOuter);
-                            reject(s3ErrOuter);
-                        }
-                        else {
-                            returnPack.webp_medium = dataOuter.Location;
-                            resolve(returnPack);
-                        }
+                    // Upload the medium webp
+                    returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                        this.awsS3Service.upload(uploadParamsMainWebpMedium, (s3ErrOuter, dataOuter) => {
+                            if (s3ErrOuter){
+                                console.log(colors.yellow('ERROR: s3ErrOuter for webp medium image'));
+                                console.log(s3ErrOuter);
+                                reject(s3ErrOuter);
+                            }
+                            else {
+                                returnPack.webp_medium = dataOuter.Location;
+                                resolve(returnPack);
+                            }
+                        });
                     });
-                });
 
-                // Upload the thumb webp
-                returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
-                    this.awsS3Service.upload(uploadParamsMainWebpThumb, (s3ErrOuter, dataOuter) => {
-                        if (s3ErrOuter){
-                            console.log(colors.yellow('ERROR: s3ErrOuter for webp thumb image'));
-                            console.log(s3ErrOuter);
-                            reject(s3ErrOuter);
-                        }
-                        else {
-                            returnPack.webp_thumb = dataOuter.Location;
-                            resolve(returnPack);
-                        }
+                    // Upload the thumb webp
+                    returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                        this.awsS3Service.upload(uploadParamsMainWebpThumb, (s3ErrOuter, dataOuter) => {
+                            if (s3ErrOuter){
+                                console.log(colors.yellow('ERROR: s3ErrOuter for webp thumb image'));
+                                console.log(s3ErrOuter);
+                                reject(s3ErrOuter);
+                            }
+                            else {
+                                returnPack.webp_thumb = dataOuter.Location;
+                                resolve(returnPack);
+                            }
+                        });
                     });
-                });
+                }
             }
             
             // Upload the main image and the main thumb
