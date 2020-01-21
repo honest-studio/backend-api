@@ -793,15 +793,15 @@ export class MediaUploadService {
                 }
             } else if (mimePack.mime.includes('video')) {
                 // Because of various shenanigans, you need to write the buffer to /tmp first...
-
-                var tempFileNameInput =
-                    crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.' + mimePack.ext;
+                var tempFileNameInput = crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.' + mimePack.ext;
                 var tempFileNameOutput = crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.jpeg';
+                // var tempFileNameOutputAltered = tempFileNameOutput.replace('.jpeg', '__altered.jpeg');
                 let tempPath = path.join(TEMP_DIR, tempFileNameInput);
                 let snapshotPath = path.join(TEMP_DIR, tempFileNameOutput);
+                // let snapshotPathAltered = path.join(TEMP_DIR, tempFileNameOutputAltered);
                 fs.writeFileSync(tempPath, bufferToUse);
                 fs.writeFileSync(snapshotPath, '');
-
+                // fs.writeFileSync(snapshotPathAltered, '');
                 try {
                     await extractFrame({
                         input: tempPath,
@@ -820,7 +820,7 @@ export class MediaUploadService {
 
                     // Resize the snapshot JPEG
                     bufferPack.thumbBuf = await (Jimp as any)
-                        .read(fs.readFileSync(snapshotPath))
+                        .read(snapshotPath)
                         .then((image) =>
                             image
                                 .background(0xffffffff)
@@ -833,6 +833,9 @@ export class MediaUploadService {
                             console.log(colors.yellow('Video thumb buffer failed'));
                             console.log(err);
                         });
+                    
+                        // await fs.writeFileSync(snapshotPathAltered, bufferPack.thumbBuf)
+                    
 
                 } catch (err) {
                     console.log(err);
@@ -841,6 +844,7 @@ export class MediaUploadService {
                 // Delete the temp files
                 await fs.unlinkSync(tempPath);
                 await fs.unlinkSync(snapshotPath);
+                // await fs.unlinkSync(snapshotPathAltered);
             } else if (mimePack.mime.includes('audio')) {
                 // TODO: Audio support
             } else {
@@ -1060,6 +1064,7 @@ export class MediaUploadService {
                             // Create and upload the thumbnail
                             // gzip the thumbnail
                             bufferPack.thumbBuf = zlib.gzipSync(bufferPack.thumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+
 
                             // Set the AWS S3 bucket key
                             let theThumbSuffix = encodeURIComponent(slugify(slug, { remove: /[*+~.()'"#%?!:@]/g })) + `/${filename}__thumb.${varPack.thumbSuffix}`;
