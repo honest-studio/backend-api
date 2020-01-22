@@ -450,6 +450,7 @@ export class MediaUploadService {
 
             // Determine the MIME type
             let mimePack: MimePack = fileType(bufferToUse);
+            let isVideo = false, isAudio = false;
             if (mimePack == null || mimePack.mime == 'application/xml'){
                 if (isSvg(bufferToUse)){
                     mimePack = {
@@ -458,6 +459,9 @@ export class MediaUploadService {
                     }
                 }
             }
+
+            if (mimePack.mime.includes('video')) isVideo = true;
+            else if (mimePack.mime.includes('audio')) isAudio = true;
 
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
@@ -793,7 +797,7 @@ export class MediaUploadService {
                         break;
                     }
                 }
-            } else if (mimePack.mime.includes('video')) {
+            } else if (isVideo) {
                 // Because of various shenanigans, you need to write the buffer to /tmp first...
                 var tempFileNameInput = crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.' + mimePack.ext;
                 var tempFileNameOutput = crypto.randomBytes(5).toString('hex') + '-' + theTimeString + '.jpeg';
@@ -872,19 +876,12 @@ export class MediaUploadService {
                 // await fs.unlinkSync(tempPath);
                 await fs.unlinkSync(snapshotPath);
                 // await fs.unlinkSync(snapshotPathAltered);
-            } else if (mimePack.mime.includes('audio')) {
-                // TODO: Audio support
             } else {
-                // Normal file
+                // Normal file (or audio)
                 useMediaRoute = false;
-                console.log(mimePack);
                 varPack.suffix = mimePack.ext;
                 varPack.mainMIME = mimePack.mime;
                 bufferPack.mainBuf = bufferToUse;
-
-                bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
-                    level: zlib.constants.Z_BEST_COMPRESSION
-                });
             }
 
             if(
@@ -897,7 +894,7 @@ export class MediaUploadService {
                     || mimePack.mime.indexOf('svg') >= 0
                     || mimePack.mime.indexOf('application/xml') >= 0
                     || mimePack.mime.indexOf('image/svg+xml') >= 0
-                    || (mimePack.mime.includes('video') && videoThumbBuffer)
+                    || (isVideo && videoThumbBuffer)
                 )
             ){
                 let temp_bufferToUse = bufferToUse;
@@ -911,7 +908,7 @@ export class MediaUploadService {
                         .then(buffer => buffer)
                         .catch(e => console.error(e));
                 }
-                else if (mimePack.mime.includes('video')){
+                else if (isVideo){
                     temp_bufferToUse = videoThumbBuffer;
                 }
 
@@ -951,7 +948,7 @@ export class MediaUploadService {
 
 
             // gzip the main files (and the webp's, if present)
-            if (!mimePack.mime.includes('video')){
+            if (!isVideo && !isAudio){
                 bufferPack.mainBuf = zlib.gzipSync(bufferPack.mainBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });
@@ -984,7 +981,7 @@ export class MediaUploadService {
                 CacheControl: 'max-age=31536000',
             };
 
-            if (!mimePack.mime.includes('video')){
+            if (!isVideo && !isAudio){
                 uploadParamsMain['ContentEncoding'] = 'gzip';
             };
 
@@ -996,7 +993,7 @@ export class MediaUploadService {
                 let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
                 let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
 
-                if (!mimePack.mime.includes('video') || videoThumbBuffer){
+                if (!isVideo || videoThumbBuffer){
                     // Specify S3 upload options for the webp'd original
                     let uploadParamsMainWebpOriginal = {
                         Bucket: this.awsS3Service.getBucket(),
@@ -1092,6 +1089,7 @@ export class MediaUploadService {
                         returnPack.mainPhotoURL = dataOuter.Location;
                         returnPack.mime = varPack.mainMIME;
                         returnPack.category = linkCategorizer(returnPack.mainPhotoURL);
+                        if (isAudio) returnPack.thumbnailPhotoURL = 'https://epcdn-vz.azureedge.net/static/images/placeholder-audio.png';
 
                         if (useMediaRoute) {
                             // Create and upload the thumbnail
