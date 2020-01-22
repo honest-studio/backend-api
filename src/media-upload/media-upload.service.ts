@@ -5,6 +5,7 @@ import * as htmlparser2 from 'htmlparser2';
 import { DWebp } from 'cwebp';
 import * as Cheerio from 'cheerio';
 import * as fs from 'fs';
+const hbjs = require('handbrake-js')
 const util = require('util');
 import * as rp from 'request-promise';
 import * as imagemin from 'imagemin';
@@ -803,6 +804,30 @@ export class MediaUploadService {
                 fs.writeFileSync(tempPath, bufferToUse);
                 fs.writeFileSync(snapshotPath, '');
                 // fs.writeFileSync(snapshotPathAltered, '');
+
+                // Convert other video types to mp4
+                let convertedPath;
+                if (mimePack.ext != 'mp4'){
+                    convertedPath = tempPath.replace(`.${mimePack.ext}`, '.mp4')
+                    const options = {
+                        input: tempPath,
+                        output: convertedPath
+                    }
+
+                    try {
+                        const result = await hbjs.run(options);
+                    } catch (err) {
+                        console.log(err);
+                    }
+
+                }
+                
+                if (convertedPath){
+                    bufferToUse = fs.readFileSync(convertedPath);
+                    await fs.unlinkSync(tempPath);
+                    tempPath = convertedPath;
+                }
+
                 try {
                     await extractFrame({
                         input: tempPath,
@@ -811,8 +836,8 @@ export class MediaUploadService {
                     });
 
                     // Set some variables
-                    varPack.suffix = mimePack.ext;
-                    varPack.mainMIME = mimePack.mime;
+                    varPack.suffix = 'mp4';
+                    varPack.mainMIME = 'video/mp4';
                     varPack.thumbSuffix = 'jpeg';
                     varPack.thumbMIME = 'image/jpeg';
 
@@ -844,7 +869,7 @@ export class MediaUploadService {
                 }
 
                 // Delete the temp files
-                await fs.unlinkSync(tempPath);
+                // await fs.unlinkSync(tempPath);
                 await fs.unlinkSync(snapshotPath);
                 // await fs.unlinkSync(snapshotPathAltered);
             } else if (mimePack.mime.includes('audio')) {
