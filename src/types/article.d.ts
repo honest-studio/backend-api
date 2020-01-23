@@ -92,7 +92,7 @@ interface Media {
     url: string;
     caption: Sentence[];
     thumb?: string;
-    timestamp?: Date | string;
+    timestamp?: Date;
     attribution_url?: string;
     mime?: string;
     alt?: string;
