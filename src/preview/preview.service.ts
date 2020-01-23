@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException, forwardRef, Inject } from '@nestjs/common';
 import * as cheerio from 'cheerio';
 import * as SqlString from 'sqlstring';
-import { HistogramMetric, InjectHistogramMetric, IpfsService } from '../common';
 import { MysqlService, RedisService } from '../feature-modules/database';
 import { WikiIdentity } from '../types/article-helpers';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
@@ -27,20 +26,6 @@ export class PreviewService {
         private mysql: MysqlService,
         private redis: RedisService,
         @Inject(forwardRef(() => WikiService)) private wikiService: WikiService,
-        // preview by hash:
-        @InjectHistogramMetric('get_prev_by_hash_pre_sql') private readonly getPrevByHashPreSqlHisto: HistogramMetric,
-        @InjectHistogramMetric('get_prev_by_hash_sql_only')
-        private readonly getPrevByHashSqlOnlyHisto: HistogramMetric,
-        @InjectHistogramMetric('get_prev_by_hash_post_sql') private readonly getPrevByHashPostSqlHisto: HistogramMetric,
-        @InjectHistogramMetric('get_prev_by_hash_total_req')
-        private readonly getPrevByHashTotalReqHisto: HistogramMetric,
-        // preview by slug:
-        @InjectHistogramMetric('get_prev_by_slug_pre_sql') private readonly getPrevBySlugPreSqlHisto: HistogramMetric,
-        @InjectHistogramMetric('get_prev_by_slug_sql_only')
-        private readonly getPrevBySlugSqlOnlyHisto: HistogramMetric,
-        @InjectHistogramMetric('get_prev_by_slug_post_sql') private readonly getPrevBySlugPostSqlHisto: HistogramMetric,
-        @InjectHistogramMetric('get_prev_by_slug_total_req')
-        private readonly getPrevBySlugTotalReqHisto: HistogramMetric
     ) {}
 
     async getPreviewsByHash(ipfs_hashes: Array<string>): Promise<PreviewResult[]> {

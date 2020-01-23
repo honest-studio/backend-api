@@ -53,6 +53,7 @@ export class ProposalService {
         proposal_ids.forEach(proposal_id => pipeline.get(`proposal:${proposal_id}:info`));
         proposal_ids.forEach(proposal_id => pipeline.smembers(`proposal:${proposal_id}:votes`));
         proposal_ids.forEach(proposal_id => pipeline.get(`proposal:${proposal_id}:result`));
+        proposal_ids.forEach(proposal_id => pipeline.get(`proposal:${proposal_id}:referendum`));
         const values = await pipeline.exec();
 
         // TODO
@@ -61,7 +62,12 @@ export class ProposalService {
         const len = proposal_ids.length;
         for (let i=0; i < len; i++) {
             const proposal_id = proposal_ids[i];
+
             proposals[i].info = JSON.parse(values[i][1]);
+
+            // change endtime if it's a referendum
+            if (proposals[i].info && values[i + 3*len][1])
+                proposals[i].info.trace.act.data.endtime = proposals[i].info.trace.act.data.starttime + 7*86400;
             if (!proposals[i].info)
                 proposals[i].info = { error: `Proposal ${proposal_id} could not be found` };
             try {
