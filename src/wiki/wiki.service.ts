@@ -1180,7 +1180,7 @@ export class WikiService {
 
     async getWikiExtras(lang_code: string, slug: string): Promise<WikiExtraInfo> {
         const wiki = await this.getWikiBySlug(lang_code, slug, false, false, false, false);
-        const article_boosts_promise = this.getBoostsByWikiLangSlug(slug, lang_code);
+        const article_boosts_promise = []; //this.getBoostsByWikiLangSlug(slug, lang_code);
         const see_also_promise = this.getSeeAlsos(wiki, lang_code);
         const schema_promise = renderSchema(wiki, 'JSON');
         const link_collection_promise = this.getPageIndexedLinkCollection(wiki, lang_code);
