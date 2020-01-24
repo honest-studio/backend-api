@@ -292,12 +292,6 @@ export class WikiService {
         if (current_hash == "removed")
             throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
 
-        // Try and get cached wiki
-        if (false && current_hash) {
-            const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
-            if (cache_wiki) return JSON.parse(cache_wiki);
-        }
-
         // NEED TO TRY A DECODED SLUG HERE TOO??, OR IF THEY ARE EQUAL, HAVE A DIFFERENT???
 
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
@@ -690,8 +684,9 @@ export class WikiService {
             const rpc = new JsonRpc('https://api.libertyblock.io', { fetch });
             const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
             
+            let result;
             try {
-                const result = await api.transact({
+                result = await api.transact({
                     actions: [{
                       account: 'everipediaiq',
                       name: 'epartpropose',
