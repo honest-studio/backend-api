@@ -1245,9 +1245,9 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
     // Find the MIME type and the extension
     let theMIME = mimePackage.getType(inputString);
     let theExtension = mimePackage.getExtension(theMIME);
-    console.log("--------")
-    console.log("theMIME: ", theMIME);
-    console.log("theExtension: ", theExtension);
+    // console.log("--------")
+    // console.log("theMIME: ", theMIME);
+    // console.log("theExtension: ", theExtension);
     // Test for different categories
     if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
