@@ -171,6 +171,26 @@ export class WikiController {
         return this.wikiService.submitWiki(wiki);
     }
 
+    @Post('/check-tx')
+    @ApiOperation({ 
+        title: 'Supply a txid to make sure the article is synced',
+        description: `The submitted wiki must be a JSON in ArticleJson format with the ipfs_hash set to null. 
+        The ArticleJson spec is available at https://github.com/EveripediaNetwork/backend-api/blob/master/src/utils/article-utils/article-dto.ts
+        An example ArticleJson can be accessed at https://api.everipedia.org/v2/wiki/slug/lang_en/cardi-b 
+        For the data to be stored properly, an article submission with the specified hash must occur on the EOS mainnet within 90 seconds.
+        There is a downvote bot that automatically downvotes unreachable wikis.
+        Using this endpoint guarantees that your article will be reachable, but it is not the only way to prevent downvotes. 
+        Any wiki that is accessible within the IPFS network will not be downvoted. 
+        Be careful though, the IPFS network is notoriously unreliable and a wiki you feel is properly hosted may not actually be accessible by the network.`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns a boolean on whether this succeeded or not`
+    })
+    async checkTx(@Body() body): Promise<{ status: boolean }> {
+        return this.wikiService.checkTx(body);
+    }
+
     @Post('get-merged-result')
     @ApiOperation({ title: 'Get the result of merging two wiki articles' })
     async getMergedWikiCtrl(@Body() pack: MergeInputPack): Promise<MergeResult> {
