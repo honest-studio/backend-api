@@ -26,14 +26,14 @@ commander
   .option('-e, --end <endid>', 'Ending ID')
   .parse(process.argv);
 
-const BATCH_SIZE = 250000;
+const BATCH_SIZE = 250;
 const ARTICLE_PAGE_TYPES = ['Person'];
 const CATEGORY_PAGE_TYPES = ['Person'];
 const SET_TO_INDEXED = 1;
 const IGNORE_CATEGORIES_BELOW = 0; // Used to help speed up categorization for new categories [4066]
 const LANGUAGE_CODE = 'en';
 // const TIMESTAMP_FLOOR = '2020-01-06 16:00:00'; 
-const TIMESTAMP_FLOOR = '2020-01-01 00:00:00'; 
+const TIMESTAMP_FLOOR = '2014-01-01 00:00:00'; 
 
 // nano scripts/Non-Lambda/Page-Categorizer-Universal.ts
 
@@ -335,7 +335,6 @@ export const PageCategorizerUniversal = async (inputString: string, regexed_cate
                     AND art.is_indexed = 1
                     AND art.page_type IN (?)
                     AND art.page_lang = ?
-                    AND art.page_note IN ('|TOP_DRAWER_SOCCER|')
                     AND hsc.timestamp >= ?
                 GROUP BY art.id
             `,

@@ -85,10 +85,12 @@ export interface Infobox {
     diff?: DiffType;
 }
 
-export interface Media {
+type EmbedDisplaySize = 'small' | 'medium' | 'large';
+
+interface Media {
     type: MediaType;
     url: string;
-    caption: Sentence[]; 
+    caption: Sentence[];
     thumb?: string;
     timestamp?: Date;
     attribution_url?: string;
@@ -98,7 +100,9 @@ export interface Media {
     width?: number;
     category?: CitationCategoryType;
     diff?: DiffType;
+    srcSet?: string;
     media_props?: MediaProps;
+    display_size?: EmbedDisplaySize
 }
 
 export interface MediaProps {
@@ -159,6 +163,7 @@ export interface Citation {
     media_props?: MediaProps;
     in_blurb?: boolean;
     diff?: DiffType;
+    display_size?: EmbedDisplaySize;
 }
 
 export interface Samp {

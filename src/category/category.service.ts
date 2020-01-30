@@ -303,9 +303,10 @@ export class CategoryService {
                     OR cat.key_regex REGEXP ? 
                     OR cat.values_regex REGEXP ?    
                 )
-            LIMIT 20
+                ORDER BY cat.views DESC
+                LIMIT 20
             `,
-            [pack.lang, pack.schema_for, pack.searchterm, pack.searchterm, pack.searchterm, pack.searchterm]
+            [pack.lang, pack.searchterm, pack.searchterm, pack.searchterm, pack.searchterm]
         );
         return categories;
     }

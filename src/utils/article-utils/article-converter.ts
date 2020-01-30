@@ -126,7 +126,7 @@ export const ANCILLARY_STYLES = [
     { normal: 'bgcolor', react: 'backgroundColor'}, // Background color
     { normal: 'align', react: 'textAlign'} // Text alignment
 ]
-export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a'];
+export const VALID_AUDIO_EXTENSIONS = ['.mp3', '.ogg', '.wav', '.m4a', '.mpga'];
 export const SPLIT_SENTENCE_EXCEPTIONS = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 export const VALID_FILE_EXTENSIONS = ['.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', '.pps', '.ppsx', '.odt', '.ods', '.key', '.csv', '.txt', '.rtf'];
 
@@ -1227,7 +1227,9 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
     // Find the MIME type and the extension
     let theMIME = mimePackage.getType(inputString);
     let theExtension = mimePackage.getExtension(theMIME);
-
+    console.log("--------")
+    console.log("theMIME: ", theMIME);
+    console.log("theExtension: ", theExtension);
     // Test for different categories
     if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';
@@ -1243,7 +1245,7 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
         return 'PICTURE';
     } else if (VALID_VIDEO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
         return 'NORMAL_VIDEO';
-    } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_VIDEO_EXTENSIONS.includes("." + theExtension)) {
+    } else if (VALID_AUDIO_EXTENSIONS.includes(theExtension) || VALID_AUDIO_EXTENSIONS.includes("." + theExtension)) {
         return 'AUDIO';
     } else if (VALID_FILE_EXTENSIONS.includes(theExtension) || VALID_FILE_EXTENSIONS.includes('.' + theExtension)) {
         return 'FILE';
