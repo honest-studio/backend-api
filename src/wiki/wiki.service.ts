@@ -677,6 +677,7 @@ export class WikiService {
         setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC);
 
         // If the token is set, relay the transaction on behalf of the user
+        // This is for Auth0 users, it's currently not in use
         if (token) {
             const privkey = this.config.get("PAY_CPU_PRIVKEY");
             const pubkey = this.config.get("PAY_CPU_PUBKEY");
