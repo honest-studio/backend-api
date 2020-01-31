@@ -169,8 +169,14 @@ export class WikiController {
     })
     async submitWiki(@Body() wiki, @Headers('authorization') auth): Promise<any> {
         let token = null;
-        if (auth.slice(0,6) == "Bearer" && auth.split(' ').length == 2) token = auth.split(' ')[1]
-        return this.wikiService.submitWiki(wiki, token);
+        if (auth && auth != "" && auth.slice(0,6) == "Bearer" && auth.split(' ').length == 2){ 
+            token = auth.split(' ')[1];
+            return this.wikiService.submitWiki(wiki, token);
+        }
+        else {
+            return this.wikiService.submitWiki(wiki, null);
+        }
+        
     }
 
     @Post('/check-tx')
