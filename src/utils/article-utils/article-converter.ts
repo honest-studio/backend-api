@@ -145,6 +145,88 @@ function pyToJS(inputItem: any) {
     }
 }
 
+const SOCIAL_MEDIA_REGEXES = {
+    'bandcamp': {
+        regex: /bandcamp.com/gimu,
+        exclusions: [/bandcamp.com\/track\/.*/gimu, /bandcamp.com\/album\/.*/gimu, /blog.bandcamp.com\/.*/gimu],
+    },
+    'facebook': {
+        regex: /facebook.com/gimu,
+        exclusions: [
+            /facebook.com\/photo.*/gimu,
+            /facebook.com\/.*?\/videos\/vb.*/gimu,
+            /facebook.com\/.*?\/photos/gimu,
+            /facebook.com\/.*?\/timeline\//gimu,
+            /facebook.com\/.*?\/posts/gimu,
+            /facebook.com\/events\/.*?/gimu,
+            /blog.facebook.com\/.*/gimu,
+            /developers.facebook.com\/.*/gimu,
+        ],
+    },
+    'google': { regex: /plus.google.com/gimu, exclusions: [] },
+    'instagram': {
+        regex: /instagram.com/gimu,
+        exclusions: [/instagram.com\/p\/.*/gimu, /blog.instagram.com\/.*/gimu],
+    },
+    'lastfm': { regex: /last.fm\/user/gimu, exclusions: [/last.fm\/music\/.*\/.*/gimu] },
+    'linkedin': {
+        regex: /linkedin.com/gimu,
+        exclusions: [/linkedin.com\/pub\/.*/gimu, /press.linkedin.com\/.*/gimu, /blog.linkedin.com\/.*/gimu],
+    },
+    'medium': { regex: /medium.com\/@/gimu, exclusions: [/medium.com\/@.*\/.*/gimu] },
+    'myspace': {
+        regex: /myspace.com/gimu,
+        exclusions: [/myspace.com\/.*\/.*/gimu, /blogs.myspace.com\/.*/gimu],
+    },
+    'pinterest': {
+        regex: /pinterest.com/gimu,
+        exclusions: [/pinterest.com\/pin\/.*/gimu, /blog.pinterest.com\/.*/gimu],
+    },
+    'quora': { regex: /quora.com\/profile/gimu, exclusions: [] },
+    'reddit': { regex: /reddit.com\/user/gimu, exclusions: [] },
+    'snapchat': { regex: /snapchat.com\/add/gimu, exclusions: [] },
+    'songkick': { regex: /songkick.com\/artists/gimu, exclusions: [] },
+    'soundcloud': {
+        regex: /soundcloud.com/gimu,
+        exclusions: [
+            /soundcloud.com\/.*\/tracks\/.*/gimu,
+            /soundcloud.com\/.*\/sets\/.*/gimu,
+            /soundcloud.com\/.*\/reposts\/.*/gimu,
+        ],
+    },
+    'tumblr': { regex: /tumblr.com/gimu, exclusions: [/tumblr.com\/post.*/gimu] },
+    'twitch': { regex: /twitch.tv/gimu, exclusions: [] },
+    'twitter': {
+        regex: /twitter.com/gimu,
+        regex_tweet: /^https?:\/\/twitter\.com\/(?:#!\/)?(\w+)\/status(es)?\/(\d+)$/gimu,
+        exclusions: [
+            /twitter.com\/.*?\/status.*?/gimu,
+            /dev.twitter.com\/.*/gimu,
+            /blog.twitter.com\/.*/gimu,
+            /help.twitter.com\/.*/gimu,
+            /support.twitter.com\/.*/gimu,
+        ],
+    },
+    'vine': { regex: /vine.co/gimu, exclusions: [] },
+    'vk': { regex: /vk.com/gimu, exclusions: [] },
+    'yelp': { regex: /yelp.com\/biz/gimu, exclusions: [] },
+    'youtube': {
+        regex: /youtube.com/gimu,
+        exclusions: [
+            /youtube.com\/playlist.*[?]list=.*/gimu,
+            /youtube.com\/v\/.*/gimu,
+            /youtube.com\/channel\/.*?#p.*?/gimu,
+            /youtube.com\/embed\/.*/gimu,
+            /youtube.com\/watch?v=.*/gimu,
+            /youtube.com\/watch.*[?]v=.*/gimu,
+            /youtube.com\/watch.*[?]v=.*/gimu,
+            /youtube.com\/watch?.*?/gimu,
+            /youtube.com\/user\/.*?#p.*?/gimu,
+            /youtube.com\/subscription_center.*/gimu,
+        ],
+    }
+};
+
 /**
  * @function parseStyles
  * Parses a string of inline styles into a javascript object with casing for react
@@ -1076,101 +1158,37 @@ export function parseSentences(inputString: string, bypass_trim?: boolean): Sent
 
 // See if a given URL is a social media URL. If so, return the type
 export function socialURLType(inputURL: string) {
-    const SOCIAL_MEDIA_REGEXES = [
-        {
-            type: 'bandcamp',
-            regex: /bandcamp.com/,
-            exclusions: [/bandcamp.com\/track\/.*/, /bandcamp.com\/album\/.*/, /blog.bandcamp.com\/.*/]
-        },
-        {
-            type: 'facebook',
-            regex: /facebook.com/,
-            exclusions: [
-                /facebook.com\/photo.*/,
-                /facebook.com\/.*?\/videos\/vb.*/,
-                /facebook.com\/.*?\/photos/,
-                /facebook.com\/.*?\/timeline\//,
-                /facebook.com\/.*?\/posts/,
-                /facebook.com\/events\/.*?/,
-                /blog.facebook.com\/.*/,
-                /developers.facebook.com\/.*/
-            ]
-        },
-        { type: 'google', regex: /plus.google.com/, exclusions: [] },
-        {
-            type: 'instagram',
-            regex: /instagram.com/,
-            exclusions: [/instagram.com\/p\/.*/, /blog.instagram.com\/.*/]
-        },
-        { type: 'lastfm', regex: /last.fm\/user/, exclusions: [/last.fm\/music\/.*\/.*/] },
-        {
-            type: 'linkedin',
-            regex: /linkedin.com/,
-            exclusions: [/linkedin.com\/pub\/.*/, /press.linkedin.com\/.*/, /blog.linkedin.com\/.*/]
-        },
-        { type: 'medium', regex: /medium.com\/@/, exclusions: [/medium.com\/@.*\/.*/] },
-        {
-            type: 'myspace',
-            regex: /myspace.com/,
-            exclusions: [/myspace.com\/.*\/.*/, /blogs.myspace.com\/.*/]
-        },
-        {
-            type: 'pinterest',
-            regex: /pinterest.com/,
-            exclusions: [/pinterest.com\/pin\/.*/, /blog.pinterest.com\/.*/]
-        },
-        { type: 'quora', regex: /quora.com\/profile/, exclusions: [] },
-        { type: 'reddit', regex: /reddit.com\/user/, exclusions: [] },
-        { type: 'snapchat', regex: /snapchat.com\/add/, exclusions: [] },
-        { type: 'songkick', regex: /songkick.com\/artists/, exclusions: [] },
-        {
-            type: 'soundcloud',
-            regex: /soundcloud.com/,
-            exclusions: [
-                /soundcloud.com\/.*\/tracks\/.*/,
-                /soundcloud.com\/.*\/sets\/.*/,
-                /soundcloud.com\/.*\/reposts\/.*/
-            ]
-        },
-        { type: 'tumblr', regex: /tumblr.com/, exclusions: [/tumblr.com\/post.*/] },
-        {
-            type: 'twitter',
-            regex: /twitter.com/,
-            exclusions: [
-                /twitter.com\/.*?\/status.*?/,
-                /dev.twitter.com\/.*/,
-                /blog.twitter.com\/.*/,
-                /help.twitter.com\/.*/,
-                /support.twitter.com\/.*/
-            ]
-        },
-        { type: 'vine', regex: /vine.co/, exclusions: [] },
-        { type: 'vk', regex: /vk.com/, exclusions: [] },
-        { type: 'yelp', regex: /yelp.com\/biz/, exclusions: [] },
-        {
-            type: 'youtube',
-            regex: /youtube.com/,
-            exclusions: [
-                /youtube.com\/playlist.*[?]list=.*/,
-                /youtube.com\/v\/.*/,
-                /youtube.com\/channel\/.*?#p.*?/,
-                /youtube.com\/embed\/.*/,
-                /youtube.com\/watch?v=.*/,
-                /youtube.com\/watch.*[?]v=.*/,
-                /youtube.com\/watch.*[?]v=.*/,
-                /youtube.com\/watch?.*?/,
-                /youtube.com\/user\/.*?#p.*?/,
-                /youtube.com\/subscription_center.*/
-            ]
-        }
-    ];
+    if (!inputURL || inputURL == "") return null;
+    // Set the return type
+    let returnSocialType = null;
 
-    // Check for a match and make sure it doesn't match an exclusion
-    const match = SOCIAL_MEDIA_REGEXES.find(
-        (r) => r.regex.test(inputURL) && !r.exclusions.some((exclusion) => exclusion.test(inputURL))
-    );
-    if (!match) return null;
-    return match.type;
+    // Loop through the regexes
+    let isExcluded = false;
+    let theSocialKeys = Object.keys(SOCIAL_MEDIA_REGEXES);
+    for (let i = 0; i < theSocialKeys.length; i++) {
+        let regexPack = SOCIAL_MEDIA_REGEXES[theSocialKeys[i]];
+        // See if the URL matches one of the regexes
+        if (inputURL && inputURL.match && inputURL.match(new RegExp(regexPack.regex, 'gimu'))) {
+            // Make sure it doesn't match one of the exclusions
+            for (let exclusion of regexPack.exclusions) {
+                if (inputURL.match(new RegExp(exclusion, 'gimu'))) {
+                    isExcluded = true;
+                    break;
+                }
+            }
+            // If the URL matched an excluded regex, break the loop and return null
+            if (isExcluded) {
+                returnSocialType = null;
+                break;
+            }
+            // Otherwise, set the type
+            else {
+                returnSocialType = theSocialKeys[i];
+                break;
+            }
+        }
+    }
+    return returnSocialType;
 }
 
 // Regex copied from natural NPM package
@@ -1227,9 +1245,9 @@ export function linkCategorizer(inputString: string): CitationCategoryType {
     // Find the MIME type and the extension
     let theMIME = mimePackage.getType(inputString);
     let theExtension = mimePackage.getExtension(theMIME);
-    console.log("--------")
-    console.log("theMIME: ", theMIME);
-    console.log("theExtension: ", theExtension);
+    // console.log("--------")
+    // console.log("theMIME: ", theMIME);
+    // console.log("theExtension: ", theExtension);
     // Test for different categories
     if (getYouTubeIdIfPresent(inputString)) {
         return 'YOUTUBE';

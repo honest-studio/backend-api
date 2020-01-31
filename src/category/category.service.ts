@@ -19,6 +19,10 @@ export interface CategorySearchPack {
     searchterm: string
 }
 
+export interface CategoryCreatePack {
+
+}
+
 @Injectable()
 export class CategoryService {
     constructor(private mysql: MysqlService) {}
@@ -276,6 +280,11 @@ export class CategoryService {
         );
 
         return categories;
+    }
+
+    async create(pack: CategoryCreatePack): Promise<PageCategory> {
+        
+        return null;
     }
 
     async search(pack: CategorySearchPack): Promise<PageCategory[]> {
