@@ -28,6 +28,8 @@ var colors = require('colors');
 import FormData from 'form-data';
 import crypto from 'crypto';
 import multihash from 'multihashes';
+const { Api, JsonRpc, RpcError } = require('eosjs');
+import { JsSignatureProvider } from 'eosjs/dist/eosjs-jssig';
 
 const MAX_SLUG_SIZE = 256;
 const MAX_LANG_CODE_SIZE = 7;
@@ -289,12 +291,6 @@ export class WikiService {
         // Checked for removed wiki
         if (current_hash == "removed")
             throw new HttpException(`Wiki ${lang_code}/${slug} is marked as removed`, HttpStatus.GONE);
-
-        // Try and get cached wiki
-        if (false && current_hash) {
-            const cache_wiki = await this.redis.connection().get(`wiki:${current_hash}`);
-            if (cache_wiki) return JSON.parse(cache_wiki);
-        }
 
         // NEED TO TRY A DECODED SLUG HERE TOO??, OR IF THEY ARE EQUAL, HAVE A DIFFERENT???
 
@@ -629,7 +625,7 @@ export class WikiService {
         else return [];
     }
 
-    async submitWiki(wiki: ArticleJson): Promise<any> {
+    async submitWiki(wiki: ArticleJson, token: string = null): Promise<any> {
         if (wiki.ipfs_hash !== null) throw new BadRequestException('ipfs_hash must be null');
 
         // get wiki info
@@ -696,6 +692,47 @@ export class WikiService {
             INTERVAL_MSEC
         );
         setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC);
+
+        // If the token is set, relay the transaction on behalf of the user
+        // This is for Auth0 users, it's currently not in use
+        if (token) {
+            const privkey = this.config.get("PAY_CPU_PRIVKEY");
+            const pubkey = this.config.get("PAY_CPU_PUBKEY");
+            const signatureProvider = new JsSignatureProvider([privkey]);
+            const rpc = new JsonRpc('https://api.libertyblock.io', { fetch });
+            const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() });
+            
+            let result;
+            try {
+                result = await api.transact({
+                    actions: [{
+                      account: 'everipediaiq',
+                      name: 'epartpropose',
+                      authorization: [{
+                        actor: 'evrpdcronjob',
+                        permission: 'active',
+                      }],
+                      data: {
+                        proposer: 'evrpdcronjob',
+                        slug: cleanedSlug,
+                        ipfs_hash,
+                        lang_code: page_lang,
+                        group_id: -1,
+                        comment: "Relayed by Everipedia API",
+                        memo: "Relayed by Everipedia API",
+                        permission: "active"
+                      },
+                    }]
+                  }, {
+                    blocksBehind: 3,
+                    expireSeconds: 30,
+                  });
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+            return { ipfs_hash, result }
+        }
 
         return { ipfs_hash };
     }

@@ -17,6 +17,7 @@ import { HomepageController, HomepageService } from './homepage';
 import { MediaUploadController, MediaUploadService } from './media-upload';
 import { UserController, UserService } from './user';
 import { StatController, StatService } from './stat';
+import { CuratedController, CuratedService } from './curated';
 import { StatusController } from './status/status.controller';
 import { DatabaseModule } from './feature-modules';
 import {
@@ -65,6 +66,7 @@ const histogramLabelBuckets = ['pid']
         UserController,
         StatController,
         ContactUsController,
+        CuratedController,
         SitemapController,
         StatusController,
         CategoryController,
@@ -82,6 +84,7 @@ const histogramLabelBuckets = ['pid']
         MediaUploadService,
         UserService,
         StatService,
+        CuratedService,
         ContactUsService,
         SitemapService,
         CategoryService,

@@ -81,5 +81,6 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     GOOGLE_ANALYTICS_ID_ES: Joi.string(),
     GOOGLE_ANALYTICS_ID_KO: Joi.string(),
     GOOGLE_ANALYTICS_ID_ZH: Joi.string(),
+    AUTH0_JWT_SECRET: Joi.string(),
 });
 
