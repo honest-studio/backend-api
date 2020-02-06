@@ -155,13 +155,13 @@ async function redis_process_actions (actions) {
         }
         else if (action.trace.act.name == "transfer") {
             // Block 59902500 is the start block for the 2.0 smart contracts
-            if (action.trace.act.data.to == "eparticlectr" && action.block_num > 59902500) {
+            if (action.trace.act.data.to == "eparticlectr") {
                 const user = action.trace.act.data.from;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
                 pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
             }
-            else if (action.trace.act.data.from == "eparticlectr" && action.block_num > 59902500) {
+            else if (action.trace.act.data.from == "eparticlectr") {
                 const user = action.trace.act.data.to;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
@@ -232,6 +232,7 @@ async function start () {
     const fields = `{
           undo cursor
           trace {
+            id
             block {
               num
               timestamp
@@ -308,6 +309,7 @@ async function graphql_callback (message, stream) {
 
 function convertNewDocToOld (data): any[] {
     return data.trace.matchingActions.map((action) => ({
+        trx_id: data.trace.id,
         block_num: data.trace.block.num,
         block_time: data.trace.block.timestamp,
         trace: {
