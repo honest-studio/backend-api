@@ -269,56 +269,58 @@ async function graphql_callback (message, stream) {
     if (message.type === "data") {
         const data = message.data.searchTransactionsForward;
         const actions = data.trace.matchingActions;
-        const doc = convertNewDocToOld(data);
+        const docs = convertNewDocToOld(data);
 
         stream.mark({ cursor: data.cursor })
+        
+        for (let doc of docs) {
+            const mongo_actions = await mongo_actions_promise;
+            mongo_actions.insertOne(doc)
+                .then(() => {
+                    const block_num = doc.block_num;
+                    const account = doc.trace.act.account;
+                    const name = doc.trace.act.name;
+                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
+                })
+                .catch((err) => {
+                    console.log('error');
+                    if (err.code == 11000) {
+                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
+                    }
+                    else {
+                        if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', doc, ' \n Error message on insert: ', err);
+                        throw err;
+                    }
+                });
 
-        const mongo_actions = await mongo_actions_promise;
-        mongo_actions.insertOne(doc)
-            .then(() => {
-                const block_num = doc.block_num;
-                const account = doc.trace.act.account;
-                const name = doc.trace.act.name;
-                if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
-            })
-            .catch((err) => {
-                console.log('error');
-                if (err.code == 11000) {
-                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
-                }
-                else {
-                    if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', doc, ' \n Error message on insert: ', err);
-                    throw err;
-                }
-            });
+            // Process actions to Redis
+            await redis_process_actions([doc])
+            let last_block_processed = doc.block_num; 
+            await redis.set(`eos_actions:last_block_processed`, last_block_processed);
 
-        // Process actions to Redis
-        await redis_process_actions([doc])
-        let last_block_processed = doc.block_num; 
-        await redis.set(`eos_actions:last_block_processed`, last_block_processed);
-
-        // publish proposal results
-        if (doc.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(doc));
+            // publish proposal results
+            if (doc.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(doc));
+        }
 
     }
     else console.log(message);
 }
 
-function convertNewDocToOld (data) {
-    return {
+function convertNewDocToOld (data): any[] {
+    return data.trace.matchingActions.map((action) => ({
         block_num: data.trace.block.num,
         block_time: data.trace.block.timestamp,
         trace: {
             act: {
-                name: data.trace.matchingActions[0].name,
-                account: data.trace.matchingActions[0].account,
-                data: data.trace.matchingActions[0].json
+                name: action.name,
+                account: action.account,
+                data: action.json
             },
             receipt: {
-                global_sequence: data.trace.matchingActions[0].seq
+                global_sequence: action.seq
             }
         }
-    }
+    }));
 }
 
 
