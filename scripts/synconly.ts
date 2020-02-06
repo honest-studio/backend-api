@@ -252,10 +252,10 @@ async function start () {
         searchTransactionsForward(query: "receiver:everipediaiq", cursor: $cursor, lowBlockNum: ${token_start_block} ) 
             ${fields}`;
     const stream_article = `subscription($cursor: String!) {
-        searchTransactionsForward(query: "receiver:eparticlectr", cursor: $cursor, lowBlockNum: ${token_start_block} ) 
+        searchTransactionsForward(query: "receiver:eparticlectr", cursor: $cursor, lowBlockNum: ${article_start_block} ) 
             ${fields}`;
     const stream_profile = `subscription($cursor: String!) {
-        searchTransactionsForward(query: "receiver:epsovreignid", cursor: $cursor, lowBlockNum: ${token_start_block} ) 
+        searchTransactionsForward(query: "receiver:epsovreignid", cursor: $cursor, lowBlockNum: ${profile_start_block} ) 
             ${fields}`;
     
 
