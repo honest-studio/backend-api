@@ -201,7 +201,7 @@ export class StatService {
             doc = {
                 key: 'site_usage',
                 timestamp: new Date('2015-01-01'),
-                total_article_count: 0,
+                total_article_count: [{ num_articles: 0 }],
                 total_pageviews: 0,
                 total_editors: 0,
                 total_iq_rewards: 0,
@@ -230,7 +230,7 @@ export class StatService {
                 AND art.page_lang = ?
             `,
             [mysql_date, lang],
-            10000
+            180000
         );
         doc.total_article_count[0].num_articles += new_article_count[0].num_articles;
 
@@ -246,6 +246,7 @@ export class StatService {
                 [lang],
                 180000
             );
+            doc.total_pageviews = total_pageviews;
         }
         else {
             const new_pageviews: Array<any> = await this.mysql.TryQuery(

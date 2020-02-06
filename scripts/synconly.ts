@@ -326,8 +326,8 @@ async function main () {
     if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
         await redis.flushdb();
         console.log(`REDIS: Flushed DB. Replaying...`);
-        await catchupRedis();
     }
+    await catchupRedis();
     start();
 }
 
