@@ -195,9 +195,6 @@ export class StatService {
             doc.timestamp = new Date(doc.timestamp);
         }
         else {
-            doc = await this.mongo.connection().statistics.findOne({ 'key': 'site_usage' });
-        }
-        if (!doc) {
             doc = {
                 key: 'site_usage',
                 timestamp: new Date('2015-01-01'),
