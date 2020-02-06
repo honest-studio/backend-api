@@ -41,7 +41,9 @@
     "deploy:sitemaps": "scp -r ./public/sitemaps beekeeper@frontend.everipedia.org:'/home/beekeeper/ep2-backend/public'",
     "deploy:pre-install": "ssh beekeeper@apitest.everipedia.org 'sudo apt-get install -y ffmpeg build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev'",
     "deploy:prod": "ssh beekeeper@apitest.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'",
-    "deploy:backup": "ssh beekeeper@frontend.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'"
+    "deploy:backup": "ssh beekeeper@frontend.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'",
+    "deploy:nginx-no-restart": "scp -r nginx.conf beekeeper@apitest.everipedia.org:'/home/beekeeper/ep2-backend' && ssh beekeeper@apitest.everipedia.org 'sudo mv ./ep2-backend/nginx.conf /etc/nginx/ && sudo nginx -t'",
+    "deploy:nginx": "scp -r nginx.conf beekeeper@apitest.everipedia.org:'/home/beekeeper/ep2-backend' && ssh beekeeper@apitest.everipedia.org 'sudo mv ./ep2-backend/nginx.conf /etc/nginx/ && sudo systemctl restart nginx'"
   },
   "dependencies": {
     "@dfuse/client": "^0.3.7",
