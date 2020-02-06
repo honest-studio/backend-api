@@ -25,7 +25,7 @@ export class CuratedController {
         status: 200,
         description: `A list of curated lists fitting the query parameters`
     })
-    @UsePipes(new JoiValidationPipe(CuratedQuerySchema, 'query'))
+    @UsePipes(new JoiValidationPipe(CuratedQuerySchema))
     async getPreviewsByHash(@Query() options): Promise<any> {
         return this.curatedService.getLists(options);
     }

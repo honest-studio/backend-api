@@ -44,6 +44,7 @@
     "deploy:backup": "ssh beekeeper@frontend.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'"
   },
   "dependencies": {
+    "@dfuse/client": "^0.3.7",
     "@nestjs/common": "^6.6.7",
     "@nestjs/core": "^6.6.7",
     "@nestjs/elasticsearch": "^6.0.1",
