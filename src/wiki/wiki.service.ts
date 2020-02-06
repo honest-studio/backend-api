@@ -648,7 +648,7 @@ export class WikiService {
         wikiCopy.ipfs_hash = ipfs_hash;
         let stringifiedWikiCopy = JSON.stringify(wikiCopy);
         try {
-            const json_insertion = await this.mysql.TryQuery(
+             await this.mysql.TryQuery(
                 `
                 INSERT INTO enterlink_hashcache (articletable_id, ipfs_hash, html_blob, timestamp) 
                 VALUES (
@@ -659,7 +659,24 @@ export class WikiService {
             );
         } catch (e) {
             if (e.message.includes("ER_DUP_ENTRY")){
-                console.log(colors.yellow('WARNING: Duplicate submission. IPFS hash already exists'));
+                console.log(colors.yellow('WARNING: Duplicate submission (enterlink_hashcache). IPFS hash already exists'));
+            }
+            else throw e;
+        }
+
+        // Update to the pending transactions table
+        try {
+            await this.mysql.TryQuery(
+                `
+                INSERT INTO pending_transactions (ipfs_hash, trace, verified) 
+                VALUES (?, NULL, 0)
+                `,
+                [ipfs_hash]
+            );
+            
+        } catch (e) {
+            if (e.message.includes("ER_DUP_ENTRY")){
+                console.log(colors.yellow('WARNING: Duplicate submission (pending_transactions). IPFS hash already exists'));
             }
             else throw e;
         }
@@ -669,14 +686,15 @@ export class WikiService {
 
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
-        let INTERVAL_MSEC = 15000;
+        let INTERVAL_MSEC = 250;
         this.updateWikiIntervals[ipfs_hash] = setIntervalAsync(
             async () => this.updateWiki(wiki, ipfs_hash, false),
             INTERVAL_MSEC
-        )
+        );
         setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC);
 
         // If the token is set, relay the transaction on behalf of the user
+        // This is for Auth0 users, it's currently not in use
         if (token) {
             const privkey = this.config.get("PAY_CPU_PRIVKEY");
             const pubkey = this.config.get("PAY_CPU_PUBKEY");
@@ -1075,16 +1093,51 @@ export class WikiService {
         return;
     }
 
+    async checkTx(body: any): Promise<{ status: boolean }> {
+        let { ipfs_hash, trace } = body;
+        let status = false;
+        try {
+            let result: any = await this.mysql.TryQuery(
+                `
+                    UPDATE pending_transactions
+                    SET trace = ?
+                    WHERE ipfs_hash = ?
+                `,
+                [JSON.stringify(trace), ipfs_hash]
+            );
+            if (result && result.affectedRows == 1) status = true;
+        }
+        catch (e){}
+        return { status };
+    }
+
     async updateWiki(wiki: ArticleJson, ipfs_hash: string, override_clear_interval: boolean = false) {
         console.log(colors.yellow(`Checking on ${ipfs_hash} to hit the mainnet`));
         // const twoMinutesAgo = (Date.now() / 1000 | 0) - 60*2;
-        const submitted_proposal = await this.mongo
-            .connection()
-            .actions.findOne({
-                'trace.act.account': 'eparticlectr',
-                'trace.act.name': 'logpropinfo',
-                'trace.act.data.ipfs_hash': ipfs_hash
-            })
+        let submitted_proposal;
+
+        // Look at Dfuse first
+        submitted_proposal = await this.mongo.connection().actions.findOne({
+            'trace.act.account': 'eparticlectr',
+            'trace.act.name': 'logpropinfo',
+            'trace.act.data.ipfs_hash': ipfs_hash
+        })
+
+        // Next, try the pending_transactions table
+        if (!submitted_proposal){
+            const fetched: any[] = await this.mysql.TryQuery(
+                `
+                    SELECT trace
+                    FROM pending_transactions
+                    WHERE ipfs_hash = ?
+                        AND trace IS NOT NULL
+                `,
+                [ipfs_hash]
+            );
+            if (fetched && fetched.length > 0) submitted_proposal = { trace: JSON.parse(fetched[0])};
+        }
+        
+
         if (submitted_proposal) {
             // console.log(util.inspect(submitted_proposal, {showHidden: false, depth: null, chalk: true}));
             const trxID = submitted_proposal.trx_id;
@@ -1096,10 +1149,11 @@ export class WikiService {
             // Check for a merge
             const theComment = submitted_proposal.trace.act.data.comment;
             const theMemo = submitted_proposal.trace.act.data.memo;
+            const theHash = submitted_proposal.trace.act.data.ipfs_hash;
             // console.log(colors.blue.bold(theComment));
             // console.log(colors.blue.bold(theMemo));
             if(theComment.indexOf("MERGE_FROM|") >= 0 && theMemo.indexOf("Merge") >= 0) {
-                await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
+                await this.processWikiUpdate(wiki, theHash, submitted_proposal);
             }
             // else if(theComment.indexOf("UNDO_MERGE|") >= 0 && theMemo.indexOf("Undo Merge") >= 0){
             //     await this.unmergeProposal(submitted_proposal);
@@ -1107,7 +1161,7 @@ export class WikiService {
             // else if(theComment.indexOf("UNDO_REMOVAL|") >= 0 && theMemo.indexOf("Undo Removal") >= 0 ) {
             //     await this.processWikiUpdate(wiki, ipfs_hash, submitted_proposal);
             // } 
-            else await this.processWikiUpdate(wiki, ipfs_hash);
+            else await this.processWikiUpdate(wiki, theHash);
         }
     }
 

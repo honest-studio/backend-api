@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, UsePipes, Param, Query, Res } from '@nestj
 import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { PageCategoryCollection, PageCategory } from '../types/api';
-import { CategoryService, CategorySearchPack } from './category.service';
+import { CategoryService, CategorySearchPack, CategoryCreatePack } from './category.service';
 
 @Controller('v2/category')
 @ApiUseTags('Contact Us')
@@ -115,6 +115,18 @@ export class CategoryController {
     async getAMPCategoryPageCtrl(@Res() res, @Param('lang_code') lang_code, @Param('slug') slug): Promise<any> {
         this.categoryService.incrementViewCount(lang_code, slug);
         return await this.categoryService.getAMPCategoryPage(res, lang_code, slug);
+    }
+
+    @Post('create')
+    @ApiOperation({ 
+        title: `Create a new category`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `Returns the newly-created category`
+    })
+    async createCtrl(@Body() pack: CategoryCreatePack): Promise<PageCategory> {
+        return this.categoryService.create(pack);
     }
 
     @Post('search')
