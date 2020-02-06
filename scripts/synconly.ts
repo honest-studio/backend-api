@@ -7,6 +7,8 @@ import WebSocket from 'ws';
 import { Collection, Db, MongoClient } from 'mongodb';
 import dotenv from 'dotenv';
 import Redis from 'ioredis';
+const { createDfuseClient } = require("@dfuse/client")
+
 
 let lastMessageReceived = Date.now();
 let dfuseJwtToken;
@@ -42,117 +44,12 @@ async function get_start_block(account) {
         .limit(1)
         .toArray()
         .then((result) => {
-        const config_start_block = Number(config.get("DFUSE_START_BLOCK"));
-        if (result.length == 0)
-            return config_start_block;
-        const db_block = result[0].block_num;
-        return Math.max(config_start_block, db_block);
-    });
-}
-
-async function start() {
-    const dfuseToken = await obtainDfuseToken();
-    try {
-        const url = `${config.get("DFUSE_API_WEBSOCKET_ENDPOINT")}?token=${dfuseToken.token}`;
-        dfuse = new WebSocket(url, {
-            headers: {
-                Origin: config.get("DFUSE_API_ORIGIN_URL")
-            }
+            const config_start_block = Number(config.get("DFUSE_START_BLOCK"));
+            if (result.length == 0)
+                return config_start_block;
+            const db_block = result[0].block_num;
+            return Math.max(config_start_block, db_block);
         });
-    }
-    catch (err) {
-        console.error('failed to connect to websocket in scripts/synconly.ts ', err);
-    }
-    dfuse.on('open', async () => {
-        const article_req = {
-            type: 'get_actions',
-            req_id: 'article_req',
-            listen: true,
-            data: {
-                account: 'eparticlectr'
-            },
-            start_block: await get_start_block('eparticlectr')
-        };
-        const token_req = {
-            type: 'get_actions',
-            req_id: 'token_req',
-            listen: true,
-            data: {
-                account: 'everipediaiq'
-            },
-            start_block: await get_start_block('everipediaiq')
-        };
-        const profile_req = {
-            type: 'get_actions',
-            req_id: 'profile_req',
-            listen: true,
-            data: {
-                account: 'epsovreignid'
-            },
-            start_block: await get_start_block('epsovreignid')
-        };
-        dfuse.send(JSON.stringify(article_req));
-        dfuse.send(JSON.stringify(token_req));
-        dfuse.send(JSON.stringify(profile_req));
-    });
-    dfuse.on('error', (err) => {
-        console.log('-- error connecting to dfuse: ', err);
-    });
-    dfuse.on('message', async (msg_str) => {
-        lastMessageReceived = Date.now();
-        const msg = JSON.parse(msg_str);
-        if (msg.type != 'action_trace') {
-            if (DFUSE_ACTION_LOGGING) console.log(msg);
-            return;
-        }
-        const mongo_actions = await mongo_actions_promise;
-        mongo_actions.insertOne(msg.data)
-            .then(() => {
-                const block_num = msg.data.block_num;
-                const account = msg.data.trace.act.account;
-                const name = msg.data.trace.act.name;
-                if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
-            })
-            .catch((err) => {
-                if (err.code == 11000) {
-                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
-                }
-                else {
-                    if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', msg, ' \n Error message on insert: ', err);
-                    throw err;
-                }
-            });
-
-        // Process actions to Redis
-        await redis_process_actions([msg.data])
-        let last_block_processed = msg.data.block_num; 
-        await redis.set(`eos_actions:last_block_processed`, last_block_processed);
-
-        // publish proposal results
-        if (msg.data.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(msg.data));
-    });
-    dfuse.on('error', (e) => {
-        console.log('DFUSE: ERROR: ', e);
-    });
-}
-
-async function obtainDfuseToken() {
-    return fetch(DFUSE_AUTH_URL, {
-        method: 'POST',
-        body: JSON.stringify({ api_key: config.get("DFUSE_API_KEY") })
-    }).then((response) => response.json());
-}
-
-function restartIfFailing() {
-    const now = Date.now();
-    const THIRTY_SECONDS = 30 * 1000;
-    if (now > lastMessageReceived + THIRTY_SECONDS) {
-        lastMessageReceived = now;
-        console.log('No messages received in 30s. Restarting dfuse');
-        if (dfuse)
-            dfuse.close();
-        start();
-    }
 }
 
 async function catchupRedis () {
@@ -288,81 +185,152 @@ async function redis_process_actions (actions) {
     return true;
 }
 
+// Helper function for dfuse websocket
+async function webSocketFactory(url: string, protocols: string[] = []) {
+    const webSocket = new WebSocket(url, protocols, {
+      handshakeTimeout: 30 * 1000, // 30s
+      maxPayload: 200 * 1024 * 1000 * 1000 // 200Mb
+    })
 
-async function catchupMongo () {
-    const MAX_ACTIONS_PER_REQUEST = 100000;
-    const dfuse_catchup_url = config.get("DFUSE_CATCHUP_URL");
-    if (!dfuse_catchup_url) {
-        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: No DFUSE_CATCHUP_URL found. Skipping fast catchup`);
-        return;
+    const onUpgrade = (response) => {
+      console.log("Socket upgrade response status code.", response.statusCode)
+
+      // You need to remove the listener at some point since this factory
+      // is called at each reconnection with the remote endpoint!
+      webSocket.removeListener("upgrade", onUpgrade)
     }
-    const mongo_actions = await mongo_actions_promise;
 
-    // article actions
-    let more = true;
-    while (more) {
-        const article_start_block = await get_start_block('eparticlectr');
-        const article_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/eparticlectr?since=${article_start_block}`;
+    webSocket.on("upgrade", onUpgrade)
 
-        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Catching up on eparticlectr actions since block ${article_start_block}...`);
-        const article_actions = await fetch(article_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
-            .then(response => response.json())
+    return webSocket;
+}
 
-        const filtered_actions = article_actions.filter(a => a.block_num != article_start_block);
-        if (filtered_actions.length > 0) {
-            const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
-            if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} eparticlectr actions`);
+async function start () {
+    const apiKey = config.get("DFUSE_API_KEY");
+    const client = createDfuseClient({ 
+        apiKey, 
+        network: "mainnet", 
+        httpClientOptions: { fetch },
+        graphqlStreamClientOptions: {
+          socketOptions: {
+            // The WebSocket factory used for GraphQL stream must use this special protocols set
+            // We intend on making the library handle this for you automatically in the future,
+            // for now, it's required otherwise, the GraphQL will not connect correctly.
+            webSocketFactory: (url) => webSocketFactory(url, ["graphql-ws"])
+          }
+        },
+        streamClientOptions: {
+          socketOptions: {
+            webSocketFactory: (url) => webSocketFactory(url)
+          }
         }
-        if (article_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
-    }
+     });
+    const profile_start_block = await get_start_block('epsovreignid');
+    const token_start_block = await get_start_block('everipediaiq');
+    const article_start_block = await get_start_block('eparticlectr');
 
-    // token actions
-    more = true;
-    while (more) {
-        const token_start_block = await get_start_block('everipediaiq');
-        const token_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/everipediaiq?since=${token_start_block}`;
-
-        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Catching up on everipediaiq actions since block ${token_start_block}...`);
-        const token_actions = await fetch(token_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
-            .then(response => response.json())
-
-        const filtered_actions = token_actions.filter(a => a.block_num != token_start_block);
-        if (filtered_actions.length > 0) {
-            const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
-            if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} everipediaiq actions`);
+    const fields = `{
+          undo cursor
+          trace {
+            block {
+              num
+              timestamp
+            }
+            id
+            matchingActions {
+              account
+              name
+              json
+              seq
+              receiver
+            }
         }
-        if (token_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
-    }
+      }
+    }`;
 
-    // profile actions
-    more = true;
-    while (more) {
-        const profile_start_block = await get_start_block('epsovreignid');
-        const profile_catchup_url = `${dfuse_catchup_url}/v2/chain/epactions/epsovreignid?since=${profile_start_block}`;
+    const stream_token = `subscription($cursor: String!) {
+        searchTransactionsForward(query: "receiver:everipediaiq", cursor: $cursor, lowBlockNum: ${token_start_block} ) 
+            ${fields}`;
+    const stream_article = `subscription($cursor: String!) {
+        searchTransactionsForward(query: "receiver:eparticlectr", cursor: $cursor, lowBlockNum: ${article_start_block} ) 
+            ${fields}`;
+    const stream_profile = `subscription($cursor: String!) {
+        searchTransactionsForward(query: "receiver:epsovreignid", cursor: $cursor, lowBlockNum: ${profile_start_block} ) 
+            ${fields}`;
+    
 
-        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Catching up on epsovreignid actions since block ${profile_start_block}...`);
-        const profile_actions = await fetch(profile_catchup_url, { headers: { 'Accept-encoding': 'gzip' }})
-            .then(response => response.json())
+    client.graphql(stream_token, graphql_callback);
+    client.graphql(stream_article, graphql_callback);
+    client.graphql(stream_profile, graphql_callback);
 
-        const filtered_actions = profile_actions.filter(a => a.block_num != profile_start_block);
-        if (filtered_actions.length > 0) {
-            const insertion = await mongo_actions.insertMany(filtered_actions, { ordered: false });
-            if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Synced ${insertion.insertedCount} epsovreignid actions`);
+}
+            
+async function graphql_callback (message, stream) {
+    if (message.type === "data") {
+        const data = message.data.searchTransactionsForward;
+        const actions = data.trace.matchingActions;
+        const docs = convertNewDocToOld(data);
+
+        stream.mark({ cursor: data.cursor })
+        
+        for (let doc of docs) {
+            const mongo_actions = await mongo_actions_promise;
+            mongo_actions.insertOne(doc)
+                .then(() => {
+                    const block_num = doc.block_num;
+                    const account = doc.trace.act.account;
+                    const name = doc.trace.act.name;
+                    if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
+                })
+                .catch((err) => {
+                    console.log('error');
+                    if (err.code == 11000) {
+                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
+                    }
+                    else {
+                        if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', doc, ' \n Error message on insert: ', err);
+                        throw err;
+                    }
+                });
+
+            // Process actions to Redis
+            await redis_process_actions([doc])
+            let last_block_processed = doc.block_num; 
+            await redis.set(`eos_actions:last_block_processed`, last_block_processed);
+
+            // publish proposal results
+            if (doc.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(doc));
         }
-        if (profile_actions.length < MAX_ACTIONS_PER_REQUEST) more = false;
+
     }
+    else console.log(message);
+}
+
+function convertNewDocToOld (data): any[] {
+    return data.trace.matchingActions.map((action) => ({
+        block_num: data.trace.block.num,
+        block_time: data.trace.block.timestamp,
+        trace: {
+            act: {
+                name: action.name,
+                account: action.account,
+                data: action.json
+            },
+            receipt: {
+                global_sequence: action.seq
+            }
+        }
+    }));
 }
 
 
 async function main () {
-    await catchupMongo();
     if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
         await redis.flushdb();
         console.log(`REDIS: Flushed DB. Replaying...`);
     }
     await catchupRedis();
     start();
-    setInterval(() => restartIfFailing.apply(this), 15 * 1000);
 }
 
 main();
