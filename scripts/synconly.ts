@@ -13,6 +13,7 @@ const { createDfuseClient } = require("@dfuse/client")
 let lastMessageReceived = Date.now();
 let dfuseJwtToken;
 let dfuse;
+let streams = [];
 const redis = new Redis();
 
 dotenv.config();
@@ -230,7 +231,8 @@ async function start () {
     const article_start_block = await get_start_block('eparticlectr');
 
     const fields = `{
-          undo cursor
+          undo 
+          cursor
           trace {
             id
             block {
@@ -260,13 +262,14 @@ async function start () {
             ${fields}`;
     
 
-    client.graphql(stream_token, graphql_callback);
-    client.graphql(stream_article, graphql_callback);
-    client.graphql(stream_profile, graphql_callback);
-
+    streams[0] = await client.graphql(stream_token, graphql_callback);
+    streams[1] = await client.graphql(stream_article, graphql_callback);
+    streams[2] = await client.graphql(stream_profile, graphql_callback);
 }
             
 async function graphql_callback (message, stream) {
+    lastMessageReceived = Date.now();
+
     if (message.type === "data") {
         const data = message.data.searchTransactionsForward;
         const actions = data.trace.matchingActions;
@@ -325,6 +328,15 @@ function convertNewDocToOld (data): any[] {
     }));
 }
 
+async function restartRegularly() {
+    lastMessageReceived = Date.now();
+    console.log('Restarting dfuse.');
+    for (let stream of streams) {
+        await stream.unregisterStream();
+    }
+    start();
+}
+
 
 async function main () {
     if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
@@ -333,6 +345,7 @@ async function main () {
     }
     await catchupRedis();
     start();
+    setInterval(restartRegularly, 300000); // every 5 min
 }
 
 main();
