@@ -81,10 +81,16 @@ async function catchupRedis () {
 async function redis_process_actions (actions) {
     let results = [];
     for (let action of actions) {
+        // Remove the Mongo IDs that prevent uniqueness
+        if (action._id) delete action._id;
+
         // Make sure this action hasn't already been processed
         // Re-processing happens a lot during restarts and replays
         const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
-        if (processed) continue;
+        if (processed) {
+            console.log(`REDIS: Ignoring duplicate seq ${action.trace.receipt.global_sequence}`)
+            continue;
+        }
 
         // process action
         const pipeline = redis.pipeline();
