@@ -57,22 +57,28 @@ async function catchupRedis () {
     const BATCH_SIZE = 50000;
     const mongo_actions = await mongo_actions_promise;
 
-    let last_block_processed: any = await redis.get(`eos_actions:last_block_processed`);
-    if (!last_block_processed) last_block_processed = 0;
-    else last_block_processed = Number(last_block_processed);
+    const contracts = ["everipediaiq", "eparticlectr", "epsovreignid"];
+    for (let contract of contracts) {
+        let last_block_processed: any = await redis.get(`eos_actions:${contract}:last_block_processed`);
+        if (!last_block_processed) last_block_processed = 0;
+        else last_block_processed = Number(last_block_processed);
 
-    // catchup actions
-    while (true) {
-        let query = { block_num: { $gte: last_block_processed }};
-        let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
-        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Syncing ${actions.length} actions since block ${last_block_processed} to Redis`);
+        // catchup actions
+        while (true) {
+            let query = { 
+                block_num: { $gte: last_block_processed },
+                'trace.act.account': contract
+            };
+            let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
+            if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Syncing ${actions.length} ${contract} actions since block ${last_block_processed} to Redis`);
 
-        await redis_process_actions(actions);
-        if (actions.length > 0)
-            last_block_processed = actions[actions.length - 1].block_num; 
-        await redis.set(`eos_actions:last_block_processed`, last_block_processed);
+            await redis_process_actions(actions);
+            if (actions.length > 0)
+                last_block_processed = actions[actions.length - 1].block_num; 
+                await redis.set(`eos_actions:${contract}:last_block_processed`, last_block_processed);
 
-        if (actions.length < BATCH_SIZE) break;
+            if (actions.length < BATCH_SIZE) break;
+        }
     }
 
     return true;
@@ -148,6 +154,9 @@ async function redis_process_actions (actions) {
             }
         }
         else if (action.trace.act.name == "propose" || action.trace.act.name == "propose2") {
+            // there's a weird edge case where the data doesn't exist for proposals between the 1.0 and 2.0 contracts
+            if (!action.trace.act.data) continue;
+
             const user = action.trace.act.data.proposer;
             pipeline.incr(`user:${user}:num_edits`);
             pipeline.incr(`stat:total_edits`);
@@ -160,8 +169,8 @@ async function redis_process_actions (actions) {
             pipeline.zincrby("editor-leaderboard:all-time:rewards", amount, user);
             pipeline.incrbyfloat("stat:total_iq_rewards", amount);
         }
+        // block 59902500 is the start point of Everipedia 2.0
         else if (action.trace.act.name == "transfer") {
-            // Block 59902500 is the start block for the 2.0 smart contracts
             if (action.trace.act.data.to == "eparticlectr") {
                 const user = action.trace.act.data.from;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
@@ -169,11 +178,21 @@ async function redis_process_actions (actions) {
                 pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
             }
             else if (action.trace.act.data.from == "eparticlectr") {
-                const user = action.trace.act.data.to;
+                let user;
+                if (action.trace.act.data.to == "iqsafesendiq")
+                    user = action.trace.act.data.memo;
+                else
+                    user = action.trace.act.data.to;
                 const amount = action.trace.act.data.quantity.split(' ')[0];
                 pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
                 pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
             }
+        }
+        else if (action.trace.act.name == "brainmeiq") {
+            const user = action.trace.act.data.staker;
+            const amount = action.trace.act.data.amount;
+            pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
+            pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
         }
         else if (action.trace.act.name == "userinsert") {
             const user = action.trace.act.data.user;
@@ -258,13 +277,13 @@ async function start () {
     }`;
 
     const stream_token = `subscription($cursor: String!) {
-        searchTransactionsForward(query: "receiver:everipediaiq", cursor: $cursor, lowBlockNum: ${token_start_block} ) 
+        searchTransactionsForward(query: "receiver:everipediaiq account:everipediaiq", cursor: $cursor, lowBlockNum: ${token_start_block} ) 
             ${fields}`;
     const stream_article = `subscription($cursor: String!) {
-        searchTransactionsForward(query: "receiver:eparticlectr", cursor: $cursor, lowBlockNum: ${article_start_block} ) 
+        searchTransactionsForward(query: "receiver:eparticlectr account:eparticlectr", cursor: $cursor, lowBlockNum: ${article_start_block} ) 
             ${fields}`;
     const stream_profile = `subscription($cursor: String!) {
-        searchTransactionsForward(query: "receiver:epsovreignid", cursor: $cursor, lowBlockNum: ${profile_start_block} ) 
+        searchTransactionsForward(query: "receiver:epsovreignid account:epsovreignid", cursor: $cursor, lowBlockNum: ${profile_start_block} ) 
             ${fields}`;
     
 
@@ -293,9 +312,8 @@ async function graphql_callback (message, stream) {
                     if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Saved ${account}:${name} @ block ${block_num}`);
                 })
                 .catch((err) => {
-                    console.log('error');
                     if (err.code == 11000) {
-                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action. This is expected behavior during server restarts or cluster deployments`);
+                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action.`);
                     }
                     else {
                         if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', doc, ' \n Error message on insert: ', err);
@@ -306,7 +324,7 @@ async function graphql_callback (message, stream) {
             // Process actions to Redis
             await redis_process_actions([doc])
             let last_block_processed = doc.block_num; 
-            await redis.set(`eos_actions:last_block_processed`, last_block_processed);
+            await redis.set(`eos_actions:${doc.trace.act.account}:last_block_processed`, last_block_processed);
 
             // publish proposal results
             if (doc.trace.act.name == "logpropres") redis.publish("action:logpropres", JSON.stringify(doc));
