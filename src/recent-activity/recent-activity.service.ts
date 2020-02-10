@@ -190,14 +190,14 @@ export class RecentActivityService {
 
     }
 
-    async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 20) {
+    async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 20, use_cache: boolean  = true) {
         let langToUse = lang;
         if (lang == 'zh') langToUse = 'zh-hans';
         if (range == 'today') {
             try {
                 // check cache first
                 const cache = await this.redis.connection().get(`trending_pages:${langToUse}:today`);
-                if (cache) {
+                if (cache && use_cache) {
                     let parsed_cache = JSON.parse(cache);
                     if (parsed_cache && parsed_cache.length >= 6) return parsed_cache.slice(0, limit);
                 }
