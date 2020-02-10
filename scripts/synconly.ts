@@ -95,12 +95,12 @@ async function redis_process_action (action) {
     // Re-processing happens a lot during restarts and replays
     const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
     if (processed) {
-        console.log(`REDIS: Ignoring duplicate ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
+        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Ignoring duplicate ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
         return false;
     }
 
     // process action
-    console.log(`REDIS: Processing ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
+    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Processing ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
     const pipeline = redis.pipeline();
     if (action.trace.act.name == "vote" || action.trace.act.name == "votebyhash") {
         const proposal_id = action.trace.act.data.proposal_id;
