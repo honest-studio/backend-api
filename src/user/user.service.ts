@@ -25,8 +25,8 @@ export class UserService {
 
     async getStakes(account_name: string, options: UserServiceOptions) {
         const pipeline = this.redis.connection().pipeline();
-        pipeline.lrange(`user:${account_name}:stakes`, options.offset, options.limit);
-        pipeline.lrange(`user:${account_name}:refunds`, options.offset, options.limit);
+        pipeline.smembers(`user:${account_name}:stakes`);
+        pipeline.smembers(`user:${account_name}:refunds`);
         pipeline.get(`user:${account_name}:sum_stakes`);
         pipeline.get(`user:${account_name}:sum_refunds`);
         const values = await pipeline.exec();
@@ -36,8 +36,8 @@ export class UserService {
         if (values[3][1]) sum_stakes -= Number(values[3][1]);
 
         return {
-            stakes: values[0][1].map(v => JSON.parse(v)),
-            refunds: values[1][1].map(v => JSON.parse(v)),
+            stakes: values[0][1].map(v => JSON.parse(v)).slice(options.offset, options.offset + options.limit),
+            refunds: values[1][1].map(v => JSON.parse(v)).slice(options.offset, options.offset + options.limit),
             sum_stakes
         };
     }
