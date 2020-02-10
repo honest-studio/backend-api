@@ -47,7 +47,7 @@ export const renderAMP = (inputJSON: ArticleJson, wikiExtras: WikiExtraInfo): st
                         last_modified
                     }</span></div>
                     <div>IPFS: <span id="ipfs_hash">${inputJSON.ipfs_hash}</span></div>
-                    <div>Pageviews: <span id="pageviews">${wikiExtras .pageviews}</span></div>
+                    <div>Pageviews: <span id="pageviews">${wikiExtras.pageviews}</span></div>
                 </div>
                 ${arp.renderSchemaHTML()}
                 ${arp.renderBreadcrumbs()}

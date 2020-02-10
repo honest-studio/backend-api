@@ -71,6 +71,30 @@ export class WikiController {
         return this.wikiService.getWikiBySlug(lang_code, slug, options.cache, null, null, false);
     }
 
+    @Get('pageview/lang_:lang_code/:slug')
+    @ApiOperation({ title: 'Increment the pageviews for a page' })
+    @ApiImplicitParam({
+        name: 'lang_code',
+        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+    })
+    @ApiImplicitParam({
+        name: 'slug',
+        description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
+    })
+    @ApiImplicitQuery({
+        name: 'cache',
+        description: `Set to false if you don't want to use the cache`
+    })
+    @ApiResponse({
+        status: 200,
+        description: `A JSON for the wiki encoded in UTF-8`
+    })
+    @UsePipes(new JoiValidationPipe(WikiQuerySchema, ['query']))
+    async incrementPageview(@Param('lang_code') lang_code, @Param('slug') slug, @Query() options): Promise<boolean> {
+        this.wikiService.incrementPageviewCount(lang_code, slug);
+        return true;
+    }
+
     @Get('schema/lang_:lang_code/:slug')
     @ApiOperation({
         title:

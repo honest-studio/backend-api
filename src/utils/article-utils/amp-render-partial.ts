@@ -429,6 +429,7 @@ export class AmpRenderPartial {
                 <div class="ent-ct-inner-wrap">
                     ${comboSections}
                 </div>
+                <amp-pixel src="https://api.everipedia.org/v2/wiki/pageview/lang_${this.cleanedVars.page_lang}/${this.cleanedVars.url_slug}" layout="nodisplay"></amp-pixel>
             </div>
         `;
     };
