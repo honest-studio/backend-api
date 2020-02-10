@@ -39,6 +39,7 @@
     "server:restart-ipfs": "ssh beekeeper@apitest.everipedia.org 'systemctl --user restart ipfs'",
     "server:restart-mongo": "ssh beekeeper@apitest.everipedia.org 'sudo systemctl restart mongodb && systemctl --user restart ipfs && pm2 reload backend && systemctl --user restart ep2-synconly'",
     "deploy:sitemaps": "scp -r ./public/sitemaps beekeeper@frontend.everipedia.org:'/home/beekeeper/ep2-backend/public'",
+    "deploy:sitemaps-dev": "scp -r ./public/sitemaps ubuntu@dev24.everipedia.org:'/home/ubuntu/frontend-ssr/public'",
     "deploy:pre-install": "ssh beekeeper@apitest.everipedia.org 'sudo apt-get install -y ffmpeg build-essential libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev'",
     "deploy:prod": "ssh beekeeper@apitest.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'",
     "deploy:backup": "ssh beekeeper@frontend.everipedia.org 'cd /home/beekeeper/ep2-backend/ && git pull origin master && npm install && npm run-script build && pm2 reload backend'",
