@@ -75,7 +75,7 @@ export class PreviewController {
     @ApiOperation({ title: 'Get AMP Hoverblurb HTML for a given article' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',

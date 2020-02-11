@@ -11,13 +11,23 @@ export const renderAMPHoverLink = (inputArticle: ArticleJson, targetUrl: string)
 
     let theCitation: Citation = inputArticle.citations.find(existingCtn => compareURLs(existingCtn.url, targetUrl));
 
-    if (!theCitation) return "NO CITATION FOUND";
+    let CITATION_MIME, CITATION_URL, CITATION_THUMB, CITATION_DESCRIPTION, CITATION_TIMESTAMP;
+    if (!theCitation) {
+        CITATION_MIME = "None";
+        CITATION_URL = targetUrl;
+        CITATION_THUMB = "https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png";
+        CITATION_DESCRIPTION = "";
+        CITATION_TIMESTAMP = null;
+    }
+    else {
+        CITATION_MIME = theCitation.mime;
+        CITATION_URL = theCitation.url;
+        CITATION_THUMB = theCitation.thumb ? theCitation : "";
+        CITATION_DESCRIPTION = theCitation.description.map(sent => sent.text).join("");
+        CITATION_TIMESTAMP = theCitation.timestamp;
+    }
 
-    const CITATION_MIME = theCitation.mime;
-    const CITATION_URL = theCitation.url;
-    const CITATION_THUMB = theCitation.thumb ? theCitation : "";
-    const CITATION_DESCRIPTION = theCitation.description.map(sent => sent.text).join("");
-    const CITATION_TIMESTAMP = theCitation.timestamp;
+
 
     const renderPicture = () => {
         if (CITATION_MIME != ''){
@@ -48,7 +58,7 @@ export const renderAMPHoverLink = (inputArticle: ArticleJson, targetUrl: string)
                 </a>
                 <div class="hvrlnk-cite-container">
                     <div class="hvrlnk-cite-avatar-extras-container">
-                        <div class="hvrlnk-cite"><span class="hvrlnk-label">Cited On: </span>${CITATION_TIMESTAMP}</div>
+                        <div class="hvrlnk-cite"><span class="hvrlnk-label">${CITATION_TIMESTAMP ? 'Cited On: ' : ''}</span>${CITATION_TIMESTAMP ? CITATION_TIMESTAMP : ''}</div>
                     </div>
                 </div>
                 <div class="description-block cls-newlink" onclick="newWindow();">
