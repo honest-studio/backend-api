@@ -88,9 +88,6 @@ export class HomepageService {
         let _butter = this.butter.getButter();
         let langToUse = lang_code;
         let butter_lang_to_use = lang_code;
-        if (lang_code == 'zh-hans') butter_lang_to_use = 'zh';
-        if (lang_code == 'zh') langToUse = 'zh-hans';
-
         const [
             blog, 
             content, 

@@ -33,7 +33,7 @@ export class WikiController {
     @ApiOperation({ title: 'Get boosts for a given langslug' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
@@ -51,7 +51,7 @@ export class WikiController {
     @ApiOperation({ title: 'Get wiki by article langslug' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
@@ -75,7 +75,7 @@ export class WikiController {
     @ApiOperation({ title: 'Increment the pageviews for a page' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
@@ -102,7 +102,7 @@ export class WikiController {
     })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
@@ -120,7 +120,7 @@ export class WikiController {
     @ApiOperation({ title: 'Get AMP HTML for a given article' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
@@ -143,7 +143,7 @@ export class WikiController {
     @ApiOperation({ title: 'Get all the language versions of a page' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
@@ -161,7 +161,7 @@ export class WikiController {
     @ApiOperation({ title: 'Get extra info for a wiki' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',

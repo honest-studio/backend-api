@@ -17,9 +17,6 @@ export const getLangPrefix = (lang: string) => {
         case 'en':
             langPrefix = '';
             break;
-        case 'zh-hans':
-            langPrefix = 'zh.';
-            break;
         default:
             langPrefix = `${lang}.`;
     };

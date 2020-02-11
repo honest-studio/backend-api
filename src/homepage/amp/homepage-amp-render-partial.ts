@@ -27,7 +27,7 @@ export class HomepageAMPRenderPartial {
         this.cleanedVars.img_full = 'https://epcdn-vz.azureedge.net/static/images/logo_new_full_1201x833.jpg';
         this.cleanedVars.img_thumb = 'https://epcdn-vz.azureedge.net/static/images/logo_new_thumb_250x173.jpg';
         this.cleanedVars.trackingIDToUse = ga_id;
-        this.TL = TranslationsPack[lang_code.replace('zh-hans', 'zh')];
+        this.TL = TranslationsPack[lang_code];
     }
 
     renderHead = (RANDOMSTRING: string): string => {

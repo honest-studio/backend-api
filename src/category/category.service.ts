@@ -10,7 +10,7 @@ const HOMEPAGE_CATEGORY_IDS = {
     en: [1, 2, 3, 4, 4234, 371, 4071, 4068, 4066, 4069, 4072, 4070, 16926],
     es: [],
     ko: [],
-    'zh-hans': [],
+    zh: [],
 };
 
 export interface CategorySearchPack {

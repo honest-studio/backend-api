@@ -152,8 +152,8 @@ export const WIKI_LANG_PACKAGES = {
         WIKI_REMOVE_CLASSES_PREPARSE: [],
         WIKI_REPLACE_CLASSES_PREPARSE: []
     },
-    "zh-hans": {
-        WIKI_LANG_CODE: "zh-hans",
+    "zh": {
+        WIKI_LANG_CODE: "zh",
         WIKI_ROOT_URL: "https://zh.wikipedia.org",
         WIKI_FACEBOOKID_PREFIX: "6967",
         WIKI_ADDITIONAL_SLICE_TERMS: ['相关阅读', '参考文献', '參見', '註释', '外部連結', '延伸閱讀', '参见', '外部链接', '参考资料和註釋', '参看'],
