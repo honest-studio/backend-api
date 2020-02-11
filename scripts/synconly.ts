@@ -72,7 +72,10 @@ async function catchupRedis () {
             let actions = await mongo_actions.find(query).limit(BATCH_SIZE).toArray();
             if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Syncing ${actions.length} ${contract} actions since block ${last_block_processed} to Redis`);
 
-            await redis_process_actions(actions);
+            for (let action of actions) {
+                await redis_process_action(action);
+            }
+
             if (actions.length > 0)
                 last_block_processed = actions[actions.length - 1].block_num; 
                 await redis.set(`eos_actions:${contract}:last_block_processed`, last_block_processed);
@@ -84,128 +87,126 @@ async function catchupRedis () {
     return true;
 }
 
-async function redis_process_actions (actions) {
-    let results = [];
-    for (let action of actions) {
-        // Remove the Mongo IDs that prevent uniqueness
-        if (action._id) delete action._id;
+async function redis_process_action (action) {
+    // Remove the Mongo IDs that prevent uniqueness
+    if (action._id) delete action._id;
 
-        // Make sure this action hasn't already been processed
-        // Re-processing happens a lot during restarts and replays
-        const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
-        if (processed) {
-            console.log(`REDIS: Ignoring duplicate seq ${action.trace.receipt.global_sequence}`)
-            continue;
-        }
+    // Make sure this action hasn't already been processed
+    // Re-processing happens a lot during restarts and replays
+    const processed = await redis.get(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
+    if (processed) {
+        if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Ignoring duplicate ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
+        return false;
+    }
 
-        // process action
-        const pipeline = redis.pipeline();
-        if (action.trace.act.name == "vote" || action.trace.act.name == "votebyhash") {
-            const proposal_id = action.trace.act.data.proposal_id;
-            pipeline.sadd(`proposal:${proposal_id}:votes`, JSON.stringify(action));
-            const user = action.trace.act.data.voter;
-            pipeline.incr(`user:${user}:num_votes`);
+    // process action
+    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Processing ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
+    const pipeline = redis.pipeline();
+    if (action.trace.act.name == "vote" || action.trace.act.name == "votebyhash") {
+        const proposal_id = action.trace.act.data.proposal_id;
+        pipeline.sadd(`proposal:${proposal_id}:votes`, JSON.stringify(action));
+        const user = action.trace.act.data.voter;
+        pipeline.incr(`user:${user}:num_votes`);
+    }
+    else if (action.trace.act.name == "logpropinfo") {
+        const proposal_id = action.trace.act.data.proposal_id;
+        const ipfs_hash = action.trace.act.data.ipfs_hash;
+        const proposer = action.trace.act.data.proposer;
+        const lang_code = action.trace.act.data.lang_code;
+        const slug = action.trace.act.data.slug;
+        const endtime = action.trace.act.data.endtime;
+        const ttl = endtime - (Date.now() / 1000 | 0);
+        pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
+        pipeline.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
+        pipeline.sadd(`user:${proposer}:proposals`, JSON.stringify(action));
+        if (ttl > 0) {
+            pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
+            pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ttl);
         }
-        else if (action.trace.act.name == "logpropinfo") {
-            const proposal_id = action.trace.act.data.proposal_id;
-            const ipfs_hash = action.trace.act.data.ipfs_hash;
-            const proposer = action.trace.act.data.proposer;
-            const lang_code = action.trace.act.data.lang_code;
-            const slug = action.trace.act.data.slug;
-            const endtime = action.trace.act.data.endtime;
-            const ttl = endtime - (Date.now() / 1000 | 0);
-            pipeline.set(`proposal:${proposal_id}:info`, JSON.stringify(action));
-            pipeline.zadd(`wiki:lang_${lang_code}:${slug}:proposals`, proposal_id, proposal_id);
-            pipeline.sadd(`user:${proposer}:proposals`, JSON.stringify(action));
-            if (ttl > 0) {
-                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ipfs_hash);
-                pipeline.expire(`wiki:lang_${lang_code}:${slug}:last_proposed_hash`, ttl);
+    }
+    else if (action.trace.act.name == "logpropres") {
+        // v1 results are done based on proposal hash
+        // v2 results are done based on proposal ID
+        const approved = action.trace.act.data.approved;
+        const proposal_id = action.trace.act.data.proposal_id;
+        const proposal = action.trace.act.data.proposal;
+        const key = proposal_id ? proposal_id : proposal;
+        pipeline.set(`proposal:${key}:result`, JSON.stringify(action));
+
+        if (proposal_id && approved === 1) {
+            const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
+            try {
+                const ipfs_hash = info.trace.act.data.ipfs_hash;
+                const lang_code = info.trace.act.data.lang_code;
+                const slug = info.trace.act.data.slug;
+                const endtime = info.trace.act.data.endtime;
+                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
+                pipeline.set(`wiki:lang_${lang_code}:${slug}:last_updated`, endtime);
+
+                const removal = info.trace.act.data.comment.includes("PAGE_REMOVAL");
+                if (removal)
+                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, "removed");
+            } catch {
+                // some proposals dont have info strangely enough
+                // mark as unprocessed and continue
+                if (DFUSE_ACTION_LOGGING) console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
+                return false;
             }
         }
-        else if (action.trace.act.name == "logpropres") {
-            // v1 results are done based on proposal hash
-            // v2 results are done based on proposal ID
-            const approved = action.trace.act.data.approved;
-            const proposal_id = action.trace.act.data.proposal_id;
-            const proposal = action.trace.act.data.proposal;
-            const key = proposal_id ? proposal_id : proposal;
-            pipeline.set(`proposal:${key}:result`, JSON.stringify(action));
+    }
+    else if (action.trace.act.name == "propose" || action.trace.act.name == "propose2") {
+        // there's a weird edge case where the data doesn't exist for proposals between the 1.0 and 2.0 contracts
+        if (!action.trace.act.data) return false;
 
-            if (proposal_id && approved === 1) {
-                const info = JSON.parse(await redis.get(`proposal:${proposal_id}:info`));
-                try {
-                    const ipfs_hash = info.trace.act.data.ipfs_hash;
-                    const lang_code = info.trace.act.data.lang_code;
-                    const slug = info.trace.act.data.slug;
-                    const endtime = info.trace.act.data.endtime;
-                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, ipfs_hash);
-                    pipeline.set(`wiki:lang_${lang_code}:${slug}:last_updated`, endtime);
-
-                    const removal = info.trace.act.data.comment.includes("PAGE_REMOVAL");
-                    if (removal)
-                        pipeline.set(`wiki:lang_${lang_code}:${slug}:last_approved_hash`, "removed");
-                } catch {
-                    // some proposals dont have info strangely enough
-                    // mark as unprocessed and continue
-                    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: No info found for proposal ${proposal_id}. Not processing action`);
-                    await redis.del(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`);
-                    continue;
-                }
-            }
-        }
-        else if (action.trace.act.name == "propose" || action.trace.act.name == "propose2") {
-            // there's a weird edge case where the data doesn't exist for proposals between the 1.0 and 2.0 contracts
-            if (!action.trace.act.data) continue;
-
-            const user = action.trace.act.data.proposer;
-            pipeline.incr(`user:${user}:num_edits`);
-            pipeline.incr(`stat:total_edits`);
-            pipeline.sadd(`stat:unique_editors`, user);
-        }
-        else if (action.trace.act.name == "issue") {
-            const user = action.trace.act.data.to;
+        const user = action.trace.act.data.proposer;
+        pipeline.incr(`user:${user}:num_edits`);
+        pipeline.incr(`stat:total_edits`);
+        pipeline.sadd(`stat:unique_editors`, user);
+    }
+    else if (action.trace.act.name == "issue") {
+        const user = action.trace.act.data.to;
+        const amount = action.trace.act.data.quantity.split(' ')[0];
+        // All-time leaderboard
+        pipeline.zincrby("editor-leaderboard:all-time:rewards", amount, user);
+        pipeline.incrbyfloat("stat:total_iq_rewards", amount);
+    }
+    // block 59902500 is the start point of Everipedia 2.0
+    else if (action.trace.act.name == "transfer") {
+        if (action.trace.act.data.to == "eparticlectr") {
+            const user = action.trace.act.data.from;
             const amount = action.trace.act.data.quantity.split(' ')[0];
-            // All-time leaderboard
-            pipeline.zincrby("editor-leaderboard:all-time:rewards", amount, user);
-            pipeline.incrbyfloat("stat:total_iq_rewards", amount);
-        }
-        // block 59902500 is the start point of Everipedia 2.0
-        else if (action.trace.act.name == "transfer") {
-            if (action.trace.act.data.to == "eparticlectr") {
-                const user = action.trace.act.data.from;
-                const amount = action.trace.act.data.quantity.split(' ')[0];
-                pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
-                pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
-            }
-            else if (action.trace.act.data.from == "eparticlectr") {
-                let user;
-                if (action.trace.act.data.to == "iqsafesendiq")
-                    user = action.trace.act.data.memo;
-                else
-                    user = action.trace.act.data.to;
-                const amount = action.trace.act.data.quantity.split(' ')[0];
-                pipeline.rpush(`user:${user}:refunds`, JSON.stringify(action));
-                pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
-            }
-        }
-        else if (action.trace.act.name == "brainmeiq") {
-            const user = action.trace.act.data.staker;
-            const amount = action.trace.act.data.amount;
-            pipeline.rpush(`user:${user}:stakes`, JSON.stringify(action));
+            pipeline.sadd(`user:${user}:stakes`, JSON.stringify(action));
             pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
         }
-        else if (action.trace.act.name == "userinsert") {
-            const user = action.trace.act.data.user;
-            const profile = action.trace.act.data;
-            pipeline.set(`user:${user}:profile`, JSON.stringify(profile));
+        else if (action.trace.act.data.from == "eparticlectr") {
+            let user;
+            if (action.trace.act.data.to == "iqsafesendiq")
+                user = action.trace.act.data.memo;
+            else
+                user = action.trace.act.data.to;
+            const amount = action.trace.act.data.quantity.split(' ')[0];
+            pipeline.sadd(`user:${user}:refunds`, JSON.stringify(action));
+            pipeline.incrbyfloat(`user:${user}:sum_refunds`, amount);
         }
-        else if (action.trace.act.name == "mkreferendum") {
-            const proposal_id = action.trace.act.data.proposal_id;
-            pipeline.set(`proposal:${proposal_id}:referendum`, 1);
-        }
-        pipeline.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
-        await pipeline.exec();
     }
+    else if (action.trace.act.name == "brainmeiq") {
+        const user = action.trace.act.data.staker;
+        const amount = action.trace.act.data.amount;
+        pipeline.sadd(`user:${user}:stakes`, JSON.stringify(action));
+        pipeline.incrbyfloat(`user:${user}:sum_stakes`, amount);
+    }
+    else if (action.trace.act.name == "userinsert") {
+        const user = action.trace.act.data.user;
+        const profile = action.trace.act.data;
+        pipeline.set(`user:${user}:profile`, JSON.stringify(profile));
+    }
+    else if (action.trace.act.name == "mkreferendum") {
+        const proposal_id = action.trace.act.data.proposal_id;
+        pipeline.set(`proposal:${proposal_id}:referendum`, 1);
+    }
+    pipeline.set(`eos_actions:global_sequence:${action.trace.receipt.global_sequence}`, 1);
+
+    await pipeline.exec();
 
 
     return true;
@@ -303,6 +304,10 @@ async function graphql_callback (message, stream) {
         stream.mark({ cursor: data.cursor })
         
         for (let doc of docs) {
+            const block_num = doc.block_num;
+            const account = doc.trace.act.account;
+            const name = doc.trace.act.name;
+
             const mongo_actions = await mongo_actions_promise;
             mongo_actions.insertOne(doc)
                 .then(() => {
@@ -313,7 +318,7 @@ async function graphql_callback (message, stream) {
                 })
                 .catch((err) => {
                     if (err.code == 11000) {
-                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate action.`);
+                        if (DFUSE_ACTION_LOGGING) console.log(`MONGO: Ignoring duplicate ${account}:${name} @ block ${block_num}`);
                     }
                     else {
                         if (DFUSE_ACTION_LOGGING) console.log('MONGO: Error inserting action ', doc, ' \n Error message on insert: ', err);
@@ -322,7 +327,7 @@ async function graphql_callback (message, stream) {
                 });
 
             // Process actions to Redis
-            await redis_process_actions([doc])
+            await redis_process_action(doc)
             let last_block_processed = doc.block_num; 
             await redis.set(`eos_actions:${doc.trace.act.account}:last_block_processed`, last_block_processed);
 

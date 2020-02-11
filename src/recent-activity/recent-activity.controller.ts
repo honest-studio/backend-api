@@ -241,8 +241,14 @@ export class RecentActivityController {
         required: false,
         type: String
     })
+    @ApiImplicitQuery({
+        name: 'cache',
+        description: 'Use the cached version if available. Default=true',
+        required: false,
+        type: String
+    })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
     async getTrendingWikis(@Query() query): Promise<Array<any>> {
-        return await this.recentActivityService.getTrendingWikis(query.lang, query.range, query.limit);
+        return await this.recentActivityService.getTrendingWikis(query.lang, query.range, query.limit, query.cache);
     }
 }
