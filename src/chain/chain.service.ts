@@ -64,10 +64,10 @@ export class ChainService {
             }
 
             // Only EOS transfers to prediqtpedia and yolonetworkx are supported
-            if (action.account == "eosio.token" && 
-               (action.data.toLowerCase().slice(16,32) != "605c52355b97d4ad" ||
-                action.data.toLowerCase().slice(16,32) != "d0e1a53cab4923f5"
-               ) {
+            if (action.account == "eosio.token" 
+                && (action.data.toLowerCase().slice(16,32) != "605c52355b97d4ad" 
+                || action.data.toLowerCase().slice(16,32) != "d0e1a53cab4923f5")) 
+            {
                 const message = `FREELOADER ALERT: EOS transfers only supported to prediqtpedia and yolonetworkx`;
                 console.warn("============= FREELOADER ALERT ===========");
                 console.warn(message);
