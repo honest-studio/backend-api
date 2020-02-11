@@ -225,6 +225,9 @@ const TABLE_ROW_SEPARATOR = '\n';
 const TABLE_SECTION_SEPARATOR = '\n~~~~~~~~~~~~~\n';
 const TABLE_CELL_SEPARATOR = '|';
 const IMAGE_URL_CAPTION_SEPARATOR = '|';
+const H1_PREFIX = 'h1h1h1^^^ ';
+const H2_PREFIX = 'h2h2h2^^^ ';
+const H3_PREFIX = 'h3h3h3^^^ ';
 const DIFF_ADD_MARKER = ' d+++d';
 const DIFF_DELETE_MARKER = ' d---d';
 const DIFF_NONE_MARKER = ' d===d';
@@ -332,6 +335,21 @@ function linesToParagraph(lines: string): Paragraph {
                     ],
                     diff: getLineDiffType(lines)
                 };
+            else if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
+                return {
+                    index, 
+                    type: 'header',
+                    tag_type: lines.slice(0,2),
+                    sentences: [
+                        {
+                            index: 0,
+                            type: 'sentence',
+                            text: lines.substring(10).slice(0, -6),
+                            diff: getLineDiffType(lines)
+                        }
+                    ]
+                }
+            }
             else if (prefix == TABLE_PREFIX) return linesToTable(lines);
             else throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
         });
@@ -417,6 +435,12 @@ function sectionImageToLine(image: Media): string {
 }
 
 function paragraphToLines(paragraph: Paragraph): string {
+    // Mark header paragraphs
+    if (paragraph.tag_type.match(/h[1-3]/)) {
+        const prefix = paragraph.tag_type.repeat(3) + "^^^ ";
+        const text = (paragraph.items[0] as any).text;
+        return `${prefix} ${text}`;
+    }
     const lines = paragraph.items
         .map((item) => {
             if (item.type == 'sentence') {
