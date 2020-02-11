@@ -28,7 +28,7 @@ export type ActivityType = 'edit' | 'merge' | 'page-removal' | 'undo-merge' | 'u
 
 export interface Sentence {
     type: string; // sentence
-    index: number;
+    index?: number;
     text: string; // contains inline WikiLink markup + some light markdown for formatting
     diff?: DiffType;
 }
@@ -50,7 +50,7 @@ export interface NestedTagItem {
 
 export interface ListItem {
     type: string; // list_item
-    index: number;
+    index?: number;
     sentences: Sentence[];
     tag_type: string; // li
     diff?: DiffType;
@@ -59,7 +59,7 @@ export interface ListItem {
 export type ParagraphItem = Sentence | ListItem | Table | DescList | Samp;
 
 export interface Paragraph {
-    index: number;
+    index?: number;
     items: ParagraphItem[];
     tag_type: string;
     attrs: {};
@@ -71,7 +71,7 @@ export interface Section {
 }
 
 export type InfoboxValue = {
-    index: number;
+    index?: number;
     sentences: Sentence[];
     diff?: DiffType;
 }
@@ -179,7 +179,7 @@ export interface DescList {
 }
 
 export interface DescListItem {
-    index: number;
+    index?: number;
     tag_type: 'dt' | 'dd';
     tag_class: TagClass;
     attrs: {};
@@ -206,7 +206,7 @@ export interface TableSection {
 }
 
 export interface TableRow {
-    index: number;
+    index?: number;
     attrs: {};
     tag_type: "tr";
     tag_class: TagClass;
@@ -215,7 +215,7 @@ export interface TableRow {
 }
 
 export interface TableCell {
-    index: number;
+    index?: number;
     attrs: {};
     tag_type: TableCellType;
     tag_class: TagClass;
