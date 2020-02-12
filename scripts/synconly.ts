@@ -98,9 +98,8 @@ async function redis_process_action (action) {
         if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Ignoring duplicate ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
         return false;
     }
-
     // process action
-    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Processing ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
+    if (DFUSE_ACTION_LOGGING) console.log(`REDIS: Processing seq ${action.trace.receipt.global_sequence} ${action.trace.act.account}:${action.trace.act.name} at block ${action.block_num}`)
     const pipeline = redis.pipeline();
     if (action.trace.act.name == "vote" || action.trace.act.name == "votebyhash") {
         const proposal_id = action.trace.act.data.proposal_id;
@@ -357,16 +356,8 @@ function convertNewDocToOld (data): any[] {
     }));
 }
 
-async function restartRegularly() {
-    lastMessageReceived = Date.now();
-    console.log('Restarting dfuse.');
-    for (let stream of streams) {
-        await stream.unregisterStream();
-    }
-    start();
-}
-
-
+// There's a cron job restarting this process every 5 min
+// so that dead websockets don't cause problems
 async function main () {
     if (config.get("REDIS_REPLAY") && config.get("REDIS_REPLAY") === "true") {
         await redis.flushdb();
@@ -374,7 +365,6 @@ async function main () {
     }
     await catchupRedis();
     start();
-    setInterval(restartRegularly, 300000); // every 5 min
 }
 
 main();
