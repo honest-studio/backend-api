@@ -220,6 +220,7 @@ const PARAGRAPH_ITEM_SEPARATOR = '\n';
 const IMAGE_SEPARATOR = '\niiiiiiiiiii\n';
 const LIST_ITEM_PREFIX = 'lilili^^^ ';
 const SENTENCE_PREFIX = 'ssssss^^^ ';
+const BLOCKQUOTE_PREFIX = 'bquote^^^ ';
 const TABLE_PREFIX = 'tabtab^^^ ';
 const TABLE_ROW_SEPARATOR = '\n';
 const TABLE_SECTION_SEPARATOR = '\n~~~~~~~~~~~~~\n';
@@ -304,6 +305,7 @@ function diffToSections(diff_text): Section[] {
 
 function linesToParagraph(lines: string): Paragraph {
     const prefix = lines.trim().substring(0, 10);
+    console.log(prefix);
     if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
         return {
             tag_type: lines.slice(0,2),
@@ -323,8 +325,13 @@ function linesToParagraph(lines: string): Paragraph {
     }
 
     let split_lines;
+    let tag_type = 'p';
     if (prefix == TABLE_PREFIX)
         split_lines = [lines];
+    else if (prefix == BLOCKQUOTE_PREFIX) {
+        tag_type = 'blockquote';
+        split_lines = lines.slice(10).split(PARAGRAPH_ITEM_SEPARATOR);
+    }
     else
         split_lines = lines.split(PARAGRAPH_ITEM_SEPARATOR);
 
@@ -354,11 +361,31 @@ function linesToParagraph(lines: string): Paragraph {
                     ],
                     diff: getLineDiffType(lines)
                 };
+            // this occasionally occurs on a bad diff
+            // if it does, just return a sentence
+            else if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
+                return {
+                    index,
+                    type: 'sentence',
+                    text: lines.substring(10).slice(0, -6),
+                    diff: getLineDiffType(lines)
+                };
+            }
+            // in case this slips through, return a sentence
+            else if (prefix == BLOCKQUOTE_PREFIX) {
+                tag_type = 'blockquote';
+                return {
+                    index,
+                    type: 'sentence',
+                    text: lines.substring(10).slice(0, -6),
+                    diff: getLineDiffType(lines)
+                };
+            }
             else if (prefix == TABLE_PREFIX) return linesToTable(lines);
             else throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
         });
 
-    return { index: 0, items, tag_type: 'p', attrs: {} };
+    return { index: 0, items, tag_type, attrs: {} };
 }
 
 function linesToTable(lines: string): Table {
@@ -439,13 +466,19 @@ function sectionImageToLine(image: Media): string {
 }
 
 function paragraphToLines(paragraph: Paragraph): string {
+    let lines = "";
+
     // Mark header paragraphs
     if (paragraph.tag_type.match(/h[1-3]/)) {
         const prefix = paragraph.tag_type.repeat(3) + "^^^ ";
         const text = (paragraph.items[0] as any).text;
         return `${prefix} ${text}`;
     }
-    const lines = paragraph.items
+    else if (paragraph.tag_type == 'blockquote') {
+        lines += BLOCKQUOTE_PREFIX;
+    }
+
+    lines += paragraph.items
         .map((item) => {
             if (item.type == 'sentence') {
                 const sentence = item as Sentence;
