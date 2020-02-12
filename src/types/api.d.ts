@@ -176,6 +176,13 @@ export interface PublicProfileType {
     about_me: string; // 'Chief Product Officer'
     display_name: string; // 'Daniel Liebeskind'
     img: string; // "https://everipedia.org/images/daniel_liebeskind.jpg"
+    medium: string // 640x640
+    thumb: string; // 320x320
+    tinythumb: string; // 100x100
+    webp_original: string; // 1201x1201
+    webp_medium: string; // 640x640 
+    webp_thumb: string; // 320x320
+    webp_tinythumb: string; // 100x100
     languages: ProfileLanguageType[]; // [{"lang_code":"EN","level":3}]
     location: ProfileLocationType; // {"city":"los angeles","country":"US","state":"CA"}
     platforms: ProfilePlatformsType[]; // [{"platform":"Instagram","url":"exploremagic"}]

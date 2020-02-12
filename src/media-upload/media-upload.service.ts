@@ -45,10 +45,12 @@ const PHOTO_CONSTANTS = {
     CROPPED_WIDTH: 1201,
     CROPPED_HEIGHT: 1201,
     DISPLAY_WIDTH: 275,
-    CROPPED_MEDIUM_WIDTH: 600,
-    CROPPED_MEDIUM_HEIGHT: 600,
-    CROPPED_THUMB_WIDTH: 200,
-    CROPPED_THUMB_HEIGHT: 200,
+    CROPPED_MEDIUM_WIDTH: 640,
+    CROPPED_MEDIUM_HEIGHT: 640,
+    CROPPED_THUMB_WIDTH: 320,
+    CROPPED_THUMB_HEIGHT: 320,
+    CROPPED_TINYTHUMB_WIDTH: 100,
+    CROPPED_TINYTHUMB_HEIGHT: 100,
     CROPPED_META_THUMB_WIDTH: 250,
     CROPPED_META_THUMB_HEIGHT: 250,
 };
@@ -463,14 +465,20 @@ export class MediaUploadService {
             if (mimePack.mime.includes('video')) isVideo = true;
             else if (mimePack.mime.includes('audio')) isAudio = true;
 
+            // Determine whether to use the extra sizes
+            let useExtraSizes = uploadType == 'ChainProfile' ? true : false;
+
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
             let bufferPack = { 
                 mainBuf: null, 
+                mediumBuf: null,
                 thumbBuf: null,
+                tinythumbBuf: null,
                 webpOriginalBuf: null,
                 webpMediumBuf: null,
-                webpThumbBuf: null
+                webpThumbBuf: null,
+                webpTinyThumbBuf: null
             };
 
             // NOTES FOR S3 AND PUSHING STREAMS/BUFFERS
@@ -484,10 +492,12 @@ export class MediaUploadService {
             // Initialize the height and width of the thumbnails
             let mainWidth = PHOTO_CONSTANTS.CROPPED_WIDTH;
             let mainHeight = PHOTO_CONSTANTS.CROPPED_HEIGHT;
-            let mediumWidth = 640;
-            let mediumHeight = 640;
-            let thumbWidth = 320;
-            let thumbHeight = 320;
+            let mediumWidth = PHOTO_CONSTANTS.CROPPED_MEDIUM_WIDTH;
+            let mediumHeight = PHOTO_CONSTANTS.CROPPED_MEDIUM_HEIGHT;
+            let thumbWidth = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
+            let thumbHeight = PHOTO_CONSTANTS.CROPPED_THUMB_WIDTH;
+            let tinythumbWidth = PHOTO_CONSTANTS.CROPPED_TINYTHUMB_WIDTH;
+            let tinythumbHeight = PHOTO_CONSTANTS.CROPPED_TINYTHUMB_WIDTH;
             let includeMainPhoto: boolean = true;
 
             // Get a timestamp string from the Unix epoch
@@ -536,6 +546,28 @@ export class MediaUploadService {
                             .toBuffer()
                             .then((buffer) => buffer)
                             .catch((err) => console.log(colors.red("SVG ERROR ON thumbBuf: "), colors.red(err)));
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await sharp(temp_buffer)
+                                .resize(mediumWidth, mediumHeight, {
+                                    fit: 'inside',
+                                    // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                                })
+                                .jpeg({ quality: 85, force: true })
+                                .toBuffer()
+                                .then((buffer) => buffer)
+                                .catch((err) => console.log(colors.red("SVG ERROR ON mediumBuf: "), colors.red(err)));
+                            
+                            bufferPack.tinythumbBuf = await sharp(temp_buffer)
+                                .resize(tinythumbWidth, tinythumbHeight, {
+                                    fit: 'inside',
+                                    // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                                })
+                                .jpeg({ quality: 85, force: true })
+                                .toBuffer()
+                                .then((buffer) => buffer)
+                                .catch((err) => console.log(colors.red("SVG ERROR ON tinythumbBuf: "), colors.red(err)));
+                        }
 
                         break;
                     }
@@ -601,6 +633,32 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await (Jimp as any).read(bufferToUse)
+                                .then((image) =>
+                                    image
+                                        .background(0xffffffff)
+                                        .scaleToFit(mediumWidth, mediumHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/jpeg')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                            
+                            bufferPack.tinythumbBuf = await (Jimp as any).read(bufferToUse)
+                                .then((image) =>
+                                    image
+                                        .background(0xffffffff)
+                                        .scaleToFit(tinythumbWidth, tinythumbHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/jpeg')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                        }
+
+
                         break;
                     }
                     // Process TIFF files
@@ -634,6 +692,32 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
+
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await (Jimp as any).read(bufferToUse)
+                                .then((image) =>
+                                    image
+                                        .background(0xffffffff)
+                                        .scaleToFit(mediumWidth, mediumHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/jpeg')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                            
+                            bufferPack.tinythumbBuf = await (Jimp as any).read(bufferToUse)
+                                .then((image) =>
+                                    image
+                                        .background(0xffffffff)
+                                        .scaleToFit(tinythumbWidth, tinythumbHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/jpeg')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                        }
+
                         break;
                     }
                     // Process GIFs
@@ -720,6 +804,32 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
+
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await (Jimp as any).read(bufferPack.mainBuf)
+                            .then((image) =>
+                                image
+                                    .background(0xffffffff)
+                                    .scaleToFit(mediumWidth, mediumHeight)
+                                    .quality(85)
+                                    .getBufferAsync('image/jpeg')
+                            )
+                            .then((buffer) => buffer as any)
+                            .catch((err) => console.log(err));
+                            
+                            bufferPack.tinythumbBuf = await (Jimp as any).read(bufferPack.mainBuf)
+                                .then((image) =>
+                                    image
+                                        .background(0xffffffff)
+                                        .scaleToFit(tinythumbWidth, tinythumbHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/jpeg')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                        }
+
                         break;
                     }
                     // Process ICO files
@@ -765,7 +875,32 @@ export class MediaUploadService {
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
-                        
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await (Jimp as any).read(bufferPack.mainBuf)
+                            .then((image) =>
+                                image
+                                    .background(0xffffffff)
+                                    .scaleToFit(mediumWidth, mediumHeight)
+                                    .quality(85)
+                                    .getBufferAsync('image/jpeg')
+                            )
+                            .then((buffer) => buffer as any)
+                            .catch((err) => console.log(err));
+                            
+                            bufferPack.tinythumbBuf = await (Jimp as any).read(bufferPack.mainBuf)
+                                .then((image) =>
+                                    image
+                                        .background(0xffffffff)
+                                        .scaleToFit(tinythumbWidth, tinythumbHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/jpeg')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                        }
+
+
                         break;
                     }
                     // Process PNG files
@@ -791,6 +926,31 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
+
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await (Jimp as any).read(bufferToUse)
+                                .then((image) =>
+                                    image
+                                        .scaleToFit(mediumWidth, mediumHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/png')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                            
+                            bufferPack.tinythumbBuf = await (Jimp as any).read(bufferToUse)
+                                .then((image) =>
+                                    image
+                                        .scaleToFit(tinythumbWidth, tinythumbHeight)
+                                        .quality(85)
+                                        .getBufferAsync('image/png')
+                                )
+                                .then((buffer) => buffer as any)
+                                .catch((err) => console.log(err));
+                        }
+
+
                         break;
                     }
                     default: {
@@ -944,6 +1104,20 @@ export class MediaUploadService {
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpThumbBuf error: ", err));
+
+                if (useExtraSizes){
+                    // Resize the WEBP for the tinythumb image
+                    bufferPack.webpTinyThumbBuf = await sharp(temp_bufferToUse)
+                        .resize(tinythumbWidth, tinythumbHeight, {
+                            fit: 'inside',
+                            // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                        })
+                        .webp({ quality: 85, lossless: false, force: true })
+                        .toBuffer()
+                        .then((buffer) => buffer as any)
+                        .catch((err) => console.log("webpTinyThumbBuf error: ", err));
+                }
+
             }
 
 
@@ -964,6 +1138,11 @@ export class MediaUploadService {
                 bufferPack.webpThumbBuf = zlib.gzipSync(bufferPack.webpThumbBuf, {
                     level: zlib.constants.Z_BEST_COMPRESSION
                 });
+                if (useExtraSizes){
+                    bufferPack.webpTinyThumbBuf = zlib.gzipSync(bufferPack.webpTinyThumbBuf, {
+                        level: zlib.constants.Z_BEST_COMPRESSION
+                    });
+                }
             }
 
             // Set the AWS S3 bucket keys
@@ -989,9 +1168,11 @@ export class MediaUploadService {
                 let encodedSuffixWebpOriginal = `${encodedSuffixFirstPart}_original.webp`;
                 let encodedSuffixWebpMedium = `${encodedSuffixFirstPart}_medium.webp`;
                 let encodedSuffixWebpThumb = `${encodedSuffixFirstPart}_thumb.webp`;
+                let encodedSuffixWebpTinyThumb = `${encodedSuffixFirstPart}_tinythumb.webp`;
                 let theMainKeyWebpOriginal = `${uploadType}/${lang}/${encodedSuffixWebpOriginal}`;
                 let theMainKeyWebpMedium = `${uploadType}/${lang}/${encodedSuffixWebpMedium}`;
                 let theMainKeyWebpThumb = `${uploadType}/${lang}/${encodedSuffixWebpThumb}`;
+                let theMainKeyWebpTinyThumb = `${uploadType}/${lang}/${encodedSuffixWebpTinyThumb}`;
 
                 if (!isVideo || videoThumbBuffer){
                     // Specify S3 upload options for the webp'd original
@@ -1002,6 +1183,7 @@ export class MediaUploadService {
                         ACL: 'public-read',
                         ContentType: "image/webp",
                         CacheControl: 'max-age=31536000',
+                        ContentEncoding: 'gzip'
                     };
 
                     // Specify S3 upload options for the medium webp
@@ -1012,6 +1194,7 @@ export class MediaUploadService {
                         ACL: 'public-read',
                         ContentType: "image/webp",
                         CacheControl: 'max-age=31536000',
+                        ContentEncoding: 'gzip'
                     };
 
                     // Specify S3 upload options for the thumb webp
@@ -1022,11 +1205,22 @@ export class MediaUploadService {
                         ACL: 'public-read',
                         ContentType: "image/webp",
                         CacheControl: 'max-age=31536000',
+                        ContentEncoding: 'gzip'
                     };
 
-                    uploadParamsMainWebpOriginal['ContentEncoding'] = 'gzip';
-                    uploadParamsMainWebpMedium['ContentEncoding'] = 'gzip';
-                    uploadParamsMainWebpThumb['ContentEncoding'] = 'gzip';
+                    let uploadParamsMainWebpTinyThumb;
+                    if (useExtraSizes){
+                        // Specify S3 upload options for the tinythumb webp
+                        uploadParamsMainWebpTinyThumb = {
+                            Bucket: this.awsS3Service.getBucket(),
+                            Key: theMainKeyWebpTinyThumb,
+                            Body: bufferPack.webpTinyThumbBuf,
+                            ACL: 'public-read',
+                            ContentType: "image/webp",
+                            CacheControl: 'max-age=31536000',
+                            ContentEncoding: 'gzip'
+                        };
+                    }
 
                     // Upload the original in webp form
                     returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
@@ -1072,6 +1266,24 @@ export class MediaUploadService {
                             }
                         });
                     });
+
+                    if (useExtraSizes && uploadParamsMainWebpTinyThumb){
+                        // Upload the tinythumb webp
+                        returnPack = await new Promise<MediaUploadResult>((resolve, reject) => {
+                            this.awsS3Service.upload(uploadParamsMainWebpTinyThumb, (s3ErrOuter, dataOuter) => {
+                                if (s3ErrOuter){
+                                    console.log(colors.yellow('ERROR: s3ErrOuter for webp tinythumb image'));
+                                    console.log(s3ErrOuter);
+                                    reject(s3ErrOuter);
+                                }
+                                else {
+                                    returnPack.webp_tinythumb = dataOuter.Location;
+                                    resolve(returnPack);
+                                }
+                            });
+                        });
+                    }
+
                 }
             }
             
@@ -1122,6 +1334,75 @@ export class MediaUploadService {
                                     // Update the return dictionary with the thumbnail URL
                                     // returnPack.thumbnailPhotoURL = 'https://everipedia-storage.s3.amazonaws.com/' + theThumbKey;
                                     returnPack.thumbnailPhotoURL = dataInner.Location;
+
+                                    if (useExtraSizes){
+                                        // Create and upload the medium and tinythumb
+
+                                        // gzip the medium and tinythumb
+                                        bufferPack.mediumBuf = zlib.gzipSync(bufferPack.mediumBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+
+                                        bufferPack.tinythumbBuf = zlib.gzipSync(bufferPack.tinythumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
+                                        
+
+                                        // Set the AWS S3 bucket keys
+
+                                        let theMediumSuffix = encodeURIComponent(slugify(slug, { remove: /[*+~.()'"#%?!:@]/g })) + `/${filename}__medium.${varPack.thumbSuffix}`;
+                                        let theMediumKey = `${uploadType}/${lang}/${theMediumSuffix}`;
+                                        let theTinyThumbSuffix = encodeURIComponent(slugify(slug, { remove: /[*+~.()'"#%?!:@]/g })) + `/${filename}__tinythumb.${varPack.thumbSuffix}`;
+                                        let theTinyThumbKey = `${uploadType}/${lang}/${theTinyThumbSuffix}`;
+
+
+                                        // Specify S3 upload options
+                                        let uploadParamsMedium = {
+                                            Bucket: this.awsS3Service.getBucket(),
+                                            Key: theMediumKey,
+                                            Body: bufferPack.mediumBuf,
+                                            ACL: 'public-read',
+                                            ContentType: varPack.thumbMIME,
+                                            CacheControl: 'max-age=31536000',
+                                            ContentEncoding: 'gzip'
+                                        };
+
+                                        let uploadParamsTinyThumb = {
+                                            Bucket: this.awsS3Service.getBucket(),
+                                            Key: theTinyThumbKey,
+                                            Body: bufferPack.tinythumbBuf,
+                                            ACL: 'public-read',
+                                            ContentType: varPack.thumbMIME,
+                                            CacheControl: 'max-age=31536000',
+                                            ContentEncoding: 'gzip'
+                                        };
+
+                                        // Upload the medium to S3
+                                        this.awsS3Service.upload(uploadParamsMedium, (s3ErrMedium, dataMedium) => {
+                                            if (s3ErrMedium){
+                                                console.log(colors.yellow('ERROR: s3ErrMedium for thumb'));
+                                                console.log(s3ErrMedium);
+                                                reject(s3ErrMedium);
+                                            }
+                                            else {
+                                                // Update the return dictionary with the medium URL
+                                                returnPack.mediumPhotoURL = dataMedium.Location;
+
+
+                                                // Upload the tinythumb to S3
+                                                this.awsS3Service.upload(uploadParamsTinyThumb, (s3ErrTinyThumb, dataTinyThumb) => {
+                                                    if (s3ErrTinyThumb){
+                                                        console.log(colors.yellow('ERROR: s3ErrTinyThumb for thumb'));
+                                                        console.log(s3ErrTinyThumb);
+                                                        reject(s3ErrTinyThumb);
+                                                    }
+                                                    else {
+                                                        // Update the return dictionary with the medium URL
+                                                        returnPack.tinythumbPhotoURL = dataTinyThumb.Location;
+                                                        resolve(returnPack);
+                                                    }
+                                                });
+
+                                            }
+                                        });
+                                        
+                                    }
                                     resolve(returnPack);
                                 }
                             });
