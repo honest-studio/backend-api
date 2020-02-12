@@ -58,7 +58,6 @@ export class RecentActivityService {
     }
 
     async getProposals(query): Promise<Array<Proposal>> {
-        if (query.langs == 'zh') query.langs = 'zh-hans';
         if (query.voter && query.account_name)
             throw new BadRequestException("voter and account_name cannot be used together");
 
@@ -192,7 +191,6 @@ export class RecentActivityService {
 
     async getTrendingWikis(lang: string = 'en', range: string = 'today', limit: number = 20, use_cache: boolean  = true) {
         let langToUse = lang;
-        if (lang == 'zh') langToUse = 'zh-hans';
         if (range == 'today') {
             try {
                 // check cache first

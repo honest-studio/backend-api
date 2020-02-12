@@ -197,10 +197,26 @@ export const CheckForLinksOrCitationsAMP = (
             }
         } else if (isCitation >= 0 && citations) {
             if (!snippetMode){
-                const citationIndex: number | string =
-                    parseInt(link.charAt(isCitation + citeString.length + 1)) ||
-                    link.charAt(isCitation + citeString.length + 1);
-                const pulledCitationURL = citations[citationIndex] ? citations[citationIndex].url : '';
+                
+
+                let reg = /\[\[CITE\|\-?.*?\|([^\]]{0,300})(\]\])/gim; // Importing CITE_REGEX causes errors here for some reason
+                let citationParseResult = reg.exec(text);
+                let linkToUse = citationParseResult && citationParseResult[1];
+                if (!citationParseResult) {
+                    const indexStart = link.lastIndexOf('|');
+                    const indexEnd = link.lastIndexOf(']]');
+                    linkToUse = link.substring(indexStart + 1, indexEnd);
+                }
+                let pulledCitation = citations.find((ctn) => compareURLs(linkToUse, ctn.url).valueOf());
+                let pulledCitationURL = pulledCitation ? pulledCitation.url : 'MISSING';
+                let citationIndex = pulledCitation ? pulledCitation.citation_id : '66666'
+
+                if (citationParseResult && (pulledCitationURL == 'MISSING' || citationIndex == '66666')){
+                    pulledCitationURL = linkToUse;
+                    let citationSplits = citationParseResult[0].split("|");
+                    if (citationSplits.length) citationIndex = citationSplits[1];
+                    
+                }
 
                 // Load the HTML into htmlparser2 beforehand since it is more forgiving
                 let dom = htmlparser2.parseDOM('<a></a>', { decodeEntities: true });

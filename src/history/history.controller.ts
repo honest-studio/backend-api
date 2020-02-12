@@ -13,7 +13,7 @@ export class HistoryController {
     @ApiOperation({ title: 'Get edit history for a wiki' })
     @ApiImplicitParam({
         name: 'lang_code',
-        description: 'An ISO 639-1 language code (zh-hans for Mandarin)'
+        description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
     @ApiImplicitParam({
         name: 'slug',
