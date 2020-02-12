@@ -94,11 +94,14 @@ export interface MediaUploadResult {
         caption: string;
         filename: string;
     };
+    mediumPhotoURL?: string;
     thumbnailPhotoURL: string;
+    tinythumbPhotoURL?: string;
     mime: string;
     category: CitationCategoryType;
     webp_original?: string;
     webp_medium?: string;
     webp_thumb?: string;
+    webp_tinythumb?: string;
 }
 
