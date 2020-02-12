@@ -1403,7 +1403,7 @@ export class MediaUploadService {
                                         });
                                         
                                     }
-                                    resolve(returnPack);
+                                    else { resolve(returnPack) };
                                 }
                             });
                         } else resolve(returnPack);
