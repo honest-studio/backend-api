@@ -1340,7 +1340,6 @@ export class MediaUploadService {
 
                                         // gzip the medium and tinythumb
                                         bufferPack.mediumBuf = zlib.gzipSync(bufferPack.mediumBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
-
                                         bufferPack.tinythumbBuf = zlib.gzipSync(bufferPack.tinythumbBuf, { level: zlib.constants.Z_BEST_COMPRESSION });
                                         
 
