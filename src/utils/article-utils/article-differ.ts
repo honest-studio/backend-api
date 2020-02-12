@@ -305,7 +305,6 @@ function diffToSections(diff_text): Section[] {
 
 function linesToParagraph(lines: string): Paragraph {
     const prefix = lines.trim().substring(0, 10);
-    console.log(prefix);
     if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
         return {
             tag_type: lines.slice(0,2),
