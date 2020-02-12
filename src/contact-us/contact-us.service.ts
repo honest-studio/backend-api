@@ -16,11 +16,11 @@ export class ContactUsService {
         const emailParams = {
             Destination: {
                 BccAddresses: [
-                    // 'theodor@everipedia.com',
-                    // 'christian@everipedia.com',
+                    'navin@everipedia.com',
+                    'william@everipedia.com',
                     // 'dave@everipedia.com',
                     // 'navin@everipedia.com',
-                    'romi@everipedia.com'
+                    // 'romi@everipedia.com'
                 ],
                 ToAddresses: [this.awsSESService.getDefaultEmail()]
             },
