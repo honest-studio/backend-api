@@ -303,8 +303,27 @@ function diffToSections(diff_text): Section[] {
 }
 
 function linesToParagraph(lines: string): Paragraph {
+    const prefix = lines.trim().substring(0, 10);
+    if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
+        return {
+            tag_type: lines.slice(0,2),
+            items: [{
+                type: 'header',
+                tag_type: lines.slice(0,2),
+                sentences: [
+                    {
+                        type: 'sentence',
+                        text: lines.substring(10).slice(0, -6),
+                        diff: getLineDiffType(lines)
+                    }
+                ]
+            }],
+            attrs: {}
+        }
+    }
+
     let split_lines;
-    if (lines.trim().substring(0, 10) == TABLE_PREFIX)
+    if (prefix == TABLE_PREFIX)
         split_lines = [lines];
     else
         split_lines = lines.split(PARAGRAPH_ITEM_SEPARATOR);
@@ -335,21 +354,6 @@ function linesToParagraph(lines: string): Paragraph {
                     ],
                     diff: getLineDiffType(lines)
                 };
-            else if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
-                return {
-                    index, 
-                    type: 'header',
-                    tag_type: lines.slice(0,2),
-                    sentences: [
-                        {
-                            index: 0,
-                            type: 'sentence',
-                            text: lines.substring(10).slice(0, -6),
-                            diff: getLineDiffType(lines)
-                        }
-                    ]
-                }
-            }
             else if (prefix == TABLE_PREFIX) return linesToTable(lines);
             else throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
         });
