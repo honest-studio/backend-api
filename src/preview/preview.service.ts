@@ -151,13 +151,12 @@ export class PreviewService {
             pipeline.get(memkey2);
         }
         const values = await pipeline.exec();
-        //const uncached_previews = [];
-        //for (let i=0; i < wiki_identities.length; i++) {
-        //    if (values[i*2][1]) previews.push(JSON.parse(values[i*2][1]));
-        //    else if (values[i*2 + 1][1]) previews.push(JSON.parse(values[i*2 + 1][1]));
-        //    else uncached_previews.push(wiki_identities[i]);
-        //}
-        const uncached_previews = wiki_identities;
+        const uncached_previews = [];
+        for (let i=0; i < wiki_identities.length; i++) {
+            if (values[i*2][1]) previews.push(JSON.parse(values[i*2][1]));
+            else if (values[i*2 + 1][1]) previews.push(JSON.parse(values[i*2 + 1][1]));
+            else uncached_previews.push(wiki_identities[i]);
+        }
 
         // Part of the 'Title Not Available' bug
         if (uncached_previews.length == 0) return previews;
