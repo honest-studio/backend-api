@@ -133,6 +133,7 @@ export class PreviewService {
     async getPreviewsBySlug(wiki_identities: WikiIdentity[], user_agent: BrowserInfo['name']): Promise<PreviewResult[]> {
         if (!wiki_identities || wiki_identities.length == 0) return [];
         let previews: Array<PreviewResult> = [];
+
         // check Redis for fast cache
         const useWebP = IsWebPCompatibleBrowser(user_agent);
         const pipeline = this.redis.connection().pipeline();
@@ -150,12 +151,13 @@ export class PreviewService {
             pipeline.get(memkey2);
         }
         const values = await pipeline.exec();
-        const uncached_previews = [];
-        for (let i=0; i < wiki_identities.length; i++) {
-            if (values[i*2][1]) previews.push(JSON.parse(values[i*2][1]));
-            else if (values[i*2 + 1][1]) previews.push(JSON.parse(values[i*2 + 1][1]));
-            else uncached_previews.push(wiki_identities[i]);
-        }
+        //const uncached_previews = [];
+        //for (let i=0; i < wiki_identities.length; i++) {
+        //    if (values[i*2][1]) previews.push(JSON.parse(values[i*2][1]));
+        //    else if (values[i*2 + 1][1]) previews.push(JSON.parse(values[i*2 + 1][1]));
+        //    else uncached_previews.push(wiki_identities[i]);
+        //}
+        const uncached_previews = wiki_identities;
 
         // Part of the 'Title Not Available' bug
         if (uncached_previews.length == 0) return previews;
@@ -228,13 +230,15 @@ export class PreviewService {
                 ${whereClause2}`;
         const query = `${query1} UNION ${query2}`;
 
+        console.time('query');
         let mysql_previews: Array<PreviewResult> = await this.mysql.TryQuery(query);
+        console.timeEnd('query');
         let found_slugs = mysql_previews.map(prev => prev.slug);
 
         // Identify orphan hashes
         let orphan_hashes = uncached_previews.map(ucp => {
             if(!(found_slugs.includes(ucp.slug))) return ucp.ipfs_hash;
-        })
+        }).filter(hash => hash !== undefined);
 
         // Sync the orphan hashes if they are present
         if (orphan_hashes.length){
