@@ -193,6 +193,33 @@ export class CategoryService {
                 else the_keys.push(key);
             })
         }
+        else {
+            // Just get the category info if there are no articles
+            let category_info_fetch: any[] = await this.mysql.TryQuery(
+                `
+                SELECT 
+                    cat.id AS cat_id,
+                    cat.lang AS cat_lang,
+                    cat.slug AS cat_slug,
+                    cat.title AS cat_title,
+                    cat.description AS cat_description,
+                    cat.img_full AS cat_img_full,
+                    cat.img_full_webp AS cat_img_full_webp,
+                    cat.img_thumb AS cat_img_thumb,
+                    cat.img_thumb_webp AS cat_img_thumb_webp
+                FROM 
+                    enterlink_pagecategory cat 
+                WHERE 
+                    cat.lang = ? 
+                    AND cat.slug = ?
+                `,
+                [lang_code, slug],
+                10000
+            );
+            if (category_info_fetch.length > 0){
+                category_info = category_info_fetch[0];
+            }
+        }
 
         // Pull out the previews
         let the_previews: PreviewResult[] = [];
