@@ -127,12 +127,9 @@ export class CategoryService {
     }
 
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
-        let limit_to_use = query && query.limit || "20";
-        limit_to_use = parseInt(limit_to_use);
-        let offset_to_use = query && query.offset || "0";
-        offset_to_use = parseInt(offset_to_use);
-        let show_adult = query && query.show_adult_content || "0";
-        show_adult = parseInt(show_adult);
+        let limit_to_use = parseInt(query && query.limit || "20");
+        let offset_to_use = parseInt(query && query.offset || "0");
+        let show_adult = parseInt(query && query.show_adult_content || "0");
         let show_adult_string = "AND art.is_adult_content=0";
         if (show_adult) show_adult_string = '';
         
