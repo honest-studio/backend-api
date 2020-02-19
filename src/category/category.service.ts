@@ -127,12 +127,12 @@ export class CategoryService {
     }
 
     async getPagesByCategoryLangSlug(lang_code: string, slug: string, query: any): Promise<PageCategoryCollection> {
-        let limit_to_use = (query && query.limit && query.limit == undefined) ? 20 : parseInt(query.limit);
-        let offset_to_use = (query && query.offset && query.offset == undefined) ? 0 : parseInt(query.offset);
-        let show_adult = (query && query.show_adult_content && query.show_adult_content) == undefined ? 0 : parseInt(query.offset);
+        let limit_to_use = parseInt(query && query.limit || "20");
+        let offset_to_use = parseInt(query && query.offset || "0");
+        let show_adult = parseInt(query && query.show_adult_content || "0");
         let show_adult_string = "AND art.is_adult_content=0";
         if (show_adult) show_adult_string = '';
-
+        
         let category_previews: any[] = await this.mysql.TryQuery(
             `
             SELECT 
@@ -185,28 +185,63 @@ export class CategoryService {
 
         // Pull out the info for the category itself
         let category_info: any = {};
-        let the_keys = [];
+        let the_keys = [], hasResults = false;
         if (category_previews.length > 0){
+            console.log("PART 0")
+            hasResults = true;
             let first_result = category_previews[0];
             Object.keys(first_result).forEach(key => {
                 if (key.indexOf('cat_') == 0) category_info[key.replace('cat_', '')] = first_result[key];
                 else the_keys.push(key);
             })
         }
+        else {
+
+            // Just get the category info if there are no articles
+            let category_info_fetch: any[] = await this.mysql.TryQuery(
+                `
+                SELECT 
+                    cat.id AS cat_id,
+                    cat.lang AS cat_lang,
+                    cat.slug AS cat_slug,
+                    cat.title AS cat_title,
+                    cat.description AS cat_description,
+                    cat.img_full AS cat_img_full,
+                    cat.img_full_webp AS cat_img_full_webp,
+                    cat.img_thumb AS cat_img_thumb,
+                    cat.img_thumb_webp AS cat_img_thumb_webp
+                FROM 
+                    enterlink_pagecategory cat 
+                WHERE 
+                    cat.lang = ? 
+                    AND cat.slug = ?
+                `,
+                [lang_code, slug],
+                10000
+            );
+            if (category_info_fetch.length > 0){
+                Object.keys(category_info_fetch[0]).forEach(key => {
+                    if (key.indexOf('cat_') == 0) category_info[key.replace('cat_', '')] = category_info_fetch[0][key];
+                    else the_keys.push(key);
+                })
+            }
+        }
 
         // Pull out the previews
         let the_previews: PreviewResult[] = [];
-        category_previews.forEach(prev => {
-            let previewresult_obj: any = {};
-            the_keys.forEach(key => {
-                let the_value = prev[key];
+        if (hasResults){
+            category_previews.forEach(prev => {
+                let previewresult_obj: any = {};
+                the_keys.forEach(key => {
+                    let the_value = prev[key];
 
-                // Sanitize the text if applicable
-                if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value);
-                previewresult_obj[key] = the_value;
-            });
-            the_previews.push(previewresult_obj);
-        })
+                    // Sanitize the text if applicable
+                    if(key.search(/page_title|text_preview/gimu) >= 0) the_value = sanitizeTextPreview(the_value);
+                    previewresult_obj[key] = the_value;
+                });
+                the_previews.push(previewresult_obj);
+            })
+        }
 
         return {
             category: category_info,

@@ -51,6 +51,10 @@ export interface UserServiceOptions {
     offset: number;
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
 @Injectable()
 export class WikiService {
     private updateWikiIntervals;
@@ -686,12 +690,13 @@ export class WikiService {
 
         // RETURN THE IPFS HASH HERE, BUT BEFORE DOING SO, START A THREAD TO LOOK FOR THE PROPOSAL ON CHAIN
         // ONCE THE PROPOSAL IS DETECTED ON CHAIN, UPDATE MYSQL
-        let INTERVAL_MSEC = 250;
+        let INTERVAL_MSEC = 1000;
+        let MAX_TRIES = 45;
         this.updateWikiIntervals[ipfs_hash] = setIntervalAsync(
             async () => this.updateWiki(wiki, ipfs_hash, false),
             INTERVAL_MSEC
         );
-        setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC);
+        setTimeout(() => clearIntervalAsync(this.updateWikiIntervals[ipfs_hash]), INTERVAL_MSEC * MAX_TRIES);
 
         // If the token is set, relay the transaction on behalf of the user
         // This is for Auth0 users, it's currently not in use
@@ -1096,18 +1101,30 @@ export class WikiService {
     async checkTx(body: any): Promise<{ status: boolean }> {
         let { ipfs_hash, trace } = body;
         let status = false;
-        try {
-            let result: any = await this.mysql.TryQuery(
-                `
-                    UPDATE pending_transactions
-                    SET trace = ?
-                    WHERE ipfs_hash = ?
-                `,
-                [JSON.stringify(trace), ipfs_hash]
-            );
-            if (result && result.affectedRows == 1) status = true;
+
+        const MAX_ATTEMPTS = 10;
+        const WAIT_TIME = 500; // msec
+        for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+            if (status) break;
+            try {
+                let result: any = await this.mysql.TryQuery(
+                    `
+                        UPDATE pending_transactions
+                        SET trace = ?
+                        WHERE ipfs_hash = ?
+                    `,
+                    [JSON.stringify(trace), ipfs_hash]
+                );
+                if (result && result.affectedRows == 1) {
+                    status = true;
+                    console.log("TX UPDATED");
+                    break;
+                }
+            }
+            catch (e){}
+            console.log("SLEEPING");
+            await sleep(WAIT_TIME);
         }
-        catch (e){}
         return { status };
     }
 
@@ -1122,9 +1139,12 @@ export class WikiService {
             'trace.act.name': 'logpropinfo',
             'trace.act.data.ipfs_hash': ipfs_hash
         })
-
-        // Next, try the pending_transactions table
-        if (!submitted_proposal){
+        if (submitted_proposal){
+            console.log(colors.green(`Found in Dfuse!`));
+        }
+        else {
+            // Next, try the pending_transactions table
+            console.log(colors.yellow(`Could not find on Dfuse. Looking at the pending transactions table`));
             const fetched: any[] = await this.mysql.TryQuery(
                 `
                     SELECT trace
@@ -1134,12 +1154,19 @@ export class WikiService {
                 `,
                 [ipfs_hash]
             );
-            if (fetched && fetched.length > 0) submitted_proposal = { trace: JSON.parse(fetched[0])};
+            if (fetched && fetched.length > 0) {
+                console.log(colors.green(`Found in the pending transactions table!`));
+                submitted_proposal = { trace: JSON.parse(fetched[0].trace)};
+            }
+            else{
+                console.log(colors.red(`Not found in the pending transactions table either`));
+            }
         }
         
 
         if (submitted_proposal) {
             // console.log(util.inspect(submitted_proposal, {showHidden: false, depth: null, chalk: true}));
+            
             const trxID = submitted_proposal.trx_id;
             console.log(colors.green(`Transaction found! (${trxID})`));
             if(!override_clear_interval){

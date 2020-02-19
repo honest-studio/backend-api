@@ -1,5 +1,6 @@
 import * as crypto from 'crypto';
 import * as JsDiff from 'diff';
+import chalk from 'chalk';
 import { ArticleJson, Citation, DescList, DiffType, Infobox, ListItem, Media, Metadata, NestedContentItem, Paragraph, Section, Sentence, Table, TableCaption, TableRow, TableSection } from '../../types/article';
 
 const METADATA_EXCLUDE_FIELDS = ['pageviews'];
@@ -381,7 +382,10 @@ function linesToParagraph(lines: string): Paragraph {
                 };
             }
             else if (prefix == TABLE_PREFIX) return linesToTable(lines);
-            else throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
+            else {
+                console.log(chalk.red(`Unrecognized ParagraphItem prefix: ${prefix}`))
+                // throw new Error(`Unrecognized ParagraphItem prefix: ${prefix}`);
+            }
         });
 
     return { index: 0, items, tag_type, attrs: {} };

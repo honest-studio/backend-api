@@ -32,12 +32,12 @@ export class UserService {
         const values = await pipeline.exec();
 
         let sum_stakes = 0;
-        if (values[2][1]) sum_stakes += Number(values[2][1]);
-        if (values[3][1]) sum_stakes -= Number(values[3][1]);
+        if (values[2] && values[2][1]) sum_stakes += Number(values[2][1]);
+        if (values[3] && values[3][1]) sum_stakes -= Number(values[3][1]);
 
         return {
-            stakes: values[0][1].map(v => JSON.parse(v)).slice(options.offset, options.offset + options.limit),
-            refunds: values[1][1].map(v => JSON.parse(v)).slice(options.offset, options.offset + options.limit),
+            stakes: values[0] && values[0][1] ? values[0][1].map(v => JSON.parse(v)).slice(options.offset, options.offset + options.limit) : [],
+            refunds: values[1] && values[1][1] ? values[1][1].map(v => JSON.parse(v)).slice(options.offset, options.offset + options.limit) : [],
             sum_stakes
         };
     }
