@@ -68,7 +68,7 @@ export class PreviewController {
     })
     async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Body() options): Promise<PreviewResult> {
         const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }], options.user_agent);
-        return previews[0];
+        return previews && previews[0] || null;
     }
 
     @Get('amp-hoverblurb/lang_:lang_code/:slug')
