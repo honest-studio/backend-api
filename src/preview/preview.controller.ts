@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, forwardRef, Inject } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
 import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
@@ -68,7 +68,16 @@ export class PreviewController {
     })
     async getWikiPreviewBySlug(@Param('lang_code') lang_code, @Param('slug') slug, @Body() options): Promise<PreviewResult> {
         const previews = await this.previewService.getPreviewsBySlug([{ lang_code, slug }], options.user_agent);
-        return previews && previews[0] || null;
+
+        if (previews && previews[0]){
+            return previews && previews[0];
+        }
+        else {
+            throw new HttpException({
+                status: HttpStatus.NOT_FOUND,
+                error: 'Preview not found',
+              }, 404);
+        }
     }
 
     @Get('amp-hoverblurb/lang_:lang_code/:slug')
