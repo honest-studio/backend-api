@@ -30,7 +30,7 @@ export class MediaUploadController {
     @Post('get-remote-file')
     @ApiOperation({ summary: 'Get a remote file' })
     async getRemoteFileCtrl(@Body() pack: UrlPack): Promise<FileFetchResult> {
-        return this.MediaUploadService.getRemoteFile(pack);
+        return await this.MediaUploadService.getRemoteFile(pack);
     }
 
     @Post('/')

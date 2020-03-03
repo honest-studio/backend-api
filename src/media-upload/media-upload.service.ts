@@ -33,7 +33,7 @@ const isSvg = require('is-svg');
 const extractFrame = require('ffmpeg-extract-frame');
 const extractGIFFrames = require('./gif-extract-frames')
 var colors = require('colors');
-const fileType = require('file-type');
+import { fromBuffer } from 'file-type';
 const getYouTubeID = require('get-youtube-id');
 const slugify = require('slugify');
 slugify.extend({'%': '_u_'});
@@ -258,7 +258,7 @@ export class MediaUploadService {
 
 
     // Fetch a file from an external URL
-    getRemoteFile(inputPack: UrlPack, timeout?: number): Promise<FileFetchResult> {
+    async getRemoteFile(inputPack: UrlPack, timeout?: number): Promise<FileFetchResult> {
         let theCategory = linkCategorizer(inputPack.url);
         let urlToUse = inputPack.url;
 
@@ -275,29 +275,29 @@ export class MediaUploadService {
         // console.log("TESTING HERE!!!");
         // console.log(urlToUse)
 
-        return axios.default({
+        let response = await axios.default({
             url: urlToUse,
             method: 'GET',
             responseType: 'arraybuffer',
             timeout: timeoutToUse
-        }).then(response => {
-            let fileBuffer = response.data;
-            let mimePack: MimePack = fileType(fileBuffer);
-            if (mimePack == null){
-                if (isSvg(fileBuffer)){
-                    mimePack = {
-                        ext: 'svg',
-                        mime: 'image/svg+xml'
-                    }
-                }
-            }
-            let returnPack: FileFetchResult = {
-                file_buffer: fileBuffer,
-                mime_pack: mimePack,
-                category: theCategory as any,
-            };
-            return returnPack;
         })
+
+        let fileBuffer = response.data;
+        let mimePack: MimePack = await fromBuffer(fileBuffer);
+        if (mimePack == null){
+            if (isSvg(fileBuffer)){
+                mimePack = {
+                    ext: 'svg',
+                    mime: 'image/svg+xml'
+                } as any;
+            }
+        }
+        let returnPack: FileFetchResult = {
+            file_buffer: fileBuffer,
+            mime_pack: mimePack,
+            category: theCategory as any,
+        };
+        return returnPack;
     }
 
     // Fetch a thumbnail from an external URL, like the og:image or twitter:image
@@ -367,13 +367,13 @@ export class MediaUploadService {
         let photoDataResult: PhotoExtraData = { width: null, height: null, mime: null };
         try {
             let imgBuffer = await this.getImageBufferFromURL(inputURL);
-            let mimeResult = fileType(imgBuffer);
+            let mimeResult = await fromBuffer(imgBuffer);
             if (mimeResult == null){
                 if (isSvg(imgBuffer)){
                     mimeResult = {
                         ext: 'svg',
                         mime: 'image/svg+xml'
-                    }
+                    } as any;
                 }
             }
             let sizeResult = sizeOf(imgBuffer);
@@ -451,14 +451,14 @@ export class MediaUploadService {
             let useMediaRoute = true;
 
             // Determine the MIME type
-            let mimePack: MimePack = fileType(bufferToUse);
+            let mimePack: MimePack = await fromBuffer(bufferToUse);
             let isVideo = false, isAudio = false;
             if (mimePack == null || mimePack.mime == 'application/xml'){
                 if (isSvg(bufferToUse)){
                     mimePack = {
                         ext: 'svg',
                         mime: 'image/svg+xml'
-                    }
+                    } as any;
                 }
             }
 
@@ -499,6 +499,8 @@ export class MediaUploadService {
             let tinythumbWidth = PHOTO_CONSTANTS.CROPPED_TINYTHUMB_WIDTH;
             let tinythumbHeight = PHOTO_CONSTANTS.CROPPED_TINYTHUMB_WIDTH;
             let includeMainPhoto: boolean = true;
+
+            console.log("SDFDSFDS")
 
             // Get a timestamp string from the Unix epoch
             let theTimeString = new Date()
@@ -1428,6 +1430,7 @@ export class MediaUploadService {
             console.log(returnPack);
             return returnPack;
         } catch (e) {
+            console.log(e);
             return null;
         }
     }

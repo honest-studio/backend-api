@@ -6,7 +6,7 @@ const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { MediaUploadService } from '../../src/media-upload/media-upload.service';
 import { ConfigService } from '../../src/common';
-const fileType = require('file-type');
+import { fromBuffer } from 'file-type';
 import * as axios from 'axios';
 
 import * as crypto from 'crypto';
@@ -58,8 +58,7 @@ const RegenerateMainPhoto = async (inputItem: Media, slug: string, lang_code: st
     let theBuffer = await theMediaUploadSvc.getImageBufferFromURL(theUrl);
     let theFileName = theUrl.substring(theUrl.lastIndexOf('/') + 1 );
     let uploadResult = await theMediaUploadSvc.processMedia(theBuffer, lang_code, slug, 'IDENTIFIER', uploadTypeInput, 'CAPTION', theFileName);
-    
-    
+
     return null;
 }
 
@@ -215,7 +214,6 @@ export const AlterAllMainPhotosInPlace = async (inputString: string, processMedi
                 WHERE art.id between ? and ?
                 AND art.is_removed = 0
                 AND redirect_page_id IS NULL
-                AND webp_large IS NULL
                 AND photo_url <> 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'
                 AND page_lang IN (?)
             `,

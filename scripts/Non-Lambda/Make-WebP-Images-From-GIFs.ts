@@ -5,7 +5,7 @@ import * as readline from 'readline';
 const path = require('path');
 import { MysqlService, AWSS3Service } from '../../src/feature-modules/database';
 import { ConfigService } from '../../src/common';
-const fileType = require('file-type');
+import { fromBuffer } from 'file-type';
 import * as axios from 'axios';
 
 import * as crypto from 'crypto';
@@ -137,31 +137,31 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
     };
 
     // Fetch the image
-    let fetchResult: Partial<FileFetchResult> = await axios.default({
+    let response = await axios.default({
         url: startingURL,
         method: 'GET',
         responseType: 'arraybuffer',
         timeout: 5000
-    }).then(response => {
-        let fileBuffer = response.data;
-        let mimePack: MimePack = fileType(fileBuffer);
-        if (mimePack == null){
-            if (isSvg(fileBuffer)){
-                mimePack = {
-                    ext: 'svg',
-                    mime: 'image/svg+xml'
-                }
-            }
+    });
+
+    let fileBuffer = response.data;
+    let mimePack: MimePack = await fromBuffer(fileBuffer);
+    if (mimePack == null){
+        if (isSvg(fileBuffer)){
+            mimePack = {
+                ext: 'svg',
+                mime: 'image/svg+xml'
+            } as any;
         }
-        let returnPack: Partial<FileFetchResult> = {
-            file_buffer: fileBuffer,
-            mime_pack: mimePack
-        };
-        return returnPack;
-    })
+    }
+    let returnPackMimed: Partial<FileFetchResult> = {
+        file_buffer: fileBuffer,
+        mime_pack: mimePack
+    };
+    
 
     // Set the starting buffer
-    let bufferToUse = fetchResult.file_buffer;
+    let bufferToUse = returnPackMimed.file_buffer;
 
     // Get the original image in WEBP form
     bufferPack.webpOriginalBuf = await sharp(bufferToUse)
@@ -303,31 +303,30 @@ const MakeRegularThumbnail = async (startingURL: string, slug: string, lang: str
     let returnUrl: string = "";
 
     // Fetch the image
-    let fetchResult: Partial<FileFetchResult> = await axios.default({
+    let response = await axios.default({
         url: startingURL,
         method: 'GET',
         responseType: 'arraybuffer',
         timeout: 5000
-    }).then(response => {
-        let fileBuffer = response.data;
-        let mimePack: MimePack = fileType(fileBuffer);
-        if (mimePack == null){
-            if (isSvg(fileBuffer)){
-                mimePack = {
-                    ext: 'svg',
-                    mime: 'image/svg+xml'
-                }
-            }
-        }
-        let returnPack: Partial<FileFetchResult> = {
-            file_buffer: fileBuffer,
-            mime_pack: mimePack
-        };
-        return returnPack;
     })
 
+    let fileBuffer = response.data;
+    let mimePack: MimePack = await fromBuffer(fileBuffer);
+    if (mimePack == null){
+        if (isSvg(fileBuffer)){
+            mimePack = {
+                ext: 'svg',
+                mime: 'image/svg+xml'
+            } as any;
+        }
+    }
+    let returnPackMimed: Partial<FileFetchResult> = {
+        file_buffer: fileBuffer,
+        mime_pack: mimePack
+    };
+
     // Set the starting buffer
-    let bufferToUse = fetchResult.file_buffer;
+    let bufferToUse = returnPackMimed.file_buffer;
 
     // Get the original image in jpeg form
     thumbBuffer = await sharp(bufferToUse)
