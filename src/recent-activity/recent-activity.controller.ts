@@ -1,41 +1,41 @@
 import { Controller, Get, Query, UsePipes, Inject, forwardRef } from '@nestjs/common';
-import { ApiImplicitQuery, ApiOperation, ApiUseTags } from '@nestjs/swagger';
+import { ApiQuery, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RecentActivityQuerySchema, RecentActivityService } from '.';
 import { JoiValidationPipe } from '../common';
 import { BoostActivityPack } from '../types/api';
 
 @Controller('v2/recent-activity')
-@ApiUseTags('Recent Activity')
+@ApiTags('Recent Activity')
 export class RecentActivityController {
     constructor(
         private readonly recentActivityService: RecentActivityService
     ) {}
     @Get('all')
     @ApiOperation({
-        title: 'Recent actions on the Everipedia Network smart contracts',
+        summary: 'Recent actions on the Everipedia Network smart contracts',
         description:
             'All actions flowing through the Everipedia Network smart contracts. Currently consists of the eparticlectr and everipediaiq contracts'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'lang',
         description: 'Filter by language',
         required: false,
         type: String
     })
     @ApiOperation({
-        title: 'All recent on-chain activity',
+        summary: 'All recent on-chain activity',
         description: 'Returns 100 most recent actions on the eparticlectr smart contract'
     })
     @UsePipes(new JoiValidationPipe(RecentActivityQuerySchema))
@@ -45,22 +45,22 @@ export class RecentActivityController {
 
     @Get('eparticlectr')
     @ApiOperation({
-        title: 'Recent article contract actions',
+        summary: 'Recent article contract actions',
         description: 'All actions flowing through the eparticlectr contract'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'user_agent',
         type: 'string',
         required: false,
@@ -73,17 +73,17 @@ export class RecentActivityController {
 
     @Get('everipediaiq')
     @ApiOperation({
-        title: 'Recent token contract actions',
+        summary: 'Recent token contract actions',
         description:
             'All actions flowing through the everipediaiq contract. Use this endpoint if you want to track transfers.'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
@@ -95,38 +95,38 @@ export class RecentActivityController {
     }
 
     @Get('proposals')
-    @ApiOperation({ title: 'Recent proposals' })
-    @ApiImplicitQuery({
+    @ApiOperation({ summary: 'Recent proposals' })
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         type: 'boolean',
         required: false,
         description: 'set false to bypass cache. default: true'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'preview',
         description: `Include page title, main photo, thumbnail, and text preview for each proposal.`,
         required: false,
         type: Boolean
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'account_name',
         description: `Filter by EOS account name`,
         required: false,
         type: String
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'diff',
         description: `Include diff data in the proposals. Takes one of three values:
             'none': (default) Don't include diff data.
@@ -137,19 +137,19 @@ export class RecentActivityController {
         required: false,
         type: Boolean
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'expiring',
         description: `Get expiring proposals instead of the most recent ones`,
         required: false,
         type: Boolean
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'completed',
         description: `Get completed proposals instead of the most recent ones`,
         required: false,
         type: Boolean
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'langs',
         description: `Language(s) if you wish to restrict the return output.
             Default: Return all languages
@@ -158,7 +158,7 @@ export class RecentActivityController {
         isArray: true,
         type: 'string'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'voter',
         description: `Specify a username to filter by proposals that a user has voted on`,
         required: false,
@@ -170,32 +170,32 @@ export class RecentActivityController {
     }
 
     @Get('boosts')
-    @ApiOperation({ title: 'Recent boosts' })
-    @ApiImplicitQuery({
+    @ApiOperation({ summary: 'Recent boosts' })
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'preview',
         description: `Include page title, main photo, thumbnail, and text preview for each proposal.`,
         required: false,
         type: Boolean
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'account_name',
         description: `Filter by EOS account name`,
         required: false,
         type: String
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'langs',
         description: `Language(s) if you wish to restrict the return output.
             Default: Return all languages
@@ -204,7 +204,7 @@ export class RecentActivityController {
         isArray: true,
         type: 'string'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'user_agent',
         description: 'User agent. Needed for WebP. Use "chrome" to serve WebP (if available) or "safari" to serve normal',
         required: false,
@@ -216,32 +216,32 @@ export class RecentActivityController {
     }
 
     @Get('trending')
-    @ApiOperation({ title: 'Trending wikis' })
-    @ApiImplicitQuery({
+    @ApiOperation({ summary: 'Trending wikis' })
+    @ApiQuery({
         name: 'lang',
         description: `Language if you wish to restrict the return output.`,
         required: false,
         type: 'string'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'range',
         description: `The date span across which to check. today | all. Default = today`,
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'user_agent',
         description: 'User agent. Needed for WebP. Use "chrome" to serve WebP (if available) or "safari" to serve normal',
         required: false,
         type: String
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         description: 'Use the cached version if available. Default=true',
         required: false,

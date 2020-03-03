@@ -1,7 +1,7 @@
 import { BadRequestException, forwardRef, Inject, Injectable, InternalServerErrorException, NotFoundException, HttpException, HttpStatus } from '@nestjs/common';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
 import * as axios from 'axios';
-import * as BooleanTools from 'boolean';
+import { boolean as BooleanTools } from 'boolean';
 import * as fetch from 'node-fetch';
 import { clearIntervalAsync, setIntervalAsync } from 'set-interval-async/dynamic';
 import * as SqlString from 'sqlstring';
@@ -328,7 +328,7 @@ export class WikiService {
             db_hash = ipfs_hash_rows[0].ipfs_hash;
             main_redirect_wikilangslug = ipfs_hash_rows[0].redirect_wikilangslug;
             // Account for the boolean flipping issue being in old articles
-            overrideIsIndexed = BooleanTools.default(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
+            overrideIsIndexed = BooleanTools(ipfs_hash_rows[0].is_idx || ipfs_hash_rows[0].is_idx_redir || 0);
             db_timestamp = new Date(ipfs_hash_rows[0].lastmod_timestamp + "Z"); // The Z indicates that the time is already in UTC
             lastmodToUse = ipfs_hash_rows[0].lastmod_timestamp;
             desktopCacheToUse = ipfs_hash_rows[0].desktop_cache_timestamp;
@@ -417,7 +417,7 @@ export class WikiService {
     }
 
     async getAMPBySlug(lang_code: string, slug: string, cache: boolean = false): Promise<string> {
-        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug, BooleanTools.default(cache), null, null, false);
+        let ampWiki: ArticleJson = await this.getWikiBySlug(lang_code, slug, BooleanTools(cache), null, null, false);
         let photoExtraData: PhotoExtraData = await this.mediaUploadService.getImageData(ampWiki.main_photo[0].url);
         ampWiki.main_photo[0].width = photoExtraData.width;
         ampWiki.main_photo[0].height = photoExtraData.height;

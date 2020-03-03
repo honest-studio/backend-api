@@ -56,7 +56,6 @@ export const logYlw = (inputString: string) => {
 const RegenerateMainPhoto = async (inputItem: Media, slug: string, lang_code: string, auxiliary_prefix: string, uploadTypeInput: string, mediaType: MediaType): Promise<Media> => {
     let theUrl = inputItem.url;
     let theBuffer = await theMediaUploadSvc.getImageBufferFromURL(theUrl);
-    console.log(theUrl);
     let theFileName = theUrl.substring(theUrl.lastIndexOf('/') + 1 );
     let uploadResult = await theMediaUploadSvc.processMedia(theBuffer, lang_code, slug, 'IDENTIFIER', uploadTypeInput, 'CAPTION', theFileName);
     

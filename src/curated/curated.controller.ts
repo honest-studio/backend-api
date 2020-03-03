@@ -1,23 +1,23 @@
 import { Inject, forwardRef, Body, UsePipes, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
+import { ApiParam, ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { CuratedService } from './curated.service';
 import { CuratedQuerySchema } from './curated.query-schema';
 
 @Controller('v2/curated')
-@ApiUseTags('Curated Lists')
+@ApiTags('Curated Lists')
 export class CuratedController {
     constructor(
         private readonly curatedService: CuratedService
     ) {}
 
     @Get('/')
-    @ApiOperation({ title: 'Get curated lists' })
-    @ApiImplicitQuery({
+    @ApiOperation({ summary: 'Get curated lists' })
+    @ApiQuery({
         name: 'user',
         description: 'filter by user'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'sort',
         description: 'recent | viewed | size'
     })

@@ -33,11 +33,11 @@ export const updateElasticsearch = async (
     
     switch (action) {
         case 'PAGE_UPDATED_OR_CREATED':
-            return elSearchSvc.index(paramPack as any).toPromise();
+            return elSearchSvc.index(paramPack as any);
         case 'PAGE_REMOVED':
-            return elSearchSvc.delete(paramPack as any).toPromise();
+            return elSearchSvc.delete(paramPack as any);
         case 'MERGE_REDIRECT':{
-            if (paramPack.body.canonical_id != paramPack.body.id) return elSearchSvc.index(paramPack as any).toPromise();
+            if (paramPack.body.canonical_id != paramPack.body.id) return elSearchSvc.index(paramPack as any);
             else {
                 console.error("ELASTICSEARCH MERGE_REDIRECT CANNOT HAVE CANONICAL_ID = ID!")
                 return null;

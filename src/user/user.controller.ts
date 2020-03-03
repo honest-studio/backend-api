@@ -1,18 +1,18 @@
 import { Controller, Get, Post, Body, Param, Query, UsePipes } from '@nestjs/common';
-import { ApiImplicitParam, ApiImplicitBody, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiParam, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { UserQuerySchema } from './user.query-schema';
 import { UserService } from './user.service';
 import { BoostsByUserReturnPack, PublicProfileType, ProfileSearchPack } from '../types/api';
 
 @Controller('v2/user')
-@ApiUseTags('User')
+@ApiTags('User')
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
     @Get(':eos_account_name/stakes')
-    @ApiOperation({ title: 'Get stakes for a user' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get stakes for a user' })
+    @ApiParam({
         name: 'eos_account_name',
         description: `Max 12-char EOS account name
             Example: kedartheiyer`
@@ -27,8 +27,8 @@ export class UserController {
     }
 
     @Get(':eos_account_name/boosts')
-    @ApiOperation({ title: 'Get boosts for a user' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get boosts for a user' })
+    @ApiParam({
         name: 'eos_account_name',
         description: `Max 12-char EOS account name
             Example: kedartheiyer`
@@ -42,8 +42,8 @@ export class UserController {
     }
 
     @Get(':eos_account_name/rewards')
-    @ApiOperation({ title: 'Get rewards and slashes for a user' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get rewards and slashes for a user' })
+    @ApiParam({
         name: 'eos_account_name',
         description: `Max 12-char EOS account name
         Example: kedartheiyer`
@@ -62,8 +62,8 @@ export class UserController {
     }
 
     @Get(':eos_account_name/activity')
-    @ApiOperation({ title: 'Get miscellaneous stats for a user' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get miscellaneous stats for a user' })
+    @ApiParam({
         name: 'eos_account_name',
         description: `Max 12-char EOS account name
         Example: kedartheiyer`
@@ -82,7 +82,7 @@ export class UserController {
 
     @Post('streaks')
     @ApiOperation({
-        title: 'Deprecated'
+        summary: 'Deprecated'
     })
     async getStreaks(@Body() users): Promise<any> {
         return this.userService.getProfiles(users);
@@ -90,7 +90,7 @@ export class UserController {
 
     @Post('profiles')
     @ApiOperation({
-        title: 'Get user info',
+        summary: 'Get user info',
         description: `Body format: An array of users. Example:
             ["kedartheiyer", "eosiochicken"]`
     })
@@ -109,8 +109,8 @@ export class UserController {
     }
 
     @Get(':eos_account_name/profile')
-    @ApiOperation({ title: 'Deprecated' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Deprecated' })
+    @ApiParam({
         name: 'eos_account_name',
         description: `Max 12-char EOS account name
         Example: kedartheiyer`
@@ -122,7 +122,7 @@ export class UserController {
 
     @Post('search')
     @ApiOperation({ 
-        title: `Search Everipedia profiles by a search term`
+        summary: `Search Everipedia profiles by a search term`
     })
     @ApiResponse({
         status: 200,

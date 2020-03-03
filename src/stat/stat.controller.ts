@@ -1,44 +1,44 @@
 import { Controller, Get, Query, UsePipes } from '@nestjs/common';
-import { ApiImplicitQuery, ApiOperation, ApiUseTags, ApiResponse } from '@nestjs/swagger';
+import { ApiQuery, ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { StatQuerySchema } from './stat.query-schema';
 import { StatService } from './stat.service';
 import { ChainService } from '../chain/chain.service';
 
 @Controller('v2/stat')
-@ApiUseTags('Stats')
+@ApiTags('Stats')
 export class StatController {
     constructor(private readonly statService: StatService, private chainService: ChainService) {}
 
     @Get('editor-leaderboard')
-    @ApiOperation({ title: 'All-time editor leaderboard' })
-    @ApiImplicitQuery({
+    @ApiOperation({ summary: 'All-time editor leaderboard' })
+    @ApiQuery({
         name: 'period',
         description: `today | this-week | this-month | all-time`,
         required: false
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'lang',
         description: 'Filter by language',
         required: false,
         type: String
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`,
         required: false
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: `Number of rows to return. Default: 10`,
         required: false
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'sortby',
         description: `Sort by a field. 'iq', 'votes', or 'edits'. Default: 'iq'`,
         required: false
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'user',
         description: `If specified, the user provided will be listed in the returned array with their rank as the last item in the array`,
         required: false
@@ -49,8 +49,8 @@ export class StatController {
     }
 
     @Get('site-usage')
-    @ApiOperation({ title: 'All-time site usage' })
-    @ApiImplicitQuery({
+    @ApiOperation({ summary: 'All-time site usage' })
+    @ApiQuery({
         name: 'lang',
         description: 'Filter by language',
         required: false,
@@ -62,7 +62,7 @@ export class StatController {
 
     @Get('edits')
     @ApiOperation({ 
-        title: 'Edit-related statistics'
+        summary: 'Edit-related statistics'
     })
     @ApiResponse({
         status: 200,
@@ -81,7 +81,7 @@ export class StatController {
 
     @Get('token-supply')
     @ApiOperation({ 
-        title: 'IQ Circulating Supply',
+        summary: 'IQ Circulating Supply',
         description: `This endpoint was created specifically for coinmarketcap.com and outputs in plain text 
             the current circulating supply of IQ.`
     })

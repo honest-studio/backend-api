@@ -1,5 +1,5 @@
 import { Body, Headers, Controller, Get, Param, Post, Query, UsePipes } from '@nestjs/common';
-import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiParam, ApiQuery, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { ArticleJson } from '../types/article';
 import { MergeResult, Boost } from '../types/api';
@@ -8,13 +8,13 @@ import { WikiQuerySchema } from './wiki.query-schema';
 import { WikiService, MergeInputPack } from './wiki.service';
 
 @Controller('v2/wiki')
-@ApiUseTags('Wikis')
+@ApiTags('Wikis')
 export class WikiController {
     constructor(private readonly wikiService: WikiService) {}
 
     @Get('hash/:ipfs_hash')
-    @ApiOperation({ title: 'Get wiki by IPFS hash' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get wiki by IPFS hash' })
+    @ApiParam({
         name: 'ipfs_hash',
         description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
             Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
@@ -30,12 +30,12 @@ export class WikiController {
     }
 
     @Get('boosts_by_langslug/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get boosts for a given langslug' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get boosts for a given langslug' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
@@ -48,16 +48,16 @@ export class WikiController {
     }
 
     @Get('slug/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get wiki by article langslug' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get wiki by article langslug' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`
     })
@@ -72,16 +72,16 @@ export class WikiController {
     }
 
     @Get('pageview/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Increment the pageviews for a page' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Increment the pageviews for a page' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`
     })
@@ -97,14 +97,13 @@ export class WikiController {
 
     @Get('schema/lang_:lang_code/:slug')
     @ApiOperation({
-        title:
-            'Get the schema.org for the page in JSON-LD format https://developers.google.com/search/docs/guides/intro-structured-data'
+        summary: 'Get the schema.org for the page in JSON-LD format https://developers.google.com/search/docs/guides/intro-structured-data'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
@@ -117,16 +116,16 @@ export class WikiController {
     }
 
     @Get('amp/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get AMP HTML for a given article' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get AMP HTML for a given article' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         description: `Set to false if you don't want to use the cache`
     })
@@ -140,12 +139,12 @@ export class WikiController {
     }
 
     @Get('group/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get all the language versions of a page' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get all the language versions of a page' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
@@ -158,12 +157,12 @@ export class WikiController {
     }
 
     @Get('extra/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get extra info for a wiki' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get extra info for a wiki' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
@@ -177,7 +176,7 @@ export class WikiController {
 
     @Post('/')
     @ApiOperation({ 
-        title: 'Submit a wiki to IPFS',
+        summary: 'Submit a wiki to IPFS',
         description: `The submitted wiki must be a JSON in ArticleJson format with the ipfs_hash set to null. 
         The ArticleJson spec is available at https://github.com/EveripediaNetwork/backend-api/blob/master/src/utils/article-utils/article-dto.ts
         An example ArticleJson can be accessed at https://api.everipedia.org/v2/wiki/slug/lang_en/cardi-b 
@@ -205,7 +204,7 @@ export class WikiController {
 
     @Post('/check-tx')
     @ApiOperation({ 
-        title: 'Supply a txid to make sure the article is synced',
+        summary: 'Supply a txid to make sure the article is synced',
         description: `The submitted wiki must be a JSON in ArticleJson format with the ipfs_hash set to null. 
         The ArticleJson spec is available at https://github.com/EveripediaNetwork/backend-api/blob/master/src/utils/article-utils/article-dto.ts
         An example ArticleJson can be accessed at https://api.everipedia.org/v2/wiki/slug/lang_en/cardi-b 
@@ -224,14 +223,14 @@ export class WikiController {
     }
 
     @Post('get-merged-result')
-    @ApiOperation({ title: 'Get the result of merging two wiki articles' })
+    @ApiOperation({ summary: 'Get the result of merging two wiki articles' })
     async getMergedWikiCtrl(@Body() pack: MergeInputPack): Promise<MergeResult> {
         return this.wikiService.getMergedWiki(pack);
     }
 
     @Post('/bot-submit')
     @ApiOperation({ 
-        title: 'Submit a wiki via a bot',
+        summary: 'Submit a wiki via a bot',
         description: `The submitted wiki must be a JSON in ArticleJson format with the ipfs_hash set to null. 
         The ArticleJson spec is available at https://github.com/EveripediaNetwork/backend-api/blob/master/src/utils/article-utils/article-dto.ts
         An example ArticleJson can be accessed at https://api.everipedia.org/v2/wiki/slug/lang_en/cardi-b 
@@ -241,11 +240,11 @@ export class WikiController {
         Any wiki that is accessible within the IPFS network will not be downvoted. 
         Be careful though, the IPFS network is notoriously unreliable and a wiki you feel is properly hosted may not actually be accessible by the network.`
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'token',
         description: `Token required to process`
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'bypass_ipfs',
         description: `Use IPFS hash inside the ArticleJSON instead of generating one on the backend`
     })

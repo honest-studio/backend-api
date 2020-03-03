@@ -1,33 +1,33 @@
 import { Body, Controller, Get, Post, UsePipes, Param, Query, Res } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { PageCategoryCollection, PageCategory } from '../types/api';
 import { CategoryService, CategorySearchPack, CategoryCreatePack } from './category.service';
 
 @Controller('v2/category')
-@ApiUseTags('Contact Us')
+@ApiTags('Contact Us')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) {}
 
     @Get('/bycategoryid/:category_id')
-    @ApiOperation({ title: 'Get all the previews for pages belonging to a category, specified by its category id' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get all the previews for pages belonging to a category, specified by its category id' })
+    @ApiParam({
         name: 'category_id',
         description: 'The category id (an integer)'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'show_adult_content',
         description: 'Allow adult content to show up in results. Default is no.',
         required: false,
@@ -42,34 +42,34 @@ export class CategoryController {
     }
 
     @Get('/bylangslug/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get all the previews for pages belonging to a category, specified by its language and slug' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get all the previews for pages belonging to a category, specified by its language and slug' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code for the category'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The category page slug. Each category has a unique (lang_code + slug). Example: instagram-stars'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'offset',
         description: 'Number of records to skip. Default=0',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of records to return. Min=1, Max=100, Default=10',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'show_adult_content',
         description: 'Allow adult content to show up in results. Default is no.',
         required: false,
         type: Number
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'increment_view_count',
         description: 'Whether to increase the page count. Default is no.',
         required: false,
@@ -85,8 +85,8 @@ export class CategoryController {
     }
 
     @Get('/homepage/:lang')
-    @ApiOperation({ title: 'Get the category pages to show on the homepage' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get the category pages to show on the homepage' })
+    @ApiParam({
         name: 'lang',
         description: 'The language of the category page'
     })
@@ -99,12 +99,12 @@ export class CategoryController {
     }
 
     @Get('/amp/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get the AMP version of the category page' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get the AMP version of the category page' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code for the category'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The category page slug. Each category has a unique (lang_code + slug). Example: instagram-stars'
     })
@@ -119,7 +119,7 @@ export class CategoryController {
 
     @Post('create')
     @ApiOperation({ 
-        title: `Create a new category`
+        summary: `Create a new category`
     })
     @ApiResponse({
         status: 200,
@@ -131,7 +131,7 @@ export class CategoryController {
 
     @Post('search')
     @ApiOperation({ 
-        title: `Search category titles`
+        summary: `Search category titles`
     })
     @ApiResponse({
         status: 200,
@@ -143,7 +143,7 @@ export class CategoryController {
 
     @Post('categoriesbyids')
     @ApiOperation({ 
-        title: `Get categories by their IDs`
+        summary: `Get categories by their IDs`
     })
     @ApiResponse({
         status: 200,

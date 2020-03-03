@@ -928,7 +928,7 @@ export class MediaUploadService {
                             .catch((err) => console.log(err));
 
 
-                            console.log("Part 2")
+                        console.log("Part 2")
 
                         // Resize the PNG for its thumbnail
                         bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
