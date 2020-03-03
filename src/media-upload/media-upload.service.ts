@@ -41,7 +41,7 @@ slugify.extend({'%': '_u_'});
 // const TEMP_DIR = path.join(__dirname, 'tmp-do-not-delete');
 // const TEMP_DIR = path.join('tmp');
 const TEMP_DIR = '/tmp';
-const PHOTO_CONSTANTS = {
+export const PHOTO_CONSTANTS = {
     CROPPED_WIDTH: 1201,
     CROPPED_HEIGHT: 1201,
     DISPLAY_WIDTH: 275,
@@ -462,13 +462,11 @@ export class MediaUploadService {
                 }
             }
 
-            console.log(mimePack)
-
             if (mimePack.mime.includes('video')) isVideo = true;
             else if (mimePack.mime.includes('audio')) isAudio = true;
 
             // Determine whether to use the extra sizes
-            let useExtraSizes = uploadType == 'ChainProfile' ? true : false;
+            let useExtraSizes = ['ChainProfile', 'ProfilePicture'].includes(uploadType) ? true : false;
 
             // Set some variables
             let varPack = { suffix: '', thumbSuffix: '', thumbMIME: '', mainMIME: '' };
@@ -916,6 +914,8 @@ export class MediaUploadService {
                         varPack.thumbSuffix = 'png';
                         varPack.thumbMIME = 'image/png';
 
+                        console.log("Part 1")
+
                         // Resize the PNG due to AMP (1200px width minimum)
                         bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
                             .then((image) => 
@@ -926,6 +926,9 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
+
+
+                            console.log("Part 2")
 
                         // Resize the PNG for its thumbnail
                         bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
