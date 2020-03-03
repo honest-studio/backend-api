@@ -542,7 +542,7 @@ export class MediaUploadService {
                                 fit: 'inside',
                                 // background: { r: 255, g: 255, b: 255, alpha: 1 }
                             })
-                            .jpeg({ quality: 85, force: true })
+                            .jpeg({ quality: 70, force: true })
                             .toBuffer()
                             .then((buffer) => buffer)
                             .catch((err) => console.log(colors.red("SVG ERROR ON thumbBuf: "), colors.red(err)));
@@ -553,7 +553,7 @@ export class MediaUploadService {
                                     fit: 'inside',
                                     // background: { r: 255, g: 255, b: 255, alpha: 1 }
                                 })
-                                .jpeg({ quality: 85, force: true })
+                                .jpeg({ quality: 70, force: true })
                                 .toBuffer()
                                 .then((buffer) => buffer)
                                 .catch((err) => console.log(colors.red("SVG ERROR ON mediumBuf: "), colors.red(err)));
@@ -563,7 +563,7 @@ export class MediaUploadService {
                                     fit: 'inside',
                                     // background: { r: 255, g: 255, b: 255, alpha: 1 }
                                 })
-                                .jpeg({ quality: 85, force: true })
+                                .jpeg({ quality: 70, force: true })
                                 .toBuffer()
                                 .then((buffer) => buffer)
                                 .catch((err) => console.log(colors.red("SVG ERROR ON tinythumbBuf: "), colors.red(err)));
@@ -1078,7 +1078,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 100, lossless: true, force: true })
+                    .webp({ quality: 70, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpOriginalBuf error: ", err));
@@ -1089,7 +1089,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 85, nearLossless: true, force: true })
+                    .webp({ quality: 70, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpMediumBuf error: ", err));
@@ -1100,7 +1100,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 85, lossless: false, force: true })
+                    .webp({ quality: 70, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpThumbBuf error: ", err));
@@ -1112,7 +1112,7 @@ export class MediaUploadService {
                             fit: 'inside',
                             // background: { r: 255, g: 255, b: 255, alpha: 1 }
                         })
-                        .webp({ quality: 85, lossless: false, force: true })
+                        .webp({ quality: 70, force: true })
                         .toBuffer()
                         .then((buffer) => buffer as any)
                         .catch((err) => console.log("webpTinyThumbBuf error: ", err));

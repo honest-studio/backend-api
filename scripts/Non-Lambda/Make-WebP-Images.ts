@@ -152,7 +152,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
             fit: 'inside',
             // background: { r: 255, g: 255, b: 255, alpha: 1 }
         })
-        .webp({ quality: 100, lossless: true, force: true })
+        .webp({ quality: 70, force: true })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));
@@ -163,7 +163,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
             fit: 'inside',
             // background: { r: 255, g: 255, b: 255, alpha: 1 }
         })
-        .webp({ quality: 85, nearLossless: true, force: true })
+        .webp({ quality: 70, force: true })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));
@@ -174,7 +174,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
             fit: 'inside',
             // background: { r: 255, g: 255, b: 255, alpha: 1 }
         })
-        .webp({ quality: 85, lossless: false, force: true })
+        .webp({ quality: 70, force: true })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));
