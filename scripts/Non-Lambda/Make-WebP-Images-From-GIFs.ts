@@ -169,7 +169,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
             fit: 'inside',
             // background: { r: 255, g: 255, b: 255, alpha: 1 }
         })
-        .webp({ quality: 70, force: true })
+        .webp({ quality: 60, reductionEffort: 6, force: true, alphaQuality: 60 })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));
@@ -180,7 +180,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
             fit: 'inside',
             // background: { r: 255, g: 255, b: 255, alpha: 1 }
         })
-        .webp({ quality: 70, force: true })
+        .webp({ quality: 60, reductionEffort: 6, force: true, alphaQuality: 60 })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));
@@ -191,7 +191,7 @@ const MakeWebPTrio = async (startingURL: string, slug: string, lang: string, upl
             fit: 'inside',
             // background: { r: 255, g: 255, b: 255, alpha: 1 }
         })
-        .webp({ quality: 70, force: true })
+        .webp({ quality: 60, reductionEffort: 6, force: true, alphaQuality: 60 })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));
@@ -334,7 +334,7 @@ const MakeRegularThumbnail = async (startingURL: string, slug: string, lang: str
         .resize(thumbWidth, thumbHeight, {
             fit: 'inside',
         })
-        .jpeg({ quality: 70, force: true })
+        .jpeg({ quality: 60, force: true, alphaQuality: 60 })
         .toBuffer()
         .then((buffer) => buffer)
         .catch((err) => console.log(err));

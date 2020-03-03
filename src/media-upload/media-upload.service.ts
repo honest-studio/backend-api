@@ -392,11 +392,11 @@ export class MediaUploadService {
         try {
             let result = await imagemin.buffer(inputBuffer, {
                 plugins: [
-                    imagemin_Gifsicle(),
+                    imagemin_Gifsicle({ optimizationLevel: 3 }),
                     imagemin_Jpegtran(),
                     imagemin_Optipng({ number: 7 }),
                     imagemin_Svgo(),
-                    imagemin_Webp({ quality: 90, method: 6 })
+                    imagemin_Webp({ preset: 'photo', quality: 60, method: 6, alphaQuality: 60 })
                 ]
             });
             return result;
@@ -530,10 +530,10 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/svg+xml';
                         varPack.thumbSuffix = 'png';
                         varPack.thumbMIME = 'image/png';
-                        bufferPack.mainBuf = bufferToUse;
+                        bufferPack.mainBuf = await imagemin.buffer(bufferPack.mainBuf, { plugins: [ imagemin_Svgo() ] });
 
-                        // Convert the SVG into jpeg and resize it into a thumbnail
-                        let temp_buffer = await svg2png(bufferToUse, { width: thumbWidth, height: thumbHeight })
+                        // Convert the uncompressed SVG into jpeg and resize it into a thumbnail
+                        let temp_buffer = await svg2png(bufferToUse)
                             .then(buffer => buffer)
                             .catch(e => console.error(e));
 
@@ -542,7 +542,7 @@ export class MediaUploadService {
                                 fit: 'inside',
                                 // background: { r: 255, g: 255, b: 255, alpha: 1 }
                             })
-                            .jpeg({ quality: 70, force: true })
+                            .jpeg({ quality: 60, force: true })
                             .toBuffer()
                             .then((buffer) => buffer)
                             .catch((err) => console.log(colors.red("SVG ERROR ON thumbBuf: "), colors.red(err)));
@@ -553,7 +553,7 @@ export class MediaUploadService {
                                     fit: 'inside',
                                     // background: { r: 255, g: 255, b: 255, alpha: 1 }
                                 })
-                                .jpeg({ quality: 70, force: true })
+                                .jpeg({ quality: 60, force: true })
                                 .toBuffer()
                                 .then((buffer) => buffer)
                                 .catch((err) => console.log(colors.red("SVG ERROR ON mediumBuf: "), colors.red(err)));
@@ -563,7 +563,7 @@ export class MediaUploadService {
                                     fit: 'inside',
                                     // background: { r: 255, g: 255, b: 255, alpha: 1 }
                                 })
-                                .jpeg({ quality: 70, force: true })
+                                .jpeg({ quality: 60, force: true })
                                 .toBuffer()
                                 .then((buffer) => buffer)
                                 .catch((err) => console.log(colors.red("SVG ERROR ON tinythumbBuf: "), colors.red(err)));
@@ -617,6 +617,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(mainWidth, mainHeight)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -628,7 +629,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(thumbWidth, thumbHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -640,7 +641,7 @@ export class MediaUploadService {
                                     image
                                         .background(0xffffffff)
                                         .scaleToFit(mediumWidth, mediumHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/jpeg')
                                 )
                                 .then((buffer) => buffer as any)
@@ -651,7 +652,7 @@ export class MediaUploadService {
                                     image
                                         .background(0xffffffff)
                                         .scaleToFit(tinythumbWidth, tinythumbHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/jpeg')
                                 )
                                 .then((buffer) => buffer as any)
@@ -676,6 +677,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(mainWidth, mainHeight)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -687,7 +689,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(thumbWidth, thumbHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -700,7 +702,7 @@ export class MediaUploadService {
                                     image
                                         .background(0xffffffff)
                                         .scaleToFit(mediumWidth, mediumHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/jpeg')
                                 )
                                 .then((buffer) => buffer as any)
@@ -711,7 +713,7 @@ export class MediaUploadService {
                                     image
                                         .background(0xffffffff)
                                         .scaleToFit(tinythumbWidth, tinythumbHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/jpeg')
                                 )
                                 .then((buffer) => buffer as any)
@@ -743,7 +745,7 @@ export class MediaUploadService {
                         //             return image
                         //             .background(0xffffffff)
                         //             .scaleToFit(mainWidth, mainHeight)
-                        //             .quality(85)
+                        //             .quality(60)
                         //             .getBufferAsync('image/jpeg');
                         //         })
                         //         .then((buffer) => buffer as any)
@@ -758,20 +760,20 @@ export class MediaUploadService {
                     }
                     // Process WEBPs
                     case 'image/webp': {
-                        // Convert to PNG for maximum browser compatibility
+                        // Convert to JPEG for maximum browser compatibility
                         varPack.suffix = 'jpeg';
                         varPack.mainMIME = 'image/jpeg';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = 'image/jpeg';
                         bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
-                        // Convert to PNG
+                        // Convert to PNG temporarily
                         let dwebpObj = new DWebp(bufferPack.mainBuf);
                         dwebpObj.png().toBuffer(function(err, thisBuffer) {
                             bufferPack.mainBuf = thisBuffer;
                         });
 
-                        // Convert to a PNG buffer
+                        // Convert to a PNG buffer temporarily
                         bufferPack.mainBuf = await dwebpObj
                             .png()
                             .toBuffer()
@@ -788,7 +790,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(thumbWidth, thumbHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -800,6 +802,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(mainWidth, mainHeight)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -812,7 +815,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(mediumWidth, mediumHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -823,7 +826,7 @@ export class MediaUploadService {
                                     image
                                         .background(0xffffffff)
                                         .scaleToFit(tinythumbWidth, tinythumbHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/jpeg')
                                 )
                                 .then((buffer) => buffer as any)
@@ -858,6 +861,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(mainWidth, mainHeight)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -869,7 +873,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(thumbWidth, thumbHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -882,7 +886,7 @@ export class MediaUploadService {
                                 image
                                     .background(0xffffffff)
                                     .scaleToFit(mediumWidth, mediumHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/jpeg')
                             )
                             .then((buffer) => buffer as any)
@@ -893,7 +897,7 @@ export class MediaUploadService {
                                     image
                                         .background(0xffffffff)
                                         .scaleToFit(tinythumbWidth, tinythumbHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/jpeg')
                                 )
                                 .then((buffer) => buffer as any)
@@ -912,7 +916,12 @@ export class MediaUploadService {
 
                         // Resize the PNG due to AMP (1200px width minimum)
                         bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
-                            .then((image) => image.scaleToFit(mainWidth, mainHeight).getBufferAsync('image/png'))
+                            .then((image) => 
+                                image
+                                    .scaleToFit(mainWidth, mainHeight)
+                                    .quality(60)
+                                    .getBufferAsync('image/png')
+                            )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
 
@@ -921,7 +930,7 @@ export class MediaUploadService {
                             .then((image) =>
                                 image
                                     .scaleToFit(thumbWidth, thumbHeight)
-                                    .quality(85)
+                                    .quality(60)
                                     .getBufferAsync('image/png')
                             )
                             .then((buffer) => buffer as any)
@@ -933,7 +942,7 @@ export class MediaUploadService {
                                 .then((image) =>
                                     image
                                         .scaleToFit(mediumWidth, mediumHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/png')
                                 )
                                 .then((buffer) => buffer as any)
@@ -943,7 +952,7 @@ export class MediaUploadService {
                                 .then((image) =>
                                     image
                                         .scaleToFit(tinythumbWidth, tinythumbHeight)
-                                        .quality(85)
+                                        .quality(60)
                                         .getBufferAsync('image/png')
                                 )
                                 .then((buffer) => buffer as any)
@@ -1016,7 +1025,7 @@ export class MediaUploadService {
                             image
                                 .background(0xffffffff)
                                 .scaleToFit(thumbWidth, thumbHeight)
-                                .quality(85)
+                                .quality(60)
                                 .getBufferAsync('image/jpeg')
                         )
                         .then((buffer) => buffer as any)
@@ -1078,7 +1087,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 70, force: true })
+                    .webp({ quality: 60, reductionEffort: 6, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpOriginalBuf error: ", err));
@@ -1089,7 +1098,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 70, force: true })
+                    .webp({ quality: 60, reductionEffort: 6, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpMediumBuf error: ", err));
@@ -1100,7 +1109,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 70, force: true })
+                    .webp({ quality: 60, reductionEffort: 6, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpThumbBuf error: ", err));
@@ -1112,7 +1121,7 @@ export class MediaUploadService {
                             fit: 'inside',
                             // background: { r: 255, g: 255, b: 255, alpha: 1 }
                         })
-                        .webp({ quality: 70, force: true })
+                        .webp({ quality: 60, reductionEffort: 6, force: true })
                         .toBuffer()
                         .then((buffer) => buffer as any)
                         .catch((err) => console.log("webpTinyThumbBuf error: ", err));
