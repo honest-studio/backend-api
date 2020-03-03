@@ -462,6 +462,8 @@ export class MediaUploadService {
                 }
             }
 
+            console.log(mimePack)
+
             if (mimePack.mime.includes('video')) isVideo = true;
             else if (mimePack.mime.includes('audio')) isAudio = true;
 
