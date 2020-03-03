@@ -8,12 +8,14 @@ import * as fs from 'fs';
 const hbjs = require('handbrake-js')
 const util = require('util');
 import * as rp from 'request-promise';
-import * as imagemin from 'imagemin';
-import * as imagemin_Gifsicle from 'imagemin-gifsicle';
-import * as imagemin_Jpegtran from 'imagemin-jpegtran';
-import * as imagemin_Optipng from 'imagemin-optipng';
-import * as imagemin_Svgo from 'imagemin-svgo';
-import * as imagemin_Webp from 'imagemin-webp';
+
+const imagemin = require('imagemin');
+const imagemin_Gifsicle = require('imagemin-gifsicle');
+const imagemin_Jpegtran = require('imagemin-jpegtran');
+const imagemin_Optipng = require('imagemin-optipng');
+const imagemin_Svgo = require('imagemin-svgo');
+const imagemin_Webp = require('imagemin-webp');
+
 import Jimp from 'jimp';
 import * as mimeClass from 'mime';
 import * as fetch from 'node-fetch';
@@ -395,12 +397,13 @@ export class MediaUploadService {
                     imagemin_Gifsicle({ optimizationLevel: 3 }),
                     imagemin_Jpegtran(),
                     imagemin_Optipng({ number: 7 }),
-                    imagemin_Svgo(),
+                    imagemin_Svgo({ removeViewBox: false, }),
                     imagemin_Webp({ preset: 'photo', quality: 60, method: 6, alphaQuality: 60 })
                 ]
             });
             return result;
         } catch (e) {
+            console.log(e);
             return null;
         }
     }
@@ -462,6 +465,8 @@ export class MediaUploadService {
                 }
             }
 
+            console.log(mimePack)
+
             if (mimePack.mime.includes('video')) isVideo = true;
             else if (mimePack.mime.includes('audio')) isAudio = true;
 
@@ -500,8 +505,6 @@ export class MediaUploadService {
             let tinythumbHeight = PHOTO_CONSTANTS.CROPPED_TINYTHUMB_WIDTH;
             let includeMainPhoto: boolean = true;
 
-            console.log("SDFDSFDS")
-
             // Get a timestamp string from the Unix epoch
             let theTimeString = new Date()
                 .getTime()
@@ -532,7 +535,7 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/svg+xml';
                         varPack.thumbSuffix = 'png';
                         varPack.thumbMIME = 'image/png';
-                        bufferPack.mainBuf = await imagemin.buffer(bufferPack.mainBuf, { plugins: [ imagemin_Svgo() ] });
+                        bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
                         // Convert the uncompressed SVG into jpeg and resize it into a thumbnail
                         let temp_buffer = await svg2png(bufferToUse)
@@ -730,34 +733,42 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/gif';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = 'image/jpeg';
-                        bufferPack.mainBuf = bufferToUse;
+                        bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
                         // Get a PNG frame from the GIF, resize, then compress it to a JPEG
                         // Must resize to fit 1201x1201 to help with AMP
                         // FIX THIS LATER
-                        bufferPack.thumbBuf = bufferPack.mainBuf;
-                        // try {
-                        //     bufferPack.thumbBuf = await this.getPNGFrameFromGIF(bufferToUse)
-                        //         .then((pngFrame) => {
-                        //             console.log(pngFrame);
-                        //             // return pngFrame;
-                        //             return (Jimp as any).read(pngFrame)
-                        //         })
-                        //         .then((image) => { 
-                        //             return image
-                        //             .background(0xffffffff)
-                        //             .scaleToFit(mainWidth, mainHeight)
-                        //             .quality(60)
-                        //             .getBufferAsync('image/jpeg');
-                        //         })
-                        //         .then((buffer) => buffer as any)
-                        //         .catch((err) => {
-                        //             console.log("ERROR BEE")
-                        //             console.log(err)
-                        //         });
-                        // } catch (e) {
-                        //     bufferPack.thumbBuf = bufferPack.mainBuf;
-                        // }
+                        bufferPack.thumbBuf = await sharp(bufferPack.mainBuf)
+                            .resize(thumbWidth, thumbHeight, {
+                                fit: 'inside',
+                                // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                            })
+                            .jpeg({ quality: 60, force: true })
+                            .toBuffer()
+                            .then((buffer) => buffer)
+                            .catch((err) => console.log(colors.red("GIF ERROR ON thumbBuf: "), colors.red(err)));
+
+                        if (useExtraSizes){
+                            bufferPack.mediumBuf = await sharp(bufferPack.mainBuf)
+                                .resize(mediumWidth, mediumHeight, {
+                                    fit: 'inside',
+                                    // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                                })
+                                .jpeg({ quality: 60, force: true })
+                                .toBuffer()
+                                .then((buffer) => buffer)
+                                .catch((err) => console.log(colors.red("GIF ERROR ON mediumBuf: "), colors.red(err)));
+                            
+                            bufferPack.tinythumbBuf = await sharp(bufferPack.mainBuf)
+                                .resize(tinythumbWidth, tinythumbHeight, {
+                                    fit: 'inside',
+                                    // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                                })
+                                .jpeg({ quality: 60, force: true })
+                                .toBuffer()
+                                .then((buffer) => buffer)
+                                .catch((err) => console.log(colors.red("GIF ERROR ON tinythumbBuf: "), colors.red(err)));
+                        }
                         break;
                     }
                     // Process WEBPs
@@ -915,8 +926,7 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/png';
                         varPack.thumbSuffix = 'png';
                         varPack.thumbMIME = 'image/png';
-
-                        console.log("Part 1")
+                        
 
                         // Resize the PNG due to AMP (1200px width minimum)
                         bufferPack.mainBuf = await (Jimp as any).read(bufferToUse)
@@ -928,9 +938,6 @@ export class MediaUploadService {
                             )
                             .then((buffer) => buffer as any)
                             .catch((err) => console.log(err));
-
-
-                        console.log("Part 2")
 
                         // Resize the PNG for its thumbnail
                         bufferPack.thumbBuf = await (Jimp as any).read(bufferToUse)
@@ -965,6 +972,51 @@ export class MediaUploadService {
                                 .then((buffer) => buffer as any)
                                 .catch((err) => console.log(err));
                         }
+
+
+                        // bufferPack.thumbBuf = await sharp(bufferToUse)
+                        //     .resize(mainWidth, mainHeight, {
+                        //         fit: 'inside',
+                        //         // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                        //     })
+                        //     .jpeg({ quality: 60, force: true })
+                        //     .toBuffer()
+                        //     .then((buffer) => buffer)
+                        //     .catch((err) => console.log(colors.red("PNG ERROR ON thumbBuf: "), colors.red(err)));
+
+                        // // Resize the PNG due to AMP (1200px width minimum)
+                        // bufferPack.thumbBuf = await sharp(bufferToUse)
+                        //     .resize(thumbWidth, thumbHeight, {
+                        //         fit: 'inside',
+                        //         // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                        //     })
+                        //     .jpeg({ quality: 60, force: true })
+                        //     .toBuffer()
+                        //     .then((buffer) => buffer)
+                        //     .catch((err) => console.log(colors.red("PNG ERROR ON thumbBuf: "), colors.red(err)));
+
+                        // if (useExtraSizes){
+                        //     bufferPack.mediumBuf = await sharp(bufferToUse)
+                        //         .resize(mediumWidth, mediumHeight, {
+                        //             fit: 'inside',
+                        //             // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                        //         })
+                        //         .jpeg({ quality: 60, force: true })
+                        //         .toBuffer()
+                        //         .then((buffer) => buffer)
+                        //         .catch((err) => console.log(colors.red("PNG ERROR ON mediumBuf: "), colors.red(err)));
+                            
+                        //     bufferPack.tinythumbBuf = await sharp(bufferToUse)
+                        //         .resize(tinythumbWidth, tinythumbHeight, {
+                        //             fit: 'inside',
+                        //             // background: { r: 255, g: 255, b: 255, alpha: 1 }
+                        //         })
+                        //         .jpeg({ quality: 60, force: true })
+                        //         .toBuffer()
+                        //         .then((buffer) => buffer)
+                        //         .catch((err) => console.log(colors.red("PNG ERROR ON tinythumbBuf: "), colors.red(err)));
+                        // }
+                        // break;
 
 
                         break;
@@ -1094,7 +1146,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 60, reductionEffort: 6, force: true })
+                    .webp({ quality: 60, reductionEffort: 6, alphaQuality: 60, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpOriginalBuf error: ", err));
@@ -1105,7 +1157,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 60, reductionEffort: 6, force: true })
+                    .webp({ quality: 60, reductionEffort: 6, alphaQuality: 60, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpMediumBuf error: ", err));
@@ -1116,7 +1168,7 @@ export class MediaUploadService {
                         fit: 'inside',
                         // background: { r: 255, g: 255, b: 255, alpha: 1 }
                     })
-                    .webp({ quality: 60, reductionEffort: 6, force: true })
+                    .webp({ quality: 60, reductionEffort: 6, alphaQuality: 60, force: true })
                     .toBuffer()
                     .then((buffer) => buffer as any)
                     .catch((err) => console.log("webpThumbBuf error: ", err));
@@ -1128,7 +1180,7 @@ export class MediaUploadService {
                             fit: 'inside',
                             // background: { r: 255, g: 255, b: 255, alpha: 1 }
                         })
-                        .webp({ quality: 60, reductionEffort: 6, force: true })
+                        .webp({ quality: 60, reductionEffort: 6, alphaQuality: 60, force: true })
                         .toBuffer()
                         .then((buffer) => buffer as any)
                         .catch((err) => console.log("webpTinyThumbBuf error: ", err));

@@ -20,7 +20,7 @@ echo
 echo "Installing Webp and HEIC/HEIF stuff"
 sudo apt-get install -y libpng-dev libtiff-dev libjpeg-dev libheif-dev build-essential libcairo2-dev
 sudo apt-get install -y libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-sudo apt-get install -y webp
+sudo apt-get install -y webp libvips-dev
 echo "Done"
 echo
 

@@ -30,7 +30,7 @@ const theAWSS3 = new AWSS3Service(theConfig);
 const theMediaUploadSvc = new MediaUploadService(theAWSS3);
 
 const BATCH_SIZE = 10;
-const LASTMOD_TIMESTAMP_CEIL = '2019-07-28 00:00:00';
+const LASTMOD_TIMESTAMP_CEIL = '2020-03-03 00:00:00';
 const LANGUAGES = ['en', 'ko'];
 
 // SELECT CONCAT('lang_', art.page_lang, '/', art.slug, '|', art.ipfs_hash_current, '|', TRIM(art.page_title))
@@ -57,9 +57,25 @@ const RegenerateMainPhoto = async (inputItem: Media, slug: string, lang_code: st
     let theUrl = inputItem.url;
     let theBuffer = await theMediaUploadSvc.getImageBufferFromURL(theUrl);
     let theFileName = theUrl.substring(theUrl.lastIndexOf('/') + 1 );
-    let uploadResult = await theMediaUploadSvc.processMedia(theBuffer, lang_code, slug, 'IDENTIFIER', uploadTypeInput, 'CAPTION', theFileName);
+    theFileName = path.parse(theFileName).name
+    let ur = await theMediaUploadSvc.processMedia(theBuffer, lang_code, slug, 'IDENTIFIER', uploadTypeInput, 'CAPTION', theFileName);
 
-    return null;
+    let newMainPhoto: Media = {
+        ...inputItem,
+        url: ur.mainPhotoURL,
+        medium: ur.mediumPhotoURL,
+        thumb: ur.thumbnailPhotoURL,
+        tinythumb: ur.tinythumbPhotoURL,
+        media_props: {
+            ...inputItem.media_props,
+            webp_original: ur.webp_original,
+            webp_medium: ur.webp_medium,
+            webp_thumb: ur.webp_thumb,
+            webp_tinythumb: ur.webp_tinythumb
+        }
+    }
+
+    return newMainPhoto;
 }
 
 export const AlterAllMainPhotosInPlace = async (inputString: string, processMediaGallery: boolean = false) => {
@@ -113,7 +129,6 @@ export const AlterAllMainPhotosInPlace = async (inputString: string, processMedi
         wiki.main_photo = [await RegenerateMainPhoto(theMainPhoto, slug, lang_code, auxiliary_prefix, 'ProfilePicture', 'main_photo') as Media]
     }
 
-    return false;
     // console.log(util.inspect(wiki.main_photo, {showHidden: false, depth: null, chalk: true}));
 
     // if(processMediaGallery){
@@ -167,6 +182,8 @@ export const AlterAllMainPhotosInPlace = async (inputString: string, processMedi
             `
                 UPDATE enterlink_articletable 
                 SET lastmod_timestamp = NOW(),
+                    photo_url = ?,
+                    photo_thumb_url = ?,
                     desktop_cache_timestamp = NULL,
                     mobile_cache_timestamp = NULL,
                     webp_large = ?,
@@ -174,7 +191,7 @@ export const AlterAllMainPhotosInPlace = async (inputString: string, processMedi
                     webp_small = ?
                 WHERE ipfs_hash_current = ? 
             `,
-            [webp_large, webp_medium, webp_small, inputIPFS]
+            [main_photo.url, main_photo.thumb, webp_large, webp_medium, webp_small, inputIPFS]
         );
     } catch (e) {
         if (e.message.includes("ER_DUP_ENTRY")){
@@ -216,8 +233,9 @@ export const AlterAllMainPhotosInPlace = async (inputString: string, processMedi
                 AND redirect_page_id IS NULL
                 AND photo_url <> 'https://epcdn-vz.azureedge.net/static/images/no-image-slide-big.png'
                 AND page_lang IN (?)
+                AND lastmod_timestamp <= ?
             `,
-            [currentStart, currentEnd, LANGUAGES]
+            [currentStart, currentEnd, LANGUAGES, LASTMOD_TIMESTAMP_CEIL]
         );
 
         for await (const artResult of fetchedArticles) {
