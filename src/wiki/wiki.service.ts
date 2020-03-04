@@ -301,6 +301,7 @@ export class WikiService {
         let ipfs_hash_rows: any[] = await this.mysql.TryQuery(
             `
             SELECT 
+                COALESCE(art_redir.id, art.id) AS id,
                 COALESCE(art_redir.ipfs_hash_current, art.ipfs_hash_current) AS ipfs_hash, 
                 art.is_indexed as is_idx, 
                 art_redir.is_indexed as is_idx_redir,
@@ -358,6 +359,20 @@ export class WikiService {
             WHERE ipfs_hash=?;`,
             [ipfs_hash]
         );
+        
+        if (wiki_rows.length == 0){
+            // Try using the article id instead
+            wiki_rows = await this.mysql.TryQuery(
+                `
+                SELECT html_blob
+                FROM enterlink_hashcache
+                WHERE articletable_id = ?
+                ORDER BY timestamp DESC;`,
+                [ipfs_hash_rows[0].id]
+            );
+
+        }
+
         let wiki: ArticleJson;
         try {
             // check if wiki is already in JSON format
