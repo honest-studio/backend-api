@@ -55,27 +55,36 @@ export const logYlw = (inputString: string) => {
 
 const RegenerateMainPhoto = async (inputItem: Media, slug: string, lang_code: string, auxiliary_prefix: string, uploadTypeInput: string, mediaType: MediaType): Promise<Media> => {
     let theUrl = inputItem.url;
+    console.log(theUrl)
     let theBuffer = await theMediaUploadSvc.getImageBufferFromURL(theUrl);
     let theFileName = theUrl.substring(theUrl.lastIndexOf('/') + 1 );
     theFileName = path.parse(theFileName).name
-    let ur = await theMediaUploadSvc.processMedia(theBuffer, lang_code, slug, 'IDENTIFIER', uploadTypeInput, 'CAPTION', theFileName);
-
-    let newMainPhoto: Media = {
-        ...inputItem,
-        url: ur.mainPhotoURL,
-        medium: ur.mediumPhotoURL,
-        thumb: ur.thumbnailPhotoURL,
-        tinythumb: ur.tinythumbPhotoURL,
-        media_props: {
-            ...inputItem.media_props,
-            webp_original: ur.webp_original,
-            webp_medium: ur.webp_medium,
-            webp_thumb: ur.webp_thumb,
-            webp_tinythumb: ur.webp_tinythumb
-        }
+    let ur;
+    try {
+        ur = await theMediaUploadSvc.processMedia(theBuffer, lang_code, slug, 'IDENTIFIER', uploadTypeInput, 'CAPTION', theFileName);
+    } 
+    catch (e){
+        throw("ERROR WITH PHOTO")
     }
-
-    return newMainPhoto;
+    if (ur){
+        let newMainPhoto: Media = {
+            ...inputItem,
+            url: ur.mainPhotoURL,
+            medium: ur.mediumPhotoURL,
+            thumb: ur.thumbnailPhotoURL,
+            tinythumb: ur.tinythumbPhotoURL,
+            media_props: {
+                ...inputItem.media_props,
+                webp_original: ur.webp_original,
+                webp_medium: ur.webp_medium,
+                webp_thumb: ur.webp_thumb,
+                webp_tinythumb: ur.webp_tinythumb
+            }
+        }
+    
+        return newMainPhoto;
+    }
+    else return null;
 }
 
 export const AlterAllMainPhotosInPlace = async (inputString: string, processMediaGallery: boolean = false) => {
@@ -126,7 +135,9 @@ export const AlterAllMainPhotosInPlace = async (inputString: string, processMedi
     // If the default photo is present, just put in the default WebP images and skip the upload
     if (wiki.main_photo && wiki.main_photo.length){
         let theMainPhoto: Media = wiki.main_photo[0];
-        wiki.main_photo = [await RegenerateMainPhoto(theMainPhoto, slug, lang_code, auxiliary_prefix, 'ProfilePicture', 'main_photo') as Media]
+        let photoResult = await RegenerateMainPhoto(theMainPhoto, slug, lang_code, auxiliary_prefix, 'ProfilePicture', 'main_photo') as Media;
+        if (photoResult) wiki.main_photo = [photoResult];
+        else return null;
     }
 
     // console.log(util.inspect(wiki.main_photo, {showHidden: false, depth: null, chalk: true}));

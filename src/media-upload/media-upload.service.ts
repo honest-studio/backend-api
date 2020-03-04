@@ -8,6 +8,7 @@ import * as fs from 'fs';
 const hbjs = require('handbrake-js')
 const util = require('util');
 import * as rp from 'request-promise';
+const isGzip = require('is-gzip');
 
 const imagemin = require('imagemin');
 const imagemin_Gifsicle = require('imagemin-gifsicle');
@@ -15,6 +16,7 @@ const imagemin_Jpegtran = require('imagemin-jpegtran');
 const imagemin_Optipng = require('imagemin-optipng');
 const imagemin_Svgo = require('imagemin-svgo');
 const imagemin_Webp = require('imagemin-webp');
+
 
 import Jimp from 'jimp';
 import * as mimeClass from 'mime';
@@ -465,7 +467,13 @@ export class MediaUploadService {
                 }
             }
 
-            console.log(mimePack)
+            // // Test the buffer to see if it corrupted
+            // try {
+            //     await sharp(bufferToUse).toBuffer()
+            // }
+            // catch (e) {
+            //     throw('Gzip error with old PNG. Moving on.')
+            // }
 
             if (mimePack.mime.includes('video')) isVideo = true;
             else if (mimePack.mime.includes('audio')) isAudio = true;
