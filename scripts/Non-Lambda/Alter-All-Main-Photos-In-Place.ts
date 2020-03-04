@@ -29,7 +29,7 @@ const theMysql = new MysqlService(theConfig);
 const theAWSS3 = new AWSS3Service(theConfig);
 const theMediaUploadSvc = new MediaUploadService(theAWSS3);
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 100;
 const LASTMOD_TIMESTAMP_CEIL = '2020-03-03 00:00:00';
 const LANGUAGES = ['en', 'ko'];
 
