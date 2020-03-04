@@ -30,7 +30,6 @@ import { fetchUrl } from './fetch-favicon';
 import { linkCategorizer } from '../utils/article-utils/article-converter';
 import { FileFetchResult, MediaUploadResult, MimePack, PhotoExtraData } from './media-upload-dto';
 import { BookInfoPack, PeriodicalInfoPack } from '../types/api';
-const svg2png = require("svg2png");
 const sharp = require('sharp');
 import * as axios from 'axios';
 const isSvg = require('is-svg');
@@ -546,9 +545,11 @@ export class MediaUploadService {
                         bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
                         // Convert the uncompressed SVG into jpeg and resize it into a thumbnail
-                        let temp_buffer = await svg2png(bufferToUse)
-                            .then(buffer => buffer)
-                            .catch(e => console.error(e));
+                        // let temp_buffer = await svg2png(bufferToUse)
+                        //     .then(buffer => buffer)
+                        //     .catch(e => console.error(e));
+
+                        let temp_buffer = bufferToUse;
 
                         bufferPack.thumbBuf = await sharp(temp_buffer)
                             .resize(thumbWidth, thumbHeight, {
@@ -1140,9 +1141,10 @@ export class MediaUploadService {
                     || mimePack.mime.indexOf('application/xml') >= 0
                     || mimePack.mime.indexOf('image/svg+xml') >= 0
                 ){
-                    temp_bufferToUse = await svg2png(bufferToUse, { width: PHOTO_CONSTANTS.CROPPED_WIDTH, height: PHOTO_CONSTANTS.CROPPED_HEIGHT })
-                        .then(buffer => buffer)
-                        .catch(e => console.error(e));
+                    // temp_bufferToUse = await svg2png(bufferToUse, { width: PHOTO_CONSTANTS.CROPPED_WIDTH, height: PHOTO_CONSTANTS.CROPPED_HEIGHT })
+                    //     .then(buffer => buffer)
+                    //     .catch(e => console.error(e));
+                    temp_bufferToUse = bufferToUse;
                 }
                 else if (isVideo){
                     temp_bufferToUse = videoThumbBuffer;

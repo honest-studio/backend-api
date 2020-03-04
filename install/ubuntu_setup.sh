@@ -27,6 +27,18 @@ sudo apt-get install -y webp libvips-dev
 echo "Done"
 echo
 
+echo "Installing PhantomJS Stuff"
+# sudo yum install -y glibc fontconfig fontconfig-devel freetype freetype-devel wget bzip2
+# wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+# sudo tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2 -C /usr/local/share/
+# sudo ln -sf /usr/local/share/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin
+# sudo apt-get install build-essential chrpath libssl-dev libxft-dev
+# sudo apt-get install libfreetype6 libfreetype6-dev
+# sudo apt-get install libfontconfig1 libfontconfig1-dev
+
+echo "Done"
+echo
+
 echo "Installing Handbrake-js stuff"
 # cd ~
 # sudo yum groupinstall -y "Development Tools" "Additional Development"
@@ -82,4 +94,5 @@ sudo apt-get install redis-server
 
 # Install NPM packages
 cd ..
+npm install -g imagemin-cli --unsafe-perm=true --allow-root
 npm install
