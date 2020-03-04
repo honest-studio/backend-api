@@ -5,6 +5,7 @@ export interface LeaderboardOptions {
     period: 'today' | 'this-week' | 'this-month' | 'all-time';
     cache: boolean;
     limit: number;
+    offset: number;
     lang: string;
     sortby: 'iq' | 'votes' | 'edits';
     user?: string;
@@ -23,7 +24,7 @@ export class StatService {
         const sortby = options && options.sortby == 'iq' ? 'cumulative_iq_rewards' : options.sortby;
 
         if (options.period == 'all-time') {
-            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 1, options.limit + 1, 'WITHSCORES');
+            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', options.offset + 1, options.limit + 1, 'WITHSCORES');
             let doc = [];
             for (let i=0; i < rewards.length; i++) {
                 if (i % 2 == 0) doc.push({ user: rewards[i] });
@@ -63,7 +64,7 @@ export class StatService {
             const sorted = JSON.parse(cache).editor_rewards
                 .sort((a,b) => b[sortby] - a[sortby])
             if (options.user) return this.addUserToLeaderboard(sorted, options);
-            else return sorted.slice(0, options.limit);
+            else return sorted.slice(options.offset, options.offset + options.limit);
         }
 
         const approx_head_block_res = await this.mongo.connection().actions.find({
@@ -167,7 +168,7 @@ export class StatService {
         const sorted = editor_rewards
             .sort((a,b) => b[sortby] - a[sortby])
         if (options.user) return this.addUserToLeaderboard(sorted, options);
-        else return sorted.slice(0, options.limit);
+        else return sorted.slice(options.offset, options.offset + options.limit);
     }
 
     // Helper function to add a specified user to the end of the leaderboard
