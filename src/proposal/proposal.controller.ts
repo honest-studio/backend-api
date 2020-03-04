@@ -1,16 +1,16 @@
 import { Controller, Get, Param, Query, UsePipes } from '@nestjs/common';
-import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiParam, ApiQuery, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { ProposalSchema } from './proposal.query-schema';
 import { Proposal, ProposalService } from './proposal.service';
 
 @Controller('v2/proposal')
-@ApiUseTags('Proposals')
+@ApiTags('Proposals')
 export class ProposalController {
     constructor(private readonly proposalService: ProposalService) {}
 
     @Get('sync-orphan-hashes')
-    @ApiOperation({ title: 'Sync confirmed / approved proposals on EOS to the Everipedia cache' })
+    @ApiOperation({ summary: 'Sync confirmed / approved proposals on EOS to the Everipedia cache' })
     @ApiResponse({
         status: 200,
         description: `returns an array of proposal objects: 
@@ -27,14 +27,14 @@ export class ProposalController {
     }
 
     @Get(':proposal_ids')
-    @ApiOperation({ title: 'Get details of a proposal' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get details of a proposal' })
+    @ApiParam({
         name: 'proposal_ids',
         description: `IDs of proposals. To get multiple proposals, separate IDs with a comma.
         Example 1: 55
         Example 2: 55,92,332`
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'diff',
         description: `Include diff data in the proposals. Takes one of three values:
             'none': (default) Don't include diff data.
@@ -45,13 +45,13 @@ export class ProposalController {
         required: false,
         type: Boolean
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'preview',
         type: 'boolean',
         required: false,
         description: 'returns wiki preview if set true'
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'cache',
         type: 'boolean',
         required: false,

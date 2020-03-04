@@ -92,7 +92,6 @@ export class SearchService {
 
         // console.log(util.inspect(searchJSON, {showHidden: false, depth: null, chalk: true}));
         // console.log(JSON.stringify(searchJSON, null, 2))
-
         let searchResult;
         try {
             searchResult = await this.client
@@ -102,14 +101,13 @@ export class SearchService {
                     body: searchJSON,
                     // timeout: '1250ms',
                 })
-                .toPromise();
         } catch (e) {
             if (e.message == "[null_pointer_exception] null")
                 return [];
             else throw e;
         }
 
-        const canonical_ids: number[] = searchResult[0].hits.hits.map((h) => {
+        const canonical_ids: number[] = searchResult.body.hits.hits.map((h) => {
             return parseInt(h._source.canonical_id);
         });
         if (canonical_ids.length == 0) return [];

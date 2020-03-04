@@ -1,16 +1,16 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiParam, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SearchQueryPack, SearchService } from './search.service';
 import { ExtendedSearchResult, PreviewResult } from '../types/api';
 
 @Controller('v2/search')
-@ApiUseTags('Search')
+@ApiTags('Search')
 export class SearchController {
     constructor(private readonly searchService: SearchService) {}
 
     @Post('title')
     @ApiOperation({ 
-        title: `Search the Everipedia database by article title, POST version`
+        summary: `Search the Everipedia database by article title, POST version`
     })
     @ApiResponse({
         status: 200,
@@ -22,7 +22,7 @@ export class SearchController {
 
     @Post('extended')
     @ApiOperation({ 
-        title: `Search Everipedia articles, categories, and profiles by a search term`
+        summary: `Search Everipedia articles, categories, and profiles by a search term`
     })
     @ApiResponse({
         status: 200,
@@ -34,7 +34,7 @@ export class SearchController {
 
     @Get('title/lang_:lang_code/:searchterm')
     @ApiOperation({ 
-        title: `Search the Everipedia database by article title, GET version`
+        summary: `Search the Everipedia database by article title, GET version`
     })
     @ApiResponse({
         status: 200,
@@ -49,14 +49,14 @@ export class SearchController {
     }
 
     @Get('schema-by-type/:query')
-    @ApiOperation({ title: 'Search for available ' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Search for available ' })
+    @ApiParam({
         name: 'query',
         description: 'Search term',
         required: true,
         type: 'string'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'page_type',
         description: 'Schema.org type for the page (e.g. Person, Organization, etc)',
         required: true,
@@ -67,8 +67,8 @@ export class SearchController {
     }
 
     //@Get('test/:query')
-    //@ApiOperation({ title: 'Shows injection of client IP into params' })
-    //@ApiImplicitParam({
+    //@ApiOperation({ summary: 'Shows injection of client IP into params' })
+    //@ApiParam({
     //    name: 'query',
     //    description: 'Search term',
     //    required: true,

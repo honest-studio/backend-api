@@ -1,17 +1,17 @@
 import { Body, Controller, Get, Post, UsePipes, Param, Query, Res } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiUseTags, ApiImplicitParam, ApiImplicitQuery } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags, ApiParam, ApiQuery } from '@nestjs/swagger';
 import { JoiValidationPipe } from '../common';
 import { PageCategoryCollection, PageCategory } from '../types/api';
 import { HomepageService } from './homepage.service';
 
 @Controller('v2/homepage')
-@ApiUseTags('Contact Us')
+@ApiTags('Contact Us')
 export class HomepageController {
     constructor(private readonly homepageService: HomepageService) {}
 
     @Get('/amp/lang_:lang_code')
-    @ApiOperation({ title: 'Get the AMP version of the homepage' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get the AMP version of the homepage' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code for the homepage'
     })

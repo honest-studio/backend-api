@@ -1,4 +1,4 @@
-import { ApiModelProperty } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { CitationCategoryType } from '../types/article';
 
@@ -10,28 +10,28 @@ export interface PhotoExtraData {
 
 // Parameters for the media upload
 export class MediaUploadDto {
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'The language of the page where the image is being uploaded to',
         required: true
     })
     @IsString()
     lang: string;
 
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'The slug of the page where the image is being uploaded to',
         required: true
     })
     @IsString()
     slug: string;
 
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'A description of the file',
         required: true
     })
     @IsString()
     caption: string;
 
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'Name of the file. Will be sanitized later',
         required: true
     })
@@ -39,13 +39,13 @@ export class MediaUploadDto {
     filename_override: string;
 
     // Can only have specific types of uploads
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, NewlinkFiles, or GalleryMediaItem)',
         required: true
     })
     @IsString()
     upload_type: string;
-    // @ApiModelProperty({
+    // @ApiProperty({
     //     description: 'The type of file being uploaded (ProfilePicture, CitationThumbnail, NewlinkFiles, or GalleryMediaItem)',
     //     required: true
     // })
@@ -58,14 +58,14 @@ export class MediaUploadDto {
 
 // Parameters for the media upload
 export class MediaUploadDtoNoFile extends MediaUploadDto {
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'The url of the target file to upload to S3',
         required: true
     })
     @IsString()
     url: string;
 
-    @ApiModelProperty({
+    @ApiProperty({
         description: 'Filename / identifier prefix',
         required: true
     })

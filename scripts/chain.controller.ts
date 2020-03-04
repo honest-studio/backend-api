@@ -1,9 +1,9 @@
 //import { Controller, Body, Post, Get, Param, Query } from '@nestjs/common';
-//import { ApiOperation, ApiUseTags, ApiImplicitQuery, ApiImplicitParam  } from '@nestjs/swagger';
+//import { ApiOperation, ApiTags, ApiQuery, ApiParam  } from '@nestjs/swagger';
 //import { ChainService } from './chain.service';
 //
 //@Controller('v2/chain')
-//@ApiUseTags('Chain')
+//@ApiTags('Chain')
 //export class ChainController {
 //    constructor(private readonly chainService: ChainService) {}
 //
@@ -12,11 +12,11 @@
 //        title: 'Catch-up endpoint for Everipedia chain actions',
 //        description: 'Get all the actions for a specific contract from the last sync point'
 //    })
-//    @ApiImplicitParam({
+//    @ApiParam({
 //        name: 'contract',
 //        description: 'the contract to search. everipediaiq or eparticlectr',
 //    })
-//    @ApiImplicitQuery({
+//    @ApiQuery({
 //        name: 'since',
 //        description: 'the block number from which to start grabbing actions',
 //        required: true

@@ -1,26 +1,26 @@
 import { Controller, Get, Param, Query, Res } from '@nestjs/common';
-import { ApiImplicitParam, ApiImplicitQuery, ApiOperation, ApiProduces, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiParam, ApiQuery, ApiOperation, ApiProduces, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SitemapService } from './sitemap.service';
 
 @Controller('v2/sitemap')
-@ApiUseTags('Sitemap')
+@ApiTags('Sitemap')
 export class SitemapController {
     constructor(private readonly sitemapService: SitemapService) {}
 
     @Get('recent/:lang')
     @ApiProduces('application/xml')
     @ApiOperation({
-        title: '1000 most recently edited pages',
+        summary: '1000 most recently edited pages',
         description:
             'Optionally filtered by language and a limit'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'lang',
         description: "An ISO 639-1 language code. Defaults to 'en'",
         required: false,
         type: String
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'limit',
         description: 'Number of URLS to sitemap (10 - 100000). Default is 1000',
         required: false,
@@ -39,16 +39,16 @@ export class SitemapController {
 
     @Get('serve-sitemap/:lang/:filename')
     @ApiOperation({
-        title: 'Serve a previously-generated static sitemap',
+        summary: 'Serve a previously-generated static sitemap',
         description:
             'Serve a previously-generated static sitemap'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'lang',
         description: "An ISO 639-1 language code. Defaults to 'en'",
         type: String
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'filename',
         description: "The name of the file",
         type: String
@@ -64,11 +64,11 @@ export class SitemapController {
 
     @Get('generate-static/:lang')
     @ApiOperation({
-        title: 'Generate a static sitemap',
+        summary: 'Generate a static sitemap',
         description:
             'Generate a static sitemap filtered by language'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'lang',
         description: "An ISO 639-1 language code. Defaults to 'en'",
         type: String
@@ -85,10 +85,10 @@ export class SitemapController {
     @Get('categories/:lang')
     @ApiProduces('application/xml')
     @ApiOperation({
-        title: 'Sitemap of category pages',
+        summary: 'Sitemap of category pages',
         description: ''
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'lang',
         description: "An ISO 639-1 language code. Defaults to 'en'",
         required: false,

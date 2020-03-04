@@ -91,7 +91,9 @@ interface Media {
     type: MediaType;
     url: string;
     caption: Sentence[];
+    medium?: string;
     thumb?: string;
+    tinythumb?: string;
     timestamp?: Date;
     attribution_url?: string;
     mime?: string;
@@ -113,8 +115,8 @@ export interface MediaProps {
     webp_original?: string;
     webp_medium?: string;
     webp_thumb?: string;
+    webp_tinythumb?: string;
 }
-
 // Valid Metadata keys
     //page_lang?: string;
     //page_type?: string;

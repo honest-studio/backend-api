@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import * as BooleanTools from 'boolean';
 import { MongoDbService, RedisService, MysqlService } from '../feature-modules/database';
 
 export interface LeaderboardOptions {

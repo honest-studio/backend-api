@@ -1,15 +1,15 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ApiOperation, ApiUseTags, ApiImplicitBody } from '@nestjs/swagger';
+import { ApiOperation, ApiTags, ApiBody } from '@nestjs/swagger';
 import { ChainService } from './chain.service';
 
 @Controller('v1/chain')
-@ApiUseTags('Chain')
+@ApiTags('Chain')
 export class ChainController {
     constructor(private readonly chainService: ChainService) {}
 
     @Get('get_info')
     @ApiOperation({
-        title: 'Get Chain Info',
+        summary: 'Get Chain Info',
         description: `
             A drop-in replacement for the EOS HTTP Chain API get_info endpoint.
             Details for using the endpoint can be found at https://developers.eos.io/eosio-nodeos/reference#get_info`
@@ -20,20 +20,18 @@ export class ChainController {
 
     @Post('sign')
     @ApiOperation({
-        title: 'Pay-for-CPU signing utility',
+        summary: 'Pay-for-CPU signing utility',
         description: `
             Sign a transaction with evrpdcronjob account. Use it to pay for a user's CPU. 
             The 'Content-Type: application/json' header must be set to use this endpoint.`
     })
-    @ApiImplicitBody({
-        name: 'chainId',
+    @ApiBody({
         description: `The chain ID for the EOSIO chain you want to use. 
             Ex: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906" for EOS mainnet`,
         type: String,
         required: true
     })
-    @ApiImplicitBody({
-        name: 'serializedTransaction',
+    @ApiBody({
         description: `The serialized transaction as a Buffer object. 
             Ex: { type: "Buffer", data: [123,234,...] }`,
         type: Buffer,
@@ -45,7 +43,7 @@ export class ChainController {
 
     @Post('get_table_rows')
     @ApiOperation({
-        title: 'Get table rows',
+        summary: 'Get table rows',
         description: `
             Returns an object containing rows from the specified table.
             The 'Content-Type: application/json' header must be set to use this endpoint.
@@ -57,7 +55,7 @@ export class ChainController {
 
     @Post(':eos_api_endpoint')
     @ApiOperation({
-        title: 'EOS Chain API',
+        summary: 'EOS Chain API',
         description: `
             A drop-in replacement for the EOS HTTP Chain API.
             The 'Content-Type: application/json' header must be set to use this endpoint.

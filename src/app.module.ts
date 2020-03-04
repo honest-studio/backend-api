@@ -38,22 +38,30 @@ const histogramLabelBuckets = ['pid']
         DatabaseModule,
         ElasticsearchModule.registerAsync({
             imports: [CommonModule],
-            useFactory: async (config: ConfigService) => {
-                const username = config.get('ELASTICSEARCH_USERNAME');
-                const password = config.get('ELASTICSEARCH_PASSWORD');
-                const host = {
-                    protocol: config.get('ELASTICSEARCH_PROTOCOL'),
-                    host: config.get('ELASTICSEARCH_HOST'),
-                    port: config.get('ELASTICSEARCH_PORT'),
-                    path: config.get('ELASTICSEARCH_URL_PREFIX'),
-                    auth: `${username}:${password}`
-                };
-                const apiVersion = '7.1'; // ignored for now
-                return { host, apiVersion };
-            },
+            useFactory: async (config: ConfigService) => ({
+                node: `${config.get('ELASTICSEARCH_PROTOCOL')}://${config.get('ELASTICSEARCH_HOST')}:${config.get('ELASTICSEARCH_PORT')}${config.get('ELASTICSEARCH_URL_PREFIX')}`,
+                auth: {
+                    username: config.get('ELASTICSEARCH_USERNAME'),
+                    password: config.get('ELASTICSEARCH_PASSWORD')
+                }
+            }),  
             inject: [ConfigService]
         })
     ],
+
+
+    // const username = config.get('ELASTICSEARCH_USERNAME');
+    // const password = config.get('ELASTICSEARCH_PASSWORD');
+    // const host = {
+        // protocol: config.get('ELASTICSEARCH_PROTOCOL'),
+        // host: config.get('ELASTICSEARCH_HOST'),
+        // port: config.get('ELASTICSEARCH_PORT'),
+        // path: config.get('ELASTICSEARCH_URL_PREFIX'),
+        // auth: `${config.get('ELASTICSEARCH_USERNAME')}:${config.get('ELASTICSEARCH_PASSWORD')}`
+    // };
+    // const apiVersion = '7.1'; // ignored for now
+    // return { host, apiVersion };
+
     controllers: [
         ProposalController,
         WikiController,

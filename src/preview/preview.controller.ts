@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post, Query, forwardRef, Inject, HttpException, HttpStatus } from '@nestjs/common';
-import { ApiImplicitParam, ApiOperation, ApiResponse, ApiUseTags, ApiImplicitQuery, ApiImplicitBody } from '@nestjs/swagger';
+import { ApiParam, ApiOperation, ApiResponse, ApiTags, ApiQuery, ApiBody } from '@nestjs/swagger';
 import { renderAMPHoverBlurb, renderAMPHoverLink } from '../utils/article-utils';
 import { PreviewService } from './preview.service';
 import { WikiService } from '../wiki/wiki.service';
@@ -7,7 +7,7 @@ import { ArticleJson } from '../types/article';
 import { PreviewResult } from '../types/api';
 
 @Controller('v2/preview')
-@ApiUseTags('Preview')
+@ApiTags('Preview')
 export class PreviewController {
     constructor(
         private readonly previewService: PreviewService,
@@ -15,8 +15,8 @@ export class PreviewController {
     ) {}
 
     @Get('hash/:ipfs_hashes')
-    @ApiOperation({ title: 'Get preview of a wiki' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get preview of a wiki' })
+    @ApiParam({
         name: 'ipfs_hashes',
         description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
             Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
@@ -40,17 +40,16 @@ export class PreviewController {
     }
 
     @Post('slug/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get preview of a wiki' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get preview of a wiki' })
+    @ApiParam({
         name: 'slug',
         description: 'slug for the wiki'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'lang_code',
         description: 'ISO 639 language code'
     })
-    @ApiImplicitBody({
-        name: 'user_agent',
+    @ApiBody({
         description: 'user agent type',
         type: String
     })
@@ -81,12 +80,12 @@ export class PreviewController {
     }
 
     @Get('amp-hoverblurb/lang_:lang_code/:slug')
-    @ApiOperation({ title: 'Get AMP Hoverblurb HTML for a given article' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get AMP Hoverblurb HTML for a given article' })
+    @ApiParam({
         name: 'lang_code',
         description: 'An ISO 639-1 language code (zh for Simplified Mandarin)'
     })
-    @ApiImplicitParam({
+    @ApiParam({
         name: 'slug',
         description: 'The article slug. Each article has a unique (slug + lang_code). Example: travismoore5036459'
     })
@@ -100,14 +99,14 @@ export class PreviewController {
     }
 
     @Get('amp-hoverlink/:ipfs_hash/')
-    @ApiOperation({ title: 'Get AMP Hoverlink HTML for a given article' })
-    @ApiImplicitParam({
+    @ApiOperation({ summary: 'Get AMP Hoverlink HTML for a given article' })
+    @ApiParam({
         name: 'ipfs_hash',
         description: `IPFS hash of a wiki. To get multiple wikis, separate hashes with a comma.  
             Example 1: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ
             Example 2: QmSfsV4eibHioKZLD1w4T8UGjx2g9DWvgwPweuKm4AcEZQ,QmU2skAMU2p9H9KXdMXWjDmzfZYoE76ksAKvsNQHdRg8dp`
     })
-    @ApiImplicitQuery({
+    @ApiQuery({
         name: 'target_url',
         description: `The URL of the citation`
     })
@@ -122,7 +121,7 @@ export class PreviewController {
 
     @Post('slugs')
     @ApiOperation({ 
-        title: 'Get preview for multiple wikis', 
+        summary: 'Get preview for multiple wikis', 
         description: `Body format: An array of WikiIdentity objects, as well as a user agent. Example:
             {
                 array: [
