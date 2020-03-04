@@ -829,7 +829,7 @@ export function urlCleaner (inputURL: string): string {
     // Make sure there is a domain, at least
     if(cleanedURL.indexOf('.') == -1) return '';
 
-    console.log(cleanedURL)
+    // console.log(cleanedURL)
 
     try {
         cleanedURL = normalizeUrl(cleanedURL);
