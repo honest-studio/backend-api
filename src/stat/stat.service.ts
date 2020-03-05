@@ -24,7 +24,7 @@ export class StatService {
         const sortby = options && options.sortby == 'iq' ? 'cumulative_iq_rewards' : options.sortby;
 
         if (options.period == 'all-time') {
-            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', options.offset + 1, options.limit + 1, 'WITHSCORES');
+            const rewards = await this.redis.connection().zrevrange('editor-leaderboard:all-time:rewards', 1, -1, 'WITHSCORES');
             let doc = [];
             for (let i=0; i < rewards.length; i++) {
                 if (i % 2 == 0) doc.push({ user: rewards[i] });
@@ -41,6 +41,7 @@ export class StatService {
                 else doc[Math.floor(i/2)].votes = Number(edits_votes[i][1]);
             }
             let sorted = doc.sort((a,b) => b[sortby] - a[sortby])
+                .slice(options.offset, options.offset + options.limit);
             if (options.user) {
                 const pipeline_user = this.redis.connection().pipeline();
                 pipeline_user.zrevrank('editor-leaderboard:all-time:rewards', options.user);
