@@ -18,7 +18,7 @@ const theAWSS3 = new AWSS3Service(theConfig);
 const theElasticsearch = new elasticsearch.Client({
     host: `${theConfig.get('ELASTICSEARCH_PROTOCOL')}://${theConfig.get('ELASTICSEARCH_HOST')}:${theConfig.get('ELASTICSEARCH_PORT')}${theConfig.get('ELASTICSEARCH_URL_PREFIX')}`,
     httpAuth: `${theConfig.get('ELASTICSEARCH_USERNAME')}:${theConfig.get('ELASTICSEARCH_PASSWORD')}`,
-    apiVersion: '7.1'
+    apiVersion: theConfig.get('ELASTICSEARCH_API_VERSION')
 });
 const theMediaUploadService = new MediaUploadService(theAWSS3);
 
