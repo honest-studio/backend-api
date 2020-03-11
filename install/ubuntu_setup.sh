@@ -8,7 +8,9 @@ echo "Done"
 echo
 
 echo "Installing MongoDB"
-sudo apt install mongodb-org -y
+sudo apt-get update
+sudo apt update
+sudo apt install mongodb
 echo "Done"
 echo
 
@@ -86,8 +88,8 @@ systemctl --user start ipfs
 echo "Done"
 
 # Install NodeJS 11 & NPM
-curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
-sudo apt install nodejs -y
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt-get install -y nodejs
 
 # Install Redis
 sudo apt-get install redis-server

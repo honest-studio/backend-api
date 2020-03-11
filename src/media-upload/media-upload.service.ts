@@ -540,8 +540,8 @@ export class MediaUploadService {
                     case 'image/svg+xml': {
                         varPack.suffix = 'svg';
                         varPack.mainMIME = 'image/svg+xml';
-                        varPack.thumbSuffix = 'png';
-                        varPack.thumbMIME = 'image/png';
+                        varPack.thumbSuffix = 'jpeg';
+                        varPack.thumbMIME = 'image/jpeg';
                         bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
                         // Convert the uncompressed SVG into jpeg and resize it into a thumbnail
@@ -787,13 +787,12 @@ export class MediaUploadService {
                         varPack.mainMIME = 'image/jpeg';
                         varPack.thumbSuffix = 'jpeg';
                         varPack.thumbMIME = 'image/jpeg';
-                        bufferPack.mainBuf = await this.compressImage(bufferToUse);
 
                         // Convert to PNG temporarily
-                        let dwebpObj = new DWebp(bufferPack.mainBuf);
-                        dwebpObj.png().toBuffer(function(err, thisBuffer) {
-                            bufferPack.mainBuf = thisBuffer;
-                        });
+                        let dwebpObj = new DWebp(bufferToUse);
+                        // dwebpObj.png().toBuffer(function(err, thisBuffer) {
+                        //     bufferPack.mainBuf = thisBuffer;
+                        // });
 
                         // Convert to a PNG buffer temporarily
                         bufferPack.mainBuf = await dwebpObj

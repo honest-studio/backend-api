@@ -37,7 +37,8 @@ export const envVarsSchema: Joi.ObjectSchema = Joi.object({
     ELASTICSEARCH_PASSWORD: Joi.string().required(),
     ELASTICSEARCH_HOST: Joi.string().required(),
     ELASTICSEARCH_PROTOCOL: Joi.string().required(),
-    ELASTICSEARCH_URL_PREFIX: Joi.string(),
+    ELASTICSEARCH_URL_PREFIX: Joi.string().allow(''),
+    ELASTICSEARCH_API_VERSION: Joi.string().required(),
     ELASTICSEARCH_PORT: Joi.number()
         .integer()
         .min(0)
