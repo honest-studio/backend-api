@@ -688,6 +688,7 @@ export const renderAMPParagraph = (
 };
 
 export const renderAMPImage = (image: Media, passedCitations: Citation[], passedIPFS: string): AMPParseCollection => {
+    if (!image) return null;
     let returnCollection: AMPParseCollection = { text: '', lightboxes: [] };
     let sanitizedCaption = image.caption
         .map((sentenceItem: Sentence, sentenceIndex) => {
@@ -1088,8 +1089,9 @@ export const getPageSentences = (passedJSON: ArticleJson): Sentence[] => {
     // Page body
     passedJSON.page_body.map(section => {
         // Get the section image caption sentences
-        section.images.forEach(image => {
-            allSentences.push(...(image.caption as Sentence[]));
+        section.images.filter(n => n).forEach(image => {
+            let theCaption = image.caption && image.caption.length ? image.caption : [];
+            allSentences.push(...(theCaption as Sentence[]));
         });
 
         // Get the sentences from various types of paragraph items

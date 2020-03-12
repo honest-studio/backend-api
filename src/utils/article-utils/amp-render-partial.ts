@@ -404,9 +404,11 @@ export class AmpRenderPartial {
                             this.artJSON.citations,
                             this.artJSON.ipfs_hash
                         );
+                        if (!result) return null;
                         this.allLightBoxes.push(...result.lightboxes);
                         return result.text;
                     })
+                    .filter(n => n)
                     .join('');
                 let paraBlock = section.paragraphs
                     .map((paragraph, paraIndex) => {
@@ -557,19 +559,21 @@ export class AmpRenderPartial {
         // const RANDOMSTRING = Math.random()
         //     .toString(36)
         //     .substring(7);
-        let sanitizedCaption = media.description
-            .map((value, index) => {
-                let result = CheckForLinksOrCitationsAMP(
-                    value.text,
-                    this.artJSON.citations,
-                    this.artJSON.ipfs_hash,
-                    [],
-                    false
-                );
-                this.allLightBoxes.push(...result.lightboxes);
-                return result.text;
-            })
-            .join('');
+        let sanitizedCaption = media.description 
+            ? media.description
+                .map((value, index) => {
+                    let result = CheckForLinksOrCitationsAMP(
+                        value.text,
+                        this.artJSON.citations,
+                        this.artJSON.ipfs_hash,
+                        [],
+                        false
+                    );
+                    this.allLightBoxes.push(...result.lightboxes);
+                    return result.text;
+                })
+                .join('')
+            : "";
         let sanitizedCaptionPlaintext = striptags(sanitizedCaption).replace(/["“”‘’]/gmiu, "\'");
 
         return `
@@ -773,20 +777,22 @@ export class AmpRenderPartial {
         // Don't render invalid URLs
         if (citation.url && !isWebUri(citation.url)) return "";
 
-        let sanitizedDescription = citation.description
-            .map((value, index) => {
-                let result = CheckForLinksOrCitationsAMP(
-                    value.text,
-                    this.artJSON.citations,
-                    this.artJSON.ipfs_hash,
-                    [],
-                    false
-                );
-                this.allLightBoxes.push(...result.lightboxes);
-                return result.text;
-            })
-            .join('');
-        
+        let sanitizedDescription = citation.description 
+            ? citation.description
+                .map((value, index) => {
+                    let result = CheckForLinksOrCitationsAMP(
+                        value.text,
+                        this.artJSON.citations,
+                        this.artJSON.ipfs_hash,
+                        [],
+                        false
+                    );
+                    this.allLightBoxes.push(...result.lightboxes);
+                    return result.text;
+                })
+                .join('')
+            : "";
+    
         let theThumbSrc = null;
 
         if (
@@ -924,7 +930,7 @@ export class AmpRenderPartial {
                 </amp-img>
                 <div class="sa-contentwrap">
                     ${title_tag_to_use}
-                    <div class="sa-blurb">${seealso.text_preview.replace(/["“”‘’]/gmiu, "\'")}</div>
+                    <div class="sa-blurb">${seealso.text_preview ? seealso.text_preview.replace(/["“”‘’]/gmiu, "\'") : ""}</div>
                 </div>
             </div>
         `;
