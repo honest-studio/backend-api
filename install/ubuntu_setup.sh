@@ -19,13 +19,18 @@ sudo snap install ipfs
 echo "Done"
 echo
 
+echo "Installing Nginx"
+sudo apt-get install nginx
+echo "Done"
+echo
+
 echo "Installing Webp and HEIC/HEIF stuff"
 # sudo yum update
 # sudo yum install -y libtiff-devel libpng-devel libheif-devel cairo cairo-devel cairomm-devel libjpeg-turbo-devel pango 
 # sudo yum install -y pango-devel librsvg2
 sudo apt-get install -y libpng-dev libtiff-dev libjpeg-dev libheif-dev build-essential libcairo2-dev
 sudo apt-get install -y libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
-sudo apt-get install -y webp libvips-dev
+sudo apt-get install -y webp libvips-dev gifsicle webp autoconf
 echo "Done"
 echo
 
@@ -87,7 +92,7 @@ echo "Starting IPFS daemon"
 systemctl --user start ipfs
 echo "Done"
 
-# Install NodeJS 11 & NPM
+# Install NodeJS 12 & NPM
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
