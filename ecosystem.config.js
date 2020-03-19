@@ -2,7 +2,7 @@
 module.exports = {
   apps : [{
     name: 'ep2-backend',
-    script: 'dist/main.js',
+    script: 'dist//src/main.js',
     instances: 8,
     autorestart: true,
     env: {
