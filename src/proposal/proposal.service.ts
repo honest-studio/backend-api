@@ -131,12 +131,16 @@ export class ProposalService {
 
         if (options.diff != 'none') {
             const metadata_only = (options.diff == "metadata");
-            const diffs = await this.diffService.getDiffsByProposal(proposal_ids, metadata_only, options.cache );
+            let cacheToUse = options.cache;
+            const diffs = await this.diffService.getDiffsByProposal(proposal_ids, metadata_only, cacheToUse);
             diffs.forEach(diff => {
                 const diff_proposal_id = diff.metadata.find(m => m.key == 'proposal_id').value;
                 const proposal = proposals.find((p) => p.proposal_id == diff_proposal_id);
                 proposal.diff = diff;
+                // console.log(util.inspect(diff, {showHidden: false, depth: null, chalk: true}));
             });
+            // let beeProposal = proposals.find((p) => p.preview.slug == "Mera_Yaar_Mila_De");
+            // console.log(util.inspect(beeProposal, {showHidden: false, depth: null, chalk: true}));
         }
         
         // proposals.map(prop => {

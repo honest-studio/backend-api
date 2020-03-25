@@ -13,6 +13,7 @@ var colors = require('colors');
 const voidElements = require('html-void-elements');
 const decode = require('unescape');
 const writeJsonFile = require('write-json-file');
+const htmlTags = require('html-tags');
 
 export const BLOCK_ELEMENTS = [
     "address",
@@ -1333,16 +1334,21 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 } 
                 // Otherwise, process normally
                 else {
-                    newElement = {
-                        type: 'tag',
-                        tag_type: element.name,
-                        tag_class: tagClass,
-                        attrs: cleanedAttributes,
-                        content: parsedChildrenContent
-                    } as NestedTagItem;
+                    // Make sure the tag type is valid
+                    let validTag = htmlTags.includes(element.name);
+                    if (!validTag) newElement = null;
+                    else {
+                        newElement = {
+                            type: 'tag',
+                            tag_type: element.name,
+                            tag_class: tagClass,
+                            attrs: cleanedAttributes,
+                            content: parsedChildrenContent
+                        } as NestedTagItem;
+                    }
                 }
 
-                nestedContents.push(newElement);
+                if (newElement) nestedContents.push(newElement);
                 break;
         }
     })

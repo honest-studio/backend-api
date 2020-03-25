@@ -310,6 +310,7 @@ function diffToSections(diff_text): Section[] {
 function linesToParagraph(lines: string): Paragraph {
     const prefix = lines.trim().substring(0, 10);
     if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX || prefix == H4_PREFIX || prefix == H5_PREFIX || prefix == H6_PREFIX) {
+        
         return {
             tag_type: lines.slice(0,2),
             items: [{
@@ -473,9 +474,8 @@ function sectionImageToLine(image: Media): string {
 
 function paragraphToLines(paragraph: Paragraph): string {
     let lines = "";
-
     // Mark header paragraphs
-    if (paragraph.tag_type.match(/h[1-3]/)) {
+    if (paragraph.tag_type.match(/h[1-6]/)) {
         const prefix = paragraph.tag_type.repeat(3) + "^^^ ";
         const text = (paragraph.items[0] as any).text;
         return `${prefix} ${text}`;
@@ -483,7 +483,7 @@ function paragraphToLines(paragraph: Paragraph): string {
     else if (paragraph.tag_type == 'blockquote') {
         lines += BLOCKQUOTE_PREFIX;
     }
-
+    
     lines += paragraph.items
         .map((item) => {
             if (item.type == 'sentence') {
