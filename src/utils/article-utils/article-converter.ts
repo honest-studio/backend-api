@@ -1311,7 +1311,7 @@ export function nestedContentParser($contents: CheerioElement[], nestedContents:
                 }
                 break;
             case 'tag':
-                let newElement: NestedTagItem | NestedTextItem;
+                let newElement: NestedTagItem | NestedTextItem = null;
                 let tagClass = BLOCK_ELEMENTS.indexOf(element.name) !== -1 
                 ? 'block'   
                 : voidElements.indexOf(element.name) !== -1 
