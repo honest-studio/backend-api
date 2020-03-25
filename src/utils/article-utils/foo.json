@@ -9,15 +9,9 @@
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "**Null** may refer to:"
+						"text": "***Mera Yaar Mila De*** ([[LINK|lang_en|Urdu_language|Urdu]]: **میرا یار ملادے** ‎ lit:My beloved join) is a Pakistani Drama serial aired on ARY Digital. This Pakistani drama is production of Bing Bang Entertainment. Drama is directed by great legend **Amjad Shahzad.** Producers of this Pakistani drama are **[[LINK|lang_en|Fahad_Mustafa|Fahad Mustafa]] ** and **Dr. Ali Kazmi**. The OST Of Mera Yaar Mila De drama is sung by great legend **[[LINK|lang_en|Rahat_Fateh_Ali_Khan|Rahat Fateh Ali Khan]] **. In this drama **[[LINK|lang_en|Sajal_Ali|Sajal Ali]] as Mushq**, She is also playing a beautiful role in “[[LINK|lang_en|Gul-e-Rana|Gul-e-Rana]]” and “[[LINK|lang_en|Tum_Mere_Kya_Ho|Tum Mere Kia Ho]]”[[LINK|lang_en|Faysal_Qureshi_(actor)|Faisal Qureshi]] as Daboo bhai and [[LINK|lang_en|Ahmed_Ali_(writer)|Ahmad Ali]] as Fahad (lover of Mushq) are playing their leading roles. In Mera Yaar Mila De Faisal Qureshi is playing a role of Muhallah ka Bhai (Gunda)."
 					}
 				]
-			},
-			{
-				"index": 1,
-				"tag_type": "p",
-				"attrs": {},
-				"items": []
 			}
 		],
 		"images": []
@@ -28,13 +22,242 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "science-technology-and-mathematics"
+					"id": "plot"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Science, technology, and mathematics"
+						"text": "Plot"
+					}
+				]
+			},
+			{
+				"index": 1,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In this Serial Faisal Qureshi plays a role A as **Daboo Bhai**, Sajjal Ali as **Mushq**, Sana Faysal as **Zeyba**, Ahmad Ali as **Fahad**, Firdous Jamal as Abba of Mushq, Ayesha Khan as **Daddu** of Mushq and Faryal Mehmood as Mehru."
+					}
+				]
+			},
+			{
+				"index": 2,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In the start of drama **Mera Yar Mila De**, camera is focused on mushq’s father (**Firdous Jamal**) who is teaching his students that always think about your parent’s respect and honor in doing anything. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "On the other side **, Mushq** is planning to run away from her home to Karachi."
+					}
+				]
+			},
+			{
+				"index": 3,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "She left a note in her room before running that is seen by her sister **Zeyba**. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Its content was that she (mushq) does not accept the proposal of the son of his father’s friend. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "She loves some **Fahad (Ahmad Ali)** and she wants to marry her. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "So she is going to him to live his life happily. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "These are so shocking details for Zeyba. "
+					},
+					{
+						"type": "sentence",
+						"index": 5,
+						"text": "She quickly inform his father about this note. "
+					},
+					{
+						"type": "sentence",
+						"index": 6,
+						"text": "He caught her on Karachi railway station and brings her home."
+					}
+				]
+			},
+			{
+				"index": 4,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Here as I thought some typical scenes were created like a tight slap on mushq’s face but against my thoughts, her father locked up her in room and broke her cell in anger. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "She cries and tells her father she will never marry to his friend’s son. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "She tells to her Dadoo that she will die without Fahad. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Now some flashbacks in Mushq’s mind about the first meeting of mushq and Fahad. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "Mushq meets him on his friend’s marriage in Lahore. "
+					},
+					{
+						"type": "sentence",
+						"index": 5,
+						"text": "They exchanges their phone numbers and start talking to one another. "
+					},
+					{
+						"type": "sentence",
+						"index": 6,
+						"text": "Fahad is a Punjabi boy lives in Lahore with his mother. "
+					},
+					{
+						"type": "sentence",
+						"index": 7,
+						"text": "Fahad finds out that Mushq is caught by his father and locked up in room, when he calls Mushq that is picked up by mushq’s Abba g. He decides to go Karachi to meet her and tells her mother that he has got a job in Karachi so he is going there. "
+					},
+					{
+						"type": "sentence",
+						"index": 8,
+						"text": "Her mother cries just like typical mothers that how she will live alone without him. "
+					},
+					{
+						"type": "sentence",
+						"index": 9,
+						"text": "Any how he reached Karachi and robbed by some teenage robbers at gun point and in this scene his mobile is also snatched by them in which Mushq’s address and cell number is saved. "
+					},
+					{
+						"type": "sentence",
+						"index": 10,
+						"text": "And here is the sudden entry o **f Daboo bhai** (Faisal Qureshi)."
+					}
+				]
+			},
+			{
+				"index": 5,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Daddu advises Mushq that she apologizes his father. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Ustaad g (Dabbu’s father) are taunted by his Colleges in Mushq’s matter. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "His friend also cancels this relation. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "He is so sad he comes homes and Mushq says sorry to his father for all that mess. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "And at night he calls at Fahad’s cell that is received by Dabbu bhai and she thought that Fahad is playing game with her and break her cell by throwing it. "
+					},
+					{
+						"type": "sentence",
+						"index": 5,
+						"text": "Again “Bechary cell ke shamat”. "
+					},
+					{
+						"type": "sentence",
+						"index": 6,
+						"text": "Her father because of his insult by the people agree to marry Mushq with old Qureshi and she also agree by thinking it as her “Ghalti ka Nateeja”."
+					}
+				]
+			},
+			{
+				"index": 6,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "In Mera Yar Mila De **,** On the other hand, Dabbu bhai’s to the some extent so cold lover Mehar (Faryal Mehmood) is seems to be interested in Fahad. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "Dabbu came to know that he is in the same area where Mushq lives so Dabbu bhai promises to help him."
+					}
+				]
+			},
+			{
+				"index": 7,
+				"tag_type": "p",
+				"attrs": {},
+				"items": [
+					{
+						"type": "sentence",
+						"index": 0,
+						"text": "Dabbu bhai gets Mushq’s address from cell and send his striker to Mushq’s home for knowing the situation. "
+					},
+					{
+						"type": "sentence",
+						"index": 1,
+						"text": "He told them about the Mushq’s marriage with Old Qureshi. "
+					},
+					{
+						"type": "sentence",
+						"index": 2,
+						"text": "It is so surprising for Fahad. "
+					},
+					{
+						"type": "sentence",
+						"index": 3,
+						"text": "Dabbu bhai threats Qureshi to break this marriage and Barrat doesn’t reach at Mushq’s home. "
+					},
+					{
+						"type": "sentence",
+						"index": 4,
+						"text": "And again Ustaad g have to face “Badnami and Muhaala walon ke baatyn”. "
+					},
+					{
+						"type": "sentence",
+						"index": 5,
+						"text": "So sad."
 					}
 				]
 			}
@@ -45,15 +268,15 @@
 		"paragraphs": [
 			{
 				"index": 0,
-				"tag_type": "h3",
+				"tag_type": "h2",
 				"attrs": {
-					"id": "computing"
+					"id": "cast"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Computing"
+						"text": "Cast"
 					}
 				]
 			},
@@ -69,7 +292,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_(SQL)|Null (SQL)]] (or NULL), a special marker and keyword in SQL indicating that something has no value"
+								"text": "[[LINK|lang_en|Faysal_Qureshi_(actor)|Faysal Qureshi]]"
 							}
 						],
 						"tag_type": "li"
@@ -81,7 +304,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_character|Null character]], the zero-valued ASCII character, also designated by NUL , often used as a terminator, separator or filler. This symbol has no visual representation."
+								"text": "[[LINK|lang_en|Sajal_Ali|Sajjal Ali]]"
 							}
 						],
 						"tag_type": "li"
@@ -93,7 +316,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_device|Null device]], a special computer file that discards all data written to it"
+								"text": "Sana Faysal"
 							}
 						],
 						"tag_type": "li"
@@ -105,7 +328,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_modem|Null modem]], a specially wired serial communications cable"
+								"text": "Ahmed Ali Akbar"
 							}
 						],
 						"tag_type": "li"
@@ -117,7 +340,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_object_pattern|Null object pattern]], a software design pattern using an object with defined neutral behavior"
+								"text": "[[LINK|lang_en|Firdous_Jamal|Firdous Jamal]]"
 							}
 						],
 						"tag_type": "li"
@@ -129,7 +352,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_pointer|Null pointer]] (sometimes written NULL , nil , or None ), used in computer programming for an uninitialized, undefined, empty, or meaningless value"
+								"text": "[[LINK|lang_en|Ayesha_Khan|Ayesha Khan]]"
 							}
 						],
 						"tag_type": "li"
@@ -141,7 +364,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_route|Null route]], a network route that goes nowhere"
+								"text": "Frayal Mehmood"
 							}
 						],
 						"tag_type": "li"
@@ -153,229 +376,7 @@
 							{
 								"type": "sentence",
 								"index": 0,
-								"text": "[[LINK|lang_en|Null_string|Null string]], the unique string of length zero (in computer science and formal language theory)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 8,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null-terminated_string|Null-terminated string]], a character string of which the length is determined by the first null-character (in programming language C and related languages)"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 9,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nullable_type|Nullable type]], a feature of some statically-typed programming languages which allows a data type to be set to the special value NULL"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "mathematics"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Mathematics"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(mathematics)|Null (mathematics)]], a zero value in several branches of mathematics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_set|Null set]], a set that is negligible in some sense Also an older term for the [[LINK|lang_en|Empty_set|empty set]]"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "physics"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Physics"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(physics)|Null (physics)]], a point in a field where the field quantity is zero"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(radio)|Null (radio)]], a concept in electromagnetism"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Causal_structure#Tangent_vectors|Null vectors or curves]] in the causal structure of a Lorentzian manifold such as a Minkowski space-time"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "other-uses-in-science-and-technology"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Other uses in science and technology"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_allele|Null allele]], in genetics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_cipher|Null cipher]], a ciphertext symbol"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_hypothesis|Null hypothesis]], a concept in statistical hypothesis testing"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_morpheme|Null morpheme]], a concept in linguistics"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_result|Null result]], the absence of a hypothesized effect in the outcome of a scientific experiment"
+								"text": "[[LINK|lang_en|Saleem_Mairaj|Saleem Mairaj]]"
 							}
 						],
 						"tag_type": "li"
@@ -391,419 +392,47 @@
 				"index": 0,
 				"tag_type": "h2",
 				"attrs": {
-					"id": "arts-and-media"
+					"id": "timing"
 				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Arts and media"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "music"
-				},
-				"items": [
-					{
-						"type": "sentence",
-						"index": 0,
-						"text": "Music"
+						"text": "Timing"
 					}
 				]
 			},
 			{
 				"index": 1,
-				"tag_type": "ul",
+				"tag_type": "p",
 				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|The_Null_Corporation|The Null Corporation]], an imprint of the band Nine Inch Nails"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(Intronaut_EP)|Null (Intronaut EP)]], 2006"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_(Foetus_EP)|Null (Foetus EP)]], 1995"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h3",
-				"attrs": {
-					"id": "other-media"
-				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "Other media"
+						"text": "Watch ***Pakistani Drama*** serial **Mera Yaar Mila De** every **Monday** at **8:00PM** only on Pakistan’s famous channel ARY Digital."
 					}
 				]
 			},
 			{
-				"index": 1,
-				"tag_type": "ul",
+				"index": 2,
+				"tag_type": "p",
 				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, an identity of the character [[LINK|lang_en|Gray_Fox_(Metal_Gear)|Gray Fox]] in the *Metal Gear Solid: Portable Ops* video game"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, man-eating sentients in the *Downs-Lord Triptich* books by [[LINK|lang_en|John_Whitbourn|John Whitbourn]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null,_the_Living_Darkness|Null, the Living Darkness]], a Marvel Comics character"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Null, a villain from *[[LINK|lang_en|Teenage_Mutant_Ninja_Turtles_Adventures|Teenage Mutant Ninja Turtles Adventures]] *"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "Nulls, worm-like remains of defeated characters in the animated program *[[LINK|lang_en|ReBoot|ReBoot]] *"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 5,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Type:_Null|Type: Null]], a Gen VII *Pokémon* species introduced in *Pokémon Sun and Moon*"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "people"
-				},
 				"items": [
 					{
 						"type": "sentence",
 						"index": 0,
-						"text": "People"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Christopher_Null|Christopher Null]] (born 1971), American film critic"
-							}
-						],
-						"tag_type": "li"
+						"text": "If case of any problem, or missed any of the episodes of ***Mera Yaar Mila De*** you can watch them here. "
 					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Eduard_van_der_Nüll|Eduard van der Nüll]] (1812–1868), Austrian architect"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Gary_Null|Gary Null]] (born 1945), American radio host and author on alternative medicine"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Keith_Null|Keith Null]] (born 1985), American football player"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|KK_Null|KK Null]] (born 1961), Japanese musician"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "other-uses"
-				},
-				"items": [
 					{
 						"type": "sentence",
-						"index": 0,
-						"text": "Other uses"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_and_void|Null and void]], having no legal validity"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
 						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null-A|Null-A]], a term used in science fiction, referring to Korzybski's notation [[INLINE_IMAGE|https://wikimedia.org/api/rest_v1/media/math/render/svg/92efef0e89bdc77f6a848764195ef5b9d9bfcc6a||{overline {A}}|hundefined|wundefined|mwe-math-fallback-image-inline]] as an abbreviation for \"non-Aristotelian\" logic"
-							}
-						],
-						"tag_type": "li"
+						"text": "We will provide you complete episode of this drama here. "
 					},
-					{
-						"type": "list-item",
-						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Stunde_Null|Stunde Null]], a term used in Germany to mark the end of the Second World War"
-							}
-						],
-						"tag_type": "li"
-					}
-				]
-			}
-		],
-		"images": []
-	},
-	{
-		"paragraphs": [
-			{
-				"index": 0,
-				"tag_type": "h2",
-				"attrs": {
-					"id": "see-also"
-				},
-				"items": [
 					{
 						"type": "sentence",
-						"index": 0,
-						"text": "See also"
-					}
-				]
-			},
-			{
-				"index": 1,
-				"tag_type": "ul",
-				"attrs": {},
-				"items": [
-					{
-						"type": "list-item",
-						"index": 0,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Ø_(disambiguation)|Ø (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 1,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Null_symbol_(disambiguation)|Null symbol (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
 						"index": 2,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|0_(disambiguation)|0 (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 3,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nil_(disambiguation)|Nil (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
-					},
-					{
-						"type": "list-item",
-						"index": 4,
-						"sentences": [
-							{
-								"type": "sentence",
-								"index": 0,
-								"text": "[[LINK|lang_en|Nul_(disambiguation)|Nul (disambiguation)]]"
-							}
-						],
-						"tag_type": "li"
+						"text": "Stay tune here for latest episode and **review** of the episodes."
 					}
 				]
 			}
