@@ -230,6 +230,9 @@ const IMAGE_URL_CAPTION_SEPARATOR = '|';
 const H1_PREFIX = 'h1h1h1^^^ ';
 const H2_PREFIX = 'h2h2h2^^^ ';
 const H3_PREFIX = 'h3h3h3^^^ ';
+const H4_PREFIX = 'h4h4h4^^^ ';
+const H5_PREFIX = 'h5h5h5^^^ ';
+const H6_PREFIX = 'h6h6h6^^^ ';
 const DIFF_ADD_MARKER = ' d+++d';
 const DIFF_DELETE_MARKER = ' d---d';
 const DIFF_NONE_MARKER = ' d===d';
@@ -306,7 +309,7 @@ function diffToSections(diff_text): Section[] {
 
 function linesToParagraph(lines: string): Paragraph {
     const prefix = lines.trim().substring(0, 10);
-    if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
+    if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX || prefix == H4_PREFIX || prefix == H5_PREFIX || prefix == H6_PREFIX) {
         return {
             tag_type: lines.slice(0,2),
             items: [{
@@ -363,7 +366,7 @@ function linesToParagraph(lines: string): Paragraph {
                 };
             // this occasionally occurs on a bad diff
             // if it does, just return a sentence
-            else if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX) {
+            else if (prefix == H1_PREFIX || prefix == H2_PREFIX || prefix == H3_PREFIX || prefix == H4_PREFIX || prefix == H5_PREFIX || prefix == H6_PREFIX) {
                 return {
                     index,
                     type: 'sentence',
