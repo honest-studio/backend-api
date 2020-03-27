@@ -4,6 +4,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
 import chalk from 'chalk';
 import express from 'express';
+import * as Sentry from '@sentry/node';
+
 import { AppModule } from './app.module';
 import { ConfigService } from './common';
 
@@ -14,8 +16,13 @@ async function bootstrap() {
     const expressApp = express();
 
     const app = await NestFactory.create(AppModule, new ExpressAdapter(expressApp));
-    app.use(bodyParser.json({limit: '25mb'}));
-    app.use(bodyParser.urlencoded({limit: '25mb', extended: true}));
+
+    Sentry.init({ dsn: 'https://5aa8ab3695a540a2b9b5d9baf75f141d@sentry.io/3484645' });
+    // The request handler must be the first middleware on the app
+    app.use(Sentry.Handlers.requestHandler());
+
+    app.use(bodyParser.json({ limit: '25mb' }));
+    app.use(bodyParser.urlencoded({ limit: '25mb', extended: true }));
     app.enableCors();
     app.enableShutdownHooks();
 
