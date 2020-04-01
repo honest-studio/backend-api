@@ -24,7 +24,7 @@ const config = {
 const DFUSE_ACTION_LOGGING = (config.get("DFUSE_ACTION_LOGGING") && config.get("DFUSE_ACTION_LOGGING") === "true");
 
 const mongo_actions_promise: Promise<Collection> = new Promise((resolve, reject) => {
-    MongoClient.connect(config.get("MONGODB_URL"), { poolSize: 10, useNewUrlParser: true }, (err, client) => {
+    MongoClient.connect(config.get("MONGODB_URL"), { poolSize: 32, useNewUrlParser: true }, (err, client) => {
         if (err) {
             console.error(err);
             reject(err);
